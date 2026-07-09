@@ -1,0 +1,377 @@
+# ========================================
+# SAME-ORIGIN API ROUTES (must be FIRST — before any redirect rules)
+# These must not be redirected to trailing slash or SPA fallback
+# ========================================
+/api/admin/email/ping  /.netlify/functions/quick-send-ping  200!
+/api/admin/email/quick-sends/send  /.netlify/functions/quick-send-proxy  200!
+/api/admin/email/quick-sends  /.netlify/functions/quick-send-list  200!
+/api/admin/email/messages/:id/events  /.netlify/functions/quick-send-detail  200!
+/api/admin/email/messages/:id/stats  /.netlify/functions/quick-send-detail  200!
+/api/admin/email/messages/:id  /.netlify/functions/quick-send-detail  200!
+
+# ========================================
+# CANONICAL SEO REDIRECTS (WWW PRIMARY DOMAIN)
+# ========================================
+# Target: https://www.gappsy.com/<path>/
+# We enforce www as the primary domain for all requests
+
+# Step 1: Redirect non-www to www (force HTTPS + WWW)
+http://gappsy.com/*  https://www.gappsy.com/:splat  301!
+https://gappsy.com/*  https://www.gappsy.com/:splat  301!
+http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
+
+# Step 2: Add trailing slash for page URLs only (exclude files with extensions and API routes)
+# This regex matches paths without dots (files) and without trailing slash
+# Note: /api/* rules above use 200! force-rewrite which takes priority, but this exclusion is belt-and-suspenders
+/api/*  /api/:splat  200!
+/([^.?]+[^/])  /$1/  301!
+
+# ========================================
+# LEGACY REDIRECTS
+# ========================================
+
+# Legacy /states/* redirect (safety net for old links)
+/states/:stateSlug  /marketing-agencies-in-:stateSlug-united-states/  301!
+
+/listing /existing-listing 301
+
+# WordPress Migration - Permanent 301 Redirects
+/marketing-agency-hozio-reviews /agency-reviews/hozio-new-york/ 301!
+/marketing-agency-hozio-reviews/ /agency-reviews/hozio-new-york/ 301!
+/marketing-agency-calta-marketing-reviews /agency-reviews/calta-marketing-new-york/ 301!
+/marketing-agency-calta-marketing-reviews/ /agency-reviews/calta-marketing-new-york/ 301!
+
+/pricing /appbuilder 301
+/login /login/apps 301
+/home / 301
+/ai / 301
+/contact-us /contact 301
+/support /contact 301
+/refund /terms 301
+/register /login/apps 301
+/about-us /about 301
+
+/marketing-agency-web-rocket-media-reviews /agency-reviews/web-rocket-media 301
+/marketing-agency-digital-silk-reviews /agency-reviews/digital-silk 301
+/marketing-agency-lounge-lizard-reviews /agency-reviews/lounge-lizard 301
+/marketing-agency-blue-fountain-media-reviews /agency-reviews/blue-fountain-media 301
+/marketing-agency-smart-sites-reviews /agency-reviews/smart-sites 301
+/marketing-agency-thrive-internet-marketing-reviews /agency-reviews/thrive-internet-marketing 301
+/marketing-agency-webfx-reviews /agency-reviews/webfx 301
+/marketing-agency-straight-north-reviews /agency-reviews/straight-north 301
+/marketing-agency-disruptive-advertising-reviews /agency-reviews/disruptive-advertising 301
+/marketing-agency-ignite-visibility-reviews /agency-reviews/ignite-visibility 301
+/marketing-agency-np-digital-reviews /agency-reviews/np-digital 301
+/marketing-agency-seer-interactive-reviews /agency-reviews/seer-interactive 301
+/marketing-agency-victorious-reviews /agency-reviews/victorious 301
+/marketing-agency-tinuiti-reviews /agency-reviews/tinuiti 301
+/marketing-agency-power-digital-marketing-reviews /agency-reviews/power-digital-marketing 301
+
+/product/appbuilder /appbuilder 301
+/product/appbuilder-pro /appbuilder 301
+/product/appbuilder-premium /appbuilder 301
+/product/appbuilder-basic /appbuilder 301
+/product/appbuilder-whitelabel /appbuilder 301
+/product/appbuilder-ltd /appbuilder 301
+/product/appbuilder-lifetime-deal-whitelabel-appsumo /appbuilder 301
+
+/product/app-publishing /publish-service 301
+/product/app-publishing-service /publish-service 301
+/product/publishing-service /publish-service 301
+/product/publish-service /publish-service 301
+/product/publish-on-ios /publish-service 301
+/product/publish-on-android /publish-service 301
+
+/product/done-for-you /done-for-you-app-creation 301
+/product/done-for-you-app /done-for-you-app-creation 301
+/product/done-for-you-app-development /done-for-you-app-creation 301
+/product/done-for-you-app-creation /done-for-you-app-creation 301
+/product/dfy /done-for-you-app-creation 301
+/product/dfy-publishing /done-for-you-app-creation 301
+/product/dfy-pub-creation /appbuilder 301
+
+/product/ai /analytics 301
+/product/ai-tools /analytics 301
+/product/ai-analytics /analytics 301
+/product/ai-dashboard /analytics 301
+/product/ai-reporting /analytics 301
+/product/ai-reports /analytics 301
+/product/ai-automation /analytics 301
+
+/product/blackfriday-gold /appbuilder 301
+/product/blackfriday-silver /appbuilder 301
+/product/blackfriday-bronze /appbuilder 301
+/product/blackfriday-gold-2024 /appbuilder 301
+/product/blackfriday-silver-2024 /appbuilder 301
+/product/blackfriday-bronze-2024 /appbuilder 301
+
+/product/deal-1-special /appbuilder 301
+/product/deal-2-special /appbuilder 301
+/product/deal-3-special /appbuilder 301
+/product/deal-4-special /appbuilder 301
+/product/deal-5-special /appbuilder 301
+/product/deal-6-special /appbuilder 301
+/product/deal-7-special /appbuilder 301
+/product/deal-8-special /appbuilder 301
+/product/deal-9-special /appbuilder 301
+/product/deal-10-special /appbuilder 301
+/product/deal-11-special /appbuilder 301
+/product/deal-12-special /appbuilder 301
+/product/deal-13-special /appbuilder 301
+/product/deal-14-special /appbuilder 301
+/product/deal-15-special /appbuilder 301
+/product/deal-16-special /appbuilder 301
+/product/deal-17-special /appbuilder 301
+/product/deal-18-special /appbuilder 301
+/product/deal-19-special /appbuilder 301
+/product/deal-20-special /appbuilder 301
+/product/deal-21-special /appbuilder 301
+/product/deal-22-special /appbuilder 301
+/product/deal-23-special /appbuilder 301
+/product/deal-24-special /appbuilder 301
+/product/deal-25-special /appbuilder 301
+
+/refund/61 / 301
+/dictum-fusce-ut-placerat-orci-nulla-pellentesque / 301
+
+/how-to-publish-on-ios /appbuilder 301!
+/product/ltd-appbuilder-basic /appbuilder 301!
+/problem / 301!
+/download /appbuilder 301!
+/product/done-for-you-app-publishing /done-for-you-app-creation 301!
+/product/gappsy-ai-ltd-tier-1 /analytics 301!
+/marketing-agency-brand-x-ads-reviews /agency-reviews/brand-x-ads 301!
+/product/appbuilder-lifetime-deal-whitelabel2-appsumo /appbuilder 301!
+/author/bartu-cavusoglu / 301!
+/marketing-agency-pbhs-reviews /agency-reviews/pbhs 301!
+/marketing-agency-furman-roth-advertising-reviews /agency-reviews/furman-roth-advertising 301!
+/ltd-2 / 301!
+/documentation-pushnotifications / 301!
+/privacy-policy / 301!
+/documentation-videos / 301!
+/reset-password / 301!
+/marketing-agency-daniel-james-consulting-reviews /agency-reviews/daniel-james-consulting 301!
+/how-to-publish-on-android /appbuilder 301!
+/ltd / 301!
+/affiliate-program / 301!
+/email / 301!
+/product/lifetimedeal-lifetime-updates-support /appbuilder 301!
+/marketing-agency-webnbeyond-reviews /agency-reviews/webnbeyond 301!
+/drag-and-drop-app-builder / 301!
+/how-to-publish-your-app /appbuilder 301!
+/dashboard / 301!
+/claim-agency / 301!
+/product/second-mobile-app /appbuilder 301!
+/marketing-agency-multivisiondigital-review /agency-reviews/multivisiondigital 301!
+/marketing-agency-justinjenkinsdesigns-review /agency-reviews/justinjenkinsdesigns 301!
+/marketing-agency-fourthree-media-review /agency-reviews/fourthree-media 301!
+/car-dealerships-in-california-united-states / 301!
+/marketing-agency-corunit-reviews /agency-reviews/corunit 301!
+/agency / 301!
+/marketing-agency-calta-marketing-review /agency-reviews/calta-marketing-new-york/ 301!
+/product/lifetime-updates-customer-support-gappsy-analytics /appbuilder 301!
+/product/reseller-program-6667 /appbuilder 301!
+/free-trial / 301!
+/documentation-form / 301!
+/about-us-2 / 301!
+/product/reseller-program-zonkeepers-210 /appbuilder 301!
+/documentation-social-wall / 301!
+/add-listing / 301!
+/product/1usd-a-day-subscription-1-day-free-trial /appbuilder 301!
+/pricing-2 / 301!
+/product/gappsy-partner-program-pay-once /appbuilder 301!
+/product/blackfriday-gold-plan /appbuilder 301!
+/directory/cloudways / 301!
+/marketing-agency-search-engine-easy-review /agency-reviews/search-engine-easy 301!
+/marketing-agency-unique-models-and-marketing-reviews /agency-reviews/unique-models-and-marketing 301!
+/marketing-agency-corbett-pr-review /agency-reviews/corbett-pr 301!
+/marketing-agency-andrea-studios-reviews /agency-reviews/andrea-studios 301!
+/update / 301!
+/blackfriday / 301!
+/product/reseller-program-547 /appbuilder 301!
+/product/appbuilder-lifetime-deal-whitelabel-3-appsumo /appbuilder 301!
+/marketing-agency-kind-marketing-reviews /agency-reviews/kind-marketing 301!
+/documentation-radio / 301!
+/documentation-qr-code-scan / 301!
+/software / 301!
+/product/top-25-agency-listing-2000-9-months /appbuilder 301!
+/product/first-payment-1313 /appbuilder 301!
+/listing-marketing-agency-plans / 301!
+/molti-showcase / 301!
+/roadmap / 301!
+/listed-your-agency-nj / 301!
+/product/gappsy-partner-program-pay-yearly-50 /appbuilder 301!
+/product/help-you-out-listing /appbuilder 301!
+/blog /appbuilder 301!
+/m / 301!
+/product/gappsy-ai-lifetime-deal-tier-5 /analytics 301!
+/marketing-agency-foley-marketing-advisors-reviews /agency-reviews/foley-marketing-advisors 301!
+/marketing-agency-amzingppc-reviews /agency-reviews/amzingppc 301!
+/product/gappsy-appbuilder-paid-yearly /analytics 301!
+/marketing-agency-rockcandymedia-review /agency-reviews/rockcandymedia 301!
+/documentation-admob / 301!
+/marketing-agency-enchantment-marketing-review /agency-reviews/enchantment-marketing 301!
+/marketing-agency-merola-design-reviews /agency-reviews/merola-design 301!
+/marketing-agency-the-vyater-group-reviews /agency-reviews/the-vyater-group 301!
+/marketing-agency-reach-marketing-reviews /agency-reviews/reach-marketing 301!
+/marketing-agency-datariven-reviews /agency-reviews/datariven 301!
+/marketing-agency-promoteyourwebsite-review /agency-reviews/promoteyourwebsite 301!
+/marketing-agency-sir-speedy-reviews /agency-reviews/sir-speedy 301!
+/article-1 / 301!
+/documentation-google-maps-api / 301!
+/product/testfreetrialsetup /appbuilder 301!
+/marketing-agency-saluk-and-co-reviews /agency-reviews/saluk-and-co 301!
+/product/vetlink /appbuilder 301!
+/product/resellerprogram2100 /appbuilder 301!
+/appsumo / 301!
+/documentation-contact / 301!
+/documentation-scratch-card / 301!
+/project / 301!
+/services / 301!
+/product/gappsy-suite-monthly-special /appbuilder 301!
+/marketing-agency-marketingtechonline-reviews /agency-reviews/marketingtechonline 301!
+/product/basic-listing-plan /appbuilder 301!
+/product/gappsy-analytics-lifetime-deal-basic /appbuilder 301!
+/documentation-audio / 301!
+/documentation-padlock / 301!
+/product/christopher-laverack-reseller-copy /appbuilder 301!
+/product/appbuilder-lifetime-deal-whitelabel-4-appsumo /appbuilder 301!
+/product/orion-tiatia /appbuilder 301!
+/terms-of-service / 301!
+/product/openweb-business-apps-whitelabel-agency-first-payment-2 /appbuilder 301!
+/search-home / 301!
+/product/openweb /appbuilder 301!
+/marketing-agency-mllgd-reviews /agency-reviews/mllgd 301!
+/elements/team-card / 301!
+/partner / 301!
+/product/leonard-tomacelli /appbuilder 301!
+/documentation-custom-page / 301!
+/product/review-page /appbuilder 301!
+/product/christopherlaverack /appbuilder 301!
+/product/dean-snaith-25-apps /analytics 301!
+/product/top-25-agency-listing-1687-3-months /appbuilder 301!
+/product/reseller-program-500 /appbuilder 301!
+/product/proof-lifetime-deal-basic /appbuilder 301!
+/product/26-50-listing /appbuilder 301!
+/product/reseller-program-131 /appbuilder 301!
+/documentation-commerce / 301!
+/product/lock-in-current-early-bird-pricing-get-free-access-to-new-apps-when-we-add-them-to-the-gappsy-suite /appbuilder 301!
+/product/gappsy-ai-lifetime-deal-tier-5-second /analytics 301!
+/shop-homepage / 301!
+/project_category/logo-design / 301!
+/documentation-wordpress / 301!
+/documentation-pages / 301!
+/documentation-custom-css / 301!
+/documentation-stripe / 301!
+/product/reseller-program-zonkeepers-397 /appbuilder 301!
+/product/dfy-pub-special-1 /appbuilder 301!
+/giveaway / 301!
+/marketing-agency-datakey-consulting-reviews /agency-reviews/datakey-consulting 301!
+/product/listing-gybmarketinggroup /appbuilder 301!
+/careers / 301!
+/elements/card-designs / 301!
+/product/dfy-pub-michael /appbuilder 301!
+/documentation-paypal / 301!
+/product/zonkeepers-247 /appbuilder 301!
+/documentation-in-app-messages / 301!
+/order-confirmation / 301!
+/product/add-url-to-gappsy-listing-refer-clients-to-site-split /appbuilder 301!
+/documentation-loyalty-card / 301!
+/unsubscribe / 301!
+/product/dfy-app-creation /appbuilder 301!
+/directory/gappsy-appbuilder / 301!
+/documentation-twitter / 301!
+/header-designs-2 / 301!
+/product/marcus-green /appbuilder 301!
+/elements/testimonial-designs / 301!
+/product/chris1 /appbuilder 301!
+/product/extra-ltd-gappsy-proof /appbuilder 301!
+/product/listing-payment-split-628 /appbuilder 301!
+/product/11-20-listing /appbuilder 301!
+/product/2-month-ad-placement-above-top-25-page /appbuilder 301!
+/neque-egestas-congue-quisque-egestas-diam-in / 301!
+/product/gappsy-appbuilder-paid-monthly /analytics 301!
+/product/add-url-to-gappsy-listing-refer-clients-to-site /appbuilder 301!
+/product/directory-listing /appbuilder 301!
+/faq / 301!
+/hiring / 301!
+/product/reseller-program-zonkeepers-997 /appbuilder 301!
+/product/gappsy-proof-paid-yearly /analytics 301!
+/cart / 301!
+/product/done-for-you-app-publishing-bonus-extra /done-for-you-app-creation 301!
+/product/gappsy-analytics-lifetime-deal-pro /appbuilder 301!
+/product/whitelabel-750 /appbuilder 301!
+/blog-advanced /appbuilder 301!
+/elementor-10085 / 301!
+/claim-proceed / 301!
+/product/gappsy-email-paid-monthly /analytics 301!
+/product/openweb-business-apps-whitelabel-agency-payment-1000 /appbuilder 301!
+/product/first-payment-of-2000-reseller /appbuilder 301!
+/product/appbuilder-business-plan-lifetime-updates-support /appbuilder 301!
+/product/appbuilder-lifetime-deal-advanced-appsumo /appbuilder 301!
+/product/2-app-repub /appbuilder 301!
+/8-reasons-why / 301!
+/product/gappsy-proof-lifetime-deal-pro /appbuilder 301!
+/product/dfy-pub-deal-now /appbuilder 301!
+/single-category/nocode /appbuilder 301!
+/coming-soon / 301!
+/product/whitelabel-new /appbuilder 301!
+/product/reseller-program-305 /appbuilder 301!
+/8-reasons-why-your-business-needs-a-mobile-app / 301!
+/sollicitudin-ac-orci-phasellus-egestas / 301!
+/elements/service-boxes / 301!
+/demovideo / 301!
+/product/gappsy-proof-paid-monthly /analytics 301!
+/single-location / 301!
+/bezpieczenstwo-i-ochrona-platnosci-blik-w-kasynach-online / 301!
+/product/extra-lifetime-deal-gappsy-analytics-business /appbuilder 301!
+/project/shoe-repairer / 301!
+/product/dfy-pub-new /appbuilder 301!
+/product/dfy-creation-special /appbuilder 301!
+/documentation-woocommerce / 301!
+/portfolio / 301!
+/product/gappsy-ai-lifetime-deal-tier-0 /analytics 301!
+/elements/portfolio-modules / 301!
+/list-your-agency / 301!
+/product/1-time-payment-750-1of2 /appbuilder 301!
+/product/gappsy-proof-lifetime-deal-business-upgrade /appbuilder 301!
+/product/gappsy-proof-lifetime-deal-business /appbuilder 301!
+/product/place-1-till-5-split /appbuilder 301!
+/product/search-engine-optimization-report /appbuilder 301!
+/project_category/web-design / 301!
+/all-listings / 301!
+/elements/pricing-tables / 301!
+/author/bartu-cavusoglu/page/2 / 301!
+/single-category /appbuilder 301!
+/volutpat-commodo-sed-egestas-egestas-fringilla-phasellus / 301!
+/elements/tab-designs / 301!
+/marketing-agency-content-studio-ny-reviews /agency-reviews/content-studio-ny 301!
+/product/lifetime-updates-customer-support-gappsy-gappsy-ai /analytics 301!
+/shop-2 / 301!
+/top-marketing-agencies-in-arizona-usa / 301!
+/product/deepak-pub-deal-473 /appbuilder 301!
+/product/gappsy-partner-program-yearly /appbuilder 301!
+/marketing-agency-digitas-reviews /agency-reviews/digitas 301!
+/marketing-agency-one-21-productions-reviews /agency-reviews/one-21-productions 301!
+/product/whitelabel-new-deal /appbuilder 301!
+/elements / 301!
+/product/whitelabel-212 /appbuilder 301!
+/product/gappsy-email-paid-yearly /analytics 301!
+/product/upgrade-to-gappsy-appbuilder-business-ltd /appbuilder 301!
+/product/dfy-katie /appbuilder 301!
+/product/dfy-pub-david /appbuilder 301!
+/product/blackfriday-gold-plan-extra /appbuilder 301!
+
+# API Proxy - Email Center (Netlify Functions)
+/wp-admin/api/smtp-test  /.netlify/functions/smtp-test  200
+/wp-admin/api/email-center-probe  /.netlify/functions/email-center-probe  200
+/wp-admin/api/email-center-upstream-check  /.netlify/functions/email-center-upstream-check  200
+/wp-admin/api/email-center  /.netlify/functions/email-center-proxy  200
+
+# Prerendered state pages (MUST be above SPA fallback)
+# Using splat syntax for maximum Netlify compatibility
+/marketing-agencies-in-*-united-states   /marketing-agencies-in-:splat-united-states.html  200
+/marketing-agencies-in-*-united-states/  /marketing-agencies-in-:splat-united-states.html  200
+
+# 4. SPA fallback
+/*  /index.html 200

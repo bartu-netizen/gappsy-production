@@ -1,0 +1,338 @@
+═══════════════════════════════════════════════════════════════════════════════
+  TOP-25 CONFIRM PAGE - LEAD MATCHING UPSELL WITH RECOMMENDED BADGE ✅
+═══════════════════════════════════════════════════════════════════════════════
+
+BUILD ID: g7vubdl6
+TIMESTAMP: 2026-04-05T02:47:41.004Z
+FILES MODIFIED:
+  - src/config/top25Upsells.ts
+  - src/pages/Top25ConfirmPage.tsx
+PAGE: /top-25/confirm
+STATUS: Production-Ready
+
+───────────────────────────────────────────────────────────────────────────────
+  CHANGES APPLIED ✅
+───────────────────────────────────────────────────────────────────────────────
+
+1. DESCRIPTION UPDATED (Line 31) ✅
+   OLD: "...Enable this to start receiving those requests as well."
+   NEW: "...Enable this to start receiving those client requests."
+   
+   REASON: More specific, emphasizes "client" for better clarity
+
+2. "RECOMMENDED" BADGE ADDED (Lines 491-504) ✅
+   NEW: Green pill badge next to title
+   
+   STYLING:
+     • Background: #dcfce7 (light green)
+     • Text: #166534 (dark green)
+     • Font size: 12px (desktop), 11px (mobile)
+     • Font weight: 600 (semibold)
+     • Padding: 3px 10px (compact)
+     • Border radius: 12px (pill shape)
+     • Position: Inline with title (flexWrap for mobile)
+   
+   REASON: Subtle psychological push, increases perceived value
+
+3. INTERFACE UPDATED (Line 14) ✅
+   Added: showRecommendedBadge?: boolean
+   
+   REASON: Type-safe flag for rendering the badge
+
+───────────────────────────────────────────────────────────────────────────────
+  VISUAL COMPARISON
+───────────────────────────────────────────────────────────────────────────────
+
+BEFORE:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ ┌─────────────────────────────────────────────────────────────────────┐ │
+│ │ [Blue dashed border box]                                            │ │
+│ │                                                                      │ │
+│ │ ☑  🔥 Get client requests from across our platform — $97           │ │
+│ │                                                                      │ │
+│ │    Some clients never see your listing. They submit requests       │ │
+│ │    elsewhere on our platform. Enable this to start receiving       │ │
+│ │    those requests as well.                                          │ │
+│ └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────┘
+
+AFTER:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ ┌─────────────────────────────────────────────────────────────────────┐ │
+│ │ [Blue dashed border box]                                            │ │
+│ │                                                                      │ │
+│ │ ☑  🔥 Get client requests from across our platform — $97           │ │
+│ │     [Recommended]  👈 Green pill badge                              │ │
+│ │                                                                      │ │
+│ │    Some clients never see your listing. They submit requests       │ │
+│ │    elsewhere on our platform. Enable this to start receiving       │ │
+│ │    those client requests.                                           │ │
+│ └─────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────┘
+
+───────────────────────────────────────────────────────────────────────────────
+  CODE CHANGES
+───────────────────────────────────────────────────────────────────────────────
+
+FILE: src/config/top25Upsells.ts
+
+1. Interface Update (Line 14):
+   + showRecommendedBadge?: boolean;
+
+2. Description Update (Line 31):
+   - `...Enable this to start receiving those requests as well.`
+   + `...Enable this to start receiving those client requests.`
+
+3. Badge Flag Added (Line 35):
+   + showRecommendedBadge: true,
+
+FILE: src/pages/Top25ConfirmPage.tsx
+
+1. Flex Container Update (Line 430):
+   - gap: '8px', marginBottom: '8px'
+   + gap: '8px', marginBottom: '8px', flexWrap: 'wrap'
+   
+   REASON: Allow badge to wrap on mobile if title is too long
+
+2. Recommended Badge Added (Lines 491-504):
+   {upsell.showRecommendedBadge && (
+     <span style={{
+       backgroundColor: '#dcfce7',
+       color: '#166534',
+       fontSize: isMobile ? '11px' : '12px',
+       fontWeight: 600,
+       padding: '3px 10px',
+       borderRadius: '12px',
+       whiteSpace: 'nowrap',
+       flexShrink: 0
+     }}>
+       Recommended
+     </span>
+   )}
+
+───────────────────────────────────────────────────────────────────────────────
+  CONVERSION IMPROVEMENTS
+───────────────────────────────────────────────────────────────────────────────
+
+DESCRIPTION IMPROVEMENTS:
+  ✓ "those requests" → "those client requests"
+  ✓ More specific and clear about what they're receiving
+  ✓ Emphasizes the value: CLIENT requests (not just any requests)
+
+BADGE IMPROVEMENTS:
+  ✓ Green color → Trust, positive, safe choice
+  ✓ "Recommended" → Authority signal
+  ✓ Subtle size → Not overpowering, just a gentle nudge
+  ✓ Inline placement → Immediately visible with title
+  ✓ Pill shape → Modern, friendly design
+
+PSYCHOLOGICAL TRIGGERS:
+  • Authority: "Recommended" suggests expert opinion
+  • Social proof: Implies others choose this option
+  • Trust: Green color = safe, good decision
+  • FOMO: Combined with urgency copy ("never see your listing")
+  • Clarity: "client requests" is more specific than "requests"
+
+───────────────────────────────────────────────────────────────────────────────
+  RESPONSIVE BEHAVIOR
+───────────────────────────────────────────────────────────────────────────────
+
+DESKTOP (>768px):
+  • Badge stays inline with title (same row)
+  • Font size: 12px
+  • Clear spacing with gap: 8px
+  • Title and badge on same line
+
+MOBILE (≤768px):
+  • Badge may wrap to second line if title is long
+  • Font size: 11px (slightly smaller)
+  • flexWrap: 'wrap' allows graceful wrapping
+  • Badge stays close to title
+
+BOTH:
+  • whiteSpace: 'nowrap' → Badge text never breaks
+  • flexShrink: 0 → Badge maintains size
+  • Badge visually aligned with title baseline
+
+───────────────────────────────────────────────────────────────────────────────
+  WHAT WAS NOT CHANGED ✅
+───────────────────────────────────────────────────────────────────────────────
+
+✓ Title text (unchanged)
+✓ Blue dashed border box (unchanged)
+✓ Checkbox functionality (unchanged)
+✓ Price: $97 (unchanged)
+✓ First upsell (badge - orange box) (unchanged)
+✓ Page layout and buttons (unchanged)
+✓ Position: Second upsell (unchanged)
+✓ Box styling and hover effects (unchanged)
+
+───────────────────────────────────────────────────────────────────────────────
+  TEXT VERIFICATION
+───────────────────────────────────────────────────────────────────────────────
+
+grep "those client requests"                → FOUND (line 31) ✓
+grep "those requests as well"               → NOT FOUND ✓ (replaced)
+grep "showRecommendedBadge"                 → FOUND (lines 14, 35, 491) ✓
+grep "Recommended"                          → FOUND (line 502) ✓
+grep "backgroundColor: '#dcfce7'"           → FOUND (line 493) ✓
+grep "color: '#166534'"                     → FOUND (line 494) ✓
+
+───────────────────────────────────────────────────────────────────────────────
+  BUILD STATUS
+───────────────────────────────────────────────────────────────────────────────
+
+✅ Build: Clean (0 errors)
+✅ TypeScript: Pass
+✅ SEO: 52/52 passed
+✅ Build Time: 1m 12s
+✅ Keyword scan: Clean
+
+───────────────────────────────────────────────────────────────────────────────
+  CONVERSION OPTIMIZATION RATIONALE
+───────────────────────────────────────────────────────────────────────────────
+
+OLD APPROACH:
+  • Generic "requests" → less specific
+  • No authority signal
+  • Relies solely on copy for conversion
+
+NEW APPROACH:
+  • "Client requests" → specific, valuable
+  • "Recommended" badge → authority signal
+  • Green badge → trust color psychology
+  • Subtle but effective visual nudge
+  • Doesn't feel pushy or aggressive
+
+EXPECTED BENEFITS:
+  ↑ Higher perceived value (authority + specificity)
+  ↑ Trust signals (green + "Recommended")
+  ↑ Conversion rate (subtle psychological push)
+  ↑ Clarity (client requests vs requests)
+  ↑ Professional appearance (modern badge design)
+
+───────────────────────────────────────────────────────────────────────────────
+  TESTING CHECKLIST
+───────────────────────────────────────────────────────────────────────────────
+
+To test on production:
+
+1. Navigate to any state page
+   Example: https://www.gappsy.com/marketing-agencies-in-new-york-united-states/
+
+2. Click "Claim Rank #X" on any Top 25 slot
+
+3. Fill in agency details and click Next
+
+4. On /top-25/confirm page, verify SECOND upsell (blue box):
+   ☑ Blue box title: "🔥 Get client requests from across our platform — $97"
+   ☑ "Recommended" badge appears next to title
+   ☑ Badge is green (#dcfce7 background, #166534 text)
+   ☑ Badge is inline with title (or wrapped below on mobile)
+   ☑ Description: "...those client requests." (not "those requests as well")
+   ☑ Three short sentences only
+   ☑ No bold/strong formatting in description
+   ☑ Checkbox functionality works
+
+5. Verify responsive behavior:
+   ☑ Desktop: Badge inline with title
+   ☑ Mobile: Badge inline or wrapped (if title is long)
+   ☑ Badge is readable on both sizes
+
+6. Verify other elements unchanged:
+   ☑ First box (badge - orange) unchanged
+   ☑ Price summary unchanged
+   ☑ Continue button unchanged
+   ☑ Box styling (blue dashed border) unchanged
+
+───────────────────────────────────────────────────────────────────────────────
+  UPSELLS COMPLETE SUMMARY
+───────────────────────────────────────────────────────────────────────────────
+
+UPSELL #1 (Badge - Orange box):
+  Title:       ⚡ Get more clicks on your listing — $37
+  Description: Add a highlighted badge... 60% more clicks...
+  Status:      ✅ Updated previously
+
+UPSELL #2 (Lead Matching - Blue box):
+  Title:       🔥 Get client requests from across our platform — $97
+  Badge:       [Recommended] 👈 NEW
+  Description: ...those client requests. 👈 UPDATED
+  Status:      ✅ Updated with badge
+
+OVERALL IMPROVEMENTS:
+  • Both upsells benefit-focused
+  • Second upsell has authority signal (Recommended badge)
+  • Both use psychological triggers (social proof, loss aversion)
+  • Both are short and scannable
+  • Clear value propositions
+
+───────────────────────────────────────────────────────────────────────────────
+  BADGE DESIGN DETAILS
+───────────────────────────────────────────────────────────────────────────────
+
+COLOR PSYCHOLOGY:
+  • Green = Trust, safety, positive choice
+  • Not too bright (subtle, professional)
+  • Contrasts well with blue box (but not competing)
+
+SIZE & PLACEMENT:
+  • Small enough to be subtle
+  • Large enough to be noticed
+  • Inline with title (immediate visibility)
+  • No extra spacing pushing it away
+
+TYPOGRAPHY:
+  • Font weight: 600 (semibold, confident)
+  • Font size: 12px desktop, 11px mobile
+  • Uppercase not used (friendly, not aggressive)
+  • Single word "Recommended" (concise)
+
+SHAPE:
+  • Pill shape (borderRadius: 12px)
+  • Compact padding (3px 10px)
+  • Modern, friendly appearance
+  • Matches current design language
+
+───────────────────────────────────────────────────────────────────────────────
+  A/B TESTING SUGGESTIONS
+───────────────────────────────────────────────────────────────────────────────
+
+Future variations to test:
+
+BADGE TEXT:
+  • "Most Popular" (social proof)
+  • "Best Value" (value perception)
+  • "Top Choice" (authority + social proof)
+  • "96% Choose This" (data-driven social proof)
+
+BADGE COLOR:
+  • Blue (#3b82f6) - matches box theme
+  • Gold (#fbbf24) - premium feeling
+  • Keep green - trust signal
+
+BADGE ICON:
+  • ⭐ star (visual interest)
+  • ✓ checkmark (approval)
+  • 👍 thumbs up (endorsement)
+  • Keep text-only (clean, professional)
+
+───────────────────────────────────────────────────────────────────────────────
+  QUICK REFERENCE
+───────────────────────────────────────────────────────────────────────────────
+
+Page:        /top-25/confirm
+Files:       src/config/top25Upsells.ts, src/pages/Top25ConfirmPage.tsx
+Upsell:      Lead Matching (getMatched) - Second upsell
+Changes:     Description text + Recommended badge
+Lines:       31 (description), 491-504 (badge rendering)
+Build ID:    g7vubdl6
+Status:      ✅ Complete
+
+───────────────────────────────────────────────────────────────────────────────
+
+STATUS: ✅ Lead matching upsell updated with "Recommended" badge and improved
+        copy ("client requests"). Badge uses green trust colors and appears
+        inline with title. Build successful. Ready for production deployment.
+
+═══════════════════════════════════════════════════════════════════════════════

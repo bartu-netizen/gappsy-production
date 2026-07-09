@@ -1,0 +1,497 @@
+[build]
+command = "npx vite build"
+publish = "dist"
+
+[build.environment]
+VITE_SUPABASE_URL = "https://jczdgzhnsyzvbpfqueyy.supabase.co"
+VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjemRnemhuc3l6dmJwZnF1ZXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxOTMzMjAsImV4cCI6MjA3OTc2OTMyMH0.YBz187aDqkiNHaURnGHcOfK5moytq7mcmVZYVGjHP3M"
+
+[build.processing]
+skip_processing = false
+
+[build.processing.css]
+bundle = true
+minify = true
+
+[build.processing.js]
+bundle = true
+minify = true
+
+[build.processing.html]
+pretty_urls = false
+
+[build.processing.images]
+compress = true
+
+# ─────────────────────────────────────────────────────────────
+# SECURITY HEADERS (all routes)
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ─────────────────────────────────────────────────────────────
+# HASHED ASSETS — 1 year immutable cache
+# These files have content hashes in their filenames, so they
+# can be cached forever. Safe to set immutable.
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/assets/*.js"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+for = "/assets/*.css"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+for = "/assets/*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "image/png"
+
+[[headers]]
+for = "/assets/*.jpg"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "image/jpeg"
+
+[[headers]]
+for = "/assets/*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "image/webp"
+
+[[headers]]
+for = "/assets/*.svg"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "image/svg+xml"
+
+[[headers]]
+for = "/assets/*.woff"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "font/woff"
+
+[[headers]]
+for = "/assets/*.woff2"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "font/woff2"
+
+[[headers]]
+for = "/assets/*.ttf"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "font/ttf"
+
+[[headers]]
+for = "/assets/*.otf"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+Content-Type = "font/otf"
+
+# ─────────────────────────────────────────────────────────────
+# FAVICON & ICONS — long-lived cache
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/favicon.ico"
+
+[headers.values]
+Content-Type = "image/x-icon"
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/favicon.png"
+
+[headers.values]
+Content-Type = "image/png"
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/favicon-*.png"
+
+[headers.values]
+Content-Type = "image/png"
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/apple-touch-icon.png"
+
+[headers.values]
+Content-Type = "image/png"
+Cache-Control = "public, max-age=31536000, immutable"
+
+# ─────────────────────────────────────────────────────────────
+# PUBLIC IMAGES (non-hashed) — 1 week cache
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/webp"
+
+[[headers]]
+for = "/*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/png"
+
+[[headers]]
+for = "/*.jpg"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/jpeg"
+
+[[headers]]
+for = "/*.svg"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/svg+xml"
+
+[[headers]]
+for = "/og/*.svg"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/svg+xml"
+
+[[headers]]
+for = "/og/*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+Content-Type = "image/png"
+
+[[headers]]
+for = "/images/*"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/logos/*"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+
+# ─────────────────────────────────────────────────────────────
+# STATE DATA JSON — short cache with SWR
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/data/*.json"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+Content-Type = "application/json; charset=utf-8"
+
+# ─────────────────────────────────────────────────────────────
+# SEO CONTENT PAGES — 5min fresh + 24hr SWR
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/marketing-agencies-in-*-united-states"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/marketing-agencies-in-*-united-states/"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/marketing-agencies"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/marketing-agencies/usa"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/about"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/contact"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/editorial-policy"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/terms"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/privacy"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/refunds"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+# ─────────────────────────────────────────────────────────────
+# SITEMAPS & ROBOTS — short cache, no index in meta
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/robots.txt"
+
+[headers.values]
+Content-Type = "text/plain; charset=utf-8"
+Cache-Control = "public, max-age=3600"
+X-Robots-Tag = "noindex"
+
+[[headers]]
+for = "/sitemap.xml"
+
+[headers.values]
+Content-Type = "application/xml; charset=utf-8"
+Cache-Control = "public, max-age=3600"
+X-Robots-Tag = "noindex"
+
+# ─────────────────────────────────────────────────────────────
+# PRIVATE / ADMIN / CHECKOUT — no-store
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+for = "/wp-admin/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/admin/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/availability/owner/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+# /your-agency ROOT — indexable. Search landing for agency owners.
+[[headers]]
+for = "/your-agency"
+
+[headers.values]
+Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
+
+# /your-agency/* CHILDREN (profile / token / not-found) — noindex,nofollow
+[[headers]]
+for = "/your-agency/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/login"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/signup"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+# NOTE: /products intentionally not set to noindex. Flag for human review
+# if it should be deindexed.
+[[headers]]
+for = "/products"
+
+[headers.values]
+Cache-Control = "no-store, private"
+
+[[headers]]
+for = "/success"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/order/complete"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/order/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/spotlight/confirm"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/spotlight/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/top-25/confirm"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/top-25/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/top25/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/activation/upgrade"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/activation/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/standard/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/continue/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/request-replay/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/manage-listing/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/offer/*"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/email-preferences"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/existing-listing"
+
+[headers.values]
+Cache-Control = "no-store, private"
+X-Robots-Tag = "noindex, nofollow"
+
+# ─────────────────────────────────────────────────────────────
+# Edge Functions for crawler optimization
+# ─────────────────────────────────────────────────────────────
+[[edge_functions]]
+function = "crawler-static"
+path = "/"
+
+[[edge_functions]]
+function = "crawler-static"
+path = "/marketing-agencies-in-*"
+
+[[edge_functions]]
+function = "crawler-static"
+path = "/your-agency"
+
+[[edge_functions]]
+function = "crawler-static"
+path = "/your-agency/*"

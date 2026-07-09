@@ -1,0 +1,32 @@
+# Gappsy.com - Robots.txt
+# Marketing Agency Directory Platform
+# Updated: 2026-01-29
+
+# Allow all crawlers (primary directive)
+User-agent: *
+Allow: /
+
+# Disallow admin and internal pages only.
+# NOTE: /your-agency root MUST remain crawlable so Google can see the
+# noindex directive on its child pages. Non-indexable funnel routes are
+# controlled at the page level (meta robots) and via Netlify X-Robots-Tag
+# headers, not via robots.txt.
+Disallow: /wp-admin/
+Disallow: /login/
+Disallow: /admin/
+Disallow: /availability/owner/
+
+# Allow critical assets for proper page rendering
+Allow: /assets/
+Allow: /*.js
+Allow: /*.css
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.webp
+Allow: /*.svg
+Allow: /*.woff
+Allow: /*.woff2
+
+# Sitemap location (canonical domain with www)
+Sitemap: https://www.gappsy.com/sitemap.xml

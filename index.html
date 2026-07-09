@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Performance: preconnect to critical origins -->
+    <link rel="preconnect" href="https://jczdgzhnsyzvbpfqueyy.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.gappsy.com" />
+
+    <!-- Stripe checkout performance: warm DNS + TLS before the user clicks -->
+    <link rel="preconnect" href="https://checkout.stripe.com" crossorigin />
+    <link rel="preconnect" href="https://js.stripe.com" crossorigin />
+    <link rel="dns-prefetch" href="https://checkout.stripe.com" />
+    <link rel="dns-prefetch" href="https://js.stripe.com" />
+    <link rel="dns-prefetch" href="https://api.stripe.com" />
+    <link rel="preload" href="/logos/gappsy-logo-white.webp" as="image" type="image/webp" />
+
+    <!-- Google Analytics: queue dataLayer before gtag.js loads so no events are lost.
+         The actual gtag.js script is deferred via requestIdleCallback to keep it
+         off the critical rendering path while preserving all SPA tracking. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-92K9E7CJBD', { send_page_view: false });
+    </script>
+
+    <title>Gappsy - Top Marketing Agencies Directory</title>
+    <meta property="og:site_name" content="Gappsy" />
+    <meta property="og:type" content="website" />
+    <meta name="robots" content="index,follow" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Defer all non-critical third-party scripts until after first idle moment
+      window.addEventListener('load', function() {
+        requestIdleCallback(function() {
+          // Google Analytics script (deferred — dataLayer already initialized above)
+          var ga = document.createElement('script');
+          ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-92K9E7CJBD';
+          ga.async = true;
+          document.head.appendChild(ga);
+
+          // Bolt.new badge
+          var bolt = document.createElement('script');
+          bolt.src = 'https://bolt.new/badge.js?s=3a01f897-123c-4246-b4d9-92237fd78b37';
+          bolt.async = true;
+          document.body.appendChild(bolt);
+        }, { timeout: 3000 });
+      });
+    </script>
+  </body>
+</html>

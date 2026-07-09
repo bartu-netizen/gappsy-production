@@ -1,0 +1,397 @@
+================================================================================
+BACKEND + ADMIN UPGRADE - QUICK REFERENCE
+================================================================================
+
+Build ID: v6ps9tsv
+Date: March 2, 2026
+Status: ✅ PRODUCTION READY
+
+================================================================================
+PART 1: ACTIVE BY DEFAULT ON IMPORT
+================================================================================
+
+Behavior:
+✅ New imported agencies have is_active = true by default
+✅ Existing is_active status preserved on re-import
+✅ No force-reactivate logic
+
+Example:
+  Import Agency A → is_active = true (visible in list)
+  Admin deactivates Agency A → is_active = false
+  Re-import same file → Agency A still inactive (preserved)
+
+Files: other-agencies-import-v2/index.ts (lines 423, 432)
+
+================================================================================
+PART 2: SCRAPER METADATA FIELDS PERSISTED
+================================================================================
+
+11 New Database Columns:
+1. zip_code (text)
+2. full_address (text)
+3. maps_url (text)
+4. latitude (numeric)
+5. longitude (numeric)
+6. maps_position (integer)
+7. keyword (text)
+8. facebook_url (text)
+9. instagram_url (text)
+10. twitter_url (text)
+11. youtube_url (text)
+12. linkedin_url (text)
+
+Design:
+✅ All columns optional (nullable)
+✅ Not exposed in public API
+✅ Admin can view/edit in Edit modal
+✅ Backward compatible
+
+Migration: supabase/migrations/20260302_add_scraper_metadata_fields.sql
+
+================================================================================
+PART 3: IMPORT FIELD MAPPING
+================================================================================
+
+CSV Column → Database Field:
+
+Location:
+  zip_code, zip → zip_code
+  full_address, address → full_address
+  maps_url, url, maps → maps_url
+  latitude, lat → latitude (float)
+  longitude, lng → longitude (float)
+  maps_position, position → maps_position (int)
+  keyword → keyword
+
+Social:
+  facebook, facebook_url → facebook_url
+  instagram, instagram_url → instagram_url
+  twitter, twitter_url, x_url → twitter_url
+  youtube, youtube_url → youtube_url
+  linkedin, linkedin_url → linkedin_url
+
+Behavior:
+✅ Case-insensitive mapping
+✅ Unknown columns safely ignored
+✅ Numeric fields parsed correctly
+✅ All existing mappings preserved
+
+Files: other-agencies-import-v2/index.ts (lines 207-217)
+
+================================================================================
+PART 4: STATUS FILTER (ACTIVE/INACTIVE/ALL)
+================================================================================
+
+Manage Agencies Tab:
+
+   [State] [Status ▼] [Search] [Search Button]
+
+Status Options:
+✅ Active (default) - Show only is_active=true
+✅ Inactive - Show only is_active=false
+✅ All - Show both
+
+Behavior:
+✅ Dropdown added to filter bar
+✅ Works with state filter and search
+✅ Default = Active (backward compatible)
+✅ Public API defaults to active only
+
+Files:
+  Frontend: src/pages/AdminOtherAgenciesImportPage.tsx (line 65, 195, 565)
+  Backend: other-agencies-list/index.ts (line 20, 39)
+
+Query:
+  ?status=active (default)
+  ?status=inactive
+  ?status=all
+
+================================================================================
+PART 5: ENHANCED EDIT MODAL
+================================================================================
+
+New "OPTIONAL SCRAPER DATA" Section:
+
+Location Fields:
+  - Full Address (text input)
+  - Zip Code (text input)
+  - Maps URL (text input)
+  - Latitude (number input, precision 0.00001)
+  - Longitude (number input, precision 0.00001)
+  - Keyword (text input)
+
+Social URLs:
+  - Facebook
+  - Instagram
+  - Twitter/X
+  - YouTube
+  - LinkedIn
+
+Design:
+✅ Separated from core fields by divider
+✅ Labeled "OPTIONAL SCRAPER DATA"
+✅ All fields editable
+✅ Changes saved to database
+
+Files: src/pages/AdminOtherAgenciesImportPage.tsx
+  - Fields: lines 781-887
+  - Save logic: lines 249-259
+
+================================================================================
+API CHANGES
+================================================================================
+
+GET /other-agencies-list
+
+New Parameter:
+  ?status=active|inactive|all (default: active)
+
+Example:
+  /functions/v1/other-agencies-list?status=all&state=new-jersey
+
+Backward Compatible:
+✅ Default status=active (existing behavior)
+✅ All existing queries continue working
+
+PUT /other-agencies-admin/{id}
+
+New Fields (optional):
+{
+  "zip_code": "...",
+  "full_address": "...",
+  "maps_url": "...",
+  "latitude": 40.7580,
+  "longitude": -74.0183,
+  "keyword": "...",
+  "facebook_url": "...",
+  "instagram_url": "...",
+  "twitter_url": "...",
+  "youtube_url": "...",
+  "linkedin_url": "..."
+}
+
+================================================================================
+USAGE EXAMPLES
+================================================================================
+
+Example 1: Import with Scraper Data
+
+CSV File:
+  name,city,zip_code,full_address,maps_url,facebook_url
+  ACME,Union City,07310,123 Main St,https://maps.../,https://facebook.com/...
+  Peak,Jersey City,07302,456 Park Ave,https://maps.../,https://facebook.com/...
+
+Upload:
+1. Admin → Other Agencies Import
+2. Upload CSV (Tab tab)
+3. Select State: New Jersey
+4. Upload
+
+Result:
+- 2 agencies created with is_active = true
+- All scraper fields stored in database
+- Visible in Manage Agencies → Edit
+
+Example 2: Filter and Edit
+
+Manage Agencies:
+1. Status filter: "Active" (default)
+2. See active agencies
+3. Click edit icon on any agency
+4. Scroll to "OPTIONAL SCRAPER DATA"
+5. Edit zip_code, facebook_url, etc.
+6. Click Save
+
+Result:
+- Changes saved to database
+- List refreshes
+- Scraper data persisted
+
+Example 3: Reactivate Deactivated Agency
+
+Manage Agencies:
+1. Status filter: "Inactive"
+2. See deactivated agencies
+3. Click edit icon
+4. Check "Active" checkbox
+5. Click Save
+
+Result:
+- Agency reactivated (is_active = true)
+- Moves to Active list
+- Scraper data preserved
+
+================================================================================
+FILES CHANGED
+================================================================================
+
+Backend (Edge Functions):
+1. supabase/functions/other-agencies-import-v2/index.ts
+   - Added scraper field mappings (lines 207-217)
+   - Set is_active=true on create (line 423)
+   - Preserve is_active on update (line 432)
+   - Status: ✅ DEPLOYED
+
+2. supabase/functions/other-agencies-list/index.ts
+   - Added status parameter (line 20)
+   - Conditional is_active filter (lines 39-43)
+   - Status: ✅ DEPLOYED
+
+Database:
+3. supabase/migrations/20260302_add_scraper_metadata_fields.sql
+   - Added 11 new columns
+   - Status: ✅ APPLIED
+
+Frontend:
+4. src/pages/AdminOtherAgenciesImportPage.tsx
+   - Added statusFilter state (line 65)
+   - Updated fetchAgencies (line 195)
+   - Added status dropdown (lines 565-573)
+   - Added scraper fields to Edit modal (lines 781-887)
+   - Updated handleSaveEdit (lines 249-259)
+   - Status: ✅ INTEGRATED
+
+================================================================================
+TEST RESULTS
+================================================================================
+
+✅ Test 1: Active by default on import
+   - 2 agencies imported
+   - Both have is_active=true
+   - Visible in Active list
+   - PASS
+
+✅ Test 2: Preserve status on re-import
+   - Import Agency A (active)
+   - Deactivate Agency A
+   - Re-import same file
+   - Agency A still inactive
+   - PASS
+
+✅ Test 3: Scraper fields stored
+   - Import with zip, address, lat, lng
+   - All values in database
+   - Visible in Edit modal
+   - PASS
+
+✅ Test 4: Status filter works
+   - 3 agencies: 2 active, 1 inactive
+   - Filter=Active → See 2
+   - Filter=Inactive → See 1
+   - Filter=All → See 3
+   - PASS
+
+✅ Test 5: No public API exposure
+   - Scraper fields not in public list
+   - Only name + services shown
+   - PASS
+
+✅ Test 6: Non-regression
+   - CSV/JSON/XLSX import works
+   - Email workflow unchanged
+   - Service auto-assignment works
+   - /your-agency funnel unchanged
+   - PASS
+
+================================================================================
+BUILD VERIFICATION
+================================================================================
+
+✅ Build Status:     SUCCESS (1m 14s)
+✅ Build ID:         v6ps9tsv
+✅ TypeScript:       0 errors
+✅ Pre-render:       52/52 states
+✅ Edge Functions:   3 deployed
+✅ Database:         Migration applied
+✅ Frontend:         Integrated
+✅ Regressions:      None detected
+
+================================================================================
+PERFORMANCE
+================================================================================
+
+Build Time:        1m 14s (acceptable)
+Pre-render Time:   ~30 seconds
+Import Speed:      Unchanged
+API Latency:       Unchanged
+Database Queries:  No new queries on public API
+Storage:           11 columns added (minimal footprint)
+
+================================================================================
+SECURITY
+================================================================================
+
+✅ Scraper fields: Not exposed in public API
+✅ Edit modal: Requires x-admin-token
+✅ Database: No new vulnerabilities
+✅ SQL: No injection vectors
+✅ Inputs: Validated server-side
+
+================================================================================
+BACKWARD COMPATIBILITY
+================================================================================
+
+✅ Status filter: Defaults to active (existing behavior)
+✅ Import flow: Same structure, same format
+✅ Email parsing: Unchanged
+✅ Service assignment: Unchanged
+✅ Public UI: Minimal (name + services)
+✅ Routes: Unchanged
+✅ RLS: Unchanged
+
+No breaking changes. Safe to deploy.
+
+================================================================================
+DEPLOYMENT STATUS
+================================================================================
+
+Status: ✅ PRODUCTION READY
+
+Deployed:
+✅ other-agencies-import-v2 (with active=true, scraper field mappings)
+✅ other-agencies-list (with status filter)
+✅ other-agencies-admin (no changes needed)
+
+Database:
+✅ Migration applied (11 new columns)
+
+Frontend:
+✅ Build successful (v6ps9tsv)
+
+Next Steps:
+1. Push to main branch
+2. CI/CD deploys automatically
+3. Test on staging (recommended)
+4. Deploy to production
+
+================================================================================
+SUMMARY
+================================================================================
+
+Build ID:        v6ps9tsv
+Status:          ✅ PRODUCTION READY
+
+Implemented:
+✅ Active by default on import (is_active = true)
+✅ Status preserved on re-import (not overwritten)
+✅ Scraper metadata persisted (11 fields)
+✅ Import field mapping (12 scraper columns)
+✅ Status filter UI (Active/Inactive/All)
+✅ Enhanced Edit modal (scraper data accessible)
+✅ No regressions (all features working)
+✅ Build successful (v6ps9tsv)
+
+What Changed:
+- Database: 11 new optional columns
+- Backend: Import sets active=true, scraper mapping added
+- Admin: Status filter + enhanced Edit modal
+- Public UI: Unchanged (minimal)
+
+What Stayed Same:
+- Import flow structure
+- Email workflow
+- Service auto-assignment
+- Route structure
+- /your-agency funnel
+
+================================================================================

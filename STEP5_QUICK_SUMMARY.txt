@@ -1,0 +1,157 @@
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 5 TIMER & TIMEFRAME IMPROVEMENTS — COMPLETE ✅
+═══════════════════════════════════════════════════════════════════════════════
+
+BUILD ID: p3ocs84i
+TIMESTAMP: 2026-04-05T01:19:32.561Z
+FILE: src/components/OwnerUpsellDashboard.tsx
+STATUS: Production-Ready
+
+───────────────────────────────────────────────────────────────────────────────
+  WHAT WAS CHANGED
+───────────────────────────────────────────────────────────────────────────────
+
+LOCATION:
+  Step 5 of /your-agency/{agencySlug} owner funnel
+  Component: OwnerUpsellDashboard
+
+PART 1 — TIMER VISUAL IMPROVEMENTS:
+  ❌ Before: Grey neutral box (bg-slate-50, border-slate-200)
+  ✅ After:  Soft orange alert (bg-orange-50, border-orange-200)
+
+  Added:
+  • Clock icon (⏱️) in orange
+  • Bold "19 hours ago" + normal rest of text
+  • Flex layout for icon + text alignment
+
+PART 2 — "LAST 30 DAYS" RESTORATION:
+  ❌ Before: "You missed 12 client requests"
+  ✅ After:  "You missed 12 client requests in the last 30 days"
+
+  ❌ Before: "You already lost in potential revenue"
+  ✅ After:  "You lost $10,000 in potential revenue in the last 30 days"
+
+───────────────────────────────────────────────────────────────────────────────
+  TIMER VISUAL CHANGES
+───────────────────────────────────────────────────────────────────────────────
+
+Background:    bg-slate-50 → bg-orange-50 (light orange tint)
+Border:        border-slate-200 → border-orange-200 (soft orange)
+Icon:          None → Clock (⏱️, orange, 16px, left of text)
+Text Format:   font-semibold → font-bold for "X hours ago"
+Layout:        Single line → Flex container (icon + text)
+
+VISUAL IMPACT:
+✓ More prominent than before
+✓ Still subtle (not aggressive)
+✓ Less prominent than red warning block
+✓ Professional and clean
+✓ No animation (as required)
+
+───────────────────────────────────────────────────────────────────────────────
+  STAT CARD TEXT UPDATES
+───────────────────────────────────────────────────────────────────────────────
+
+FIRST STAT CARD (Client Requests):
+  Mobile (Line 324):
+    Old: "You missed {X} client requests"
+    New: "You missed {X} client requests in the last 30 days"
+
+  Desktop (Line 342):
+    Old: "You missed {X} client requests"
+    New: "You missed {X} client requests in the last 30 days"
+
+SECOND STAT CARD (Revenue):
+  Mobile (Line 335):
+    Old: "You already lost in potential revenue"
+    New: "You lost in potential revenue in the last 30 days"
+
+  Desktop (Line 353):
+    Old: "You already lost in potential revenue"
+    New: "You lost {$X} in potential revenue in the last 30 days"
+
+  Desktop No Revenue (Line 358):
+    Old: "You already lost in potential revenue"
+    New: "You lost in potential revenue in the last 30 days"
+
+───────────────────────────────────────────────────────────────────────────────
+  CONSISTENCY ACHIEVED
+───────────────────────────────────────────────────────────────────────────────
+
+Both stat cards now reference the SAME timeframe:
+
+Card 1: "...in the last 30 days"
+Card 2: "...in the last 30 days"
+
+→ Cohesive story with clear context
+→ Numbers remain dynamic (12, $10,000, etc.)
+→ Only descriptive text updated
+
+───────────────────────────────────────────────────────────────────────────────
+  VERIFICATION
+───────────────────────────────────────────────────────────────────────────────
+
+OLD TEXT REMOVED:
+  grep "You already lost in potential revenue"  → NO MATCHES ✓
+
+NEW TEXT PRESENT:
+  grep "in the last 30 days"              → 5 MATCHES ✓
+  grep "bg-orange-50 border-orange-200"   → 1 MATCH ✓
+  grep "Clock.*orange-600"                → 1 MATCH ✓
+
+BUILD STATUS:
+  ✅ Build: Clean (0 errors)
+  ✅ TypeScript: Pass
+  ✅ SEO: 52/52 passed
+  ✅ Only 1 file modified
+
+───────────────────────────────────────────────────────────────────────────────
+  NO LAYOUT BREAKS
+───────────────────────────────────────────────────────────────────────────────
+
+✓ Stat cards: Layout unchanged
+✓ Timer: New styling fits perfectly
+✓ Warning blocks: Position unchanged
+✓ CTA button: Position unchanged
+✓ Mobile responsive: Text wraps correctly
+✓ Desktop view: Full width maintained
+✓ Spacing: Comfortable and consistent
+
+───────────────────────────────────────────────────────────────────────────────
+  WHAT WAS NOT CHANGED
+───────────────────────────────────────────────────────────────────────────────
+
+✓ CTA button text/styling
+✓ Red warning block
+✓ Layout spacing
+✓ Step 1-4, Step 6
+✓ State pages
+✓ Other components
+✓ Global styles
+
+───────────────────────────────────────────────────────────────────────────────
+  QUICK REFERENCE
+───────────────────────────────────────────────────────────────────────────────
+
+Component:       OwnerUpsellDashboard
+File:            src/components/OwnerUpsellDashboard.tsx
+Step:            5 only
+Lines Changed:   4, 324, 335, 342, 353, 358, 364-372
+Timer:           Grey → Soft orange alert with ⏱️ icon
+Stat Cards:      Added "in the last 30 days" to both
+Status:          ✅ Complete
+
+───────────────────────────────────────────────────────────────────────────────
+  DOCUMENTATION
+───────────────────────────────────────────────────────────────────────────────
+
+Full Details:  STEP5_TIMER_AND_TIMEFRAME_IMPROVEMENTS_COMPLETE.md
+Quick Summary: STEP5_QUICK_SUMMARY.txt (this file)
+Confirmation:  STEP5_CONFIRMATION.txt
+
+───────────────────────────────────────────────────────────────────────────────
+
+STATUS: ✅ Timer is now visually prominent with icon. Stat cards include
+timeframe. Ready for production.
+
+═══════════════════════════════════════════════════════════════════════════════

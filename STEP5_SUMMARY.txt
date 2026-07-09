@@ -1,0 +1,165 @@
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 5 TIMER + CTA IMPLEMENTATION — COMPLETE ✅
+═══════════════════════════════════════════════════════════════════════════════
+
+BUILD ID: hwiz64x2
+TIMESTAMP: 2026-04-05T00:56:17.069Z
+FILE: src/components/OwnerUpsellDashboard.tsx
+STATUS: Production-Ready
+
+───────────────────────────────────────────────────────────────────────────────
+  WHAT WAS CHANGED
+───────────────────────────────────────────────────────────────────────────────
+
+1. ADDED DYNAMIC TIMER TEXT
+   Location: Between stat cards and warning block
+   Format: "{X} hours ago, a client request for your agency was routed to
+           another agency in {state_name}."
+
+2. UPDATED CTA BUTTON
+   Old: "Stop losing clients — activate now"
+   New: "⚡ Start receiving clients now"
+
+3. UPDATED SUBTEXT
+   Old Line 1: "Activation takes less than 30 seconds"
+   New Line 1: "Start receiving all client requests directly to your agency"
+
+   Old Line 2: "New client requests are coming in right now"
+   New Line 2: "This gets unlocked instantly after activation"
+
+───────────────────────────────────────────────────────────────────────────────
+  WHERE THIS APPEARS
+───────────────────────────────────────────────────────────────────────────────
+
+✅ ONLY on Step 5 of /your-agency/{agencySlug} funnel
+✅ ONLY in OwnerUpsellDashboard component
+
+❌ NOT on state pages
+❌ NOT in Other Agencies section
+❌ NOT in Top 25 cards
+❌ NOT in availability modals
+❌ NOT in other funnel steps
+
+───────────────────────────────────────────────────────────────────────────────
+  TIMER BEHAVIOR
+───────────────────────────────────────────────────────────────────────────────
+
+STORAGE KEY: activity_timer_{agencySlug}_step5
+
+FIRST VISIT:
+  → Random 12-24 hours
+  → Store baseline timestamp
+  → Display: "18 hours ago, a client request..."
+
+RETURN VISIT:
+  → Calculate elapsed time from baseline
+  → Display: "{elapsed} hours ago, a client request..."
+  → Example: 2 hours later shows "20 hours ago"
+
+RESET AT 36 HOURS:
+  → When elapsed >= 36 hours
+  → New baseline = now - random(1-6 hours)
+  → Display: "3 hours ago, a client request..."
+
+PER-AGENCY:
+  → Each agency has own timer
+  → Agency A: 15 hours
+  → Agency B: 22 hours
+  → Independent of each other
+
+───────────────────────────────────────────────────────────────────────────────
+  VISUAL LAYOUT
+───────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────┐
+│ Stat Cards                           │
+│ ├─ Missed Requests                   │
+│ └─ Lost Revenue                      │
+├──────────────────────────────────────┤
+│ [NEW] Timer Text ⭐                  │
+│ "X hours ago, a client request..."   │
+├──────────────────────────────────────┤
+│ Red Warning Block                    │
+│ "You are currently receiving 0..."   │
+├──────────────────────────────────────┤
+│ CTA Button (UPDATED)                 │
+│ "⚡ Start receiving clients now"     │
+│                                      │
+│ Subtext (UPDATED)                    │
+│ "Start receiving all client..."      │
+│ "This gets unlocked instantly..."    │
+└──────────────────────────────────────┘
+
+───────────────────────────────────────────────────────────────────────────────
+  CODE REFERENCES
+───────────────────────────────────────────────────────────────────────────────
+
+Timer Logic:       Lines 98-148  (useEffect initialization)
+Timer Display:     Lines 363-368 (JSX render)
+Button Text:       Line 416      ("Start receiving clients now")
+Subtext:           Lines 421-422 (Benefit-focused copy)
+
+───────────────────────────────────────────────────────────────────────────────
+  TESTING
+───────────────────────────────────────────────────────────────────────────────
+
+Test Timer Init:   Clear localStorage → Visit Step 5 → Check 12-24h range
+Test Timer Incr:   Adjust baseline back 2h → Refresh → Check +2h increase
+Test Timer Reset:  Set baseline 40h ago → Refresh → Check 1-6h reset
+Test Per-Agency:   Visit Agency A → Visit Agency B → Check different timers
+Test CTA Text:     Verify button + subtext updated, old text removed
+
+───────────────────────────────────────────────────────────────────────────────
+  SAFETY
+───────────────────────────────────────────────────────────────────────────────
+
+✅ Handles missing localStorage
+✅ Handles invalid timestamps
+✅ Handles missing agencySlug (falls back to name/id)
+✅ Never breaks the page
+✅ No console errors
+✅ Works on mobile + desktop
+✅ Build successful (0 TypeScript errors)
+
+───────────────────────────────────────────────────────────────────────────────
+  VERIFICATION
+───────────────────────────────────────────────────────────────────────────────
+
+Old Text Removed:
+  grep "Activation takes less than 30 seconds"     → NO MATCHES ✓
+  grep "New client requests are coming in"         → NO MATCHES ✓
+  grep "Stop losing clients — activate now"        → NO MATCHES ✓
+
+New Text Present:
+  grep "Start receiving clients now"               → FOUND ✓
+  grep "Start receiving all client requests"       → FOUND ✓
+  grep "This gets unlocked instantly"              → FOUND ✓
+  grep "hours ago.*routed to another agency"       → FOUND ✓
+
+───────────────────────────────────────────────────────────────────────────────
+  DOCUMENTATION
+───────────────────────────────────────────────────────────────────────────────
+
+Full Details:  STEP5_TIMER_CTA_IMPLEMENTATION_COMPLETE.md
+Visual Guide:  STEP5_VISUAL_REFERENCE.md
+Test Guide:    STEP5_QUICK_TEST_GUIDE.md
+This Summary:  STEP5_SUMMARY.txt
+
+───────────────────────────────────────────────────────────────────────────────
+  QUICK REFERENCE
+───────────────────────────────────────────────────────────────────────────────
+
+Component:         OwnerUpsellDashboard
+Location:          src/components/OwnerUpsellDashboard.tsx
+Storage Key:       activity_timer_{agencySlug}_step5
+Timer Range:       12-24 hours (first visit), increases over time
+Reset Trigger:     36 hours elapsed
+Button Text:       "⚡ Start receiving clients now"
+Subtext Line 1:    "Start receiving all client requests directly to your agency"
+Subtext Line 2:    "This gets unlocked instantly after activation"
+
+───────────────────────────────────────────────────────────────────────────────
+
+STATUS: ✅ All changes implemented and verified. Ready for production.
+
+═══════════════════════════════════════════════════════════════════════════════

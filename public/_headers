@@ -1,0 +1,205 @@
+# Cache-Control and compression headers for optimal performance
+# Order matters: more specific rules first, then general rules
+
+# SEO CRITICAL FILES - Robots.txt and Sitemap.xml
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex
+
+# FAVICON FILES - Long-term caching for branding
+/favicon.ico
+  Content-Type: image/x-icon
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon-32x32.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon-16x16.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+/apple-touch-icon.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
+# PRIVATE/SENSITIVE PAGES - No caching, no indexing
+/availability/*
+  Cache-Control: no-store, private
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/admin/*
+  Cache-Control: no-store, private
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/login
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/signup
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/products
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/success
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/order-complete
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/spotlight/confirm
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/top25/confirm
+  Cache-Control: no-store, private
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+# PUBLIC PAGES - Smart caching with stale-while-revalidate
+# State ranking pages (all current and future states)
+/marketing-agencies-in-*-united-states
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+# Home page
+/
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+# Static public pages
+/united-states
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/about
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/contact
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/editorial-policy
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/terms
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/privacy
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/refund
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+# Hashed JS and CSS files - long-lived cache (1 year)
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/javascript; charset=utf-8
+
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css; charset=utf-8
+
+# Images - long-lived cache (1 year)
+/assets/*.png
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/png
+
+/assets/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/jpeg
+
+/assets/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/jpeg
+
+/assets/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/webp
+
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/svg+xml
+
+# Fonts - long-lived cache (1 year)
+/assets/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: font/woff
+
+/assets/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: font/woff2
+
+/assets/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: font/ttf
+
+/assets/*.otf
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: font/otf
+
+# State data JSON - smart caching with stale-while-revalidate
+/data/*.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+  Content-Type: application/json; charset=utf-8
+
+# Logo images in public directory - moderate cache (1 week)
+/logos/*
+  Cache-Control: public, max-age=604800
+
+/*.png
+  Cache-Control: public, max-age=604800
+  Content-Type: image/png
+
+/*.jpg
+  Cache-Control: public, max-age=604800
+  Content-Type: image/jpeg
+
+/*.jpeg
+  Cache-Control: public, max-age=604800
+  Content-Type: image/jpeg
+
+/*.webp
+  Cache-Control: public, max-age=604800
+  Content-Type: image/webp
+
+/*.svg
+  Cache-Control: public, max-age=604800
+  Content-Type: image/svg+xml

@@ -1,0 +1,140 @@
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 5 TEXT UPDATES — COMPLETE ✅
+═══════════════════════════════════════════════════════════════════════════════
+
+BUILD ID: 4mzrk9m1
+TIMESTAMP: 2026-04-05T01:37:12.309Z
+FILE: src/components/OwnerUpsellDashboard.tsx
+STATUS: Production-Ready
+
+───────────────────────────────────────────────────────────────────────────────
+  TARGET CONFIRMATION
+───────────────────────────────────────────────────────────────────────────────
+
+✅ CORRECT: Step 5 inside /your-agency/{agencySlug} owner funnel
+
+IDENTIFIED BY:
+  ✓ Green sticky header: "Agency Owner Preview"
+  ✓ Headline: "You missed these client requests"
+  ✓ Two stat cards (requests + revenue)
+  ✓ Red alert box
+  ✓ CTA button at bottom
+
+───────────────────────────────────────────────────────────────────────────────
+  CHANGE 1 — RED ALERT BOX TEXT ✅
+───────────────────────────────────────────────────────────────────────────────
+
+BEFORE:
+  "New requests are being redirected right now"
+
+AFTER:
+  "You are losing client requests right now to competing agencies in {state_name}."
+
+UPDATED IN:
+  • Line 380 (critical severity alert - red gradient)
+  • Line 391 (high severity alert - light red)
+
+───────────────────────────────────────────────────────────────────────────────
+  CHANGE 2 — MAIN CTA BUTTON TEXT ✅
+───────────────────────────────────────────────────────────────────────────────
+
+BEFORE:
+  "Start receiving clients now"
+
+AFTER:
+  "Activate your listing now →"
+
+UPDATED IN:
+  • Line 420 (main CTA button)
+
+NOTE: Top-25 unpaid flow still shows:
+  "Continue to Top-25 Activation Options" (unchanged, as intended)
+
+───────────────────────────────────────────────────────────────────────────────
+  WHAT WAS NOT CHANGED ✅
+───────────────────────────────────────────────────────────────────────────────
+
+✓ Layout unchanged
+✓ Styling unchanged
+✓ Spacing unchanged
+✓ All other text unchanged
+✓ Step 1-4, Step 6 unchanged
+✓ Other pages/modals unchanged
+✓ State pages unchanged
+
+───────────────────────────────────────────────────────────────────────────────
+  VERIFICATION
+───────────────────────────────────────────────────────────────────────────────
+
+OLD TEXT REMOVED:
+  grep "New requests are being redirected right now"  → NO MATCHES ✓
+  grep "Start receiving clients now"                  → NO MATCHES (in this button) ✓
+
+NEW TEXT PRESENT:
+  grep "You are losing client requests right now"     → 2 MATCHES (lines 380, 391) ✓
+  grep "Activate your listing now →"                  → 1 MATCH (line 420) ✓
+
+BUILD STATUS:
+  ✅ Build: Clean (0 errors)
+  ✅ TypeScript: Pass
+  ✅ SEO: 52/52 passed
+  ✅ Build Time: 1m 17s
+
+───────────────────────────────────────────────────────────────────────────────
+  VISUAL COMPARISON
+───────────────────────────────────────────────────────────────────────────────
+
+BEFORE:
+┌────────────────────────────────────────────────────────────────┐
+│ [RED GRADIENT BOX]                                             │
+│ You are currently receiving 0 of these requests                │
+│ New requests are being redirected right now                    │
+└────────────────────────────────────────────────────────────────┘
+│ [CTA BUTTON]                                                   │
+│ ⚡ Start receiving clients now                                 │
+└────────────────────────────────────────────────────────────────┘
+
+AFTER:
+┌────────────────────────────────────────────────────────────────┐
+│ [RED GRADIENT BOX]                                             │
+│ You are currently receiving 0 of these requests                │
+│ You are losing client requests right now to competing          │
+│ agencies in New York.                                          │
+└────────────────────────────────────────────────────────────────┘
+│ [CTA BUTTON]                                                   │
+│ ⚡ Activate your listing now →                                 │
+└────────────────────────────────────────────────────────────────┘
+
+───────────────────────────────────────────────────────────────────────────────
+  IMPROVEMENTS
+───────────────────────────────────────────────────────────────────────────────
+
+RED ALERT TEXT:
+  ✓ More specific and concrete
+  ✓ Mentions "competing agencies"
+  ✓ Includes specific state name (contextual)
+  ✓ Stronger sense of loss/urgency
+
+CTA BUTTON:
+  ✓ More direct action-oriented language
+  ✓ "Activate" is clearer than "Start receiving"
+  ✓ Arrow (→) suggests forward progress
+  ✓ Shorter and more focused
+
+───────────────────────────────────────────────────────────────────────────────
+  QUICK REFERENCE
+───────────────────────────────────────────────────────────────────────────────
+
+Component:       OwnerUpsellDashboard
+File:            src/components/OwnerUpsellDashboard.tsx
+Step:            5 only
+Alert Text:      "New requests..." → "You are losing client requests..."
+CTA Text:        "Start receiving..." → "Activate your listing now →"
+Lines Changed:   380, 391, 420
+Status:          ✅ Complete
+
+───────────────────────────────────────────────────────────────────────────────
+
+STATUS: ✅ Text updates applied to Step 5 only. Ready for production.
+
+═══════════════════════════════════════════════════════════════════════════════
