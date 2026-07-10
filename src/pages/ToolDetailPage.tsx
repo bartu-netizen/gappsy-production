@@ -4,26 +4,25 @@ import { ArrowLeft, FolderTree } from 'lucide-react';
 import MiniHeader from '../components/MiniHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
+import LazyLoad from '../components/LazyLoad';
 import { supabase } from '../lib/supabase';
 import { getToolContent } from '../data/toolContent';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
+import { formatLastUpdated, formatSchemaDate } from '../utils/formatLastUpdated';
 import type { ToolCardData } from '../components/ToolCard';
-import type { TaxonomyRef, ScreenshotItem, PricingPlanItem, IntegrationItem } from '../components/tools/detail/types';
+import type { TaxonomyRef, ScreenshotItem, PricingPlanItem, IntegrationItem, ReviewItem } from '../components/tools/detail/types';
 import ToolBreadcrumbs from '../components/tools/detail/ToolBreadcrumbs';
 import ToolHero from '../components/tools/detail/ToolHero';
-import ToolFactsSidebar from '../components/tools/detail/ToolFactsSidebar';
+import ToolFactsSidebar, { PLATFORM_TAGS } from '../components/tools/detail/ToolFactsSidebar';
 import TableOfContents, { type TocSection } from '../components/tools/detail/TableOfContents';
+import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
+import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
 import ProsConsSection from '../components/tools/detail/ProsConsSection';
 import PricingSection from '../components/tools/detail/PricingSection';
-import ScreenshotGallery from '../components/tools/detail/ScreenshotGallery';
-import VideoSection from '../components/tools/detail/VideoSection';
-import IntegrationsSection from '../components/tools/detail/IntegrationsSection';
 import FAQSection from '../components/tools/detail/FAQSection';
 import UseCasesSection from '../components/tools/detail/UseCasesSection';
-import AlternativesSection from '../components/tools/detail/AlternativesSection';
-import ComparisonLinksSection from '../components/tools/detail/ComparisonLinksSection';
 import ToolCardRow from '../components/tools/detail/ToolCardRow';
 import ToolConversionBand from '../components/tools/detail/ToolConversionBand';
 import ToolDetailSkeleton from '../components/tools/detail/ToolDetailSkeleton';
@@ -45,7 +44,13 @@ interface ToolDetail {
   verified: boolean;
   featured: boolean;
   updated_at: string | null;
+  founded_year: number | null;
+  company_size: string | null;
+  headquarters: string | null;
+  languages: string[];
 }
+
+const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
 
 // Defensive, client-side check before rendering anything as a clickable link or
 // image source. The admin edge function already rejects non-http(s) URLs at
@@ -77,8 +82,11 @@ export default function ToolDetailPage() {
   const [screenshots, setScreenshots] = useState<ScreenshotItem[]>([]);
   const [pricingPlans, setPricingPlans] = useState<PricingPlanItem[]>([]);
   const [integrations, setIntegrations] = useState<IntegrationItem[]>([]);
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [relatedTools, setRelatedTools] = useState<ToolCardData[]>([]);
   const [recentTools, setRecentTools] = useState<ToolCardData[]>([]);
+  const [editorPicks, setEditorPicks] = useState<ToolCardData[]>([]);
+  const [recentlyUpdated, setRecentlyUpdated] = useState<ToolCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -91,7 +99,9 @@ export default function ToolDetailPage() {
 
     supabase
       .from('tools')
-      .select('id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at')
+      .select(
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages'
+      )
       .eq('slug', toolSlug)
       .eq('status', 'published')
       .maybeSingle()
@@ -101,7 +111,7 @@ export default function ToolDetailPage() {
           setLoading(false);
           return;
         }
-        setTool(data);
+        setTool({ ...data, languages: data.languages || [] });
 
         Promise.all([
           supabase
@@ -113,7 +123,10 @@ export default function ToolDetailPage() {
           supabase.from('tool_screenshots').select('id, image_url, caption').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_pricing_plans').select('id, plan_name, price, billing_cycle, description, features, sort_order').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_integrations').select('id, integration_name, integration_slug, integration_logo, description').eq('tool_id', data.id),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult]) => {
+          supabase.from('tool_reviews').select('id, author_name, author_title, rating, quote, source, created_at').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('rating', { ascending: false }).limit(6),
+          supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').neq('id', data.id).order('updated_at', { ascending: false }).limit(6),
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, recentlyUpdatedResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -133,6 +146,9 @@ export default function ToolDetailPage() {
             }))
           );
           setIntegrations(integrationsResult.data || []);
+          setReviews(reviewsResult.data || []);
+          setEditorPicks(editorPicksResult.data || []);
+          setRecentlyUpdated(recentlyUpdatedResult.data || []);
 
           if (primaryCategoryId) {
             supabase
@@ -141,6 +157,8 @@ export default function ToolDetailPage() {
               .eq('category_id', primaryCategoryId)
               .neq('tool_id', data.id)
               .eq('tools.status', 'published')
+              .order('featured', { ascending: false, referencedTable: 'tools' })
+              .order('rating', { ascending: false, referencedTable: 'tools' })
               .limit(8)
               .then(({ data: relatedLinks }) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -161,7 +179,7 @@ export default function ToolDetailPage() {
     }
     supabase
       .from('tools')
-      .select('slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured')
+      .select(TOOL_CARD_COLUMNS)
       .in('slug', recentSlugs)
       .eq('status', 'published')
       .then(({ data }) => {
@@ -206,7 +224,17 @@ export default function ToolDetailPage() {
   const safeLogo = isSafeHttpUrl(tool.logo) ? tool.logo : null;
   const safeScreenshots = screenshots.filter((shot) => isSafeHttpUrl(shot.image_url));
   const extendedContent = getToolContent(tool.slug);
-  const hasAI = tags.some((t) => t.slug === 'ai');
+  const tagSlugs = new Set(tags.map((t) => t.slug));
+  const hasAI = tagSlugs.has('ai');
+  const hasFreePlan = tagSlugs.has('free-plan') || tagSlugs.has('freemium');
+  const hasFreeTrial = tagSlugs.has('free-trial');
+  const hasApi = tagSlugs.has('api');
+  const platforms = PLATFORM_TAGS.filter((p) => tagSlugs.has(p.slug));
+  const platformsLabel = platforms.length > 0 ? platforms.map((p) => p.label).join(', ') : null;
+  const updatedLabel = formatLastUpdated(tool.updated_at);
+  const standoutFeature = extendedContent?.features[0]
+    ? { title: extendedContent.features[0].title, description: extendedContent.features[0].description }
+    : null;
 
   const tocSections: TocSection[] = [
     ...(extendedContent?.longForm.filter((b) => b.level === 2).map((b) => ({ id: b.id, label: b.heading })) || []),
@@ -217,6 +245,7 @@ export default function ToolDetailPage() {
     ...(tool.youtube_url ? [{ id: 'video', label: 'Video' }] : []),
     ...(integrations.length ? [{ id: 'integrations', label: 'Integrations' }] : []),
     ...(extendedContent?.useCases.length ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
+    ...(reviews.length ? [{ id: 'reviews', label: 'Reviews' }] : []),
     ...(extendedContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(extendedContent?.alternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
@@ -229,6 +258,14 @@ export default function ToolDetailPage() {
       return { '@type': 'Offer', name: plan.plan_name || undefined, price, priceCurrency: 'USD' };
     })
     .filter(Boolean);
+
+  const reviewJsonLd = reviews.map((review) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: review.author_name },
+    reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: 5, worstRating: 1 },
+    reviewBody: review.quote,
+    ...(review.created_at ? { datePublished: formatSchemaDate(review.created_at) || undefined } : {}),
+  }));
 
   return (
     <div className="bg-[#f7f8fa] min-h-screen">
@@ -251,6 +288,7 @@ export default function ToolDetailPage() {
             ...(tool.rating > 0 && tool.review_count > 0
               ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: tool.rating, reviewCount: tool.review_count } }
               : {}),
+            ...(reviewJsonLd.length > 0 ? { review: reviewJsonLd } : {}),
           },
           ...(extendedContent?.faqs.length
             ? [
@@ -281,13 +319,11 @@ export default function ToolDetailPage() {
       </div>
 
       <ToolHero
-        slug={tool.slug}
         name={tool.name}
         logo={safeLogo}
         shortDescription={tool.short_description}
         verified={tool.verified}
         featured={tool.featured}
-        trending={false}
         hasAI={hasAI}
         rating={tool.rating}
         reviewCount={tool.review_count}
@@ -297,70 +333,118 @@ export default function ToolDetailPage() {
         updatedAt={tool.updated_at}
         websiteUrl={websiteUrl}
         affiliateUrl={affiliateUrl}
+        reviewerNames={reviews.map((r) => r.author_name)}
       />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_300px] gap-8">
+        <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-8">
           <div className="hidden lg:block">
             <TableOfContents sections={tocSections} />
           </div>
 
-          <div className="space-y-12 min-w-0">
-            {extendedContent ? (
-              <>
-                <LongFormContent blocks={extendedContent.longForm} />
-                <FeatureGrid toolName={tool.name} features={extendedContent.features} />
-                <ProsConsSection toolName={tool.name} pros={extendedContent.pros} cons={extendedContent.cons} />
-                <PricingSection toolName={tool.name} plans={pricingPlans} />
-                <ScreenshotGallery toolName={tool.name} screenshots={safeScreenshots} />
-                <VideoSection toolName={tool.name} youtubeUrl={tool.youtube_url} transcript={extendedContent.transcript} />
-                <IntegrationsSection toolName={tool.name} integrations={integrations} />
-                <UseCasesSection toolName={tool.name} useCases={extendedContent.useCases} />
-                <FAQSection toolName={tool.name} faqs={extendedContent.faqs} />
-                <AlternativesSection toolName={tool.name} alternatives={extendedContent.alternatives} />
-                <ComparisonLinksSection toolName={tool.name} comparisons={extendedContent.comparisons} />
-              </>
-            ) : (
-              <>
-                {(tool.long_description || tool.short_description) && (
-                  <section id="overview" className="scroll-mt-24">
-                    {tool.long_description ? (
-                      <p className="text-[17px] sm:text-lg text-slate-700 leading-relaxed whitespace-pre-line">
+          {/* Content stack: Zone A pairs the narrative with the facts sidebar;
+              Zone B (below) drops the sidebar column entirely once its content
+              naturally ends, so grids/cards get the full content width instead
+              of leaving an empty column beside a short sidebar. */}
+          <div className="min-w-0 space-y-12">
+            <div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start">
+              <div className="space-y-10 min-w-0">
+                <QuickSummarySection
+                  toolName={tool.name}
+                  categoryName={primaryCategory?.name || null}
+                  pricingModel={tool.pricing_model}
+                  startingPrice={tool.starting_price}
+                  platformsLabel={platformsLabel}
+                  standoutFeature={standoutFeature}
+                />
+
+                <KeyFactsSection
+                  toolName={tool.name}
+                  shortDescription={extendedContent ? null : tool.short_description}
+                  categoryName={primaryCategory?.name || null}
+                  pricingModel={tool.pricing_model}
+                  startingPrice={tool.starting_price}
+                  platformsLabel={platformsLabel}
+                  hasFreePlan={hasFreePlan}
+                  hasApi={hasApi}
+                  verified={tool.verified}
+                  updatedLabel={updatedLabel}
+                />
+
+                {extendedContent ? (
+                  <LongFormContent blocks={extendedContent.longForm} />
+                ) : (
+                  tool.long_description && (
+                    <section id="overview" className="scroll-mt-24">
+                      <p className="text-[17px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch] whitespace-pre-line">
                         {tool.long_description}
                       </p>
-                    ) : (
-                      <blockquote className="border-l-2 border-indigo-200 pl-5 text-lg text-slate-700 leading-relaxed italic">
-                        {tool.short_description}
-                      </blockquote>
-                    )}
-                  </section>
+                    </section>
+                  )
                 )}
-                <ScreenshotGallery toolName={tool.name} screenshots={safeScreenshots} />
-                <VideoSection toolName={tool.name} youtubeUrl={tool.youtube_url} />
-                <IntegrationsSection toolName={tool.name} integrations={integrations} />
-                <PricingSection toolName={tool.name} plans={pricingPlans} />
-              </>
-            )}
-          </div>
+              </div>
 
-          <ToolFactsSidebar
-            rating={tool.rating}
-            reviewCount={tool.review_count}
-            pricingModel={tool.pricing_model}
-            startingPrice={tool.starting_price}
-            websiteUrl={websiteUrl}
-            affiliateUrl={affiliateUrl}
-            categories={categories}
-            tags={tags}
-            integrationCount={integrations.length}
-          />
+              <ToolFactsSidebar
+                slug={tool.slug}
+                name={tool.name}
+                rating={tool.rating}
+                reviewCount={tool.review_count}
+                pricingModel={tool.pricing_model}
+                startingPrice={tool.starting_price}
+                websiteUrl={websiteUrl}
+                affiliateUrl={affiliateUrl}
+                categories={categories}
+                tags={tags}
+                integrationCount={integrations.length}
+                verified={tool.verified}
+                updatedAt={tool.updated_at}
+                foundedYear={tool.founded_year}
+                companySize={tool.company_size}
+                headquarters={tool.headquarters}
+                languages={tool.languages}
+              />
+            </div>
+
+            {/* Zone B — full width, no sidebar column */}
+            <div className="space-y-14 lg:space-y-16">
+              {extendedContent && <FeatureGrid toolName={tool.name} features={extendedContent.features} />}
+              <PricingSection toolName={tool.name} plans={pricingPlans} websiteUrl={websiteUrl} affiliateUrl={affiliateUrl} />
+              {extendedContent && <ProsConsSection toolName={tool.name} pros={extendedContent.pros} cons={extendedContent.cons} />}
+              <LazyLoad component={() => import('../components/tools/detail/ScreenshotGallery')} componentProps={{ toolName: tool.name, screenshots: safeScreenshots, websiteUrl }} />
+              <LazyLoad component={() => import('../components/tools/detail/VideoSection')} componentProps={{ toolName: tool.name, youtubeUrl: tool.youtube_url, transcript: extendedContent?.transcript }} />
+              <LazyLoad component={() => import('../components/tools/detail/IntegrationsSection')} componentProps={{ toolName: tool.name, integrations }} />
+              {extendedContent && <UseCasesSection toolName={tool.name} useCases={extendedContent.useCases} />}
+              <LazyLoad component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolName: tool.name, reviews }} />
+              {extendedContent && <FAQSection toolName={tool.name} faqs={extendedContent.faqs} />}
+              {extendedContent && (
+                <LazyLoad component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
+              )}
+              {extendedContent && (
+                <LazyLoad component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: extendedContent.comparisons }} />
+              )}
+            </div>
+          </div>
         </div>
       </main>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 pb-16">
-        <ToolCardRow eyebrow="Related" title={`More tools like ${tool.name}`} tools={relatedTools} minToShow={2} />
+        <ToolCardRow eyebrow="Same Category" title={`More tools like ${tool.name}`} tools={relatedTools} minToShow={2} />
+        <LazyLoad
+          component={() => import('../components/tools/detail/ToolCardRow')}
+          componentProps={{ eyebrow: 'Editor Picks', title: 'Hand-picked by our editors', tools: editorPicks, minToShow: 2 }}
+        />
+        <LazyLoad
+          component={() => import('../components/tools/detail/ToolCardRow')}
+          componentProps={{ eyebrow: 'Recently Updated', title: 'Fresh listings worth a look', tools: recentlyUpdated, minToShow: 2 }}
+        />
         <ToolCardRow eyebrow="History" title="Recently viewed" tools={recentTools} minToShow={1} />
-        <ToolConversionBand toolName={tool.name} websiteUrl={websiteUrl} affiliateUrl={affiliateUrl} hasVideo={Boolean(tool.youtube_url)} />
+        <ToolConversionBand
+          toolName={tool.name}
+          websiteUrl={websiteUrl}
+          affiliateUrl={affiliateUrl}
+          hasVideo={Boolean(tool.youtube_url)}
+          hasFreeOffering={hasFreePlan || hasFreeTrial}
+        />
       </div>
 
       <FooterWrapper />

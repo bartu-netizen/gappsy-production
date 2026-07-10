@@ -1,11 +1,18 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Star, ExternalLink, FolderTree, Tag as TagIcon, CheckCircle2, Plug,
-  Smartphone, Monitor, Apple, Chrome, MonitorSmartphone,
+  Star, ExternalLink, FolderTree, Tag as TagIcon, CheckCircle2, Plug, Globe, Calendar,
+  Users, MapPin, Languages as LanguagesIcon, ShieldCheck, Clock, Bookmark, Share2,
+  GitCompareArrows, Smartphone, Monitor, Apple, Chrome, MonitorSmartphone, Package,
 } from 'lucide-react';
+import Card from './Card';
+import { useBookmarkedTool } from '../../../hooks/useBookmarkedTools';
+import { formatLastUpdated } from '../../../utils/formatLastUpdated';
 import type { TaxonomyRef } from './types';
 
 interface ToolFactsSidebarProps {
+  slug: string;
+  name: string;
   rating: number;
   reviewCount: number;
   pricingModel: string | null;
@@ -15,22 +22,40 @@ interface ToolFactsSidebarProps {
   categories: TaxonomyRef[];
   tags: TaxonomyRef[];
   integrationCount: number;
+  verified: boolean;
+  updatedAt: string | null;
+  foundedYear: number | null;
+  companySize: string | null;
+  headquarters: string | null;
+  languages: string[];
 }
 
 // Tag slugs (from the shared tool_tags taxonomy) that this sidebar reads to
 // derive "quick facts" the schema has no dedicated columns for yet —
 // Free Plan / Free Trial / API Available / platform availability — instead
 // of adding new tools columns for each one.
-const PLATFORM_TAGS: { slug: string; label: string; icon: typeof Smartphone }[] = [
+export const PLATFORM_TAGS: { slug: string; label: string; icon: typeof Smartphone }[] = [
   { slug: 'web-app', label: 'Web', icon: MonitorSmartphone },
   { slug: 'ios', label: 'iOS', icon: Apple },
   { slug: 'android', label: 'Android', icon: Smartphone },
   { slug: 'mac', label: 'Mac', icon: Apple },
   { slug: 'windows', label: 'Windows', icon: Monitor },
-  { slug: 'chrome-extension', label: 'Chrome', icon: Chrome },
+  { slug: 'chrome-extension', label: 'Browser Extension', icon: Chrome },
+  { slug: 'desktop-app', label: 'Desktop App', icon: Monitor },
+  { slug: 'mobile-app', label: 'Mobile App', icon: Smartphone },
 ];
 
+function hostnameOf(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
 export default function ToolFactsSidebar({
+  slug,
+  name,
   rating,
   reviewCount,
   pricingModel,
@@ -40,17 +65,47 @@ export default function ToolFactsSidebar({
   categories,
   tags,
   integrationCount,
+  verified,
+  updatedAt,
+  foundedYear,
+  companySize,
+  headquarters,
+  languages,
 }: ToolFactsSidebarProps) {
+  const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
+  const [compareAdded, setCompareAdded] = useState(false);
+  const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
+
   const cta = affiliateUrl || websiteUrl;
   const tagSlugs = new Set(tags.map((t) => t.slug));
   const hasFreePlan = tagSlugs.has('free-plan') || tagSlugs.has('freemium');
   const hasFreeTrial = tagSlugs.has('free-trial');
   const hasApi = tagSlugs.has('api');
   const platforms = PLATFORM_TAGS.filter((p) => tagSlugs.has(p.slug));
+  const updatedLabel = formatLastUpdated(updatedAt);
+
+  async function handleShare() {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: name, url });
+        return;
+      } catch {
+        // user cancelled the native share sheet — fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState('copied');
+      setTimeout(() => setShareState('idle'), 2000);
+    } catch {
+      // clipboard unavailable — nothing more we can do silently
+    }
+  }
 
   return (
-    <aside className="lg:sticky lg:top-6 space-y-4">
-      <div className="bg-white border border-[#eef0f3] rounded-2xl p-5 space-y-5 shadow-sm">
+    <aside className="lg:sticky lg:top-6 space-y-4 order-first lg:order-none">
+      <Card className="p-5 space-y-5">
         {rating > 0 && (
           <div>
             <div className="flex items-center gap-1">
@@ -76,12 +131,44 @@ export default function ToolFactsSidebar({
             href={cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F46E5] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-full font-semibold transition-colors text-sm"
+            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F46E5] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-full font-semibold transition-all text-sm"
           >
             Visit Website
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         )}
+
+        <div className="flex items-center justify-center gap-1.5">
+          <button
+            type="button"
+            onClick={toggleBookmark}
+            aria-pressed={bookmarked}
+            aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark this tool'}
+            className={`flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors ${bookmarked ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
+          >
+            <Bookmark className={`w-3.5 h-3.5 ${bookmarked ? 'fill-indigo-600' : ''}`} />
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={handleShare}
+            aria-label="Share this tool"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border border-slate-200 text-xs font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors relative"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            {shareState === 'copied' ? 'Copied!' : 'Share'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setCompareAdded((v) => !v)}
+            aria-pressed={compareAdded}
+            aria-label={compareAdded ? 'Remove from comparison' : 'Add to comparison'}
+            className={`flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors ${compareAdded ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
+          >
+            <GitCompareArrows className="w-3.5 h-3.5" />
+            Compare
+          </button>
+        </div>
 
         {(hasFreePlan || hasFreeTrial || hasApi) && (
           <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-slate-600">
@@ -104,6 +191,53 @@ export default function ToolFactsSidebar({
             </div>
           </div>
         )}
+
+        <dl className="space-y-2.5 text-sm">
+          {websiteUrl && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><Globe className="w-3.5 h-3.5" />Website</dt>
+              <dd className="truncate max-w-[150px] text-right">
+                <a href={websiteUrl} target="_blank" rel="noopener noreferrer nofollow" className="text-indigo-600 hover:text-indigo-700 font-medium">
+                  {hostnameOf(websiteUrl)}
+                </a>
+              </dd>
+            </div>
+          )}
+          {foundedYear && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><Calendar className="w-3.5 h-3.5" />Founded</dt>
+              <dd className="font-medium text-[#0B1221]">{foundedYear}</dd>
+            </div>
+          )}
+          {companySize && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><Users className="w-3.5 h-3.5" />Company size</dt>
+              <dd className="font-medium text-[#0B1221] text-right">{companySize}</dd>
+            </div>
+          )}
+          {headquarters && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><MapPin className="w-3.5 h-3.5" />Headquarters</dt>
+              <dd className="font-medium text-[#0B1221] text-right">{headquarters}</dd>
+            </div>
+          )}
+          {languages.length > 0 && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><LanguagesIcon className="w-3.5 h-3.5" />Languages</dt>
+              <dd className="font-medium text-[#0B1221] text-right truncate max-w-[150px]">{languages.join(', ')}</dd>
+            </div>
+          )}
+          <div className="flex items-center justify-between gap-3">
+            <dt className="inline-flex items-center gap-1.5 text-slate-500"><ShieldCheck className="w-3.5 h-3.5" />Verified</dt>
+            <dd className={`font-medium ${verified ? 'text-emerald-600' : 'text-slate-400'}`}>{verified ? 'Yes' : 'Not yet'}</dd>
+          </div>
+          {updatedLabel && (
+            <div className="flex items-center justify-between gap-3">
+              <dt className="inline-flex items-center gap-1.5 text-slate-500"><Clock className="w-3.5 h-3.5" />Last updated</dt>
+              <dd className="font-medium text-[#0B1221]">{updatedLabel}</dd>
+            </div>
+          )}
+        </dl>
 
         {integrationCount > 0 && (
           <a href="#integrations" className="flex items-center justify-between text-sm text-slate-600 hover:text-indigo-600 transition-colors">
@@ -147,7 +281,14 @@ export default function ToolFactsSidebar({
             </div>
           </div>
         )}
-      </div>
+
+        {affiliateUrl && (
+          <p className="flex items-start gap-1.5 text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-100">
+            <Package className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+            We may earn a commission if you sign up through our link, at no extra cost to you.
+          </p>
+        )}
+      </Card>
     </aside>
   );
 }

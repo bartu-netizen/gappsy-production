@@ -22,6 +22,14 @@ interface ScreenshotDraft {
   caption: string;
 }
 
+interface ReviewDraft {
+  author_name: string;
+  author_title: string;
+  rating: number;
+  quote: string;
+  source: string;
+}
+
 interface ToolFormData {
   slug: string;
   name: string;
@@ -38,10 +46,15 @@ interface ToolFormData {
   rating: number;
   review_count: number;
   status: 'draft' | 'published' | 'archived';
+  founded_year: string;
+  company_size: string;
+  headquarters: string;
+  languages: string;
   category_ids: string[];
   primary_category_id: string;
   tag_ids: string[];
   screenshots: ScreenshotDraft[];
+  reviews: ReviewDraft[];
 }
 
 const EMPTY_FORM: ToolFormData = {
@@ -60,10 +73,15 @@ const EMPTY_FORM: ToolFormData = {
   rating: 0,
   review_count: 0,
   status: 'draft',
+  founded_year: '',
+  company_size: '',
+  headquarters: '',
+  languages: '',
   category_ids: [],
   primary_category_id: '',
   tag_ids: [],
   screenshots: [],
+  reviews: [],
 };
 
 function slugify(value: string): string {
@@ -80,11 +98,19 @@ interface CategoriesListResponse { ok: boolean; data: ToolCategoryOption[]; }
 interface TagsListResponse { ok: boolean; data: ToolTagOption[]; }
 interface ToolDetailResponse {
   ok: boolean;
-  data: Omit<ToolFormData, 'category_ids' | 'primary_category_id' | 'tag_ids' | 'screenshots'> & {
+  data: Omit<
+    ToolFormData,
+    'category_ids' | 'primary_category_id' | 'tag_ids' | 'screenshots' | 'reviews' | 'founded_year' | 'company_size' | 'headquarters' | 'languages'
+  > & {
     id: string;
+    founded_year: number | null;
+    company_size: string | null;
+    headquarters: string | null;
+    languages: string[] | null;
     categories: Array<{ id: string; primary_category: boolean }>;
     tags: Array<{ id: string }>;
     screenshots: Array<{ image_url: string; caption: string | null }>;
+    reviews: Array<{ author_name: string; author_title: string | null; rating: number; quote: string; source: string | null }>;
   };
 }
 
@@ -140,10 +166,21 @@ export default function WpAdminToolEditorPage() {
         rating: t.rating,
         review_count: t.review_count,
         status: t.status,
+        founded_year: t.founded_year ? String(t.founded_year) : '',
+        company_size: t.company_size || '',
+        headquarters: t.headquarters || '',
+        languages: (t.languages || []).join(', '),
         category_ids: t.categories.map((c) => c.id),
         primary_category_id: primary?.id || '',
         tag_ids: t.tags.map((tag) => tag.id),
         screenshots: t.screenshots.map((s) => ({ image_url: s.image_url, caption: s.caption || '' })),
+        reviews: t.reviews.map((r) => ({
+          author_name: r.author_name,
+          author_title: r.author_title || '',
+          rating: r.rating,
+          quote: r.quote,
+          source: r.source || '',
+        })),
       });
     }
   }, [toolData]);
@@ -187,6 +224,24 @@ export default function WpAdminToolEditorPage() {
     setFormData((prev) => ({ ...prev, screenshots: prev.screenshots.filter((_, i) => i !== index) }));
   }
 
+  function addReview() {
+    setFormData((prev) => ({
+      ...prev,
+      reviews: [...prev.reviews, { author_name: '', author_title: '', rating: 5, quote: '', source: '' }],
+    }));
+  }
+
+  function updateReview(index: number, field: keyof ReviewDraft, value: string | number) {
+    setFormData((prev) => ({
+      ...prev,
+      reviews: prev.reviews.map((r, i) => (i === index ? { ...r, [field]: value } : r)),
+    }));
+  }
+
+  function removeReview(index: number) {
+    setFormData((prev) => ({ ...prev, reviews: prev.reviews.filter((_, i) => i !== index) }));
+  }
+
   async function handleSave(status?: ToolFormData['status']) {
     setSaveError(null);
     if (!formData.slug || !formData.name) {
@@ -210,10 +265,18 @@ export default function WpAdminToolEditorPage() {
       rating: formData.rating,
       review_count: formData.review_count,
       status: status || formData.status,
+      founded_year: formData.founded_year.trim() ? Number(formData.founded_year) : null,
+      company_size: formData.company_size || null,
+      headquarters: formData.headquarters || null,
+      languages: formData.languages
+        .split(',')
+        .map((l) => l.trim())
+        .filter(Boolean),
       category_ids: formData.category_ids,
       primary_category_id: formData.primary_category_id || null,
       tag_ids: formData.tag_ids,
       screenshots: formData.screenshots.filter((s) => s.image_url.trim()),
+      reviews: formData.reviews.filter((r) => r.author_name.trim() && r.quote.trim()),
     };
 
     setSaving(true);
@@ -370,6 +433,52 @@ export default function WpAdminToolEditorPage() {
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Founded Year</label>
+              <input
+                type="number"
+                value={formData.founded_year}
+                onChange={(e) => setFormData((p) => ({ ...p, founded_year: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g. 2013"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Company Size</label>
+              <input
+                type="text"
+                value={formData.company_size}
+                onChange={(e) => setFormData((p) => ({ ...p, company_size: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g. 11-50 employees"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Headquarters</label>
+              <input
+                type="text"
+                value={formData.headquarters}
+                onChange={(e) => setFormData((p) => ({ ...p, headquarters: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g. Sydney, Australia"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Languages</label>
+              <input
+                type="text"
+                value={formData.languages}
+                onChange={(e) => setFormData((p) => ({ ...p, languages: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Comma-separated, e.g. English, Spanish"
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-4 gap-4">
             <label className="flex items-center gap-2 text-sm text-gray-700">
               <input
@@ -492,6 +601,70 @@ export default function WpAdminToolEditorPage() {
                   <button onClick={() => removeScreenshot(index)} className="p-2 text-gray-400 hover:text-red-600">
                     <Trash2 className="w-4 h-4" />
                   </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-gray-100 pt-4">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-700">Reviews</label>
+              <button
+                onClick={addReview}
+                className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                Add review
+              </button>
+            </div>
+            <div className="space-y-3">
+              {formData.reviews.map((review, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
+                  <div className="grid grid-cols-3 gap-2">
+                    <input
+                      type="text"
+                      value={review.author_name}
+                      onChange={(e) => updateReview(index, 'author_name', e.target.value)}
+                      placeholder="Author name"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                    <input
+                      type="text"
+                      value={review.author_title}
+                      onChange={(e) => updateReview(index, 'author_title', e.target.value)}
+                      placeholder="Author title (optional)"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                    <input
+                      type="number"
+                      step="1"
+                      min="1"
+                      max="5"
+                      value={review.rating}
+                      onChange={(e) => updateReview(index, 'rating', Number(e.target.value))}
+                      placeholder="Rating (1-5)"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                  </div>
+                  <textarea
+                    value={review.quote}
+                    onChange={(e) => updateReview(index, 'quote', e.target.value)}
+                    rows={2}
+                    placeholder="Review quote"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={review.source}
+                      onChange={(e) => updateReview(index, 'source', e.target.value)}
+                      placeholder="Source (optional, e.g. G2, Editorial)"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                    <button onClick={() => removeReview(index)} className="p-2 text-gray-400 hover:text-red-600">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

@@ -12,6 +12,7 @@ const TOOL_FIELDS = [
   "slug", "name", "logo", "website", "affiliate_link", "short_description",
   "long_description", "pricing_model", "starting_price", "youtube_url",
   "verified", "featured", "rating", "review_count", "status",
+  "founded_year", "company_size", "headquarters", "languages",
 ];
 
 const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url"];
@@ -49,6 +50,64 @@ interface ScreenshotInput {
   image_url: string;
   caption: string | null;
   sort_order: number;
+}
+
+interface ReviewInput {
+  author_name: string;
+  author_title: string | null;
+  rating: number;
+  quote: string;
+  source: string | null;
+  sort_order: number;
+}
+
+// Validates founded_year: optional, but if present must be a plausible year.
+function validateOptionalYear(value: unknown, fieldName: string): number | null {
+  if (value === undefined || value === null || value === "") return null;
+  const year = Number(value);
+  if (!Number.isInteger(year) || year < 1900 || year > 2100) {
+    throw new ValidationError(`${fieldName} must be a whole number year between 1900 and 2100`);
+  }
+  return year;
+}
+
+// Validates languages: optional array of non-empty strings (deduped, trimmed).
+function validateLanguages(value: unknown): string[] {
+  if (value === undefined || value === null) return [];
+  if (!Array.isArray(value)) {
+    throw new ValidationError("languages must be an array of strings");
+  }
+  const cleaned = value
+    .map((v) => (typeof v === "string" ? v.trim() : ""))
+    .filter((v) => v.length > 0);
+  return [...new Set(cleaned)];
+}
+
+// Validates the full reviews array up front, mirroring validateScreenshots.
+function validateReviews(input: unknown): ReviewInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("reviews must be an array");
+  }
+  return input.map((raw, index) => {
+    const review = raw as Record<string, unknown>;
+    const authorName = typeof review?.author_name === "string" ? review.author_name.trim() : "";
+    if (!authorName) {
+      throw new ValidationError(`reviews[${index}].author_name is required`);
+    }
+    const quote = typeof review?.quote === "string" ? review.quote.trim() : "";
+    if (!quote) {
+      throw new ValidationError(`reviews[${index}].quote is required`);
+    }
+    const rating = Number(review?.rating);
+    if (!Number.isFinite(rating) || rating < 1 || rating > 5) {
+      throw new ValidationError(`reviews[${index}].rating must be a number between 1 and 5`);
+    }
+    const authorTitle = typeof review?.author_title === "string" && review.author_title.trim() ? review.author_title.trim() : null;
+    const source = typeof review?.source === "string" && review.source.trim() ? review.source.trim() : null;
+    const sortOrder = typeof review?.sort_order === "number" ? review.sort_order : index;
+    return { author_name: authorName, author_title: authorTitle, rating, quote, source, sort_order: sortOrder };
+  });
 }
 
 // Validates the full screenshots array up front. Unlike tool URL fields,
@@ -184,6 +243,28 @@ async function replaceScreenshots(supabase: any, toolId: string, screenshots: Sc
   if (insertError) throw new Error(`Failed to save screenshots: ${insertError.message}`);
 }
 
+// See transactional-limitation note on replaceCategoryLinks above — applies here too.
+// `reviews` is expected to already be validated (see validateReviews).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function replaceReviews(supabase: any, toolId: string, reviews: ReviewInput[]) {
+  const { error: deleteError } = await supabase.from("tool_reviews").delete().eq("tool_id", toolId);
+  if (deleteError) throw new Error(`Failed to clear existing reviews: ${deleteError.message}`);
+
+  if (reviews.length === 0) return;
+
+  const rows = reviews.map((r, index) => ({
+    tool_id: toolId,
+    author_name: r.author_name,
+    author_title: r.author_title,
+    rating: r.rating,
+    quote: r.quote,
+    source: r.source,
+    sort_order: r.sort_order ?? index,
+  }));
+  const { error: insertError } = await supabase.from("tool_reviews").insert(rows);
+  if (insertError) throw new Error(`Failed to save reviews: ${insertError.message}`);
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function generateUniqueSlug(supabase: any, baseSlug: string) {
   let candidate = `${baseSlug}-copy`;
@@ -207,14 +288,21 @@ function validateAndNormalizeToolPayload(payload: Record<string, unknown>) {
       payload[field] = validateOptionalUrl(payload[field], field);
     }
   }
+  if (Object.prototype.hasOwnProperty.call(payload, "founded_year")) {
+    payload.founded_year = validateOptionalYear(payload.founded_year, "founded_year");
+  }
+  if (Object.prototype.hasOwnProperty.call(payload, "languages")) {
+    payload.languages = validateLanguages(payload.languages);
+  }
 
   const categoryIds: string[] = Array.isArray(payload.category_ids) ? payload.category_ids : [];
   const primaryCategoryId: string | null = (payload.primary_category_id as string | null | undefined) ?? null;
   validateCategorySelection(categoryIds, primaryCategoryId);
 
   const screenshots = validateScreenshots(payload.screenshots);
+  const reviews = validateReviews(payload.reviews);
 
-  return { categoryIds, primaryCategoryId, screenshots };
+  return { categoryIds, primaryCategoryId, screenshots, reviews };
 }
 
 Deno.serve(async (req: Request) => {
@@ -241,13 +329,17 @@ Deno.serve(async (req: Request) => {
         if (error) return jsonResponse({ ok: false, error: error.message }, 500);
         if (!tool) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
 
-        const [categoriesMap, tagsMap, screenshotsResult] = await Promise.all([
+        const [categoriesMap, tagsMap, screenshotsResult, reviewsResult] = await Promise.all([
           attachToolCategories(supabase, [id]),
           attachToolTags(supabase, [id]),
           supabase.from("tool_screenshots").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_reviews").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
         ]);
         if (screenshotsResult.error) {
           return jsonResponse({ ok: false, error: `Failed to load screenshots: ${screenshotsResult.error.message}` }, 500);
+        }
+        if (reviewsResult.error) {
+          return jsonResponse({ ok: false, error: `Failed to load reviews: ${reviewsResult.error.message}` }, 500);
         }
 
         return jsonResponse({
@@ -257,6 +349,7 @@ Deno.serve(async (req: Request) => {
             categories: categoriesMap.get(id) || [],
             tags: tagsMap.get(id) || [],
             screenshots: screenshotsResult.data || [],
+            reviews: reviewsResult.data || [],
           },
         });
       }
@@ -311,18 +404,21 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({ ok: false, error: insertError.message }, 500);
         }
 
-        const [catLinksResult, tagLinksResult, screenshotsResult] = await Promise.all([
+        const [catLinksResult, tagLinksResult, screenshotsResult, reviewsResult] = await Promise.all([
           supabase.from("tool_category_links").select("category_id, primary_category").eq("tool_id", payload.id),
           supabase.from("tool_tag_links").select("tag_id").eq("tool_id", payload.id),
           supabase.from("tool_screenshots").select("image_url, caption, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_reviews").select("author_name, author_title, rating, quote, source, sort_order").eq("tool_id", payload.id),
         ]);
         if (catLinksResult.error) throw new Error(`Failed to read source categories: ${catLinksResult.error.message}`);
         if (tagLinksResult.error) throw new Error(`Failed to read source tags: ${tagLinksResult.error.message}`);
         if (screenshotsResult.error) throw new Error(`Failed to read source screenshots: ${screenshotsResult.error.message}`);
+        if (reviewsResult.error) throw new Error(`Failed to read source reviews: ${reviewsResult.error.message}`);
 
         const catLinks = catLinksResult.data || [];
         const tagLinks = tagLinksResult.data || [];
         const sourceScreenshots = screenshotsResult.data || [];
+        const sourceReviews = reviewsResult.data || [];
 
         const categoryIds = catLinks.map((c: { category_id: string }) => c.category_id);
         const primaryCategoryId = catLinks.find((c: { primary_category: boolean }) => c.primary_category)?.category_id ?? null;
@@ -334,6 +430,16 @@ Deno.serve(async (req: Request) => {
             sort_order: s.sort_order ?? index,
           })
         );
+        const reviewsToCopy: ReviewInput[] = sourceReviews.map(
+          (r: { author_name: string; author_title: string | null; rating: number; quote: string; source: string | null; sort_order: number }, index: number) => ({
+            author_name: r.author_name,
+            author_title: r.author_title,
+            rating: r.rating,
+            quote: r.quote,
+            source: r.source,
+            sort_order: r.sort_order ?? index,
+          })
+        );
 
         // Relation copies are validated + error-checked the same way as create/update
         // (see replace* helpers above) — a failure here throws and is surfaced as a
@@ -342,6 +448,7 @@ Deno.serve(async (req: Request) => {
           replaceCategoryLinks(supabase, newTool.id, categoryIds, primaryCategoryId),
           replaceTagLinks(supabase, newTool.id, tagIds),
           replaceScreenshots(supabase, newTool.id, screenshotsToCopy),
+          replaceReviews(supabase, newTool.id, reviewsToCopy),
         ]);
 
         return jsonResponse({ ok: true, data: newTool });
@@ -354,8 +461,9 @@ Deno.serve(async (req: Request) => {
       let categoryIds: string[];
       let primaryCategoryId: string | null;
       let screenshots: ScreenshotInput[];
+      let reviews: ReviewInput[];
       try {
-        ({ categoryIds, primaryCategoryId, screenshots } = validateAndNormalizeToolPayload(payload));
+        ({ categoryIds, primaryCategoryId, screenshots, reviews } = validateAndNormalizeToolPayload(payload));
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
           return jsonResponse({ ok: false, error: validationError.message }, 400);
@@ -390,6 +498,7 @@ Deno.serve(async (req: Request) => {
         replaceCategoryLinks(supabase, newTool.id, categoryIds, primaryCategoryId),
         replaceTagLinks(supabase, newTool.id, Array.isArray(payload.tag_ids) ? payload.tag_ids : []),
         replaceScreenshots(supabase, newTool.id, screenshots),
+        replaceReviews(supabase, newTool.id, reviews),
       ]);
 
       return jsonResponse({ ok: true, data: newTool });
@@ -445,14 +554,24 @@ Deno.serve(async (req: Request) => {
       }
 
       let screenshotsToSave: ScreenshotInput[] | null = null;
+      let reviewsToSave: ReviewInput[] | null = null;
       try {
         for (const field of URL_FIELDS) {
           if (Object.prototype.hasOwnProperty.call(payload, field)) {
             payload[field] = validateOptionalUrl(payload[field], field);
           }
         }
+        if (Object.prototype.hasOwnProperty.call(payload, "founded_year")) {
+          payload.founded_year = validateOptionalYear(payload.founded_year, "founded_year");
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "languages")) {
+          payload.languages = validateLanguages(payload.languages);
+        }
         if (Object.prototype.hasOwnProperty.call(payload, "screenshots")) {
           screenshotsToSave = validateScreenshots(payload.screenshots);
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "reviews")) {
+          reviewsToSave = validateReviews(payload.reviews);
         }
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
@@ -502,6 +621,9 @@ Deno.serve(async (req: Request) => {
       }
       if (screenshotsToSave !== null) {
         tasks.push(replaceScreenshots(supabase, id, screenshotsToSave));
+      }
+      if (reviewsToSave !== null) {
+        tasks.push(replaceReviews(supabase, id, reviewsToSave));
       }
       if (tasks.length > 0) await Promise.all(tasks);
 

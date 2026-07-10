@@ -31,3 +31,13 @@ export interface IntegrationItem {
   integration_logo: string | null;
   description: string | null;
 }
+
+export interface ReviewItem {
+  id: string;
+  author_name: string;
+  author_title: string | null;
+  rating: number;
+  quote: string;
+  source: string | null;
+  created_at: string | null;
+}

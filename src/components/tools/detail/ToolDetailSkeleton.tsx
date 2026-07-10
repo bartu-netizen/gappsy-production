@@ -12,19 +12,21 @@ export default function ToolDetailSkeleton() {
         </div>
       </div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_300px] gap-8">
+        <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-8">
           <div className="hidden lg:block space-y-2">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="h-4 bg-slate-100 rounded w-32" />
             ))}
           </div>
-          <div className="space-y-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-4 bg-slate-100 rounded w-full" />
-            ))}
-            <div className="h-64 bg-slate-100 rounded-2xl" />
+          <div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 space-y-4 lg:space-y-0">
+            <div className="space-y-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="h-4 bg-slate-100 rounded w-full" />
+              ))}
+              <div className="h-64 bg-slate-100 rounded-2xl" />
+            </div>
+            <div className="h-72 bg-slate-100 rounded-2xl" />
           </div>
-          <div className="h-72 bg-slate-100 rounded-2xl" />
         </div>
       </div>
     </div>
