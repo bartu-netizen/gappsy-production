@@ -154,8 +154,6 @@ export async function prerenderTools(options = {}) {
     throw new Error('dist/index.html not found. Run Vite build first.');
   }
   const baseHtml = readFileSync(baseHtmlPath, 'utf-8');
-  const toolsRootDir = join(distDir, 'tools');
-  mkdirSync(toolsRootDir, { recursive: true });
 
   const supabase = initSupabase();
   const tools = await fetchAllPublishedTools(supabase);
@@ -200,11 +198,11 @@ export async function prerenderTools(options = {}) {
       const staticBodyHTML = generateToolStaticBodyHTML({ tool, ...context, extendedContent });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
 
-      // Flat file is the actual redirect target (see public/_redirects); the
-      // directory/index.html mirrors the literal path future tooling expects
-      // and doubles as a reliability fallback, same dual-output pattern the
-      // state-page prerender already uses.
-      writeFileSync(join(distDir, 'tools', `${tool.slug}.html`), html, 'utf-8');
+      // Directory + index.html only — Netlify serves an exact static-file
+      // match before evaluating any redirect rule, so this needs no entry
+      // in public/_redirects (see that file's comment for why the explicit
+      // rewrite-rule approach used for state pages was tried and reverted
+      // for tools specifically).
       const toolDir = join(distDir, 'tools', tool.slug);
       mkdirSync(toolDir, { recursive: true });
       writeFileSync(join(toolDir, 'index.html'), html, 'utf-8');

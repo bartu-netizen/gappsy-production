@@ -9,7 +9,7 @@
  *   - the number of generated tool files doesn't match what prerender-tools.js
  *     reported it successfully generated (catches a silent generation failure)
  */
-import { readFileSync, readdirSync, existsSync } from 'fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -37,21 +37,29 @@ if (!existsSync(toolsDir)) {
   process.exit(0);
 }
 
-const toolFiles = readdirSync(toolsDir).filter((f) => f.endsWith('.html'));
+// Each published tool is a subdirectory dist/tools/{slug}/index.html —
+// no flat dist/tools/{slug}.html file (see public/_redirects for why: an
+// explicit rewrite to a flat file was tried and reverted after production
+// testing showed it misbehaving for missing-target requests).
+const toolSlugs = readdirSync(toolsDir).filter((name) => statSync(join(toolsDir, name)).isDirectory());
 
-if (toolFiles.length === 0) {
+if (toolSlugs.length === 0) {
   console.log('ℹ️  No prerendered tool files found — no published tools. Skipping.\n');
   process.exit(0);
 }
 
-console.log(`   Checking ${toolFiles.length} prerendered tool file(s)...\n`);
+console.log(`   Checking ${toolSlugs.length} prerendered tool file(s)...\n`);
 
 const seenTitles = new Map();
 const seenCanonicals = new Map();
 
-for (const file of toolFiles) {
-  const slug = file.replace(/\.html$/, '');
-  const html = readFileSync(join(toolsDir, file), 'utf-8');
+for (const slug of toolSlugs) {
+  const indexPath = join(toolsDir, slug, 'index.html');
+  if (!existsSync(indexPath)) {
+    fail(`${slug}: dist/tools/${slug}/index.html is missing`);
+    continue;
+  }
+  const html = readFileSync(indexPath, 'utf-8');
 
   const titleMatches = html.match(/<title>([^<]*)<\/title>/g) || [];
   const canonicalMatches = html.match(/<link[^>]+rel=["']canonical["'][^>]*>/g) || [];
@@ -108,15 +116,15 @@ if (existsSync(markerPath)) {
   const successMatch = marker.match(/Tools Success:\s*(\d+)/);
   if (successMatch) {
     const expectedCount = Number(successMatch[1]);
-    if (expectedCount !== toolFiles.length) {
-      fail(`Generated tool file count (${toolFiles.length}) does not match prerender-tools.js's reported success count (${expectedCount})`);
+    if (expectedCount !== toolSlugs.length) {
+      fail(`Generated tool file count (${toolSlugs.length}) does not match prerender-tools.js's reported success count (${expectedCount})`);
     }
   }
 } else {
   fail('Missing dist/__prerendered-tools.txt deploy marker');
 }
 
-console.log(`\n📊 Results: ${toolFiles.length} tool file(s) checked`);
+console.log(`\n📊 Results: ${toolSlugs.length} tool file(s) checked`);
 
 if (errors.length > 0) {
   console.error(`\n❌ CRITICAL failures (${errors.length}) — build cannot ship:`);
