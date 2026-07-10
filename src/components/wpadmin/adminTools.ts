@@ -100,6 +100,15 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Upload',
   },
   {
+    id: 'tools',
+    label: 'Tools',
+    description: 'Manage the Tools directory — entities, categories, and tags',
+    href: '/wp-admin/tools',
+    keywords: ['tools', 'directory', 'entities', 'categories', 'tags', 'software'],
+    group: 'Content',
+    iconName: 'Wrench',
+  },
+  {
     id: 'sidebar-ads',
     label: 'Homepage Ads',
     description: 'Manage sidebar advertisement placements on homepage',

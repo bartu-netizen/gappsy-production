@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -35,6 +35,7 @@ const ICON_MAP: Record<string, JSX.Element> = {
   TrendingUp: <TrendingUp className="w-4 h-4" />,
   Building2: <Building2 className="w-4 h-4" />,
   Flame: <Flame className="w-4 h-4" />,
+  Wrench: <Wrench className="w-4 h-4" />,
 };
 
 const GROUP_COLORS: Record<string, string> = {

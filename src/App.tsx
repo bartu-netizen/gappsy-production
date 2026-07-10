@@ -30,6 +30,11 @@ const TermsPage = lazy(() => import("./pages/TermsPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const RefundPage = lazy(() => import("./pages/RefundPage"));
 const AgencyReviewPage = lazy(() => import("./pages/AgencyReviewPage"));
+const ToolsIndexPage = lazy(() => import("./pages/ToolsIndexPage"));
+const ToolDetailPage = lazy(() => import("./pages/ToolDetailPage"));
+const ToolCategoriesIndexPage = lazy(() => import("./pages/ToolCategoriesIndexPage"));
+const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage"));
+const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -86,6 +91,12 @@ const AdminSidebarAdsPage = lazy(() => import("./pages/AdminSidebarAdsPage"));
 const AdminAgencyReviewsPage = lazy(() => import("./pages/AdminAgencyReviewsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
+const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
+const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
+const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategoriesPage"));
+const WpAdminToolCategoryEditorPage = lazy(() => import("./pages/WpAdminToolCategoryEditorPage"));
+const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
+const WpAdminToolTagEditorPage = lazy(() => import("./pages/WpAdminToolTagEditorPage"));
 const AdminBulkStateImport = lazy(() => import("./pages/AdminBulkStateImport"));
 const BulkLogoUploadPage = lazy(() => import("./pages/BulkLogoUploadPage"));
 const WpAdminFunnelAnalyticsPage = lazy(() => import("./pages/WpAdminFunnelAnalyticsPage"));
@@ -176,6 +187,15 @@ export default function App() {
         <Route path="/wp-admin/agency-reviews/import" element={<AdminRoute><AdminAgencyReviewsImportPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/new" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/edit/:id" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools" element={<AdminRoute><WpAdminToolsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/new" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories" element={<AdminRoute><WpAdminToolCategoriesPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories/new" element={<AdminRoute><WpAdminToolCategoryEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories/:id/edit" element={<AdminRoute><WpAdminToolCategoryEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags" element={<AdminRoute><WpAdminToolTagsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags/new" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/json-import" element={<AdminRoute><AdminBulkStateImport /></AdminRoute>} />
         <Route path="/wp-admin/logo-upload" element={<AdminRoute><BulkLogoUploadPage /></AdminRoute>} />
         <Route path="/wp-admin/content-scanner" element={<AdminRoute><AdminContentScanPage /></AdminRoute>} />
@@ -266,6 +286,11 @@ export default function App() {
 
         {/* Agency Review Routes */}
         <Route path="/agency-reviews/:agencySlug" element={<AgencyReviewPage />} />
+        <Route path="/tools" element={<ToolsIndexPage />} />
+        <Route path="/tools/:toolSlug" element={<ToolDetailPage />} />
+        <Route path="/tool-categories" element={<ToolCategoriesIndexPage />} />
+        <Route path="/tool-categories/:categorySlug" element={<ToolCategoryDetailPage />} />
+        <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />
