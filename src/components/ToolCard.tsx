@@ -18,42 +18,46 @@ export default function ToolCard({ tool }: { tool: ToolCardData }) {
   return (
     <Link
       to={`/tools/${tool.slug}`}
-      className="flex flex-col bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:border-slate-300 transition-all"
+      className="group flex flex-col bg-white border border-[#eef0f3] rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] hover:border-slate-200"
     >
-      <div className="flex items-start gap-3 mb-3">
+      <div className="flex items-start gap-3 mb-3.5">
         {tool.logo ? (
-          <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg object-contain border border-slate-100 bg-white" />
+          <img src={tool.logo} alt={tool.name} className="w-11 h-11 rounded-xl object-contain border border-slate-100 bg-white shrink-0" />
         ) : (
-          <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold">
+          <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-semibold shrink-0">
             {tool.name.charAt(0)}
           </div>
         )}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 pt-0.5">
           <div className="flex items-center gap-1.5">
-            <h3 className="font-semibold text-slate-900 text-sm truncate">{tool.name}</h3>
-            {tool.verified && <ShieldCheck className="w-3.5 h-3.5 text-blue-500 shrink-0" />}
+            <h3 className="font-semibold text-[#0B1221] text-[15px] truncate group-hover:text-indigo-600 transition-colors">
+              {tool.name}
+            </h3>
+            {tool.verified && <ShieldCheck className="w-3.5 h-3.5 text-indigo-500 shrink-0" />}
           </div>
-          {tool.rating > 0 && (
+          {tool.rating > 0 ? (
             <div className="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
               <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-              {tool.rating.toFixed(1)} ({tool.review_count})
+              {tool.rating.toFixed(1)}
+              <span className="text-slate-400">({tool.review_count})</span>
             </div>
+          ) : (
+            tool.featured && (
+              <p className="text-[11px] font-medium text-amber-600 mt-0.5">Featured pick</p>
+            )
           )}
         </div>
-        {tool.featured && (
-          <span className="text-xs font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded shrink-0">Featured</span>
-        )}
       </div>
 
       {tool.short_description && (
-        <p className="text-sm text-slate-600 line-clamp-2 mb-3">{tool.short_description}</p>
+        <p className="text-[13.5px] text-slate-500 leading-relaxed line-clamp-2 mb-3.5">{tool.short_description}</p>
       )}
 
       {(tool.pricing_model || tool.starting_price) && (
-        <p className="text-xs text-slate-400 mt-auto">
+        <p className="text-xs text-slate-400 mt-auto pt-3 border-t border-slate-100">
           {tool.pricing_model}
           {tool.pricing_model && tool.starting_price ? ' · ' : ''}
-          {tool.starting_price}
+          {tool.starting_price && <span className="text-slate-500 font-medium">From {tool.starting_price}</span>}
         </p>
       )}
     </Link>

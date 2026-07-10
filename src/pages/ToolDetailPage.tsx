@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShieldCheck, Star, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Star, ExternalLink, ArrowLeft, Tag as TagIcon, FolderTree } from 'lucide-react';
 import MiniHeader from '../components/MiniHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
+import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import { supabase } from '../lib/supabase';
 
 interface ToolDetail {
@@ -111,9 +112,11 @@ export default function ToolDetailPage() {
 
   if (loading) {
     return (
-      <div>
+      <div className="bg-[#f7f8fa] min-h-screen">
         <div className="pt-6 pb-2"><MiniHeader /></div>
-        <main className="max-w-4xl mx-auto px-4 py-16 text-center text-slate-400">Loading...</main>
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+          <ToolsSkeletonGrid count={3} />
+        </main>
         <FooterWrapper />
       </div>
     );
@@ -121,13 +124,19 @@ export default function ToolDetailPage() {
 
   if (notFound || !tool) {
     return (
-      <div>
+      <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Tool Not Found | Gappsy" description="This tool could not be found." path={`/tools/${toolSlug || ''}`} noindex />
         <div className="pt-6 pb-2"><MiniHeader /></div>
-        <main className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Tool Not Found</h1>
-          <p className="text-slate-500 mb-6">This tool doesn't exist or is no longer published.</p>
-          <Link to="/tools" className="text-blue-600 font-medium hover:text-blue-700">Browse all tools →</Link>
+        <main className="max-w-4xl mx-auto px-4 py-20 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
+            <FolderTree className="w-6 h-6 text-slate-400" />
+          </div>
+          <h1 className="text-2xl font-bold text-[#0B1221] mb-2">This tool isn't available</h1>
+          <p className="text-slate-500 mb-6">It doesn't exist, or it's no longer published.</p>
+          <Link to="/tools" className="inline-flex items-center gap-1.5 text-indigo-600 font-semibold hover:text-indigo-700">
+            <ArrowLeft className="w-4 h-4" />
+            Browse the directory
+          </Link>
         </main>
         <FooterWrapper />
       </div>
@@ -137,9 +146,14 @@ export default function ToolDetailPage() {
   const ctaCandidate = tool.affiliate_link || tool.website;
   const cta = isSafeHttpUrl(ctaCandidate) ? ctaCandidate : null;
   const safeLogo = isSafeHttpUrl(tool.logo) ? tool.logo : null;
+  const safeScreenshots = screenshots.filter((shot) => isSafeHttpUrl(shot.image_url));
+  const featuredShot = safeScreenshots[0];
+  const supportingShots = safeScreenshots.slice(1, 5);
+  const narrative = tool.long_description || tool.short_description;
+  const hasFacts = tool.pricing_model || tool.starting_price || categories.length > 0 || tags.length > 0;
 
   return (
-    <div>
+    <div className="bg-[#f7f8fa] min-h-screen">
       <EntitySEOTags
         title={`${tool.name} — Reviews, Pricing & Details | Gappsy`}
         description={tool.short_description || `Learn about ${tool.name}: pricing, features, and reviews.`}
@@ -163,86 +177,153 @@ export default function ToolDetailPage() {
 
       <div className="pt-6 pb-2"><MiniHeader /></div>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-start gap-4 mb-6">
+      {/* Hero */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10">
+        <Link to="/tools" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors mb-6">
+          <ArrowLeft className="w-3 h-3" />
+          All tools
+        </Link>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-6">
           {safeLogo ? (
-            <img src={safeLogo} alt={tool.name} className="w-16 h-16 rounded-xl object-contain border border-slate-100 bg-white" />
+            <img src={safeLogo} alt={tool.name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm shrink-0" />
           ) : (
-            <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xl">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-400 font-bold text-2xl shrink-0">
               {tool.name.charAt(0)}
             </div>
           )}
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-slate-900">{tool.name}</h1>
-              {tool.verified && <ShieldCheck className="w-5 h-5 text-blue-500" />}
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-2xl sm:text-[34px] font-bold text-[#0B1221] leading-tight">{tool.name}</h1>
+              {tool.verified && <ShieldCheck className="w-5 h-5 text-indigo-500" />}
               {tool.featured && (
-                <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded">Featured</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wide bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                  Featured
+                </span>
               )}
             </div>
+            {tool.short_description && (
+              <p className="text-slate-600 text-[15px] sm:text-base mt-1.5 max-w-xl">{tool.short_description}</p>
+            )}
             {tool.rating > 0 && (
-              <div className="flex items-center gap-1 text-sm text-slate-500 mt-1">
+              <div className="flex items-center gap-1 text-sm text-slate-500 mt-2">
                 <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                {tool.rating.toFixed(1)} ({tool.review_count} reviews)
+                <span className="font-medium text-[#0B1221]">{tool.rating.toFixed(1)}</span>
+                <span className="text-slate-400">({tool.review_count} reviews)</span>
               </div>
             )}
           </div>
+
           {cta && (
             <a
               href={cta}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="inline-flex items-center gap-1.5 bg-slate-900 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-slate-800 transition text-sm shrink-0"
+              className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white px-5 py-3 rounded-full font-semibold transition-colors text-sm shrink-0 self-start sm:self-center"
             >
               Visit Website
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           )}
         </div>
+      </section>
 
-        {tool.short_description && <p className="text-slate-600 mb-4">{tool.short_description}</p>}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-10">
+          {/* Narrative column */}
+          <div className="space-y-10">
+            {narrative && (
+              <section>
+                {tool.long_description ? (
+                  <div className="prose prose-slate max-w-none">
+                    <p className="text-[17px] sm:text-lg text-slate-700 leading-relaxed whitespace-pre-line">{narrative}</p>
+                  </div>
+                ) : (
+                  <blockquote className="border-l-2 border-indigo-200 pl-5 text-lg text-slate-700 leading-relaxed italic">
+                    {narrative}
+                  </blockquote>
+                )}
+              </section>
+            )}
 
-        {(tool.pricing_model || tool.starting_price) && (
-          <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-            {tool.pricing_model && <span className="bg-slate-100 px-2.5 py-1 rounded-full">{tool.pricing_model}</span>}
-            {tool.starting_price && <span className="bg-slate-100 px-2.5 py-1 rounded-full">From {tool.starting_price}</span>}
+            {featuredShot && (
+              <section>
+                <img
+                  src={featuredShot.image_url}
+                  alt={featuredShot.caption || tool.name}
+                  className="w-full rounded-2xl border border-[#eef0f3] shadow-sm"
+                />
+                {featuredShot.caption && <p className="text-xs text-slate-400 mt-2">{featuredShot.caption}</p>}
+
+                {supportingShots.length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+                    {supportingShots.map((shot) => (
+                      <figure key={shot.id}>
+                        <img
+                          src={shot.image_url}
+                          alt={shot.caption || tool.name}
+                          className="w-full aspect-[4/3] object-cover rounded-xl border border-[#eef0f3]"
+                        />
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
           </div>
-        )}
 
-        {(categories.length > 0 || tags.length > 0) && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            {categories.map((c) => (
-              <Link key={c.slug} to={`/tool-categories/${c.slug}`} className="text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full hover:bg-blue-100">
-                {c.name}
-              </Link>
-            ))}
-            {tags.map((t) => (
-              <Link key={t.slug} to={`/tool-tags/${t.slug}`} className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full hover:bg-slate-200">
-                {t.name}
-              </Link>
-            ))}
-          </div>
-        )}
+          {/* Quick facts rail */}
+          {hasFacts && (
+            <aside className="lg:pt-1">
+              <div className="bg-white border border-[#eef0f3] rounded-2xl p-5 space-y-5 lg:sticky lg:top-6">
+                {(tool.pricing_model || tool.starting_price) && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400 mb-2">Pricing</p>
+                    {tool.pricing_model && <p className="text-sm font-medium text-[#0B1221]">{tool.pricing_model}</p>}
+                    {tool.starting_price && <p className="text-sm text-slate-500 mt-0.5">From {tool.starting_price}</p>}
+                  </div>
+                )}
 
-        {tool.long_description && (
-          <div className="prose prose-slate max-w-none mb-8 whitespace-pre-line text-slate-700">
-            {tool.long_description}
-          </div>
-        )}
+                {categories.length > 0 && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400 mb-2">Category</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {categories.map((c) => (
+                        <Link
+                          key={c.slug}
+                          to={`/tool-categories/${c.slug}`}
+                          className="inline-flex items-center gap-1 text-xs font-medium bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full hover:bg-indigo-100 transition-colors"
+                        >
+                          <FolderTree className="w-3 h-3" />
+                          {c.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-        {screenshots.filter((shot) => isSafeHttpUrl(shot.image_url)).length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-slate-900 mb-3">Screenshots</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {screenshots.filter((shot) => isSafeHttpUrl(shot.image_url)).map((shot) => (
-                <figure key={shot.id}>
-                  <img src={shot.image_url} alt={shot.caption || tool.name} className="w-full rounded-lg border border-slate-200" />
-                  {shot.caption && <figcaption className="text-xs text-slate-400 mt-1">{shot.caption}</figcaption>}
-                </figure>
-              ))}
-            </div>
-          </div>
-        )}
+                {tags.length > 0 && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400 mb-2">Tags</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {tags.map((t) => (
+                        <Link
+                          key={t.slug}
+                          to={`/tool-tags/${t.slug}`}
+                          className="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full hover:bg-slate-200 transition-colors"
+                        >
+                          <TagIcon className="w-3 h-3" />
+                          {t.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </aside>
+          )}
+        </div>
       </main>
 
       <FooterWrapper />

@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FolderTree } from 'lucide-react';
 import MiniHeader from '../components/MiniHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
+import CategoryTile, { type CategoryTileData } from '../components/tools/CategoryTile';
+import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
+import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
+import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import { supabase } from '../lib/supabase';
 
-interface CategoryWithCount {
-  id: string;
-  slug: string;
-  name: string;
-  description: string | null;
-  toolCount: number;
-}
+const FEATURED_COUNT = 3;
 
 export default function ToolCategoriesIndexPage() {
-  const [categories, setCategories] = useState<CategoryWithCount[]>([]);
+  const [categories, setCategories] = useState<CategoryTileData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,14 +25,19 @@ export default function ToolCategoriesIndexPage() {
       (linksResult.data || []).forEach((row: any) => {
         counts.set(row.category_id, (counts.get(row.category_id) || 0) + 1);
       });
-      const data = (categoriesResult.data || []).map((c) => ({ ...c, toolCount: counts.get(c.id) || 0 }));
+      const data = (categoriesResult.data || [])
+        .map((c) => ({ ...c, toolCount: counts.get(c.id) || 0 }))
+        .sort((a, b) => b.toolCount - a.toolCount);
       setCategories(data);
       setLoading(false);
     });
   }, []);
 
+  const featured = categories.slice(0, FEATURED_COUNT);
+  const rest = categories.slice(FEATURED_COUNT);
+
   return (
-    <div>
+    <div className="bg-[#f7f8fa] min-h-screen">
       <EntitySEOTags
         title="Tool Categories — Browse Software by Category | Gappsy"
         description="Browse software tools organized by category."
@@ -45,30 +47,53 @@ export default function ToolCategoriesIndexPage() {
 
       <div className="pt-6 pb-2"><MiniHeader /></div>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Tool Categories</h1>
-        <p className="text-slate-500 mb-6">Browse tools by category.</p>
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10 sm:pb-14 text-center">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-indigo-600 mb-3">Browse</p>
+        <h1 className="text-3xl sm:text-[38px] font-bold text-[#0B1221] leading-[1.1] mb-4">
+          Find tools by category
+        </h1>
+        <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto">
+          Every category is a starting point — pick the one closest to what you're trying to solve.
+        </p>
+      </section>
 
-        {loading && <p className="text-slate-400 text-sm">Loading categories...</p>}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+        {loading && <ToolsSkeletonGrid count={6} />}
 
-        {!loading && categories.length === 0 && <p className="text-slate-400 text-sm">No categories yet.</p>}
+        {!loading && categories.length === 0 && (
+          <ToolsEmptyState
+            icon={FolderTree}
+            eyebrow="Browse"
+            title="Categories are on their way"
+            description="We're organizing the directory into categories now. Check back shortly."
+            actionLabel="Browse all tools"
+            actionHref="/tools"
+          />
+        )}
 
         {!loading && categories.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                to={`/tool-categories/${category.slug}`}
-                className="flex flex-col bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:border-slate-300 transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <FolderTree className="w-4 h-4 text-slate-400" />
-                  <h3 className="font-semibold text-slate-900 text-sm">{category.name}</h3>
+          <div className="space-y-14">
+            {featured.length > 0 && (
+              <section>
+                <ToolsSectionHeader eyebrow="Most active" title="Popular categories" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                  {featured.map((category) => (
+                    <CategoryTile key={category.slug} category={category} size="large" />
+                  ))}
                 </div>
-                {category.description && <p className="text-sm text-slate-500 line-clamp-2 mb-2">{category.description}</p>}
-                <p className="text-xs text-slate-400 mt-auto">{category.toolCount} tool{category.toolCount === 1 ? '' : 's'}</p>
-              </Link>
-            ))}
+              </section>
+            )}
+
+            {rest.length > 0 && (
+              <section>
+                <ToolsSectionHeader title="All other categories" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {rest.map((category) => (
+                    <CategoryTile key={category.slug} category={category} size="compact" />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
       </main>
