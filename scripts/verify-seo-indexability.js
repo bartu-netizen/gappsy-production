@@ -73,6 +73,7 @@ else {
     /^https:\/\/www\.gappsy\.com\/editorial-policy\/$/,
     /^https:\/\/www\.gappsy\.com\/terms\/$/,
     /^https:\/\/www\.gappsy\.com\/privacy\/$/,
+    /^https:\/\/www\.gappsy\.com\/tools\/[a-z0-9-]+\/$/,
   ];
   for (const loc of locs) {
     if (!allowed.some((re) => re.test(loc))) {

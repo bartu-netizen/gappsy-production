@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { prerender } from './scripts/prerender.js';
+import { prerenderTools } from './scripts/prerender-tools.js';
 
 /**
  * Vite plugin that automatically runs prerender after build
@@ -28,6 +29,18 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Prerender completed successfully - All states have full content\n');
+
+        // Extend the same prerender step to published tool pages. Same
+        // failure path, same plugin — state-page prerendering above is
+        // untouched either way.
+        console.log('\n🔄 Running tool-page prerender with Supabase data...\n');
+        const toolResult = await prerenderTools({ failOnError: true });
+
+        if (!toolResult.success) {
+          throw new Error(`Tool prerender failed for ${toolResult.errorCount} tool(s)`);
+        }
+
+        console.log('✅ Tool prerender completed successfully - All published tools have crawlable HTML\n');
       } catch (error) {
         console.error('\n❌ PRERENDER FAILED - Build cannot continue\n');
         console.error('Error:', error.message);
@@ -36,6 +49,9 @@ function prerenderPlugin() {
         console.error('  • Exactly 25 agencies with descriptions');
         console.error('  • FAQ section');
         console.error('  • FAQPage JSON-LD schema\n');
+        console.error('Every published tool must have:');
+        console.error('  • A real short or long description (no generic fallback)');
+        console.error('  • A title, canonical, and non-noindex robots meta\n');
 
         // HARD FAIL the build
         throw error;

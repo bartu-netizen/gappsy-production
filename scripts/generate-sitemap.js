@@ -10,6 +10,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createClient } from '@supabase/supabase-js';
+import { loadEnv } from 'vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,7 +62,30 @@ const ALLOWED_PATTERNS = [
   /^\/editorial-policy\/$/,
   /^\/terms\/$/,
   /^\/privacy\/$/,
+  /^\/tools\/[a-z0-9-]+\/$/,
 ];
+
+async function fetchPublishedToolSlugs() {
+  try {
+    const env = loadEnv('production', path.join(__dirname, '..'), '');
+    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      console.warn('⚠️  Supabase credentials not found — skipping tool URLs in sitemap');
+      return [];
+    }
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const { data, error } = await supabase.from('tools').select('slug').eq('status', 'published');
+    if (error) {
+      console.warn(`⚠️  Failed to fetch tool slugs for sitemap: ${error.message}`);
+      return [];
+    }
+    return (data || []).map((t) => t.slug);
+  } catch (err) {
+    console.warn(`⚠️  Error fetching tool slugs for sitemap: ${err.message}`);
+    return [];
+  }
+}
 
 function generateUrlEntry(url, lastmod, priority, changefreq) {
   return `  <url>
@@ -93,6 +118,15 @@ async function generateSitemap() {
     paths.push(url);
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
+
+  const toolSlugs = await fetchPublishedToolSlugs();
+  toolSlugs.forEach((slug) => {
+    const url = `/tools/${slug}/`;
+    assertAllowed(url);
+    paths.push(url);
+    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
+  });
+  console.log(`Tool URLs included: ${toolSlugs.length}`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

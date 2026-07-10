@@ -373,5 +373,14 @@ http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
 /marketing-agencies-in-*-united-states   /marketing-agencies-in-:splat-united-states.html  200
 /marketing-agencies-in-*-united-states/  /marketing-agencies-in-:splat-united-states.html  200
 
+# Prerendered tool pages (MUST be above SPA fallback)
+# Named :slug (not splat *) so it only matches a single non-empty path
+# segment — this must NOT match the bare /tools or /tools/ listing page.
+# A slug with no generated file (unpublished/nonexistent) falls through to
+# the SPA fallback below, where ToolDetailPage.tsx renders its own
+# not-found state client-side.
+/tools/:slug   /tools/:slug.html   200
+/tools/:slug/  /tools/:slug.html   200
+
 # 4. SPA fallback
 /*  /index.html 200

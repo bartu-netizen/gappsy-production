@@ -73,6 +73,19 @@ function parsePriceNumber(price: string | null): number | null {
   return match ? Number(match[1]) : null;
 }
 
+// Real data only — mirrors scripts/tool-seo-generator.js's generateToolDescription
+// so the prerendered and hydrated meta descriptions agree. Never a generic
+// templated sentence; returns null when the tool genuinely has neither field
+// (the build-time prerender treats that as a validation failure, not a page
+// that should ship with fabricated copy).
+function generateMetaDescription(shortDescription: string | null, longDescription: string | null): string | null {
+  const short = shortDescription?.trim();
+  if (short) return short.length > 160 ? `${short.slice(0, 159).trimEnd()}…` : short;
+  const long = longDescription?.trim().split(/\n+/)[0];
+  if (long) return long.length > 160 ? `${long.slice(0, 159).trimEnd()}…` : long;
+  return null;
+}
+
 export default function ToolDetailPage() {
   const { toolSlug } = useParams<{ toolSlug: string }>();
   const [tool, setTool] = useState<ToolDetail | null>(null);
@@ -232,6 +245,7 @@ export default function ToolDetailPage() {
   const platforms = PLATFORM_TAGS.filter((p) => tagSlugs.has(p.slug));
   const platformsLabel = platforms.length > 0 ? platforms.map((p) => p.label).join(', ') : null;
   const updatedLabel = formatLastUpdated(tool.updated_at);
+  const metaDescription = generateMetaDescription(tool.short_description, tool.long_description) || tool.name;
   const standoutFeature = extendedContent?.features[0]
     ? { title: extendedContent.features[0].title, description: extendedContent.features[0].description }
     : null;
@@ -270,8 +284,8 @@ export default function ToolDetailPage() {
   return (
     <div className="bg-[#f7f8fa] min-h-screen">
       <EntitySEOTags
-        title={`${tool.name} — Reviews, Pricing & Features | Gappsy`}
-        description={tool.short_description || `Learn about ${tool.name}: pricing, features, and reviews.`}
+        title={`${tool.name} Review, Pricing, Features & Alternatives | Gappsy`}
+        description={metaDescription}
         path={`/tools/${tool.slug}`}
         ogImage={safeLogo || '/og/default-og-image.svg'}
         breadcrumbs={[{ name: 'Tools', path: '/tools' }, { name: tool.name, path: `/tools/${tool.slug}` }]}
