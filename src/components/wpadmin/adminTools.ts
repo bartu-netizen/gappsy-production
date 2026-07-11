@@ -1,14 +1,53 @@
+// The 4 admin-wide view groups (plus 'overview', which is always visible
+// regardless of the selected view — see isToolVisibleInView below). This is
+// a presentation-only classification layered on top of the existing,
+// finer-grained `group` field — it does not replace it, and it changes no
+// route, permission, or component.
+export type AdminScope = 'overview' | 'agency' | 'software' | 'shared';
+
 export interface AdminTool {
   id: string;
   label: string;
   description: string;
   href: string;
   keywords: string[];
-  group: 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Overview' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
+  scopes: AdminScope[];
+  badge?: string;
+}
+
+export const ADMIN_VIEWS: { value: AdminScope | 'all'; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'agency', label: 'Agencies' },
+  { value: 'software', label: 'Software' },
+  { value: 'shared', label: 'Shared' },
+];
+
+// 'shared' and 'overview' items are always visible no matter which view is
+// selected — a genuinely cross-cutting module (or the Dashboard) should
+// never disappear just because someone is filtered to "Agencies" or
+// "Software". This is a pure client-side display filter: it never hides a
+// route from direct navigation and is not a substitute for the real
+// server-side admin-session/auth checks every edge function already
+// enforces independently.
+export function isToolVisibleInView(tool: AdminTool, view: AdminScope | 'all'): boolean {
+  if (view === 'all') return true;
+  if (tool.scopes.includes('shared') || tool.scopes.includes('overview')) return true;
+  return tool.scopes.includes(view);
 }
 
 export const ADMIN_TOOLS: AdminTool[] = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    description: 'Admin home — quick access to every module',
+    href: '/wp-admin/dashboard',
+    keywords: ['dashboard', 'home', 'overview'],
+    group: 'Overview',
+    iconName: 'LayoutDashboard',
+    scopes: ['overview'],
+  },
   {
     id: 'publishing-dashboard',
     label: 'Import Dashboard',
@@ -16,6 +55,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing',
     keywords: ['import', 'dashboard', 'overview', 'stats', 'pipeline'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'Gauge',
   },
   {
@@ -25,6 +65,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/new',
     keywords: ['new', 'software', 'wizard', 'publish', 'add', 'import', 'onboard'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'Rocket',
   },
   {
@@ -34,6 +75,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/queue',
     keywords: ['publishing', 'queue', 'pipeline', 'status', 'review', 'bulk'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'ListChecks',
   },
   {
@@ -43,6 +85,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/import-queue',
     keywords: ['import', 'queue', 'job', 'jobs', 'pipeline', 'progress', 'retry'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'Workflow',
   },
   {
@@ -52,6 +95,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/drafts',
     keywords: ['draft', 'queue', 'unfinished', 'wip'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'FileEdit',
   },
   {
@@ -61,6 +105,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/published',
     keywords: ['published', 'live', 'public'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'Globe2',
   },
   {
@@ -70,6 +115,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/archive',
     keywords: ['archive', 'archived', 'removed'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'Archive',
   },
   {
@@ -79,6 +125,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/publishing/imports',
     keywords: ['import', 'history', 'wizard', 'bulk', 'api', 'log', 'provenance'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'History',
   },
   {
@@ -88,6 +135,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/seo-health',
     keywords: ['seo', 'health', 'meta', 'schema', 'screenshots', 'faq', 'alternatives', 'sitemap', 'tools', 'audit'],
     group: 'Publishing',
+    scopes: ['software'],
     iconName: 'BarChart2',
   },
   {
@@ -97,6 +145,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/tools/new',
     keywords: ['add', 'new', 'tool', 'create', 'software'],
     group: 'Software',
+    scopes: ['software'],
     iconName: 'Wrench',
   },
   {
@@ -106,6 +155,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/tools/categories',
     keywords: ['categories', 'taxonomy', 'tools', 'software', 'filter'],
     group: 'Taxonomy',
+    scopes: ['software'],
     iconName: 'FolderTree',
   },
   {
@@ -115,6 +165,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/tools/tags',
     keywords: ['tags', 'taxonomy', 'tools', 'software'],
     group: 'Taxonomy',
+    scopes: ['software'],
     iconName: 'Tag',
   },
   {
@@ -124,6 +175,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/tool-comparisons',
     keywords: ['comparisons', 'compare', 'vs', 'tools', 'software'],
     group: 'Editorial',
+    scopes: ['software'],
     iconName: 'GitCompare',
   },
   {
@@ -133,6 +185,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/top25-editor',
     keywords: ['top25', 'state', 'edit', 'agencies', 'spotlight', 'content'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Edit2',
   },
   {
@@ -142,6 +195,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/json-import',
     keywords: ['import', 'json', 'bulk', 'agencies', 'states'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'FileJson',
   },
   {
@@ -151,6 +205,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-import',
     keywords: ['import', 'csv', 'json', 'agencies', 'bulk', 'local', 'other', 'state', 'email'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Upload',
   },
   {
@@ -160,6 +215,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-import-v2',
     keywords: ['import', 'v2', 'csv', 'xlsx', 'agencies', 'bulk', 'local', 'other', 'state', 'email', 'background'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'UploadCloud',
   },
   {
@@ -169,6 +225,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-manager',
     keywords: ['other', 'agencies', 'badges', 'website', 'paid', 'status', 'manager', 'bulk', 'override', 'active'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Building2',
   },
   {
@@ -178,6 +235,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email-cleaning',
     keywords: ['email', 'cleaning', 'validation', 'export', 'import', 'zerobounce', 'neverbounce', 'agencies'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'MailOpen',
   },
   {
@@ -187,6 +245,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/smartlead',
     keywords: ['smartlead', 'sync', 'campaigns', 'outreach', 'agencies', 'contacts', 'engagement', 'leads', 'reply', 'bounce'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Send',
   },
   {
@@ -196,6 +255,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/logo-upload',
     keywords: ['logo', 'image', 'upload', 'agencies'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Image',
   },
   {
@@ -205,6 +265,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-reviews',
     keywords: ['reviews', 'ratings', 'agency', 'submissions'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Star',
   },
   {
@@ -214,6 +275,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-reviews/import',
     keywords: ['reviews', 'import', 'bulk', 'csv', 'json', 'agency', 'upload', 'uniqueness'],
     group: 'Content',
+    scopes: ['agency'],
     iconName: 'Upload',
   },
   {
@@ -223,6 +285,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/tools',
     keywords: ['tools', 'directory', 'entities', 'software', 'all'],
     group: 'Software',
+    scopes: ['software'],
     iconName: 'Wrench',
   },
   {
@@ -232,6 +295,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/media',
     keywords: ['media', 'library', 'files', 'images', 'screenshots', 'logos', 'uploads', 'assets'],
     group: 'Software',
+    scopes: ['software'],
     iconName: 'Image',
   },
   {
@@ -241,6 +305,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/sidebar-ads',
     keywords: ['ads', 'sidebar', 'homepage', 'advertising', 'banners'],
     group: 'Monetization',
+    scopes: ['shared'],
     iconName: 'LayoutGrid',
   },
   {
@@ -250,6 +315,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/revenue',
     keywords: ['stripe', 'revenue', 'orders', 'payments', 'subscriptions', 'billing'],
     group: 'Monetization',
+    scopes: ['agency'],
     iconName: 'CreditCard',
   },
   {
@@ -259,6 +325,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/revenue-health',
     keywords: ['revenue', 'health', 'slots', 'inventory', 'audit', 'self-test', 'availability', 'locked', 'sold'],
     group: 'Monetization',
+    scopes: ['agency'],
     iconName: 'Activity',
   },
   {
@@ -268,6 +335,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/thank-you-page',
     keywords: ['thank-you', 'payment', 'order', 'complete', 'preview', 'test', 'qa', 'validation', 'post-payment', 'editor'],
     group: 'Monetization',
+    scopes: ['agency'],
     iconName: 'CheckCircle',
   },
   {
@@ -277,6 +345,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/customer-suppression',
     keywords: ['suppression', 'paid', 'customer', 'do not contact', 'smartlead', 'exclude', 'opt out', 'blocked', 'agency'],
     group: 'Email',
+    scopes: ['agency'],
     iconName: 'ShieldOff',
   },
   {
@@ -286,6 +355,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/overview',
     keywords: ['email', 'marketing', 'dashboard', 'kpi', 'overview', 'campaigns', 'automations', 'smtp', 'audience', 'segments', 'templates', 'logs'],
     group: 'Email',
+    scopes: ['shared'],
     iconName: 'Mail',
   },
   {
@@ -295,6 +365,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/smartlead/inbox',
     keywords: ['smartlead', 'inbox', 'crm', 'conversations', 'replies', 'cold outreach', 'leads', 'agency'],
     group: 'Email',
+    scopes: ['agency'],
     iconName: 'Inbox',
   },
   {
@@ -304,6 +375,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/contact-inbox',
     keywords: ['contact', 'inbox', 'messages', 'form', 'submissions', 'reply', 'smtp', 'crm'],
     group: 'Email',
+    scopes: ['shared'],
     iconName: 'MessageSquare',
   },
   {
@@ -313,6 +385,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/agency-lookup',
     keywords: ['email', 'lookup', 'agency', 'reply', 'smartlead', 'your-agency', 'url', 'copy', 'manual'],
     group: 'Email',
+    scopes: ['agency'],
     iconName: 'UserSearch',
   },
   {
@@ -322,6 +395,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/submissions',
     keywords: ['submissions', 'leads', 'forms', 'funnel', 'tracking', 'get matched', 'spotlight', 'availability'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Inbox',
   },
   {
@@ -331,6 +405,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/funnels',
     keywords: ['funnel', 'analytics', 'conversion', 'sessions', 'events', 'steps', 'drop-off', 'tracking', 'your agency', 'demo'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'TrendingUp',
   },
   {
@@ -340,6 +415,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/product-funnel',
     keywords: ['product', 'funnel', 'intelligence', 'hot', 'unpaid', 'your agency', 'replay', 'availability', 'manage', 'activation', 'checkout', 'discount'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Flame',
   },
   {
@@ -349,6 +425,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/agency-funnel',
     keywords: ['agency', 'funnel', 'analytics', 'conversion', 'drop-off', 'engagement', 'your agency', 'scroll', 'time', 'search', 'direct'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Target',
   },
   {
@@ -358,6 +435,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/activity-feed',
     keywords: ['activity', 'feed', 'live', 'realtime', 'events', 'stream', 'timeline', 'agency', 'intent', 'signals'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Activity',
   },
   {
@@ -367,6 +445,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/intent-center',
     keywords: ['intent', 'hot', 'score', 'activity', 'replay', 'availability', 'checkout', 'follow-up', 'signals', 'priority'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Flame',
   },
   {
@@ -376,6 +455,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/manage-removals',
     keywords: ['manage', 'removals', 'hidden', 'self-removed', 'removal_pending', 'recovery', 'remove intent', 'listing', 'owner', 'funnel'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'EyeOff',
   },
   {
@@ -385,6 +465,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/availability-analytics',
     keywords: ['availability', 'analytics', 'leaderboard', 'agencies', 'requests', 'clicks', 'stats', 'trends'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'BarChart2',
   },
   {
@@ -394,6 +475,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email-notifications',
     keywords: ['email', 'notifications', 'alerts', 'forms', 'submissions', 'smtp', 'recipients', 'notify'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Bell',
   },
   {
@@ -403,6 +485,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-email-automations',
     keywords: ['agency', 'email', 'automations', 'availability', 'leads', 'digest', 'paid', 'unpaid'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Zap',
   },
   {
@@ -412,6 +495,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-dedup',
     keywords: ['dedup', 'duplicate', 'agency', 'merge', 'repair', 'identity', 'conflict', 'your-agency', 'url', 'email', 'ownership'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'GitMerge',
   },
   {
@@ -421,6 +505,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/content-scanner',
     keywords: ['scan', 'casino', 'slots', 'gambling', 'content', 'keywords'],
     group: 'Ops',
+    scopes: ['shared'],
     iconName: 'AlertTriangle',
   },
   {
@@ -430,6 +515,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/security/audit-log',
     keywords: ['audit', 'log', 'security', 'events', 'history', 'rejected', 'violations'],
     group: 'Ops',
+    scopes: ['shared'],
     iconName: 'Shield',
   },
   {
@@ -439,6 +525,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/settings',
     keywords: ['settings', 'secrets', 'config', 'api keys', 'security'],
     group: 'Ops',
+    scopes: ['shared'],
     iconName: 'Settings',
   },
   {
@@ -448,8 +535,23 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/claim-links',
     keywords: ['claim', 'links', 'token', 'your agency', 'outreach', 'campaign', 'deep link'],
     group: 'Ops',
+    scopes: ['agency'],
     iconName: 'Link2',
   },
 ];
 
-export const TOOL_GROUPS = ['Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
+export const TOOL_GROUPS = ['Overview', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
+
+// For a deep-linked detail/editor page that isn't itself a sidebar item
+// (e.g. /wp-admin/tools/:id/edit, only ever reached by clicking through
+// from "All Tools") — finds the most specific registered route that's an
+// ancestor of the given pathname and returns its primary scope, so the
+// view switcher can auto-reveal the right section on direct navigation.
+// Returns null when nothing matches; callers should treat that as "show
+// everything" (view 'all') rather than guessing.
+export function inferScopeForPath(pathname: string): AdminScope | null {
+  const candidates = ADMIN_TOOLS
+    .filter((t) => pathname === t.href || pathname.startsWith(`${t.href}/`))
+    .sort((a, b) => b.href.length - a.href.length);
+  return candidates[0]?.scopes[0] ?? null;
+}

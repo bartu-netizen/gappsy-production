@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import {
   Search, FileEdit, CheckCircle2, Rocket, Archive, AlertTriangle, Download, Clock,
   LayoutGrid, Tags, GitCompare, TrendingUp, Edit3, ListTodo, Plus,
+  Building2, Star, ShieldCheck, Inbox, Activity,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import AdminToolCard from '../components/wpadmin/AdminToolCard';
 import AdminCommandPalette from '../components/wpadmin/AdminCommandPalette';
-import { ADMIN_TOOLS, TOOL_GROUPS } from '../components/wpadmin/adminTools';
+import { ADMIN_TOOLS, TOOL_GROUPS, isToolVisibleInView } from '../components/wpadmin/adminTools';
 import { useAdminFetch } from '../hooks/useAdminFetch';
+import { useAdminView } from '../contexts/AdminViewContext';
 import { toolStatusBadgeClass, toolStatusLabel } from '../utils/toolStatus';
 
 interface PublishingStatsResponse {
@@ -42,6 +44,46 @@ interface PublishingStatsResponse {
   };
 }
 
+// Every field is `number | null` — null means "not available from the
+// database right now" (e.g. a table doesn't exist or the count query
+// failed), rendered as an explicit empty state, never as a fabricated 0.
+interface WorkspaceStatsResponse {
+  ok: boolean;
+  data: {
+    agency: {
+      total_agencies: number | null;
+      paid_listings: number | null;
+      reviews: number | null;
+    };
+    global: {
+      audit_log_total: number | null;
+      audit_log_today: number | null;
+      contact_messages_total: number | null;
+    };
+  };
+}
+
+function StatCard({ icon: Icon, value, label, href }: { icon: typeof Building2; value: number | null; label: string; href: string }) {
+  const content = (
+    <>
+      <Icon className="w-5 h-5 text-slate-400 shrink-0" />
+      <div className="min-w-0">
+        {value === null ? (
+          <div className="text-sm font-medium text-slate-400 leading-none">No data available yet</div>
+        ) : (
+          <div className="text-xl font-bold text-slate-800 leading-none">{value.toLocaleString()}</div>
+        )}
+        <div className="text-xs text-slate-400 mt-1">{label}</div>
+      </div>
+    </>
+  );
+  return (
+    <Link to={href} className="flex items-center gap-3 p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all">
+      {content}
+    </Link>
+  );
+}
+
 // Same threshold coloring used for completeness bars elsewhere in this admin.
 function completenessBarClass(percent: number): string {
   if (percent >= 80) return 'bg-emerald-500';
@@ -68,16 +110,47 @@ export default function WpAdminDashboardPage() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { data: statsData, isLoading: statsLoading, isError: statsError } = useAdminFetch<PublishingStatsResponse>('admin-publishing-stats');
   const stats = statsData?.data;
+  const { data: workspaceData, isLoading: workspaceLoading, isError: workspaceError } = useAdminFetch<WorkspaceStatsResponse>('admin-workspace-stats');
+  const workspace = workspaceData?.data;
+  const view = useAdminView();
 
   return (
     <WpAdminLayout title="Dashboard" subtitle="Quick access to all admin tools">
       <AdminCommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
 
       <div className="space-y-8">
-        {/* Publishing overview */}
+        {/* Agency summary — real data only, from admin-workspace-stats */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Publishing</h2>
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Agency Summary</h2>
+            <div className="flex-1 h-px bg-slate-100" />
+          </div>
+
+          {workspaceLoading && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-20 bg-slate-100 rounded-xl animate-pulse" />
+              ))}
+            </div>
+          )}
+
+          {!workspaceLoading && workspaceError && (
+            <p className="text-sm text-slate-400">No data available yet.</p>
+          )}
+
+          {!workspaceLoading && !workspaceError && workspace && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <StatCard icon={Building2} value={workspace.agency.total_agencies} label="Total Agencies" href="/wp-admin/other-agencies-manager" />
+              <StatCard icon={ShieldCheck} value={workspace.agency.paid_listings} label="Paid Listings" href="/wp-admin/revenue" />
+              <StatCard icon={Star} value={workspace.agency.reviews} label="Agency Reviews" href="/wp-admin/agency-reviews" />
+            </div>
+          )}
+        </div>
+
+        {/* Software summary (was "Publishing overview") — real data only, from admin-publishing-stats */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Software Summary</h2>
             <div className="flex-1 h-px bg-slate-100" />
           </div>
 
@@ -399,6 +472,34 @@ export default function WpAdminDashboardPage() {
           )}
         </div>
 
+        {/* Global summary — real data only, from admin-workspace-stats */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Global Summary</h2>
+            <div className="flex-1 h-px bg-slate-100" />
+          </div>
+
+          {workspaceLoading && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-20 bg-slate-100 rounded-xl animate-pulse" />
+              ))}
+            </div>
+          )}
+
+          {!workspaceLoading && workspaceError && (
+            <p className="text-sm text-slate-400">No data available yet.</p>
+          )}
+
+          {!workspaceLoading && !workspaceError && workspace && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <StatCard icon={Activity} value={workspace.global.audit_log_total} label="Admin Actions Logged" href="/wp-admin/security/audit-log" />
+              <StatCard icon={Activity} value={workspace.global.audit_log_today} label="Admin Actions Today" href="/wp-admin/security/audit-log" />
+              <StatCard icon={Inbox} value={workspace.global.contact_messages_total} label="Contact Messages" href="/wp-admin/contact-inbox" />
+            </div>
+          )}
+        </div>
+
         {/* Search bar */}
         <button
           onClick={() => setPaletteOpen(true)}
@@ -412,15 +513,23 @@ export default function WpAdminDashboardPage() {
           </div>
         </button>
 
-        {/* Tool groups */}
-        {TOOL_GROUPS.map(group => (
+        {/* Tool groups — Overview is skipped here since it's only ever the
+            Dashboard itself, and a self-referential "Dashboard" tile on the
+            Dashboard page would be redundant. Filtered by the same
+            All/Agencies/Software/Shared view as the sidebar (via
+            AdminViewContext) so this grid never disagrees with what the
+            sidebar is currently showing. */}
+        {TOOL_GROUPS.filter(group => group !== 'Overview')
+          .map(group => ({ group, tools: ADMIN_TOOLS.filter(t => t.group === group && isToolVisibleInView(t, view)) }))
+          .filter(({ tools }) => tools.length > 0)
+          .map(({ group, tools }) => (
           <div key={group}>
             <div className="flex items-center gap-3 mb-4">
               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{group}</h2>
               <div className="flex-1 h-px bg-slate-100" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-              {ADMIN_TOOLS.filter(t => t.group === group).map(tool => (
+              {tools.map(tool => (
                 <AdminToolCard key={tool.id} tool={tool} />
               ))}
             </div>
