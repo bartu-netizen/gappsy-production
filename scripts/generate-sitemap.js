@@ -65,6 +65,8 @@ const ALLOWED_PATTERNS = [
   /^\/tools\/[a-z0-9-]+\/$/,
   /^\/tool-categories\/$/,
   /^\/tool-categories\/[a-z0-9-]+\/$/,
+  /^\/compare\/$/,
+  /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
 ];
 
 async function fetchPublishedToolSlugs() {
@@ -126,6 +128,30 @@ function assertAllowed(url) {
   }
 }
 
+// Only approved, published comparisons — never every possible tool pair.
+// Mirrors fetchPublishedToolSlugs/fetchPublishedCategorySlugs above.
+async function fetchPublishedComparisonSlugs() {
+  try {
+    const env = loadEnv('production', path.join(__dirname, '..'), '');
+    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      console.warn('⚠️  Supabase credentials not found — skipping comparison URLs in sitemap');
+      return [];
+    }
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const { data, error } = await supabase.from('tool_comparisons').select('slug').eq('status', 'published');
+    if (error) {
+      console.warn(`⚠️  Failed to fetch comparison slugs for sitemap: ${error.message}`);
+      return [];
+    }
+    return (data || []).map((c) => c.slug);
+  } catch (err) {
+    console.warn(`⚠️  Error fetching comparison slugs for sitemap: ${err.message}`);
+    return [];
+  }
+}
+
 async function generateSitemap() {
   const urls = [];
   const paths = [];
@@ -165,6 +191,20 @@ async function generateSitemap() {
     urls.push(generateUrlEntry(url, TODAY, '0.6', 'weekly'));
   });
   console.log(`Category URLs included: ${categorySlugs.length} (+ 1 hub)`);
+
+  const compareHubUrl = '/compare/';
+  assertAllowed(compareHubUrl);
+  paths.push(compareHubUrl);
+  urls.push(generateUrlEntry(compareHubUrl, TODAY, '0.6', 'weekly'));
+
+  const comparisonSlugs = await fetchPublishedComparisonSlugs();
+  comparisonSlugs.forEach((slug) => {
+    const url = `/compare/${slug}/`;
+    assertAllowed(url);
+    paths.push(url);
+    urls.push(generateUrlEntry(url, TODAY, '0.6', 'weekly'));
+  });
+  console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

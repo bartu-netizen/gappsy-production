@@ -35,6 +35,8 @@ const ToolDetailPage = lazy(() => import("./pages/ToolDetailPage"));
 const ToolCategoriesIndexPage = lazy(() => import("./pages/ToolCategoriesIndexPage"));
 const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage"));
 const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -97,6 +99,8 @@ const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategori
 const WpAdminToolCategoryEditorPage = lazy(() => import("./pages/WpAdminToolCategoryEditorPage"));
 const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
 const WpAdminToolTagEditorPage = lazy(() => import("./pages/WpAdminToolTagEditorPage"));
+const WpAdminToolComparisonsPage = lazy(() => import("./pages/WpAdminToolComparisonsPage"));
+const WpAdminToolComparisonEditorPage = lazy(() => import("./pages/WpAdminToolComparisonEditorPage"));
 const AdminBulkStateImport = lazy(() => import("./pages/AdminBulkStateImport"));
 const BulkLogoUploadPage = lazy(() => import("./pages/BulkLogoUploadPage"));
 const WpAdminFunnelAnalyticsPage = lazy(() => import("./pages/WpAdminFunnelAnalyticsPage"));
@@ -196,6 +200,9 @@ export default function App() {
         <Route path="/wp-admin/tools/tags/new" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/json-import" element={<AdminRoute><AdminBulkStateImport /></AdminRoute>} />
         <Route path="/wp-admin/logo-upload" element={<AdminRoute><BulkLogoUploadPage /></AdminRoute>} />
         <Route path="/wp-admin/content-scanner" element={<AdminRoute><AdminContentScanPage /></AdminRoute>} />
@@ -291,6 +298,8 @@ export default function App() {
         <Route path="/tool-categories" element={<ToolCategoriesIndexPage />} />
         <Route path="/tool-categories/:categorySlug" element={<ToolCategoryDetailPage />} />
         <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />

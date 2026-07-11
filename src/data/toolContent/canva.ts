@@ -449,7 +449,7 @@ const canvaContent: ToolExtendedContent = {
       pros: ['Best-in-class real-time collaboration', 'Powerful vector and component tools', 'Strong fit for UI/UX and product teams'],
       cons: ['Steeper learning curve than Canva', 'Fewer ready-made marketing templates', 'Not built for physical print production'],
       pricingSummary: 'Free plan available; paid seats from around $3–$5 per editor/month.',
-      href: '/tool-categories/graphic-design',
+      href: '/tools/figma',
     },
     {
       name: 'VistaCreate',
@@ -478,7 +478,7 @@ const canvaContent: ToolExtendedContent = {
   ],
 
   comparisons: [
-    { label: 'Canva vs Figma', href: '/tool-categories/graphic-design' },
+    { label: 'Canva vs Figma', href: '/compare/canva-vs-figma' },
     { label: 'Canva vs Adobe Express', href: '/tool-categories/graphic-design' },
     { label: 'Canva vs Photoshop', href: '/tool-categories/graphic-design' },
     { label: 'Canva vs VistaCreate', href: '/tool-categories/graphic-design' },

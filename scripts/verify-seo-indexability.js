@@ -76,6 +76,8 @@ else {
     /^https:\/\/www\.gappsy\.com\/tools\/[a-z0-9-]+\/$/,
     /^https:\/\/www\.gappsy\.com\/tool-categories\/$/,
     /^https:\/\/www\.gappsy\.com\/tool-categories\/[a-z0-9-]+\/$/,
+    /^https:\/\/www\.gappsy\.com\/compare\/$/,
+    /^https:\/\/www\.gappsy\.com\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
   ];
   for (const loc of locs) {
     if (!allowed.some((re) => re.test(loc))) {

@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { prerender } from './scripts/prerender.js';
 import { prerenderTools } from './scripts/prerender-tools.js';
 import { prerenderCategories } from './scripts/prerender-categories.js';
+import { prerenderComparisons } from './scripts/prerender-comparisons.js';
 
 /**
  * Vite plugin that automatically runs prerender after build
@@ -54,6 +55,19 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Category prerender completed successfully - All published categories have crawlable HTML\n');
+
+        // Extend the same prerender step to approved /compare pages. Same
+        // failure path, same plugin — tool, category, and state prerendering
+        // above are untouched either way. An empty approved-comparisons set
+        // is valid (not a failure) — see prerenderComparisons.
+        console.log('\n🔄 Running comparison-page prerender with Supabase data...\n');
+        const comparisonResult = await prerenderComparisons({ failOnError: true });
+
+        if (!comparisonResult.success) {
+          throw new Error(`Comparison prerender failed for ${comparisonResult.errorCount} comparison(s)`);
+        }
+
+        console.log('✅ Comparison prerender completed successfully - All published comparisons have crawlable HTML\n');
       } catch (error) {
         console.error('\n❌ PRERENDER FAILED - Build cannot continue\n');
         console.error('Error:', error.message);
@@ -68,6 +82,8 @@ function prerenderPlugin() {
         console.error('Every published category must have:');
         console.error('  • A real seo_description or description (no generic fallback)');
         console.error('  • A title and canonical\n');
+        console.error('Every published comparison must have:');
+        console.error('  • A slug matching the canonical alphabetical ordering of its two tools\n');
 
         // HARD FAIL the build
         throw error;

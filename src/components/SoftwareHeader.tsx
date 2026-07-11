@@ -10,17 +10,17 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Categories', href: '/tool-categories' },
-  { label: 'Compare' },
+  { label: 'Compare', href: '/compare' },
   { label: 'Resources' },
   { label: 'For Vendors' },
 ];
 
 // Premium application header for the software-directory templates (/tools/*,
-// and eventually /categories/*, /compare/*). Deliberately separate from
-// MiniHeader — the floating pill nav used everywhere else on the site — so
-// that component and its callers stay completely untouched. Nav items with
-// no `href` point to pages that don't exist yet; they render as disabled
-// "Soon" entries instead of dead links.
+// /tool-categories/*, /compare/*). Deliberately separate from MiniHeader —
+// the floating pill nav used everywhere else on the site — so that component
+// and its callers stay completely untouched. Nav items with no `href` point
+// to pages that don't exist yet; they render as disabled "Soon" entries
+// instead of dead links.
 export default function SoftwareHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
