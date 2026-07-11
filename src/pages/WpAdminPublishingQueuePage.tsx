@@ -99,6 +99,10 @@ export default function WpAdminPublishingQueuePage() {
   const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string; force?: boolean }>((v) => `admin-tools?id=${v.id}`, 'PUT');
   const { mutate: updateSchedule } = useAdminMutation<{ ok: boolean }, { id: string; scheduled_publish_at: string | null }>((v) => `admin-tools?id=${v.id}`, 'PUT');
   const { mutate: deleteTool } = useAdminMutation<{ ok: boolean }, string>((id) => `admin-tools?id=${id}`, 'DELETE');
+  const { mutate: bulkAssignCategory } = useAdminMutation<{ ok: boolean; data: { assigned_count: number } }, { action: string; tool_ids: string[]; category_id: string }>('admin-tools', 'POST');
+  const { data: categoriesData } = useAdminFetch<{ ok: boolean; data: Array<{ id: string; name: string }> }>('admin-tool-categories');
+  const categories = categoriesData?.data || [];
+  const [bulkCategoryId, setBulkCategoryId] = useState('');
 
   const tools = data?.data || [];
   const total = data?.total || 0;
@@ -178,6 +182,23 @@ export default function WpAdminPublishingQueuePage() {
     setBulkBusy(true);
     await Promise.all([...selected].map((id) => deleteTool(id)));
     setBulkBusy(false);
+    setSelected(new Set());
+    refetch();
+  }
+
+  async function handleBulkAssignCategory() {
+    if (selected.size === 0 || !bulkCategoryId) return;
+    setBulkMessage(null);
+    setBulkBusy(true);
+    const result = await bulkAssignCategory({ action: 'bulk-assign-category', tool_ids: [...selected], category_id: bulkCategoryId });
+    setBulkBusy(false);
+    if (!result.ok) {
+      setBulkMessage(result.error?.message || 'Failed to assign category');
+      return;
+    }
+    const assignedCount = result.data?.data.assigned_count ?? 0;
+    setBulkMessage(`Added the category to ${assignedCount} tool(s) (${selected.size - assignedCount} already had it).`);
+    setBulkCategoryId('');
     setSelected(new Set());
     refetch();
   }
@@ -283,6 +304,26 @@ export default function WpAdminPublishingQueuePage() {
                   Move to {s.label}
                 </button>
               ))}
+              {categories.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <select
+                    value={bulkCategoryId}
+                    onChange={(e) => setBulkCategoryId(e.target.value)}
+                    disabled={bulkBusy}
+                    className="text-xs px-2 py-1.5 rounded-lg bg-white border border-blue-200 text-blue-700 disabled:opacity-50"
+                  >
+                    <option value="">Add category…</option>
+                    {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                  <button
+                    onClick={handleBulkAssignCategory}
+                    disabled={bulkBusy || !bulkCategoryId}
+                    className="text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-blue-200 text-blue-700 hover:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  >
+                    Assign
+                  </button>
+                </div>
+              )}
               <button
                 onClick={handleBulkDelete}
                 disabled={bulkBusy}

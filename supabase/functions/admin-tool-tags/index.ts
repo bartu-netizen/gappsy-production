@@ -41,17 +41,81 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: true, data });
       }
 
-      const { data, error } = await supabase
-        .from("tool_tags")
-        .select("*")
-        .order("name", { ascending: true });
+      const q = (url.searchParams.get("q") || "").trim();
+      let listQuery = supabase.from("tool_tags").select("*").order("name", { ascending: true });
+      if (q) listQuery = listQuery.ilike("name", `%${q}%`);
 
+      const { data, error } = await listQuery;
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
-      return jsonResponse({ ok: true, data });
+
+      const tagIds = (data || []).map((t: { id: string }) => t.id);
+      let toolCounts = new Map<string, number>();
+      if (tagIds.length > 0) {
+        const { data: links, error: linksError } = await supabase
+          .from("tool_tag_links")
+          .select("tag_id")
+          .in("tag_id", tagIds);
+        if (linksError) return jsonResponse({ ok: false, error: linksError.message }, 500);
+        toolCounts = (links || []).reduce((map: Map<string, number>, l: { tag_id: string }) => {
+          map.set(l.tag_id, (map.get(l.tag_id) || 0) + 1);
+          return map;
+        }, new Map<string, number>());
+      }
+
+      const withCounts = (data || []).map((t: { id: string }) => ({ ...t, tool_count: toolCounts.get(t.id) || 0 }));
+      return jsonResponse({ ok: true, data: withCounts });
     }
 
     if (req.method === "POST") {
       const payload = await req.json();
+
+      // Merges `source_id` into `target_id`: every tool tagged with the
+      // source tag gets the target tag instead (deduped — a tool already
+      // carrying both isn't double-linked), then the source tag row is
+      // deleted. Irreversible, so the caller UI must confirm before calling
+      // this.
+      if (payload.action === "merge") {
+        const sourceId = payload.source_id as string | undefined;
+        const targetId = payload.target_id as string | undefined;
+        if (!sourceId || !targetId) {
+          return jsonResponse({ ok: false, error: "source_id and target_id are required" }, 400);
+        }
+        if (sourceId === targetId) {
+          return jsonResponse({ ok: false, error: "source_id and target_id must be different tags" }, 400);
+        }
+
+        const { data: sourceLinks, error: sourceLinksError } = await supabase
+          .from("tool_tag_links")
+          .select("tool_id")
+          .eq("tag_id", sourceId);
+        if (sourceLinksError) return jsonResponse({ ok: false, error: sourceLinksError.message }, 500);
+
+        const { data: targetLinks, error: targetLinksError } = await supabase
+          .from("tool_tag_links")
+          .select("tool_id")
+          .eq("tag_id", targetId);
+        if (targetLinksError) return jsonResponse({ ok: false, error: targetLinksError.message }, 500);
+
+        const targetToolIds = new Set((targetLinks || []).map((l: { tool_id: string }) => l.tool_id));
+        const toRelink = (sourceLinks || [])
+          .map((l: { tool_id: string }) => l.tool_id)
+          .filter((toolId: string) => !targetToolIds.has(toolId));
+
+        if (toRelink.length > 0) {
+          const { error: insertError } = await supabase
+            .from("tool_tag_links")
+            .insert(toRelink.map((toolId: string) => ({ tool_id: toolId, tag_id: targetId })));
+          if (insertError) return jsonResponse({ ok: false, error: insertError.message }, 500);
+        }
+
+        const { error: deleteLinksError } = await supabase.from("tool_tag_links").delete().eq("tag_id", sourceId);
+        if (deleteLinksError) return jsonResponse({ ok: false, error: deleteLinksError.message }, 500);
+
+        const { error: deleteTagError } = await supabase.from("tool_tags").delete().eq("id", sourceId);
+        if (deleteTagError) return jsonResponse({ ok: false, error: deleteTagError.message }, 500);
+
+        return jsonResponse({ ok: true, data: { merged_tool_count: toRelink.length } });
+      }
 
       if (!payload.slug || !payload.name) {
         return jsonResponse({ ok: false, error: "Missing required fields: slug, name" }, 400);

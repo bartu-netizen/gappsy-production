@@ -169,7 +169,7 @@ Deno.serve(async (req: Request) => {
         updates.slug = slug;
       }
 
-      if (payload.status === "published" || payload.status === "draft") {
+      if (payload.status === "published" || payload.status === "draft" || payload.status === "archived") {
         updates.status = payload.status;
       }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Plus, Edit2, Trash2, Eye, Copy, Wrench, Search, Star, ShieldCheck, Award,
-  FolderTree, Tag as TagIcon, ChevronLeft, ChevronRight, ArrowUpDown, ExternalLink,
+  FolderTree, Tag as TagIcon, ChevronLeft, ChevronRight, ArrowUpDown, ExternalLink, Layers,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
@@ -16,9 +16,17 @@ interface ToolCategoryRef {
   primary_category: boolean;
 }
 
+interface CompletenessItem {
+  key: string;
+  label: string;
+  required: boolean;
+  met: boolean;
+}
+
 interface CompletenessSummary {
   percent: number;
   requiredMet: boolean;
+  items: CompletenessItem[];
 }
 
 interface ToolRow {
@@ -32,6 +40,7 @@ interface ToolRow {
   is_editors_pick: boolean;
   pricing_model: string | null;
   starting_price: string | null;
+  assigned_editor: string | null;
   updated_at: string;
   created_at: string;
   categories: ToolCategoryRef[];
@@ -79,6 +88,31 @@ function CompletenessBar({ completeness }: { completeness: CompletenessSummary }
   );
 }
 
+// A lightweight SEO-specific projection over the same completeness.items
+// array the API already returns — not a new/invented metric. Percentage of
+// these specific checklist items (see toolCompleteness.ts) that are met.
+const SEO_ITEM_KEYS = ['seo_title', 'canonical', 'sitemap_eligible', 'screenshots', 'faq'];
+
+function computeSeoScore(items: CompletenessItem[]): number {
+  const relevant = items.filter((i) => SEO_ITEM_KEYS.includes(i.key));
+  if (relevant.length === 0) return 0;
+  const met = relevant.filter((i) => i.met).length;
+  return Math.round((met / relevant.length) * 100);
+}
+
+function SeoScoreBadge({ items }: { items: CompletenessItem[] }) {
+  const score = computeSeoScore(items);
+  const color = score >= 80 ? 'bg-emerald-50 text-emerald-700' : score >= 50 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700';
+  return (
+    <span
+      className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold ${color}`}
+      title="SEO checklist: meta title, canonical, sitemap eligibility, screenshots, FAQ"
+    >
+      SEO {score}%
+    </span>
+  );
+}
+
 function SortableHeader({
   label, column, activeSort, activeDir, onSort,
 }: {
@@ -110,6 +144,10 @@ export default function WpAdminToolsPage() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState(1);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [editorFilterInput, setEditorFilterInput] = useState('');
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkMessage, setBulkMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setSearch(searchInput.trim()), DEBOUNCE_MS);
@@ -118,6 +156,8 @@ export default function WpAdminToolsPage() {
 
   useEffect(() => {
     setPage(1);
+    setSelected(new Set());
+    setBulkMessage(null);
   }, [search, statusFilter, categoryFilter, sortColumn, sortDir]);
 
   const { data: categoriesData } = useAdminFetch<CategoriesListResponse>('admin-tool-categories');
@@ -137,7 +177,11 @@ export default function WpAdminToolsPage() {
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
 
-  const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string }>(
+  const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string; force?: boolean }>(
+    (v) => `admin-tools?id=${v.id}`,
+    'PUT'
+  );
+  const { mutate: updateAssignedEditor } = useAdminMutation<{ ok: boolean }, { id: string; assigned_editor: string | null }>(
     (v) => `admin-tools?id=${v.id}`,
     'PUT'
   );
@@ -153,6 +197,28 @@ export default function WpAdminToolsPage() {
   const tools = data?.data || [];
   const total = data?.total || 0;
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+
+  // Client-side only — filters the currently loaded page by assigned_editor.
+  // No new server query param; assigned_editor already flows through the
+  // existing GET response for every row.
+  const trimmedEditorFilter = editorFilterInput.trim().toLowerCase();
+  const displayedTools = trimmedEditorFilter
+    ? tools.filter((t) => (t.assigned_editor || '').toLowerCase().includes(trimmedEditorFilter))
+    : tools;
+
+  const allSelected = displayedTools.length > 0 && displayedTools.every((t) => selected.has(t.id));
+
+  function toggleAll() {
+    setSelected(allSelected ? new Set() : new Set(displayedTools.map((t) => t.id)));
+  }
+  function toggleOne(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   function handleSort(column: string) {
     if (sortColumn === column) {
@@ -170,6 +236,79 @@ export default function WpAdminToolsPage() {
     } else {
       refetch();
     }
+  }
+
+  async function handleAssignedEditorChange(id: string, value: string) {
+    const result = await updateAssignedEditor({ id, assigned_editor: value.trim() || null });
+    if (!result.ok) {
+      alert(result.error?.message || 'Failed to update assigned editor');
+    } else {
+      refetch();
+    }
+  }
+
+  async function handleBulkStatus(newStatus: string) {
+    if (selected.size === 0) return;
+    setBulkMessage(null);
+    const selectedIds = [...selected];
+
+    // Publishing directly from Draft is guarded server-side (requires force:true).
+    // Only rows we currently have loaded (this page) can be checked for status —
+    // ids selected from a previously viewed page aren't visible here.
+    if (newStatus === 'published') {
+      const draftIds = tools.filter((t) => selected.has(t.id) && t.status === 'draft').map((t) => t.id);
+      const nonDraftIds = selectedIds.filter((id) => !draftIds.includes(id));
+
+      if (draftIds.length > 0) {
+        const confirmForce = window.confirm(
+          `${draftIds.length} of the ${selectedIds.length} selected tools are still in Draft. Force-publish them directly from Draft?`
+        );
+
+        setBulkBusy(true);
+        const nonDraftResults = await Promise.all(nonDraftIds.map((id) => updateStatus({ id, status: 'published' })));
+        const failures = nonDraftResults.filter((r) => !r.ok);
+
+        if (confirmForce) {
+          const draftResults = await Promise.all(draftIds.map((id) => updateStatus({ id, status: 'published', force: true })));
+          failures.push(...draftResults.filter((r) => !r.ok));
+          if (failures.length > 0) {
+            setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+          }
+        } else {
+          const skippedMsg = `Skipped ${draftIds.length} tool(s) still in Draft (force-publish not confirmed).`;
+          setBulkMessage(failures.length > 0 ? `${skippedMsg} Also, ${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}` : skippedMsg);
+        }
+
+        setBulkBusy(false);
+        setSelected(new Set());
+        refetch();
+        return;
+      }
+    }
+
+    setBulkBusy(true);
+    const results = await Promise.all(selectedIds.map((id) => updateStatus({ id, status: newStatus })));
+    const failures = results.filter((r) => !r.ok);
+    setBulkBusy(false);
+    setSelected(new Set());
+    if (failures.length > 0) {
+      setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+    }
+    refetch();
+  }
+
+  async function handleBulkDelete() {
+    if (selected.size === 0) return;
+    if (!window.confirm(`Delete ${selected.size} tool(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    const results = await Promise.all([...selected].map((id) => deleteTool(id)));
+    const failures = results.filter((r) => !r.ok);
+    setBulkBusy(false);
+    setSelected(new Set());
+    if (failures.length > 0) {
+      setBulkMessage(`${failures.length} delete(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+    }
+    refetch();
   }
 
   async function handleDuplicate(id: string) {
@@ -264,7 +403,51 @@ export default function WpAdminToolsPage() {
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
+          <div className="min-w-[160px]">
+            <input
+              type="text"
+              value={editorFilterInput}
+              onChange={(e) => setEditorFilterInput(e.target.value)}
+              placeholder="Filter by editor..."
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
         </div>
+
+        {selected.size > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4 flex flex-wrap items-center gap-3">
+            <span className="text-sm font-medium text-blue-800 inline-flex items-center gap-1.5">
+              <Layers className="w-4 h-4" />
+              {selected.size} selected
+            </span>
+            <div className="flex flex-wrap items-center gap-2 ml-auto">
+              {TOOL_STATUSES.map((s) => (
+                <button
+                  key={s.value}
+                  onClick={() => handleBulkStatus(s.value)}
+                  disabled={bulkBusy}
+                  className="text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-blue-200 text-blue-700 hover:bg-blue-100 disabled:opacity-50 transition"
+                >
+                  Move to {s.label}
+                </button>
+              ))}
+              <button
+                onClick={handleBulkDelete}
+                disabled={bulkBusy}
+                className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-50 transition"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+
+        {bulkMessage && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-800">
+            {bulkMessage}
+          </div>
+        )}
 
         {isError && error && <AdminErrorBanner error={error} onRetry={refetch} className="mb-6" />}
         {isLoading && <AdminLoadingState message="Loading tools..." />}
@@ -273,26 +456,37 @@ export default function WpAdminToolsPage() {
           <AdminEmptyState icon={Wrench} title="No tools found" message="Create your first tool to get started." />
         )}
 
-        {!isLoading && tools.length > 0 && (
+        {!isLoading && !isError && tools.length > 0 && displayedTools.length === 0 && (
+          <AdminEmptyState icon={Wrench} title="No tools match this editor filter" message="Clear the editor filter to see all tools on this page." />
+        )}
+
+        {!isLoading && displayedTools.length > 0 && (
           <>
             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
+                    <th className="px-4 py-3 w-8">
+                      <input type="checkbox" checked={allSelected} onChange={toggleAll} />
+                    </th>
                     <th className="text-left px-5 py-3"><SortableHeader label="Tool" column="name" activeSort={sortColumn} activeDir={sortDir} onSort={handleSort} /></th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Category</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Pricing</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Status</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Editor</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Completeness</th>
                     <th className="text-left px-5 py-3"><SortableHeader label="Updated" column="updated_at" activeSort={sortColumn} activeDir={sortDir} onSort={handleSort} /></th>
                     <th className="text-right px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {tools.map((tool) => {
+                  {displayedTools.map((tool) => {
                     const primaryCategory = tool.categories.find((c) => c.primary_category) || tool.categories[0];
                     return (
-                      <tr key={tool.id} className="hover:bg-gray-50 transition-colors">
+                      <tr key={tool.id} className={`hover:bg-gray-50 transition-colors ${selected.has(tool.id) ? 'bg-blue-50/50' : ''}`}>
+                        <td className="px-4 py-3.5">
+                          <input type="checkbox" checked={selected.has(tool.id)} onChange={() => toggleOne(tool.id)} />
+                        </td>
                         <td className="px-5 py-3.5">
                           <div className="flex items-center gap-3">
                             {tool.logo ? (
@@ -329,7 +523,25 @@ export default function WpAdminToolsPage() {
                           <div className="mt-1"><StatusBadge status={tool.status} /></div>
                         </td>
                         <td className="px-5 py-3.5">
-                          <CompletenessBar completeness={tool.completeness} />
+                          <input
+                            type="text"
+                            defaultValue={tool.assigned_editor || ''}
+                            placeholder="—"
+                            onBlur={(e) => {
+                              const value = e.target.value;
+                              if (value.trim() !== (tool.assigned_editor || '')) handleAssignedEditorChange(tool.id, value);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                            }}
+                            className="w-28 text-xs border border-gray-200 rounded px-1.5 py-1 bg-white"
+                          />
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <div className="flex flex-col gap-1">
+                            <CompletenessBar completeness={tool.completeness} />
+                            <SeoScoreBadge items={tool.completeness.items} />
+                          </div>
                         </td>
                         <td className="px-5 py-3.5 text-sm text-gray-500">
                           {new Date(tool.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}

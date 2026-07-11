@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Edit2, Trash2, Eye, GitCompareArrows } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, GitCompareArrows, Archive, Search } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -15,7 +15,7 @@ interface ToolRef {
 interface ToolComparison {
   id: string;
   slug: string;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'archived';
   tool_a: ToolRef | null;
   tool_b: ToolRef | null;
 }
@@ -29,6 +29,7 @@ function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     published: 'bg-green-100 text-green-800',
     draft: 'bg-gray-100 text-gray-600',
+    archived: 'bg-slate-200 text-slate-600',
   };
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${styles[status] || styles.draft}`}>
@@ -40,12 +41,36 @@ function StatusBadge({ status }: { status: string }) {
 export default function WpAdminToolComparisonsPage() {
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>('admin-tool-comparisons');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
   const { mutate: deleteComparison } = useAdminMutation<{ ok: boolean }, string>(
     (comparisonId) => `admin-tool-comparisons?id=${comparisonId}`,
     'DELETE'
   );
+  const { mutate: updateComparison } = useAdminMutation<{ ok: boolean }, { id: string; status: string }>(
+    (v) => `admin-tool-comparisons?id=${v.id}`,
+    'PUT'
+  );
 
-  const comparisons = data?.data || [];
+  const allComparisons = useMemo(() => data?.data || [], [data]);
+  const comparisons = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return allComparisons;
+    return allComparisons.filter((c) =>
+      c.slug.toLowerCase().includes(q) ||
+      (c.tool_a?.name || '').toLowerCase().includes(q) ||
+      (c.tool_b?.name || '').toLowerCase().includes(q)
+    );
+  }, [allComparisons, search]);
+
+  async function handleArchiveToggle(id: string, currentStatus: string) {
+    const nextStatus = currentStatus === 'archived' ? 'draft' : 'archived';
+    const result = await updateComparison({ id, status: nextStatus });
+    if (!result.ok) {
+      alert(result.error?.message || 'Failed to update comparison');
+      return;
+    }
+    refetch();
+  }
 
   async function handleDelete(id: string, label: string) {
     if (deleteConfirm !== id) {
@@ -93,15 +118,34 @@ export default function WpAdminToolComparisonsPage() {
           </div>
         </div>
 
+        {!isLoading && !isError && allComparisons.length > 0 && (
+          <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+            <div className="relative max-w-sm">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by tool name or slug..."
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
+        )}
+
         {isError && error && <AdminErrorBanner error={error} onRetry={refetch} className="mb-6" />}
         {isLoading && <AdminLoadingState message="Loading comparisons..." />}
 
-        {!isLoading && !isError && comparisons.length === 0 && (
+        {!isLoading && !isError && allComparisons.length === 0 && (
           <AdminEmptyState
             icon={GitCompareArrows}
             title="No comparisons yet"
             message="Approve your first tool pair to start building /compare."
           />
+        )}
+
+        {!isLoading && !isError && allComparisons.length > 0 && comparisons.length === 0 && (
+          <AdminEmptyState icon={Search} title="No matches" message={`No comparisons match "${search}".`} />
         )}
 
         {!isLoading && comparisons.length > 0 && (
@@ -140,6 +184,13 @@ export default function WpAdminToolComparisonsPage() {
                           >
                             <Edit2 className="w-4 h-4" />
                           </Link>
+                          <button
+                            onClick={() => handleArchiveToggle(comparison.id, comparison.status)}
+                            className={`p-1.5 rounded transition ${comparison.status === 'archived' ? 'text-slate-600 bg-slate-100' : 'text-gray-500 hover:text-slate-700 hover:bg-slate-100'}`}
+                            title={comparison.status === 'archived' ? 'Restore to draft' : 'Archive'}
+                          >
+                            <Archive className="w-4 h-4" />
+                          </button>
                           <button
                             onClick={() => handleDelete(comparison.id, label)}
                             className={`p-1.5 rounded transition ${

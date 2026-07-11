@@ -1,7 +1,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
-import { computeCompleteness, validateFirstPublishStrict, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
+import { computeCompleteness, validateFirstPublishStrict, getMissingPublishRequirements, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
+import { writeAuditLog } from "../_shared/adminAuth.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -16,7 +17,7 @@ const TOOL_FIELDS = [
   "founded_year", "company_size", "headquarters", "languages",
   "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
   "noindex", "sitemap_eligible", "is_editors_pick",
-  "source", "source_url", "scheduled_publish_at", "canonical_url", "editorial_notes",
+  "source", "source_url", "scheduled_publish_at", "canonical_url", "editorial_notes", "assigned_editor",
 ];
 
 const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url", "canonical_url"];
@@ -419,27 +420,12 @@ function validateCategorySelection(categoryIds: string[], primaryCategoryId: str
 
 // Required-for-publish gate — the authoritative check (client-side
 // completeness UI mirrors this for live feedback, but this is what actually
-// blocks a publish). Mirrors src/utils/toolCompleteness.ts's REQUIRED_KEYS.
-function validatePublishRequirements(merged: {
-  name: string;
-  slug: string;
-  website: string | null;
-  short_description: string | null;
-  long_description: string | null;
-  seo_meta_description: string | null;
-  pricing_model: string | null;
-  categoryIds: string[];
-}) {
-  const missing: string[] = [];
-  if (!merged.name?.trim()) missing.push("name");
-  if (!merged.slug?.trim()) missing.push("slug");
-  if (!merged.website?.trim()) missing.push("website");
-  if (merged.categoryIds.length === 0) missing.push("category");
-  if (!merged.short_description?.trim() && !merged.long_description?.trim()) missing.push("description");
-  if (!merged.seo_meta_description?.trim() && !merged.short_description?.trim() && !merged.long_description?.trim()) {
-    missing.push("SEO meta description");
-  }
-  if (!merged.pricing_model?.trim()) missing.push("pricing model");
+// blocks a publish). Thin wrapper over the shared, reusable
+// getMissingPublishRequirements (see _shared/toolCompleteness.ts) — this is
+// where a future import/AI pipeline gets the exact same enforcement without
+// duplicating it.
+function validatePublishRequirements(merged: Parameters<typeof getMissingPublishRequirements>[0]) {
+  const missing = getMissingPublishRequirements(merged);
   if (missing.length > 0) {
     throw new ValidationError(`Cannot publish — missing required field(s): ${missing.join(", ")}`);
   }
@@ -698,7 +684,7 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    await requireAdminSession(req);
+    const session = await requireAdminSession(req);
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -838,6 +824,38 @@ Deno.serve(async (req: Request) => {
     if (req.method === "POST") {
       const payload = await req.json();
 
+      // Bulk category assignment (Publishing Queue's bulk-action bar) —
+      // ADDS category_id to every tool_id's existing categories, it never
+      // replaces them. Skips tools that already carry the category.
+      // Never touches primary_category — an added category is never
+      // auto-promoted to primary.
+      if (payload.action === "bulk-assign-category") {
+        const toolIds = Array.isArray(payload.tool_ids) ? payload.tool_ids.filter((v: unknown) => typeof v === "string") : [];
+        const categoryId = typeof payload.category_id === "string" ? payload.category_id : null;
+        if (toolIds.length === 0 || !categoryId) {
+          return jsonResponse({ ok: false, error: "tool_ids (non-empty array) and category_id are required" }, 400);
+        }
+
+        const { data: existingLinks, error: existingLinksError } = await supabase
+          .from("tool_category_links")
+          .select("tool_id")
+          .eq("category_id", categoryId)
+          .in("tool_id", toolIds);
+        if (existingLinksError) return jsonResponse({ ok: false, error: existingLinksError.message }, 500);
+
+        const alreadyLinked = new Set((existingLinks || []).map((l: { tool_id: string }) => l.tool_id));
+        const toInsert = toolIds.filter((id: string) => !alreadyLinked.has(id));
+
+        if (toInsert.length > 0) {
+          const { error: insertError } = await supabase
+            .from("tool_category_links")
+            .insert(toInsert.map((toolId: string) => ({ tool_id: toolId, category_id: categoryId, primary_category: false })));
+          if (insertError) return jsonResponse({ ok: false, error: insertError.message }, 500);
+        }
+
+        return jsonResponse({ ok: true, data: { assigned_count: toInsert.length, already_had_it_count: alreadyLinked.size } });
+      }
+
       // Used by the New Software wizard's Step 1 (duplicate-tool check).
       // Compares by normalized hostname (so https://canva.com,
       // https://www.canva.com/, and canva.com all match) and by slug —
@@ -946,6 +964,10 @@ Deno.serve(async (req: Request) => {
           replaceChildRows(supabase, "tool_faqs", newTool.id, faqsResult.data || []),
         ]);
 
+        await writeAuditLog({
+          actor_session_type: "session_token", actor_email: session.email || undefined,
+          action: "tool_duplicated", target_table: "tools", target_id: newTool.id, status: "success",
+        });
         return jsonResponse({ ok: true, data: newTool });
       }
 
@@ -1029,6 +1051,10 @@ Deno.serve(async (req: Request) => {
 
       if (newTool.status === "published") await syncImportHistoryOnPublish(supabase, newTool.id);
 
+      await writeAuditLog({
+        actor_session_type: "session_token", actor_email: session.email || undefined,
+        action: "tool_created", target_table: "tools", target_id: newTool.id, status: "success",
+      });
       return jsonResponse({ ok: true, data: newTool });
     }
 
@@ -1206,6 +1232,15 @@ Deno.serve(async (req: Request) => {
         await syncImportHistoryOnPublish(supabase, id);
       }
 
+      const statusChanged = updated.status !== existing.status;
+      const updateAction = statusChanged
+        ? (updated.status === "published" ? "tool_published" : updated.status === "archived" ? "tool_archived" : "tool_status_changed")
+        : "tool_updated";
+      await writeAuditLog({
+        actor_session_type: "session_token", actor_email: session.email || undefined,
+        action: updateAction, target_table: "tools", target_id: id, status: "success",
+      });
+
       return jsonResponse({ ok: true, data: updated });
     }
 
@@ -1214,6 +1249,11 @@ Deno.serve(async (req: Request) => {
 
       const { error } = await supabase.from("tools").delete().eq("id", id);
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
+
+      await writeAuditLog({
+        actor_session_type: "session_token", actor_email: session.email || undefined,
+        action: "tool_deleted", target_table: "tools", target_id: id, status: "success",
+      });
       return jsonResponse({ ok: true });
     }
 

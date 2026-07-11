@@ -204,6 +204,7 @@ export default function WpAdminToolEditorPage() {
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingScreenshotIndex, setUploadingScreenshotIndex] = useState<number | null>(null);
   const [forcePublish, setForcePublish] = useState(false);
+  const [autosaveStatus, setAutosaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
   const categories = categoriesData?.data || [];
   const tags = tagsData?.data || [];
@@ -259,6 +260,53 @@ export default function WpAdminToolEditorPage() {
   }, [formData.name, autoSlug]);
 
   const isDirty = JSON.stringify(formData) !== savedSnapshot;
+
+  // Autosave — edit mode only, and deliberately never touches publish
+  // status: it always resends whatever status was last actually persisted
+  // (from savedSnapshot), even if the Status dropdown in the Publishing tab
+  // currently shows an uncommitted change. A status change — especially
+  // draft -> published, which requires an explicit force confirmation — is
+  // only ever committed by clicking Save/Publish. This keeps autosave
+  // strictly a "don't lose my content edits" safety net, never a path to
+  // silently publishing or force-publishing anything.
+  useEffect(() => {
+    if (!isEditMode || !isDirty || saving !== null) return;
+    if (!formData.slug.trim() || !formData.name.trim()) return;
+    const lastPersistedStatus: ToolFormData['status'] = (() => {
+      try { return JSON.parse(savedSnapshot).status; } catch { return formData.status; }
+    })();
+
+    const timer = setTimeout(async () => {
+      setAutosaveStatus('saving');
+      const payload = buildPayload(lastPersistedStatus, false);
+      const result = await updateTool(payload);
+      if (result.ok) {
+        setSavedSnapshot(JSON.stringify({ ...formData, status: lastPersistedStatus }));
+        setAutosaveStatus('saved');
+      } else {
+        setAutosaveStatus('error');
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, isEditMode, isDirty, saving]);
+
+  useEffect(() => {
+    if (autosaveStatus !== 'saved') return;
+    const timer = setTimeout(() => setAutosaveStatus('idle'), 4000);
+    return () => clearTimeout(timer);
+  }, [autosaveStatus]);
+
+  // Native browser warning on tab close/refresh with unsaved edits —
+  // autosave covers most cases a few seconds later, but this catches the
+  // gap between an edit and the next autosave tick.
+  useEffect(() => {
+    if (!isDirty) return;
+    const handler = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
 
   const completeness: CompletenessResult = useMemo(() => {
     const input: ToolCompletenessInput = {
@@ -398,6 +446,7 @@ export default function WpAdminToolEditorPage() {
 
   async function handleSave(status: ToolFormData['status'], force = false) {
     setSaveError(null);
+    setAutosaveStatus('idle');
     if (!formData.slug || !formData.name) {
       setSaveError('Slug and name are required.');
       setActiveTab('Overview');
@@ -451,6 +500,12 @@ export default function WpAdminToolEditorPage() {
   const recommendedItems = completeness.items.filter((item) => !item.required);
   const requiredMetCount = requiredItems.filter((item) => item.met).length;
   const recommendedMetCount = recommendedItems.filter((item) => item.met).length;
+  // Same underlying data as required/recommended, reframed as a CMS-standard
+  // 3-tier readout: Errors block publishing, Warnings don't but should be
+  // fixed, Passing is everything already in good shape.
+  const errorItems = requiredItems.filter((item) => !item.met);
+  const warningItems = recommendedItems.filter((item) => !item.met);
+  const passingItems = completeness.items.filter((item) => item.met);
   const firstPublishMissing = toolData?.data.first_publish_missing || [];
   const showFirstPublishBanner = isEditMode && formData.status !== 'published' && firstPublishMissing.length > 0;
   const jsonLd = buildToolJsonLd({
@@ -479,7 +534,16 @@ export default function WpAdminToolEditorPage() {
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-gray-900 text-sm truncate">{formData.name || 'New Tool'}</p>
             <p className="text-xs text-gray-400 truncate">
-              {isDirty ? 'Unsaved changes' : 'All changes saved'} &middot; {completeness.percent}% complete
+              {autosaveStatus === 'saving' ? (
+                <span className="text-blue-600 inline-flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Autosaving…</span>
+              ) : autosaveStatus === 'saved' ? (
+                <span className="text-emerald-600 inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Autosaved</span>
+              ) : autosaveStatus === 'error' ? (
+                <span className="text-rose-600 inline-flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> Autosave failed — click Save to retry</span>
+              ) : (
+                isDirty ? 'Unsaved changes' : 'All changes saved'
+              )}
+              {' '}&middot; {completeness.percent}% complete
               {!completeness.requiredMet && <span className="text-amber-600"> &middot; missing required fields</span>}
             </p>
           </div>
@@ -1176,33 +1240,62 @@ export default function WpAdminToolEditorPage() {
                     <div className="flex items-center justify-between mb-1">
                       <p className={labelCls}>Publish readiness</p>
                     </div>
-                    <p className="text-xs text-gray-400 mb-3">
+                    <p className="text-xs text-gray-400 mb-4">
                       {requiredMetCount} of {requiredItems.length} required complete, {recommendedMetCount} of {recommendedItems.length} recommended
                     </p>
 
-                    <div className="mb-4">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Required</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                        {requiredItems.map((item) => (
-                          <div key={item.key} className="flex items-center gap-2 text-sm">
-                            {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
-                            <span className={item.met ? 'text-gray-600' : 'text-rose-600 font-medium'}>{item.label}</span>
-                          </div>
-                        ))}
+                    {errorItems.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-rose-600 mb-2 flex items-center gap-1.5">
+                          <XCircle className="w-3.5 h-3.5" /> Errors — blocks publishing
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                          {errorItems.map((item) => (
+                            <div key={item.key} className="flex items-center gap-2 text-sm">
+                              <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                              <span className="text-rose-600 font-medium">{item.label}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Recommended</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                        {recommendedItems.map((item) => (
+                    {warningItems.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-amber-600 mb-2 flex items-center gap-1.5">
+                          <AlertTriangle className="w-3.5 h-3.5" /> Warnings — won't block, but should be fixed
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                          {warningItems.map((item) => (
+                            <div key={item.key} className="flex items-center gap-2 text-sm">
+                              <Circle className="w-4 h-4 text-amber-400 shrink-0" />
+                              <span className="text-gray-600">{item.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {errorItems.length === 0 && warningItems.length === 0 && (
+                      <div className="mb-4 flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" />
+                        No errors or warnings — this tool passes every check.
+                      </div>
+                    )}
+
+                    <details>
+                      <summary className="text-xs font-semibold uppercase tracking-wide text-emerald-600 mb-2 cursor-pointer select-none flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Passing ({passingItems.length})
+                      </summary>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 mt-2">
+                        {passingItems.map((item) => (
                           <div key={item.key} className="flex items-center gap-2 text-sm">
-                            {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <Circle className="w-4 h-4 text-amber-400 shrink-0" />}
-                            <span className={item.met ? 'text-gray-600' : 'text-gray-400'}>{item.label}</span>
+                            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                            <span className="text-gray-600">{item.label}</span>
                           </div>
                         ))}
                       </div>
-                    </div>
+                    </details>
                   </div>
                 </>
               )}

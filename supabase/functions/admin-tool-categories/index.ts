@@ -41,13 +41,29 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: true, data });
       }
 
-      const { data, error } = await supabase
-        .from("tool_categories")
-        .select("*")
-        .order("name", { ascending: true });
+      const q = (url.searchParams.get("q") || "").trim();
+      let listQuery = supabase.from("tool_categories").select("*").order("name", { ascending: true });
+      if (q) listQuery = listQuery.ilike("name", `%${q}%`);
 
+      const { data, error } = await listQuery;
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
-      return jsonResponse({ ok: true, data });
+
+      const categoryIds = (data || []).map((c: { id: string }) => c.id);
+      let toolCounts = new Map<string, number>();
+      if (categoryIds.length > 0) {
+        const { data: links, error: linksError } = await supabase
+          .from("tool_category_links")
+          .select("category_id")
+          .in("category_id", categoryIds);
+        if (linksError) return jsonResponse({ ok: false, error: linksError.message }, 500);
+        toolCounts = (links || []).reduce((map: Map<string, number>, l: { category_id: string }) => {
+          map.set(l.category_id, (map.get(l.category_id) || 0) + 1);
+          return map;
+        }, new Map<string, number>());
+      }
+
+      const withCounts = (data || []).map((c: { id: string }) => ({ ...c, tool_count: toolCounts.get(c.id) || 0 }));
+      return jsonResponse({ ok: true, data: withCounts });
     }
 
     if (req.method === "POST") {
@@ -75,6 +91,7 @@ Deno.serve(async (req: Request) => {
         seo_description: payload.seo_description || null,
         icon: payload.icon || null,
         status: payload.status || "published",
+        is_featured: payload.is_featured === true,
       };
 
       const { data, error } = await supabase.from("tool_categories").insert(row).select().single();
@@ -114,7 +131,7 @@ Deno.serve(async (req: Request) => {
         }
       }
 
-      const fields = ["slug", "name", "description", "seo_title", "seo_description", "icon", "status"];
+      const fields = ["slug", "name", "description", "seo_title", "seo_description", "icon", "status", "is_featured"];
       const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
       for (const field of fields) {
         if (Object.prototype.hasOwnProperty.call(payload, field)) {

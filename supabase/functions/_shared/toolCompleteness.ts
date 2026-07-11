@@ -99,6 +99,35 @@ export function computeCompleteness(input: ToolCompletenessInput): CompletenessR
   return { percent, requiredMet: missingRequired.length === 0, missingRequired, items };
 }
 
+// The base required-for-publish gate — reusable by any edge function that
+// creates or updates a tool (admin-tools today; a future import/AI/bulk
+// pipeline tomorrow, without duplicating this logic). Returns the list of
+// missing human-readable labels; empty array means the gate passes. Callers
+// decide what to do with a non-empty result (admin-tools throws a
+// ValidationError with this list joined into the message).
+export function getMissingPublishRequirements(merged: {
+  name: string;
+  slug: string;
+  website: string | null;
+  short_description: string | null;
+  long_description: string | null;
+  seo_meta_description: string | null;
+  pricing_model: string | null;
+  categoryIds: string[];
+}): string[] {
+  const missing: string[] = [];
+  if (!merged.name?.trim()) missing.push("name");
+  if (!merged.slug?.trim()) missing.push("slug");
+  if (!merged.website?.trim()) missing.push("website");
+  if (merged.categoryIds.length === 0) missing.push("category");
+  if (!merged.short_description?.trim() && !merged.long_description?.trim()) missing.push("description");
+  if (!merged.seo_meta_description?.trim() && !merged.short_description?.trim() && !merged.long_description?.trim()) {
+    missing.push("SEO meta description");
+  }
+  if (!merged.pricing_model?.trim()) missing.push("pricing model");
+  return missing;
+}
+
 // The stricter gate applied only at the draft/ready_to_publish -> published
 // transition (see admin-tools/index.ts). Returns the list of missing
 // human-readable labels; empty array means the gate passes.
@@ -106,7 +135,7 @@ export function computeCompleteness(input: ToolCompletenessInput): CompletenessR
 // Deliberately does NOT include canonical URL or JSON-LD/schema as separate
 // checks here even though the Phase 4 spec lists them: both are always
 // satisfied automatically once name/slug/website/description are present
-// (already-required fields validatePublishRequirements enforces), so a
+// (already-required fields getMissingPublishRequirements enforces), so a
 // separate blocking check would be a no-op that can never actually fire.
 // The Publishing/Validation tab still displays them as pass/fail items —
 // see toolCompleteness's "canonical" item — so the CMS checklist reads

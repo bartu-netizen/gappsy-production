@@ -99,6 +99,8 @@ const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage
 const WpAdminNewSoftwareWizardPage = lazy(() => import("./pages/WpAdminNewSoftwareWizardPage"));
 const WpAdminPublishingQueuePage = lazy(() => import("./pages/WpAdminPublishingQueuePage"));
 const WpAdminImportHistoryPage = lazy(() => import("./pages/WpAdminImportHistoryPage"));
+const WpAdminMediaLibraryPage = lazy(() => import("./pages/WpAdminMediaLibraryPage"));
+const WpAdminSeoHealthPage = lazy(() => import("./pages/WpAdminSeoHealthPage"));
 const WpAdminPublishingDashboardPage = lazy(() => import("./pages/WpAdminPublishingDashboardPage"));
 const WpAdminImportQueuePage = lazy(() => import("./pages/WpAdminImportQueuePage"));
 const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategoriesPage"));
@@ -215,6 +217,8 @@ export default function App() {
         <Route path="/wp-admin/publishing/published" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/archive" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/imports" element={<AdminRoute><WpAdminImportHistoryPage /></AdminRoute>} />
+        <Route path="/wp-admin/media" element={<AdminRoute><WpAdminMediaLibraryPage /></AdminRoute>} />
+        <Route path="/wp-admin/seo-health" element={<AdminRoute><WpAdminSeoHealthPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />

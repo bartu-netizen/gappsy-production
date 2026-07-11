@@ -82,6 +82,15 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'History',
   },
   {
+    id: 'seo-health',
+    label: 'SEO Health',
+    description: 'Database-level completeness rollup for published tools — missing meta, schema, screenshots, FAQs, alternatives, sitemap eligibility',
+    href: '/wp-admin/seo-health',
+    keywords: ['seo', 'health', 'meta', 'schema', 'screenshots', 'faq', 'alternatives', 'sitemap', 'tools', 'audit'],
+    group: 'Publishing',
+    iconName: 'BarChart2',
+  },
+  {
     id: 'add-tool',
     label: 'Add Tool',
     description: 'Create a new software tool listing',
@@ -215,6 +224,15 @@ export const ADMIN_TOOLS: AdminTool[] = [
     keywords: ['tools', 'directory', 'entities', 'software', 'all'],
     group: 'Software',
     iconName: 'Wrench',
+  },
+  {
+    id: 'media-library',
+    label: 'Media',
+    description: 'Browse, search, and manage every file uploaded through the tool editor — logos, screenshots, and more',
+    href: '/wp-admin/media',
+    keywords: ['media', 'library', 'files', 'images', 'screenshots', 'logos', 'uploads', 'assets'],
+    group: 'Software',
+    iconName: 'Image',
   },
   {
     id: 'sidebar-ads',
