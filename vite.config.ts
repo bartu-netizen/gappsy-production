@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { prerender } from './scripts/prerender.js';
 import { prerenderTools } from './scripts/prerender-tools.js';
+import { prerenderCategories } from './scripts/prerender-categories.js';
 
 /**
  * Vite plugin that automatically runs prerender after build
@@ -41,6 +42,18 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Tool prerender completed successfully - All published tools have crawlable HTML\n');
+
+        // Extend the same prerender step to the categories hub + every
+        // published category page. Same failure path, same plugin — tool
+        // and state prerendering above are untouched either way.
+        console.log('\n🔄 Running category-page prerender with Supabase data...\n');
+        const categoryResult = await prerenderCategories({ failOnError: true });
+
+        if (!categoryResult.success) {
+          throw new Error(`Category prerender failed for ${categoryResult.errorCount} categor${categoryResult.errorCount === 1 ? 'y' : 'ies'}`);
+        }
+
+        console.log('✅ Category prerender completed successfully - All published categories have crawlable HTML\n');
       } catch (error) {
         console.error('\n❌ PRERENDER FAILED - Build cannot continue\n');
         console.error('Error:', error.message);
@@ -52,6 +65,9 @@ function prerenderPlugin() {
         console.error('Every published tool must have:');
         console.error('  • A real short or long description (no generic fallback)');
         console.error('  • A title, canonical, and non-noindex robots meta\n');
+        console.error('Every published category must have:');
+        console.error('  • A real seo_description or description (no generic fallback)');
+        console.error('  • A title and canonical\n');
 
         // HARD FAIL the build
         throw error;

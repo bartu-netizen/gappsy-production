@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, FolderTree } from 'lucide-react';
-import MiniHeader from '../components/MiniHeader';
+import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import LazyLoad from '../components/LazyLoad';
@@ -204,7 +204,7 @@ export default function ToolDetailPage() {
   if (loading) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <div className="pt-6 pb-2"><MiniHeader /></div>
+        <SoftwareHeader />
         <ToolDetailSkeleton />
         <FooterWrapper />
       </div>
@@ -215,7 +215,7 @@ export default function ToolDetailPage() {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Tool Not Found | Gappsy" description="This tool could not be found." path={`/tools/${toolSlug || ''}`} noindex />
-        <div className="pt-6 pb-2"><MiniHeader /></div>
+        <SoftwareHeader />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
             <FolderTree className="w-6 h-6 text-slate-400" />
@@ -320,9 +320,9 @@ export default function ToolDetailPage() {
         ]}
       />
 
-      <div className="pt-6 pb-2"><MiniHeader /></div>
+      <SoftwareHeader />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
         <ToolBreadcrumbs
           items={[
             { name: 'Tools', path: '/tools' },

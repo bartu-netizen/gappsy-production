@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Sparkles, Tag as TagIcon, Clock, Mail, X } from 'lucide-react';
 import MiniHeader from '../components/MiniHeader';
 import FooterWrapper from '../components/FooterWrapper';
@@ -27,7 +27,8 @@ export default function ToolsIndexPage() {
   const [categories, setCategories] = useState<CategoryTileData[]>([]);
   const [tags, setTags] = useState<TagWithCount[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState(() => searchParams.get('q') || '');
 
   useEffect(() => {
     Promise.all([

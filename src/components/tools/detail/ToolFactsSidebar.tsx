@@ -104,7 +104,7 @@ export default function ToolFactsSidebar({
   }
 
   return (
-    <aside className="lg:sticky lg:top-6 space-y-4 order-first lg:order-none">
+    <aside className="lg:sticky lg:top-[88px] space-y-4 order-first lg:order-none">
       <Card className="p-5 space-y-5">
         {rating > 0 && (
           <div>
