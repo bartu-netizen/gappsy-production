@@ -19,10 +19,17 @@ export default function ScreenshotGallery({
   toolName,
   screenshots,
   websiteUrl,
+  sectionId = 'screenshots',
+  eyebrow = 'Gallery',
 }: {
   toolName: string;
   screenshots: ScreenshotItem[];
   websiteUrl?: string | null;
+  // Lets a page render more than one gallery (e.g. Compare, one per tool)
+  // without id collisions — defaults match the original single-tool usage
+  // on ToolDetailPage exactly, so that call site needs no changes.
+  sectionId?: string;
+  eyebrow?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [entered, setEntered] = useState(false);
@@ -110,8 +117,8 @@ export default function ScreenshotGallery({
   }
 
   return (
-    <section id="screenshots" className="scroll-mt-24">
-      <ToolsSectionHeader eyebrow="Gallery" title={`${toolName} screenshots`} />
+    <section id={sectionId} className="scroll-mt-24">
+      <ToolsSectionHeader eyebrow={eyebrow} title={`${toolName} screenshots`} />
 
       <div className="relative mb-4">
         <div

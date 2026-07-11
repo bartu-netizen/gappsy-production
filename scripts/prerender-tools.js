@@ -30,7 +30,7 @@ function initSupabase() {
 // can read it too — an in-memory lookup, not a DB call, so it never affects
 // the per-tool query count at scale. Any tool without an entry (49,999 of
 // 50,000, today every tool except Canva) simply gets `undefined` back.
-async function loadGetToolContent() {
+export async function loadGetToolContent() {
   const outfile = join(tmpdir(), `gappsy-tool-content-${Date.now()}.mjs`);
   await esbuildBuild({
     entryPoints: [join(projectRoot, 'src/data/toolContent/index.ts')],

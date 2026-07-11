@@ -5,6 +5,7 @@ import { tmpdir } from 'os';
 import { createClient } from '@supabase/supabase-js';
 import { build as esbuildBuild } from 'esbuild';
 import { injectToolSEOTags } from './tool-seo-generator.js';
+import { loadGetToolContent } from './prerender-tools.js';
 import { generateComparisonSEOData, generateComparisonJSONLD, generateComparisonStaticBodyHTML } from './comparison-seo-generator.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -84,6 +85,39 @@ async function fetchTagsByToolId(supabase, toolIds) {
   return map;
 }
 
+async function fetchCategoriesByToolId(supabase, toolIds) {
+  if (toolIds.length === 0) return new Map();
+  const { data, error } = await supabase
+    .from('tool_category_links')
+    .select('tool_id, primary_category, tool_categories!inner(slug, name, status)')
+    .in('tool_id', toolIds)
+    .eq('tool_categories.status', 'published');
+  if (error) throw new Error(`Failed to fetch tool categories: ${error.message}`);
+  const map = new Map();
+  for (const row of data || []) {
+    const existing = map.get(row.tool_id);
+    if (!existing || row.primary_category) map.set(row.tool_id, row.tool_categories);
+  }
+  return map;
+}
+
+async function fetchPricingPlansByToolId(supabase, toolIds) {
+  if (toolIds.length === 0) return new Map();
+  const { data, error } = await supabase
+    .from('tool_pricing_plans')
+    .select('tool_id, plan_name, price, billing_cycle, sort_order')
+    .in('tool_id', toolIds)
+    .order('sort_order', { ascending: true });
+  if (error) throw new Error(`Failed to fetch tool pricing plans: ${error.message}`);
+  const map = new Map();
+  for (const row of data || []) {
+    const list = map.get(row.tool_id) || [];
+    list.push(row);
+    map.set(row.tool_id, list);
+  }
+  return map;
+}
+
 function buildFacts(tool, tagSlugs) {
   return {
     rating: tool.rating || 0,
@@ -92,6 +126,9 @@ function buildFacts(tool, tagSlugs) {
     startingPrice: tool.starting_price || null,
     hasFreePlan: tagSlugs.has('free-plan') || tagSlugs.has('freemium'),
     hasFreeTrial: tagSlugs.has('free-trial'),
+    hasApi: tagSlugs.has('api'),
+    hasAI: tagSlugs.has('ai'),
+    hasTeamCollaboration: tagSlugs.has('real-time-collaboration') || tagSlugs.has('team-management'),
     platforms: Object.entries(PLATFORM_TAG_LABELS).filter(([slug]) => tagSlugs.has(slug)).map(([, label]) => label),
   };
 }
@@ -126,8 +163,12 @@ export async function prerenderComparisons(options = {}) {
   }
 
   const toolIds = [...new Set(comparisons.flatMap((c) => [c.tool_a.id, c.tool_b.id]))];
-  const tagsByToolId = await fetchTagsByToolId(supabase, toolIds);
-  const getComparisonContent = await loadGetComparisonContent();
+  const [tagsByToolId, categoriesByToolId, pricingPlansByToolId] = await Promise.all([
+    fetchTagsByToolId(supabase, toolIds),
+    fetchCategoriesByToolId(supabase, toolIds),
+    fetchPricingPlansByToolId(supabase, toolIds),
+  ]);
+  const [getComparisonContent, getToolContent] = await Promise.all([loadGetComparisonContent(), loadGetToolContent()]);
 
   let successCount = 0;
   let errorCount = 0;
@@ -151,7 +192,20 @@ export async function prerenderComparisons(options = {}) {
       const jsonLd = generateComparisonJSONLD({ toolA, toolB, comparisonContent, seoData });
       const factsA = buildFacts(toolA, tagsByToolId.get(toolA.id) || new Set());
       const factsB = buildFacts(toolB, tagsByToolId.get(toolB.id) || new Set());
-      const staticBodyHTML = generateComparisonStaticBodyHTML({ toolA, toolB, factsA, factsB, comparisonContent, seoData });
+      const staticBodyHTML = generateComparisonStaticBodyHTML({
+        toolA,
+        toolB,
+        factsA,
+        factsB,
+        categoryA: categoriesByToolId.get(toolA.id) || null,
+        categoryB: categoriesByToolId.get(toolB.id) || null,
+        plansA: pricingPlansByToolId.get(toolA.id) || [],
+        plansB: pricingPlansByToolId.get(toolB.id) || [],
+        contentA: getToolContent(toolA.slug),
+        contentB: getToolContent(toolB.slug),
+        comparisonContent,
+        seoData,
+      });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
 
       const comparisonDir = join(distDir, 'compare', comparison.slug);

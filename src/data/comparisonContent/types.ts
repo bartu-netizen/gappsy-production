@@ -10,11 +10,31 @@ export interface ComparisonDifference {
   title: string;
   toolA: string;
   toolB: string;
+  // Why this difference is worth caring about, and which kind of user it
+  // actually affects — turns a bare fact into a decision-relevant one.
+  whyItMatters: string;
+  benefitsWho: string;
 }
 
 export interface ComparisonFAQ {
   question: string;
   answer: string;
+}
+
+// 'not-documented' is the honest default for anything neither tool's
+// toolContent/DB facts actually state — never inferred or guessed.
+export type FeatureStatus = 'available' | 'limited' | 'unavailable' | 'not-documented';
+
+export interface FeatureMatrixRow {
+  feature: string;
+  toolA: FeatureStatus;
+  toolB: FeatureStatus;
+  note?: string;
+}
+
+export interface FeatureMatrixGroup {
+  group: string;
+  rows: FeatureMatrixRow[];
 }
 
 export interface ToolComparisonContent {
@@ -23,6 +43,9 @@ export interface ToolComparisonContent {
   // Context-specific recommendation for when each tool is the better fit.
   bestForToolA: string;
   bestForToolB: string;
+  // Who should skip picking one and expect to use both.
+  whoNeedsBoth: string;
   keyDifferences: ComparisonDifference[];
+  featureMatrix: FeatureMatrixGroup[];
   faqs: ComparisonFAQ[];
 }
