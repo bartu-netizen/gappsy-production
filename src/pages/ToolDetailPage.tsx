@@ -10,7 +10,8 @@ import { adminApiFetch } from '../lib/adminApiFetch';
 import { getToolContent } from '../data/toolContent';
 import type { ToolFeature, ToolFAQ, ToolUseCase } from '../data/toolContent/types';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
-import { formatLastUpdated, formatSchemaDate } from '../utils/formatLastUpdated';
+import { formatLastUpdated } from '../utils/formatLastUpdated';
+import { buildToolJsonLd } from '../utils/toolJsonLd';
 import type { ToolCardData } from '../components/ToolCard';
 import type { TaxonomyRef, ScreenshotItem, PricingPlanItem, IntegrationItem, ReviewItem } from '../components/tools/detail/types';
 import ToolBreadcrumbs from '../components/tools/detail/ToolBreadcrumbs';
@@ -93,12 +94,6 @@ function isSafeHttpUrl(value: string | null | undefined): value is string {
   } catch {
     return false;
   }
-}
-
-function parsePriceNumber(price: string | null): number | null {
-  if (!price) return null;
-  const match = price.replace(/,/g, '').match(/(\d+(\.\d+)?)/);
-  return match ? Number(match[1]) : null;
 }
 
 // Real data only — mirrors scripts/tool-seo-generator.js's generateToolDescription
@@ -369,21 +364,20 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
   ];
 
-  const offers = pricingPlans
-    .map((plan) => {
-      const price = parsePriceNumber(plan.price);
-      if (price === null) return null;
-      return { '@type': 'Offer', name: plan.plan_name || undefined, price, priceCurrency: 'USD' };
-    })
-    .filter(Boolean);
-
-  const reviewJsonLd = reviews.map((review) => ({
-    '@type': 'Review',
-    author: { '@type': 'Person', name: review.author_name },
-    reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: 5, worstRating: 1 },
-    reviewBody: review.quote,
-    ...(review.created_at ? { datePublished: formatSchemaDate(review.created_at) || undefined } : {}),
-  }));
+  const jsonLd = buildToolJsonLd({
+    slug: tool.slug,
+    name: tool.name,
+    shortDescription: tool.short_description,
+    longDescription: tool.long_description,
+    logo: safeLogo || null,
+    websiteUrl,
+    primaryCategoryName: primaryCategory?.name,
+    rating: tool.rating,
+    reviewCount: tool.review_count,
+    pricingPlans,
+    reviews,
+    faqs: mergedFaqs,
+  });
 
   return (
     <div className="bg-[#f7f8fa] min-h-screen">
@@ -393,35 +387,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         path={`/tools/${tool.slug}`}
         ogImage={safeLogo || '/og/default-og-image.svg'}
         breadcrumbs={[{ name: 'Tools', path: '/tools' }, { name: tool.name, path: `/tools/${tool.slug}` }]}
-        jsonLd={[
-          {
-            '@type': 'SoftwareApplication',
-            '@id': `https://www.gappsy.com/tools/${tool.slug}/#software`,
-            name: tool.name,
-            description: tool.short_description || tool.long_description || undefined,
-            image: safeLogo || undefined,
-            url: websiteUrl || undefined,
-            applicationCategory: primaryCategory?.name,
-            ...(offers.length > 0 ? { offers } : {}),
-            ...(tool.rating > 0 && tool.review_count > 0
-              ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: tool.rating, reviewCount: tool.review_count } }
-              : {}),
-            ...(reviewJsonLd.length > 0 ? { review: reviewJsonLd } : {}),
-          },
-          ...(mergedFaqs.length
-            ? [
-                {
-                  '@type': 'FAQPage',
-                  '@id': `https://www.gappsy.com/tools/${tool.slug}/#faq`,
-                  mainEntity: mergedFaqs.map((faq) => ({
-                    '@type': 'Question',
-                    name: faq.question,
-                    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-                  })),
-                },
-              ]
-            : []),
-        ]}
+        jsonLd={jsonLd}
         noindex={isPreview}
       />
 

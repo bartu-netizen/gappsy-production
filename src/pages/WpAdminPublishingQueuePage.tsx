@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers } from 'lucide-react';
+import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers, Calendar } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -14,6 +14,7 @@ interface ToolRow {
   status: string;
   source: string;
   updated_at: string;
+  scheduled_publish_at: string | null;
   completeness: { percent: number; requiredMet: boolean };
 }
 
@@ -21,6 +22,16 @@ interface ListResponse { ok: boolean; data: ToolRow[]; total: number; page: numb
 
 const PER_PAGE = 25;
 const DEBOUNCE_MS = 300;
+
+// Converts an ISO timestamp to the "YYYY-MM-DDTHH:mm" shape <input type="datetime-local">
+// expects, in the admin's local timezone. Returns '' for null/unset.
+function toDatetimeLocalValue(iso: string | null): string {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 16);
+}
 
 // One shared component behind two routes — /wp-admin/publishing/queue (all
 // 5 statuses) and /wp-admin/publishing/drafts (preset to draft only). This
@@ -39,6 +50,11 @@ export default function WpAdminPublishingQueuePage() {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkMessage, setBulkMessage] = useState<string | null>(null);
+
+  const [schedulingId, setSchedulingId] = useState<string | null>(null);
+  const [scheduleValue, setScheduleValue] = useState('');
+  const [scheduleBusy, setScheduleBusy] = useState(false);
 
   useEffect(() => {
     setStatusFilter(isDraftQueue ? 'draft' : 'all');
@@ -54,6 +70,7 @@ export default function WpAdminPublishingQueuePage() {
   useEffect(() => {
     setPage(1);
     setSelected(new Set());
+    setBulkMessage(null);
   }, [search, statusFilter, sortColumn, sortDir]);
 
   const listPath = () => {
@@ -68,7 +85,8 @@ export default function WpAdminPublishingQueuePage() {
   };
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
-  const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string }>((v) => `admin-tools?id=${v.id}`, 'PUT');
+  const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string; force?: boolean }>((v) => `admin-tools?id=${v.id}`, 'PUT');
+  const { mutate: updateSchedule } = useAdminMutation<{ ok: boolean }, { id: string; scheduled_publish_at: string | null }>((v) => `admin-tools?id=${v.id}`, 'PUT');
   const { mutate: deleteTool } = useAdminMutation<{ ok: boolean }, string>((id) => `admin-tools?id=${id}`, 'DELETE');
 
   const tools = data?.data || [];
@@ -95,10 +113,51 @@ export default function WpAdminPublishingQueuePage() {
 
   async function handleBulkStatus(newStatus: string) {
     if (selected.size === 0) return;
+    setBulkMessage(null);
+    const selectedIds = [...selected];
+
+    // Publishing directly from Draft is guarded server-side (requires force:true).
+    // Only rows we currently have loaded (this page) can be checked for status —
+    // ids selected from a previously viewed page aren't visible here.
+    if (newStatus === 'published') {
+      const draftIds = tools.filter((t) => selected.has(t.id) && t.status === 'draft').map((t) => t.id);
+      const nonDraftIds = selectedIds.filter((id) => !draftIds.includes(id));
+
+      if (draftIds.length > 0) {
+        const confirmForce = window.confirm(
+          `${draftIds.length} of the ${selectedIds.length} selected tools are still in Draft. Force-publish them directly from Draft?`
+        );
+
+        setBulkBusy(true);
+        const nonDraftResults = await Promise.all(nonDraftIds.map((id) => updateStatus({ id, status: 'published' })));
+        const failures = nonDraftResults.filter((r) => !r.ok);
+
+        if (confirmForce) {
+          const draftResults = await Promise.all(draftIds.map((id) => updateStatus({ id, status: 'published', force: true })));
+          failures.push(...draftResults.filter((r) => !r.ok));
+          if (failures.length > 0) {
+            setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+          }
+        } else {
+          const skippedMsg = `Skipped ${draftIds.length} tool(s) still in Draft (force-publish not confirmed).`;
+          setBulkMessage(failures.length > 0 ? `${skippedMsg} Also, ${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}` : skippedMsg);
+        }
+
+        setBulkBusy(false);
+        setSelected(new Set());
+        refetch();
+        return;
+      }
+    }
+
     setBulkBusy(true);
-    await Promise.all([...selected].map((id) => updateStatus({ id, status: newStatus })));
+    const results = await Promise.all(selectedIds.map((id) => updateStatus({ id, status: newStatus })));
+    const failures = results.filter((r) => !r.ok);
     setBulkBusy(false);
     setSelected(new Set());
+    if (failures.length > 0) {
+      setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+    }
     refetch();
   }
 
@@ -112,7 +171,41 @@ export default function WpAdminPublishingQueuePage() {
     refetch();
   }
 
+  function openScheduler(tool: ToolRow) {
+    setSchedulingId(tool.id);
+    setScheduleValue(toDatetimeLocalValue(tool.scheduled_publish_at));
+  }
+  function closeScheduler() {
+    setSchedulingId(null);
+    setScheduleValue('');
+  }
+  async function saveSchedule(id: string) {
+    if (!scheduleValue) return;
+    setScheduleBusy(true);
+    const iso = new Date(scheduleValue).toISOString();
+    const result = await updateSchedule({ id, scheduled_publish_at: iso });
+    setScheduleBusy(false);
+    if (result.ok) {
+      closeScheduler();
+      refetch();
+    } else {
+      setBulkMessage(result.error?.message || 'Failed to update schedule.');
+    }
+  }
+  async function clearSchedule(id: string) {
+    setScheduleBusy(true);
+    const result = await updateSchedule({ id, scheduled_publish_at: null });
+    setScheduleBusy(false);
+    if (result.ok) {
+      closeScheduler();
+      refetch();
+    } else {
+      setBulkMessage(result.error?.message || 'Failed to clear schedule.');
+    }
+  }
+
   const title = isDraftQueue ? 'Draft Queue' : 'Publishing Queue';
+  const stageFilters = [{ value: 'all', label: 'All' }, ...TOOL_STATUSES.map((s) => ({ value: s.value, label: s.label }))];
 
   return (
     <WpAdminLayout title={title} subtitle={isDraftQueue ? 'Tools not yet ready for review' : 'Every tool moving through the publishing pipeline'}>
@@ -143,14 +236,21 @@ export default function WpAdminPublishingQueuePage() {
             />
           </div>
           {!isDraftQueue && (
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="all">All Stages</option>
-              {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-            </select>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {stageFilters.map((s) => (
+                <button
+                  key={s.value}
+                  onClick={() => setStatusFilter(s.value)}
+                  className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition ${
+                    statusFilter === s.value
+                      ? 'bg-gray-900 text-white border-gray-900'
+                      : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
           )}
         </div>
 
@@ -180,6 +280,12 @@ export default function WpAdminPublishingQueuePage() {
                 Delete
               </button>
             </div>
+          </div>
+        )}
+
+        {bulkMessage && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-800">
+            {bulkMessage}
           </div>
         )}
 
@@ -216,7 +322,10 @@ export default function WpAdminPublishingQueuePage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {tools.map((tool) => (
+                  {tools.map((tool) => {
+                    const hasFutureSchedule = !!tool.scheduled_publish_at && new Date(tool.scheduled_publish_at).getTime() > Date.now();
+                    const canSchedule = tool.status === 'ready_to_publish' || !!tool.scheduled_publish_at;
+                    return (
                     <tr key={tool.id} className={`hover:bg-gray-50 transition-colors ${selected.has(tool.id) ? 'bg-blue-50/50' : ''}`}>
                       <td className="px-4 py-3.5">
                         <input type="checkbox" checked={selected.has(tool.id)} onChange={() => toggleOne(tool.id)} />
@@ -237,9 +346,17 @@ export default function WpAdminPublishingQueuePage() {
                         </div>
                       </td>
                       <td className="px-5 py-3.5">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${toolStatusBadgeClass(tool.status)}`}>
-                          {toolStatusLabel(tool.status)}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${toolStatusBadgeClass(tool.status)}`}>
+                            {toolStatusLabel(tool.status)}
+                          </span>
+                          {hasFutureSchedule && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-sky-50 text-sky-700 border border-sky-200">
+                              <Calendar className="w-3 h-3" />
+                              Scheduled for {new Date(tool.scheduled_publish_at as string).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-5 py-3.5">
                         <span className={`text-xs ${tool.source === 'manual' ? 'text-gray-400' : 'font-medium text-violet-600'}`}>
@@ -261,7 +378,7 @@ export default function WpAdminPublishingQueuePage() {
                         {new Date(tool.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </td>
                       <td className="px-5 py-3.5">
-                        <div className="flex items-center justify-end gap-1">
+                        <div className="relative flex items-center justify-end gap-1">
                           <Link to={`/wp-admin/tools/${tool.id}/preview`} className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition" title="Preview">
                             <Eye className="w-4 h-4" />
                           </Link>
@@ -270,13 +387,57 @@ export default function WpAdminPublishingQueuePage() {
                               <ExternalLink className="w-4 h-4" />
                             </Link>
                           )}
+                          {canSchedule && (
+                            <button
+                              onClick={() => (schedulingId === tool.id ? closeScheduler() : openScheduler(tool))}
+                              className={`p-1.5 rounded transition ${tool.scheduled_publish_at ? 'text-sky-600 hover:bg-sky-50' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}`}
+                              title={tool.scheduled_publish_at ? 'Edit scheduled publish date' : 'Schedule publish'}
+                            >
+                              <Calendar className="w-4 h-4" />
+                            </button>
+                          )}
                           <Link to={`/wp-admin/tools/${tool.id}/edit`} className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition" title="Edit">
                             <Edit2 className="w-4 h-4" />
                           </Link>
+
+                          {schedulingId === tool.id && (
+                            <div className="absolute right-0 top-full mt-1 z-20 bg-white border border-gray-200 rounded-lg shadow-lg p-3 w-64 text-left">
+                              <label className="block text-xs font-medium text-gray-600 mb-1">Schedule publish</label>
+                              <input
+                                type="datetime-local"
+                                value={scheduleValue}
+                                onChange={(e) => setScheduleValue(e.target.value)}
+                                className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-2"
+                              />
+                              <p className="text-xs text-gray-400 mb-2">Recorded for reference only — nothing auto-publishes on this date yet.</p>
+                              <div className="flex items-center justify-between gap-2">
+                                <button
+                                  onClick={() => clearSchedule(tool.id)}
+                                  disabled={scheduleBusy || !tool.scheduled_publish_at}
+                                  className="text-xs text-red-600 hover:underline disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                  Clear
+                                </button>
+                                <div className="flex items-center gap-2">
+                                  <button onClick={closeScheduler} disabled={scheduleBusy} className="text-xs text-gray-500 hover:text-gray-700">
+                                    Cancel
+                                  </button>
+                                  <button
+                                    onClick={() => saveSchedule(tool.id)}
+                                    disabled={scheduleBusy || !scheduleValue}
+                                    className="text-xs font-medium px-2.5 py-1 rounded-lg bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-50 transition"
+                                  >
+                                    Save
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

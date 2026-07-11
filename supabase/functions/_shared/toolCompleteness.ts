@@ -9,7 +9,15 @@
 // Required items gate publishing (see admin-tools/index.ts's
 // validatePublishRequirements, the actual enforcement point — this module
 // only computes the score/labels, it never blocks anything by itself).
-// Recommended items only affect the percentage.
+// Recommended items only affect the percentage and the CMS-style checklist.
+//
+// A second, stricter gate — validateFirstPublishStrict below — applies
+// only at the moment a tool first transitions into 'published'. It is not
+// part of the required set here because Canva/Figma (published before this
+// checklist existed) have zero DB logo/screenshots/features/FAQs — they
+// render from file-based editorial content instead. Making those fields
+// universally required would block ordinary re-saves of already-published
+// tools. See admin-tools/index.ts for where this is invoked.
 
 export interface ToolCompletenessInput {
   name: string | null;
@@ -18,9 +26,13 @@ export interface ToolCompletenessInput {
   short_description: string | null;
   long_description: string | null;
   seo_meta_description: string | null;
+  seo_title: string | null;
   pricing_model: string | null;
   status: string;
   categoryCount: number;
+  tagCount: number;
+  logoPresent: boolean;
+  sitemapEligible: boolean;
   screenshotCount: number;
   faqCount: number;
   prosCount: number;
@@ -65,7 +77,12 @@ export function computeCompleteness(input: ToolCompletenessInput): CompletenessR
     { key: "pricing_model", label: "Pricing model", required: true, met: hasText(input.pricing_model) },
     { key: "status", label: "Status", required: true, met: hasText(input.status) },
 
-    { key: "screenshots", label: "Screenshots", required: false, met: input.screenshotCount > 0 },
+    { key: "seo_title", label: "Meta title", required: false, met: hasText(input.seo_title) },
+    { key: "canonical", label: "Canonical URL", required: false, met: hasText(input.slug) },
+    { key: "sitemap_eligible", label: "Sitemap eligibility", required: false, met: input.sitemapEligible },
+    { key: "tags", label: "Tags", required: false, met: input.tagCount > 0 },
+    { key: "logo", label: "Logo", required: false, met: input.logoPresent },
+    { key: "screenshots", label: "Screenshots (hero image)", required: false, met: input.screenshotCount > 0 },
     { key: "faq", label: "FAQ", required: false, met: input.faqCount > 0 },
     { key: "pros", label: "Pros", required: false, met: input.prosCount > 0 },
     { key: "cons", label: "Cons", required: false, met: input.consCount > 0 },
@@ -80,4 +97,21 @@ export function computeCompleteness(input: ToolCompletenessInput): CompletenessR
   const missingRequired = items.filter((i) => i.required && !i.met).map((i) => i.label);
 
   return { percent, requiredMet: missingRequired.length === 0, missingRequired, items };
+}
+
+// The stricter gate applied only at the draft/ready_to_publish -> published
+// transition (see admin-tools/index.ts). Returns the list of missing
+// human-readable labels; empty array means the gate passes.
+export function validateFirstPublishStrict(input: {
+  logoPresent: boolean;
+  screenshotCount: number;
+  featureCount: number;
+  faqCount: number;
+}): string[] {
+  const missing: string[] = [];
+  if (!input.logoPresent) missing.push("logo");
+  if (input.screenshotCount === 0) missing.push("hero image / screenshot");
+  if (input.featureCount === 0) missing.push("at least one feature");
+  if (input.faqCount === 0) missing.push("at least one FAQ");
+  return missing;
 }

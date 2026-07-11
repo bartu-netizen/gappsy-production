@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
-import { computeCompleteness, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
+import { computeCompleteness, validateFirstPublishStrict, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -16,11 +16,40 @@ const TOOL_FIELDS = [
   "founded_year", "company_size", "headquarters", "languages",
   "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
   "noindex", "sitemap_eligible", "is_editors_pick",
-  "source", "source_url",
+  "source", "source_url", "scheduled_publish_at", "canonical_url",
 ];
 
-const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url"];
+const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url", "canonical_url"];
 const VALID_SOURCES = new Set(["manual", "wizard", "bulk", "api"]);
+
+// The one workflow rule the publishing pipeline enforces server-side:
+// Draft can never become Published in a single step unless explicitly
+// forced. Every other transition (including skips like needs_review ->
+// published, or moving backward) stays as flexible as it already was —
+// the Publishing Queue's bulk "Move to X" actions rely on that
+// flexibility, and the spec only calls out this one specific guard.
+function validateStatusTransition(fromStatus: string | null, toStatus: string | undefined, force: boolean) {
+  if (!toStatus || toStatus === fromStatus) return;
+  const effectiveFrom = fromStatus ?? "draft";
+  if (effectiveFrom === "draft" && toStatus === "published" && !force) {
+    throw new ValidationError(
+      'Cannot publish directly from Draft. Move it to "Ready to Publish" first, or confirm "Force publish" to override.'
+    );
+  }
+}
+
+// Optional ISO-8601 timestamp, e.g. tools.scheduled_publish_at.
+function validateOptionalTimestamp(value: unknown, fieldName: string): string | null {
+  if (value === undefined || value === null || value === "") return null;
+  if (typeof value !== "string") {
+    throw new ValidationError(`${fieldName} must be a string`);
+  }
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new ValidationError(`${fieldName} is not a valid date/time`);
+  }
+  return parsed.toISOString();
+}
 
 const UNIQUE_VIOLATION = "23505";
 const SORTABLE_COLUMNS = new Set(["name", "updated_at", "created_at", "rating"]);
@@ -106,6 +135,28 @@ interface FaqInput {
   question: string;
   answer: string;
   status: "draft" | "published";
+  sort_order: number;
+}
+
+interface VideoInput {
+  title: string | null;
+  video_url: string;
+  thumbnail_url: string | null;
+  sort_order: number;
+}
+
+interface InternalLinkInput {
+  label: string;
+  url: string;
+  sort_order: number;
+}
+
+interface AlternativeInput {
+  alternative_tool_id: string | null;
+  alternative_name: string | null;
+  alternative_url: string | null;
+  alternative_logo: string | null;
+  note: string | null;
   sort_order: number;
 }
 
@@ -292,6 +343,64 @@ function validateFaqs(input: unknown): FaqInput[] {
   });
 }
 
+function validateVideos(input: unknown): VideoInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("videos must be an array");
+  }
+  return input.map((raw, index) => {
+    const video = raw as Record<string, unknown>;
+    const url = validateOptionalUrl(video?.video_url, `videos[${index}].video_url`);
+    if (!url) {
+      throw new ValidationError(`videos[${index}].video_url is required`);
+    }
+    const title = typeof video?.title === "string" && video.title.trim() ? video.title.trim() : null;
+    const thumbnailUrl = validateOptionalUrl(video?.thumbnail_url, `videos[${index}].thumbnail_url`);
+    const sortOrder = typeof video?.sort_order === "number" ? video.sort_order : index;
+    return { title, video_url: url, thumbnail_url: thumbnailUrl, sort_order: sortOrder };
+  });
+}
+
+function validateInternalLinks(input: unknown): InternalLinkInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("internal_links must be an array");
+  }
+  return input.map((raw, index) => {
+    const link = raw as Record<string, unknown>;
+    const label = typeof link?.label === "string" ? link.label.trim() : "";
+    if (!label) {
+      throw new ValidationError(`internal_links[${index}].label is required`);
+    }
+    const url = typeof link?.url === "string" ? link.url.trim() : "";
+    if (!url) {
+      throw new ValidationError(`internal_links[${index}].url is required`);
+    }
+    const sortOrder = typeof link?.sort_order === "number" ? link.sort_order : index;
+    return { label, url, sort_order: sortOrder };
+  });
+}
+
+function validateAlternatives(input: unknown): AlternativeInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("alternatives must be an array");
+  }
+  return input.map((raw, index) => {
+    const alt = raw as Record<string, unknown>;
+    const name = typeof alt?.alternative_name === "string" && alt.alternative_name.trim() ? alt.alternative_name.trim() : null;
+    const alternativeToolId = typeof alt?.alternative_tool_id === "string" && alt.alternative_tool_id.trim() ? alt.alternative_tool_id.trim() : null;
+    if (!name && !alternativeToolId) {
+      throw new ValidationError(`alternatives[${index}] requires either alternative_tool_id or alternative_name`);
+    }
+    const url = validateOptionalUrl(alt?.alternative_url, `alternatives[${index}].alternative_url`);
+    const logo = validateOptionalUrl(alt?.alternative_logo, `alternatives[${index}].alternative_logo`);
+    const note = typeof alt?.note === "string" && alt.note.trim() ? alt.note.trim() : null;
+    const sortOrder = typeof alt?.sort_order === "number" ? alt.sort_order : index;
+    return { alternative_tool_id: alternativeToolId, alternative_name: name, alternative_url: url, alternative_logo: logo, note, sort_order: sortOrder };
+  });
+}
+
 // Validates that category_ids/primary_category_id are internally consistent.
 // Never trusts the frontend: this runs on every create/update regardless of
 // what the admin UI already enforces client-side.
@@ -378,9 +487,9 @@ async function attachToolTags(supabase: any, toolIds: string[]) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchCompletenessRelations(supabase: any, toolIds: string[]) {
   if (toolIds.length === 0) {
-    return { screenshots: new Map(), faqs: new Map(), pros: new Map(), cons: new Map(), useCases: new Map(), pricingPlans: new Map(), features: new Map(), integrations: new Map() };
+    return { screenshots: new Map(), faqs: new Map(), pros: new Map(), cons: new Map(), useCases: new Map(), pricingPlans: new Map(), features: new Map(), integrations: new Map(), tags: new Map() };
   }
-  const [screenshots, faqs, pros, cons, useCases, pricingPlans, features, integrations] = await Promise.all([
+  const [screenshots, faqs, pros, cons, useCases, pricingPlans, features, integrations, tags] = await Promise.all([
     supabase.from("tool_screenshots").select("tool_id").in("tool_id", toolIds),
     supabase.from("tool_faqs").select("tool_id").in("tool_id", toolIds),
     supabase.from("tool_pros").select("tool_id").in("tool_id", toolIds),
@@ -389,6 +498,7 @@ async function fetchCompletenessRelations(supabase: any, toolIds: string[]) {
     supabase.from("tool_pricing_plans").select("tool_id").in("tool_id", toolIds),
     supabase.from("tool_features").select("tool_id").in("tool_id", toolIds),
     supabase.from("tool_integrations").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_tag_links").select("tool_id").in("tool_id", toolIds),
   ]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const countBy = (rows: any[]) => {
@@ -405,6 +515,7 @@ async function fetchCompletenessRelations(supabase: any, toolIds: string[]) {
     pricingPlans: countBy(pricingPlans.data),
     features: countBy(features.data),
     integrations: countBy(integrations.data),
+    tags: countBy(tags.data),
   };
 }
 
@@ -418,9 +529,13 @@ function buildCompletenessInput(tool: any, categoryCount: number, relations: Awa
     short_description: tool.short_description,
     long_description: tool.long_description,
     seo_meta_description: tool.seo_meta_description,
+    seo_title: tool.seo_title,
     pricing_model: tool.pricing_model,
     status: tool.status,
     categoryCount,
+    tagCount: relations.tags.get(id) || 0,
+    logoPresent: Boolean(tool.logo && String(tool.logo).trim()),
+    sitemapEligible: tool.sitemap_eligible !== false,
     screenshotCount: relations.screenshots.get(id) || 0,
     faqCount: relations.faqs.get(id) || 0,
     prosCount: relations.pros.get(id) || 0,
@@ -508,6 +623,9 @@ interface NormalizedToolPayload {
   cons: string[];
   useCases: UseCaseInput[];
   faqs: FaqInput[];
+  videos: VideoInput[];
+  internalLinks: InternalLinkInput[];
+  alternatives: AlternativeInput[];
 }
 
 // Applies validated URL fields onto TOOL_FIELDS-shaped payload in place, and
@@ -530,6 +648,9 @@ function validateAndNormalizeToolPayload(payload: Record<string, unknown>): Norm
     if (validated) payload.source = validated;
     else delete payload.source;
   }
+  if (Object.prototype.hasOwnProperty.call(payload, "scheduled_publish_at")) {
+    payload.scheduled_publish_at = validateOptionalTimestamp(payload.scheduled_publish_at, "scheduled_publish_at");
+  }
 
   const categoryIds: string[] = Array.isArray(payload.category_ids) ? payload.category_ids : [];
   const primaryCategoryId: string | null = (payload.primary_category_id as string | null | undefined) ?? null;
@@ -547,6 +668,9 @@ function validateAndNormalizeToolPayload(payload: Record<string, unknown>): Norm
     cons: validateStringList(payload.cons, "cons"),
     useCases: validateUseCases(payload.use_cases),
     faqs: validateFaqs(payload.faqs),
+    videos: validateVideos(payload.videos),
+    internalLinks: validateInternalLinks(payload.internal_links),
+    alternatives: validateAlternatives(payload.alternatives),
   };
 }
 
@@ -574,7 +698,7 @@ Deno.serve(async (req: Request) => {
         if (error) return jsonResponse({ ok: false, error: error.message }, 500);
         if (!tool) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
 
-        const [categoriesMap, tagsMap, screenshotsResult, reviewsResult, pricingResult, integrationsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult] = await Promise.all([
+        const [categoriesMap, tagsMap, screenshotsResult, reviewsResult, pricingResult, integrationsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, videosResult, internalLinksResult, alternativesResult] = await Promise.all([
           attachToolCategories(supabase, [id]),
           attachToolTags(supabase, [id]),
           supabase.from("tool_screenshots").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
@@ -586,11 +710,15 @@ Deno.serve(async (req: Request) => {
           supabase.from("tool_cons").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
           supabase.from("tool_use_cases").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
           supabase.from("tool_faqs").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_videos").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_internal_links").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_alternatives").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
         ]);
         for (const [label, result] of [
           ["screenshots", screenshotsResult], ["reviews", reviewsResult], ["pricing plans", pricingResult],
           ["integrations", integrationsResult], ["features", featuresResult], ["pros", prosResult],
           ["cons", consResult], ["use cases", useCasesResult], ["faqs", faqsResult],
+          ["videos", videosResult], ["internal links", internalLinksResult], ["alternatives", alternativesResult],
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ] as [string, any][]) {
           if (result.error) return jsonResponse({ ok: false, error: `Failed to load ${label}: ${result.error.message}` }, 500);
@@ -599,6 +727,12 @@ Deno.serve(async (req: Request) => {
         const categories = categoriesMap.get(id) || [];
         const relations = await fetchCompletenessRelations(supabase, [id]);
         const completeness = computeCompleteness(buildCompletenessInput(tool, categories.length, relations));
+        const firstPublishMissing = validateFirstPublishStrict({
+          logoPresent: Boolean(tool.logo && String(tool.logo).trim()),
+          screenshotCount: relations.screenshots.get(id) || 0,
+          featureCount: relations.features.get(id) || 0,
+          faqCount: relations.faqs.get(id) || 0,
+        });
 
         return jsonResponse({
           ok: true,
@@ -615,7 +749,11 @@ Deno.serve(async (req: Request) => {
             cons: (consResult.data || []).map((r: { text: string }) => r.text),
             use_cases: useCasesResult.data || [],
             faqs: faqsResult.data || [],
+            videos: videosResult.data || [],
+            internal_links: internalLinksResult.data || [],
+            alternatives: alternativesResult.data || [],
             completeness,
+            first_publish_missing: firstPublishMissing,
           },
         });
       }
@@ -797,6 +935,7 @@ Deno.serve(async (req: Request) => {
 
       let normalized: NormalizedToolPayload;
       try {
+        validateStatusTransition(null, payload.status as string | undefined, payload.force === true);
         normalized = validateAndNormalizeToolPayload(payload);
         if (payload.status === "published") {
           validatePublishRequirements({
@@ -809,6 +948,15 @@ Deno.serve(async (req: Request) => {
             pricing_model: (payload.pricing_model as string) ?? null,
             categoryIds: normalized.categoryIds,
           });
+          const firstPublishMissing = validateFirstPublishStrict({
+            logoPresent: Boolean(payload.logo && String(payload.logo).trim()),
+            screenshotCount: normalized.screenshots.length,
+            featureCount: normalized.features.length,
+            faqCount: normalized.faqs.length,
+          });
+          if (firstPublishMissing.length > 0) {
+            throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
+          }
         }
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
@@ -852,6 +1000,9 @@ Deno.serve(async (req: Request) => {
         replaceChildRows(supabase, "tool_cons", newTool.id, normalized.cons.map((text, index) => ({ text, sort_order: index }))),
         replaceChildRows(supabase, "tool_use_cases", newTool.id, normalized.useCases),
         replaceChildRows(supabase, "tool_faqs", newTool.id, normalized.faqs),
+        replaceChildRows(supabase, "tool_videos", newTool.id, normalized.videos),
+        replaceChildRows(supabase, "tool_internal_links", newTool.id, normalized.internalLinks),
+        replaceChildRows(supabase, "tool_alternatives", newTool.id, normalized.alternatives),
       ]);
 
       return jsonResponse({ ok: true, data: newTool });
@@ -900,6 +1051,7 @@ Deno.serve(async (req: Request) => {
       const normalized: Partial<NormalizedToolPayload> = {};
       try {
         validateCategorySelection(categoryIds, primaryCategoryId);
+        validateStatusTransition(existing.status, payload.status as string | undefined, payload.force === true);
         for (const field of URL_FIELDS) {
           if (Object.prototype.hasOwnProperty.call(payload, field)) {
             payload[field] = validateOptionalUrl(payload[field], field);
@@ -916,6 +1068,9 @@ Deno.serve(async (req: Request) => {
           if (validated) payload.source = validated;
           else delete payload.source;
         }
+        if (Object.prototype.hasOwnProperty.call(payload, "scheduled_publish_at")) {
+          payload.scheduled_publish_at = validateOptionalTimestamp(payload.scheduled_publish_at, "scheduled_publish_at");
+        }
         if (Object.prototype.hasOwnProperty.call(payload, "screenshots")) normalized.screenshots = validateScreenshots(payload.screenshots);
         if (Object.prototype.hasOwnProperty.call(payload, "reviews")) normalized.reviews = validateReviews(payload.reviews);
         if (Object.prototype.hasOwnProperty.call(payload, "pricing_plans")) normalized.pricingPlans = validatePricingPlans(payload.pricing_plans);
@@ -925,6 +1080,9 @@ Deno.serve(async (req: Request) => {
         if (Object.prototype.hasOwnProperty.call(payload, "cons")) normalized.cons = validateStringList(payload.cons, "cons");
         if (Object.prototype.hasOwnProperty.call(payload, "use_cases")) normalized.useCases = validateUseCases(payload.use_cases);
         if (Object.prototype.hasOwnProperty.call(payload, "faqs")) normalized.faqs = validateFaqs(payload.faqs);
+        if (Object.prototype.hasOwnProperty.call(payload, "videos")) normalized.videos = validateVideos(payload.videos);
+        if (Object.prototype.hasOwnProperty.call(payload, "internal_links")) normalized.internalLinks = validateInternalLinks(payload.internal_links);
+        if (Object.prototype.hasOwnProperty.call(payload, "alternatives")) normalized.alternatives = validateAlternatives(payload.alternatives);
 
         if (payload.status === "published") {
           validatePublishRequirements({
@@ -937,6 +1095,24 @@ Deno.serve(async (req: Request) => {
             pricing_model: Object.prototype.hasOwnProperty.call(payload, "pricing_model") ? (payload.pricing_model as string | null) : existing.pricing_model,
             categoryIds,
           });
+
+          // The stricter logo/hero/feature/FAQ gate only applies the moment a
+          // tool actually transitions into Published — not on ordinary edits
+          // to a tool that's already published (see toolCompleteness.ts's
+          // validateFirstPublishStrict doc comment for why: Canva/Figma have
+          // zero DB logo/screenshots/features/FAQs today and must stay
+          // editable).
+          if (existing.status !== "published") {
+            const logoPresent = Boolean((Object.prototype.hasOwnProperty.call(payload, "logo") ? payload.logo : existing.logo));
+            const relations = await fetchCompletenessRelations(supabase, [id]);
+            const screenshotCount = normalized.screenshots ? normalized.screenshots.length : (relations.screenshots.get(id) || 0);
+            const featureCount = normalized.features ? normalized.features.length : (relations.features.get(id) || 0);
+            const faqCount = normalized.faqs ? normalized.faqs.length : (relations.faqs.get(id) || 0);
+            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount });
+            if (firstPublishMissing.length > 0) {
+              throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
+            }
+          }
         }
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
@@ -993,6 +1169,9 @@ Deno.serve(async (req: Request) => {
       if (normalized.cons) tasks.push(replaceChildRows(supabase, "tool_cons", id, normalized.cons.map((text, index) => ({ text, sort_order: index }))));
       if (normalized.useCases) tasks.push(replaceChildRows(supabase, "tool_use_cases", id, normalized.useCases));
       if (normalized.faqs) tasks.push(replaceChildRows(supabase, "tool_faqs", id, normalized.faqs));
+      if (normalized.videos) tasks.push(replaceChildRows(supabase, "tool_videos", id, normalized.videos));
+      if (normalized.internalLinks) tasks.push(replaceChildRows(supabase, "tool_internal_links", id, normalized.internalLinks));
+      if (normalized.alternatives) tasks.push(replaceChildRows(supabase, "tool_alternatives", id, normalized.alternatives));
       if (tasks.length > 0) await Promise.all(tasks);
 
       return jsonResponse({ ok: true, data: updated });

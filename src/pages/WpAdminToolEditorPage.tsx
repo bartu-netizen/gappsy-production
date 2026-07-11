@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   Save, ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, Eye, ExternalLink,
   CheckCircle2, XCircle, Circle, Upload, Loader2, AlertTriangle,
+  Video, Link2, Repeat, Lock, Sparkles,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
@@ -10,6 +11,7 @@ import { AdminErrorBanner, AdminLoadingState } from '../components/admin/AdminEr
 import { uploadToolMedia } from '../lib/adminMediaUpload';
 import { computeCompleteness, type ToolCompletenessInput, type CompletenessResult } from '../utils/toolCompleteness';
 import { TOOL_STATUSES, toolStatusLabel, type ToolStatus } from '../utils/toolStatus';
+import { buildToolJsonLd } from '../utils/toolJsonLd';
 
 interface ToolCategoryOption { id: string; slug: string; name: string; }
 interface ToolTagOption { id: string; slug: string; name: string; }
@@ -21,6 +23,9 @@ interface IntegrationDraft { integration_name: string; integration_slug: string;
 interface FeatureDraft { group_name: string; title: string; description: string; }
 interface UseCaseDraft { title: string; description: string; audience: string; }
 interface FaqDraft { question: string; answer: string; status: 'draft' | 'published'; }
+interface VideoDraft { title: string; video_url: string; thumbnail_url: string; }
+interface InternalLinkDraft { label: string; url: string; }
+interface AlternativeDraft { alternative_tool_id: string; alternative_name: string; alternative_url: string; alternative_logo: string; note: string; }
 
 interface ToolFormData {
   slug: string;
@@ -55,6 +60,9 @@ interface ToolFormData {
   cons: string[];
   use_cases: UseCaseDraft[];
   faqs: FaqDraft[];
+  videos: VideoDraft[];
+  internal_links: InternalLinkDraft[];
+  alternatives: AlternativeDraft[];
   seo_title: string;
   seo_meta_description: string;
   og_title: string;
@@ -62,6 +70,8 @@ interface ToolFormData {
   og_image: string;
   noindex: boolean;
   sitemap_eligible: boolean;
+  canonical_url: string;
+  scheduled_publish_at: string;
 }
 
 const EMPTY_FORM: ToolFormData = {
@@ -70,17 +80,36 @@ const EMPTY_FORM: ToolFormData = {
   rating: 0, review_count: 0, status: 'draft', founded_year: '', company_size: '', headquarters: '', languages: '',
   category_ids: [], primary_category_id: '', tag_ids: [],
   screenshots: [], reviews: [], pricing_plans: [], integrations: [], features: [], pros: [], cons: [], use_cases: [], faqs: [],
+  videos: [], internal_links: [], alternatives: [],
   seo_title: '', seo_meta_description: '', og_title: '', og_description: '', og_image: '', noindex: false, sitemap_eligible: true,
+  canonical_url: '', scheduled_publish_at: '',
 };
 
 const TABS = [
   'Overview', 'Classification', 'Company', 'Pricing', 'Features', 'Pros & Cons',
-  'Use Cases', 'Screenshots', 'Integrations', 'FAQ', 'Reviews', 'SEO', 'Publishing',
+  'Use Cases', 'Screenshots', 'Integrations', 'Videos', 'Alternatives', 'Internal Links',
+  'FAQ', 'Reviews', 'SEO', 'Publishing',
 ] as const;
 type Tab = typeof TABS[number];
 
 function slugify(value: string): string {
   return value.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+// datetime-local inputs use local time with no timezone/seconds; convert to/from ISO for the API.
+function isoToLocalInput(iso: string | null | undefined): string {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function localInputToIso(value: string): string | null {
+  if (!value.trim()) return null;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toISOString();
 }
 
 function move<T>(arr: T[], index: number, dir: -1 | 1): T[] {
@@ -105,6 +134,8 @@ interface ToolDetailResponse {
     founded_year: number | null; company_size: string | null; headquarters: string | null; languages: string[] | null;
     seo_title: string | null; seo_meta_description: string | null; og_title: string | null; og_description: string | null;
     og_image: string | null; noindex: boolean; sitemap_eligible: boolean;
+    canonical_url: string | null; scheduled_publish_at: string | null;
+    first_publish_missing?: string[];
     categories: Array<{ id: string; primary_category: boolean }>;
     tags: Array<{ id: string }>;
     screenshots: Array<{ image_url: string; caption: string | null; alt_text: string | null; is_featured: boolean }>;
@@ -116,6 +147,9 @@ interface ToolDetailResponse {
     cons: string[];
     use_cases: Array<{ title: string; description: string | null; audience: string | null }>;
     faqs: Array<{ question: string; answer: string; status: 'draft' | 'published' }>;
+    videos: Array<{ title: string | null; video_url: string; thumbnail_url: string | null; sort_order: number }>;
+    internal_links: Array<{ label: string; url: string; sort_order: number }>;
+    alternatives: Array<{ alternative_tool_id: string | null; alternative_name: string | null; alternative_url: string | null; alternative_logo: string | null; note: string | null; sort_order: number }>;
   };
 }
 
@@ -167,6 +201,7 @@ export default function WpAdminToolEditorPage() {
   const [activeTab, setActiveTab] = useState<Tab>('Overview');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingScreenshotIndex, setUploadingScreenshotIndex] = useState<number | null>(null);
+  const [forcePublish, setForcePublish] = useState(false);
 
   const categories = categoriesData?.data || [];
   const tags = tagsData?.data || [];
@@ -199,8 +234,15 @@ export default function WpAdminToolEditorPage() {
         cons: t.cons || [],
         use_cases: t.use_cases.map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' })),
         faqs: t.faqs.map((f) => ({ question: f.question, answer: f.answer, status: f.status })),
+        videos: t.videos.map((v) => ({ title: v.title || '', video_url: v.video_url, thumbnail_url: v.thumbnail_url || '' })),
+        internal_links: t.internal_links.map((l) => ({ label: l.label, url: l.url })),
+        alternatives: t.alternatives.map((a) => ({
+          alternative_tool_id: a.alternative_tool_id || '', alternative_name: a.alternative_name || '',
+          alternative_url: a.alternative_url || '', alternative_logo: a.alternative_logo || '', note: a.note || '',
+        })),
         seo_title: t.seo_title || '', seo_meta_description: t.seo_meta_description || '', og_title: t.og_title || '',
         og_description: t.og_description || '', og_image: t.og_image || '', noindex: t.noindex, sitemap_eligible: t.sitemap_eligible,
+        canonical_url: t.canonical_url || '', scheduled_publish_at: isoToLocalInput(t.scheduled_publish_at),
       };
       setFormData(next);
       setSavedSnapshot(JSON.stringify(next));
@@ -223,9 +265,13 @@ export default function WpAdminToolEditorPage() {
       short_description: formData.short_description,
       long_description: formData.long_description,
       seo_meta_description: formData.seo_meta_description,
+      seo_title: formData.seo_title,
       pricing_model: formData.pricing_model,
       status: formData.status,
       categoryCount: formData.category_ids.length,
+      tagCount: formData.tag_ids.length,
+      logoPresent: Boolean(formData.logo && formData.logo.trim()),
+      sitemapEligible: formData.sitemap_eligible,
       screenshotCount: formData.screenshots.length,
       faqCount: formData.faqs.length,
       prosCount: formData.pros.length,
@@ -281,7 +327,7 @@ export default function WpAdminToolEditorPage() {
     setFormData((p) => ({ ...p, screenshots: p.screenshots.map((s, i) => (i === index ? { ...s, image_url: result.url || s.image_url } : s)) }));
   }
 
-  function buildPayload(status: ToolFormData['status']) {
+  function buildPayload(status: ToolFormData['status'], force = false) {
     return {
       slug: formData.slug,
       name: formData.name,
@@ -317,6 +363,22 @@ export default function WpAdminToolEditorPage() {
       cons: formData.cons.filter((c) => c.trim()),
       use_cases: formData.use_cases.filter((u) => u.title.trim()).map((u) => ({ title: u.title, description: u.description || null, audience: u.audience || null })),
       faqs: formData.faqs.filter((f) => f.question.trim() && f.answer.trim()),
+      videos: formData.videos
+        .filter((v) => v.video_url.trim())
+        .map((v, i) => ({ title: v.title || null, video_url: v.video_url, thumbnail_url: v.thumbnail_url || null, sort_order: i })),
+      internal_links: formData.internal_links
+        .filter((l) => l.label.trim() && l.url.trim())
+        .map((l, i) => ({ label: l.label, url: l.url, sort_order: i })),
+      alternatives: formData.alternatives
+        .filter((a) => a.alternative_name.trim() || a.alternative_tool_id.trim())
+        .map((a, i) => ({
+          alternative_tool_id: a.alternative_tool_id || null,
+          alternative_name: a.alternative_name || null,
+          alternative_url: a.alternative_url || null,
+          alternative_logo: a.alternative_logo || null,
+          note: a.note || null,
+          sort_order: i,
+        })),
       seo_title: formData.seo_title || null,
       seo_meta_description: formData.seo_meta_description || null,
       og_title: formData.og_title || null,
@@ -324,10 +386,13 @@ export default function WpAdminToolEditorPage() {
       og_image: formData.og_image || null,
       noindex: formData.noindex,
       sitemap_eligible: formData.sitemap_eligible,
+      canonical_url: formData.canonical_url || null,
+      scheduled_publish_at: localInputToIso(formData.scheduled_publish_at),
+      ...(force ? { force: true } : {}),
     };
   }
 
-  async function handleSave(status: ToolFormData['status']) {
+  async function handleSave(status: ToolFormData['status'], force = false) {
     setSaveError(null);
     if (!formData.slug || !formData.name) {
       setSaveError('Slug and name are required.');
@@ -337,7 +402,7 @@ export default function WpAdminToolEditorPage() {
 
     const kind = status === 'published' ? 'publish' : status === 'archived' ? 'archive' : 'draft';
     setSaving(kind);
-    const payload = buildPayload(status);
+    const payload = buildPayload(status, force);
 
     if (isEditMode) {
       const result = await updateTool(payload);
@@ -444,10 +509,16 @@ export default function WpAdminToolEditorPage() {
               {saving === 'archive' ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Archive'}
             </button>
           )}
+          {formData.status === 'draft' && (
+            <label className="hidden sm:flex items-center gap-1.5 text-xs text-gray-500 shrink-0" title="Publishing directly from Draft requires confirmation.">
+              <input type="checkbox" checked={forcePublish} onChange={(e) => setForcePublish(e.target.checked)} />
+              Force publish from Draft
+            </label>
+          )}
           <button
-            onClick={() => handleSave('published')}
-            disabled={saving !== null}
-            title={!completeness.requiredMet ? `Missing: ${completeness.missingRequired.join(', ')}` : undefined}
+            onClick={() => handleSave('published', formData.status === 'draft' ? forcePublish : false)}
+            disabled={saving !== null || (formData.status === 'draft' && !forcePublish)}
+            title={!completeness.requiredMet ? `Missing: ${completeness.missingRequired.join(', ')}` : formData.status === 'draft' && !forcePublish ? 'Check "Force publish from Draft" to publish directly from Draft.' : undefined}
             className="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2 rounded-lg font-semibold hover:bg-gray-800 disabled:bg-gray-400 transition text-sm shrink-0"
           >
             <Save className="w-4 h-4" />
@@ -844,6 +915,107 @@ export default function WpAdminToolEditorPage() {
                 </div>
               )}
 
+              {activeTab === 'Videos' && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className={labelCls}>Videos</label>
+                    <button onClick={() => setFormData((p) => ({ ...p, videos: [...p.videos, { title: '', video_url: '', thumbnail_url: '' }] }))} className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700">
+                      <Plus className="w-3.5 h-3.5" /> Add video
+                    </button>
+                  </div>
+                  {formData.videos.length === 0 && (
+                    <p className="text-xs text-gray-400 flex items-center gap-1.5"><Video className="w-3.5 h-3.5" /> No videos yet.</p>
+                  )}
+                  <div className="space-y-3">
+                    {formData.videos.map((video, index) => (
+                      <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="grid grid-cols-2 gap-2 flex-1">
+                            <input type="text" value={video.title} onChange={(e) => setFormData((p) => ({ ...p, videos: p.videos.map((x, i) => i === index ? { ...x, title: e.target.value } : x) }))} placeholder="Title (optional)" className={inputCls} />
+                            <input type="text" value={video.video_url} onChange={(e) => setFormData((p) => ({ ...p, videos: p.videos.map((x, i) => i === index ? { ...x, video_url: e.target.value } : x) }))} placeholder="Video URL (required)" className={inputCls} />
+                          </div>
+                          <RowActions
+                            index={index} count={formData.videos.length}
+                            onUp={() => setFormData((p) => ({ ...p, videos: move(p.videos, index, -1) }))}
+                            onDown={() => setFormData((p) => ({ ...p, videos: move(p.videos, index, 1) }))}
+                            onRemove={() => setFormData((p) => ({ ...p, videos: p.videos.filter((_, i) => i !== index) }))}
+                          />
+                        </div>
+                        <input type="text" value={video.thumbnail_url} onChange={(e) => setFormData((p) => ({ ...p, videos: p.videos.map((x, i) => i === index ? { ...x, thumbnail_url: e.target.value } : x) }))} placeholder="Thumbnail URL (optional)" className={inputCls} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'Alternatives' && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className={labelCls}>Alternatives</label>
+                    <button onClick={() => setFormData((p) => ({ ...p, alternatives: [...p.alternatives, { alternative_tool_id: '', alternative_name: '', alternative_url: '', alternative_logo: '', note: '' }] }))} className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700">
+                      <Plus className="w-3.5 h-3.5" /> Add alternative
+                    </button>
+                  </div>
+                  {formData.alternatives.length === 0 && (
+                    <p className="text-xs text-gray-400 flex items-center gap-1.5"><Repeat className="w-3.5 h-3.5" /> No alternatives yet.</p>
+                  )}
+                  <p className="text-xs text-gray-400 mb-2">Provide either an alternative tool ID (advanced, for linking to an existing tool record) or a free-text name/URL.</p>
+                  <div className="space-y-3">
+                    {formData.alternatives.map((alt, index) => (
+                      <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="grid grid-cols-2 gap-2 flex-1">
+                            <input type="text" value={alt.alternative_name} onChange={(e) => setFormData((p) => ({ ...p, alternatives: p.alternatives.map((x, i) => i === index ? { ...x, alternative_name: e.target.value } : x) }))} placeholder="Alternative name" className={inputCls} />
+                            <input type="text" value={alt.alternative_url} onChange={(e) => setFormData((p) => ({ ...p, alternatives: p.alternatives.map((x, i) => i === index ? { ...x, alternative_url: e.target.value } : x) }))} placeholder="URL (optional)" className={inputCls} />
+                          </div>
+                          <RowActions
+                            index={index} count={formData.alternatives.length}
+                            onUp={() => setFormData((p) => ({ ...p, alternatives: move(p.alternatives, index, -1) }))}
+                            onDown={() => setFormData((p) => ({ ...p, alternatives: move(p.alternatives, index, 1) }))}
+                            onRemove={() => setFormData((p) => ({ ...p, alternatives: p.alternatives.filter((_, i) => i !== index) }))}
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <input type="text" value={alt.alternative_logo} onChange={(e) => setFormData((p) => ({ ...p, alternatives: p.alternatives.map((x, i) => i === index ? { ...x, alternative_logo: e.target.value } : x) }))} placeholder="Logo URL (optional)" className={inputCls} />
+                          <input type="text" value={alt.alternative_tool_id} onChange={(e) => setFormData((p) => ({ ...p, alternatives: p.alternatives.map((x, i) => i === index ? { ...x, alternative_tool_id: e.target.value } : x) }))} placeholder="Alternative tool ID (advanced, optional)" className={`${inputCls} font-mono`} />
+                        </div>
+                        <input type="text" value={alt.note} onChange={(e) => setFormData((p) => ({ ...p, alternatives: p.alternatives.map((x, i) => i === index ? { ...x, note: e.target.value } : x) }))} placeholder="Note (optional)" className={inputCls} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'Internal Links' && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className={labelCls}>Internal Links</label>
+                    <button onClick={() => setFormData((p) => ({ ...p, internal_links: [...p.internal_links, { label: '', url: '' }] }))} className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700">
+                      <Plus className="w-3.5 h-3.5" /> Add link
+                    </button>
+                  </div>
+                  {formData.internal_links.length === 0 && (
+                    <p className="text-xs text-gray-400 flex items-center gap-1.5"><Link2 className="w-3.5 h-3.5" /> No internal links yet.</p>
+                  )}
+                  <div className="space-y-2">
+                    {formData.internal_links.map((link, index) => (
+                      <div key={index} className="flex items-start gap-2">
+                        <div className="grid grid-cols-2 gap-2 flex-1">
+                          <input type="text" value={link.label} onChange={(e) => setFormData((p) => ({ ...p, internal_links: p.internal_links.map((x, i) => i === index ? { ...x, label: e.target.value } : x) }))} placeholder="Label" className={inputCls} />
+                          <input type="text" value={link.url} onChange={(e) => setFormData((p) => ({ ...p, internal_links: p.internal_links.map((x, i) => i === index ? { ...x, url: e.target.value } : x) }))} placeholder="URL" className={inputCls} />
+                        </div>
+                        <RowActions
+                          index={index} count={formData.internal_links.length}
+                          onUp={() => setFormData((p) => ({ ...p, internal_links: move(p.internal_links, index, -1) }))}
+                          onDown={() => setFormData((p) => ({ ...p, internal_links: move(p.internal_links, index, 1) }))}
+                          onRemove={() => setFormData((p) => ({ ...p, internal_links: p.internal_links.filter((_, i) => i !== index) }))}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {activeTab === 'FAQ' && (
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -912,6 +1084,9 @@ export default function WpAdminToolEditorPage() {
                   <Field label="SEO Meta Description" hint="Falls back to Short Description when empty">
                     <textarea value={formData.seo_meta_description} onChange={(e) => setFormData((p) => ({ ...p, seo_meta_description: e.target.value }))} rows={2} className={inputCls} placeholder={formData.short_description || 'Meta description...'} />
                   </Field>
+                  <Field label="Canonical URL" hint="Defaults to the auto-generated canonical from the slug when empty">
+                    <input type="text" value={formData.canonical_url} onChange={(e) => setFormData((p) => ({ ...p, canonical_url: e.target.value }))} className={inputCls} placeholder={`https://www.gappsy.com/tools/${formData.slug || '...'}`} />
+                  </Field>
 
                   <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">
                     <p className="text-xs text-gray-400 mb-1">Search preview</p>
@@ -941,40 +1116,121 @@ export default function WpAdminToolEditorPage() {
                 </>
               )}
 
-              {activeTab === 'Publishing' && (
-                <>
-                  <div className="grid grid-cols-3 gap-4">
-                    <Field label="Status">
-                      <select value={formData.status} onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as ToolFormData['status'] }))} className={inputCls}>
-                        {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-                      </select>
-                    </Field>
-                    <Field label="Rating">
-                      <input type="number" step="0.1" min="0" max="5" value={formData.rating} onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))} className={inputCls} />
-                    </Field>
-                    <Field label="Review Count">
-                      <input type="number" min="0" value={formData.review_count} onChange={(e) => setFormData((p) => ({ ...p, review_count: Number(e.target.value) }))} className={inputCls} />
-                    </Field>
-                  </div>
+              {activeTab === 'Publishing' && (() => {
+                const requiredItems = completeness.items.filter((item) => item.required);
+                const recommendedItems = completeness.items.filter((item) => !item.required);
+                const requiredMetCount = requiredItems.filter((item) => item.met).length;
+                const recommendedMetCount = recommendedItems.filter((item) => item.met).length;
+                const firstPublishMissing = toolData?.data.first_publish_missing || [];
+                const showFirstPublishBanner = isEditMode && formData.status !== 'published' && firstPublishMissing.length > 0;
+                const jsonLd = buildToolJsonLd({
+                  slug: formData.slug,
+                  name: formData.name,
+                  shortDescription: formData.short_description || null,
+                  longDescription: formData.long_description || null,
+                  logo: formData.logo || null,
+                  websiteUrl: formData.website || null,
+                  primaryCategoryName: categories.find((c) => c.id === formData.primary_category_id)?.name,
+                  rating: formData.rating,
+                  reviewCount: formData.review_count,
+                  pricingPlans: formData.pricing_plans.map((p) => ({ plan_name: p.plan_name || null, price: p.price || null })),
+                  reviews: formData.reviews.map((r) => ({ author_name: r.author_name, rating: r.rating, quote: r.quote, created_at: null })),
+                  faqs: formData.faqs.filter((f) => f.status === 'published').map((f) => ({ question: f.question, answer: f.answer })),
+                });
 
-                  <div className="border-t border-gray-100 pt-4">
-                    <p className={labelCls}>Completeness checklist</p>
-                    <p className="text-xs text-gray-400 mb-3">
-                      Publishing is blocked until every <span className="font-medium text-gray-600">required</span> item is met. Recommended items only affect the percentage.
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                      {completeness.items.map((item) => (
-                        <div key={item.key} className="flex items-center gap-2 text-sm">
-                          {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : item.required ? <XCircle className="w-4 h-4 text-rose-400 shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 shrink-0" />}
-                          <span className={item.met ? 'text-gray-600' : item.required ? 'text-rose-600 font-medium' : 'text-gray-400'}>
-                            {item.label} {item.required && <span className="text-[10px] uppercase text-gray-400">(required)</span>}
-                          </span>
-                        </div>
-                      ))}
+                return (
+                  <>
+                    {showFirstPublishBanner && (
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800 flex items-start gap-2">
+                        <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                        <span>Before this can be published for the first time: {firstPublishMissing.join(', ')}.</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-3 gap-4">
+                      <Field label="Status">
+                        <select value={formData.status} onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as ToolFormData['status'] }))} className={inputCls}>
+                          {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                        </select>
+                      </Field>
+                      <Field label="Rating">
+                        <input type="number" step="0.1" min="0" max="5" value={formData.rating} onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))} className={inputCls} />
+                      </Field>
+                      <Field label="Review Count">
+                        <input type="number" min="0" value={formData.review_count} onChange={(e) => setFormData((p) => ({ ...p, review_count: Number(e.target.value) }))} className={inputCls} />
+                      </Field>
                     </div>
-                  </div>
-                </>
-              )}
+
+                    <Field label="Scheduled Publish At" hint="Optional. Leave empty for no schedule.">
+                      <input type="datetime-local" value={formData.scheduled_publish_at} onChange={(e) => setFormData((p) => ({ ...p, scheduled_publish_at: e.target.value }))} className={inputCls} />
+                    </Field>
+
+                    {formData.status === 'draft' && (
+                      <label className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg p-3 bg-gray-50">
+                        <input type="checkbox" checked={forcePublish} onChange={(e) => setForcePublish(e.target.checked)} />
+                        Force publish directly from Draft (bypasses the "Ready to Publish" step)
+                      </label>
+                    )}
+
+                    <div className="border-t border-gray-100 pt-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className={labelCls}>Publish readiness</p>
+                      </div>
+                      <p className="text-xs text-gray-400 mb-3">
+                        {requiredMetCount} of {requiredItems.length} required complete, {recommendedMetCount} of {recommendedItems.length} recommended
+                      </p>
+
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Required</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                          {requiredItems.map((item) => (
+                            <div key={item.key} className="flex items-center gap-2 text-sm">
+                              {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                              <span className={item.met ? 'text-gray-600' : 'text-rose-600 font-medium'}>{item.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Recommended</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                          {recommendedItems.map((item) => (
+                            <div key={item.key} className="flex items-center gap-2 text-sm">
+                              {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <Circle className="w-4 h-4 text-amber-400 shrink-0" />}
+                              <span className={item.met ? 'text-gray-600' : 'text-gray-400'}>{item.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-100 pt-4 opacity-60">
+                      <div className="border border-dashed border-gray-300 rounded-lg p-3 flex items-start gap-3 bg-gray-50">
+                        <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200">
+                          <Lock className="w-4 h-4 text-gray-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-500 flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5" /> AI Content Score
+                          </p>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            AI-assisted quality scoring is coming in a future phase — not yet active. The completeness percentage above (shown in the header) is the only real score on this page today.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-100 pt-4">
+                      <details>
+                        <summary className={`${labelCls} cursor-pointer select-none`}>JSON-LD preview</summary>
+                        <p className="text-xs text-gray-400 mt-1 mb-2">Read-only preview generated from the current form state. Not saved anywhere.</p>
+                        <pre className="text-xs bg-gray-50 border border-gray-200 rounded-lg p-3 overflow-x-auto">{JSON.stringify(jsonLd, null, 2)}</pre>
+                      </details>
+                    </div>
+                  </>
+                );
+              })()}
 
             </div>
           </div>

@@ -81,6 +81,10 @@ function PlaceholderCard({ icon: Icon, title, note }: { icon: typeof Building2; 
 export default function WpAdminNewSoftwareWizardPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  // Real wall-clock start of this import attempt — used to log an honest
+  // duration on tool_import_history, not a fabricated one.
+  const [flowStartedAt] = useState(() => new Date().toISOString());
+  const [forcePublish, setForcePublish] = useState(false);
 
   // Step 1
   const [url, setUrl] = useState('');
@@ -107,6 +111,7 @@ export default function WpAdminNewSoftwareWizardPage() {
   const { mutate: checkDuplicate } = useAdminMutation<DuplicateCheckResponse, { action: string; website?: string; slug?: string }>('admin-tools', 'POST');
   const { mutate: createTool } = useAdminMutation<{ ok: boolean; data: { id: string } }, Record<string, unknown>>('admin-tools', 'POST');
   const { mutate: updateTool } = useAdminMutation<{ ok: boolean }, Record<string, unknown>>(`admin-tools?id=${toolId}`, 'PUT');
+  const { mutate: logImport } = useAdminMutation<{ ok: boolean }, Record<string, unknown>>('admin-import-history', 'POST');
 
   const { data: reviewData, refetch: refetchReview } = useAdminFetch<ToolDetailResponse>(
     () => (step === 5 && toolId ? `admin-tools?id=${toolId}` : null)
@@ -162,6 +167,11 @@ export default function WpAdminNewSoftwareWizardPage() {
       primary_category_id: categoryId || null,
     };
 
+    const sourceUrl = normalizeUrl(url) || null;
+    const importErrors = urlCheck && !urlCheck.reachable
+      ? [`URL reachability check failed${urlCheck.error ? `: ${urlCheck.error}` : ''} — continued anyway`]
+      : [];
+
     if (toolId) {
       const result = await updateTool(payload);
       setSaving(false);
@@ -169,6 +179,11 @@ export default function WpAdminNewSoftwareWizardPage() {
         setSaveError(result.error?.message || 'Failed to save');
         return;
       }
+      logImport({
+        tool_id: toolId, source: 'wizard', source_url: sourceUrl, status: 'success',
+        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0,
+        started_at: flowStartedAt, completed_at: new Date().toISOString(),
+      });
       setStep(3);
       return;
     }
@@ -180,7 +195,13 @@ export default function WpAdminNewSoftwareWizardPage() {
       return;
     }
     if (result.data) {
-      setToolId(result.data.data.id);
+      const newToolId = result.data.data.id;
+      setToolId(newToolId);
+      logImport({
+        tool_id: newToolId, source: 'wizard', source_url: sourceUrl, status: 'success',
+        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0,
+        started_at: flowStartedAt, completed_at: new Date().toISOString(),
+      });
       setStep(3);
     }
   }
@@ -188,11 +209,25 @@ export default function WpAdminNewSoftwareWizardPage() {
   const review = reviewData?.data;
   const completeness: CompletenessResult | undefined = review?.completeness;
 
+  async function handleMarkReadyToPublish() {
+    if (!toolId) return;
+    setSaveError(null);
+    setSaving(true);
+    const result = await updateTool({ status: 'ready_to_publish' });
+    setSaving(false);
+    if (!result.ok) {
+      setSaveError(result.error?.message || 'Failed to update status');
+      return;
+    }
+    refetchReview();
+  }
+
   async function handlePublish() {
     if (!toolId) return;
     setSaveError(null);
     setSaving(true);
-    const result = await updateTool({ status: 'published' });
+    const isDraft = review?.status === 'draft';
+    const result = await updateTool({ status: 'published', ...(isDraft ? { force: true } : {}) });
     setSaving(false);
     if (!result.ok) {
       setSaveError(result.error?.message || 'Failed to publish');
@@ -451,6 +486,16 @@ export default function WpAdminNewSoftwareWizardPage() {
                     </div>
                   )}
 
+                  {review.status === 'draft' && (
+                    <label className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                      <input type="checkbox" checked={forcePublish} onChange={(e) => setForcePublish(e.target.checked)} className="mt-0.5" />
+                      <span>
+                        This tool is still a Draft. Publishing normally requires moving it to "Ready to Publish" first —
+                        check this box to force-publish directly from Draft instead.
+                      </span>
+                    </label>
+                  )}
+
                   <div className="flex flex-wrap justify-end gap-2 pt-2 border-t border-gray-100">
                     <Link
                       to={`/wp-admin/tools/${toolId}/edit`}
@@ -465,9 +510,18 @@ export default function WpAdminNewSoftwareWizardPage() {
                       <Save className="w-4 h-4" />
                       Save Draft &amp; Exit
                     </button>
+                    {review.status === 'draft' && (
+                      <button
+                        onClick={handleMarkReadyToPublish}
+                        disabled={saving}
+                        className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-2.5 rounded-lg font-medium hover:bg-sky-200 disabled:opacity-50 transition text-sm"
+                      >
+                        Mark Ready to Publish
+                      </button>
+                    )}
                     <button
                       onClick={handlePublish}
-                      disabled={saving || review.status === 'published'}
+                      disabled={saving || review.status === 'published' || (review.status === 'draft' && !forcePublish) || (completeness ? !completeness.requiredMet : false)}
                       title={completeness && !completeness.requiredMet ? `Missing: ${completeness.missingRequired.join(', ')}` : undefined}
                       className="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-gray-800 disabled:bg-gray-400 transition text-sm"
                     >
