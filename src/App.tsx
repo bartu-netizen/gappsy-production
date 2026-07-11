@@ -95,6 +95,7 @@ const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyRevie
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
 const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
 const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
+const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
 const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategoriesPage"));
 const WpAdminToolCategoryEditorPage = lazy(() => import("./pages/WpAdminToolCategoryEditorPage"));
 const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
@@ -200,6 +201,7 @@ export default function App() {
         <Route path="/wp-admin/tools/tags/new" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/:id/preview" element={<AdminRoute><WpAdminToolPreviewPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />

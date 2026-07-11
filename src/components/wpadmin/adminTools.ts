@@ -4,11 +4,47 @@ export interface AdminTool {
   description: string;
   href: string;
   keywords: string[];
-  group: 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
 }
 
 export const ADMIN_TOOLS: AdminTool[] = [
+  {
+    id: 'add-tool',
+    label: 'Add Tool',
+    description: 'Create a new software tool listing',
+    href: '/wp-admin/tools/new',
+    keywords: ['add', 'new', 'tool', 'create', 'software'],
+    group: 'Software',
+    iconName: 'Wrench',
+  },
+  {
+    id: 'tool-categories',
+    label: 'Categories',
+    description: 'Manage the Tools taxonomy — categories used to filter and organize the directory',
+    href: '/wp-admin/tools/categories',
+    keywords: ['categories', 'taxonomy', 'tools', 'software', 'filter'],
+    group: 'Taxonomy',
+    iconName: 'FolderTree',
+  },
+  {
+    id: 'tool-tags',
+    label: 'Tags',
+    description: 'Manage the Tools free-form tag taxonomy',
+    href: '/wp-admin/tools/tags',
+    keywords: ['tags', 'taxonomy', 'tools', 'software'],
+    group: 'Taxonomy',
+    iconName: 'Tag',
+  },
+  {
+    id: 'tool-comparisons',
+    label: 'Comparisons',
+    description: 'Manage approved tool-vs-tool comparison pages',
+    href: '/wp-admin/tool-comparisons',
+    keywords: ['comparisons', 'compare', 'vs', 'tools', 'software'],
+    group: 'Editorial',
+    iconName: 'GitCompare',
+  },
   {
     id: 'top25-editor',
     label: 'Edit Top-25 Pages',
@@ -101,11 +137,11 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
   {
     id: 'tools',
-    label: 'Tools',
-    description: 'Manage the Tools directory — entities, categories, and tags',
+    label: 'All Tools',
+    description: 'Browse, search, and manage every software tool listing',
     href: '/wp-admin/tools',
-    keywords: ['tools', 'directory', 'entities', 'categories', 'tags', 'software'],
-    group: 'Content',
+    keywords: ['tools', 'directory', 'entities', 'software', 'all'],
+    group: 'Software',
     iconName: 'Wrench',
   },
   {
@@ -326,4 +362,4 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
 ];
 
-export const TOOL_GROUPS = ['Content', 'Monetization', 'Email', 'Ops'] as const;
+export const TOOL_GROUPS = ['Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;

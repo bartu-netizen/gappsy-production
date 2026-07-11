@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
+import { computeCompleteness, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -13,11 +14,16 @@ const TOOL_FIELDS = [
   "long_description", "pricing_model", "starting_price", "youtube_url",
   "verified", "featured", "rating", "review_count", "status",
   "founded_year", "company_size", "headquarters", "languages",
+  "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
+  "noindex", "sitemap_eligible", "is_editors_pick",
 ];
 
-const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url"];
+const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image"];
 
 const UNIQUE_VIOLATION = "23505";
+const SORTABLE_COLUMNS = new Set(["name", "updated_at", "created_at", "rating"]);
+const DEFAULT_PER_PAGE = 25;
+const MAX_PER_PAGE = 100;
 
 class ValidationError extends Error {}
 
@@ -49,6 +55,8 @@ function validateOptionalUrl(value: unknown, fieldName: string): string | null {
 interface ScreenshotInput {
   image_url: string;
   caption: string | null;
+  alt_text: string | null;
+  is_featured: boolean;
   sort_order: number;
 }
 
@@ -58,6 +66,44 @@ interface ReviewInput {
   rating: number;
   quote: string;
   source: string | null;
+  sort_order: number;
+}
+
+interface PricingPlanInput {
+  plan_name: string | null;
+  price: string | null;
+  billing_cycle: string | null;
+  description: string | null;
+  features: string[];
+  is_recommended: boolean;
+  sort_order: number;
+}
+
+interface IntegrationInput {
+  integration_name: string;
+  integration_slug: string | null;
+  integration_logo: string | null;
+  description: string | null;
+}
+
+interface FeatureInput {
+  group_name: string | null;
+  title: string;
+  description: string | null;
+  sort_order: number;
+}
+
+interface UseCaseInput {
+  title: string;
+  description: string | null;
+  audience: string | null;
+  sort_order: number;
+}
+
+interface FaqInput {
+  question: string;
+  answer: string;
+  status: "draft" | "published";
   sort_order: number;
 }
 
@@ -83,7 +129,6 @@ function validateLanguages(value: unknown): string[] {
   return [...new Set(cleaned)];
 }
 
-// Validates the full reviews array up front, mirroring validateScreenshots.
 function validateReviews(input: unknown): ReviewInput[] {
   if (input === undefined || input === null) return [];
   if (!Array.isArray(input)) {
@@ -110,9 +155,8 @@ function validateReviews(input: unknown): ReviewInput[] {
   });
 }
 
-// Validates the full screenshots array up front. Unlike tool URL fields,
-// image_url is required (NOT NULL in the schema) — an empty/invalid value is
-// rejected rather than silently dropped.
+// Unlike tool URL fields, image_url is required (NOT NULL in the schema) —
+// an empty/invalid value is rejected rather than silently dropped.
 function validateScreenshots(input: unknown): ScreenshotInput[] {
   if (input === undefined || input === null) return [];
   if (!Array.isArray(input)) {
@@ -125,8 +169,114 @@ function validateScreenshots(input: unknown): ScreenshotInput[] {
       throw new ValidationError(`screenshots[${index}].image_url is required`);
     }
     const caption = typeof shot?.caption === "string" && shot.caption.trim() ? shot.caption : null;
+    const altText = typeof shot?.alt_text === "string" && shot.alt_text.trim() ? shot.alt_text : null;
+    const isFeatured = shot?.is_featured === true;
     const sortOrder = typeof shot?.sort_order === "number" ? shot.sort_order : index;
-    return { image_url: url, caption, sort_order: sortOrder };
+    return { image_url: url, caption, alt_text: altText, is_featured: isFeatured, sort_order: sortOrder };
+  });
+}
+
+function validatePricingPlans(input: unknown): PricingPlanInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("pricing_plans must be an array");
+  }
+  return input.map((raw, index) => {
+    const plan = raw as Record<string, unknown>;
+    const planName = typeof plan?.plan_name === "string" && plan.plan_name.trim() ? plan.plan_name.trim() : null;
+    const price = typeof plan?.price === "string" && plan.price.trim() ? plan.price.trim() : null;
+    const billingCycle = typeof plan?.billing_cycle === "string" && plan.billing_cycle.trim() ? plan.billing_cycle.trim() : null;
+    const description = typeof plan?.description === "string" && plan.description.trim() ? plan.description.trim() : null;
+    const features = Array.isArray(plan?.features)
+      ? (plan.features as unknown[]).map((f) => String(f).trim()).filter(Boolean)
+      : [];
+    const isRecommended = plan?.is_recommended === true;
+    const sortOrder = typeof plan?.sort_order === "number" ? plan.sort_order : index;
+    return { plan_name: planName, price, billing_cycle: billingCycle, description, features, is_recommended: isRecommended, sort_order: sortOrder };
+  });
+}
+
+function validateIntegrations(input: unknown): IntegrationInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("integrations must be an array");
+  }
+  return input.map((raw, index) => {
+    const integration = raw as Record<string, unknown>;
+    const name = typeof integration?.integration_name === "string" ? integration.integration_name.trim() : "";
+    if (!name) {
+      throw new ValidationError(`integrations[${index}].integration_name is required`);
+    }
+    const slug = typeof integration?.integration_slug === "string" && integration.integration_slug.trim() ? integration.integration_slug.trim() : null;
+    const logo = validateOptionalUrl(integration?.integration_logo, `integrations[${index}].integration_logo`);
+    const description = typeof integration?.description === "string" && integration.description.trim() ? integration.description.trim() : null;
+    return { integration_name: name, integration_slug: slug, integration_logo: logo, description };
+  });
+}
+
+function validateFeatures(input: unknown): FeatureInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("features must be an array");
+  }
+  return input.map((raw, index) => {
+    const feature = raw as Record<string, unknown>;
+    const title = typeof feature?.title === "string" ? feature.title.trim() : "";
+    if (!title) {
+      throw new ValidationError(`features[${index}].title is required`);
+    }
+    const groupName = typeof feature?.group_name === "string" && feature.group_name.trim() ? feature.group_name.trim() : null;
+    const description = typeof feature?.description === "string" && feature.description.trim() ? feature.description.trim() : null;
+    const sortOrder = typeof feature?.sort_order === "number" ? feature.sort_order : index;
+    return { group_name: groupName, title, description, sort_order: sortOrder };
+  });
+}
+
+// Pros/cons are simple ordered strings — one item per row in the admin UI.
+function validateStringList(input: unknown, fieldName: string): string[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError(`${fieldName} must be an array`);
+  }
+  return (input as unknown[]).map((v) => String(v).trim()).filter(Boolean);
+}
+
+function validateUseCases(input: unknown): UseCaseInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("use_cases must be an array");
+  }
+  return input.map((raw, index) => {
+    const useCase = raw as Record<string, unknown>;
+    const title = typeof useCase?.title === "string" ? useCase.title.trim() : "";
+    if (!title) {
+      throw new ValidationError(`use_cases[${index}].title is required`);
+    }
+    const description = typeof useCase?.description === "string" && useCase.description.trim() ? useCase.description.trim() : null;
+    const audience = typeof useCase?.audience === "string" && useCase.audience.trim() ? useCase.audience.trim() : null;
+    const sortOrder = typeof useCase?.sort_order === "number" ? useCase.sort_order : index;
+    return { title, description, audience, sort_order: sortOrder };
+  });
+}
+
+function validateFaqs(input: unknown): FaqInput[] {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) {
+    throw new ValidationError("faqs must be an array");
+  }
+  return input.map((raw, index) => {
+    const faq = raw as Record<string, unknown>;
+    const question = typeof faq?.question === "string" ? faq.question.trim() : "";
+    if (!question) {
+      throw new ValidationError(`faqs[${index}].question is required`);
+    }
+    const answer = typeof faq?.answer === "string" ? faq.answer.trim() : "";
+    if (!answer) {
+      throw new ValidationError(`faqs[${index}].answer is required`);
+    }
+    const status = faq?.status === "draft" ? "draft" : "published";
+    const sortOrder = typeof faq?.sort_order === "number" ? faq.sort_order : index;
+    return { question, answer, status, sort_order: sortOrder };
   });
 }
 
@@ -143,6 +293,34 @@ function validateCategorySelection(categoryIds: string[], primaryCategoryId: str
   }
   if (!categoryIds.includes(primaryCategoryId)) {
     throw new ValidationError("primary_category_id must be one of the selected category_ids");
+  }
+}
+
+// Required-for-publish gate — the authoritative check (client-side
+// completeness UI mirrors this for live feedback, but this is what actually
+// blocks a publish). Mirrors src/utils/toolCompleteness.ts's REQUIRED_KEYS.
+function validatePublishRequirements(merged: {
+  name: string;
+  slug: string;
+  website: string | null;
+  short_description: string | null;
+  long_description: string | null;
+  seo_meta_description: string | null;
+  pricing_model: string | null;
+  categoryIds: string[];
+}) {
+  const missing: string[] = [];
+  if (!merged.name?.trim()) missing.push("name");
+  if (!merged.slug?.trim()) missing.push("slug");
+  if (!merged.website?.trim()) missing.push("website");
+  if (merged.categoryIds.length === 0) missing.push("category");
+  if (!merged.short_description?.trim() && !merged.long_description?.trim()) missing.push("description");
+  if (!merged.seo_meta_description?.trim() && !merged.short_description?.trim() && !merged.long_description?.trim()) {
+    missing.push("SEO meta description");
+  }
+  if (!merged.pricing_model?.trim()) missing.push("pricing model");
+  if (missing.length > 0) {
+    throw new ValidationError(`Cannot publish — missing required field(s): ${missing.join(", ")}`);
   }
 }
 
@@ -180,6 +358,66 @@ async function attachToolTags(supabase: any, toolIds: string[]) {
     map.set(row.tool_id, list);
   }
   return map;
+}
+
+// A fixed set of bulk queries regardless of how many tools are on the
+// current page — this is what lets the list endpoint stay cheap at 50,000+
+// tools: never one query per tool, always ~9 queries per page.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchCompletenessRelations(supabase: any, toolIds: string[]) {
+  if (toolIds.length === 0) {
+    return { screenshots: new Map(), faqs: new Map(), pros: new Map(), cons: new Map(), useCases: new Map(), pricingPlans: new Map(), features: new Map(), integrations: new Map() };
+  }
+  const [screenshots, faqs, pros, cons, useCases, pricingPlans, features, integrations] = await Promise.all([
+    supabase.from("tool_screenshots").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_faqs").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_pros").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_cons").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_use_cases").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_pricing_plans").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_features").select("tool_id").in("tool_id", toolIds),
+    supabase.from("tool_integrations").select("tool_id").in("tool_id", toolIds),
+  ]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const countBy = (rows: any[]) => {
+    const map = new Map<string, number>();
+    for (const row of rows || []) map.set(row.tool_id, (map.get(row.tool_id) || 0) + 1);
+    return map;
+  };
+  return {
+    screenshots: countBy(screenshots.data),
+    faqs: countBy(faqs.data),
+    pros: countBy(pros.data),
+    cons: countBy(cons.data),
+    useCases: countBy(useCases.data),
+    pricingPlans: countBy(pricingPlans.data),
+    features: countBy(features.data),
+    integrations: countBy(integrations.data),
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildCompletenessInput(tool: any, categoryCount: number, relations: Awaited<ReturnType<typeof fetchCompletenessRelations>>): ToolCompletenessInput {
+  const id = tool.id;
+  return {
+    name: tool.name,
+    slug: tool.slug,
+    website: tool.website,
+    short_description: tool.short_description,
+    long_description: tool.long_description,
+    seo_meta_description: tool.seo_meta_description,
+    pricing_model: tool.pricing_model,
+    status: tool.status,
+    categoryCount,
+    screenshotCount: relations.screenshots.get(id) || 0,
+    faqCount: relations.faqs.get(id) || 0,
+    prosCount: relations.pros.get(id) || 0,
+    consCount: relations.cons.get(id) || 0,
+    useCaseCount: relations.useCases.get(id) || 0,
+    pricingPlanCount: relations.pricingPlans.get(id) || 0,
+    featureCount: relations.features.get(id) || 0,
+    integrationCount: relations.integrations.get(id) || 0,
+  };
 }
 
 // NOTE — transactional limitation: delete() and insert() below are two
@@ -224,52 +462,19 @@ async function replaceTagLinks(supabase: any, toolId: string, tagIds: string[]) 
   if (insertError) throw new Error(`Failed to save tags: ${insertError.message}`);
 }
 
-// See transactional-limitation note on replaceCategoryLinks above — applies here too.
-// `screenshots` is expected to already be validated (see validateScreenshots).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function replaceScreenshots(supabase: any, toolId: string, screenshots: ScreenshotInput[]) {
-  const { error: deleteError } = await supabase.from("tool_screenshots").delete().eq("tool_id", toolId);
-  if (deleteError) throw new Error(`Failed to clear existing screenshots: ${deleteError.message}`);
-
-  if (screenshots.length === 0) return;
-
-  const rows = screenshots.map((s, index) => ({
-    tool_id: toolId,
-    image_url: s.image_url,
-    caption: s.caption,
-    sort_order: s.sort_order ?? index,
-  }));
-  const { error: insertError } = await supabase.from("tool_screenshots").insert(rows);
-  if (insertError) throw new Error(`Failed to save screenshots: ${insertError.message}`);
-}
-
-// See transactional-limitation note on replaceCategoryLinks above — applies here too.
-// `reviews` is expected to already be validated (see validateReviews).
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function replaceReviews(supabase: any, toolId: string, reviews: ReviewInput[]) {
-  const { error: deleteError } = await supabase.from("tool_reviews").delete().eq("tool_id", toolId);
-  if (deleteError) throw new Error(`Failed to clear existing reviews: ${deleteError.message}`);
-
-  if (reviews.length === 0) return;
-
-  const rows = reviews.map((r, index) => ({
-    tool_id: toolId,
-    author_name: r.author_name,
-    author_title: r.author_title,
-    rating: r.rating,
-    quote: r.quote,
-    source: r.source,
-    sort_order: r.sort_order ?? index,
-  }));
-  const { error: insertError } = await supabase.from("tool_reviews").insert(rows);
-  if (insertError) throw new Error(`Failed to save reviews: ${insertError.message}`);
+async function replaceChildRows(supabase: any, table: string, toolId: string, rows: Record<string, unknown>[]) {
+  const { error: deleteError } = await supabase.from(table).delete().eq("tool_id", toolId);
+  if (deleteError) throw new Error(`Failed to clear existing ${table}: ${deleteError.message}`);
+  if (rows.length === 0) return;
+  const { error: insertError } = await supabase.from(table).insert(rows.map((r) => ({ ...r, tool_id: toolId })));
+  if (insertError) throw new Error(`Failed to save ${table}: ${insertError.message}`);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function generateUniqueSlug(supabase: any, baseSlug: string) {
   let candidate = `${baseSlug}-copy`;
   let suffix = 2;
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const { data, error } = await supabase.from("tools").select("id").eq("slug", candidate).maybeSingle();
     if (error) throw new Error(`Failed to check slug uniqueness: ${error.message}`);
@@ -279,10 +484,24 @@ async function generateUniqueSlug(supabase: any, baseSlug: string) {
   }
 }
 
+interface NormalizedToolPayload {
+  categoryIds: string[];
+  primaryCategoryId: string | null;
+  screenshots: ScreenshotInput[];
+  reviews: ReviewInput[];
+  pricingPlans: PricingPlanInput[];
+  integrations: IntegrationInput[];
+  features: FeatureInput[];
+  pros: string[];
+  cons: string[];
+  useCases: UseCaseInput[];
+  faqs: FaqInput[];
+}
+
 // Applies validated URL fields onto TOOL_FIELDS-shaped payload in place, and
-// returns the validated screenshots array. Throws ValidationError on any bad
+// returns the validated relation arrays. Throws ValidationError on any bad
 // input — caller is responsible for turning that into a 400 response.
-function validateAndNormalizeToolPayload(payload: Record<string, unknown>) {
+function validateAndNormalizeToolPayload(payload: Record<string, unknown>): NormalizedToolPayload {
   for (const field of URL_FIELDS) {
     if (Object.prototype.hasOwnProperty.call(payload, field)) {
       payload[field] = validateOptionalUrl(payload[field], field);
@@ -299,10 +518,19 @@ function validateAndNormalizeToolPayload(payload: Record<string, unknown>) {
   const primaryCategoryId: string | null = (payload.primary_category_id as string | null | undefined) ?? null;
   validateCategorySelection(categoryIds, primaryCategoryId);
 
-  const screenshots = validateScreenshots(payload.screenshots);
-  const reviews = validateReviews(payload.reviews);
-
-  return { categoryIds, primaryCategoryId, screenshots, reviews };
+  return {
+    categoryIds,
+    primaryCategoryId,
+    screenshots: validateScreenshots(payload.screenshots),
+    reviews: validateReviews(payload.reviews),
+    pricingPlans: validatePricingPlans(payload.pricing_plans),
+    integrations: validateIntegrations(payload.integrations),
+    features: validateFeatures(payload.features),
+    pros: validateStringList(payload.pros, "pros"),
+    cons: validateStringList(payload.cons, "cons"),
+    useCases: validateUseCases(payload.use_cases),
+    faqs: validateFaqs(payload.faqs),
+  };
 }
 
 Deno.serve(async (req: Request) => {
@@ -329,47 +557,101 @@ Deno.serve(async (req: Request) => {
         if (error) return jsonResponse({ ok: false, error: error.message }, 500);
         if (!tool) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
 
-        const [categoriesMap, tagsMap, screenshotsResult, reviewsResult] = await Promise.all([
+        const [categoriesMap, tagsMap, screenshotsResult, reviewsResult, pricingResult, integrationsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult] = await Promise.all([
           attachToolCategories(supabase, [id]),
           attachToolTags(supabase, [id]),
           supabase.from("tool_screenshots").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
           supabase.from("tool_reviews").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_pricing_plans").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_integrations").select("*").eq("tool_id", id),
+          supabase.from("tool_features").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_pros").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_cons").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_use_cases").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
+          supabase.from("tool_faqs").select("*").eq("tool_id", id).order("sort_order", { ascending: true }),
         ]);
-        if (screenshotsResult.error) {
-          return jsonResponse({ ok: false, error: `Failed to load screenshots: ${screenshotsResult.error.message}` }, 500);
+        for (const [label, result] of [
+          ["screenshots", screenshotsResult], ["reviews", reviewsResult], ["pricing plans", pricingResult],
+          ["integrations", integrationsResult], ["features", featuresResult], ["pros", prosResult],
+          ["cons", consResult], ["use cases", useCasesResult], ["faqs", faqsResult],
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ] as [string, any][]) {
+          if (result.error) return jsonResponse({ ok: false, error: `Failed to load ${label}: ${result.error.message}` }, 500);
         }
-        if (reviewsResult.error) {
-          return jsonResponse({ ok: false, error: `Failed to load reviews: ${reviewsResult.error.message}` }, 500);
-        }
+
+        const categories = categoriesMap.get(id) || [];
+        const relations = await fetchCompletenessRelations(supabase, [id]);
+        const completeness = computeCompleteness(buildCompletenessInput(tool, categories.length, relations));
 
         return jsonResponse({
           ok: true,
           data: {
             ...tool,
-            categories: categoriesMap.get(id) || [],
+            categories,
             tags: tagsMap.get(id) || [],
             screenshots: screenshotsResult.data || [],
             reviews: reviewsResult.data || [],
+            pricing_plans: pricingResult.data || [],
+            integrations: integrationsResult.data || [],
+            features: featuresResult.data || [],
+            pros: (prosResult.data || []).map((r: { text: string }) => r.text),
+            cons: (consResult.data || []).map((r: { text: string }) => r.text),
+            use_cases: useCasesResult.data || [],
+            faqs: faqsResult.data || [],
+            completeness,
           },
         });
       }
 
-      const { data: tools, error } = await supabase.from("tools").select("*").order("name", { ascending: true });
+      // ── List: server-side search / status filter / category filter / sort / pagination ──
+      const q = (url.searchParams.get("q") || "").trim();
+      const statusFilter = url.searchParams.get("status");
+      const categoryFilter = url.searchParams.get("category");
+      const sortColumn = SORTABLE_COLUMNS.has(url.searchParams.get("sort") || "") ? (url.searchParams.get("sort") as string) : "updated_at";
+      const sortAscending = url.searchParams.get("dir") === "asc";
+      const page = Math.max(1, Number(url.searchParams.get("page")) || 1);
+      const perPage = Math.min(MAX_PER_PAGE, Math.max(1, Number(url.searchParams.get("per_page")) || DEFAULT_PER_PAGE));
+      const rangeFrom = (page - 1) * perPage;
+      const rangeTo = rangeFrom + perPage - 1;
+
+      let toolIdsInCategory: string[] | null = null;
+      if (categoryFilter) {
+        const { data: links, error: linksError } = await supabase
+          .from("tool_category_links")
+          .select("tool_id")
+          .eq("category_id", categoryFilter);
+        if (linksError) return jsonResponse({ ok: false, error: linksError.message }, 500);
+        toolIdsInCategory = (links || []).map((l: { tool_id: string }) => l.tool_id);
+        if (toolIdsInCategory.length === 0) {
+          return jsonResponse({ ok: true, data: [], total: 0, page, per_page: perPage });
+        }
+      }
+
+      let query = supabase.from("tools").select("*", { count: "exact" });
+      if (statusFilter && statusFilter !== "all") query = query.eq("status", statusFilter);
+      if (q) query = query.or(`name.ilike.%${q}%,slug.ilike.%${q}%`);
+      if (toolIdsInCategory) query = query.in("id", toolIdsInCategory);
+      query = query.order(sortColumn, { ascending: sortAscending }).range(rangeFrom, rangeTo);
+
+      const { data: tools, error, count } = await query;
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
 
       const toolIds = (tools || []).map((t: { id: string }) => t.id);
-      const [categoriesMap, tagsMap] = await Promise.all([
+      const [categoriesMap, relations] = await Promise.all([
         attachToolCategories(supabase, toolIds),
-        attachToolTags(supabase, toolIds),
+        fetchCompletenessRelations(supabase, toolIds),
       ]);
 
-      const data = (tools || []).map((t: { id: string }) => ({
-        ...t,
-        categories: categoriesMap.get(t.id) || [],
-        tags: tagsMap.get(t.id) || [],
-      }));
+      const data = (tools || []).map((t: { id: string }) => {
+        const categories = categoriesMap.get(t.id) || [];
+        return {
+          ...t,
+          categories,
+          completeness: computeCompleteness(buildCompletenessInput(t, categories.length, relations)),
+        };
+      });
 
-      return jsonResponse({ ok: true, data });
+      return jsonResponse({ ok: true, data, total: count || 0, page, per_page: perPage });
     }
 
     if (req.method === "POST") {
@@ -404,51 +686,41 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({ ok: false, error: insertError.message }, 500);
         }
 
-        const [catLinksResult, tagLinksResult, screenshotsResult, reviewsResult] = await Promise.all([
+        const [catLinksResult, tagLinksResult, screenshotsResult, reviewsResult, pricingResult, integrationsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult] = await Promise.all([
           supabase.from("tool_category_links").select("category_id, primary_category").eq("tool_id", payload.id),
           supabase.from("tool_tag_links").select("tag_id").eq("tool_id", payload.id),
-          supabase.from("tool_screenshots").select("image_url, caption, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_screenshots").select("image_url, caption, alt_text, is_featured, sort_order").eq("tool_id", payload.id),
           supabase.from("tool_reviews").select("author_name, author_title, rating, quote, source, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_pricing_plans").select("plan_name, price, billing_cycle, description, features, is_recommended, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_integrations").select("integration_name, integration_slug, integration_logo, description").eq("tool_id", payload.id),
+          supabase.from("tool_features").select("group_name, title, description, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_pros").select("text, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_cons").select("text, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_use_cases").select("title, description, audience, sort_order").eq("tool_id", payload.id),
+          supabase.from("tool_faqs").select("question, answer, status, sort_order").eq("tool_id", payload.id),
         ]);
-        if (catLinksResult.error) throw new Error(`Failed to read source categories: ${catLinksResult.error.message}`);
-        if (tagLinksResult.error) throw new Error(`Failed to read source tags: ${tagLinksResult.error.message}`);
-        if (screenshotsResult.error) throw new Error(`Failed to read source screenshots: ${screenshotsResult.error.message}`);
-        if (reviewsResult.error) throw new Error(`Failed to read source reviews: ${reviewsResult.error.message}`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (const [label, result] of [["categories", catLinksResult], ["tags", tagLinksResult], ["screenshots", screenshotsResult], ["reviews", reviewsResult], ["pricing plans", pricingResult], ["integrations", integrationsResult], ["features", featuresResult], ["pros", prosResult], ["cons", consResult], ["use cases", useCasesResult], ["faqs", faqsResult]] as [string, any][]) {
+          if (result.error) throw new Error(`Failed to read source ${label}: ${result.error.message}`);
+        }
 
         const catLinks = catLinksResult.data || [];
-        const tagLinks = tagLinksResult.data || [];
-        const sourceScreenshots = screenshotsResult.data || [];
-        const sourceReviews = reviewsResult.data || [];
-
         const categoryIds = catLinks.map((c: { category_id: string }) => c.category_id);
         const primaryCategoryId = catLinks.find((c: { primary_category: boolean }) => c.primary_category)?.category_id ?? null;
-        const tagIds = tagLinks.map((t: { tag_id: string }) => t.tag_id);
-        const screenshotsToCopy: ScreenshotInput[] = sourceScreenshots.map(
-          (s: { image_url: string; caption: string | null; sort_order: number }, index: number) => ({
-            image_url: s.image_url,
-            caption: s.caption,
-            sort_order: s.sort_order ?? index,
-          })
-        );
-        const reviewsToCopy: ReviewInput[] = sourceReviews.map(
-          (r: { author_name: string; author_title: string | null; rating: number; quote: string; source: string | null; sort_order: number }, index: number) => ({
-            author_name: r.author_name,
-            author_title: r.author_title,
-            rating: r.rating,
-            quote: r.quote,
-            source: r.source,
-            sort_order: r.sort_order ?? index,
-          })
-        );
+        const tagIds = (tagLinksResult.data || []).map((t: { tag_id: string }) => t.tag_id);
 
-        // Relation copies are validated + error-checked the same way as create/update
-        // (see replace* helpers above) — a failure here throws and is surfaced as a
-        // 500 by the outer catch, never reported as a false ok:true.
         await Promise.all([
           replaceCategoryLinks(supabase, newTool.id, categoryIds, primaryCategoryId),
           replaceTagLinks(supabase, newTool.id, tagIds),
-          replaceScreenshots(supabase, newTool.id, screenshotsToCopy),
-          replaceReviews(supabase, newTool.id, reviewsToCopy),
+          replaceChildRows(supabase, "tool_screenshots", newTool.id, screenshotsResult.data || []),
+          replaceChildRows(supabase, "tool_reviews", newTool.id, reviewsResult.data || []),
+          replaceChildRows(supabase, "tool_pricing_plans", newTool.id, pricingResult.data || []),
+          replaceChildRows(supabase, "tool_integrations", newTool.id, integrationsResult.data || []),
+          replaceChildRows(supabase, "tool_features", newTool.id, featuresResult.data || []),
+          replaceChildRows(supabase, "tool_pros", newTool.id, prosResult.data || []),
+          replaceChildRows(supabase, "tool_cons", newTool.id, consResult.data || []),
+          replaceChildRows(supabase, "tool_use_cases", newTool.id, useCasesResult.data || []),
+          replaceChildRows(supabase, "tool_faqs", newTool.id, faqsResult.data || []),
         ]);
 
         return jsonResponse({ ok: true, data: newTool });
@@ -458,12 +730,21 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: false, error: "Missing required fields: slug, name" }, 400);
       }
 
-      let categoryIds: string[];
-      let primaryCategoryId: string | null;
-      let screenshots: ScreenshotInput[];
-      let reviews: ReviewInput[];
+      let normalized: NormalizedToolPayload;
       try {
-        ({ categoryIds, primaryCategoryId, screenshots, reviews } = validateAndNormalizeToolPayload(payload));
+        normalized = validateAndNormalizeToolPayload(payload);
+        if (payload.status === "published") {
+          validatePublishRequirements({
+            name: payload.name,
+            slug: payload.slug,
+            website: (payload.website as string) ?? null,
+            short_description: (payload.short_description as string) ?? null,
+            long_description: (payload.long_description as string) ?? null,
+            seo_meta_description: (payload.seo_meta_description as string) ?? null,
+            pricing_model: (payload.pricing_model as string) ?? null,
+            categoryIds: normalized.categoryIds,
+          });
+        }
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
           return jsonResponse({ ok: false, error: validationError.message }, 400);
@@ -495,10 +776,17 @@ Deno.serve(async (req: Request) => {
       }
 
       await Promise.all([
-        replaceCategoryLinks(supabase, newTool.id, categoryIds, primaryCategoryId),
+        replaceCategoryLinks(supabase, newTool.id, normalized.categoryIds, normalized.primaryCategoryId),
         replaceTagLinks(supabase, newTool.id, Array.isArray(payload.tag_ids) ? payload.tag_ids : []),
-        replaceScreenshots(supabase, newTool.id, screenshots),
-        replaceReviews(supabase, newTool.id, reviews),
+        replaceChildRows(supabase, "tool_screenshots", newTool.id, normalized.screenshots),
+        replaceChildRows(supabase, "tool_reviews", newTool.id, normalized.reviews),
+        replaceChildRows(supabase, "tool_pricing_plans", newTool.id, normalized.pricingPlans),
+        replaceChildRows(supabase, "tool_integrations", newTool.id, normalized.integrations),
+        replaceChildRows(supabase, "tool_features", newTool.id, normalized.features),
+        replaceChildRows(supabase, "tool_pros", newTool.id, normalized.pros.map((text, index) => ({ text, sort_order: index }))),
+        replaceChildRows(supabase, "tool_cons", newTool.id, normalized.cons.map((text, index) => ({ text, sort_order: index }))),
+        replaceChildRows(supabase, "tool_use_cases", newTool.id, normalized.useCases),
+        replaceChildRows(supabase, "tool_faqs", newTool.id, normalized.faqs),
       ]);
 
       return jsonResponse({ ok: true, data: newTool });
@@ -507,7 +795,7 @@ Deno.serve(async (req: Request) => {
     if (req.method === "PUT") {
       if (!id) return jsonResponse({ ok: false, error: "Tool ID is required" }, 400);
 
-      const { data: existing } = await supabase.from("tools").select("id, slug").eq("id", id).maybeSingle();
+      const { data: existing } = await supabase.from("tools").select("*").eq("id", id).maybeSingle();
       if (!existing) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
 
       const payload = await req.json();
@@ -516,17 +804,15 @@ Deno.serve(async (req: Request) => {
       // primary_category_id does not silently clear an existing primary category —
       // it is preserved as long as it's still among the submitted category_ids.
       //
-      // IMPORTANT: only *resolve and validate* here — do NOT call replaceCategoryLinks
-      // yet. Calling it now would kick off its delete()/insert() network calls before
-      // we know whether the main `tools` row update below will even succeed (e.g. a
-      // slug conflict returns early). Relation writes must only run once we're
-      // committed to returning success, exactly like the tag_ids/screenshots writes
-      // below.
-      let categoryUpdate: { categoryIds: string[]; primaryCategoryId: string | null } | null = null;
+      // IMPORTANT: only *resolve and validate* here — do NOT write relations yet.
+      // Writing now would kick off delete()/insert() network calls before we know
+      // whether the main `tools` row update below will even succeed (e.g. a slug
+      // conflict returns early). Relation writes must only run once we're
+      // committed to returning success.
+      let categoryIds: string[];
+      let primaryCategoryId: string | null;
       if (Object.prototype.hasOwnProperty.call(payload, "category_ids")) {
-        const categoryIds: string[] = Array.isArray(payload.category_ids) ? [...new Set(payload.category_ids)] : [];
-        let primaryCategoryId: string | null;
-
+        categoryIds = Array.isArray(payload.category_ids) ? [...new Set(payload.category_ids)] : [];
         if (Object.prototype.hasOwnProperty.call(payload, "primary_category_id")) {
           primaryCategoryId = payload.primary_category_id || null;
         } else {
@@ -540,22 +826,15 @@ Deno.serve(async (req: Request) => {
           const existingPrimary = (existingLinks || []).find((l: { primary_category: boolean }) => l.primary_category)?.category_id ?? null;
           primaryCategoryId = existingPrimary && categoryIds.includes(existingPrimary) ? existingPrimary : null;
         }
-
-        try {
-          validateCategorySelection(categoryIds, primaryCategoryId);
-        } catch (validationError) {
-          if (validationError instanceof ValidationError) {
-            return jsonResponse({ ok: false, error: validationError.message }, 400);
-          }
-          throw validationError;
-        }
-
-        categoryUpdate = { categoryIds, primaryCategoryId };
+      } else {
+        const { data: existingLinks } = await supabase.from("tool_category_links").select("category_id, primary_category").eq("tool_id", id);
+        categoryIds = (existingLinks || []).map((l: { category_id: string }) => l.category_id);
+        primaryCategoryId = (existingLinks || []).find((l: { primary_category: boolean }) => l.primary_category)?.category_id ?? null;
       }
 
-      let screenshotsToSave: ScreenshotInput[] | null = null;
-      let reviewsToSave: ReviewInput[] | null = null;
+      const normalized: Partial<NormalizedToolPayload> = {};
       try {
+        validateCategorySelection(categoryIds, primaryCategoryId);
         for (const field of URL_FIELDS) {
           if (Object.prototype.hasOwnProperty.call(payload, field)) {
             payload[field] = validateOptionalUrl(payload[field], field);
@@ -567,11 +846,27 @@ Deno.serve(async (req: Request) => {
         if (Object.prototype.hasOwnProperty.call(payload, "languages")) {
           payload.languages = validateLanguages(payload.languages);
         }
-        if (Object.prototype.hasOwnProperty.call(payload, "screenshots")) {
-          screenshotsToSave = validateScreenshots(payload.screenshots);
-        }
-        if (Object.prototype.hasOwnProperty.call(payload, "reviews")) {
-          reviewsToSave = validateReviews(payload.reviews);
+        if (Object.prototype.hasOwnProperty.call(payload, "screenshots")) normalized.screenshots = validateScreenshots(payload.screenshots);
+        if (Object.prototype.hasOwnProperty.call(payload, "reviews")) normalized.reviews = validateReviews(payload.reviews);
+        if (Object.prototype.hasOwnProperty.call(payload, "pricing_plans")) normalized.pricingPlans = validatePricingPlans(payload.pricing_plans);
+        if (Object.prototype.hasOwnProperty.call(payload, "integrations")) normalized.integrations = validateIntegrations(payload.integrations);
+        if (Object.prototype.hasOwnProperty.call(payload, "features")) normalized.features = validateFeatures(payload.features);
+        if (Object.prototype.hasOwnProperty.call(payload, "pros")) normalized.pros = validateStringList(payload.pros, "pros");
+        if (Object.prototype.hasOwnProperty.call(payload, "cons")) normalized.cons = validateStringList(payload.cons, "cons");
+        if (Object.prototype.hasOwnProperty.call(payload, "use_cases")) normalized.useCases = validateUseCases(payload.use_cases);
+        if (Object.prototype.hasOwnProperty.call(payload, "faqs")) normalized.faqs = validateFaqs(payload.faqs);
+
+        if (payload.status === "published") {
+          validatePublishRequirements({
+            name: (payload.name as string) ?? existing.name,
+            slug: (payload.slug as string) ?? existing.slug,
+            website: Object.prototype.hasOwnProperty.call(payload, "website") ? (payload.website as string | null) : existing.website,
+            short_description: Object.prototype.hasOwnProperty.call(payload, "short_description") ? (payload.short_description as string | null) : existing.short_description,
+            long_description: Object.prototype.hasOwnProperty.call(payload, "long_description") ? (payload.long_description as string | null) : existing.long_description,
+            seo_meta_description: Object.prototype.hasOwnProperty.call(payload, "seo_meta_description") ? (payload.seo_meta_description as string | null) : existing.seo_meta_description,
+            pricing_model: Object.prototype.hasOwnProperty.call(payload, "pricing_model") ? (payload.pricing_model as string | null) : existing.pricing_model,
+            categoryIds,
+          });
         }
       } catch (validationError) {
         if (validationError instanceof ValidationError) {
@@ -613,18 +908,21 @@ Deno.serve(async (req: Request) => {
       }
 
       const tasks: Promise<unknown>[] = [];
-      if (categoryUpdate) {
-        tasks.push(replaceCategoryLinks(supabase, id, categoryUpdate.categoryIds, categoryUpdate.primaryCategoryId));
+      if (Object.prototype.hasOwnProperty.call(payload, "category_ids")) {
+        tasks.push(replaceCategoryLinks(supabase, id, categoryIds, primaryCategoryId));
       }
       if (Object.prototype.hasOwnProperty.call(payload, "tag_ids")) {
         tasks.push(replaceTagLinks(supabase, id, Array.isArray(payload.tag_ids) ? payload.tag_ids : []));
       }
-      if (screenshotsToSave !== null) {
-        tasks.push(replaceScreenshots(supabase, id, screenshotsToSave));
-      }
-      if (reviewsToSave !== null) {
-        tasks.push(replaceReviews(supabase, id, reviewsToSave));
-      }
+      if (normalized.screenshots) tasks.push(replaceChildRows(supabase, "tool_screenshots", id, normalized.screenshots));
+      if (normalized.reviews) tasks.push(replaceChildRows(supabase, "tool_reviews", id, normalized.reviews));
+      if (normalized.pricingPlans) tasks.push(replaceChildRows(supabase, "tool_pricing_plans", id, normalized.pricingPlans));
+      if (normalized.integrations) tasks.push(replaceChildRows(supabase, "tool_integrations", id, normalized.integrations));
+      if (normalized.features) tasks.push(replaceChildRows(supabase, "tool_features", id, normalized.features));
+      if (normalized.pros) tasks.push(replaceChildRows(supabase, "tool_pros", id, normalized.pros.map((text, index) => ({ text, sort_order: index }))));
+      if (normalized.cons) tasks.push(replaceChildRows(supabase, "tool_cons", id, normalized.cons.map((text, index) => ({ text, sort_order: index }))));
+      if (normalized.useCases) tasks.push(replaceChildRows(supabase, "tool_use_cases", id, normalized.useCases));
+      if (normalized.faqs) tasks.push(replaceChildRows(supabase, "tool_faqs", id, normalized.faqs));
       if (tasks.length > 0) await Promise.all(tasks);
 
       return jsonResponse({ ok: true, data: updated });

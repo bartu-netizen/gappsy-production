@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -36,9 +36,15 @@ const ICON_MAP: Record<string, JSX.Element> = {
   Building2: <Building2 className="w-4 h-4" />,
   Flame: <Flame className="w-4 h-4" />,
   Wrench: <Wrench className="w-4 h-4" />,
+  FolderTree: <FolderTree className="w-4 h-4" />,
+  Tag: <Tag className="w-4 h-4" />,
+  GitCompare: <GitCompare className="w-4 h-4" />,
 };
 
 const GROUP_COLORS: Record<string, string> = {
+  Software: 'text-indigo-500',
+  Taxonomy: 'text-violet-500',
+  Editorial: 'text-fuchsia-500',
   Content: 'text-blue-500',
   Monetization: 'text-emerald-500',
   Email: 'text-sky-500',
@@ -89,7 +95,7 @@ const SidebarNav = memo(function SidebarNav({ pathname, onNavigate, onLogout, st
           Dashboard
         </button>
 
-        {(['Content', 'Monetization', 'Email', 'Ops'] as const).map(group => (
+        {(['Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const).map(group => (
           <div key={group} className="pt-3">
             <p className="px-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{group}</p>
             {ADMIN_TOOLS.filter(t => t.group === group).map(tool => (

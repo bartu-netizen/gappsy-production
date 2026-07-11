@@ -6,7 +6,9 @@ import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import LazyLoad from '../components/LazyLoad';
 import { supabase } from '../lib/supabase';
+import { adminApiFetch } from '../lib/adminApiFetch';
 import { getToolContent } from '../data/toolContent';
+import type { ToolFeature, ToolFAQ, ToolUseCase } from '../data/toolContent/types';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
 import { formatLastUpdated, formatSchemaDate } from '../utils/formatLastUpdated';
 import type { ToolCardData } from '../components/ToolCard';
@@ -48,9 +50,35 @@ interface ToolDetail {
   company_size: string | null;
   headquarters: string | null;
   languages: string[];
+  status: string;
 }
 
 const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
+
+// Shape returned by admin-tools?id=... (GET) — the admin-authenticated,
+// any-status data path used only in preview mode (see `previewToolId`
+// below). Deliberately loose/partial: only the fields this page actually
+// reads are declared, everything else on the real response is ignored.
+interface AdminToolPreviewResponse {
+  ok: boolean;
+  data?: ToolDetail & {
+    categories: Array<TaxonomyRef & { primary_category: boolean }>;
+    tags: TaxonomyRef[];
+    screenshots: Array<{ id: string; image_url: string; caption: string | null }>;
+    pricing_plans: Array<{ id: string; plan_name: string | null; price: string | null; billing_cycle: string | null; description: string | null; features: unknown; sort_order: number }>;
+    integrations: Array<{ id: string; integration_name: string; integration_slug: string | null; integration_logo: string | null; description: string | null }>;
+    reviews: Array<{ id: string; author_name: string; author_title: string | null; rating: number; quote: string; source: string | null; created_at: string | null }>;
+    features: Array<{ group_name: string | null; title: string; description: string | null }>;
+    pros: string[];
+    cons: string[];
+    use_cases: Array<{ title: string; description: string | null; audience: string | null }>;
+    faqs: Array<{ question: string; answer: string; status: string }>;
+  };
+}
+
+// DB rows have no `icon` column yet — database-sourced features render with
+// this neutral default rather than fabricating a per-feature icon.
+const DB_FEATURE_ICON = 'CheckCircle2';
 
 // Defensive, client-side check before rendering anything as a clickable link or
 // image source. The admin edge function already rejects non-http(s) URLs at
@@ -86,8 +114,14 @@ function generateMetaDescription(shortDescription: string | null, longDescriptio
   return null;
 }
 
-export default function ToolDetailPage() {
+// `previewToolId` is only ever passed by WpAdminToolPreviewPage — an
+// admin-only, noindexed route that needs to render a draft/unpublished
+// tool through this exact same component tree ("no duplicated rendering
+// logic"). Public visitors always hit this route via /tools/:toolSlug with
+// no prop, which is why every existing code path below is unchanged.
+export default function ToolDetailPage({ previewToolId }: { previewToolId?: string } = {}) {
   const { toolSlug } = useParams<{ toolSlug: string }>();
+  const isPreview = Boolean(previewToolId);
   const [tool, setTool] = useState<ToolDetail | null>(null);
   const [categories, setCategories] = useState<TaxonomyRef[]>([]);
   const [primaryCategory, setPrimaryCategory] = useState<TaxonomyRef | null>(null);
@@ -100,12 +134,64 @@ export default function ToolDetailPage() {
   const [recentTools, setRecentTools] = useState<ToolCardData[]>([]);
   const [editorPicks, setEditorPicks] = useState<ToolCardData[]>([]);
   const [recentlyUpdated, setRecentlyUpdated] = useState<ToolCardData[]>([]);
+  // Database-backed editorial content — the first step of the file-to-database
+  // migration (see the tool_features/tool_pros/tool_cons/tool_use_cases/tool_faqs
+  // migration). Each field falls back to the file-based extendedContent below
+  // independently when its own DB table has no rows for this tool, which is why
+  // Canva and Figma (file-only today) render identically either way.
+  const [dbFeatures, setDbFeatures] = useState<ToolFeature[]>([]);
+  const [dbPros, setDbPros] = useState<string[]>([]);
+  const [dbCons, setDbCons] = useState<string[]>([]);
+  const [dbUseCases, setDbUseCases] = useState<ToolUseCase[]>([]);
+  const [dbFaqs, setDbFaqs] = useState<ToolFAQ[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  const recentSlugs = useRecentlyViewedTools(toolSlug || '');
+  const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
 
   useEffect(() => {
+    if (previewToolId) {
+      setLoading(true);
+      setNotFound(false);
+
+      adminApiFetch<AdminToolPreviewResponse>(`admin-tools?id=${previewToolId}`).then((result) => {
+        const t = result.ok ? result.data?.data : undefined;
+        if (!t) {
+          setNotFound(true);
+          setLoading(false);
+          return;
+        }
+        setTool({
+          id: t.id, slug: t.slug, name: t.name, logo: t.logo, website: t.website, affiliate_link: t.affiliate_link,
+          short_description: t.short_description, long_description: t.long_description, pricing_model: t.pricing_model,
+          starting_price: t.starting_price, youtube_url: t.youtube_url, rating: t.rating, review_count: t.review_count,
+          verified: t.verified, featured: t.featured, updated_at: t.updated_at,
+          founded_year: t.founded_year, company_size: t.company_size, headquarters: t.headquarters, languages: t.languages || [],
+          status: t.status,
+        });
+        const primary = t.categories.find((c) => c.primary_category) || t.categories[0] || null;
+        setCategories(t.categories);
+        setPrimaryCategory(primary ? { slug: primary.slug, name: primary.name } : null);
+        setTags(t.tags);
+        setScreenshots(t.screenshots.map((s) => ({ id: s.id, image_url: s.image_url, caption: s.caption })));
+        setPricingPlans(
+          t.pricing_plans.map((p) => ({
+            id: p.id, plan_name: p.plan_name, price: p.price, billing_cycle: p.billing_cycle,
+            description: p.description, features: Array.isArray(p.features) ? (p.features as string[]) : [], sort_order: p.sort_order,
+          }))
+        );
+        setIntegrations(t.integrations);
+        setReviews(t.reviews);
+        setDbFeatures(t.features.map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] })));
+        setDbPros(t.pros);
+        setDbCons(t.cons);
+        setDbUseCases(t.use_cases.map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' })));
+        setDbFaqs(t.faqs.filter((f) => f.status === 'published').map((f) => ({ question: f.question, answer: f.answer })));
+        setLoading(false);
+      });
+      return;
+    }
+
     if (!toolSlug) return;
     setLoading(true);
     setNotFound(false);
@@ -124,7 +210,7 @@ export default function ToolDetailPage() {
           setLoading(false);
           return;
         }
-        setTool({ ...data, languages: data.languages || [] });
+        setTool({ ...data, languages: data.languages || [], status: 'published' });
 
         Promise.all([
           supabase
@@ -139,7 +225,12 @@ export default function ToolDetailPage() {
           supabase.from('tool_reviews').select('id, author_name, author_title, rating, quote, source, created_at').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('rating', { ascending: false }).limit(6),
           supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').neq('id', data.id).order('updated_at', { ascending: false }).limit(6),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, recentlyUpdatedResult]) => {
+          supabase.from('tool_features').select('title, description').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_pros').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_cons').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_use_cases').select('title, description, audience').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_faqs').select('question, answer').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, recentlyUpdatedResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -162,6 +253,11 @@ export default function ToolDetailPage() {
           setReviews(reviewsResult.data || []);
           setEditorPicks(editorPicksResult.data || []);
           setRecentlyUpdated(recentlyUpdatedResult.data || []);
+          setDbFeatures((featuresResult.data || []).map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] })));
+          setDbPros((prosResult.data || []).map((r) => r.text));
+          setDbCons((consResult.data || []).map((r) => r.text));
+          setDbUseCases((useCasesResult.data || []).map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' })));
+          setDbFaqs(faqsResult.data || []);
 
           if (primaryCategoryId) {
             supabase
@@ -183,7 +279,7 @@ export default function ToolDetailPage() {
           setLoading(false);
         });
       });
-  }, [toolSlug]);
+  }, [toolSlug, previewToolId]);
 
   useEffect(() => {
     if (recentSlugs.length === 0) {
@@ -237,6 +333,14 @@ export default function ToolDetailPage() {
   const safeLogo = isSafeHttpUrl(tool.logo) ? tool.logo : null;
   const safeScreenshots = screenshots.filter((shot) => isSafeHttpUrl(shot.image_url));
   const extendedContent = getToolContent(tool.slug);
+  // DB-first, file-fallback per field — see the dbFeatures/dbPros/etc state
+  // comment above. longForm/alternatives/comparisons/transcript have no DB
+  // equivalent yet, so those stay purely file-based (extendedContent only).
+  const mergedFeatures = dbFeatures.length > 0 ? dbFeatures : extendedContent?.features || [];
+  const mergedPros = dbPros.length > 0 ? dbPros : extendedContent?.pros || [];
+  const mergedCons = dbCons.length > 0 ? dbCons : extendedContent?.cons || [];
+  const mergedUseCases = dbUseCases.length > 0 ? dbUseCases : extendedContent?.useCases || [];
+  const mergedFaqs = dbFaqs.length > 0 ? dbFaqs : extendedContent?.faqs || [];
   const tagSlugs = new Set(tags.map((t) => t.slug));
   const hasAI = tagSlugs.has('ai');
   const hasFreePlan = tagSlugs.has('free-plan') || tagSlugs.has('freemium');
@@ -246,21 +350,21 @@ export default function ToolDetailPage() {
   const platformsLabel = platforms.length > 0 ? platforms.map((p) => p.label).join(', ') : null;
   const updatedLabel = formatLastUpdated(tool.updated_at);
   const metaDescription = generateMetaDescription(tool.short_description, tool.long_description) || tool.name;
-  const standoutFeature = extendedContent?.features[0]
-    ? { title: extendedContent.features[0].title, description: extendedContent.features[0].description }
+  const standoutFeature = mergedFeatures[0]
+    ? { title: mergedFeatures[0].title, description: mergedFeatures[0].description }
     : null;
 
   const tocSections: TocSection[] = [
     ...(extendedContent?.longForm.filter((b) => b.level === 2).map((b) => ({ id: b.id, label: b.heading })) || []),
-    ...(extendedContent?.features.length ? [{ id: 'features', label: 'Features' }] : []),
-    ...(extendedContent && (extendedContent.pros.length || extendedContent.cons.length) ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
+    ...(mergedFeatures.length ? [{ id: 'features', label: 'Features' }] : []),
+    ...(mergedPros.length || mergedCons.length ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
     ...(pricingPlans.length ? [{ id: 'pricing', label: 'Pricing' }] : []),
     ...(safeScreenshots.length ? [{ id: 'screenshots', label: 'Screenshots' }] : []),
     ...(tool.youtube_url ? [{ id: 'video', label: 'Video' }] : []),
     ...(integrations.length ? [{ id: 'integrations', label: 'Integrations' }] : []),
-    ...(extendedContent?.useCases.length ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
+    ...(mergedUseCases.length ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
     ...(reviews.length ? [{ id: 'reviews', label: 'Reviews' }] : []),
-    ...(extendedContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
+    ...(mergedFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(extendedContent?.alternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
   ];
@@ -304,12 +408,12 @@ export default function ToolDetailPage() {
               : {}),
             ...(reviewJsonLd.length > 0 ? { review: reviewJsonLd } : {}),
           },
-          ...(extendedContent?.faqs.length
+          ...(mergedFaqs.length
             ? [
                 {
                   '@type': 'FAQPage',
                   '@id': `https://www.gappsy.com/tools/${tool.slug}/#faq`,
-                  mainEntity: extendedContent.faqs.map((faq) => ({
+                  mainEntity: mergedFaqs.map((faq) => ({
                     '@type': 'Question',
                     name: faq.question,
                     acceptedAnswer: { '@type': 'Answer', text: faq.answer },
@@ -318,7 +422,14 @@ export default function ToolDetailPage() {
               ]
             : []),
         ]}
+        noindex={isPreview}
       />
+
+      {isPreview && (
+        <div className="sticky top-0 z-50 bg-amber-500 text-amber-950 text-sm font-medium text-center py-2 px-4">
+          Preview mode — this tool is <strong>{tool.status === 'published' ? 'published but showing unsaved changes' : `not published (${tool.status})`}</strong>. Not indexed, not in the sitemap, visible only to admins.
+        </div>
+      )}
 
       <SoftwareHeader />
 
@@ -421,15 +532,15 @@ export default function ToolDetailPage() {
 
             {/* Zone B — full width, no sidebar column */}
             <div className="space-y-14 lg:space-y-16">
-              {extendedContent && <FeatureGrid toolName={tool.name} features={extendedContent.features} />}
+              {mergedFeatures.length > 0 && <FeatureGrid toolName={tool.name} features={mergedFeatures} />}
               <PricingSection toolName={tool.name} plans={pricingPlans} websiteUrl={websiteUrl} affiliateUrl={affiliateUrl} />
-              {extendedContent && <ProsConsSection toolName={tool.name} pros={extendedContent.pros} cons={extendedContent.cons} />}
+              {(mergedPros.length > 0 || mergedCons.length > 0) && <ProsConsSection toolName={tool.name} pros={mergedPros} cons={mergedCons} />}
               <LazyLoad component={() => import('../components/tools/detail/ScreenshotGallery')} componentProps={{ toolName: tool.name, screenshots: safeScreenshots, websiteUrl }} />
               <LazyLoad component={() => import('../components/tools/detail/VideoSection')} componentProps={{ toolName: tool.name, youtubeUrl: tool.youtube_url, transcript: extendedContent?.transcript }} />
               <LazyLoad component={() => import('../components/tools/detail/IntegrationsSection')} componentProps={{ toolName: tool.name, integrations }} />
-              {extendedContent && <UseCasesSection toolName={tool.name} useCases={extendedContent.useCases} />}
+              {mergedUseCases.length > 0 && <UseCasesSection toolName={tool.name} useCases={mergedUseCases} />}
               <LazyLoad component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolName: tool.name, reviews }} />
-              {extendedContent && <FAQSection toolName={tool.name} faqs={extendedContent.faqs} />}
+              {mergedFaqs.length > 0 && <FAQSection toolName={tool.name} faqs={mergedFaqs} />}
               {extendedContent && (
                 <LazyLoad component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
               )}

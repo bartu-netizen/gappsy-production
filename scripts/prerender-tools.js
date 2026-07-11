@@ -75,10 +75,13 @@ async function fetchAllPublishedTools(supabase) {
 // trips, never one query per tool.
 async function fetchRelatedData(supabase, toolIds) {
   if (toolIds.length === 0) {
-    return { categoryLinksByTool: new Map(), tagLinksByTool: new Map(), pricingByTool: new Map(), reviewsByTool: new Map() };
+    return {
+      categoryLinksByTool: new Map(), tagLinksByTool: new Map(), pricingByTool: new Map(), reviewsByTool: new Map(),
+      featuresByTool: new Map(), prosByTool: new Map(), consByTool: new Map(), useCasesByTool: new Map(), faqsByTool: new Map(),
+    };
   }
 
-  const [catResult, tagResult, pricingResult, reviewsResult] = await Promise.all([
+  const [catResult, tagResult, pricingResult, reviewsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult] = await Promise.all([
     supabase
       .from('tool_category_links')
       .select('tool_id, category_id, primary_category, tool_categories!inner(slug, name, status)')
@@ -96,18 +99,71 @@ async function fetchRelatedData(supabase, toolIds) {
       .in('tool_id', toolIds)
       .eq('status', 'published')
       .order('sort_order', { ascending: true }),
+    // Database-backed editorial content — DB-first, file-fallback per field
+    // (mirrors src/pages/ToolDetailPage.tsx's dbFeatures/dbPros/etc, so the
+    // prerendered HTML crawlers see always matches what hydrates).
+    supabase.from('tool_features').select('tool_id, title, description, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    supabase.from('tool_pros').select('tool_id, text, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    supabase.from('tool_cons').select('tool_id, text, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    supabase.from('tool_use_cases').select('tool_id, title, description, audience, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    supabase.from('tool_faqs').select('tool_id, question, answer, sort_order').in('tool_id', toolIds).eq('status', 'published').order('sort_order', { ascending: true }),
   ]);
 
   if (catResult.error) throw new Error(`Failed to fetch tool categories: ${catResult.error.message}`);
   if (tagResult.error) throw new Error(`Failed to fetch tool tags: ${tagResult.error.message}`);
   if (pricingResult.error) throw new Error(`Failed to fetch tool pricing: ${pricingResult.error.message}`);
   if (reviewsResult.error) throw new Error(`Failed to fetch tool reviews: ${reviewsResult.error.message}`);
+  if (featuresResult.error) throw new Error(`Failed to fetch tool features: ${featuresResult.error.message}`);
+  if (prosResult.error) throw new Error(`Failed to fetch tool pros: ${prosResult.error.message}`);
+  if (consResult.error) throw new Error(`Failed to fetch tool cons: ${consResult.error.message}`);
+  if (useCasesResult.error) throw new Error(`Failed to fetch tool use cases: ${useCasesResult.error.message}`);
+  if (faqsResult.error) throw new Error(`Failed to fetch tool faqs: ${faqsResult.error.message}`);
 
   return {
     categoryLinksByTool: groupBy(catResult.data, (r) => r.tool_id),
     tagLinksByTool: groupBy(tagResult.data, (r) => r.tool_id),
     pricingByTool: groupBy(pricingResult.data, (r) => r.tool_id),
     reviewsByTool: groupBy(reviewsResult.data, (r) => r.tool_id),
+    featuresByTool: groupBy(featuresResult.data, (r) => r.tool_id),
+    prosByTool: groupBy(prosResult.data, (r) => r.tool_id),
+    consByTool: groupBy(consResult.data, (r) => r.tool_id),
+    useCasesByTool: groupBy(useCasesResult.data, (r) => r.tool_id),
+    faqsByTool: groupBy(faqsResult.data, (r) => r.tool_id),
+  };
+}
+
+const DB_FEATURE_ICON = 'CheckCircle2';
+
+// Merges DB-backed editorial content over file-based extendedContent,
+// per field independently — a tool with no DB rows for a given field (e.g.
+// Canva and Figma today, which have none) falls back to that field's file
+// content unchanged. Returns undefined only when neither source has any
+// content at all, matching extendedContent's original "no entry" contract.
+function mergeExtendedContent(extendedContent, related, toolId) {
+  const dbFeatures = related.featuresByTool.get(toolId) || [];
+  const dbPros = related.prosByTool.get(toolId) || [];
+  const dbCons = related.consByTool.get(toolId) || [];
+  const dbUseCases = related.useCasesByTool.get(toolId) || [];
+  const dbFaqs = related.faqsByTool.get(toolId) || [];
+
+  if (dbFeatures.length === 0 && dbPros.length === 0 && dbCons.length === 0 && dbUseCases.length === 0 && dbFaqs.length === 0) {
+    return extendedContent;
+  }
+
+  return {
+    longForm: extendedContent?.longForm || [],
+    features: dbFeatures.length > 0
+      ? dbFeatures.map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] }))
+      : extendedContent?.features || [],
+    pros: dbPros.length > 0 ? dbPros.map((r) => r.text) : extendedContent?.pros || [],
+    cons: dbCons.length > 0 ? dbCons.map((r) => r.text) : extendedContent?.cons || [],
+    faqs: dbFaqs.length > 0 ? dbFaqs.map((f) => ({ question: f.question, answer: f.answer })) : extendedContent?.faqs || [],
+    useCases: dbUseCases.length > 0
+      ? dbUseCases.map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' }))
+      : extendedContent?.useCases || [],
+    alternatives: extendedContent?.alternatives || [],
+    comparisons: extendedContent?.comparisons || [],
+    transcript: extendedContent?.transcript,
   };
 }
 
@@ -193,7 +249,8 @@ export async function prerenderTools(options = {}) {
         throw new Error('missing short_description and long_description — cannot generate a real (non-generic) meta description');
       }
 
-      const extendedContent = getToolContent(tool.slug);
+      const fileContent = getToolContent(tool.slug);
+      const extendedContent = mergeExtendedContent(fileContent, related, tool.id);
       const jsonLd = generateToolJSONLD({ tool, ...context, extendedContent, seoData });
       const staticBodyHTML = generateToolStaticBodyHTML({ tool, ...context, extendedContent });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
