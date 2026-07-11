@@ -102,16 +102,29 @@ export function computeCompleteness(input: ToolCompletenessInput): CompletenessR
 // The stricter gate applied only at the draft/ready_to_publish -> published
 // transition (see admin-tools/index.ts). Returns the list of missing
 // human-readable labels; empty array means the gate passes.
+//
+// Deliberately does NOT include canonical URL or JSON-LD/schema as separate
+// checks here even though the Phase 4 spec lists them: both are always
+// satisfied automatically once name/slug/website/description are present
+// (already-required fields validatePublishRequirements enforces), so a
+// separate blocking check would be a no-op that can never actually fire.
+// The Publishing/Validation tab still displays them as pass/fail items —
+// see toolCompleteness's "canonical" item — so the CMS checklist reads
+// honestly without adding a redundant gate.
 export function validateFirstPublishStrict(input: {
   logoPresent: boolean;
   screenshotCount: number;
   featureCount: number;
   faqCount: number;
+  tagCount: number;
+  seoTitlePresent: boolean;
 }): string[] {
   const missing: string[] = [];
   if (!input.logoPresent) missing.push("logo");
   if (input.screenshotCount === 0) missing.push("hero image / screenshot");
   if (input.featureCount === 0) missing.push("at least one feature");
   if (input.faqCount === 0) missing.push("at least one FAQ");
+  if (input.tagCount === 0) missing.push("at least one tag");
+  if (!input.seoTitlePresent) missing.push("meta title");
   return missing;
 }

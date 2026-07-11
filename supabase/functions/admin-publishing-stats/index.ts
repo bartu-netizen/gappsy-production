@@ -36,7 +36,9 @@ Deno.serve(async (req: Request) => {
       return count || 0;
     };
 
-    const [draft, needsReview, readyToPublish, published, archived, lastImports, lastPublished, failedImports] = await Promise.all([
+    const todayStartIso = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString();
+
+    const [draft, needsReview, readyToPublish, published, archived, lastImports, lastPublished, failedImports, totalImports, importsToday] = await Promise.all([
       statusCount("draft"),
       statusCount("needs_review"),
       statusCount("ready_to_publish"),
@@ -54,11 +56,15 @@ Deno.serve(async (req: Request) => {
         .order("updated_at", { ascending: false })
         .limit(5),
       supabase.from("tool_import_history").select("id", { count: "exact", head: true }).eq("status", "failed"),
+      supabase.from("tool_import_history").select("id", { count: "exact", head: true }),
+      supabase.from("tool_import_history").select("id", { count: "exact", head: true }).gte("created_at", todayStartIso),
     ]);
 
     if (lastImports.error) return jsonResponse({ ok: false, error: lastImports.error.message }, 500);
     if (lastPublished.error) return jsonResponse({ ok: false, error: lastPublished.error.message }, 500);
     if (failedImports.error) return jsonResponse({ ok: false, error: failedImports.error.message }, 500);
+    if (totalImports.error) return jsonResponse({ ok: false, error: totalImports.error.message }, 500);
+    if (importsToday.error) return jsonResponse({ ok: false, error: importsToday.error.message }, 500);
 
     return jsonResponse({
       ok: true,
@@ -67,6 +73,8 @@ Deno.serve(async (req: Request) => {
         last_imports: lastImports.data || [],
         last_published: lastPublished.data || [],
         failed_imports_count: failedImports.count || 0,
+        total_imports_count: totalImports.count || 0,
+        imports_today_count: importsToday.count || 0,
       },
     });
   } catch (error) {

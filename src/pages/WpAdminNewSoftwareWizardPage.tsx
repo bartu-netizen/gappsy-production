@@ -180,8 +180,8 @@ export default function WpAdminNewSoftwareWizardPage() {
         return;
       }
       logImport({
-        tool_id: toolId, source: 'wizard', source_url: sourceUrl, status: 'success',
-        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0,
+        tool_id: toolId, source: 'wizard', source_url: sourceUrl, status: 'review_required',
+        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0, pages_processed: 1,
         started_at: flowStartedAt, completed_at: new Date().toISOString(),
       });
       setStep(3);
@@ -198,8 +198,8 @@ export default function WpAdminNewSoftwareWizardPage() {
       const newToolId = result.data.data.id;
       setToolId(newToolId);
       logImport({
-        tool_id: newToolId, source: 'wizard', source_url: sourceUrl, status: 'success',
-        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0,
+        tool_id: newToolId, source: 'wizard', source_url: sourceUrl, status: 'review_required',
+        imported_sections: ['basic_info'], errors: importErrors, credits_used: 0, pages_processed: 1,
         started_at: flowStartedAt, completed_at: new Date().toISOString(),
       });
       setStep(3);

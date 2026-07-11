@@ -16,7 +16,7 @@ const TOOL_FIELDS = [
   "founded_year", "company_size", "headquarters", "languages",
   "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
   "noindex", "sitemap_eligible", "is_editors_pick",
-  "source", "source_url", "scheduled_publish_at", "canonical_url",
+  "source", "source_url", "scheduled_publish_at", "canonical_url", "editorial_notes",
 ];
 
 const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url", "canonical_url"];
@@ -598,6 +598,24 @@ async function replaceChildRows(supabase: any, table: string, toolId: string, ro
   if (insertError) throw new Error(`Failed to save ${table}: ${insertError.message}`);
 }
 
+// Best-effort: when a tool actually publishes, reflect that on whatever
+// import job(s) produced it — a job that isn't already terminal (failed/
+// cancelled) genuinely did lead to a published tool, so "published" is an
+// honest status for it, not a fabricated one. Never blocks or fails the
+// publish itself if this update errors.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function syncImportHistoryOnPublish(supabase: any, toolId: string) {
+  try {
+    await supabase
+      .from("tool_import_history")
+      .update({ status: "published", progress: 100 })
+      .eq("tool_id", toolId)
+      .not("status", "in", "(failed,cancelled)");
+  } catch (e) {
+    console.error("[syncImportHistoryOnPublish] non-fatal:", e);
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function generateUniqueSlug(supabase: any, baseSlug: string) {
   let candidate = `${baseSlug}-copy`;
@@ -732,6 +750,8 @@ Deno.serve(async (req: Request) => {
           screenshotCount: relations.screenshots.get(id) || 0,
           featureCount: relations.features.get(id) || 0,
           faqCount: relations.faqs.get(id) || 0,
+          tagCount: relations.tags.get(id) || 0,
+          seoTitlePresent: Boolean(tool.seo_title && String(tool.seo_title).trim()),
         });
 
         return jsonResponse({
@@ -953,6 +973,8 @@ Deno.serve(async (req: Request) => {
             screenshotCount: normalized.screenshots.length,
             featureCount: normalized.features.length,
             faqCount: normalized.faqs.length,
+            tagCount: Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0,
+            seoTitlePresent: Boolean(payload.seo_title && String(payload.seo_title).trim()),
           });
           if (firstPublishMissing.length > 0) {
             throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
@@ -1004,6 +1026,8 @@ Deno.serve(async (req: Request) => {
         replaceChildRows(supabase, "tool_internal_links", newTool.id, normalized.internalLinks),
         replaceChildRows(supabase, "tool_alternatives", newTool.id, normalized.alternatives),
       ]);
+
+      if (newTool.status === "published") await syncImportHistoryOnPublish(supabase, newTool.id);
 
       return jsonResponse({ ok: true, data: newTool });
     }
@@ -1104,11 +1128,15 @@ Deno.serve(async (req: Request) => {
           // editable).
           if (existing.status !== "published") {
             const logoPresent = Boolean((Object.prototype.hasOwnProperty.call(payload, "logo") ? payload.logo : existing.logo));
+            const seoTitlePresent = Boolean((Object.prototype.hasOwnProperty.call(payload, "seo_title") ? payload.seo_title : existing.seo_title));
             const relations = await fetchCompletenessRelations(supabase, [id]);
             const screenshotCount = normalized.screenshots ? normalized.screenshots.length : (relations.screenshots.get(id) || 0);
             const featureCount = normalized.features ? normalized.features.length : (relations.features.get(id) || 0);
             const faqCount = normalized.faqs ? normalized.faqs.length : (relations.faqs.get(id) || 0);
-            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount });
+            const tagCount = Object.prototype.hasOwnProperty.call(payload, "tag_ids")
+              ? (Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0)
+              : (relations.tags.get(id) || 0);
+            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount, tagCount, seoTitlePresent });
             if (firstPublishMissing.length > 0) {
               throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
             }
@@ -1173,6 +1201,10 @@ Deno.serve(async (req: Request) => {
       if (normalized.internalLinks) tasks.push(replaceChildRows(supabase, "tool_internal_links", id, normalized.internalLinks));
       if (normalized.alternatives) tasks.push(replaceChildRows(supabase, "tool_alternatives", id, normalized.alternatives));
       if (tasks.length > 0) await Promise.all(tasks);
+
+      if (updated.status === "published" && existing.status !== "published") {
+        await syncImportHistoryOnPublish(supabase, id);
+      }
 
       return jsonResponse({ ok: true, data: updated });
     }

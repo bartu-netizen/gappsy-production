@@ -72,6 +72,7 @@ interface ToolFormData {
   sitemap_eligible: boolean;
   canonical_url: string;
   scheduled_publish_at: string;
+  editorial_notes: string;
 }
 
 const EMPTY_FORM: ToolFormData = {
@@ -82,13 +83,13 @@ const EMPTY_FORM: ToolFormData = {
   screenshots: [], reviews: [], pricing_plans: [], integrations: [], features: [], pros: [], cons: [], use_cases: [], faqs: [],
   videos: [], internal_links: [], alternatives: [],
   seo_title: '', seo_meta_description: '', og_title: '', og_description: '', og_image: '', noindex: false, sitemap_eligible: true,
-  canonical_url: '', scheduled_publish_at: '',
+  canonical_url: '', scheduled_publish_at: '', editorial_notes: '',
 };
 
 const TABS = [
   'Overview', 'Classification', 'Company', 'Pricing', 'Features', 'Pros & Cons',
   'Use Cases', 'Screenshots', 'Integrations', 'Videos', 'Alternatives', 'Internal Links',
-  'FAQ', 'Reviews', 'SEO', 'Publishing',
+  'FAQ', 'Reviews', 'Editorial Notes', 'SEO', 'JSON-LD', 'Validation', 'Publishing',
 ] as const;
 type Tab = typeof TABS[number];
 
@@ -135,6 +136,7 @@ interface ToolDetailResponse {
     seo_title: string | null; seo_meta_description: string | null; og_title: string | null; og_description: string | null;
     og_image: string | null; noindex: boolean; sitemap_eligible: boolean;
     canonical_url: string | null; scheduled_publish_at: string | null;
+    editorial_notes: string | null;
     first_publish_missing?: string[];
     categories: Array<{ id: string; primary_category: boolean }>;
     tags: Array<{ id: string }>;
@@ -243,6 +245,7 @@ export default function WpAdminToolEditorPage() {
         seo_title: t.seo_title || '', seo_meta_description: t.seo_meta_description || '', og_title: t.og_title || '',
         og_description: t.og_description || '', og_image: t.og_image || '', noindex: t.noindex, sitemap_eligible: t.sitemap_eligible,
         canonical_url: t.canonical_url || '', scheduled_publish_at: isoToLocalInput(t.scheduled_publish_at),
+        editorial_notes: t.editorial_notes || '',
       };
       setFormData(next);
       setSavedSnapshot(JSON.stringify(next));
@@ -388,6 +391,7 @@ export default function WpAdminToolEditorPage() {
       sitemap_eligible: formData.sitemap_eligible,
       canonical_url: formData.canonical_url || null,
       scheduled_publish_at: localInputToIso(formData.scheduled_publish_at),
+      editorial_notes: formData.editorial_notes || null,
       ...(force ? { force: true } : {}),
     };
   }
@@ -442,6 +446,27 @@ export default function WpAdminToolEditorPage() {
       </WpAdminLayout>
     );
   }
+
+  const requiredItems = completeness.items.filter((item) => item.required);
+  const recommendedItems = completeness.items.filter((item) => !item.required);
+  const requiredMetCount = requiredItems.filter((item) => item.met).length;
+  const recommendedMetCount = recommendedItems.filter((item) => item.met).length;
+  const firstPublishMissing = toolData?.data.first_publish_missing || [];
+  const showFirstPublishBanner = isEditMode && formData.status !== 'published' && firstPublishMissing.length > 0;
+  const jsonLd = buildToolJsonLd({
+    slug: formData.slug,
+    name: formData.name,
+    shortDescription: formData.short_description || null,
+    longDescription: formData.long_description || null,
+    logo: formData.logo || null,
+    websiteUrl: formData.website || null,
+    primaryCategoryName: categories.find((c) => c.id === formData.primary_category_id)?.name,
+    rating: formData.rating,
+    reviewCount: formData.review_count,
+    pricingPlans: formData.pricing_plans.map((p) => ({ plan_name: p.plan_name || null, price: p.price || null })),
+    reviews: formData.reviews.map((r) => ({ author_name: r.author_name, rating: r.rating, quote: r.quote, created_at: null })),
+    faqs: formData.faqs.filter((f) => f.status === 'published').map((f) => ({ question: f.question, answer: f.answer })),
+  });
 
   return (
     <WpAdminLayout title={isEditMode ? 'Edit Tool' : 'New Tool'} fullHeight>
@@ -1076,6 +1101,18 @@ export default function WpAdminToolEditorPage() {
                 </div>
               )}
 
+              {activeTab === 'Editorial Notes' && (
+                <Field label="Editorial Notes" hint="Internal notes for editors — never rendered on the public site. Use this for review context, follow-ups, or handoff notes.">
+                  <textarea
+                    value={formData.editorial_notes}
+                    onChange={(e) => setFormData((p) => ({ ...p, editorial_notes: e.target.value }))}
+                    rows={10}
+                    className={inputCls}
+                    placeholder="Private notes for editors..."
+                  />
+                </Field>
+              )}
+
               {activeTab === 'SEO' && (
                 <>
                   <Field label="SEO Title" hint="Falls back to the default title pattern when empty">
@@ -1116,121 +1153,104 @@ export default function WpAdminToolEditorPage() {
                 </>
               )}
 
-              {activeTab === 'Publishing' && (() => {
-                const requiredItems = completeness.items.filter((item) => item.required);
-                const recommendedItems = completeness.items.filter((item) => !item.required);
-                const requiredMetCount = requiredItems.filter((item) => item.met).length;
-                const recommendedMetCount = recommendedItems.filter((item) => item.met).length;
-                const firstPublishMissing = toolData?.data.first_publish_missing || [];
-                const showFirstPublishBanner = isEditMode && formData.status !== 'published' && firstPublishMissing.length > 0;
-                const jsonLd = buildToolJsonLd({
-                  slug: formData.slug,
-                  name: formData.name,
-                  shortDescription: formData.short_description || null,
-                  longDescription: formData.long_description || null,
-                  logo: formData.logo || null,
-                  websiteUrl: formData.website || null,
-                  primaryCategoryName: categories.find((c) => c.id === formData.primary_category_id)?.name,
-                  rating: formData.rating,
-                  reviewCount: formData.review_count,
-                  pricingPlans: formData.pricing_plans.map((p) => ({ plan_name: p.plan_name || null, price: p.price || null })),
-                  reviews: formData.reviews.map((r) => ({ author_name: r.author_name, rating: r.rating, quote: r.quote, created_at: null })),
-                  faqs: formData.faqs.filter((f) => f.status === 'published').map((f) => ({ question: f.question, answer: f.answer })),
-                });
+              {activeTab === 'JSON-LD' && (
+                <div>
+                  <p className={labelCls}>JSON-LD preview</p>
+                  <p className="text-xs text-gray-400 mt-1 mb-2">
+                    Read-only preview generated from the current form state. Not saved anywhere. This is exactly what the public tool page renders in a <code>script type="application/ld+json"</code> tag.
+                  </p>
+                  <pre className="text-xs bg-gray-50 border border-gray-200 rounded-lg p-3 overflow-x-auto">{JSON.stringify(jsonLd, null, 2)}</pre>
+                </div>
+              )}
 
-                return (
-                  <>
-                    {showFirstPublishBanner && (
-                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800 flex items-start gap-2">
-                        <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                        <span>Before this can be published for the first time: {firstPublishMissing.join(', ')}.</span>
+              {activeTab === 'Validation' && (
+                <>
+                  {showFirstPublishBanner && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800 flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                      <span>Before this can be published for the first time: {firstPublishMissing.join(', ')}.</span>
+                    </div>
+                  )}
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className={labelCls}>Publish readiness</p>
+                    </div>
+                    <p className="text-xs text-gray-400 mb-3">
+                      {requiredMetCount} of {requiredItems.length} required complete, {recommendedMetCount} of {recommendedItems.length} recommended
+                    </p>
+
+                    <div className="mb-4">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Required</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                        {requiredItems.map((item) => (
+                          <div key={item.key} className="flex items-center gap-2 text-sm">
+                            {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                            <span className={item.met ? 'text-gray-600' : 'text-rose-600 font-medium'}>{item.label}</span>
+                          </div>
+                        ))}
                       </div>
-                    )}
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <Field label="Status">
-                        <select value={formData.status} onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as ToolFormData['status'] }))} className={inputCls}>
-                          {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-                        </select>
-                      </Field>
-                      <Field label="Rating">
-                        <input type="number" step="0.1" min="0" max="5" value={formData.rating} onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))} className={inputCls} />
-                      </Field>
-                      <Field label="Review Count">
-                        <input type="number" min="0" value={formData.review_count} onChange={(e) => setFormData((p) => ({ ...p, review_count: Number(e.target.value) }))} className={inputCls} />
-                      </Field>
                     </div>
 
-                    <Field label="Scheduled Publish At" hint="Optional. Leave empty for no schedule.">
-                      <input type="datetime-local" value={formData.scheduled_publish_at} onChange={(e) => setFormData((p) => ({ ...p, scheduled_publish_at: e.target.value }))} className={inputCls} />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Recommended</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                        {recommendedItems.map((item) => (
+                          <div key={item.key} className="flex items-center gap-2 text-sm">
+                            {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <Circle className="w-4 h-4 text-amber-400 shrink-0" />}
+                            <span className={item.met ? 'text-gray-600' : 'text-gray-400'}>{item.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'Publishing' && (
+                <>
+                  <div className="grid grid-cols-3 gap-4">
+                    <Field label="Status">
+                      <select value={formData.status} onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as ToolFormData['status'] }))} className={inputCls}>
+                        {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                      </select>
                     </Field>
+                    <Field label="Rating">
+                      <input type="number" step="0.1" min="0" max="5" value={formData.rating} onChange={(e) => setFormData((p) => ({ ...p, rating: Number(e.target.value) }))} className={inputCls} />
+                    </Field>
+                    <Field label="Review Count">
+                      <input type="number" min="0" value={formData.review_count} onChange={(e) => setFormData((p) => ({ ...p, review_count: Number(e.target.value) }))} className={inputCls} />
+                    </Field>
+                  </div>
 
-                    {formData.status === 'draft' && (
-                      <label className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg p-3 bg-gray-50">
-                        <input type="checkbox" checked={forcePublish} onChange={(e) => setForcePublish(e.target.checked)} />
-                        Force publish directly from Draft (bypasses the "Ready to Publish" step)
-                      </label>
-                    )}
+                  <Field label="Scheduled Publish At" hint="Optional. Leave empty for no schedule.">
+                    <input type="datetime-local" value={formData.scheduled_publish_at} onChange={(e) => setFormData((p) => ({ ...p, scheduled_publish_at: e.target.value }))} className={inputCls} />
+                  </Field>
 
-                    <div className="border-t border-gray-100 pt-4">
-                      <div className="flex items-center justify-between mb-1">
-                        <p className={labelCls}>Publish readiness</p>
+                  {formData.status === 'draft' && (
+                    <label className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg p-3 bg-gray-50">
+                      <input type="checkbox" checked={forcePublish} onChange={(e) => setForcePublish(e.target.checked)} />
+                      Force publish directly from Draft (bypasses the "Ready to Publish" step)
+                    </label>
+                  )}
+
+                  <div className="border-t border-gray-100 pt-4 opacity-60">
+                    <div className="border border-dashed border-gray-300 rounded-lg p-3 flex items-start gap-3 bg-gray-50">
+                      <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200">
+                        <Lock className="w-4 h-4 text-gray-400" />
                       </div>
-                      <p className="text-xs text-gray-400 mb-3">
-                        {requiredMetCount} of {requiredItems.length} required complete, {recommendedMetCount} of {recommendedItems.length} recommended
-                      </p>
-
-                      <div className="mb-4">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Required</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                          {requiredItems.map((item) => (
-                            <div key={item.key} className="flex items-center gap-2 text-sm">
-                              {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
-                              <span className={item.met ? 'text-gray-600' : 'text-rose-600 font-medium'}>{item.label}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Recommended</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                          {recommendedItems.map((item) => (
-                            <div key={item.key} className="flex items-center gap-2 text-sm">
-                              {item.met ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> : <Circle className="w-4 h-4 text-amber-400 shrink-0" />}
-                              <span className={item.met ? 'text-gray-600' : 'text-gray-400'}>{item.label}</span>
-                            </div>
-                          ))}
-                        </div>
+                        <p className="text-sm font-medium text-gray-500 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5" /> AI Content Score
+                        </p>
+                        <p className="text-xs text-gray-400 mt-0.5">
+                          AI-assisted quality scoring is coming in a future phase — not yet active. The completeness percentage above (shown in the header) is the only real score on this page today.
+                        </p>
                       </div>
                     </div>
-
-                    <div className="border-t border-gray-100 pt-4 opacity-60">
-                      <div className="border border-dashed border-gray-300 rounded-lg p-3 flex items-start gap-3 bg-gray-50">
-                        <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200">
-                          <Lock className="w-4 h-4 text-gray-400" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-500 flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5" /> AI Content Score
-                          </p>
-                          <p className="text-xs text-gray-400 mt-0.5">
-                            AI-assisted quality scoring is coming in a future phase — not yet active. The completeness percentage above (shown in the header) is the only real score on this page today.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-gray-100 pt-4">
-                      <details>
-                        <summary className={`${labelCls} cursor-pointer select-none`}>JSON-LD preview</summary>
-                        <p className="text-xs text-gray-400 mt-1 mb-2">Read-only preview generated from the current form state. Not saved anywhere.</p>
-                        <pre className="text-xs bg-gray-50 border border-gray-200 rounded-lg p-3 overflow-x-auto">{JSON.stringify(jsonLd, null, 2)}</pre>
-                      </details>
-                    </div>
-                  </>
-                );
-              })()}
+                  </div>
+                </>
+              )}
 
             </div>
           </div>

@@ -33,18 +33,29 @@ function toDatetimeLocalValue(iso: string | null): string {
   return local.toISOString().slice(0, 16);
 }
 
-// One shared component behind two routes — /wp-admin/publishing/queue (all
-// 5 statuses) and /wp-admin/publishing/drafts (preset to draft only). This
-// is the reuse the Publishing Engine architecture calls for: a future bulk
-// importer or API lands rows in the exact same queue, no second page to
-// maintain.
+// Preset routes that pin this page to a single stage, keyed by their path
+// suffix. `/wp-admin/publishing/queue` itself has no preset (shows all
+// stages with the filter chips). Adding a new preset view is a one-line
+// addition here — no new component needed.
+const STAGE_PRESETS: Record<string, { status: string; title: string; subtitle: string }> = {
+  '/drafts': { status: 'draft', title: 'Draft Queue', subtitle: 'Tools not yet ready for review' },
+  '/published': { status: 'published', title: 'Published', subtitle: 'Every tool currently live on the public site' },
+  '/archive': { status: 'archived', title: 'Archive', subtitle: 'Tools removed from publication' },
+};
+
+// One shared component behind several routes — /wp-admin/publishing/queue
+// (all 5 statuses) plus one preset route per stage (see STAGE_PRESETS
+// above). This is the reuse the Publishing Engine architecture calls for: a
+// future bulk importer or API lands rows in the exact same queue, no second
+// page to maintain.
 export default function WpAdminPublishingQueuePage() {
   const location = useLocation();
-  const isDraftQueue = location.pathname.endsWith('/drafts');
+  const preset = Object.entries(STAGE_PRESETS).find(([suffix]) => location.pathname.endsWith(suffix))?.[1] || null;
+  const isDraftQueue = preset?.status === 'draft';
 
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>(isDraftQueue ? 'draft' : 'all');
+  const [statusFilter, setStatusFilter] = useState<string>(preset?.status || 'all');
   const [sortColumn, setSortColumn] = useState('updated_at');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState(1);
@@ -57,10 +68,10 @@ export default function WpAdminPublishingQueuePage() {
   const [scheduleBusy, setScheduleBusy] = useState(false);
 
   useEffect(() => {
-    setStatusFilter(isDraftQueue ? 'draft' : 'all');
+    setStatusFilter(preset?.status || 'all');
     setPage(1);
     setSelected(new Set());
-  }, [isDraftQueue]);
+  }, [preset?.status]);
 
   useEffect(() => {
     const timer = setTimeout(() => setSearch(searchInput.trim()), DEBOUNCE_MS);
@@ -204,11 +215,12 @@ export default function WpAdminPublishingQueuePage() {
     }
   }
 
-  const title = isDraftQueue ? 'Draft Queue' : 'Publishing Queue';
+  const title = preset?.title || 'Publishing Queue';
+  const subtitle = preset?.subtitle || 'Every tool moving through the publishing pipeline';
   const stageFilters = [{ value: 'all', label: 'All' }, ...TOOL_STATUSES.map((s) => ({ value: s.value, label: s.label }))];
 
   return (
-    <WpAdminLayout title={title} subtitle={isDraftQueue ? 'Tools not yet ready for review' : 'Every tool moving through the publishing pipeline'}>
+    <WpAdminLayout title={title} subtitle={subtitle}>
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div>
@@ -235,7 +247,7 @@ export default function WpAdminPublishingQueuePage() {
               className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          {!isDraftQueue && (
+          {!preset && (
             <div className="flex flex-wrap items-center gap-1.5">
               {stageFilters.map((s) => (
                 <button

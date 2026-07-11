@@ -10,6 +10,15 @@ export interface AdminTool {
 
 export const ADMIN_TOOLS: AdminTool[] = [
   {
+    id: 'publishing-dashboard',
+    label: 'Import Dashboard',
+    description: 'Publishing pipeline overview — imports, drafts, ready to publish, published, failed',
+    href: '/wp-admin/publishing',
+    keywords: ['import', 'dashboard', 'overview', 'stats', 'pipeline'],
+    group: 'Publishing',
+    iconName: 'Gauge',
+  },
+  {
     id: 'publishing-new-software',
     label: 'New Software',
     description: 'Guided wizard for publishing a new tool — URL check, basic info, and a completeness-gated review',
@@ -28,6 +37,15 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'ListChecks',
   },
   {
+    id: 'publishing-import-queue',
+    label: 'Import Queue',
+    description: 'Live import jobs — queued, fetching, extracting, review required, ready, published, failed, cancelled',
+    href: '/wp-admin/publishing/import-queue',
+    keywords: ['import', 'queue', 'job', 'jobs', 'pipeline', 'progress', 'retry'],
+    group: 'Publishing',
+    iconName: 'Workflow',
+  },
+  {
     id: 'publishing-drafts',
     label: 'Draft Queue',
     description: 'Tools still in draft, not yet ready for review',
@@ -37,9 +55,27 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'FileEdit',
   },
   {
+    id: 'publishing-published',
+    label: 'Published',
+    description: 'Every tool currently live on the public site',
+    href: '/wp-admin/publishing/published',
+    keywords: ['published', 'live', 'public'],
+    group: 'Publishing',
+    iconName: 'Globe2',
+  },
+  {
+    id: 'publishing-archive',
+    label: 'Archive',
+    description: 'Tools removed from publication',
+    href: '/wp-admin/publishing/archive',
+    keywords: ['archive', 'archived', 'removed'],
+    group: 'Publishing',
+    iconName: 'Archive',
+  },
+  {
     id: 'publishing-imports',
     label: 'Import History',
-    description: 'Every tool that entered the system via the wizard, bulk import, or API',
+    description: 'Every import attempt from the wizard, bulk import, or API — duration, status, sections, errors',
     href: '/wp-admin/publishing/imports',
     keywords: ['import', 'history', 'wizard', 'bulk', 'api', 'log', 'provenance'],
     group: 'Publishing',

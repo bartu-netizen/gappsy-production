@@ -5,7 +5,9 @@ import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
 
-type ImportStatus = 'pending' | 'success' | 'failed';
+type ImportStatus =
+  | 'pending' | 'success' | 'failed'
+  | 'queued' | 'fetching' | 'extracting' | 'review_required' | 'ready' | 'published' | 'cancelled';
 
 interface ImportHistoryRow {
   id: string;
@@ -13,6 +15,9 @@ interface ImportHistoryRow {
   source: string;
   source_url: string | null;
   status: ImportStatus;
+  progress: number;
+  pages_processed: number;
+  created_by: string | null;
   imported_sections: string[];
   errors: string[];
   credits_used: number;
@@ -29,20 +34,32 @@ const DEBOUNCE_MS = 300;
 
 const SOURCE_LABELS: Record<string, string> = { wizard: 'New Software Wizard', bulk: 'Bulk Import', api: 'API' };
 
+const STATUS_LABELS: Record<ImportStatus, string> = {
+  pending: 'Pending', success: 'Success', failed: 'Failed',
+  queued: 'Queued', fetching: 'Fetching', extracting: 'Extracting',
+  review_required: 'Review Required', ready: 'Ready', published: 'Published', cancelled: 'Cancelled',
+};
+
 const STATUS_FILTERS: { value: string; label: string }[] = [
   { value: 'all', label: 'All Statuses' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'success', label: 'Success' },
-  { value: 'failed', label: 'Failed' },
+  ...(Object.keys(STATUS_LABELS) as ImportStatus[]).map((value) => ({ value, label: STATUS_LABELS[value] })),
 ];
 
-// Import-attempt status (pending/success/failed) — distinct from a tool's
-// publishing stage, which lives in utils/toolStatus.
+// Import-job status — distinct from a tool's publishing stage, which lives
+// in utils/toolStatus. 'pending'/'success' are legacy values from before
+// this lifecycle vocabulary existed; still handled for old rows.
 function importStatusBadgeClass(status: ImportStatus): string {
   switch (status) {
-    case 'success': return 'bg-emerald-100 text-emerald-700';
+    case 'success':
+    case 'ready':
+    case 'published': return 'bg-emerald-100 text-emerald-700';
     case 'failed': return 'bg-red-100 text-red-700';
-    case 'pending': return 'bg-amber-100 text-amber-700';
+    case 'cancelled': return 'bg-gray-200 text-gray-600';
+    case 'pending':
+    case 'queued': return 'bg-amber-100 text-amber-700';
+    case 'fetching':
+    case 'extracting': return 'bg-blue-100 text-blue-700';
+    case 'review_required': return 'bg-violet-100 text-violet-700';
     default: return 'bg-gray-100 text-gray-600';
   }
 }
@@ -141,6 +158,8 @@ export default function WpAdminImportHistoryPage() {
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Date</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Duration</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Status</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Pages</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Editor</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Credits</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Sections</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Errors</th>
@@ -178,9 +197,11 @@ export default function WpAdminImportHistoryPage() {
                           <td className="px-5 py-3.5 text-sm text-gray-500">{formatDuration(record.started_at, record.completed_at)}</td>
                           <td className="px-5 py-3.5">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${importStatusBadgeClass(record.status)}`}>
-                              {record.status}
+                              {STATUS_LABELS[record.status] || record.status}
                             </span>
                           </td>
+                          <td className="px-5 py-3.5 text-sm text-gray-500 tabular-nums">{record.pages_processed}</td>
+                          <td className="px-5 py-3.5 text-sm text-gray-500 truncate max-w-[160px]">{record.created_by || '—'}</td>
                           <td className="px-5 py-3.5 text-sm text-gray-500 tabular-nums">{record.credits_used}</td>
                           <td className="px-5 py-3.5">
                             {record.imported_sections.length > 0 ? (
@@ -231,7 +252,7 @@ export default function WpAdminImportHistoryPage() {
                         </tr>
                         {isExpanded && (
                           <tr className="bg-gray-50">
-                            <td colSpan={9} className="px-5 py-4">
+                            <td colSpan={11} className="px-5 py-4">
                               <div className="grid sm:grid-cols-2 gap-4">
                                 <div>
                                   <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">Imported sections</p>

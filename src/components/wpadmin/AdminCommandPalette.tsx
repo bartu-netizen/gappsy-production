@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History } from 'lucide-react';
+import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive } from 'lucide-react';
 import { ADMIN_TOOLS, TOOL_GROUPS, AdminTool } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
@@ -41,6 +41,10 @@ const ICON_MAP: Record<string, JSX.Element> = {
   ListChecks: <ListChecks className="w-4 h-4" />,
   FileEdit: <FileEdit className="w-4 h-4" />,
   History: <History className="w-4 h-4" />,
+  Gauge: <Gauge className="w-4 h-4" />,
+  Workflow: <Workflow className="w-4 h-4" />,
+  Globe2: <Globe2 className="w-4 h-4" />,
+  Archive: <Archive className="w-4 h-4" />,
 };
 
 const GROUP_COLORS: Record<string, string> = {
