@@ -96,6 +96,9 @@ const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReview
 const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
 const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
 const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
+const WpAdminNewSoftwareWizardPage = lazy(() => import("./pages/WpAdminNewSoftwareWizardPage"));
+const WpAdminPublishingQueuePage = lazy(() => import("./pages/WpAdminPublishingQueuePage"));
+const WpAdminImportHistoryPage = lazy(() => import("./pages/WpAdminImportHistoryPage"));
 const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategoriesPage"));
 const WpAdminToolCategoryEditorPage = lazy(() => import("./pages/WpAdminToolCategoryEditorPage"));
 const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
@@ -202,6 +205,10 @@ export default function App() {
         <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/preview" element={<AdminRoute><WpAdminToolPreviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/new" element={<AdminRoute><WpAdminNewSoftwareWizardPage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/queue" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/drafts" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/imports" element={<AdminRoute><WpAdminImportHistoryPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />

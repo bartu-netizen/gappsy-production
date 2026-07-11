@@ -16,9 +16,11 @@ const TOOL_FIELDS = [
   "founded_year", "company_size", "headquarters", "languages",
   "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
   "noindex", "sitemap_eligible", "is_editors_pick",
+  "source", "source_url",
 ];
 
-const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image"];
+const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url"];
+const VALID_SOURCES = new Set(["manual", "wizard", "bulk", "api"]);
 
 const UNIQUE_VIOLATION = "23505";
 const SORTABLE_COLUMNS = new Set(["name", "updated_at", "created_at", "rating"]);
@@ -115,6 +117,16 @@ function validateOptionalYear(value: unknown, fieldName: string): number | null 
     throw new ValidationError(`${fieldName} must be a whole number year between 1900 and 2100`);
   }
   return year;
+}
+
+// Validates `source` (provenance — manual/wizard/bulk/api): optional, but if
+// present must be one of the known values. Never trusts the frontend.
+function validateSource(value: unknown): string | undefined {
+  if (value === undefined || value === null || value === "") return undefined;
+  if (typeof value !== "string" || !VALID_SOURCES.has(value)) {
+    throw new ValidationError(`source must be one of: ${[...VALID_SOURCES].join(", ")}`);
+  }
+  return value;
 }
 
 // Validates languages: optional array of non-empty strings (deduped, trimmed).
@@ -513,6 +525,11 @@ function validateAndNormalizeToolPayload(payload: Record<string, unknown>): Norm
   if (Object.prototype.hasOwnProperty.call(payload, "languages")) {
     payload.languages = validateLanguages(payload.languages);
   }
+  if (Object.prototype.hasOwnProperty.call(payload, "source")) {
+    const validated = validateSource(payload.source);
+    if (validated) payload.source = validated;
+    else delete payload.source;
+  }
 
   const categoryIds: string[] = Array.isArray(payload.category_ids) ? payload.category_ids : [];
   const primaryCategoryId: string | null = (payload.primary_category_id as string | null | undefined) ?? null;
@@ -607,6 +624,10 @@ Deno.serve(async (req: Request) => {
       const q = (url.searchParams.get("q") || "").trim();
       const statusFilter = url.searchParams.get("status");
       const categoryFilter = url.searchParams.get("category");
+      // "imported" is a sentinel meaning "source is anything but manual" —
+      // what Import History shows. A concrete value (wizard/bulk/api)
+      // filters to exactly that source.
+      const sourceFilter = url.searchParams.get("source");
       const sortColumn = SORTABLE_COLUMNS.has(url.searchParams.get("sort") || "") ? (url.searchParams.get("sort") as string) : "updated_at";
       const sortAscending = url.searchParams.get("dir") === "asc";
       const page = Math.max(1, Number(url.searchParams.get("page")) || 1);
@@ -629,6 +650,8 @@ Deno.serve(async (req: Request) => {
 
       let query = supabase.from("tools").select("*", { count: "exact" });
       if (statusFilter && statusFilter !== "all") query = query.eq("status", statusFilter);
+      if (sourceFilter === "imported") query = query.neq("source", "manual");
+      else if (sourceFilter && sourceFilter !== "all") query = query.eq("source", sourceFilter);
       if (q) query = query.or(`name.ilike.%${q}%,slug.ilike.%${q}%`);
       if (toolIdsInCategory) query = query.in("id", toolIdsInCategory);
       query = query.order(sortColumn, { ascending: sortAscending }).range(rangeFrom, rangeTo);
@@ -656,6 +679,48 @@ Deno.serve(async (req: Request) => {
 
     if (req.method === "POST") {
       const payload = await req.json();
+
+      // Used by the New Software wizard's Step 1 (duplicate-tool check).
+      // Compares by normalized hostname (so https://canva.com,
+      // https://www.canva.com/, and canva.com all match) and by slug —
+      // never fabricates a "no duplicate" result on a lookup failure.
+      if (payload.action === "check-duplicate") {
+        const rawWebsite = typeof payload.website === "string" ? payload.website.trim() : "";
+        const rawSlug = typeof payload.slug === "string" ? payload.slug.trim() : "";
+        if (!rawWebsite && !rawSlug) {
+          return jsonResponse({ ok: false, error: "website or slug is required" }, 400);
+        }
+
+        let hostname: string | null = null;
+        if (rawWebsite) {
+          try {
+            hostname = new URL(rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`).hostname.replace(/^www\./, "").toLowerCase();
+          } catch {
+            hostname = null;
+          }
+        }
+
+        const { data: candidates, error: candidatesError } = await supabase
+          .from("tools")
+          .select("id, name, slug, website, status")
+          .or([rawSlug ? `slug.eq.${rawSlug}` : null, hostname ? `website.ilike.%${hostname}%` : null].filter(Boolean).join(","));
+        if (candidatesError) return jsonResponse({ ok: false, error: candidatesError.message }, 500);
+
+        const bySlug = rawSlug ? (candidates || []).find((t: { slug: string }) => t.slug === rawSlug) : null;
+        const byHostname = hostname
+          ? (candidates || []).find((t: { website: string | null }) => {
+              if (!t.website) return false;
+              try {
+                return new URL(t.website).hostname.replace(/^www\./, "").toLowerCase() === hostname;
+              } catch {
+                return false;
+              }
+            })
+          : null;
+        const match = bySlug || byHostname;
+
+        return jsonResponse({ ok: true, data: { exists: Boolean(match), tool: match || null, matchedBy: match ? (bySlug ? "slug" : "website") : null } });
+      }
 
       if (payload.action === "duplicate") {
         if (!payload.id) return jsonResponse({ ok: false, error: "Tool ID is required" }, 400);
@@ -845,6 +910,11 @@ Deno.serve(async (req: Request) => {
         }
         if (Object.prototype.hasOwnProperty.call(payload, "languages")) {
           payload.languages = validateLanguages(payload.languages);
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "source")) {
+          const validated = validateSource(payload.source);
+          if (validated) payload.source = validated;
+          else delete payload.source;
         }
         if (Object.prototype.hasOwnProperty.call(payload, "screenshots")) normalized.screenshots = validateScreenshots(payload.screenshots);
         if (Object.prototype.hasOwnProperty.call(payload, "reviews")) normalized.reviews = validateReviews(payload.reviews);

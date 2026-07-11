@@ -4,11 +4,47 @@ export interface AdminTool {
   description: string;
   href: string;
   keywords: string[];
-  group: 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
 }
 
 export const ADMIN_TOOLS: AdminTool[] = [
+  {
+    id: 'publishing-new-software',
+    label: 'New Software',
+    description: 'Guided wizard for publishing a new tool — URL check, basic info, and a completeness-gated review',
+    href: '/wp-admin/publishing/new',
+    keywords: ['new', 'software', 'wizard', 'publish', 'add', 'import', 'onboard'],
+    group: 'Publishing',
+    iconName: 'Rocket',
+  },
+  {
+    id: 'publishing-queue',
+    label: 'Publishing Queue',
+    description: 'Every tool moving through the publishing pipeline — draft, needs review, ready to publish, published, archived',
+    href: '/wp-admin/publishing/queue',
+    keywords: ['publishing', 'queue', 'pipeline', 'status', 'review', 'bulk'],
+    group: 'Publishing',
+    iconName: 'ListChecks',
+  },
+  {
+    id: 'publishing-drafts',
+    label: 'Draft Queue',
+    description: 'Tools still in draft, not yet ready for review',
+    href: '/wp-admin/publishing/drafts',
+    keywords: ['draft', 'queue', 'unfinished', 'wip'],
+    group: 'Publishing',
+    iconName: 'FileEdit',
+  },
+  {
+    id: 'publishing-imports',
+    label: 'Import History',
+    description: 'Every tool that entered the system via the wizard, bulk import, or API',
+    href: '/wp-admin/publishing/imports',
+    keywords: ['import', 'history', 'wizard', 'bulk', 'api', 'log', 'provenance'],
+    group: 'Publishing',
+    iconName: 'History',
+  },
   {
     id: 'add-tool',
     label: 'Add Tool',
@@ -362,4 +398,4 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
 ];
 
-export const TOOL_GROUPS = ['Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
+export const TOOL_GROUPS = ['Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;

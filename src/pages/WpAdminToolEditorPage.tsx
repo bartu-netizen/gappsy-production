@@ -9,6 +9,7 @@ import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState } from '../components/admin/AdminErrorBanner';
 import { uploadToolMedia } from '../lib/adminMediaUpload';
 import { computeCompleteness, type ToolCompletenessInput, type CompletenessResult } from '../utils/toolCompleteness';
+import { TOOL_STATUSES, toolStatusLabel, type ToolStatus } from '../utils/toolStatus';
 
 interface ToolCategoryOption { id: string; slug: string; name: string; }
 interface ToolTagOption { id: string; slug: string; name: string; }
@@ -37,7 +38,7 @@ interface ToolFormData {
   is_editors_pick: boolean;
   rating: number;
   review_count: number;
-  status: 'draft' | 'published' | 'archived';
+  status: ToolStatus;
   founded_year: string;
   company_size: string;
   headquarters: string;
@@ -422,11 +423,17 @@ export default function WpAdminToolEditorPage() {
             </Link>
           )}
           <button
-            onClick={() => handleSave('draft')}
+            onClick={() => handleSave(formData.status === 'published' || formData.status === 'archived' ? 'draft' : formData.status)}
             disabled={saving !== null}
             className="inline-flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 disabled:opacity-50 transition text-sm shrink-0"
           >
-            {saving === 'draft' ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save Draft'}
+            {saving === 'draft' ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : formData.status === 'published' || formData.status === 'archived' ? (
+              'Save as Draft'
+            ) : (
+              `Save (${toolStatusLabel(formData.status)})`
+            )}
           </button>
           {formData.status === 'published' && (
             <button
@@ -939,9 +946,7 @@ export default function WpAdminToolEditorPage() {
                   <div className="grid grid-cols-3 gap-4">
                     <Field label="Status">
                       <select value={formData.status} onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as ToolFormData['status'] }))} className={inputCls}>
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
-                        <option value="archived">Archived</option>
+                        {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                       </select>
                     </Field>
                     <Field label="Rating">

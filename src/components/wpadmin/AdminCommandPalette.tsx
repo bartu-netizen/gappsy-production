@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame } from 'lucide-react';
+import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History } from 'lucide-react';
 import { ADMIN_TOOLS, TOOL_GROUPS, AdminTool } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
@@ -37,9 +37,14 @@ const ICON_MAP: Record<string, JSX.Element> = {
   Tag: <Tag className="w-4 h-4" />,
   GitCompare: <GitCompare className="w-4 h-4" />,
   Flame: <Flame className="w-4 h-4" />,
+  Rocket: <Rocket className="w-4 h-4" />,
+  ListChecks: <ListChecks className="w-4 h-4" />,
+  FileEdit: <FileEdit className="w-4 h-4" />,
+  History: <History className="w-4 h-4" />,
 };
 
 const GROUP_COLORS: Record<string, string> = {
+  Publishing: 'text-rose-600 bg-rose-50',
   Software: 'text-indigo-600 bg-indigo-50',
   Taxonomy: 'text-violet-600 bg-violet-50',
   Editorial: 'text-fuchsia-600 bg-fuchsia-50',

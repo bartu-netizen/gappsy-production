@@ -7,6 +7,7 @@ import {
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
+import { TOOL_STATUSES, toolStatusLabel, toolStatusBadgeClass } from '../utils/toolStatus';
 
 interface ToolCategoryRef {
   id: string;
@@ -59,14 +60,9 @@ const PER_PAGE = 25;
 const DEBOUNCE_MS = 300;
 
 function StatusBadge({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    published: 'bg-green-100 text-green-800',
-    draft: 'bg-gray-100 text-gray-600',
-    archived: 'bg-slate-200 text-slate-600',
-  };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${styles[status] || styles.draft}`}>
-      {status}
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${toolStatusBadgeClass(status)}`}>
+      {toolStatusLabel(status)}
     </span>
   );
 }
@@ -256,9 +252,7 @@ export default function WpAdminToolsPage() {
             className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="all">All Status</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-            <option value="archived">Archived</option>
+            {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
           </select>
           <select
             value={categoryFilter}
@@ -330,9 +324,7 @@ export default function WpAdminToolsPage() {
                             onChange={(e) => handleStatusChange(tool.id, e.target.value)}
                             className="text-xs border border-gray-200 rounded px-1.5 py-1 bg-white"
                           >
-                            <option value="draft">Draft</option>
-                            <option value="published">Published</option>
-                            <option value="archived">Archived</option>
+                            {TOOL_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                           </select>
                           <div className="mt-1"><StatusBadge status={tool.status} /></div>
                         </td>
