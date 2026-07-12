@@ -101,6 +101,13 @@ const WpAdminDiscoveryDuplicatesPage = lazy(() => import("./pages/WpAdminDiscove
 const WpAdminDiscoveryValidationPage = lazy(() => import("./pages/WpAdminDiscoveryValidationPage"));
 const WpAdminDiscoveryProvidersPage = lazy(() => import("./pages/WpAdminDiscoveryProvidersPage"));
 const WpAdminCrawlReviewPage = lazy(() => import("./pages/WpAdminCrawlReviewPage"));
+const WpAdminAiEnrichmentDashboardPage = lazy(() => import("./pages/WpAdminAiEnrichmentDashboardPage"));
+const WpAdminAiEnrichmentQueuePage = lazy(() => import("./pages/WpAdminAiEnrichmentQueuePage"));
+const WpAdminAiEnrichmentBatchPage = lazy(() => import("./pages/WpAdminAiEnrichmentBatchPage"));
+const WpAdminAiEnrichmentJobsListPage = lazy(() => import("./pages/WpAdminAiEnrichmentJobsListPage"));
+const WpAdminAiEnrichmentReviewPage = lazy(() => import("./pages/WpAdminAiEnrichmentReviewPage"));
+const WpAdminAiEnrichmentPromptVersionsPage = lazy(() => import("./pages/WpAdminAiEnrichmentPromptVersionsPage"));
+const WpAdminAiEnrichmentSettingsPage = lazy(() => import("./pages/WpAdminAiEnrichmentSettingsPage"));
 const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
 const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
 const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
@@ -225,6 +232,16 @@ export default function App() {
         <Route path="/wp-admin/discovery/validation" element={<AdminRoute><WpAdminDiscoveryValidationPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/providers" element={<AdminRoute><WpAdminDiscoveryProvidersPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/crawl/:jobId" element={<AdminRoute><WpAdminCrawlReviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment" element={<AdminRoute><WpAdminAiEnrichmentDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/queue" element={<AdminRoute><WpAdminAiEnrichmentQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/batches/:id" element={<AdminRoute><WpAdminAiEnrichmentBatchPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/needs-review" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/completed" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/failed" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/history" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/jobs/:id" element={<AdminRoute><WpAdminAiEnrichmentReviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/prompts" element={<AdminRoute><WpAdminAiEnrichmentPromptVersionsPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/settings" element={<AdminRoute><WpAdminAiEnrichmentSettingsPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing" element={<AdminRoute><WpAdminPublishingDashboardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/new" element={<AdminRoute><WpAdminNewSoftwareWizardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/queue" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />

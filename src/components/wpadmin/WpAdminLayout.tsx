@@ -72,6 +72,7 @@ const GROUP_COLORS: Record<string, string> = {
   Software: 'text-indigo-500',
   Taxonomy: 'text-violet-500',
   Editorial: 'text-fuchsia-500',
+  'AI Enrichment': 'text-purple-500',
   Content: 'text-blue-500',
   Monetization: 'text-emerald-500',
   Email: 'text-sky-500',

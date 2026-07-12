@@ -18,6 +18,9 @@ const TOOL_FIELDS = [
   "seo_title", "seo_meta_description", "og_title", "og_description", "og_image",
   "noindex", "sitemap_eligible", "is_editors_pick",
   "source", "source_url", "scheduled_publish_at", "canonical_url", "editorial_notes", "assigned_editor",
+  // AI Enrichment Engine — additive editorial fields (supabase/migrations/20260713110000_*)
+  "best_for", "target_audience", "pricing_summary", "features_summary",
+  "integrations_summary", "company_summary", "editorial_verdict", "llm_readable_summary",
 ];
 
 const URL_FIELDS = ["website", "affiliate_link", "logo", "youtube_url", "og_image", "source_url", "canonical_url"];

@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   Save, ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, Eye, ExternalLink,
   CheckCircle2, XCircle, Circle, Upload, Loader2, AlertTriangle,
-  Video, Link2, Repeat, Lock, Sparkles,
+  Video, Link2, Repeat, Lock, Sparkles, Zap,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
@@ -564,6 +564,15 @@ export default function WpAdminToolEditorPage() {
             >
               <Eye className="w-4 h-4" />
               <span className="hidden md:inline">Preview</span>
+            </Link>
+          )}
+          {isEditMode && formData.status !== 'published' && (
+            <Link
+              to={`/wp-admin/ai-enrichment/queue?tool_id=${id}`}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm text-purple-600 hover:bg-purple-50 rounded-lg transition shrink-0"
+            >
+              <Zap className="w-4 h-4" />
+              <span className="hidden md:inline">Enrich with AI</span>
             </Link>
           )}
           {formData.status === 'published' && (

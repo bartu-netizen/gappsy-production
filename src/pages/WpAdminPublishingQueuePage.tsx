@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers, Calendar } from 'lucide-react';
+import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers, Calendar, Zap } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -294,6 +294,12 @@ export default function WpAdminPublishingQueuePage() {
               {selected.size} selected
             </span>
             <div className="flex flex-wrap items-center gap-2 ml-auto">
+              <Link
+                to={`/wp-admin/ai-enrichment/queue?tool_ids=${[...selected].join(',')}`}
+                className="text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 transition inline-flex items-center gap-1"
+              >
+                <Zap className="w-3 h-3" /> Enrich with AI
+              </Link>
               {TOOL_STATUSES.map((s) => (
                 <button
                   key={s.value}

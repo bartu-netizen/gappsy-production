@@ -11,7 +11,7 @@ export interface AdminTool {
   description: string;
   href: string;
   keywords: string[];
-  group: 'Overview' | 'Discovery' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Overview' | 'Discovery' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'AI Enrichment' | 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
   scopes: AdminScope[];
   badge?: string;
@@ -608,9 +608,89 @@ export const ADMIN_TOOLS: AdminTool[] = [
     scopes: ['agency'],
     iconName: 'Link2',
   },
+  {
+    id: 'ai-enrichment-dashboard',
+    label: 'AI Dashboard',
+    description: 'AI Enrichment Engine overview — batches, jobs, and review status',
+    href: '/wp-admin/ai-enrichment',
+    keywords: ['ai', 'enrichment', 'dashboard', 'claude', 'batch', 'overview'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-queue',
+    label: 'AI Queue',
+    description: 'Select Tool Drafts and export a Claude Code batch package',
+    href: '/wp-admin/ai-enrichment/queue',
+    keywords: ['ai', 'enrichment', 'queue', 'batch', 'export', 'claude code'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-needs-review',
+    label: 'Needs Review',
+    description: 'Enrichment jobs with AI suggestions awaiting approve/reject/edit',
+    href: '/wp-admin/ai-enrichment/needs-review',
+    keywords: ['ai', 'enrichment', 'review', 'suggestions', 'pending'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-completed',
+    label: 'Completed',
+    description: 'Enrichment jobs whose approved fields have been applied',
+    href: '/wp-admin/ai-enrichment/completed',
+    keywords: ['ai', 'enrichment', 'completed', 'applied'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-failed',
+    label: 'Failed',
+    description: 'Enrichment jobs and batches that failed export/import/apply',
+    href: '/wp-admin/ai-enrichment/failed',
+    keywords: ['ai', 'enrichment', 'failed', 'errors'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-history',
+    label: 'Generation History',
+    description: 'Every enrichment job across every tool, including regenerations',
+    href: '/wp-admin/ai-enrichment/history',
+    keywords: ['ai', 'enrichment', 'history', 'generations', 'regenerate'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-prompts',
+    label: 'Prompt Versions',
+    description: 'Versioned enrichment prompt templates — create new versions, never overwrite',
+    href: '/wp-admin/ai-enrichment/prompts',
+    keywords: ['ai', 'enrichment', 'prompt', 'versions', 'template'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
+  {
+    id: 'ai-enrichment-settings',
+    label: 'Model Settings',
+    description: 'Enrichment provider, confidence threshold, and batch size limits',
+    href: '/wp-admin/ai-enrichment/settings',
+    keywords: ['ai', 'enrichment', 'settings', 'provider', 'model', 'confidence', 'threshold'],
+    group: 'AI Enrichment',
+    scopes: ['software'],
+    iconName: 'Zap',
+  },
 ];
 
-export const TOOL_GROUPS = ['Overview', 'Discovery', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
+export const TOOL_GROUPS = ['Overview', 'Discovery', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'AI Enrichment', 'Content', 'Monetization', 'Email', 'Ops'] as const;
 
 // For a deep-linked detail/editor page that isn't itself a sidebar item
 // (e.g. /wp-admin/tools/:id/edit, only ever reached by clicking through
