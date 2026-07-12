@@ -2,17 +2,21 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 
-// Read-only: lists Tool Drafts eligible for AI enrichment (status
-// draft/needs_review/ready_to_publish — never published/archived), each
-// annotated with its most recent enrichment job (if any) so the Queue page
-// can show "not yet enriched" vs "needs review" vs "applied".
+// Read-only: lists every tool eligible for AI enrichment — the engine
+// works on any tool status (draft, needs_review, ready_to_publish,
+// published, archived), not just drafts. Applying to a published tool
+// still requires the normal review/approve/apply steps; it just also
+// means the change goes live immediately once applied (the review screen
+// surfaces a warning for that case). Each row is annotated with its most
+// recent enrichment job (if any) so the Queue page can show "not yet
+// enriched" vs "needs review" vs "applied".
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
 }
 
-const ELIGIBLE_STATUSES = ["draft", "needs_review", "ready_to_publish"];
+const ALL_STATUSES = ["draft", "needs_review", "ready_to_publish", "published", "archived"];
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
@@ -27,15 +31,19 @@ Deno.serve(async (req: Request) => {
 
     const url = new URL(req.url);
     const search = url.searchParams.get("search")?.trim() || null;
-    const statusFilter = url.searchParams.get("status");
+    const statusFilter = url.searchParams.get("status"); // one of ALL_STATUSES, or "all"/omitted for every status
     const enrichmentFilter = url.searchParams.get("enrichment_status"); // "never" | "needs_review" | "applied"
     const page = Math.max(1, Number(url.searchParams.get("page")) || 1);
     const pageSize = Math.min(100, Math.max(1, Number(url.searchParams.get("page_size")) || 25));
 
+    const statusesToQuery = statusFilter && statusFilter !== "all" && ALL_STATUSES.includes(statusFilter)
+      ? [statusFilter]
+      : ALL_STATUSES;
+
     let query = supabase
       .from("tools")
       .select("id, name, slug, status, source, short_description, updated_at", { count: "exact" })
-      .in("status", statusFilter ? [statusFilter] : ELIGIBLE_STATUSES)
+      .in("status", statusesToQuery)
       .order("updated_at", { ascending: false });
     if (search) query = query.ilike("name", `%${search}%`);
 

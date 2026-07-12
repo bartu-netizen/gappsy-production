@@ -151,6 +151,58 @@ export async function applyApprovedSuggestions(
     }
   }
 
+  // tool_features — merge-append, dedupe by title.
+  const featureItems = suggestions.filter((s) => s.field_key === "features");
+  if (featureItems.length > 0) {
+    const { data: existingRows } = await supabase.from("tool_features").select("group_name, title, description, sort_order").eq("tool_id", toolId);
+    const existing = existingRows || [];
+    const existingTitles = new Set(existing.map((r: any) => r.title.toLowerCase()));
+    const merged = [...existing];
+    for (const item of featureItems) {
+      const v = item.value as any;
+      const candidates = Array.isArray(v) ? v : [v];
+      for (const c of candidates) {
+        const title = typeof c?.title === "string" ? c.title.trim() : "";
+        if (title && !existingTitles.has(title.toLowerCase())) {
+          merged.push({ group_name: c.group_name ?? null, title, description: c.description ?? null, sort_order: merged.length });
+          existingTitles.add(title.toLowerCase());
+        }
+      }
+    }
+    if (merged.length > existing.length) {
+      payload.features = merged;
+      appliedFieldKeys.push("features");
+    } else {
+      skipped.push({ field_key: "features", reason: "No new values to merge" });
+    }
+  }
+
+  // tool_integrations — merge-append, dedupe by integration_name.
+  const integrationItems = suggestions.filter((s) => s.field_key === "integrations");
+  if (integrationItems.length > 0) {
+    const { data: existingRows } = await supabase.from("tool_integrations").select("integration_name, integration_slug, integration_logo, description").eq("tool_id", toolId);
+    const existing = existingRows || [];
+    const existingNames = new Set(existing.map((r: any) => r.integration_name.toLowerCase()));
+    const merged = [...existing];
+    for (const item of integrationItems) {
+      const v = item.value as any;
+      const candidates = Array.isArray(v) ? v : [v];
+      for (const c of candidates) {
+        const name = typeof c?.integration_name === "string" ? c.integration_name.trim() : typeof c?.name === "string" ? c.name.trim() : "";
+        if (name && !existingNames.has(name.toLowerCase())) {
+          merged.push({ integration_name: name, integration_slug: c.integration_slug ?? null, integration_logo: c.integration_logo ?? null, description: c.description ?? null });
+          existingNames.add(name.toLowerCase());
+        }
+      }
+    }
+    if (merged.length > existing.length) {
+      payload.integrations = merged;
+      appliedFieldKeys.push("integrations");
+    } else {
+      skipped.push({ field_key: "integrations", reason: "No new values to merge" });
+    }
+  }
+
   // category / tag suggestions — resolve against EXISTING taxonomy only
   // (never auto-create), union with current links.
   const categorySuggestion = suggestions.find((s) => s.field_key === "category_suggestions");

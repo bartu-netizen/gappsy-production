@@ -172,6 +172,13 @@ export default function WpAdminAiEnrichmentReviewPage() {
               </div>
             </div>
 
+            {job.tools?.status === 'published' && (
+              <div className="bg-rose-50 border border-rose-200 rounded-lg p-3 mb-4 flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-600 mt-0.5 shrink-0" />
+                <p className="text-xs text-rose-700"><strong>This tool is published and live.</strong> Applying approved fields here updates the public page immediately — there is no additional staging step for published tools.</p>
+              </div>
+            )}
+
             <div className="flex flex-wrap items-center gap-2 mb-4">
               <button onClick={bulkApprove} disabled={selected.size === 0} className="px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-40">
                 Approve selected ({selected.size})

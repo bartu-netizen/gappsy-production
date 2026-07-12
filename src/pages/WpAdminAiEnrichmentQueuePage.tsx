@@ -6,6 +6,7 @@ import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
 import { ALL_ENRICHMENT_FIELD_KEYS, BATCH_SIZE_PRESETS, ENRICHMENT_FIELDS } from '../lib/enrichmentFields';
 import { enrichmentJobStatusBadgeClass, enrichmentJobStatusLabel } from '../utils/enrichmentStatus';
+import { TOOL_STATUSES, toolStatusBadgeClass } from '../utils/toolStatus';
 
 interface QueueTool {
   id: string;
@@ -34,12 +35,19 @@ export default function WpAdminAiEnrichmentQueuePage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedFields, setSelectedFields] = useState<Set<string>>(new Set(ALL_ENRICHMENT_FIELD_KEYS));
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<QueueResponse>(
-    () => `admin-enrichment-queue${search ? `?search=${encodeURIComponent(search)}` : ''}`,
-    { deps: [search] },
+    () => {
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (statusFilter !== 'all') params.set('status', statusFilter);
+      const qs = params.toString();
+      return `admin-enrichment-queue${qs ? `?${qs}` : ''}`;
+    },
+    { deps: [search, statusFilter] },
   );
   const tools = useMemo(() => data?.data || [], [data]);
 
@@ -83,8 +91,30 @@ export default function WpAdminAiEnrichmentQueuePage() {
   };
 
   return (
-    <WpAdminLayout title="AI Enrichment Queue" subtitle="Select Tool Drafts and export a Claude Code batch package">
+    <WpAdminLayout title="AI Enrichment Queue" subtitle="Works on any tool — draft or published. Select tools and export a Claude Code batch package">
       <div className="max-w-6xl mx-auto">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <button
+            onClick={() => setStatusFilter('all')}
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
+              statusFilter === 'all' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            All statuses
+          </button>
+          {TOOL_STATUSES.map((s) => (
+            <button
+              key={s.value}
+              onClick={() => setStatusFilter(s.value)}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
+                statusFilter === s.value ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div className="relative w-full sm:w-80">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -131,7 +161,7 @@ export default function WpAdminAiEnrichmentQueuePage() {
         {isError && error && <AdminErrorBanner error={error} onRetry={refetch} className="mb-4" />}
         {isLoading && <AdminLoadingState message="Loading eligible tool drafts..." />}
         {!isLoading && !isError && tools.length === 0 && (
-          <AdminEmptyState icon={Zap} title="Nothing to enrich" message="No Tool Drafts are currently eligible for AI enrichment." />
+          <AdminEmptyState icon={Zap} title="Nothing to enrich" message="No tools match this filter." />
         )}
 
         {!isLoading && !isError && tools.length > 0 && (
@@ -144,7 +174,7 @@ export default function WpAdminAiEnrichmentQueuePage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-medium text-gray-900 text-sm truncate">{t.name}</span>
-                    <span className="text-xs text-gray-400">{t.status}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${toolStatusBadgeClass(t.status)}`}>{t.status}</span>
                     {t.latest_enrichment_job && (
                       <span className={`text-xs px-2 py-0.5 rounded-full ${enrichmentJobStatusBadgeClass(t.latest_enrichment_job.status)}`}>
                         {enrichmentJobStatusLabel(t.latest_enrichment_job.status)} (v{t.latest_enrichment_job.generation_version})

@@ -4,7 +4,7 @@
 // from a versioned enrichment_prompt_versions row plus the grounded input
 // built by enrichmentInputBuilder.ts — nothing here talks to a database.
 
-import type { ExportInputJson, ExportPackage, ToolExportInput } from "./enrichmentSchema.ts";
+import { fieldDefinitionsFor, type ExportInputJson, type ExportPackage, type ToolExportInput } from "./enrichmentSchema.ts";
 
 export interface PromptVersionRow {
   id: string;
@@ -22,6 +22,7 @@ const VALIDATION_RULES: string[] = [
   "Never generate or alter rating, review_count, popularity/traffic/market-share claims, or unsupported comparisons.",
   "Category and tag suggestions must come only from the taxonomy list provided in the input JSON — never invent a new one.",
   "Only generate the fields listed in each tool's requested_fields — omit everything else.",
+  "Check input_json.field_definitions for the exact meaning/shape of each requested field_key before writing it (e.g. \"features\" is a list of individual {title, description} items grounded in evidence; \"features_summary\" is a short prose paragraph — they are different fields).",
   "confidence must be an integer 0-100. classification must be exactly \"factual\" or \"editorial\".",
   "Output strictly valid JSON matching output_schema below. No prose, no markdown fences, no commentary outside the JSON object.",
   "Return one entry in results for every tool_id in the input, even if every field for that tool is unsupported.",
@@ -31,6 +32,7 @@ export function buildExportPackage(promptVersion: PromptVersionRow, tools: ToolE
   const inputJson: ExportInputJson = {
     batch_id: batchId,
     prompt_version: { key: promptVersion.prompt_key, version: promptVersion.version },
+    field_definitions: fieldDefinitionsFor(tools.flatMap((t) => t.requested_fields)),
     tools,
   };
 

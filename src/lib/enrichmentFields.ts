@@ -19,6 +19,8 @@ export const ENRICHMENT_FIELDS: EnrichmentFieldMeta[] = [
   { key: 'use_cases', label: 'Use cases', repeatable: true, defaultClassification: 'editorial' },
   { key: 'pros', label: 'Pros', repeatable: true, defaultClassification: 'editorial' },
   { key: 'cons', label: 'Cons', repeatable: true, defaultClassification: 'editorial' },
+  { key: 'features', label: 'Features', repeatable: true, defaultClassification: 'factual' },
+  { key: 'integrations', label: 'Integrations', repeatable: true, defaultClassification: 'factual' },
   { key: 'pricing_summary', label: 'Pricing summary', repeatable: false, defaultClassification: 'factual' },
   { key: 'features_summary', label: 'Features summary', repeatable: false, defaultClassification: 'factual' },
   { key: 'integrations_summary', label: 'Integrations summary', repeatable: false, defaultClassification: 'factual' },
@@ -59,6 +61,8 @@ export function currentValueOf(tool: Record<string, unknown> | null | undefined,
   if (fieldKey === 'cons') return tool.cons ?? [];
   if (fieldKey === 'use_cases') return tool.use_cases ?? [];
   if (fieldKey === 'faqs') return tool.faqs ?? [];
+  if (fieldKey === 'features') return tool.features ?? [];
+  if (fieldKey === 'integrations') return tool.integrations ?? [];
   if (fieldKey === 'category_suggestions') return ((tool.categories as { name: string }[]) || []).map((c) => c.name);
   if (fieldKey === 'tag_suggestions') return ((tool.tags as { name: string }[]) || []).map((t) => t.name);
   return null;

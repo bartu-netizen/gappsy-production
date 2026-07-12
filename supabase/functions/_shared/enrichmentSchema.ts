@@ -15,6 +15,8 @@ export type ApplyTarget =
   | { kind: "child_table"; table: "tool_pros" | "tool_cons" }
   | { kind: "use_cases" }
   | { kind: "faqs" }
+  | { kind: "features" }
+  | { kind: "integrations" }
   | { kind: "category_suggestions" }
   | { kind: "tag_suggestions" };
 
@@ -90,6 +92,22 @@ export const FIELD_REGISTRY: Record<string, FieldDefinition> = {
     repeatable: true,
     applyTarget: { kind: "child_table", table: "tool_cons" },
     maxValueLength: 300,
+  },
+  features: {
+    key: "features",
+    label: "Features",
+    description: "Individual product features, each with a title and short description — grounded in evidence.",
+    defaultClassification: "factual",
+    repeatable: true,
+    applyTarget: { kind: "features" },
+  },
+  integrations: {
+    key: "integrations",
+    label: "Integrations",
+    description: "Third-party tools/services this product integrates with — grounded in evidence.",
+    defaultClassification: "factual",
+    repeatable: true,
+    applyTarget: { kind: "integrations" },
   },
   pricing_summary: {
     key: "pricing_summary",
@@ -238,7 +256,21 @@ export interface ToolExportInput {
 export interface ExportInputJson {
   batch_id: string;
   prompt_version: { key: string; version: number };
+  field_definitions: Record<string, { label: string; description: string; repeatable: boolean; classification: FieldClassification }>;
   tools: ToolExportInput[];
+}
+
+// Field definitions for exactly the keys referenced across a batch's
+// tools — embedded in the export package so Claude Code never has to
+// guess what a field_key like "features" vs "features_summary" means.
+export function fieldDefinitionsFor(fieldKeys: string[]): ExportInputJson["field_definitions"] {
+  const out: ExportInputJson["field_definitions"] = {};
+  for (const key of new Set(fieldKeys)) {
+    const def = FIELD_REGISTRY[key];
+    if (!def) continue;
+    out[key] = { label: def.label, description: def.description, repeatable: def.repeatable, classification: def.defaultClassification };
+  }
+  return out;
 }
 
 export interface ExportPackage {
