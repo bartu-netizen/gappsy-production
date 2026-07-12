@@ -11,7 +11,7 @@ export interface AdminTool {
   description: string;
   href: string;
   keywords: string[];
-  group: 'Overview' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Overview' | 'Discovery' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
   scopes: AdminScope[];
   badge?: string;
@@ -47,6 +47,76 @@ export const ADMIN_TOOLS: AdminTool[] = [
     group: 'Overview',
     iconName: 'LayoutDashboard',
     scopes: ['overview'],
+  },
+  {
+    id: 'discovery-dashboard',
+    label: 'Discovery Dashboard',
+    description: 'Discovery Engine overview — discovered, validated, duplicates, rejected, approved for crawl',
+    href: '/wp-admin/discovery',
+    keywords: ['discovery', 'dashboard', 'overview', 'stats', 'pipeline', 'candidates'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'Compass',
+  },
+  {
+    id: 'discovery-queue',
+    label: 'Discovery Queue',
+    description: 'Every discovered candidate — search, filter, bulk actions, status transitions',
+    href: '/wp-admin/discovery/queue',
+    keywords: ['discovery', 'queue', 'candidates', 'review', 'bulk', 'status'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'ListChecks',
+  },
+  {
+    id: 'discovery-import',
+    label: 'Discover Software',
+    description: 'Manually add a candidate or bulk-import from CSV',
+    href: '/wp-admin/discovery/import',
+    keywords: ['discovery', 'import', 'manual', 'csv', 'add', 'candidate'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'PlusCircle',
+  },
+  {
+    id: 'discovery-import-history',
+    label: 'Import History',
+    description: 'Every discovery import batch — CSV files, row counts, and errors',
+    href: '/wp-admin/discovery/import-history',
+    keywords: ['discovery', 'import', 'history', 'batch', 'csv', 'log'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'History',
+  },
+  {
+    id: 'discovery-duplicates',
+    label: 'Duplicate Manager',
+    description: 'Review candidates flagged as likely duplicates of existing or pending tools',
+    href: '/wp-admin/discovery/duplicates',
+    keywords: ['discovery', 'duplicate', 'dedup', 'merge', 'candidates'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'GitMerge',
+  },
+  {
+    id: 'discovery-validation',
+    label: 'Validation Results',
+    description: 'Reachability, HTTPS, robots.txt, sitemap, and domain-health checks across every candidate',
+    href: '/wp-admin/discovery/validation',
+    keywords: ['discovery', 'validation', 'health', 'robots', 'sitemap', 'https', 'reachability'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'ShieldCheck',
+  },
+  {
+    id: 'discovery-providers',
+    label: 'Providers',
+    description: 'Manage discovery sources — Manual Import, CSV Import, and future providers',
+    href: '/wp-admin/discovery/providers',
+    keywords: ['discovery', 'providers', 'sources', 'manual', 'csv', 'api'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'Plug',
   },
   {
     id: 'publishing-dashboard',
@@ -540,7 +610,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
 ];
 
-export const TOOL_GROUPS = ['Overview', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
+export const TOOL_GROUPS = ['Overview', 'Discovery', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'Content', 'Monetization', 'Email', 'Ops'] as const;
 
 // For a deep-linked detail/editor page that isn't itself a sidebar item
 // (e.g. /wp-admin/tools/:id/edit, only ever reached by clicking through

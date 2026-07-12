@@ -93,6 +93,13 @@ const AdminSidebarAdsPage = lazy(() => import("./pages/AdminSidebarAdsPage"));
 const AdminAgencyReviewsPage = lazy(() => import("./pages/AdminAgencyReviewsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
+const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscoveryDashboardPage"));
+const WpAdminDiscoveryQueuePage = lazy(() => import("./pages/WpAdminDiscoveryQueuePage"));
+const WpAdminDiscoveryImportPage = lazy(() => import("./pages/WpAdminDiscoveryImportPage"));
+const WpAdminDiscoveryImportHistoryPage = lazy(() => import("./pages/WpAdminDiscoveryImportHistoryPage"));
+const WpAdminDiscoveryDuplicatesPage = lazy(() => import("./pages/WpAdminDiscoveryDuplicatesPage"));
+const WpAdminDiscoveryValidationPage = lazy(() => import("./pages/WpAdminDiscoveryValidationPage"));
+const WpAdminDiscoveryProvidersPage = lazy(() => import("./pages/WpAdminDiscoveryProvidersPage"));
 const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
 const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
 const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
@@ -209,6 +216,13 @@ export default function App() {
         <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tools/:id/preview" element={<AdminRoute><WpAdminToolPreviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery" element={<AdminRoute><WpAdminDiscoveryDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/queue" element={<AdminRoute><WpAdminDiscoveryQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/import" element={<AdminRoute><WpAdminDiscoveryImportPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/import-history" element={<AdminRoute><WpAdminDiscoveryImportHistoryPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/duplicates" element={<AdminRoute><WpAdminDiscoveryDuplicatesPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/validation" element={<AdminRoute><WpAdminDiscoveryValidationPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/providers" element={<AdminRoute><WpAdminDiscoveryProvidersPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing" element={<AdminRoute><WpAdminPublishingDashboardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/new" element={<AdminRoute><WpAdminNewSoftwareWizardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/queue" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
