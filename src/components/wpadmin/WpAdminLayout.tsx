@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS, ADMIN_VIEWS, TOOL_GROUPS, isToolVisibleInView, inferScopeForPath, type AdminScope, type AdminTool } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -63,6 +63,7 @@ const ICON_MAP: Record<string, JSX.Element> = {
   GitMerge: <GitMerge className="w-4 h-4" />,
   ShieldCheck: <ShieldCheck className="w-4 h-4" />,
   Plug: <Plug className="w-4 h-4" />,
+  Radar: <Radar className="w-4 h-4" />,
 };
 
 const GROUP_COLORS: Record<string, string> = {

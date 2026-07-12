@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import {
   PlusCircle, Search, ShieldAlert, GitMerge, XCircle, CheckCircle2,
-  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles, HeartPulse,
+  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles, HeartPulse, Radar,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch } from '../hooks/useAdminFetch';
@@ -46,6 +46,7 @@ function formatShortDate(iso: string): string {
 
 const SECTIONS: Array<{ label: string; description: string; href: string; icon: typeof ListChecks }> = [
   { label: 'Discovery Queue', description: 'Every candidate, all pipeline stages', href: '/wp-admin/discovery/queue', icon: ListChecks },
+  { label: 'Crawl Queue', description: 'Every crawl attempt — queued, running, completed, failed, retried', href: '/wp-admin/discovery/crawl-queue', icon: Radar },
   { label: 'Duplicate Manager', description: 'Candidates flagged as likely duplicates', href: '/wp-admin/discovery/duplicates', icon: GitMerge },
   { label: 'Validation Results', description: 'Reachability, HTTPS, robots, sitemap health', href: '/wp-admin/discovery/validation', icon: ShieldCheck },
   { label: 'Import History', description: 'Every CSV batch and its results', href: '/wp-admin/discovery/import-history', icon: History },

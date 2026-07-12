@@ -119,6 +119,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Plug',
   },
   {
+    id: 'crawl-queue',
+    label: 'Crawl Queue',
+    description: 'Every crawl attempt — queued, running, completed, failed, and retried',
+    href: '/wp-admin/discovery/crawl-queue',
+    keywords: ['crawl', 'queue', 'crawl4ai', 'jobs', 'retry', 'cancel'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'Radar',
+  },
+  {
     id: 'publishing-dashboard',
     label: 'Import Dashboard',
     description: 'Publishing pipeline overview — imports, drafts, ready to publish, published, failed',

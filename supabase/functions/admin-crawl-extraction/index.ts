@@ -1,7 +1,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS, extractToken } from "../_shared/adminSession.ts";
-import type { NormalizedExtraction, ProvenanceField } from "../_shared/crawlExtractionAdapter.ts";
+import type { NormalizedExtraction } from "../_shared/crawlExtractionAdapter.ts";
+import { walkFields, resolveApprovedValue, createDraftFromCrawlJob, type ReviewState } from "../_shared/crawlDraftCreation.ts";
 
 // Owns the review workflow over one crawl_jobs row's normalized_extraction:
 // GET returns the extraction grouped for the review screen; POST handles
@@ -18,52 +19,6 @@ function jsonResponse(body: unknown, status = 200) {
 }
 
 const HIGH_CONFIDENCE_THRESHOLD = 70;
-
-type ReviewState = Record<string, { status: "approved" | "rejected" | "edited"; edited_value?: unknown; reviewed_by: string; reviewed_at: string }>;
-
-function slugify(name: string): string {
-  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "draft";
-}
-
-async function uniqueToolSlug(supabase: ReturnType<typeof createClient>, base: string): Promise<string> {
-  const baseSlug = slugify(base);
-  let candidate = baseSlug;
-  let suffix = 1;
-  while (true) {
-    const { data } = await supabase.from("tools").select("id").eq("slug", candidate).maybeSingle();
-    if (!data) return candidate;
-    suffix += 1;
-    candidate = `${baseSlug}-${suffix}`;
-  }
-}
-
-// Every leaf ProvenanceField in the extraction, addressed by a stable
-// "group.field" path (arrays use "group.field[index]"), so review_state can
-// key approvals without needing a schema-aware walker on the client.
-function walkFields(extraction: NormalizedExtraction, visit: (path: string, f: ProvenanceField<unknown>) => void) {
-  for (const [groupName, group] of Object.entries(extraction) as [string, unknown][]) {
-    if (groupName === "crawl_sources" || groupName === "warnings") continue;
-    if (Array.isArray(group)) continue; // content.faq_candidates etc. handled separately by the UI, not auto-approved here
-    for (const [fieldName, value] of Object.entries(group as Record<string, unknown>)) {
-      if (Array.isArray(value)) {
-        value.forEach((item, idx) => {
-          if (item && typeof item === "object" && "confidence" in item) visit(`${groupName}.${fieldName}[${idx}]`, item as ProvenanceField<unknown>);
-        });
-      } else if (value && typeof value === "object" && "confidence" in value) {
-        visit(`${groupName}.${fieldName}`, value as ProvenanceField<unknown>);
-      }
-    }
-  }
-}
-
-function resolveApprovedValue(path: string, field: ProvenanceField<unknown>, reviewState: ReviewState): unknown {
-  const entry = reviewState[path];
-  if (!entry) return null;
-  if (entry.status === "rejected") return null;
-  if (entry.status === "edited") return entry.edited_value;
-  if (entry.status === "approved") return field.value;
-  return null;
-}
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
@@ -132,43 +87,7 @@ Deno.serve(async (req: Request) => {
       const reviewState: ReviewState = job.review_state || {};
 
       const nameValue = resolveApprovedValue("identity.tool_name_candidate", extraction.identity.tool_name_candidate, reviewState) as string | null;
-      const websiteValue = resolveApprovedValue("identity.canonical_website", extraction.identity.canonical_website, reviewState) as string | null;
       if (!nameValue) return jsonResponse({ ok: false, error: "Approve or edit a tool name before creating a draft." }, 400);
-
-      const { data: candidate } = await supabase.from("discovered_tools").select("id, name, official_website, category_id").eq("id", job.discovery_candidate_id).maybeSingle();
-      const finalName = nameValue || candidate?.name || "Untitled";
-      const slug = await uniqueToolSlug(supabase, finalName);
-
-      const logoValue = resolveApprovedValue("identity.logo_candidates[0]", (extraction.identity.logo_candidates[0] || { confidence: 0, value: null, source_url: null, evidence: null, review_status: "pending" }), reviewState);
-      const descValue = resolveApprovedValue("identity.meta_description", extraction.identity.meta_description, reviewState) as string | null;
-      const pricingModelValue = resolveApprovedValue("pricing.pricing_model_candidate", extraction.pricing.pricing_model_candidate, reviewState) as string | null;
-      const startingPriceValue = resolveApprovedValue("pricing.starting_price_candidate", extraction.pricing.starting_price_candidate, reviewState) as string | null;
-      const foundedValue = resolveApprovedValue("company.founded_year_candidate", extraction.company.founded_year_candidate, reviewState) as string | null;
-      const hqValue = resolveApprovedValue("company.headquarters_candidate", extraction.company.headquarters_candidate, reviewState) as string | null;
-      const sizeValue = resolveApprovedValue("company.company_size_candidate", extraction.company.company_size_candidate, reviewState) as string | null;
-
-      const toolPayload: Record<string, unknown> = {
-        name: finalName,
-        slug,
-        status: "needs_review",
-        noindex: true,
-        sitemap_eligible: false,
-        source: "api",
-        source_url: candidate?.official_website || websiteValue || undefined,
-        website: websiteValue || candidate?.official_website || undefined,
-        logo: logoValue || undefined,
-        short_description: descValue || undefined,
-        pricing_model: pricingModelValue || undefined,
-        starting_price: startingPriceValue || undefined,
-        founded_year: foundedValue ? Number(foundedValue) : undefined,
-        headquarters: hqValue || undefined,
-        company_size: sizeValue || undefined,
-        editorial_notes: `Created from Crawl4AI extraction. discovery_candidate_id=${job.discovery_candidate_id} crawl_job_id=${job.id}. Review all fields before publishing — nothing here has been verified.`,
-      };
-      if (candidate?.category_id) {
-        toolPayload.category_ids = [candidate.category_id];
-        toolPayload.primary_category_id = candidate.category_id;
-      }
 
       // Reuse the EXISTING admin-tools creation path — same validation,
       // same child-row handling, same completeness gate — rather than
@@ -176,26 +95,24 @@ Deno.serve(async (req: Request) => {
       // admin session token (already verified above), exactly as the
       // frontend would when calling admin-tools itself.
       const token = extractToken(req);
-      const adminToolsRes = await fetch(`${supabaseUrl}/functions/v1/admin-tools`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${Deno.env.get("SUPABASE_ANON_KEY") || ""}`,
-          "apikey": Deno.env.get("SUPABASE_ANON_KEY") || "",
-          "x-admin-token": token || "",
-        },
-        body: JSON.stringify(toolPayload),
-      });
-      const adminToolsBody = await adminToolsRes.json().catch(() => null);
-      if (!adminToolsRes.ok || !adminToolsBody?.ok) {
-        return jsonResponse({ ok: false, error: adminToolsBody?.error || "Failed to create the tool draft." }, 502);
-      }
+      const result = await createDraftFromCrawlJob(
+        supabase,
+        supabaseUrl,
+        Deno.env.get("SUPABASE_ANON_KEY") || "",
+        token || "",
+        { id: job.id, discovery_candidate_id: job.discovery_candidate_id, completed_at: job.completed_at },
+        extraction,
+        reviewState,
+      );
+      if (!result.ok) return jsonResponse({ ok: false, error: result.error }, 502);
 
-      const newToolId = adminToolsBody.data?.id;
-      const { data: updatedJob, error: updateError } = await supabase.from("crawl_jobs").update({ created_draft_tool_id: newToolId, updated_at: new Date().toISOString() }).eq("id", jobId).select().single();
+      // createDraftFromCrawlJob already persisted created_draft_tool_id onto
+      // this crawl_jobs row — re-fetch it so the response shape (job + tool)
+      // stays exactly what callers of this action already expect.
+      const { data: updatedJob, error: updateError } = await supabase.from("crawl_jobs").select("*").eq("id", jobId).maybeSingle();
       if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
 
-      return jsonResponse({ ok: true, data: { job: updatedJob, tool: adminToolsBody.data } });
+      return jsonResponse({ ok: true, data: { job: updatedJob, tool: result.tool } });
     }
 
     return jsonResponse({ ok: false, error: "Unknown action" }, 400);

@@ -2,8 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 import { validateCrawlUrl, resolvesToPublicAddress, CRAWL_LIMITS } from "../_shared/crawlUrlSafety.ts";
-import { callCrawlerGateway, GatewayError } from "../_shared/crawlGatewayClient.ts";
-import { normalizeCrawlResult, buildBoundedRawSnapshot, type Crawl4aiRawResponse } from "../_shared/crawlExtractionAdapter.ts";
+import { executeCrawlJob } from "../_shared/crawlRunner.ts";
 
 // Owns crawl_jobs' lifecycle: start (validate candidate + URL + no
 // duplicate active job -> call the gateway synchronously, since the
@@ -110,66 +109,9 @@ Deno.serve(async (req: Request) => {
       // Synchronous gateway call — bounded by CRAWL_LIMITS + the client's
       // own GATEWAY_TIMEOUT_MS. Safe for one small-site crawl at a time;
       // NOT the model for bulk crawling (explicitly out of scope).
-      try {
-        const gatewayResult = await callCrawlerGateway({
-          request_id: job.id,
-          url: urlCheck.normalizedUrl!,
-          max_pages: CRAWL_LIMITS.MAX_PAGES,
-          max_depth: CRAWL_LIMITS.MAX_DEPTH,
-          max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
-        });
-
-        if (!gatewayResult.ok || !gatewayResult.data) {
-          throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
-        }
-
-        const raw = gatewayResult.data.raw as Crawl4aiRawResponse;
-        const normalized = normalizeCrawlResult(raw, { discoveryCandidateWebsite: candidate.official_website });
-        const boundedRaw = buildBoundedRawSnapshot(raw);
-        const completedAt = new Date();
-        const startedAt = new Date(job.started_at);
-
-        const { data: updatedJob, error: updateError } = await supabase
-          .from("crawl_jobs")
-          .update({
-            status: "needs_review",
-            progress: 100,
-            completed_at: completedAt.toISOString(),
-            duration_ms: completedAt.getTime() - startedAt.getTime(),
-            crawl4ai_version: gatewayResult.data.crawl4ai_version,
-            discovered_pages: gatewayResult.data.discovered_pages,
-            crawled_pages: gatewayResult.data.crawled_pages,
-            source_urls: gatewayResult.data.source_urls,
-            raw_extraction_ref: boundedRaw,
-            normalized_extraction: normalized,
-            updated_at: completedAt.toISOString(),
-          })
-          .eq("id", job.id)
-          .select()
-          .single();
-        if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
-
-        await supabase.from("discovered_tools").update({ status: "crawled", updated_at: new Date().toISOString() }).eq("id", candidateId);
-
-        return jsonResponse({ ok: true, data: updatedJob });
-      } catch (err) {
-        const code = err instanceof GatewayError ? err.code : "unknown_error";
-        const message = err instanceof GatewayError ? err.message : "An unexpected error occurred while crawling.";
-        const completedAt = new Date();
-        const startedAt = new Date(job.started_at);
-        await supabase
-          .from("crawl_jobs")
-          .update({
-            status: "failed",
-            error_code: code,
-            error_message: message,
-            completed_at: completedAt.toISOString(),
-            duration_ms: completedAt.getTime() - startedAt.getTime(),
-            updated_at: completedAt.toISOString(),
-          })
-          .eq("id", job.id);
-        return jsonResponse({ ok: false, error_code: code, error: message }, 502);
-      }
+      const result = await executeCrawlJob(supabase, job, candidate.official_website, candidateId);
+      if (!result.ok) return jsonResponse({ ok: false, error_code: result.error_code, error: result.error }, 502);
+      return jsonResponse({ ok: true, data: result.job });
     }
 
     if (payload.action === "cancel") {
@@ -201,10 +143,8 @@ Deno.serve(async (req: Request) => {
       }
 
       // Insert a fresh row with retry_count incremented, then run the same
-      // validate -> call gateway -> normalize -> persist sequence as
-      // action:'start' (duplicated inline rather than recursing through
-      // the HTTP handler, since Deno.serve's handler isn't re-invocable
-      // as a plain function from within itself).
+      // validate -> gateway -> normalize -> persist sequence as action:'start'
+      // via the shared executeCrawlJob.
       const urlCheck = validateCrawlUrl(source.requested_url);
       if (!urlCheck.ok) return jsonResponse({ ok: false, error_code: urlCheck.reason, error: "The candidate URL failed validation." }, 400);
       const dnsCheck = await resolvesToPublicAddress(urlCheck.hostname!);
@@ -225,42 +165,9 @@ Deno.serve(async (req: Request) => {
         .single();
       if (insertError) return jsonResponse({ ok: false, error: insertError.message }, 500);
 
-      try {
-        const gatewayResult = await callCrawlerGateway({
-          request_id: job.id,
-          url: urlCheck.normalizedUrl!,
-          max_pages: CRAWL_LIMITS.MAX_PAGES,
-          max_depth: CRAWL_LIMITS.MAX_DEPTH,
-          max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
-        });
-        if (!gatewayResult.ok || !gatewayResult.data) {
-          throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
-        }
-        const { data: candidate } = await supabase.from("discovered_tools").select("official_website").eq("id", source.discovery_candidate_id).single();
-        const raw = gatewayResult.data.raw as Crawl4aiRawResponse;
-        const normalized = normalizeCrawlResult(raw, { discoveryCandidateWebsite: candidate?.official_website || source.requested_url });
-        const boundedRaw = buildBoundedRawSnapshot(raw);
-        const completedAt = new Date();
-        const { data: updatedJob, error: updateError } = await supabase
-          .from("crawl_jobs")
-          .update({
-            status: "needs_review", progress: 100, completed_at: completedAt.toISOString(),
-            duration_ms: completedAt.getTime() - new Date(job.started_at).getTime(),
-            crawl4ai_version: gatewayResult.data.crawl4ai_version, discovered_pages: gatewayResult.data.discovered_pages,
-            crawled_pages: gatewayResult.data.crawled_pages, source_urls: gatewayResult.data.source_urls,
-            raw_extraction_ref: boundedRaw, normalized_extraction: normalized, updated_at: completedAt.toISOString(),
-          })
-          .eq("id", job.id).select().single();
-        if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
-        await supabase.from("discovered_tools").update({ status: "crawled", updated_at: new Date().toISOString() }).eq("id", source.discovery_candidate_id);
-        return jsonResponse({ ok: true, data: updatedJob });
-      } catch (err) {
-        const code = err instanceof GatewayError ? err.code : "unknown_error";
-        const message = err instanceof GatewayError ? err.message : "An unexpected error occurred while crawling.";
-        const completedAt = new Date();
-        await supabase.from("crawl_jobs").update({ status: "failed", error_code: code, error_message: message, completed_at: completedAt.toISOString(), duration_ms: completedAt.getTime() - new Date(job.started_at).getTime(), updated_at: completedAt.toISOString() }).eq("id", job.id);
-        return jsonResponse({ ok: false, error_code: code, error: message }, 502);
-      }
+      const result = await executeCrawlJob(supabase, job, source.requested_url, source.discovery_candidate_id);
+      if (!result.ok) return jsonResponse({ ok: false, error_code: result.error_code, error: result.error }, 502);
+      return jsonResponse({ ok: true, data: result.job });
     }
 
     return jsonResponse({ ok: false, error: "Unknown action" }, 400);

@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 import { normalizeHostname, validateWebsite } from "../_shared/discoveryValidation.ts";
 import { computeConfidenceScore, computeDuplicateScore, computeQualityScore } from "../_shared/discoveryScoring.ts";
+import { drainCrawlQueue } from "../_shared/crawlRunner.ts";
 
 // Owns discovered_tools end-to-end: the Discovery Queue admin page. GET
 // lists/searches/filters/paginates (GET ?id= for a single row's detail,
@@ -12,7 +13,12 @@ import { computeConfidenceScore, computeDuplicateScore, computeQualityScore } fr
 // never client-supplied. POST handles bulk actions (bulk-status,
 // bulk-delete, revalidate) for the Queue's bulk-selection toolbar and the
 // Validation Results page's "re-check" action, mirroring admin-tools'
-// bulk-assign-category pattern.
+// bulk-assign-category pattern. POST also handles approve/bulk-approve,
+// which move a 'validated' candidate to 'approved_for_crawl' (stamping
+// approved_by/approved_at, distinct from reviewed_by/reviewed_at), queue a
+// crawl_jobs row, and kick off drainCrawlQueue in the background so the
+// candidate flows on into the automatic Discovery -> Crawl -> Draft -> AI
+// Enrichment Queue pipeline.
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -210,6 +216,119 @@ Deno.serve(async (req: Request) => {
         }
 
         return jsonResponse({ ok: true, data: { revalidated_count: revalidatedCount } });
+      }
+
+      // Validated -> Approved For Crawl. Stamps approved_by/approved_at
+      // (distinct from reviewed_by/reviewed_at, which bulk-status/PUT set)
+      // and queues a crawl_jobs row, then kicks off background draining so
+      // the candidate flows Discovery -> Crawl -> Draft -> AI Enrichment
+      // Queue without the caller waiting on the crawl itself.
+      if (payload.action === "approve") {
+        const candidateId = typeof payload.id === "string" ? payload.id : null;
+        if (!candidateId) return jsonResponse({ ok: false, error: "id is required" }, 400);
+
+        const { data: candidate, error: fetchError } = await supabase
+          .from("discovered_tools")
+          .select("id, official_website, status")
+          .eq("id", candidateId)
+          .maybeSingle();
+        if (fetchError) return jsonResponse({ ok: false, error: fetchError.message }, 500);
+        if (!candidate) return jsonResponse({ ok: false, error: "Discovered tool not found" }, 404);
+        if (candidate.status !== "validated") {
+          return jsonResponse({
+            ok: false,
+            error: `Candidate must be in 'validated' status to approve for crawl (current status: '${candidate.status}')`,
+            error_code: "not_validated",
+          }, 409);
+        }
+
+        const nowIso = new Date().toISOString();
+        const { data: updated, error: updateError } = await supabase
+          .from("discovered_tools")
+          .update({ status: "approved_for_crawl", approved_by: session.email, approved_at: nowIso, updated_at: nowIso })
+          .eq("id", candidateId)
+          .select()
+          .single();
+        if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
+
+        const { data: job, error: jobError } = await supabase
+          .from("crawl_jobs")
+          .insert({ discovery_candidate_id: candidateId, requested_url: candidate.official_website, status: "queued", created_by: session.email })
+          .select("id")
+          .single();
+        if (jobError) return jsonResponse({ ok: false, error: jobError.message }, 500);
+
+        EdgeRuntime.waitUntil(drainCrawlQueue(supabase, supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY") || ""));
+
+        return jsonResponse({
+          ok: true,
+          data: { approved: [candidateId], skipped: [], crawl_jobs_created: [job.id], candidate: updated },
+        });
+      }
+
+      // Bulk version of "approve" — silently skips any id that isn't
+      // currently 'validated' (or doesn't exist) rather than failing the
+      // whole batch, and reports why each skip happened.
+      if (payload.action === "bulk-approve") {
+        const ids = Array.isArray(payload.ids) ? payload.ids.filter((v: unknown) => typeof v === "string") : [];
+        if (ids.length === 0) return jsonResponse({ ok: false, error: "ids (non-empty array) is required" }, 400);
+
+        const { data: candidates, error: fetchError } = await supabase
+          .from("discovered_tools")
+          .select("id, official_website, status")
+          .in("id", ids);
+        if (fetchError) return jsonResponse({ ok: false, error: fetchError.message }, 500);
+
+        const foundIds = new Set((candidates || []).map((c: { id: string }) => c.id));
+        const skipped: { id: string; reason: string }[] = [];
+        for (const requestedId of ids) {
+          if (!foundIds.has(requestedId)) skipped.push({ id: requestedId, reason: "not_found" });
+        }
+
+        const eligible: { id: string; official_website: string; status: string }[] = [];
+        for (const candidate of (candidates || []) as { id: string; official_website: string; status: string }[]) {
+          if (candidate.status === "validated") {
+            eligible.push(candidate);
+          } else {
+            skipped.push({ id: candidate.id, reason: `status is '${candidate.status}', not 'validated'` });
+          }
+        }
+
+        if (eligible.length === 0) {
+          return jsonResponse({ ok: true, data: { approved: [], skipped, crawl_jobs_created: [] } });
+        }
+
+        const eligibleIds = eligible.map((c) => c.id);
+        const nowIso = new Date().toISOString();
+        const { data: updatedRows, error: updateError } = await supabase
+          .from("discovered_tools")
+          .update({ status: "approved_for_crawl", approved_by: session.email, approved_at: nowIso, updated_at: nowIso })
+          .in("id", eligibleIds)
+          .select("id");
+        if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
+
+        const jobRows = eligible.map((c) => ({
+          discovery_candidate_id: c.id,
+          requested_url: c.official_website,
+          status: "queued",
+          created_by: session.email,
+        }));
+        const { data: createdJobs, error: jobError } = await supabase
+          .from("crawl_jobs")
+          .insert(jobRows)
+          .select("id");
+        if (jobError) return jsonResponse({ ok: false, error: jobError.message }, 500);
+
+        EdgeRuntime.waitUntil(drainCrawlQueue(supabase, supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY") || ""));
+
+        return jsonResponse({
+          ok: true,
+          data: {
+            approved: (updatedRows || []).map((r: { id: string }) => r.id),
+            skipped,
+            crawl_jobs_created: (createdJobs || []).map((j: { id: string }) => j.id),
+          },
+        });
       }
 
       return jsonResponse({ ok: false, error: "Unknown action" }, 400);

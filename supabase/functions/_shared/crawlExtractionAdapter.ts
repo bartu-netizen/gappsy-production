@@ -63,7 +63,10 @@ export interface NormalizedExtraction {
     platform_indicators: ProvenanceField<string>[];
     integrations: ProvenanceField<string>[];
     docs_api_indicators: ProvenanceField<string>[];
+    api_documentation: ProvenanceField<string>;
     languages: ProvenanceField<string>[];
+    security_indicators: ProvenanceField<string>[];
+    support_channels: ProvenanceField<string>[];
   };
   content: {
     faq_candidates: FaqCandidate[];
@@ -74,6 +77,15 @@ export interface NormalizedExtraction {
     screenshot_candidates: ProvenanceField<string>[];
     image_candidates: ProvenanceField<string>[];
     logo_candidates: ProvenanceField<string>[];
+  };
+  // Suggestions matched against the EXISTING tool_categories/tool_tags
+  // taxonomy only (passed in via NormalizeOptions) — never a newly-invented
+  // category or tag. A category/tag is suggested only when its name is
+  // literally present in the crawled text, so the match is always
+  // evidence-grounded, not guessed.
+  taxonomy: {
+    category_suggestions: ProvenanceField<string>[];
+    tag_suggestions: ProvenanceField<string>[];
   };
   crawl_sources: { url: string; status_code: number | null; title: string | null }[];
   warnings: string[];
@@ -135,13 +147,19 @@ const COMPANY_SIZE_RE = /\b(\d{1,4}\s?[-–]\s?\d{1,5}|\d{2,5}\+?)\s+employees\b
 const FREE_PLAN_RE = /\bfree\s+plan\b|\bforever\s+free\b|\bfree\s+forever\b/i;
 const FREE_TRIAL_RE = /\bfree\s+trial\b|\btry\s+(it\s+)?free\b/i;
 const LOGO_HINT_RE = /logo/i;
+const SCREENSHOT_HINT_RE = /screenshot|dashboard|preview|app[-_ ]?screen|product[-_ ]?shot|ui[-_ ]?preview/i;
+const HTML_LANG_RE = /<html[^>]+lang=["']([a-zA-Z]{2}(?:-[a-zA-Z]{2,})?)["']/i;
+const SECURITY_KEYWORDS = [
+  "soc 2", "soc2", "iso 27001", "gdpr", "hipaa", "pci dss", "penetration test",
+  "two-factor", "2fa", "single sign-on", "sso", "end-to-end encryption", "encrypted at rest",
+];
+const SUPPORT_KEYWORDS = [
+  "live chat", "email support", "phone support", "24/7 support", "24/7", "community forum",
+  "help center", "helpdesk", "knowledge base", "support ticket",
+];
 
 function absoluteUrl(href: string, base: string): string | null {
   try { return new URL(href, base).toString(); } catch { return null; }
-}
-
-function resolveUrl(u: string, base: string): string {
-  return absoluteUrl(u, base) || u;
 }
 
 // Q/A pairs from a markdown FAQ page: a heading followed by the paragraph(s)
@@ -178,8 +196,37 @@ function extractFaqCandidates(markdown: string, sourceUrl: string): FaqCandidate
   return faqs.slice(0, 20);
 }
 
+export interface TaxonomyEntry {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export interface NormalizeOptions {
   discoveryCandidateWebsite: string;
+  // Existing taxonomy to match category/tag suggestions against — optional
+  // and additive; callers that omit it simply get empty suggestion arrays,
+  // never an invented category/tag.
+  categories?: TaxonomyEntry[];
+  tags?: TaxonomyEntry[];
+}
+
+// A taxonomy entry "matches" when its name appears as a whole word,
+// case-insensitively, in the crawled text corpus — literal textual
+// evidence, never a semantic/fuzzy guess.
+function matchTaxonomy(entries: TaxonomyEntry[], corpus: string, sourceUrl: string | null): ProvenanceField<string>[] {
+  const lowerCorpus = corpus.toLowerCase();
+  const matches: ProvenanceField<string>[] = [];
+  for (const entry of entries) {
+    const name = entry.name.trim();
+    if (!name) continue;
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`(?:^|[^a-z0-9])${escaped.toLowerCase()}(?:$|[^a-z0-9])`, "i");
+    if (re.test(lowerCorpus)) {
+      matches.push(field(entry.id, sourceUrl, `Matched taxonomy name "${name}" in crawled content`, 50));
+    }
+  }
+  return matches.slice(0, 10);
 }
 
 // Turns Crawl4AI's raw multi-page response into the stable internal
@@ -197,6 +244,7 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
   const featuresPage = pages.find((p) => classifyPage(pageUrl(p)) === "features" || classifyPage(pageUrl(p)) === "product");
   const integrationsPage = pages.find((p) => classifyPage(pageUrl(p)) === "integrations");
   const docsPage = pages.find((p) => classifyPage(pageUrl(p)) === "docs");
+  const securityPage = pages.find((p) => classifyPage(pageUrl(p)) === "security");
 
   // ---- Identity ----
   const homeUrl = homepage ? pageUrl(homepage) : opts.discoveryCandidateWebsite;
@@ -218,6 +266,8 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
 
   const logoCandidates: ProvenanceField<string>[] = [];
   const imageCandidates: ProvenanceField<string>[] = [];
+  const screenshotCandidates: ProvenanceField<string>[] = [];
+  const seenScreenshot = new Set<string>();
   for (const page of pages) {
     const url = pageUrl(page);
     for (const img of page.media?.images || []) {
@@ -225,8 +275,15 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
       const abs = absoluteUrl(img.src, url);
       if (!abs) continue;
       imageCandidates.push(field(abs, url, img.alt || null, 30));
-      if (LOGO_HINT_RE.test(img.src) || (img.alt && LOGO_HINT_RE.test(img.alt))) {
+      const isLogoHint = LOGO_HINT_RE.test(img.src) || (img.alt && LOGO_HINT_RE.test(img.alt));
+      if (isLogoHint) {
         logoCandidates.push(field(abs, url, img.alt || "filename/alt contains 'logo'", 65));
+        continue;
+      }
+      const isScreenshotHint = SCREENSHOT_HINT_RE.test(img.src) || (img.alt && SCREENSHOT_HINT_RE.test(img.alt));
+      if (isScreenshotHint && !seenScreenshot.has(abs)) {
+        seenScreenshot.add(abs);
+        screenshotCandidates.push(field(abs, url, img.alt || "filename/alt suggests a product screenshot", 65));
       }
     }
   }
@@ -276,6 +333,50 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
       }
     }
   }
+
+  // A single "does this product have API documentation, and where" field,
+  // distinct from the broader docs_api_indicators list above: the docs page
+  // itself if its URL/content clearly references an API, else the
+  // strongest API-shaped link already collected.
+  let apiDocumentation: ProvenanceField<string> = EMPTY_FIELD;
+  if (docsPage && /\bapi\b/i.test(pageUrl(docsPage) + " " + getMarkdown(docsPage).slice(0, 500))) {
+    apiDocumentation = field(pageUrl(docsPage), pageUrl(docsPage), "Docs page URL/content references an API", 75);
+  } else if (docsIndicators.length > 0 && docsIndicators[0].value) {
+    apiDocumentation = field(docsIndicators[0].value, docsIndicators[0].source_url, docsIndicators[0].evidence, 50);
+  }
+
+  // ---- Languages: <html lang="xx"> across crawled pages, deduped. ----
+  const languageCandidates: ProvenanceField<string>[] = [];
+  const seenLanguages = new Set<string>();
+  for (const page of pages) {
+    const match = (page.html || "").match(HTML_LANG_RE);
+    if (!match) continue;
+    const lang = match[1].toLowerCase();
+    if (seenLanguages.has(lang)) continue;
+    seenLanguages.add(lang);
+    languageCandidates.push(field(match[1], pageUrl(page), `<html lang="${match[1]}">`, 70));
+  }
+
+  // ---- Security & Support: keyword evidence on their classified pages. ----
+  const securityMd = securityPage ? getMarkdown(securityPage) : "";
+  const securityUrl = securityPage ? pageUrl(securityPage) : null;
+  const securityIndicators: ProvenanceField<string>[] = SECURITY_KEYWORDS
+    .filter((kw) => securityMd.toLowerCase().includes(kw))
+    .map((kw) => field(kw, securityUrl, `Matched "${kw}" on the security/trust page`, 60));
+
+  const supportCorpus = [faqPage ? getMarkdown(faqPage) : "", homeMd].join("\n\n").toLowerCase();
+  const supportUrl = faqPage ? pageUrl(faqPage) : homeUrl;
+  const supportChannels: ProvenanceField<string>[] = SUPPORT_KEYWORDS
+    .filter((kw) => supportCorpus.includes(kw))
+    .map((kw) => field(kw, supportUrl, `Matched "${kw}"`, 55));
+
+  // ---- Taxonomy suggestions: matched against the EXISTING taxonomy only. ----
+  const taxonomyCorpus = [
+    homepage?.metadata?.title || "", homepage?.metadata?.description || "", ogTitle || "", ogDescription || "",
+    ...featureHeadings,
+  ].join(" ");
+  const categorySuggestions = matchTaxonomy(opts.categories || [], taxonomyCorpus, homeUrl);
+  const tagSuggestions = matchTaxonomy(opts.tags || [], taxonomyCorpus, homeUrl);
 
   // ---- Content ----
   const importantHeadings: ProvenanceField<string>[] = [];
@@ -340,7 +441,10 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
       platform_indicators: [],
       integrations: integrationNames.slice(0, 20).map((n) => field(n, integrationsPage ? pageUrl(integrationsPage) : null, null, 35)),
       docs_api_indicators: docsIndicators.slice(0, 5),
-      languages: [],
+      api_documentation: apiDocumentation,
+      languages: languageCandidates.slice(0, 10),
+      security_indicators: securityIndicators.slice(0, 10),
+      support_channels: supportChannels.slice(0, 10),
     },
     content: {
       faq_candidates: faqCandidates,
@@ -348,9 +452,13 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
       source_summaries: sourceSummaries.slice(0, 10),
     },
     assets: {
-      screenshot_candidates: [],
+      screenshot_candidates: screenshotCandidates.slice(0, 10),
       image_candidates: imageCandidates.slice(0, 20),
       logo_candidates: logoCandidates.slice(0, 5),
+    },
+    taxonomy: {
+      category_suggestions: categorySuggestions,
+      tag_suggestions: tagSuggestions,
     },
     crawl_sources: crawlSources,
     warnings,

@@ -54,6 +54,26 @@ function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+// Builds a human-readable message from an approve / bulk-approve response.
+// Reads the payload defensively since the exact field names/shape may vary —
+// falls back to a generic success message if counts aren't parseable.
+function buildApproveMessage(data: unknown): string {
+  if (!data || typeof data !== 'object') {
+    return 'Approved — crawling started automatically.';
+  }
+  const d = data as Record<string, unknown>;
+  const approved = Array.isArray(d.approved) ? d.approved.length : undefined;
+  const skipped = Array.isArray(d.skipped) ? d.skipped.length : undefined;
+  if (approved === undefined) {
+    return 'Approved — crawling started automatically.';
+  }
+  let msg = `Approved ${approved} candidate${approved === 1 ? '' : 's'} — crawling started automatically.`;
+  if (skipped) {
+    msg += ` ${skipped} skipped (not yet validated).`;
+  }
+  return msg;
+}
+
 // Discovery Queue — every candidate moving through the pipeline (New ->
 // Validated -> Needs Review / Duplicate / Rejected -> Approved For Crawl ->
 // Crawled). Search, filters, bulk actions, and pagination live inline here,
@@ -90,9 +110,11 @@ export default function WpAdminDiscoveryQueuePage() {
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
   const { mutate: bulkAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-discovery-queue', 'POST');
+  const { mutate: approveAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-discovery-queue', 'POST');
   const { mutate: crawlAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-crawl-jobs', 'POST');
   const [crawlBusyId, setCrawlBusyId] = useState<string | null>(null);
   const [crawlMessage, setCrawlMessage] = useState<string | null>(null);
+  const [approveBusyId, setApproveBusyId] = useState<string | null>(null);
 
   const rows = data?.data || [];
   const total = data?.total || 0;
@@ -119,6 +141,19 @@ export default function WpAdminDiscoveryQueuePage() {
     const result = await crawlAction({ action: 'retry', id: jobId });
     setCrawlBusyId(null);
     if (!result.ok) setCrawlMessage(result.error?.message || 'Failed to retry crawl.');
+    refetch();
+  }
+
+  async function handleApprove(candidateId: string) {
+    setApproveBusyId(candidateId);
+    setCrawlMessage(null);
+    const result = await approveAction({ action: 'approve', id: candidateId });
+    setApproveBusyId(null);
+    if (result.ok) {
+      setCrawlMessage(buildApproveMessage(result.data));
+    } else {
+      setCrawlMessage(result.error?.message || 'Failed to approve.');
+    }
     refetch();
   }
 
@@ -150,7 +185,7 @@ export default function WpAdminDiscoveryQueuePage() {
     const result = await bulkAction({ ...body, ids: Array.from(selected) });
     setBulkBusy(false);
     if (result.ok) {
-      setBulkMessage(`${label} complete.`);
+      setBulkMessage(body.action === 'bulk-approve' ? buildApproveMessage(result.data) : `${label} complete.`);
       setSelected(new Set());
       refetch();
     } else {
@@ -212,7 +247,7 @@ export default function WpAdminDiscoveryQueuePage() {
             <div className="flex flex-wrap items-center gap-2 ml-auto">
               <button
                 disabled={bulkBusy}
-                onClick={() => runBulk({ action: 'bulk-status', status: 'approved_for_crawl' }, 'Approve')}
+                onClick={() => runBulk({ action: 'bulk-approve' }, 'Approve')}
                 className="text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50 disabled:opacity-50"
               >
                 Approve For Crawl
@@ -335,6 +370,14 @@ export default function WpAdminDiscoveryQueuePage() {
                             {(() => {
                               const job = row.latest_crawl_job;
                               const isBusy = crawlBusyId === row.id;
+                              const isApproving = approveBusyId === row.id;
+                              if (isApproving) {
+                                return (
+                                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" /> Approving…
+                                  </span>
+                                );
+                              }
                               if (isBusy) {
                                 return (
                                   <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
@@ -352,6 +395,18 @@ export default function WpAdminDiscoveryQueuePage() {
                                       className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                       <Play className="w-3.5 h-3.5" /> Start Crawl
+                                    </button>
+                                  );
+                                }
+                                if (row.status === 'validated') {
+                                  return (
+                                    <button
+                                      onClick={() => handleApprove(row.id)}
+                                      disabled={anyActiveCrawl}
+                                      title={anyActiveCrawl ? 'Another crawl is already in progress' : 'Approve — crawling starts automatically'}
+                                      className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      <Play className="w-3.5 h-3.5" /> Approve
                                     </button>
                                   );
                                 }
