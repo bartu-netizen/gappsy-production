@@ -2,12 +2,22 @@ import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
-  ListChecks, ExternalLink, Layers, RefreshCw,
+  ListChecks, ExternalLink, Layers, RefreshCw, Play, Loader2, FileSearch, RotateCcw, PencilLine,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
 import { DISCOVERY_STATUSES, discoveryStatusLabel, discoveryStatusBadgeClass, scoreBadgeClass, type DiscoveryStatus } from '../utils/discoveryStatus';
+import { crawlJobStatusLabel, crawlJobStatusBadgeClass, CRAWL_ACTIVE_STATUSES, type CrawlJobStatus } from '../utils/crawlJobStatus';
+
+interface LatestCrawlJob {
+  id: string;
+  status: CrawlJobStatus;
+  progress: number;
+  error_code: string | null;
+  error_message: string | null;
+  created_draft_tool_id: string | null;
+}
 
 interface DiscoveredToolRow {
   id: string;
@@ -26,6 +36,7 @@ interface DiscoveredToolRow {
   created_at: string;
   tool_categories: { id: string; name: string } | null;
   discovery_providers: { id: string; name: string } | null;
+  latest_crawl_job: LatestCrawlJob | null;
 }
 
 interface ListResponse { ok: boolean; data: DiscoveredToolRow[]; total: number; page: number; per_page: number; }
@@ -79,11 +90,37 @@ export default function WpAdminDiscoveryQueuePage() {
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
   const { mutate: bulkAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-discovery-queue', 'POST');
+  const { mutate: crawlAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-crawl-jobs', 'POST');
+  const [crawlBusyId, setCrawlBusyId] = useState<string | null>(null);
+  const [crawlMessage, setCrawlMessage] = useState<string | null>(null);
 
   const rows = data?.data || [];
   const total = data?.total || 0;
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
   const allSelected = rows.length > 0 && rows.every((r) => selected.has(r.id));
+  const anyActiveCrawl = rows.some((r) => r.latest_crawl_job && CRAWL_ACTIVE_STATUSES.includes(r.latest_crawl_job.status));
+
+  async function handleStartCrawl(candidateId: string) {
+    setCrawlBusyId(candidateId);
+    setCrawlMessage(null);
+    const result = await crawlAction({ action: 'start', discovery_candidate_id: candidateId });
+    setCrawlBusyId(null);
+    if (result.ok) {
+      setCrawlMessage('Crawl completed — extraction ready for review.');
+    } else {
+      setCrawlMessage(result.error?.message || 'Failed to start crawl.');
+    }
+    refetch();
+  }
+
+  async function handleRetryCrawl(jobId: string, candidateId: string) {
+    setCrawlBusyId(candidateId);
+    setCrawlMessage(null);
+    const result = await crawlAction({ action: 'retry', id: jobId });
+    setCrawlBusyId(null);
+    if (!result.ok) setCrawlMessage(result.error?.message || 'Failed to retry crawl.');
+    refetch();
+  }
 
   function toggleExpanded(id: string) {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -216,6 +253,9 @@ export default function WpAdminDiscoveryQueuePage() {
         {bulkMessage && (
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-4 text-sm text-gray-700">{bulkMessage}</div>
         )}
+        {crawlMessage && (
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-4 text-sm text-gray-700">{crawlMessage}</div>
+        )}
 
         {isError && error && <AdminErrorBanner error={error} onRetry={refetch} className="mb-6" />}
         {isLoading && <AdminLoadingState message="Loading discovery queue..." />}
@@ -239,6 +279,7 @@ export default function WpAdminDiscoveryQueuePage() {
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Confidence</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Quality</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Found</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Crawl</th>
                     <th className="text-right px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Actions</th>
                   </tr>
                 </thead>
@@ -291,6 +332,68 @@ export default function WpAdminDiscoveryQueuePage() {
                           </td>
                           <td className="px-5 py-3.5 text-sm text-gray-500">{formatDate(row.created_at)}</td>
                           <td className="px-5 py-3.5">
+                            {(() => {
+                              const job = row.latest_crawl_job;
+                              const isBusy = crawlBusyId === row.id;
+                              if (isBusy) {
+                                return (
+                                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" /> Crawling…
+                                  </span>
+                                );
+                              }
+                              if (!job) {
+                                if (row.status === 'approved_for_crawl') {
+                                  return (
+                                    <button
+                                      onClick={() => handleStartCrawl(row.id)}
+                                      disabled={anyActiveCrawl}
+                                      title={anyActiveCrawl ? 'Another crawl is already in progress' : 'Start crawl'}
+                                      className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      <Play className="w-3.5 h-3.5" /> Start Crawl
+                                    </button>
+                                  );
+                                }
+                                return <span className="text-gray-300 text-sm">—</span>;
+                              }
+                              if (job.created_draft_tool_id) {
+                                return (
+                                  <Link to={`/wp-admin/tools/${job.created_draft_tool_id}/edit`} className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:underline">
+                                    <PencilLine className="w-3.5 h-3.5" /> View Draft
+                                  </Link>
+                                );
+                              }
+                              if (job.status === 'needs_review') {
+                                return (
+                                  <Link to={`/wp-admin/discovery/crawl/${job.id}`} className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded bg-violet-50 text-violet-700 hover:bg-violet-100">
+                                    <FileSearch className="w-3.5 h-3.5" /> Review Extraction
+                                  </Link>
+                                );
+                              }
+                              if (job.status === 'failed') {
+                                return (
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${crawlJobStatusBadgeClass(job.status)}`}>{crawlJobStatusLabel(job.status)}</span>
+                                    <button
+                                      onClick={() => handleRetryCrawl(job.id, row.id)}
+                                      disabled={anyActiveCrawl}
+                                      title={job.error_message || 'Retry'}
+                                      className="inline-flex items-center gap-1 text-xs font-medium px-1.5 py-1 rounded text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                                    >
+                                      <RotateCcw className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                );
+                              }
+                              return (
+                                <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${crawlJobStatusBadgeClass(job.status)}`}>
+                                  {crawlJobStatusLabel(job.status)}
+                                </span>
+                              );
+                            })()}
+                          </td>
+                          <td className="px-5 py-3.5">
                             <div className="flex items-center justify-end gap-1">
                               <button
                                 onClick={() => toggleExpanded(row.id)}
@@ -304,7 +407,7 @@ export default function WpAdminDiscoveryQueuePage() {
                         </tr>
                         {isExpanded && (
                           <tr className="bg-gray-50">
-                            <td colSpan={8} className="px-5 py-4">
+                            <td colSpan={9} className="px-5 py-4">
                               <div className="grid sm:grid-cols-3 gap-4">
                                 <div>
                                   <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">Candidate info</p>

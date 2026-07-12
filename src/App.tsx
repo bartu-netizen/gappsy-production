@@ -100,6 +100,7 @@ const WpAdminDiscoveryImportHistoryPage = lazy(() => import("./pages/WpAdminDisc
 const WpAdminDiscoveryDuplicatesPage = lazy(() => import("./pages/WpAdminDiscoveryDuplicatesPage"));
 const WpAdminDiscoveryValidationPage = lazy(() => import("./pages/WpAdminDiscoveryValidationPage"));
 const WpAdminDiscoveryProvidersPage = lazy(() => import("./pages/WpAdminDiscoveryProvidersPage"));
+const WpAdminCrawlReviewPage = lazy(() => import("./pages/WpAdminCrawlReviewPage"));
 const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
 const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
 const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
@@ -223,6 +224,7 @@ export default function App() {
         <Route path="/wp-admin/discovery/duplicates" element={<AdminRoute><WpAdminDiscoveryDuplicatesPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/validation" element={<AdminRoute><WpAdminDiscoveryValidationPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/providers" element={<AdminRoute><WpAdminDiscoveryProvidersPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/crawl/:jobId" element={<AdminRoute><WpAdminCrawlReviewPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing" element={<AdminRoute><WpAdminPublishingDashboardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/new" element={<AdminRoute><WpAdminNewSoftwareWizardPage /></AdminRoute>} />
         <Route path="/wp-admin/publishing/queue" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />

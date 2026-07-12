@@ -83,7 +83,26 @@ Deno.serve(async (req: Request) => {
       const { data, error, count } = await query;
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
 
-      return jsonResponse({ ok: true, data: data || [], total: count || 0, page, per_page: perPage });
+      // Attach each row's most recent crawl job (if any) so the Queue can
+      // show crawl status/actions inline without a second round-trip per
+      // row. One extra query, reduced to latest-per-candidate in memory —
+      // fine at this page size (<=100 rows).
+      const candidateIds = (data || []).map((r: { id: string }) => r.id);
+      let latestJobByCandidate: Record<string, unknown> = {};
+      if (candidateIds.length > 0) {
+        const { data: jobs } = await supabase
+          .from("crawl_jobs")
+          .select("id, discovery_candidate_id, status, progress, error_code, error_message, created_draft_tool_id, created_at")
+          .in("discovery_candidate_id", candidateIds)
+          .order("created_at", { ascending: false });
+        latestJobByCandidate = (jobs || []).reduce((acc: Record<string, unknown>, job: { discovery_candidate_id: string }) => {
+          if (!acc[job.discovery_candidate_id]) acc[job.discovery_candidate_id] = job;
+          return acc;
+        }, {});
+      }
+      const enriched = (data || []).map((row: { id: string }) => ({ ...row, latest_crawl_job: latestJobByCandidate[row.id] || null }));
+
+      return jsonResponse({ ok: true, data: enriched, total: count || 0, page, per_page: perPage });
     }
 
     if (req.method === "PUT") {
