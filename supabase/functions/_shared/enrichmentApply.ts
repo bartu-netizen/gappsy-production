@@ -27,6 +27,11 @@ export interface ApplyOutcome {
   applied_field_keys: string[];
   conflicts: ApplyConflict[];
   skipped: { field_key: string; reason: string }[];
+  // Suggestions that were validly resolved but produced no database change
+  // (e.g. every suggested category/tag was already linked) — reported
+  // separately from `skipped` because these ARE fully resolved/applied,
+  // not held back or rejected.
+  no_op: { field_key: string; reason: string }[];
   tool: any | null;
 }
 
@@ -37,6 +42,47 @@ function valuesEqual(a: unknown, b: unknown): boolean {
   } catch {
     return false;
   }
+}
+
+export interface TaxonomyRow {
+  id: string;
+  slug: string;
+  name: string;
+}
+
+// Shared by category_suggestions and tag_suggestions: match suggested
+// values (id/slug/name) against the existing taxonomy only (never
+// auto-create), union with the tool's current links. `changed` tells the
+// caller whether there's a real DB write to make; when false, the
+// suggestion was still fully and validly processed (no unresolved work
+// left for a reviewer) — the caller marks it applied as a no-op rather
+// than leaving it stuck pending.
+export function resolveTaxonomySuggestion(
+  fieldKey: "category_suggestions" | "tag_suggestions",
+  suggested: unknown[],
+  taxonomyRows: TaxonomyRow[],
+  existingIds: string[],
+  skipped: { field_key: string; reason: string }[],
+): { merged: string[]; changed: boolean; noOpReason: string } {
+  const resolved = new Set<string>();
+  const kindLabel = fieldKey === "category_suggestions" ? "category" : "tag";
+  const kindLabelPlural = fieldKey === "category_suggestions" ? "categories" : "tags";
+  for (const s of suggested) {
+    const needle = typeof s === "string" ? s.toLowerCase() : "";
+    const match = taxonomyRows.find((t) => t.id === s || t.slug.toLowerCase() === needle || t.name.toLowerCase() === needle);
+    if (match) resolved.add(match.id);
+    else skipped.push({ field_key: fieldKey, reason: `"${s}" is not an existing ${kindLabel} — not applied` });
+  }
+  const merged = [...new Set([...existingIds, ...resolved])];
+  if (merged.length > existingIds.length) {
+    return { merged, changed: true, noOpReason: "" };
+  }
+  const noOpReason = suggested.length === 0
+    ? `No ${kindLabelPlural} were suggested — nothing to add.`
+    : resolved.size === 0
+      ? `None of the suggested ${kindLabelPlural} could be matched to the existing taxonomy — no changes made.`
+      : `All suggested ${kindLabelPlural} are already linked to this tool — no new ${kindLabelPlural} added.`;
+  return { merged, changed: false, noOpReason };
 }
 
 export async function applyApprovedSuggestions(
@@ -50,6 +96,7 @@ export async function applyApprovedSuggestions(
 ): Promise<ApplyOutcome> {
   const conflicts: ApplyConflict[] = [];
   const skipped: { field_key: string; reason: string }[] = [];
+  const noOp: { field_key: string; reason: string }[] = [];
   const confirmSet = new Set(confirmOverwriteFieldKeys);
 
   const { data: tool, error: toolError } = await supabase.from("tools").select("*").eq("id", toolId).single();
@@ -204,26 +251,24 @@ export async function applyApprovedSuggestions(
   }
 
   // category / tag suggestions — resolve against EXISTING taxonomy only
-  // (never auto-create), union with current links.
+  // (never auto-create), union with current links. A suggestion that
+  // resolves to no new links (already-present, or nothing suggested) is
+  // still fully applied as a no-op — it must not stay stuck pending, since
+  // there is nothing further for a reviewer to do with it.
   const categorySuggestion = suggestions.find((s) => s.field_key === "category_suggestions");
   if (categorySuggestion) {
     const suggested = Array.isArray(categorySuggestion.value) ? categorySuggestion.value : [categorySuggestion.value];
     const { data: allCategories } = await supabase.from("tool_categories").select("id, slug, name");
-    const resolved = new Set<string>();
-    for (const s of suggested) {
-      const needle = typeof s === "string" ? s.toLowerCase() : "";
-      const match = (allCategories || []).find((c: any) => c.id === s || c.slug.toLowerCase() === needle || c.name.toLowerCase() === needle);
-      if (match) resolved.add(match.id);
-      else skipped.push({ field_key: "category_suggestions", reason: `"${s}" is not an existing category — not applied` });
-    }
     const { data: existingLinks } = await supabase.from("tool_category_links").select("category_id, primary_category").eq("tool_id", toolId);
     const existingIds = (existingLinks || []).map((r: any) => r.category_id);
-    const merged = [...new Set([...existingIds, ...resolved])];
-    if (merged.length > existingIds.length) {
-      payload.category_ids = merged;
+    const result = resolveTaxonomySuggestion("category_suggestions", suggested, (allCategories || []) as TaxonomyRow[], existingIds, skipped);
+    appliedFieldKeys.push("category_suggestions");
+    if (result.changed) {
+      payload.category_ids = result.merged;
       const existingPrimary = (existingLinks || []).find((r: any) => r.primary_category)?.category_id;
-      payload.primary_category_id = existingPrimary || merged[0];
-      appliedFieldKeys.push("category_suggestions");
+      payload.primary_category_id = existingPrimary || result.merged[0];
+    } else {
+      noOp.push({ field_key: "category_suggestions", reason: result.noOpReason });
     }
   }
 
@@ -231,24 +276,19 @@ export async function applyApprovedSuggestions(
   if (tagSuggestion) {
     const suggested = Array.isArray(tagSuggestion.value) ? tagSuggestion.value : [tagSuggestion.value];
     const { data: allTags } = await supabase.from("tool_tags").select("id, slug, name");
-    const resolved = new Set<string>();
-    for (const s of suggested) {
-      const needle = typeof s === "string" ? s.toLowerCase() : "";
-      const match = (allTags || []).find((t: any) => t.id === s || t.slug.toLowerCase() === needle || t.name.toLowerCase() === needle);
-      if (match) resolved.add(match.id);
-      else skipped.push({ field_key: "tag_suggestions", reason: `"${s}" is not an existing tag — not applied` });
-    }
     const { data: existingLinks } = await supabase.from("tool_tag_links").select("tag_id").eq("tool_id", toolId);
     const existingIds = (existingLinks || []).map((r: any) => r.tag_id);
-    const merged = [...new Set([...existingIds, ...resolved])];
-    if (merged.length > existingIds.length) {
-      payload.tag_ids = merged;
-      appliedFieldKeys.push("tag_suggestions");
+    const result = resolveTaxonomySuggestion("tag_suggestions", suggested, (allTags || []) as TaxonomyRow[], existingIds, skipped);
+    appliedFieldKeys.push("tag_suggestions");
+    if (result.changed) {
+      payload.tag_ids = result.merged;
+    } else {
+      noOp.push({ field_key: "tag_suggestions", reason: result.noOpReason });
     }
   }
 
   if (Object.keys(payload).length === 0) {
-    return { applied_field_keys: [], conflicts, skipped, tool: null };
+    return { applied_field_keys: appliedFieldKeys, conflicts, skipped, no_op: noOp, tool: null };
   }
 
   const res = await fetch(`${supabaseUrl}/functions/v1/admin-tools?id=${toolId}`, {
@@ -266,5 +306,5 @@ export async function applyApprovedSuggestions(
     throw new Error(body?.error || "Failed to apply enrichment fields via admin-tools");
   }
 
-  return { applied_field_keys: appliedFieldKeys, conflicts, skipped, tool: body.data };
+  return { applied_field_keys: appliedFieldKeys, conflicts, skipped, no_op: noOp, tool: body.data };
 }
