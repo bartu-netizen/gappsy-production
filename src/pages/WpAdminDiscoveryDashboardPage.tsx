@@ -1,12 +1,24 @@
 import { Link } from 'react-router-dom';
 import {
   PlusCircle, Search, ShieldAlert, GitMerge, XCircle, CheckCircle2,
-  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles,
+  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles, HeartPulse,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
 import { discoveryStatusLabel, discoveryStatusBadgeClass, type DiscoveryStatus } from '../utils/discoveryStatus';
+
+interface ProviderHealthRow {
+  id: string;
+  key: string;
+  name: string;
+  enabled: boolean;
+  implemented: boolean;
+  last_run_status: 'completed' | 'failed' | 'partial' | null;
+  recent_error_count: number;
+  disabled_reason: string | null;
+  last_run: { started_at: string; candidates_created: number } | null;
+}
 
 interface DiscoveryStatsResponse {
   ok: boolean;
@@ -18,8 +30,15 @@ interface DiscoveryStatsResponse {
     by_day: Record<string, number>;
     validation_success_rate: number | null;
     recent: Array<{ id: string; name: string; logo_url: string | null; status: DiscoveryStatus; created_at: string }>;
+    provider_health: ProviderHealthRow[];
   };
 }
+
+const HEALTH_DOT_CLASS: Record<string, string> = {
+  completed: 'bg-emerald-500',
+  partial: 'bg-amber-500',
+  failed: 'bg-rose-500',
+};
 
 function formatShortDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -184,6 +203,45 @@ export default function WpAdminDiscoveryDashboardPage() {
                   </ul>
                 )}
               </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <HeartPulse className="w-4 h-4 text-gray-400" />
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Provider Health</h3>
+                </div>
+                <Link to="/wp-admin/discovery/providers" className="text-xs font-semibold text-blue-600 hover:underline">Manage providers</Link>
+              </div>
+              {(!stats.provider_health || stats.provider_health.length === 0) ? (
+                <p className="text-sm text-gray-400 py-2">No providers registered.</p>
+              ) : (
+                <ul className="divide-y divide-gray-100">
+                  {stats.provider_health.map((p) => (
+                    <li key={p.id} className="flex items-center gap-3 py-2.5">
+                      <span
+                        className={`w-2 h-2 rounded-full shrink-0 ${p.last_run_status ? HEALTH_DOT_CLASS[p.last_run_status] : 'bg-gray-300'}`}
+                        title={p.last_run_status || 'Never run'}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm text-gray-800 truncate">
+                          {p.name}
+                          {!p.implemented && <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-semibold align-middle">Planned</span>}
+                        </p>
+                        {p.disabled_reason && !p.enabled && (
+                          <p className="text-[11px] text-gray-400 truncate">{p.disabled_reason}</p>
+                        )}
+                      </div>
+                      {p.recent_error_count > 0 && (
+                        <span className="text-xs font-semibold text-rose-600 shrink-0">{p.recent_error_count} error{p.recent_error_count === 1 ? '' : 's'} (7d)</span>
+                      )}
+                      {p.last_run && (
+                        <span className="text-xs text-gray-400 shrink-0">{formatShortDate(p.last_run.started_at)}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         )}

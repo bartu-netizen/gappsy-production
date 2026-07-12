@@ -38,6 +38,35 @@ export function normalizeHostname(rawUrl: string): string | null {
   }
 }
 
+// Code-hosting/package-registry domains where thousands of unrelated
+// projects share the same base hostname (a tool whose "official website" is
+// just its repo, common for self-hosted/open-source software). A bare
+// hostname match on one of these is meaningless as a duplicate signal —
+// see normalizeFullUrl/isMultiTenantHost's use in discoveryIngest.ts's
+// findDuplicate.
+const MULTI_TENANT_HOSTS = new Set([
+  "github.com", "gitlab.com", "bitbucket.org", "sourceforge.net",
+  "gitee.com", "codeberg.org", "npmjs.com", "pypi.org",
+]);
+
+export function isMultiTenantHost(hostname: string): boolean {
+  return MULTI_TENANT_HOSTS.has(hostname.toLowerCase());
+}
+
+// Host + path (query/hash/trailing-slash stripped), for comparing identity
+// on multi-tenant hosts where the path — not the hostname — is what
+// actually identifies a distinct project (e.g. github.com/owner/repo).
+export function normalizeFullUrl(rawUrl: string): string | null {
+  try {
+    const url = new URL(rawUrl.match(/^https?:\/\//) ? rawUrl : `https://${rawUrl}`);
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    const path = url.pathname.replace(/\/+$/, "").toLowerCase();
+    return `${host}${path}`;
+  } catch {
+    return null;
+  }
+}
+
 async function timedFetch(url: string, method: "HEAD" | "GET" = "GET"): Promise<{ ok: boolean; status?: number; finalUrl?: string; error?: string }> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);

@@ -74,6 +74,42 @@ Deno.serve(async (req: Request) => {
       .order("created_at", { ascending: false })
       .limit(8);
 
+    // Provider health rollup — one row per registered provider (including
+    // unimplemented stubs) with its last-run status/time and a recent error
+    // count, so the Discovery Dashboard can show "which sources are
+    // healthy" without a separate page. Read-only; never changes anything.
+    const { data: providers } = await supabase
+      .from("discovery_providers")
+      .select("id, key, name, type, enabled, implemented, priority, schedule_frequency, last_run_at, last_run_status, disabled_reason")
+      .order("priority", { ascending: true });
+
+    const providerIds = (providers || []).map((p: { id: string }) => p.id);
+    const recentErrorCountByProvider: Record<string, number> = {};
+    const lastRunByProvider: Record<string, unknown> = {};
+    if (providerIds.length > 0) {
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const { data: runs } = await supabase
+        .from("discovery_provider_runs")
+        .select("id, provider_id, status, candidates_found, candidates_created, candidates_duplicate, candidates_rejected, error_message, started_at, completed_at, duration_ms")
+        .in("provider_id", providerIds)
+        .gte("started_at", sevenDaysAgo)
+        .order("started_at", { ascending: false });
+
+      for (const run of runs || []) {
+        const r = run as { provider_id: string; status: string };
+        if (r.status === "failed") {
+          recentErrorCountByProvider[r.provider_id] = (recentErrorCountByProvider[r.provider_id] || 0) + 1;
+        }
+        if (!lastRunByProvider[r.provider_id]) lastRunByProvider[r.provider_id] = run;
+      }
+    }
+
+    const providerHealth = (providers || []).map((p: { id: string }) => ({
+      ...p,
+      recent_error_count: recentErrorCountByProvider[p.id] || 0,
+      last_run: lastRunByProvider[p.id] || null,
+    }));
+
     return jsonResponse({
       ok: true,
       data: {
@@ -84,6 +120,7 @@ Deno.serve(async (req: Request) => {
         by_day: byDay,
         validation_success_rate: validationSuccessRate,
         recent: recent || [],
+        provider_health: providerHealth,
       },
     });
   } catch (error) {
