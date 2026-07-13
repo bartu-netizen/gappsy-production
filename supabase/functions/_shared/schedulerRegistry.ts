@@ -12,6 +12,8 @@ import { drainCrawlQueue } from "./crawlRunner.ts";
 import { runProvider } from "./discoveryProviderRunner.ts";
 import { getProvider } from "./discoveryProviders/registry.ts";
 import { ProviderNotImplementedError } from "./discoveryProviders/types.ts";
+import { computeCompleteness } from "./toolCompleteness.ts";
+import { attachToolCategories, fetchCompletenessRelations, buildCompletenessInput, computeQualityScore } from "./toolCompletenessRelations.ts";
 
 export interface SchedulerJobContext {
   supabase: SupabaseClient;
@@ -154,11 +156,56 @@ async function enrichmentStuckSweepHandler(ctx: SchedulerJobContext): Promise<Re
   return { stuck_count: (stuck || []).length, by_status: byStatus };
 }
 
+// Editorial Platform: keeps tools.completeness_percent / quality_score /
+// last_scored_at fresh without recomputing on every dashboard/list read.
+// Bounded to config.batch_size per run (default 200) via
+// get_dirty_tools_for_scoring (last_scored_at IS NULL OR updated_at >
+// last_scored_at) — a change now shows an updated score within one tick,
+// not instantly, which is the right tradeoff for a cached aggregate.
+// Individual per-row updates (not a bulk upsert) so a partial batch
+// failure never risks touching unrelated tool columns.
+async function completenessRescanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const batchSize = typeof config.batch_size === "number" && config.batch_size > 0 ? Math.min(config.batch_size, 1000) : 200;
+
+  const { data: dirtyRows, error: dirtyError } = await supabase.rpc("get_dirty_tools_for_scoring", { p_limit: batchSize });
+  if (dirtyError) throw new Error(`Failed to find tools needing rescore: ${dirtyError.message}`);
+  const toolIds = ((dirtyRows || []) as any[]).map((r) => r.id as string);
+  if (toolIds.length === 0) return { rescored: 0 };
+
+  const { data: tools, error: toolsError } = await supabase
+    .from("tools")
+    .select("id, name, slug, website, short_description, long_description, seo_meta_description, seo_title, pricing_model, status, logo, sitemap_eligible, updated_at")
+    .in("id", toolIds);
+  if (toolsError) throw new Error(`Failed to load tools for rescoring: ${toolsError.message}`);
+
+  const categoriesMap = await attachToolCategories(supabase, toolIds);
+  const relations = await fetchCompletenessRelations(supabase, toolIds);
+  const nowIso = new Date().toISOString();
+
+  const outcomes = await Promise.allSettled(
+    ((tools || []) as any[]).map(async (tool) => {
+      const categoryCount = ((categoriesMap.get(tool.id) || []) as any[]).length;
+      const completeness = computeCompleteness(buildCompletenessInput(tool, categoryCount, relations));
+      const qualityScore = computeQualityScore(completeness.percent, tool.updated_at);
+      const { error } = await supabase
+        .from("tools")
+        .update({ completeness_percent: completeness.percent, quality_score: qualityScore, last_scored_at: nowIso })
+        .eq("id", tool.id);
+      if (error) throw new Error(`${tool.id}: ${error.message}`);
+    }),
+  );
+  const failed = outcomes.filter((o) => o.status === "rejected").length;
+
+  return { rescored: (tools || []).length - failed, failed };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
   crawl_lease_cleanup: crawlLeaseCleanupHandler,
   enrichment_stuck_sweep: enrichmentStuckSweepHandler,
+  completeness_rescan: completenessRescanHandler,
 };
 
 export class UnknownJobTypeError extends Error {

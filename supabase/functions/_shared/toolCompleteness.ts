@@ -140,6 +140,16 @@ export function getMissingPublishRequirements(merged: {
 // The Publishing/Validation tab still displays them as pass/fail items —
 // see toolCompleteness's "canonical" item — so the CMS checklist reads
 // honestly without adding a redundant gate.
+// requiredKeys defaults to every check below (today's exact hardcoded
+// behavior) when omitted, so every existing call site is unaffected. Pass
+// a smaller Set (from publishing_rules — see admin-tools/index.ts's
+// getConfiguredFirstPublishRequiredKeys) to make this admin-configurable:
+// an editor can disable the "logo" or "tags" check platform-wide without a
+// code change.
+export const FIRST_PUBLISH_DEFAULT_REQUIRED_KEYS = new Set([
+  "logo", "screenshots", "features", "faq", "tags", "seo_title",
+]);
+
 export function validateFirstPublishStrict(input: {
   logoPresent: boolean;
   screenshotCount: number;
@@ -147,13 +157,13 @@ export function validateFirstPublishStrict(input: {
   faqCount: number;
   tagCount: number;
   seoTitlePresent: boolean;
-}): string[] {
+}, requiredKeys: Set<string> = FIRST_PUBLISH_DEFAULT_REQUIRED_KEYS): string[] {
   const missing: string[] = [];
-  if (!input.logoPresent) missing.push("logo");
-  if (input.screenshotCount === 0) missing.push("hero image / screenshot");
-  if (input.featureCount === 0) missing.push("at least one feature");
-  if (input.faqCount === 0) missing.push("at least one FAQ");
-  if (input.tagCount === 0) missing.push("at least one tag");
-  if (!input.seoTitlePresent) missing.push("meta title");
+  if (requiredKeys.has("logo") && !input.logoPresent) missing.push("logo");
+  if (requiredKeys.has("screenshots") && input.screenshotCount === 0) missing.push("hero image / screenshot");
+  if (requiredKeys.has("features") && input.featureCount === 0) missing.push("at least one feature");
+  if (requiredKeys.has("faq") && input.faqCount === 0) missing.push("at least one FAQ");
+  if (requiredKeys.has("tags") && input.tagCount === 0) missing.push("at least one tag");
+  if (requiredKeys.has("seo_title") && !input.seoTitlePresent) missing.push("meta title");
   return missing;
 }

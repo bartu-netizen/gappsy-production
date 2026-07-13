@@ -1,8 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
-import { computeCompleteness, validateFirstPublishStrict, getMissingPublishRequirements, type ToolCompletenessInput } from "../_shared/toolCompleteness.ts";
+import { computeCompleteness, validateFirstPublishStrict, getMissingPublishRequirements } from "../_shared/toolCompleteness.ts";
+import { attachToolCategories, attachToolTags, fetchCompletenessRelations, buildCompletenessInput, getConfiguredFirstPublishRequiredKeys } from "../_shared/toolCompletenessRelations.ts";
 import { writeAuditLog } from "../_shared/adminAuth.ts";
+import { validateCrawlUrl } from "../_shared/crawlUrlSafety.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -434,107 +436,10 @@ function validatePublishRequirements(merged: Parameters<typeof getMissingPublish
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function attachToolCategories(supabase: any, toolIds: string[]) {
-  if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase
-    .from("tool_category_links")
-    .select("tool_id, primary_category, tool_categories(id, slug, name)")
-    .in("tool_id", toolIds);
-  if (error) throw new Error(`Failed to load tool categories: ${error.message}`);
-
-  const map = new Map<string, unknown[]>();
-  for (const row of data || []) {
-    const list = map.get(row.tool_id) || [];
-    list.push({ ...row.tool_categories, primary_category: row.primary_category });
-    map.set(row.tool_id, list);
-  }
-  return map;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function attachToolTags(supabase: any, toolIds: string[]) {
-  if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase
-    .from("tool_tag_links")
-    .select("tool_id, tool_tags(id, slug, name)")
-    .in("tool_id", toolIds);
-  if (error) throw new Error(`Failed to load tool tags: ${error.message}`);
-
-  const map = new Map<string, unknown[]>();
-  for (const row of data || []) {
-    const list = map.get(row.tool_id) || [];
-    list.push(row.tool_tags);
-    map.set(row.tool_id, list);
-  }
-  return map;
-}
-
-// A fixed set of bulk queries regardless of how many tools are on the
-// current page — this is what lets the list endpoint stay cheap at 50,000+
-// tools: never one query per tool, always ~9 queries per page.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fetchCompletenessRelations(supabase: any, toolIds: string[]) {
-  if (toolIds.length === 0) {
-    return { screenshots: new Map(), faqs: new Map(), pros: new Map(), cons: new Map(), useCases: new Map(), pricingPlans: new Map(), features: new Map(), integrations: new Map(), tags: new Map() };
-  }
-  const [screenshots, faqs, pros, cons, useCases, pricingPlans, features, integrations, tags] = await Promise.all([
-    supabase.from("tool_screenshots").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_faqs").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_pros").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_cons").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_use_cases").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_pricing_plans").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_features").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_integrations").select("tool_id").in("tool_id", toolIds),
-    supabase.from("tool_tag_links").select("tool_id").in("tool_id", toolIds),
-  ]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const countBy = (rows: any[]) => {
-    const map = new Map<string, number>();
-    for (const row of rows || []) map.set(row.tool_id, (map.get(row.tool_id) || 0) + 1);
-    return map;
-  };
-  return {
-    screenshots: countBy(screenshots.data),
-    faqs: countBy(faqs.data),
-    pros: countBy(pros.data),
-    cons: countBy(cons.data),
-    useCases: countBy(useCases.data),
-    pricingPlans: countBy(pricingPlans.data),
-    features: countBy(features.data),
-    integrations: countBy(integrations.data),
-    tags: countBy(tags.data),
-  };
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildCompletenessInput(tool: any, categoryCount: number, relations: Awaited<ReturnType<typeof fetchCompletenessRelations>>): ToolCompletenessInput {
-  const id = tool.id;
-  return {
-    name: tool.name,
-    slug: tool.slug,
-    website: tool.website,
-    short_description: tool.short_description,
-    long_description: tool.long_description,
-    seo_meta_description: tool.seo_meta_description,
-    seo_title: tool.seo_title,
-    pricing_model: tool.pricing_model,
-    status: tool.status,
-    categoryCount,
-    tagCount: relations.tags.get(id) || 0,
-    logoPresent: Boolean(tool.logo && String(tool.logo).trim()),
-    sitemapEligible: tool.sitemap_eligible !== false,
-    screenshotCount: relations.screenshots.get(id) || 0,
-    faqCount: relations.faqs.get(id) || 0,
-    prosCount: relations.pros.get(id) || 0,
-    consCount: relations.cons.get(id) || 0,
-    useCaseCount: relations.useCases.get(id) || 0,
-    pricingPlanCount: relations.pricingPlans.get(id) || 0,
-    featureCount: relations.features.get(id) || 0,
-    integrationCount: relations.integrations.get(id) || 0,
-  };
-}
+// attachToolCategories, attachToolTags, fetchCompletenessRelations, and
+// buildCompletenessInput moved to ../_shared/toolCompletenessRelations.ts
+// (imported above) so the completeness_rescan scheduler job can reuse the
+// exact same fixed ~9-query batch pattern instead of duplicating it.
 
 // NOTE — transactional limitation: delete() and insert() below are two
 // independent network round-trips against PostgREST, not one atomic DB
@@ -734,6 +639,7 @@ Deno.serve(async (req: Request) => {
         const categories = categoriesMap.get(id) || [];
         const relations = await fetchCompletenessRelations(supabase, [id]);
         const completeness = computeCompleteness(buildCompletenessInput(tool, categories.length, relations));
+        const requiredKeys = await getConfiguredFirstPublishRequiredKeys(supabase);
         const firstPublishMissing = validateFirstPublishStrict({
           logoPresent: Boolean(tool.logo && String(tool.logo).trim()),
           screenshotCount: relations.screenshots.get(id) || 0,
@@ -741,7 +647,7 @@ Deno.serve(async (req: Request) => {
           faqCount: relations.faqs.get(id) || 0,
           tagCount: relations.tags.get(id) || 0,
           seoTitlePresent: Boolean(tool.seo_title && String(tool.seo_title).trim()),
-        });
+        }, requiredKeys);
 
         return jsonResponse({
           ok: true,
@@ -857,6 +763,175 @@ Deno.serve(async (req: Request) => {
         }
 
         return jsonResponse({ ok: true, data: { assigned_count: toInsert.length, already_had_it_count: alreadyLinked.size } });
+      }
+
+      // Real server-side batch status transition (Editorial Platform) —
+      // the Publishing Queue previously did this as N sequential PUT calls
+      // (Promise.all(ids.map(id => update...))), one HTTP round trip per
+      // tool. This does ~9 fixed batch queries total (via
+      // fetchCompletenessRelations) regardless of how many tools are
+      // selected, applies the exact same per-tool gates a single PUT would
+      // (validateStatusTransition + publish requirements +
+      // first-publish-strict when moving into 'published'), and reports
+      // exactly which tools were skipped and why rather than silently
+      // dropping them.
+      if (payload.action === "bulk-set-status") {
+        const toolIds = Array.isArray(payload.tool_ids) ? payload.tool_ids.filter((v: unknown) => typeof v === "string") : [];
+        const targetStatus = typeof payload.status === "string" ? payload.status : null;
+        const force = payload.force === true;
+        const VALID_STATUSES = new Set(["draft", "needs_review", "ready_to_publish", "published", "archived"]);
+        if (toolIds.length === 0 || !targetStatus) {
+          return jsonResponse({ ok: false, error: "tool_ids (non-empty array) and status are required" }, 400);
+        }
+        if (!VALID_STATUSES.has(targetStatus)) {
+          return jsonResponse({ ok: false, error: `status must be one of: ${[...VALID_STATUSES].join(", ")}` }, 400);
+        }
+
+        const { data: existingTools, error: fetchToolsError } = await supabase
+          .from("tools")
+          .select("id, status, name, slug, website, short_description, long_description, seo_meta_description, pricing_model, logo, seo_title")
+          .in("id", toolIds);
+        if (fetchToolsError) return jsonResponse({ ok: false, error: fetchToolsError.message }, 500);
+
+        const foundIds = new Set((existingTools || []).map((t: { id: string }) => t.id));
+        const skipped: { id: string; reason: string }[] = toolIds
+          .filter((id: string) => !foundIds.has(id))
+          .map((id: string) => ({ id, reason: "not_found" }));
+
+        const categoriesMap = await attachToolCategories(supabase, toolIds);
+        const relations = await fetchCompletenessRelations(supabase, toolIds);
+        const requiredKeys = targetStatus === "published" ? await getConfiguredFirstPublishRequiredKeys(supabase) : null;
+
+        const eligibleIds: string[] = [];
+        const newlyPublishedIds: string[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (const tool of (existingTools || []) as any[]) {
+          try {
+            validateStatusTransition(tool.status, targetStatus, force);
+            if (targetStatus === "published") {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const categoryIds = ((categoriesMap.get(tool.id) || []) as any[]).map((c) => c.id);
+              validatePublishRequirements({
+                name: tool.name, slug: tool.slug, website: tool.website,
+                short_description: tool.short_description, long_description: tool.long_description,
+                seo_meta_description: tool.seo_meta_description, pricing_model: tool.pricing_model,
+                categoryIds,
+              });
+              if (tool.status !== "published") {
+                const firstPublishMissing = validateFirstPublishStrict({
+                  logoPresent: Boolean(tool.logo && String(tool.logo).trim()),
+                  screenshotCount: relations.screenshots.get(tool.id) || 0,
+                  featureCount: relations.features.get(tool.id) || 0,
+                  faqCount: relations.faqs.get(tool.id) || 0,
+                  tagCount: relations.tags.get(tool.id) || 0,
+                  seoTitlePresent: Boolean(tool.seo_title && String(tool.seo_title).trim()),
+                }, requiredKeys as Set<string>);
+                if (firstPublishMissing.length > 0) {
+                  throw new ValidationError(`missing required field(s): ${firstPublishMissing.join(", ")}`);
+                }
+              }
+            }
+            eligibleIds.push(tool.id);
+            if (targetStatus === "published" && tool.status !== "published") newlyPublishedIds.push(tool.id);
+          } catch (err) {
+            skipped.push({ id: tool.id, reason: err instanceof Error ? err.message : "validation failed" });
+          }
+        }
+
+        if (eligibleIds.length > 0) {
+          const nowIso = new Date().toISOString();
+          const { error: updateError } = await supabase
+            .from("tools")
+            .update({ status: targetStatus, updated_at: nowIso })
+            .in("id", eligibleIds);
+          if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
+
+          if (newlyPublishedIds.length > 0) {
+            const { error: publishedAtError } = await supabase
+              .from("tools")
+              .update({ published_at: nowIso })
+              .in("id", newlyPublishedIds);
+            if (publishedAtError) return jsonResponse({ ok: false, error: publishedAtError.message }, 500);
+          }
+        }
+
+        await writeAuditLog({
+          actor_session_type: "session_token", actor_email: session.email || undefined,
+          action: "tool_bulk_status_change", target_table: "tools",
+          target_id: `${eligibleIds.length} tool(s) -> ${targetStatus}`, status: "success",
+        });
+
+        return jsonResponse({ ok: true, data: { updated: eligibleIds, skipped } });
+      }
+
+      // Bulk recrawl (Editorial Platform) — reuses the exact crawl_jobs
+      // queue from bottleneck #1/#2: only works for tools that trace back
+      // to a discovery candidate (crawl_jobs.created_draft_tool_id), since
+      // that's the only way to know what URL/candidate to re-crawl.
+      // Queued jobs are picked up automatically by the scheduler's
+      // crawl_queue_drain — this endpoint only enqueues, it never crawls
+      // synchronously. Inserted one row at a time (not a single bulk
+      // insert) so one candidate that already has an active crawl (the
+      // partial unique index from 20260713140000 rejects it) doesn't abort
+      // the whole batch — every other eligible tool still gets queued.
+      if (payload.action === "bulk-recrawl") {
+        const toolIds = Array.isArray(payload.tool_ids) ? payload.tool_ids.filter((v: unknown) => typeof v === "string") : [];
+        if (toolIds.length === 0) return jsonResponse({ ok: false, error: "tool_ids (non-empty array) is required" }, 400);
+
+        const { data: originJobs, error: originError } = await supabase
+          .from("crawl_jobs")
+          .select("created_draft_tool_id, discovery_candidate_id, requested_url, completed_at")
+          .in("created_draft_tool_id", toolIds)
+          .order("completed_at", { ascending: false });
+        if (originError) return jsonResponse({ ok: false, error: originError.message }, 500);
+
+        const originByTool = new Map<string, { discovery_candidate_id: string; requested_url: string }>();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (const row of (originJobs || []) as any[]) {
+          if (!originByTool.has(row.created_draft_tool_id)) {
+            originByTool.set(row.created_draft_tool_id, { discovery_candidate_id: row.discovery_candidate_id, requested_url: row.requested_url });
+          }
+        }
+
+        const queued: string[] = [];
+        const skipped: { id: string; reason: string }[] = [];
+        for (const toolId of toolIds) {
+          const origin = originByTool.get(toolId);
+          if (!origin) {
+            skipped.push({ id: toolId, reason: "no linked discovery candidate — this tool wasn't created via the Discovery/Crawl pipeline" });
+            continue;
+          }
+          const urlCheck = validateCrawlUrl(origin.requested_url);
+          if (!urlCheck.ok) {
+            skipped.push({ id: toolId, reason: `stored URL failed validation: ${urlCheck.reason}` });
+            continue;
+          }
+          const { data: inserted, error: insertError } = await supabase
+            .from("crawl_jobs")
+            .insert({
+              discovery_candidate_id: origin.discovery_candidate_id,
+              requested_url: origin.requested_url,
+              normalized_url: urlCheck.normalizedUrl,
+              status: "queued",
+              created_by: session.email,
+            })
+            .select("id")
+            .maybeSingle();
+          if (insertError) {
+            const alreadyActive = insertError.message?.includes("crawl_jobs_one_active_per_candidate_idx") || insertError.code === "23505";
+            skipped.push({ id: toolId, reason: alreadyActive ? "a crawl is already queued or running for this candidate" : insertError.message });
+            continue;
+          }
+          if (inserted) queued.push(toolId);
+        }
+
+        await writeAuditLog({
+          actor_session_type: "session_token", actor_email: session.email || undefined,
+          action: "tool_bulk_recrawl", target_table: "tools",
+          target_id: `${queued.length} tool(s) queued`, status: "success",
+        });
+
+        return jsonResponse({ ok: true, data: { queued, skipped } });
       }
 
       // Used by the New Software wizard's Step 1 (duplicate-tool check).
@@ -993,6 +1068,7 @@ Deno.serve(async (req: Request) => {
             pricing_model: (payload.pricing_model as string) ?? null,
             categoryIds: normalized.categoryIds,
           });
+          const createRequiredKeys = await getConfiguredFirstPublishRequiredKeys(supabase);
           const firstPublishMissing = validateFirstPublishStrict({
             logoPresent: Boolean(payload.logo && String(payload.logo).trim()),
             screenshotCount: normalized.screenshots.length,
@@ -1000,7 +1076,7 @@ Deno.serve(async (req: Request) => {
             faqCount: normalized.faqs.length,
             tagCount: Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0,
             seoTitlePresent: Boolean(payload.seo_title && String(payload.seo_title).trim()),
-          });
+          }, createRequiredKeys);
           if (firstPublishMissing.length > 0) {
             throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
           }
@@ -1026,6 +1102,7 @@ Deno.serve(async (req: Request) => {
       }
       row.slug = payload.slug;
       row.name = payload.name;
+      if (row.status === "published") row.published_at = new Date().toISOString();
 
       const { data: newTool, error: insertError } = await supabase.from("tools").insert(row).select().single();
       if (insertError) {
@@ -1165,7 +1242,8 @@ Deno.serve(async (req: Request) => {
             const tagCount = Object.prototype.hasOwnProperty.call(payload, "tag_ids")
               ? (Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0)
               : (relations.tags.get(id) || 0);
-            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount, tagCount, seoTitlePresent });
+            const updateRequiredKeys = await getConfiguredFirstPublishRequiredKeys(supabase);
+            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount, tagCount, seoTitlePresent }, updateRequiredKeys);
             if (firstPublishMissing.length > 0) {
               throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
             }
@@ -1194,6 +1272,13 @@ Deno.serve(async (req: Request) => {
       const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
       for (const field of TOOL_FIELDS) {
         if (Object.prototype.hasOwnProperty.call(payload, field)) updates[field] = payload[field];
+      }
+      // Set once, on the actual first draft -> published transition — never
+      // overwritten on later edits to an already-published tool. Powers
+      // the Editorial Dashboard's "Published today" count (updated_at
+      // alone can't answer that, since ordinary edits also touch it).
+      if (payload.status === "published" && existing.status !== "published") {
+        updates.published_at = updates.updated_at;
       }
 
       const { data: updated, error: updateError } = await supabase
@@ -1239,9 +1324,16 @@ Deno.serve(async (req: Request) => {
       const updateAction = statusChanged
         ? (updated.status === "published" ? "tool_published" : updated.status === "archived" ? "tool_archived" : "tool_status_changed")
         : "tool_updated";
+      // duration_ms is optional, editor-reported time-on-screen (the
+      // Review Workspace sends it) — powers Editor Metrics' "average
+      // review time." Never required; every other caller of this PUT
+      // simply omits it.
+      const reviewDurationMs = typeof payload.review_duration_ms === "number" && payload.review_duration_ms >= 0
+        ? Math.round(payload.review_duration_ms) : undefined;
       await writeAuditLog({
         actor_session_type: "session_token", actor_email: session.email || undefined,
         action: updateAction, target_table: "tools", target_id: id, status: "success",
+        ...(reviewDurationMs !== undefined ? { duration_ms: reviewDurationMs } : {}),
       });
 
       return jsonResponse({ ok: true, data: updated });

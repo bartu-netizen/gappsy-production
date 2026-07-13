@@ -97,6 +97,10 @@ const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscover
 const WpAdminDiscoveryQueuePage = lazy(() => import("./pages/WpAdminDiscoveryQueuePage"));
 const WpAdminCrawlQueuePage = lazy(() => import("./pages/WpAdminCrawlQueuePage"));
 const WpAdminSchedulerPage = lazy(() => import("./pages/WpAdminSchedulerPage"));
+const WpAdminEditorialDashboardPage = lazy(() => import("./pages/WpAdminEditorialDashboardPage"));
+const WpAdminReviewWorkspacePage = lazy(() => import("./pages/WpAdminReviewWorkspacePage"));
+const WpAdminEditorialMetricsPage = lazy(() => import("./pages/WpAdminEditorialMetricsPage"));
+const WpAdminPublishingRulesPage = lazy(() => import("./pages/WpAdminPublishingRulesPage"));
 const WpAdminDiscoveryImportPage = lazy(() => import("./pages/WpAdminDiscoveryImportPage"));
 const WpAdminDiscoveryImportHistoryPage = lazy(() => import("./pages/WpAdminDiscoveryImportHistoryPage"));
 const WpAdminDiscoveryDuplicatesPage = lazy(() => import("./pages/WpAdminDiscoveryDuplicatesPage"));
@@ -235,6 +239,10 @@ export default function App() {
         <Route path="/wp-admin/discovery/providers" element={<AdminRoute><WpAdminDiscoveryProvidersPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/crawl-queue" element={<AdminRoute><WpAdminCrawlQueuePage /></AdminRoute>} />
         <Route path="/wp-admin/scheduler" element={<AdminRoute><WpAdminSchedulerPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial" element={<AdminRoute><WpAdminEditorialDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/review/:toolId" element={<AdminRoute><WpAdminReviewWorkspacePage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/metrics" element={<AdminRoute><WpAdminEditorialMetricsPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/publishing-rules" element={<AdminRoute><WpAdminPublishingRulesPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/crawl/:jobId" element={<AdminRoute><WpAdminCrawlReviewPage /></AdminRoute>} />
         <Route path="/wp-admin/ai-enrichment" element={<AdminRoute><WpAdminAiEnrichmentDashboardPage /></AdminRoute>} />
         <Route path="/wp-admin/ai-enrichment/queue" element={<AdminRoute><WpAdminAiEnrichmentQueuePage /></AdminRoute>} />

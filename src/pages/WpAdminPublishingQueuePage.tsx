@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers, Calendar, Zap } from 'lucide-react';
+import { Plus, Edit2, Eye, ExternalLink, Search, ChevronLeft, ChevronRight, ArrowUpDown, Trash2, Layers, Calendar, Zap, RotateCw } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -96,10 +96,11 @@ export default function WpAdminPublishingQueuePage() {
   };
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
-  const { mutate: updateStatus } = useAdminMutation<{ ok: boolean }, { id: string; status: string; force?: boolean }>((v) => `admin-tools?id=${v.id}`, 'PUT');
   const { mutate: updateSchedule } = useAdminMutation<{ ok: boolean }, { id: string; scheduled_publish_at: string | null }>((v) => `admin-tools?id=${v.id}`, 'PUT');
   const { mutate: deleteTool } = useAdminMutation<{ ok: boolean }, string>((id) => `admin-tools?id=${id}`, 'DELETE');
   const { mutate: bulkAssignCategory } = useAdminMutation<{ ok: boolean; data: { assigned_count: number } }, { action: string; tool_ids: string[]; category_id: string }>('admin-tools', 'POST');
+  const { mutate: bulkSetStatus } = useAdminMutation<{ ok: boolean; data?: { updated: string[]; skipped: { id: string; reason: string }[] } }, Record<string, unknown>>('admin-tools', 'POST');
+  const { mutate: bulkRecrawl } = useAdminMutation<{ ok: boolean; data?: { queued: string[]; skipped: { id: string; reason: string }[] } }, Record<string, unknown>>('admin-tools', 'POST');
   const { data: categoriesData } = useAdminFetch<{ ok: boolean; data: Array<{ id: string; name: string }> }>('admin-tool-categories');
   const categories = categoriesData?.data || [];
   const [bulkCategoryId, setBulkCategoryId] = useState('');
@@ -126,14 +127,17 @@ export default function WpAdminPublishingQueuePage() {
     else { setSortColumn(column); setSortDir('desc'); }
   }
 
+  // Real server-side batch (admin-tools' bulk-set-status action — one
+  // request, ~9 fixed queries regardless of selection size) instead of the
+  // previous N-sequential-PUT-calls fan-out. Publishing directly from
+  // Draft is still guarded server-side (requires force:true), so a
+  // draft/non-draft split into two batch calls is still needed when
+  // publishing — just two requests total, not two-per-tool.
   async function handleBulkStatus(newStatus: string) {
     if (selected.size === 0) return;
     setBulkMessage(null);
     const selectedIds = [...selected];
 
-    // Publishing directly from Draft is guarded server-side (requires force:true).
-    // Only rows we currently have loaded (this page) can be checked for status —
-    // ids selected from a previously viewed page aren't visible here.
     if (newStatus === 'published') {
       const draftIds = tools.filter((t) => selected.has(t.id) && t.status === 'draft').map((t) => t.id);
       const nonDraftIds = selectedIds.filter((id) => !draftIds.includes(id));
@@ -144,18 +148,21 @@ export default function WpAdminPublishingQueuePage() {
         );
 
         setBulkBusy(true);
-        const nonDraftResults = await Promise.all(nonDraftIds.map((id) => updateStatus({ id, status: 'published' })));
-        const failures = nonDraftResults.filter((r) => !r.ok);
+        const skippedReasons: string[] = [];
+        if (nonDraftIds.length > 0) {
+          const result = await bulkSetStatus({ action: 'bulk-set-status', tool_ids: nonDraftIds, status: 'published' });
+          if (result.ok) skippedReasons.push(...(result.data?.data?.skipped || []).map((s) => s.reason));
+          else skippedReasons.push(result.error?.message || 'Unknown error');
+        }
 
         if (confirmForce) {
-          const draftResults = await Promise.all(draftIds.map((id) => updateStatus({ id, status: 'published', force: true })));
-          failures.push(...draftResults.filter((r) => !r.ok));
-          if (failures.length > 0) {
-            setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
-          }
+          const result = await bulkSetStatus({ action: 'bulk-set-status', tool_ids: draftIds, status: 'published', force: true });
+          if (result.ok) skippedReasons.push(...(result.data?.data?.skipped || []).map((s) => s.reason));
+          else skippedReasons.push(result.error?.message || 'Unknown error');
+          if (skippedReasons.length > 0) setBulkMessage(`${skippedReasons.length} tool(s) skipped: ${skippedReasons[0]}`);
         } else {
           const skippedMsg = `Skipped ${draftIds.length} tool(s) still in Draft (force-publish not confirmed).`;
-          setBulkMessage(failures.length > 0 ? `${skippedMsg} Also, ${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}` : skippedMsg);
+          setBulkMessage(skippedReasons.length > 0 ? `${skippedMsg} Also: ${skippedReasons[0]}` : skippedMsg);
         }
 
         setBulkBusy(false);
@@ -166,12 +173,35 @@ export default function WpAdminPublishingQueuePage() {
     }
 
     setBulkBusy(true);
-    const results = await Promise.all(selectedIds.map((id) => updateStatus({ id, status: newStatus })));
-    const failures = results.filter((r) => !r.ok);
+    const result = await bulkSetStatus({ action: 'bulk-set-status', tool_ids: selectedIds, status: newStatus });
     setBulkBusy(false);
     setSelected(new Set());
-    if (failures.length > 0) {
-      setBulkMessage(`${failures.length} update(s) failed: ${failures[0].error?.message || 'Unknown error'}`);
+    if (!result.ok) {
+      setBulkMessage(result.error?.message || 'Bulk update failed');
+    } else {
+      const skipped = result.data?.data?.skipped || [];
+      if (skipped.length > 0) setBulkMessage(`${skipped.length} tool(s) skipped: ${skipped[0].reason}`);
+    }
+    refetch();
+  }
+
+  // Only works for tools that trace back to a discovery candidate — see
+  // admin-tools' bulk-recrawl action. Queued jobs are picked up
+  // automatically by the scheduler's crawl_queue_drain job, not crawled
+  // synchronously by this call.
+  async function handleBulkRecrawl() {
+    if (selected.size === 0) return;
+    setBulkMessage(null);
+    setBulkBusy(true);
+    const result = await bulkRecrawl({ action: 'bulk-recrawl', tool_ids: [...selected] });
+    setBulkBusy(false);
+    setSelected(new Set());
+    if (!result.ok) {
+      setBulkMessage(result.error?.message || 'Bulk recrawl failed');
+    } else {
+      const queued = result.data?.data?.queued.length || 0;
+      const skipped = result.data?.data?.skipped || [];
+      setBulkMessage(`Queued ${queued} tool(s) for recrawl${skipped.length > 0 ? `; ${skipped.length} skipped (${skipped[0].reason})` : ''}.`);
     }
     refetch();
   }
@@ -300,6 +330,14 @@ export default function WpAdminPublishingQueuePage() {
               >
                 <Zap className="w-3 h-3" /> Enrich with AI
               </Link>
+              <button
+                onClick={handleBulkRecrawl}
+                disabled={bulkBusy}
+                className="text-xs font-medium px-2.5 py-1.5 rounded-lg bg-white border border-teal-200 text-teal-700 hover:bg-teal-50 disabled:opacity-50 transition inline-flex items-center gap-1"
+                title="Only works for tools created via the Discovery/Crawl pipeline"
+              >
+                <RotateCw className="w-3 h-3" /> Recrawl
+              </button>
               {TOOL_STATUSES.map((s) => (
                 <button
                   key={s.value}
