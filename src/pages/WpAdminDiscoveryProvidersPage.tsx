@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plug, ToggleLeft, ToggleRight, Clock, AlertTriangle, Play, Loader2 } from 'lucide-react';
+import { ArrowLeft, Plug, ToggleLeft, ToggleRight, Clock, AlertTriangle, Play, Loader2, RotateCcw, GitBranch } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -20,6 +20,9 @@ interface ProviderRow {
   last_run_status: 'completed' | 'failed' | 'partial' | null;
   implemented: boolean;
   disabled_reason: string | null;
+  last_cursor: string | null;
+  cursor_updated_at: string | null;
+  cursor_reset_at: string | null;
 }
 
 interface ListResponse { ok: boolean; data: ProviderRow[]; }
@@ -49,8 +52,10 @@ const RUN_STATUS_CLASS: Record<string, string> = {
 export default function WpAdminDiscoveryProvidersPage() {
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>('admin-discovery-providers');
   const { mutate: toggleProvider } = useAdminMutation<ToggleResponse, { id: string; enabled: boolean }>((v) => `admin-discovery-providers?id=${v.id}`, 'PUT');
+  const { mutate: resetCursor } = useAdminMutation<ToggleResponse, { id: string; reset_cursor: true }>((v) => `admin-discovery-providers?id=${v.id}`, 'PUT');
   const { mutate: runProviderNow } = useAdminMutation<RunResponse, { action: 'run'; id: string }>('admin-discovery-providers', 'POST');
   const [runningId, setRunningId] = useState<string | null>(null);
+  const [resettingId, setResettingId] = useState<string | null>(null);
   const [lastRunResult, setLastRunResult] = useState<{ id: string; summary: RunSummary | null; error: string | null } | null>(null);
 
   const providers = data?.data || [];
@@ -58,6 +63,14 @@ export default function WpAdminDiscoveryProvidersPage() {
   async function handleToggle(id: string, currentEnabled: boolean) {
     const result = await toggleProvider({ id, enabled: !currentEnabled });
     if (result.ok) refetch();
+  }
+
+  async function handleResetCursor(id: string) {
+    if (!window.confirm('Reset this provider\'s cursor? Its next run will start fresh from the beginning of the source instead of resuming where it left off.')) return;
+    setResettingId(id);
+    await resetCursor({ id, reset_cursor: true });
+    setResettingId(null);
+    await refetch();
   }
 
   async function handleRunNow(id: string) {
@@ -121,6 +134,28 @@ export default function WpAdminDiscoveryProvidersPage() {
                       {provider.last_run_at && (
                         <p className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1">
                           <Clock className="w-3 h-3" /> Last run {new Date(provider.last_run_at).toLocaleString()}
+                        </p>
+                      )}
+                      {provider.implemented && (
+                        <p className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1.5">
+                          <GitBranch className="w-3 h-3 shrink-0" />
+                          {provider.last_cursor ? (
+                            <span className="truncate max-w-xs" title={provider.last_cursor}>
+                              Cursor: {provider.last_cursor}
+                              {provider.cursor_updated_at && ` (advanced ${new Date(provider.cursor_updated_at).toLocaleString()})`}
+                            </span>
+                          ) : (
+                            <span>No cursor{provider.cursor_reset_at ? ` (reset ${new Date(provider.cursor_reset_at).toLocaleString()})` : ' — next run starts fresh'}</span>
+                          )}
+                          {provider.last_cursor && (
+                            <button
+                              onClick={() => handleResetCursor(provider.id)}
+                              disabled={resettingId === provider.id}
+                              className="inline-flex items-center gap-0.5 text-blue-600 hover:underline disabled:opacity-40 shrink-0"
+                            >
+                              {resettingId === provider.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <RotateCcw className="w-3 h-3" />} Reset
+                            </button>
+                          )}
                         </p>
                       )}
                       {provider.disabled_reason && (

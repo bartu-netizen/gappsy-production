@@ -93,6 +93,14 @@ Deno.serve(async (req: Request) => {
         }
         updates.schedule_frequency = payload.schedule_frequency;
       }
+      // Admin cursor reset — the next run starts fresh (cursorIn = null)
+      // instead of resuming from wherever this provider last left off.
+      // Never happens as a side effect of any other update; only when
+      // explicitly requested.
+      if (payload.reset_cursor === true) {
+        updates.last_cursor = null;
+        updates.cursor_reset_at = updates.updated_at;
+      }
 
       const { data: record, error } = await supabase.from("discovery_providers").update(updates).eq("id", id).select().single();
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
@@ -110,7 +118,7 @@ Deno.serve(async (req: Request) => {
 
       const { data: providerRow, error: providerError } = await supabase
         .from("discovery_providers")
-        .select("id, key, enabled, implemented, config, rate_limit_per_run")
+        .select("id, key, enabled, implemented, config, rate_limit_per_run, last_cursor")
         .eq("id", providerId)
         .maybeSingle();
       if (providerError) return jsonResponse({ ok: false, error: providerError.message }, 500);
@@ -137,6 +145,7 @@ Deno.serve(async (req: Request) => {
           key: providerRow.key as string,
           config: (providerRow.config as Record<string, unknown>) || {},
           rate_limit_per_run: providerRow.rate_limit_per_run as number,
+          last_cursor: (providerRow.last_cursor as string | null) ?? null,
         },
         "manual",
         session.email,

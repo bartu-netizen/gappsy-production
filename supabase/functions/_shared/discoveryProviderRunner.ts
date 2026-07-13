@@ -33,6 +33,29 @@ export interface DiscoveryProviderRow {
   key: string;
   config: Record<string, unknown>;
   rate_limit_per_run: number;
+  // The previous run's cursor_out (see 20260713240000) — null for a
+  // provider that has never advanced a cursor (never run yet, always
+  // resets to null, or genuinely has no pagination concept).
+  last_cursor: string | null;
+}
+
+// Pure decision logic for whether/what to persist as the provider's next
+// cursorIn, extracted so "do not advance cursor after a hard failed run"
+// is directly unit-testable without a database. A 'failed' run means
+// fetchCandidates() itself threw (see the catch block below) — cursorOut
+// is never meaningful there, so the existing last_cursor must be left
+// untouched (shouldUpdate: false), not overwritten with null. 'completed'
+// and 'partial' both mean the fetch itself succeeded (partial only means
+// some candidates were rejected further down the ingest pipeline), so
+// both safely advance the cursor — including to null, which is the
+// correct, idempotent value for a provider that has no pagination concept
+// (e.g. GitHub Awesome Lists always returns cursor_out: null).
+export function decideCursorUpdate(
+  status: "completed" | "partial" | "failed",
+  cursorOut: string | null,
+): { shouldUpdate: boolean; value: string | null } {
+  if (status === "failed") return { shouldUpdate: false, value: null };
+  return { shouldUpdate: true, value: cursorOut };
 }
 
 type IngestClassification = "created" | "duplicate" | "rejected";
@@ -165,14 +188,7 @@ export async function runProvider(
 
   let fetchResult: FetchResult;
   try {
-    // cursorIn is always null for now. discovery_providers has no
-    // dedicated "last_cursor" column in this migration — only
-    // discovery_provider_runs.cursor_out, which records history per run
-    // but isn't threaded back in as the next run's input yet. Reading the
-    // previous run's cursor_out for this provider and passing it here is a
-    // follow-up once that lookup/column exists; every run starts fresh
-    // until then.
-    fetchResult = await provider.fetchCandidates(providerRow.config, null, providerRow.rate_limit_per_run);
+    fetchResult = await provider.fetchCandidates(providerRow.config, providerRow.last_cursor, providerRow.rate_limit_per_run);
   } catch (err) {
     const completedAt = new Date();
     const durationMs = completedAt.getTime() - startedAt.getTime();
@@ -266,12 +282,16 @@ export async function runProvider(
     })
     .eq("id", runId);
 
+  const cursorDecision = decideCursorUpdate(outcome.status, cursorOut);
   await supabase
     .from("discovery_providers")
     .update({
       last_run_at: completedAt.toISOString(),
       last_run_status: outcome.status,
       updated_at: completedAt.toISOString(),
+      ...(cursorDecision.shouldUpdate
+        ? { last_cursor: cursorDecision.value, cursor_updated_at: completedAt.toISOString() }
+        : {}),
     })
     .eq("id", providerRow.id);
 

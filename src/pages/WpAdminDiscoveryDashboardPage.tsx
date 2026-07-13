@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import {
   PlusCircle, Search, ShieldAlert, GitMerge, XCircle, CheckCircle2,
-  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles, HeartPulse, Radar,
+  ListChecks, History, ShieldCheck, Plug, LayoutGrid, Sparkles, HeartPulse, Radar, RefreshCw, Fingerprint,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch } from '../hooks/useAdminFetch';
@@ -18,6 +18,28 @@ interface ProviderHealthRow {
   recent_error_count: number;
   disabled_reason: string | null;
   last_run: { started_at: string; candidates_created: number } | null;
+  throughput_7d: number;
+  duplicate_rate_7d: number | null;
+}
+
+type ChangeSeverity = 'no_change' | 'minor' | 'meaningful' | 'critical' | 'unavailable';
+
+interface RecentChangeRow {
+  tool_id: string;
+  tool_name: string;
+  page_type: string;
+  severity: ChangeSeverity;
+  changed_at: string;
+  canonical_url: string;
+}
+
+interface ChangeDetectionSummary {
+  fingerprints_tracked: number;
+  checked_24h: number;
+  severity_breakdown_7d: Partial<Record<ChangeSeverity, number>>;
+  recrawls_queued_7d: number;
+  stale_backed_off: number;
+  recent_changes: RecentChangeRow[];
 }
 
 interface DiscoveryStatsResponse {
@@ -31,8 +53,17 @@ interface DiscoveryStatsResponse {
     validation_success_rate: number | null;
     recent: Array<{ id: string; name: string; logo_url: string | null; status: DiscoveryStatus; created_at: string }>;
     provider_health: ProviderHealthRow[];
+    change_detection: ChangeDetectionSummary;
   };
 }
+
+const SEVERITY_BADGE_CLASS: Record<ChangeSeverity, string> = {
+  no_change: 'bg-gray-100 text-gray-600',
+  minor: 'bg-gray-100 text-gray-600',
+  meaningful: 'bg-amber-50 text-amber-700',
+  critical: 'bg-rose-50 text-rose-700',
+  unavailable: 'bg-gray-100 text-gray-500',
+};
 
 const HEALTH_DOT_CLASS: Record<string, string> = {
   completed: 'bg-emerald-500',
@@ -233,6 +264,12 @@ export default function WpAdminDiscoveryDashboardPage() {
                           <p className="text-[11px] text-gray-400 truncate">{p.disabled_reason}</p>
                         )}
                       </div>
+                      {p.throughput_7d > 0 && (
+                        <span className="text-xs text-gray-500 shrink-0" title="Candidates created, last 7 days">{p.throughput_7d} created (7d)</span>
+                      )}
+                      {p.duplicate_rate_7d !== null && (
+                        <span className="text-xs text-gray-400 shrink-0" title="Duplicate rate, last 7 days">{p.duplicate_rate_7d}% dup</span>
+                      )}
                       {p.recent_error_count > 0 && (
                         <span className="text-xs font-semibold text-rose-600 shrink-0">{p.recent_error_count} error{p.recent_error_count === 1 ? '' : 's'} (7d)</span>
                       )}
@@ -244,6 +281,67 @@ export default function WpAdminDiscoveryDashboardPage() {
                 </ul>
               )}
             </div>
+
+            {stats.change_detection && (
+              <div className="bg-white border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Fingerprint className="w-4 h-4 text-gray-400" />
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Change Detection</h3>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-lg font-bold text-gray-900">{stats.change_detection.fingerprints_tracked.toLocaleString()}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">Pages tracked</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-lg font-bold text-gray-900">{stats.change_detection.checked_24h.toLocaleString()}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">Checked (24h)</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100 flex items-center gap-2">
+                    <RefreshCw className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">{stats.change_detection.recrawls_queued_7d.toLocaleString()}</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Recrawls queued (7d)</div>
+                    </div>
+                  </div>
+                  <div className={`p-3 rounded-lg border ${stats.change_detection.stale_backed_off > 0 ? 'bg-amber-50 border-amber-200' : 'bg-gray-50 border-gray-100'}`}>
+                    <div className={`text-lg font-bold ${stats.change_detection.stale_backed_off > 0 ? 'text-amber-800' : 'text-gray-900'}`}>{stats.change_detection.stale_backed_off.toLocaleString()}</div>
+                    <div className={`text-xs mt-0.5 ${stats.change_detection.stale_backed_off > 0 ? 'text-amber-600' : 'text-gray-500'}`}>Backed off (repeated failures)</div>
+                  </div>
+                </div>
+
+                {Object.keys(stats.change_detection.severity_breakdown_7d).length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="text-xs text-gray-400">Changes this week:</span>
+                    {(Object.entries(stats.change_detection.severity_breakdown_7d) as Array<[ChangeSeverity, number]>)
+                      .filter(([severity]) => severity !== 'no_change')
+                      .map(([severity, count]) => (
+                        <span key={severity} className={`text-xs px-2 py-0.5 rounded font-medium ${SEVERITY_BADGE_CLASS[severity]}`}>
+                          {count} {severity}
+                        </span>
+                      ))}
+                  </div>
+                )}
+
+                <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide mb-2">Recent meaningful/critical changes</h4>
+                {stats.change_detection.recent_changes.length === 0 ? (
+                  <p className="text-sm text-gray-400 py-2">No meaningful or critical changes detected recently.</p>
+                ) : (
+                  <ul className="divide-y divide-gray-100">
+                    {stats.change_detection.recent_changes.map((change) => (
+                      <li key={`${change.tool_id}-${change.page_type}`} className="flex items-center gap-3 py-2">
+                        <span className="flex-1 min-w-0 text-sm text-gray-700 truncate">
+                          {change.tool_name} <span className="text-gray-400">— {change.page_type}</span>
+                        </span>
+                        <span className={`text-xs px-2 py-0.5 rounded font-medium shrink-0 ${SEVERITY_BADGE_CLASS[change.severity]}`}>{change.severity}</span>
+                        <span className="text-xs text-gray-400 shrink-0">{formatShortDate(change.changed_at)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

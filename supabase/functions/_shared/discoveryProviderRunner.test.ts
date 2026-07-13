@@ -31,7 +31,7 @@ import { assertEquals, assertMatch } from "https://deno.land/std@0.224.0/assert/
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2.57.4";
 import type { DiscoveryProvider, FetchResult, RawDiscoveryCandidate } from "./discoveryProviders/types.ts";
 import { ProviderConfigError, ProviderNotImplementedError } from "./discoveryProviders/types.ts";
-import { runProvider, summarizeRunOutcome, type DiscoveryProviderRow } from "./discoveryProviderRunner.ts";
+import { decideCursorUpdate, runProvider, summarizeRunOutcome, type DiscoveryProviderRow } from "./discoveryProviderRunner.ts";
 
 // ---------------------------------------------------------------------------
 // Minimal fake Supabase client — see file-header comment for rationale.
@@ -149,6 +149,7 @@ function makeProviderRow(overrides: Partial<DiscoveryProviderRow> = {}): Discove
     key: "test-provider",
     config: {},
     rate_limit_per_run: 50,
+    last_cursor: null,
     ...overrides,
   };
 }
@@ -209,6 +210,28 @@ Deno.test("summarizeRunOutcome: fetch-level warnings alone force partial", () =>
   assertEquals(result.status, "partial");
   assertEquals(result.candidates_created, 1);
   assertEquals(result.candidates_rejected, 0);
+});
+
+// ---------------------------------------------------------------------------
+// decideCursorUpdate — pure function, the exact "don't advance on hard
+// failure" decision Phase 1 of the Discovery scale work needs to be right.
+// ---------------------------------------------------------------------------
+
+Deno.test("decideCursorUpdate: failed run never advances, regardless of cursorOut", () => {
+  assertEquals(decideCursorUpdate("failed", "some-cursor"), { shouldUpdate: false, value: null });
+  assertEquals(decideCursorUpdate("failed", null), { shouldUpdate: false, value: null });
+});
+
+Deno.test("decideCursorUpdate: completed run advances to the new cursor value", () => {
+  assertEquals(decideCursorUpdate("completed", "cursor-123"), { shouldUpdate: true, value: "cursor-123" });
+});
+
+Deno.test("decideCursorUpdate: partial run still advances (partial means ingest-level rejections, not a fetch failure)", () => {
+  assertEquals(decideCursorUpdate("partial", "cursor-456"), { shouldUpdate: true, value: "cursor-456" });
+});
+
+Deno.test("decideCursorUpdate: a provider with no cursor concept advancing to null is a valid, idempotent update", () => {
+  assertEquals(decideCursorUpdate("completed", null), { shouldUpdate: true, value: null });
 });
 
 // ---------------------------------------------------------------------------
@@ -336,6 +359,51 @@ Deno.test("runProvider: fetch succeeds with zero candidates -> completed, not fa
   assertEquals(summary.status, "completed");
   assertEquals(summary.candidates_found, 0);
   assertEquals(summary.candidates_created, 0);
+});
+
+Deno.test("runProvider: passes providerRow.last_cursor through as cursorIn, and persists cursor_out on success (Product Hunt pagination contract)", async () => {
+  const supabase = fakeSupabase();
+  const providerRow = makeProviderRow({ last_cursor: "endCursor-page-1" });
+  (supabase as unknown as FakeSupabaseClient).db.discovery_providers = [{ id: providerRow.id, key: providerRow.key }];
+
+  let receivedCursorIn: string | null = "not-called";
+  const provider = makeProvider((_config, cursorIn) => {
+    receivedCursorIn = cursorIn;
+    return Promise.resolve<FetchResult>({
+      candidates: [candidate({ name: "Page 2 Tool" })],
+      cursor_out: "endCursor-page-2", // mirrors Product Hunt's pageInfo.endCursor
+    });
+  });
+
+  const summary = await runProvider(supabase, provider, providerRow, "scheduled", null);
+
+  assertEquals(receivedCursorIn, "endCursor-page-1");
+  assertEquals(summary.cursor_out, "endCursor-page-2");
+
+  const db = (supabase as unknown as FakeSupabaseClient).db;
+  const providerRowAfter = db.discovery_providers.find((r) => r.id === providerRow.id);
+  assertEquals(providerRowAfter?.last_cursor, "endCursor-page-2");
+  assertEquals(typeof providerRowAfter?.cursor_updated_at, "string");
+});
+
+Deno.test("runProvider: a failed run leaves the previously-persisted cursor untouched (never regresses/clears on failure)", async () => {
+  const supabase = fakeSupabase();
+  const providerRow = makeProviderRow({ last_cursor: "endCursor-page-5" });
+  // Simulate the DB already holding a previously-advanced cursor.
+  (supabase as unknown as FakeSupabaseClient).db.discovery_providers = [
+    { id: providerRow.id, key: providerRow.key, last_cursor: "endCursor-page-5" },
+  ];
+  const provider = makeProvider(() => {
+    throw new Error("upstream API is down");
+  });
+
+  await runProvider(supabase, provider, providerRow, "scheduled", null);
+
+  const db = (supabase as unknown as FakeSupabaseClient).db;
+  const providerRowAfter = db.discovery_providers.find((r) => r.id === providerRow.id);
+  // The failure-path update only sets last_run_at/last_run_status/updated_at
+  // — no cursor keys at all, so the field the fake DB already held survives.
+  assertEquals(providerRowAfter?.last_cursor, "endCursor-page-5");
 });
 
 Deno.test("runProvider: duplicate candidate is counted as both created and duplicate", async () => {

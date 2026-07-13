@@ -3,6 +3,14 @@
 // executeCrawlJob/runAutomaticCrawlPipeline paths (real gateway HTTP calls,
 // real admin-tools calls) are integration-level and verified live in
 // production instead (see the pipeline verification step).
+//
+// Claiming itself goes through the claim_crawl_jobs() Postgres RPC (see
+// 20260713140000/20260713150000 — atomic FOR UPDATE SKIP LOCKED claiming,
+// one row per call, capacity-aware), not a plain crawl_jobs select/update
+// chain. The fake client's rpc() below reimplements just enough of that
+// RPC's real SQL semantics (one queued row per call, ordered by
+// created_at, respecting a single active-job cap) to drive drainCrawlQueue
+// end-to-end deterministically, without a real Postgres connection.
 
 // deno-lint-ignore-file no-explicit-any
 /* eslint-disable @typescript-eslint/no-explicit-any -- untyped fake Supabase query-builder chain */
@@ -28,6 +36,13 @@ interface FakeCrawlJob {
 // executeCrawlJob's validateCrawlUrl call before any network fetch happens
 // — deterministic and hermetic, same trick used in discoveryProviderRunner's
 // tests.
+// Matches crawl_settings.max_concurrent_crawls' real production default
+// (20260713140000) — the fake RPC below enforces this same cap so
+// capacity-limit tests reflect the actual configured default, not the
+// old pre-bottleneck-#1 hardcoded MAX_ACTIVE_JOBS=1.
+const FAKE_MAX_CONCURRENT_CRAWLS = 2;
+const IN_FLIGHT_STATUSES = ["starting", "crawling", "extracting"];
+
 function makeFakeClient(jobs: FakeCrawlJob[]) {
   const table = { crawl_jobs: jobs };
 
@@ -103,6 +118,40 @@ function makeFakeClient(jobs: FakeCrawlJob[]) {
       if (tableName === "crawl_jobs") return crawlJobsBuilder();
       throw new Error(`FakeClient: unexpected table ${tableName}`);
     },
+    // Reimplements just enough of claim_crawl_jobs()'s real SQL semantics
+    // (see 20260713150000): claims at most ONE queued row per call,
+    // ordered oldest-first, only while under FAKE_MAX_CONCURRENT_CRAWLS
+    // in-flight jobs — matching the real RPC now claiming exactly one row
+    // per call so N independent worker loops each get their own job
+    // rather than one loop grabbing every free slot.
+    rpc(name: string, params: Record<string, unknown>) {
+      if (name === "claim_crawl_jobs") {
+        return {
+          then(resolve: (v: any) => void) {
+            const activeCount = table.crawl_jobs.filter((j) => IN_FLIGHT_STATUSES.includes(j.status)).length;
+            if (activeCount >= FAKE_MAX_CONCURRENT_CRAWLS) {
+              resolve({ data: [], error: null });
+              return;
+            }
+            const queued = table.crawl_jobs
+              .filter((j) => j.status === "queued")
+              .sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+            if (queued.length === 0) {
+              resolve({ data: [], error: null });
+              return;
+            }
+            const claimed = queued[0] as any;
+            claimed.status = "starting";
+            claimed.worker_id = params.p_worker_id;
+            resolve({ data: [{ ...claimed }], error: null });
+          },
+        };
+      }
+      if (name === "heartbeat_crawl_job") {
+        return { then(resolve: (v: any) => void) { resolve({ data: [], error: null }); } };
+      }
+      throw new Error(`FakeClient: unexpected rpc ${name}`);
+    },
   };
 }
 
@@ -115,8 +164,12 @@ Deno.test("drainCrawlQueue stops immediately when there are no queued jobs", asy
 
 Deno.test("drainCrawlQueue does not process a job when the active-job limit is already reached", async () => {
   const jobs: FakeCrawlJob[] = [
+    // Two already-active jobs = FAKE_MAX_CONCURRENT_CRAWLS (matching the
+    // real crawl_settings.max_concurrent_crawls default of 2) — no
+    // capacity left for the queued job below.
     { id: "active-1", discovery_candidate_id: "c1", requested_url: "https://real-site.example", status: "crawling", started_at: "2026-01-01T00:00:00Z", created_at: "2026-01-01T00:00:00Z", normalized_extraction: null, completed_at: null },
-    { id: "queued-1", discovery_candidate_id: "c2", requested_url: "https://real-site.example", status: "queued", started_at: "2026-01-01T00:00:00Z", created_at: "2026-01-01T00:00:01Z", normalized_extraction: null, completed_at: null },
+    { id: "active-2", discovery_candidate_id: "c2", requested_url: "https://real-site.example", status: "starting", started_at: "2026-01-01T00:00:00Z", created_at: "2026-01-01T00:00:00Z", normalized_extraction: null, completed_at: null },
+    { id: "queued-1", discovery_candidate_id: "c3", requested_url: "https://real-site.example", status: "queued", started_at: "2026-01-01T00:00:00Z", created_at: "2026-01-01T00:00:01Z", normalized_extraction: null, completed_at: null },
   ];
   const client = makeFakeClient(jobs);
   const summary = await drainCrawlQueue(client as any, "https://supabase.example", "anon-key");
