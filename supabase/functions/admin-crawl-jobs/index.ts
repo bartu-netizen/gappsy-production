@@ -1,24 +1,42 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
-import { validateCrawlUrl, resolvesToPublicAddress, CRAWL_LIMITS } from "../_shared/crawlUrlSafety.ts";
-import { executeCrawlJob } from "../_shared/crawlRunner.ts";
+import { validateCrawlUrl, resolvesToPublicAddress } from "../_shared/crawlUrlSafety.ts";
+import { executeCrawlJob, drainCrawlQueue } from "../_shared/crawlRunner.ts";
 
-// Owns crawl_jobs' lifecycle: start (validate candidate + URL + no
-// duplicate active job -> call the gateway synchronously, since the
+// Owns crawl_jobs' lifecycle: start (validate candidate + URL + free
+// worker-lease capacity -> call the gateway synchronously, since the
 // 10-page/10-minute ceiling is small enough for a single request/response
-// for this one-candidate-at-a-time MVP -> normalize -> persist), list/get,
-// cancel (only for a stuck queued/starting row), retry (fresh job row,
-// retry_count incremented). Bulk/async orchestration is explicitly out of
-// scope — see the crawl integration plan.
+// -> normalize -> persist), list/get, cancel (only for a stuck
+// queued/starting row), retry (fresh job row, retry_count incremented),
+// process_queue (synchronously drain queued/due-retry jobs up to
+// configured concurrency — see _shared/crawlRunner.ts's claim_crawl_jobs-
+// backed drainCrawlQueue). Concurrency is now a configurable, DB-backed
+// setting (crawl_settings.max_concurrent_crawls) instead of a hardcoded
+// single-active-job limit — see the 20260713140000 migration.
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
 }
 
-const ACTIVE_STATUSES = ["queued", "starting", "crawling", "extracting"];
 const TERMINAL_STATUSES = ["completed", "failed", "cancelled", "needs_review"];
+
+// Manual "Start"/"Retry" single-candidate actions still take one lease slot
+// each, same as the automatic worker pool, so the two paths can never
+// together exceed crawl_settings.max_concurrent_crawls. Only counts
+// in-flight jobs whose lease hasn't expired — a crashed job doesn't
+// permanently eat a manual slot either.
+async function hasFreeCapacity(supabase: ReturnType<typeof createClient>): Promise<boolean> {
+  const { data: settings } = await supabase.from("crawl_settings").select("max_concurrent_crawls").eq("id", true).maybeSingle();
+  const maxConcurrency = settings?.max_concurrent_crawls ?? 2;
+  const { count: activeCount } = await supabase
+    .from("crawl_jobs")
+    .select("id", { count: "exact", head: true })
+    .in("status", ["starting", "crawling", "extracting"])
+    .gt("lease_expires_at", new Date().toISOString());
+  return (activeCount || 0) < maxConcurrency;
+}
 
 // dns_resolution_failed (domain doesn't exist / no DNS records) and
 // dns_rebinding_private_ip (domain resolves, but to a private/loopback
@@ -83,9 +101,8 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: false, error_code: "already_converted", error: "This candidate has already been converted to a tool draft." }, 409);
       }
 
-      const { count: activeCount } = await supabase.from("crawl_jobs").select("id", { count: "exact", head: true }).in("status", ACTIVE_STATUSES);
-      if ((activeCount || 0) >= CRAWL_LIMITS.MAX_ACTIVE_JOBS) {
-        return jsonResponse({ ok: false, error_code: "duplicate_active_job", error: "A crawl is already in progress. Only one active crawl is allowed at a time." }, 409);
+      if (!(await hasFreeCapacity(supabase))) {
+        return jsonResponse({ ok: false, error_code: "at_capacity", error: "All configured concurrent crawl slots are currently in use. Try again shortly." }, 409);
       }
 
       const urlCheck = validateCrawlUrl(candidate.official_website);
@@ -97,6 +114,9 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: false, error_code: dnsCheck.reason, error: dnsFailureMessage(dnsCheck.reason) }, 400);
       }
 
+      const nowIso = new Date().toISOString();
+      const { data: settings } = await supabase.from("crawl_settings").select("lease_seconds").eq("id", true).maybeSingle();
+      const leaseSeconds = settings?.lease_seconds ?? 240;
       const { data: job, error: insertError } = await supabase
         .from("crawl_jobs")
         .insert({
@@ -104,7 +124,10 @@ Deno.serve(async (req: Request) => {
           requested_url: candidate.official_website,
           normalized_url: urlCheck.normalizedUrl,
           status: "starting",
-          started_at: new Date().toISOString(),
+          started_at: nowIso,
+          worker_id: `manual-${session.email || "admin"}`,
+          lease_expires_at: new Date(Date.now() + leaseSeconds * 1000).toISOString(),
+          heartbeat_at: nowIso,
           created_by: session.email,
         })
         .select()
@@ -142,19 +165,24 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: false, error: "Only failed or cancelled jobs can be retried." }, 409);
       }
 
-      const { count: activeCount } = await supabase.from("crawl_jobs").select("id", { count: "exact", head: true }).in("status", ACTIVE_STATUSES);
-      if ((activeCount || 0) >= CRAWL_LIMITS.MAX_ACTIVE_JOBS) {
-        return jsonResponse({ ok: false, error_code: "duplicate_active_job", error: "A crawl is already in progress." }, 409);
+      if (!(await hasFreeCapacity(supabase))) {
+        return jsonResponse({ ok: false, error_code: "at_capacity", error: "All configured concurrent crawl slots are currently in use. Try again shortly." }, 409);
       }
 
       // Insert a fresh row with retry_count incremented, then run the same
       // validate -> gateway -> normalize -> persist sequence as action:'start'
-      // via the shared executeCrawlJob.
+      // via the shared executeCrawlJob. (This is the human-initiated Retry
+      // button — distinct from the automatic pipeline's in-place
+      // attempt/backoff retry on the SAME row; a manual retry always gets
+      // its own fresh row and a fresh single attempt.)
       const urlCheck = validateCrawlUrl(source.requested_url);
       if (!urlCheck.ok) return jsonResponse({ ok: false, error_code: urlCheck.reason, error: "The candidate URL failed validation." }, 400);
       const dnsCheck = await resolvesToPublicAddress(urlCheck.hostname!);
       if (!dnsCheck.ok) return jsonResponse({ ok: false, error_code: dnsCheck.reason, error: dnsFailureMessage(dnsCheck.reason) }, 400);
 
+      const nowIso = new Date().toISOString();
+      const { data: settings } = await supabase.from("crawl_settings").select("lease_seconds").eq("id", true).maybeSingle();
+      const leaseSeconds = settings?.lease_seconds ?? 240;
       const { data: job, error: insertError } = await supabase
         .from("crawl_jobs")
         .insert({
@@ -163,7 +191,10 @@ Deno.serve(async (req: Request) => {
           normalized_url: urlCheck.normalizedUrl,
           status: "starting",
           retry_count: (source.retry_count || 0) + 1,
-          started_at: new Date().toISOString(),
+          started_at: nowIso,
+          worker_id: `manual-${session.email || "admin"}`,
+          lease_expires_at: new Date(Date.now() + leaseSeconds * 1000).toISOString(),
+          heartbeat_at: nowIso,
           created_by: session.email,
         })
         .select()
@@ -173,6 +204,19 @@ Deno.serve(async (req: Request) => {
       const result = await executeCrawlJob(supabase, job, source.requested_url, source.discovery_candidate_id);
       if (!result.ok) return jsonResponse({ ok: false, error_code: result.error_code, error: result.error }, 502);
       return jsonResponse({ ok: true, data: result.job });
+    }
+
+    // Synchronously drains every queued/due-retry job up to the configured
+    // concurrency (claiming + running them via the same claim_crawl_jobs-
+    // backed worker pool the automatic Discovery -> Crawl pipeline uses),
+    // then returns the outcome directly instead of firing-and-forgetting
+    // via EdgeRuntime.waitUntil. For admins who want to kick a backlog
+    // without waiting for the next discovery approve/bulk-approve call —
+    // and for verifying concurrency behavior end-to-end.
+    if (payload.action === "process_queue") {
+      const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+      const summary = await drainCrawlQueue(supabase, supabaseUrl, anonKey);
+      return jsonResponse({ ok: true, data: summary });
     }
 
     return jsonResponse({ ok: false, error: "Unknown action" }, 400);

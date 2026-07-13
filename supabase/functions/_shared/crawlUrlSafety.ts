@@ -126,10 +126,15 @@ export function isIgnoredPath(pathname: string): boolean {
   return IGNORE_PATH_PATTERNS.some((re) => re.test(pathname));
 }
 
+// MAX_ACTIVE_JOBS was removed: global crawl concurrency is now a
+// configurable, DB-backed setting (crawl_settings.max_concurrent_crawls,
+// default 2, hard-bounded 1-4 by a CHECK constraint) claimed atomically via
+// the claim_crawl_jobs() RPC — see _shared/crawlRunner.ts. Everything below
+// is unrelated to concurrency and stays as the gateway's own hard resource
+// ceiling (unchanged by the concurrency work).
 export const CRAWL_LIMITS = {
   MAX_PAGES: 10,
   MAX_DEPTH: 2,
-  MAX_ACTIVE_JOBS: 1,
   MAX_DURATION_MS: 10 * 60 * 1000,
   MAX_RESPONSE_BYTES: 5_000_000,
   MAX_REDIRECTS: 5,

@@ -21,9 +21,44 @@ import { buildAutoApproveReviewState, createDraftFromCrawlJob } from "./crawlDra
 import { createBatchAndJobs, EnrichmentBatchError } from "./enrichmentBatchOps.ts";
 import { createSessionToken } from "./adminSession.ts";
 
-// Deliberately excludes "queued": a job waiting its turn must not count
-// against the very capacity check that decides whether it can start.
-const IN_FLIGHT_STATUSES = ["starting", "crawling", "extracting"];
+// Error codes worth an automatic, backed-off retry (transient gateway/
+// network conditions). Everything else (bad URL, private IP, DNS failure,
+// unsupported protocol, gateway not configured) is a permanent condition
+// that retrying the exact same request will not fix, so those go straight
+// to a terminal 'failed' — same as before this change.
+const RETRYABLE_ERROR_CODES = new Set([
+  "gateway_unreachable",
+  "gateway_timeout",
+  "gateway_malformed_response",
+  "gateway_error",
+  "crawl_timeout",
+  "crawl_failed",
+]);
+
+function backoffSeconds(attempt: number): number {
+  // 30s, 120s, 480s, capped at 15min — attempt is the attempt that just
+  // failed, so the NEXT attempt waits this long.
+  return Math.min(30 * Math.pow(4, Math.max(0, attempt - 1)), 900);
+}
+
+// Keeps a claimed job's lease alive for however long its pipeline actually
+// takes, instead of hardcoding a heartbeat call at one specific pipeline
+// step (fragile — easy to leave a slow step unattended). Ticks every 60s,
+// well inside the default 240s lease, so a legitimately-still-running job
+// is never mistaken for a crashed one and reclaimed out from under it.
+// heartbeat_crawl_job only extends the lease if this worker_id still
+// legitimately owns it, so a tick that fires after the job already
+// finished (interval not yet cleared) is a harmless no-op.
+async function withHeartbeat<T>(supabase: SupabaseClient, jobId: string, workerId: string, fn: () => Promise<T>): Promise<T> {
+  const intervalId = setInterval(() => {
+    supabase.rpc("heartbeat_crawl_job", { p_job_id: jobId, p_worker_id: workerId }).then(() => {}, () => {});
+  }, 60_000);
+  try {
+    return await fn();
+  } finally {
+    clearInterval(intervalId);
+  }
+}
 
 // The full field set the existing Claude Max / Claude Code Batch enrichment
 // workflow expects — the same list used for a manually-created batch, so an
@@ -243,52 +278,102 @@ export interface DrainSummary {
   results: { discovery_candidate_id: string; job_id: string; result: AutomaticPipelineResult }[];
 }
 
-// Sequentially processes every 'queued' crawl_jobs row, respecting the
-// system-wide MAX_ACTIVE_JOBS limit (crawling is one-at-a-time — see
-// crawlUrlSafety.ts). Intended to run via EdgeRuntime.waitUntil() after an
+// If executeCrawlJob failed with a transient error code and the job hasn't
+// exhausted crawl_settings.max_auto_retries, requeue it in place (same row
+// — never a new one, so this can never produce a duplicate crawl_jobs row
+// or duplicate downstream draft/enrichment work) with an exponential
+// backoff retry_at instead of leaving it terminally 'failed'. Only touches
+// rows still 'failed' (the exact status executeCrawlJob just set), so a
+// job that was concurrently cancelled or already retried by an admin is
+// left alone.
+async function maybeScheduleAutoRetry(supabase: SupabaseClient, jobId: string, errorCode: string | undefined): Promise<boolean> {
+  if (!errorCode || !RETRYABLE_ERROR_CODES.has(errorCode)) return false;
+
+  const [{ data: settings }, { data: current }] = await Promise.all([
+    supabase.from("crawl_settings").select("max_auto_retries").eq("id", true).maybeSingle(),
+    supabase.from("crawl_jobs").select("attempt").eq("id", jobId).maybeSingle(),
+  ]);
+  const maxAutoRetries = settings?.max_auto_retries ?? 3;
+  const attempt = current?.attempt || 1;
+  if (attempt >= maxAutoRetries) return false;
+
+  const retryAt = new Date(Date.now() + backoffSeconds(attempt) * 1000).toISOString();
+  const { data: requeued } = await supabase
+    .from("crawl_jobs")
+    // attempt is bumped explicitly here (not by claim_crawl_jobs — this row
+    // is going back to 'queued', not being reclaimed from a crashed
+    // in-flight state, so the RPC's own crash-reclaim CASE never fires for
+    // it) so the next attempt at this job is correctly counted.
+    .update({ status: "queued", retry_at: retryAt, attempt: attempt + 1, worker_id: null, lease_expires_at: null, heartbeat_at: null, updated_at: new Date().toISOString() })
+    .eq("id", jobId)
+    .eq("status", "failed")
+    .select("id")
+    .maybeSingle();
+  return !!requeued;
+}
+
+// Hard ceiling enforced by crawl_settings' own CHECK constraint — spawning
+// this many independent worker loops is always safe regardless of the
+// CONFIGURED concurrency, because claim_crawl_jobs() is the actual
+// enforcement point (serialized on the crawl_settings row lock): loops
+// beyond the configured limit simply receive an empty claim and exit
+// immediately rather than ever over-claiming.
+const MAX_WORKER_LOOPS = 4;
+
+// One independent claim -> execute -> reclaim loop. Runs until a claim
+// attempt comes back empty (no eligible job right now, or at capacity),
+// then exits. Several of these run concurrently (see drainCrawlQueue), so
+// as soon as any one loop's job finishes, that SAME loop immediately tries
+// to claim the next eligible job — a freed slot is refilled right away
+// rather than waiting for sibling loops to also finish (true worker-pool
+// pipelining, not batch rounds).
+async function runWorkerLoop(
+  supabase: SupabaseClient,
+  supabaseUrl: string,
+  anonKey: string,
+  loopId: string,
+  results: DrainSummary["results"],
+): Promise<void> {
+  let n = 0;
+  while (true) {
+    const { data: claimedJobs, error: claimError } = await supabase.rpc("claim_crawl_jobs", { p_worker_id: `${loopId}-${n}` });
+    if (claimError || !claimedJobs || claimedJobs.length === 0) return;
+    n += 1;
+
+    for (const claimed of claimedJobs as any[]) {
+      const workerId = claimed.worker_id as string;
+      const result = await withHeartbeat(supabase, claimed.id, workerId, () =>
+        runAutomaticCrawlPipeline(
+          supabase, supabaseUrl, anonKey,
+          { id: claimed.id, started_at: claimed.started_at },
+          claimed.requested_url,
+          claimed.discovery_candidate_id,
+        ));
+      if (!result.crawl.ok) {
+        await maybeScheduleAutoRetry(supabase, claimed.id, result.crawl.error_code);
+      }
+      results.push({ discovery_candidate_id: claimed.discovery_candidate_id, job_id: claimed.id, result });
+    }
+  }
+}
+
+// Drains crawl_jobs concurrently, up to crawl_settings.max_concurrent_crawls
+// (default 2, hard-bounded 1-4) — the actual cap is enforced atomically
+// inside claim_crawl_jobs(), not by how many loops this function happens to
+// spawn. Intended to run via EdgeRuntime.waitUntil() after an
 // approve/bulk-approve HTTP response has already been sent, so bulk-
-// approving many candidates never blocks the request. Bulk volume beyond a
-// handful of candidates is explicitly out of scope for this MVP (same
-// "one active crawl at a time" limit the manual Start Crawl button already
-// has) — any candidate left queued when this run ends is picked up by the
-// next approve/bulk-approve call's drain, or the per-candidate manual
-// "Start Crawl" button, so nothing is ever silently stuck.
+// approving many candidates never blocks the request. Any candidate left
+// queued (or scheduled for a backed-off retry) when this run ends is picked
+// up by the next approve/bulk-approve call's drain, the "Process Queue"
+// admin action, or the per-candidate manual "Start Crawl" button — nothing
+// is ever silently stuck beyond its own retry_at.
 export async function drainCrawlQueue(supabase: SupabaseClient, supabaseUrl: string, anonKey: string): Promise<DrainSummary> {
   const results: DrainSummary["results"] = [];
+  const drainId = crypto.randomUUID();
 
-  while (true) {
-    const { count: activeCount } = await supabase.from("crawl_jobs").select("id", { count: "exact", head: true }).in("status", IN_FLIGHT_STATUSES);
-    if ((activeCount || 0) >= CRAWL_LIMITS.MAX_ACTIVE_JOBS) break;
-
-    const { data: nextJob } = await supabase
-      .from("crawl_jobs")
-      .select("id, discovery_candidate_id, requested_url, started_at")
-      .eq("status", "queued")
-      .order("created_at", { ascending: true })
-      .limit(1)
-      .maybeSingle();
-    if (!nextJob) break;
-
-    // Claim it (queued -> starting) before doing any work, so a
-    // concurrently-running drain (from a second approve call) can't also
-    // pick it up.
-    const { data: claimed } = await supabase
-      .from("crawl_jobs")
-      .update({ status: "starting", started_at: new Date().toISOString(), updated_at: new Date().toISOString() })
-      .eq("id", nextJob.id)
-      .eq("status", "queued")
-      .select()
-      .maybeSingle();
-    if (!claimed) continue; // lost the race to another drain — try the next one
-
-    const result = await runAutomaticCrawlPipeline(
-      supabase, supabaseUrl, anonKey,
-      { id: claimed.id, started_at: claimed.started_at },
-      claimed.requested_url,
-      claimed.discovery_candidate_id,
-    );
-    results.push({ discovery_candidate_id: claimed.discovery_candidate_id, job_id: claimed.id, result });
-  }
+  await Promise.allSettled(
+    Array.from({ length: MAX_WORKER_LOOPS }, (_, i) => runWorkerLoop(supabase, supabaseUrl, anonKey, `drain-${drainId}-w${i}`, results)),
+  );
 
   return { processed: results.length, results };
 }

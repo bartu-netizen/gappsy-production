@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronLeft, ChevronRight, ExternalLink, RotateCcw, Ban, Loader2, PencilLine, Radar,
+  Activity, AlertTriangle, PlayCircle, Gauge,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
@@ -26,6 +27,10 @@ interface CrawlJobRow {
   completed_at: string | null;
   duration_ms: number | null;
   retry_count: number;
+  attempt: number;
+  worker_id: string | null;
+  lease_expires_at: string | null;
+  retry_at: string | null;
   error_code: string | null;
   error_message: string | null;
   crawl4ai_version: string | null;
@@ -39,11 +44,38 @@ interface CrawlJobRow {
 interface ListResponse { ok: boolean; data: CrawlJobRow[]; total: number; page: number; page_size: number; }
 interface MutateResponse { ok: boolean; data?: unknown; }
 
+interface StatsResponse {
+  ok: boolean;
+  data: {
+    max_concurrent_crawls: number | null;
+    lease_seconds: number | null;
+    max_auto_retries: number | null;
+    active_count: number;
+    queue_depth: number;
+    scheduled_retry_count: number;
+    stuck_lease_count: number;
+    failures_last_24h: number;
+    pending_auto_retries: number;
+    avg_duration_ms: number | null;
+    avg_duration_sample_size: number;
+    throughput_last_hour: number;
+    throughput_last_24h: number;
+    throughput_last_7d: number;
+  } | null;
+}
+
+interface SettingsResponse {
+  ok: boolean;
+  data: { max_concurrent_crawls: number; lease_seconds: number; max_auto_retries: number } | null;
+  bounds?: { max_concurrent_crawls: { min: number; max: number } };
+}
+
 const PER_PAGE = 25;
 
 const RUNNING_STATUSES: CrawlJobStatus[] = ['starting', 'crawling', 'extracting'];
 const CANCELLABLE_STATUSES: CrawlJobStatus[] = ['queued', 'starting'];
 const RETRYABLE_STATUSES: CrawlJobStatus[] = ['failed', 'cancelled'];
+const CONCURRENCY_BOUNDS = { min: 1, max: 4 };
 
 const STATUS_CHIPS: { value: string; label: string }[] = [
   { value: 'all', label: 'All' },
@@ -72,6 +104,24 @@ function formatDuration(ms: number | null): string {
   return `${minutes}m ${seconds}s`;
 }
 
+function formatElapsedSince(iso: string | null): string {
+  if (!iso) return '—';
+  const ms = Date.now() - new Date(iso).getTime();
+  if (ms < 0) return '0s';
+  return formatDuration(ms);
+}
+
+function formatRelativeFuture(iso: string | null): string {
+  if (!iso) return '—';
+  const ms = new Date(iso).getTime() - Date.now();
+  if (ms <= 0) return 'due now';
+  return `in ${formatDuration(ms)}`;
+}
+
+function isLeaseStuck(job: CrawlJobRow): boolean {
+  return RUNNING_STATUSES.includes(job.status) && !!job.lease_expires_at && new Date(job.lease_expires_at).getTime() <= Date.now();
+}
+
 // Crawl Queue — every crawl_jobs row (one per crawl attempt), independent of
 // the per-candidate inline status shown in Discovery Queue. This is the
 // ops-facing view: what's queued/running right now, what failed and needs a
@@ -94,9 +144,29 @@ export default function WpAdminCrawlQueuePage() {
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
   const { mutate: jobAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-crawl-jobs', 'POST');
 
+  const { data: statsData, refetch: refetchStats } = useAdminFetch<StatsResponse>('admin-crawl-stats');
+  const { data: settingsData, refetch: refetchSettings } = useAdminFetch<SettingsResponse>('admin-crawl-settings');
+  const { mutate: updateSettings, isLoading: isSavingConcurrency } = useAdminMutation<SettingsResponse, Record<string, unknown>>('admin-crawl-settings', 'PUT');
+  const { mutate: processQueue, isLoading: isProcessingQueue } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-crawl-jobs', 'POST');
+
   const rows = data?.data || [];
   const total = data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const stats = statsData?.data || null;
+  const concurrency = settingsData?.data?.max_concurrent_crawls ?? null;
+
+  // Live-ish view of a background worker pool: poll the list + stats every
+  // 10s so an operator watching this page during a concurrency run sees
+  // jobs move through starting -> crawling -> needs_review without manually
+  // refreshing.
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refetch();
+      refetchStats();
+    }, 10_000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleFilterChange(value: string) {
     setStatusFilter(value);
@@ -110,6 +180,7 @@ export default function WpAdminCrawlQueuePage() {
     setBusyId(null);
     if (!result.ok) setMessage(result.error?.message || 'Failed to retry crawl.');
     refetch();
+    refetchStats();
   }
 
   async function handleCancel(jobId: string) {
@@ -119,6 +190,27 @@ export default function WpAdminCrawlQueuePage() {
     setBusyId(null);
     if (!result.ok) setMessage(result.error?.message || 'Failed to cancel crawl.');
     refetch();
+    refetchStats();
+  }
+
+  async function handleProcessQueue() {
+    setMessage(null);
+    const result = await processQueue({ action: 'process_queue' });
+    if (!result.ok) {
+      setMessage(result.error?.message || 'Failed to process the queue.');
+    } else {
+      const processed = (result.data?.data as { processed?: number } | undefined)?.processed ?? 0;
+      setMessage(processed > 0 ? `Processed ${processed} crawl job${processed === 1 ? '' : 's'}.` : 'Nothing eligible to process right now.');
+    }
+    refetch();
+    refetchStats();
+  }
+
+  async function handleConcurrencyChange(next: number) {
+    const result = await updateSettings({ max_concurrent_crawls: next });
+    if (!result.ok) setMessage(result.error?.message || 'Failed to update concurrency.');
+    refetchSettings();
+    refetchStats();
   }
 
   const emptyMessage = statusFilter === 'all'
@@ -128,9 +220,73 @@ export default function WpAdminCrawlQueuePage() {
   return (
     <WpAdminLayout title="Crawl Queue" subtitle="Every crawl attempt — queued, running, completed, failed, and retried">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Crawl Queue</h1>
-          <p className="text-gray-500 mt-1 text-sm">{total.toLocaleString()} crawl job{total === 1 ? '' : 's'}</p>
+        <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Crawl Queue</h1>
+            <p className="text-gray-500 mt-1 text-sm">{total.toLocaleString()} crawl job{total === 1 ? '' : 's'}</p>
+          </div>
+          <button
+            onClick={handleProcessQueue}
+            disabled={isProcessingQueue}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            {isProcessingQueue ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayCircle className="w-4 h-4" />}
+            Process Queue
+          </button>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <div className="flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-500">Active:</span>
+              <span className="font-semibold text-gray-900">{stats?.active_count ?? '—'}</span>
+              <span className="text-gray-400">/ {concurrency ?? '—'} slots</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-gray-500">Queue depth:</span>
+              <span className="font-semibold text-gray-900">{stats?.queue_depth ?? '—'}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-gray-500">Scheduled retries:</span>
+              <span className="font-semibold text-gray-900">{stats?.scheduled_retry_count ?? '—'}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-gray-500">Avg duration:</span>
+              <span className="font-semibold text-gray-900">{stats?.avg_duration_ms != null ? formatDuration(stats.avg_duration_ms) : '—'}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-gray-500">Failures (24h):</span>
+              <span className="font-semibold text-gray-900">{stats?.failures_last_24h ?? '—'}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-gray-500">Throughput:</span>
+              <span className="font-semibold text-gray-900">{stats?.throughput_last_hour ?? '—'}/hr &middot; {stats?.throughput_last_24h ?? '—'}/24h</span>
+            </div>
+            {!!stats?.stuck_lease_count && (
+              <div className="flex items-center gap-1.5 text-amber-700">
+                <AlertTriangle className="w-4 h-4" />
+                <span className="font-semibold">{stats.stuck_lease_count} stuck lease{stats.stuck_lease_count === 1 ? '' : 's'} (will auto-recover on next claim)</span>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-3 pt-3 border-t border-gray-100 flex items-center gap-2">
+            <Gauge className="w-4 h-4 text-gray-400" />
+            <label htmlFor="concurrency" className="text-sm text-gray-500">Max concurrent crawls:</label>
+            <select
+              id="concurrency"
+              value={concurrency ?? ''}
+              disabled={isSavingConcurrency || concurrency == null}
+              onChange={(e) => handleConcurrencyChange(Number(e.target.value))}
+              className="text-sm border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            >
+              {Array.from({ length: CONCURRENCY_BOUNDS.max - CONCURRENCY_BOUNDS.min + 1 }, (_, i) => CONCURRENCY_BOUNDS.min + i).map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+            <span className="text-xs text-gray-400">(hard limit {CONCURRENCY_BOUNDS.min}–{CONCURRENCY_BOUNDS.max} on the current gateway)</span>
+          </div>
         </div>
 
         <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4 flex flex-wrap items-center gap-1.5">
@@ -168,11 +324,12 @@ export default function WpAdminCrawlQueuePage() {
                   <tr>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Candidate</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Status</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Worker / Lease</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Last Crawl</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Duration</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Pages</th>
                     <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Version</th>
-                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Retries</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Attempts</th>
                     <th className="text-right px-5 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Actions</th>
                   </tr>
                 </thead>
@@ -214,13 +371,32 @@ export default function WpAdminCrawlQueuePage() {
                             <p className="text-xs text-red-600 mt-1 max-w-xs truncate" title={job.error_message}>{job.error_message}</p>
                           )}
                         </td>
+                        <td className="px-5 py-3.5 text-sm text-gray-500">
+                          {RUNNING_STATUSES.includes(job.status) ? (
+                            <div>
+                              <p className="text-gray-700 truncate max-w-[10rem]" title={job.worker_id || undefined}>{job.worker_id || '—'}</p>
+                              <p className="text-xs text-gray-400">elapsed {formatElapsedSince(job.started_at)}</p>
+                              {isLeaseStuck(job) && (
+                                <p className="inline-flex items-center gap-1 text-xs text-amber-700 mt-0.5">
+                                  <AlertTriangle className="w-3 h-3" /> stuck lease
+                                </p>
+                              )}
+                            </div>
+                          ) : job.status === 'queued' && job.retry_at ? (
+                            <p className="text-xs text-gray-500">retry {formatRelativeFuture(job.retry_at)}</p>
+                          ) : (
+                            <span className="text-gray-300">—</span>
+                          )}
+                        </td>
                         <td className="px-5 py-3.5 text-sm text-gray-500">{formatDateTime(job.started_at || job.completed_at)}</td>
                         <td className="px-5 py-3.5 text-sm text-gray-600">{formatDuration(job.duration_ms)}</td>
                         <td className="px-5 py-3.5 text-sm text-gray-600">
                           {job.crawled_pages ?? '—'}{job.discovered_pages != null ? ` / ${job.discovered_pages}` : ''}
                         </td>
                         <td className="px-5 py-3.5 text-sm text-gray-500">{job.crawl4ai_version || '—'}</td>
-                        <td className="px-5 py-3.5 text-sm text-gray-600">{job.retry_count || 0}</td>
+                        <td className="px-5 py-3.5 text-sm text-gray-600">
+                          {job.attempt > 1 ? `${job.attempt} auto` : '1'}{job.retry_count > 0 ? ` · ${job.retry_count} manual` : ''}
+                        </td>
                         <td className="px-5 py-3.5">
                           <div className="flex items-center justify-end gap-1.5">
                             {isBusy && <Loader2 className="w-4 h-4 animate-spin text-gray-400" />}
