@@ -51,12 +51,17 @@ Deno.serve(async (req: Request) => {
       }
       const candidateId = url.searchParams.get("discovery_candidate_id");
       const statusFilter = url.searchParams.get("status");
-      let query = supabase.from("crawl_jobs").select("*, discovered_tools(id, name, official_website, status)", { count: "exact" }).order("created_at", { ascending: false }).limit(50);
+      const page = Math.max(1, Number(url.searchParams.get("page")) || 1);
+      const pageSize = Math.min(100, Math.max(1, Number(url.searchParams.get("page_size")) || 50));
+      let query = supabase.from("crawl_jobs").select("*, discovered_tools(id, name, official_website, status)", { count: "exact" }).order("created_at", { ascending: false });
       if (candidateId) query = query.eq("discovery_candidate_id", candidateId);
-      if (statusFilter) query = query.eq("status", statusFilter);
-      const { data, error, count } = await query;
+      if (statusFilter) {
+        const statuses = statusFilter.split(",").map((s) => s.trim()).filter(Boolean);
+        query = statuses.length > 1 ? query.in("status", statuses) : query.eq("status", statuses[0]);
+      }
+      const { data, error, count } = await query.range((page - 1) * pageSize, page * pageSize - 1);
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
-      return jsonResponse({ ok: true, data: data || [], total: count || 0 });
+      return jsonResponse({ ok: true, data: data || [], total: count || 0, page, page_size: pageSize });
     }
 
     if (req.method !== "POST") return jsonResponse({ ok: false, error: "Method not allowed" }, 405);

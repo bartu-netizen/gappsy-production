@@ -58,11 +58,9 @@ Deno.serve(async (req: Request) => {
       const ids = Array.isArray(payload.suggestion_ids) ? payload.suggestion_ids.filter((v: unknown) => typeof v === "string") : [];
       if (ids.length === 0) return jsonResponse({ ok: false, error: "suggestion_ids is required" }, 400);
       if (payload.action === "bulk-approve") {
-        const { data: rows } = await supabase.from("enrichment_field_suggestions").select("id, generated_value").in("id", ids).eq("review_status", "pending");
-        for (const row of rows || []) {
-          await supabase.from("enrichment_field_suggestions").update({ review_status: "approved", approved_value: row.generated_value, reviewer: session.email, reviewed_at: nowIso }).eq("id", row.id);
-        }
-        return jsonResponse({ ok: true, data: { updated: (rows || []).length } });
+        const { data: approvedRows, error: approveError } = await supabase.rpc("approve_enrichment_suggestions", { p_ids: ids, p_reviewer: session.email });
+        if (approveError) return jsonResponse({ ok: false, error: approveError.message }, 500);
+        return jsonResponse({ ok: true, data: { updated: (approvedRows || []).length } });
       }
       const { data: updated, error } = await supabase
         .from("enrichment_field_suggestions")
@@ -84,15 +82,16 @@ Deno.serve(async (req: Request) => {
       }
       const { data: eligible } = await supabase
         .from("enrichment_field_suggestions")
-        .select("id, generated_value")
+        .select("id")
         .eq("enrichment_job_id", jobId)
         .eq("review_status", "pending")
         .eq("unsupported", false)
         .gte("confidence", threshold);
-      for (const row of eligible || []) {
-        await supabase.from("enrichment_field_suggestions").update({ review_status: "approved", approved_value: row.generated_value, reviewer: session.email, reviewed_at: nowIso }).eq("id", row.id);
-      }
-      return jsonResponse({ ok: true, data: { approved: (eligible || []).length, threshold } });
+      const eligibleIds = (eligible || []).map((row: { id: string }) => row.id);
+      if (eligibleIds.length === 0) return jsonResponse({ ok: true, data: { approved: 0, threshold } });
+      const { data: approvedRows, error: approveError } = await supabase.rpc("approve_enrichment_suggestions", { p_ids: eligibleIds, p_reviewer: session.email });
+      if (approveError) return jsonResponse({ ok: false, error: approveError.message }, 500);
+      return jsonResponse({ ok: true, data: { approved: (approvedRows || []).length, threshold } });
     }
 
     if (payload.action === "regenerate") {

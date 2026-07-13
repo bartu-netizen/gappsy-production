@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Zap, CheckSquare, Square } from 'lucide-react';
+import { Search, Zap, CheckSquare, Square, ChevronLeft, ChevronRight } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { useAdminFetch, useAdminMutation } from '../hooks/useAdminFetch';
 import { AdminErrorBanner, AdminLoadingState, AdminEmptyState } from '../components/admin/AdminErrorBanner';
@@ -23,6 +23,8 @@ interface QueueResponse {
   total: number;
 }
 
+const PER_PAGE = 25;
+
 interface CreateBatchResponse {
   ok: boolean;
   data: { batch: { id: string } };
@@ -36,20 +38,27 @@ export default function WpAdminAiEnrichmentQueuePage() {
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedFields, setSelectedFields] = useState<Set<string>>(new Set(ALL_ENRICHMENT_FIELD_KEYS));
+
+  useEffect(() => { setPage(1); }, [search, statusFilter]);
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<QueueResponse>(
     () => {
       const params = new URLSearchParams();
       if (search) params.set('search', search);
       if (statusFilter !== 'all') params.set('status', statusFilter);
+      params.set('page', String(page));
+      params.set('page_size', String(PER_PAGE));
       const qs = params.toString();
-      return `admin-enrichment-queue${qs ? `?${qs}` : ''}`;
+      return `admin-enrichment-queue?${qs}`;
     },
-    { deps: [search, statusFilter] },
+    { deps: [search, statusFilter, page] },
   );
   const tools = useMemo(() => data?.data || [], [data]);
+  const total = data?.total || 0;
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
 
   useEffect(() => {
     const single = searchParams.get('tool_id');
@@ -185,6 +194,20 @@ export default function WpAdminAiEnrichmentQueuePage() {
                 </div>
               </label>
             ))}
+          </div>
+        )}
+
+        {!isLoading && !isError && tools.length > 0 && (
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-gray-500">Page {page} of {totalPages} &middot; {total.toLocaleString()} tool{total === 1 ? '' : 's'}</p>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1} className="inline-flex items-center gap-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                <ChevronLeft className="w-4 h-4" /> Prev
+              </button>
+              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages} className="inline-flex items-center gap-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                Next <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
 

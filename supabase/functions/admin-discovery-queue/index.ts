@@ -242,14 +242,26 @@ Deno.serve(async (req: Request) => {
           }, 409);
         }
 
+        // WHERE also re-checks status='validated' (not just the earlier
+        // SELECT) so a concurrent approve of the same candidate can't both
+        // pass the check above and both queue a crawl job — the loser's
+        // conditional UPDATE simply matches zero rows.
         const nowIso = new Date().toISOString();
         const { data: updated, error: updateError } = await supabase
           .from("discovered_tools")
           .update({ status: "approved_for_crawl", approved_by: session.email, approved_at: nowIso, updated_at: nowIso })
           .eq("id", candidateId)
+          .eq("status", "validated")
           .select()
-          .single();
+          .maybeSingle();
         if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
+        if (!updated) {
+          return jsonResponse({
+            ok: false,
+            error: "Candidate was already approved (or its status changed) by a concurrent request",
+            error_code: "not_validated",
+          }, 409);
+        }
 
         const { data: job, error: jobError } = await supabase
           .from("crawl_jobs")
@@ -298,25 +310,37 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({ ok: true, data: { approved: [], skipped, crawl_jobs_created: [] } });
         }
 
+        // WHERE also re-checks status='validated' so a candidate concurrently
+        // approved/mutated between the SELECT above and this UPDATE is
+        // excluded from the returned rows instead of being double-approved.
         const eligibleIds = eligible.map((c) => c.id);
         const nowIso = new Date().toISOString();
         const { data: updatedRows, error: updateError } = await supabase
           .from("discovered_tools")
           .update({ status: "approved_for_crawl", approved_by: session.email, approved_at: nowIso, updated_at: nowIso })
           .in("id", eligibleIds)
+          .eq("status", "validated")
           .select("id");
         if (updateError) return jsonResponse({ ok: false, error: updateError.message }, 500);
 
-        const jobRows = eligible.map((c) => ({
-          discovery_candidate_id: c.id,
-          requested_url: c.official_website,
-          status: "queued",
-          created_by: session.email,
-        }));
-        const { data: createdJobs, error: jobError } = await supabase
-          .from("crawl_jobs")
-          .insert(jobRows)
-          .select("id");
+        const actuallyUpdatedIds = new Set((updatedRows || []).map((r: { id: string }) => r.id));
+        for (const candidate of eligible) {
+          if (!actuallyUpdatedIds.has(candidate.id)) {
+            skipped.push({ id: candidate.id, reason: "status changed by a concurrent request" });
+          }
+        }
+
+        const jobRows = eligible
+          .filter((c) => actuallyUpdatedIds.has(c.id))
+          .map((c) => ({
+            discovery_candidate_id: c.id,
+            requested_url: c.official_website,
+            status: "queued",
+            created_by: session.email,
+          }));
+        const { data: createdJobs, error: jobError } = jobRows.length > 0
+          ? await supabase.from("crawl_jobs").insert(jobRows).select("id")
+          : { data: [] as { id: string }[], error: null };
         if (jobError) return jsonResponse({ ok: false, error: jobError.message }, 500);
 
         EdgeRuntime.waitUntil(drainCrawlQueue(supabase, supabaseUrl, Deno.env.get("SUPABASE_ANON_KEY") || ""));

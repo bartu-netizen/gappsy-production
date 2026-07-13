@@ -36,17 +36,11 @@ interface CrawlJobRow {
   discovered_tools: CandidateRef | null;
 }
 
-interface ListResponse { ok: boolean; data: CrawlJobRow[]; total: number; }
+interface ListResponse { ok: boolean; data: CrawlJobRow[]; total: number; page: number; page_size: number; }
 interface MutateResponse { ok: boolean; data?: unknown; }
 
 const PER_PAGE = 25;
 
-// The gateway is one-crawl-at-a-time (see admin-crawl-jobs), so this list is
-// never large — the edge function caps GET at the latest 50 rows and has no
-// page/offset support. Pagination below is therefore client-side over that
-// single batch rather than a server round-trip per page, same limitation the
-// "Running" bucket works around by filtering the unfiltered batch locally
-// (the API only accepts one `status` value at a time, not a set).
 const RUNNING_STATUSES: CrawlJobStatus[] = ['starting', 'crawling', 'extracting'];
 const CANCELLABLE_STATUSES: CrawlJobStatus[] = ['queued', 'starting'];
 const RETRYABLE_STATUSES: CrawlJobStatus[] = ['failed', 'cancelled'];
@@ -90,21 +84,19 @@ export default function WpAdminCrawlQueuePage() {
 
   const listPath = () => {
     const params = new URLSearchParams();
-    if (statusFilter !== 'all' && statusFilter !== 'running') params.set('status', statusFilter);
-    const qs = params.toString();
-    return qs ? `admin-crawl-jobs?${qs}` : 'admin-crawl-jobs';
+    if (statusFilter === 'running') params.set('status', RUNNING_STATUSES.join(','));
+    else if (statusFilter !== 'all') params.set('status', statusFilter);
+    params.set('page', String(page));
+    params.set('page_size', String(PER_PAGE));
+    return `admin-crawl-jobs?${params.toString()}`;
   };
 
   const { data, isLoading, isError, error, refetch } = useAdminFetch<ListResponse>(listPath);
   const { mutate: jobAction } = useAdminMutation<MutateResponse, Record<string, unknown>>('admin-crawl-jobs', 'POST');
 
-  const allRows = data?.data || [];
-  const filteredRows = statusFilter === 'running'
-    ? allRows.filter((r) => RUNNING_STATUSES.includes(r.status))
-    : allRows;
-  const total = statusFilter === 'running' ? filteredRows.length : (data?.total ?? filteredRows.length);
-  const totalPages = Math.max(1, Math.ceil(filteredRows.length / PER_PAGE));
-  const rows = filteredRows.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const rows = data?.data || [];
+  const total = data?.total ?? 0;
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
 
   function handleFilterChange(value: string) {
     setStatusFilter(value);

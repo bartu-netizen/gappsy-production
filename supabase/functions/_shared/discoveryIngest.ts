@@ -185,6 +185,25 @@ export async function ingestOne(
     .select("id")
     .single();
 
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    // 23505 on discovered_tools_official_website_unique_idx means a
+    // concurrent ingest (another provider run / CSV row / admin paste) won
+    // the race for this exact URL between our findDuplicate() check and
+    // this insert. That's not a real error — it's the duplicate outcome
+    // findDuplicate() would have reported had it run a moment later, so
+    // report it the same way instead of surfacing a raw DB error.
+    const isRaceDuplicate = (error as { code?: string }).code === "23505" &&
+      error.message.includes("official_website");
+    if (isRaceDuplicate) {
+      const winnerUrl = validation.final_url || candidate.officialWebsite;
+      const { data: winner } = await supabase
+        .from("discovered_tools")
+        .select("id")
+        .eq("official_website", winnerUrl)
+        .maybeSingle();
+      if (winner) return { ok: true, id: winner.id as string, status: "duplicate" };
+    }
+    return { ok: false, error: error.message };
+  }
   return { ok: true, id: record.id as string, status };
 }
