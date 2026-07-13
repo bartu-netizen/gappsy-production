@@ -129,6 +129,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Radar',
   },
   {
+    id: 'scheduler',
+    label: 'Scheduler',
+    description: 'Central orchestration — cron/interval schedules driving Discovery, Crawl, and cleanup automatically',
+    href: '/wp-admin/scheduler',
+    keywords: ['scheduler', 'cron', 'orchestrator', 'automation', 'jobs', 'interval', 'heartbeat'],
+    group: 'Discovery',
+    scopes: ['software'],
+    iconName: 'Workflow',
+  },
+  {
     id: 'publishing-dashboard',
     label: 'Import Dashboard',
     description: 'Publishing pipeline overview — imports, drafts, ready to publish, published, failed',
