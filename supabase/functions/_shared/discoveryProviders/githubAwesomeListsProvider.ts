@@ -55,6 +55,11 @@ function isSkippableUrl(url: string, ownerRepoLower: string): boolean {
     if (path === ownerRepoLower || path.startsWith(`${ownerRepoLower}/`)) return true;
     // GitHub Actions / CI badge or workflow links.
     if (path.includes("/actions")) return true;
+    // A link to another awesome-list repo (e.g. from sindresorhus/awesome,
+    // the meta-index of all awesome-lists) is a list of more curated lists,
+    // never itself an individual tool a candidate should be created from.
+    const repoSegment = path.split("/")[1] ?? "";
+    if (/^awesome(?:[-_].+)?$/.test(repoSegment)) return true;
   }
 
   // Generic catch-all for badge images hosted elsewhere.

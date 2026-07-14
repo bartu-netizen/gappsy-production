@@ -131,6 +131,21 @@ Deno.test("tracks category_hint across multiple headings, null before any headin
   assertEquals(candidates[3].category_hint, "Gamma");
 });
 
+Deno.test("skips links to other awesome-list repos, e.g. from a meta-index like sindresorhus/awesome", () => {
+  const markdown = `
+## Programming Languages
+
+- [Node.js](https://github.com/sindresorhus/awesome-nodejs)
+- [awesome](https://github.com/some-org/awesome-something-else)
+- [Real Tool](https://example.com/real-tool) - Not a meta-list link.
+`;
+
+  const candidates = parseAwesomeListMarkdown(markdown, "sindresorhus/awesome");
+
+  assertEquals(candidates.length, 1);
+  assertEquals(candidates[0].name, "Real Tool");
+});
+
 Deno.test("ignores links outside of list items (prose, headers, table of contents)", () => {
   const markdown = `
 ## Contents
