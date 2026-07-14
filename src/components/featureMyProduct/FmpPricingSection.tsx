@@ -47,7 +47,7 @@ export default function FmpPricingSection() {
             </ul>
 
             <Link
-              to="/contact"
+              to="/feature-my-product/onboarding"
               className="mt-8 flex items-center justify-center w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity active:scale-[0.99]"
             >
               Get featured — $37/mo

@@ -38,6 +38,8 @@ const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
+const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
+const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -96,6 +98,7 @@ const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyRevie
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
 const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscoveryDashboardPage"));
 const WpAdminDiscoveryQueuePage = lazy(() => import("./pages/WpAdminDiscoveryQueuePage"));
+const WpAdminVendorMonetizationPage = lazy(() => import("./pages/WpAdminVendorMonetizationPage"));
 const WpAdminCrawlQueuePage = lazy(() => import("./pages/WpAdminCrawlQueuePage"));
 const WpAdminSchedulerPage = lazy(() => import("./pages/WpAdminSchedulerPage"));
 const WpAdminEditorialDashboardPage = lazy(() => import("./pages/WpAdminEditorialDashboardPage"));
@@ -233,6 +236,7 @@ export default function App() {
         <Route path="/wp-admin/tools/:id/preview" element={<AdminRoute><WpAdminToolPreviewPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery" element={<AdminRoute><WpAdminDiscoveryDashboardPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/queue" element={<AdminRoute><WpAdminDiscoveryQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/vendor-monetization" element={<AdminRoute><WpAdminVendorMonetizationPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/import" element={<AdminRoute><WpAdminDiscoveryImportPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/import-history" element={<AdminRoute><WpAdminDiscoveryImportHistoryPage /></AdminRoute>} />
         <Route path="/wp-admin/discovery/duplicates" element={<AdminRoute><WpAdminDiscoveryDuplicatesPage /></AdminRoute>} />
@@ -366,6 +370,8 @@ export default function App() {
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
         <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
+        <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
+        <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />

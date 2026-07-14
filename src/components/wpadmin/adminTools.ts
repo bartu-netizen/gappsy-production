@@ -419,6 +419,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Image',
   },
   {
+    id: 'vendor-monetization',
+    label: 'Vendor Monetization',
+    description: 'Feature My Product onboarding sessions, subscriptions, and ownership verification',
+    href: '/wp-admin/vendor-monetization',
+    keywords: ['vendor', 'monetization', 'feature my product', 'checkout', 'subscription', 'ownership', 'verification'],
+    group: 'Monetization',
+    scopes: ['software'],
+    iconName: 'Rocket',
+  },
+  {
     id: 'sidebar-ads',
     label: 'Homepage Ads',
     description: 'Manage sidebar advertisement placements on homepage',

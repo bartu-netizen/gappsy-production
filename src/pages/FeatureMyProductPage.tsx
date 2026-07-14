@@ -90,7 +90,7 @@ export default function FeatureMyProductPage() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
-                  to="/contact"
+                  to="/feature-my-product/onboarding"
                   className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
                   Get featured — $37/mo
@@ -140,7 +140,7 @@ export default function FeatureMyProductPage() {
                   </p>
                   <div className="mt-8">
                     <Link
-                      to="/contact"
+                      to="/feature-my-product/onboarding"
                       className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-xl text-[15px] font-semibold text-[#0B1221] bg-white hover:bg-slate-100 transition-colors active:scale-[0.99]"
                     >
                       Get featured — $37/mo
@@ -157,7 +157,7 @@ export default function FeatureMyProductPage() {
       {/* Sticky mobile CTA */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#f1f3f5] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <Link
-          to="/contact"
+          to="/feature-my-product/onboarding"
           className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] active:scale-[0.99] transition-transform"
         >
           Get featured — $37/mo

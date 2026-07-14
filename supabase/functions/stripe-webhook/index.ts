@@ -3,6 +3,7 @@ import Stripe from "npm:stripe@17.7.0";
 import { createClient } from "npm:@supabase/supabase-js@2.49.1";
 import { sendEmail } from "../_shared/emailClient.ts";
 import { buildAgencyAdminUrl } from "../_shared/adminEmailContext.ts";
+import { activateVendorFeatureSubscription, handleVendorSubscriptionChange } from "../_shared/vendorFeatureActivation.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -1004,6 +1005,11 @@ async function handleCheckoutCompleted(
   const listingType = metadata.listingType || metadata.funnel || null;
   const isStandardListing = listingType === "standard" || listingType === "other_listing" || listingType === "activation";
 
+  if (metadata.funnel_type === "feature_my_product") {
+    await activateVendorFeatureSubscription(supabase, session, stripe);
+    return;
+  }
+
   console.log("[webhook] checkout.session.completed", {
     id: session.id,
     mode: session.mode,
@@ -1896,6 +1902,11 @@ async function syncStripeSubscription(
 // ─── handle subscription changes ─────────────────────────────────────────────
 
 async function handleSubscriptionChange(subscription: Stripe.Subscription, stripe?: Stripe) {
+  if ((subscription.metadata as Record<string, string> | undefined)?.funnel_type === "feature_my_product") {
+    await handleVendorSubscriptionChange(supabase, subscription);
+    return;
+  }
+
   const subscriptionId = subscription.id;
   const status = subscription.status;
   const currentPeriodEnd = subscription.current_period_end;
