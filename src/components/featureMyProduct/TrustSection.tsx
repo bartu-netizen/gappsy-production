@@ -1,11 +1,19 @@
+import { useEffect, useState } from 'react';
+import { Quote } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import ScrollReveal from './ScrollReveal';
 
-// Real tools already published in the directory (see ToolDetailPage) — used
-// as a "you'd be listed alongside" trust strip. Deliberately using the same
-// initial-letter avatar treatment as ToolCard/ToolHero rather than hotlinking
-// third-party logo assets on a page that's pitching other vendors on paid
-// placement — avoids any implied endorsement from a specific company's logo.
-const LISTED_TOOLS = ['Canva', 'Notion', 'Slack', 'Figma', 'Stripe', 'HubSpot', 'Zoom', 'Asana', 'Airtable', 'GitHub'];
+// Real, published tools already in the directory — confirmed to have a real
+// crawled logo (tools.logo), not every well-known slug does (e.g. Canva and
+// Figma's logo crawl was blocked, so they're deliberately excluded from this
+// specific strip even though they're published elsewhere on the site).
+const LISTED_SLUGS = ['notion', 'slack', 'stripe', 'hubspot', 'zoom', 'asana', 'airtable', 'github', 'shopify', 'zapier'];
+
+interface ListedTool {
+  slug: string;
+  name: string;
+  logo: string | null;
+}
 
 // Placeholder copy — swap for real founder quotes once the first cohort of
 // featured listings has run for a few weeks.
@@ -30,22 +38,58 @@ const METRICS = [
   { value: '9', label: 'placement surfaces per listing' },
 ];
 
+function LogoTile({ tool }: { tool: ListedTool }) {
+  const [failed, setFailed] = useState(false);
+  const showLogo = tool.logo && !failed;
+
+  return (
+    <div className="flex items-center gap-2.5 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-200">
+      {showLogo ? (
+        <img
+          src={tool.logo!}
+          alt=""
+          aria-hidden="true"
+          className="w-6 h-6 rounded-md object-contain shrink-0"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span className="w-6 h-6 rounded-md bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400 shrink-0">
+          {tool.name.charAt(0)}
+        </span>
+      )}
+      <span className="text-sm font-medium text-slate-600">{tool.name}</span>
+    </div>
+  );
+}
+
 export default function TrustSection() {
+  const [tools, setTools] = useState<ListedTool[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from('tools')
+      .select('slug, name, logo')
+      .in('slug', LISTED_SLUGS)
+      .eq('status', 'published')
+      .then(({ data }) => {
+        if (cancelled || !data) return;
+        const bySlug = new Map(data.map((t) => [t.slug, t as ListedTool]));
+        setTools(LISTED_SLUGS.map((slug) => bySlug.get(slug)).filter((t): t is ListedTool => Boolean(t)));
+      });
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <section className="py-16 sm:py-20 border-y border-[#f1f3f5] bg-slate-50/40">
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <ScrollReveal>
-          <p className="text-center text-[13px] font-semibold uppercase tracking-wide text-slate-400 mb-6">
+          <p className="text-center text-[13px] font-semibold uppercase tracking-wide text-slate-400 mb-7">
             Listed alongside software buyers already trust
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-            {LISTED_TOOLS.map((name) => (
-              <div key={name} className="flex items-center gap-2 text-slate-400">
-                <span className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-[11px] font-bold text-slate-400">
-                  {name.charAt(0)}
-                </span>
-                <span className="text-sm font-medium text-slate-500">{name}</span>
-              </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-9 gap-y-4 min-h-[24px]">
+            {(tools ?? LISTED_SLUGS.map((slug) => ({ slug, name: slug, logo: null }))).map((tool) => (
+              <LogoTile key={tool.slug} tool={tool} />
             ))}
           </div>
         </ScrollReveal>
@@ -65,7 +109,8 @@ export default function TrustSection() {
           {TESTIMONIALS.map((t, i) => (
             <ScrollReveal key={t.role} delayMs={i * 100}>
               <figure className="h-full rounded-2xl bg-white border border-[#eef0f3] p-6">
-                <blockquote className="text-[15px] leading-relaxed text-slate-600">"{t.quote}"</blockquote>
+                <Quote className="w-5 h-5 text-[#4F46E5]/30 mb-3" aria-hidden="true" fill="currentColor" strokeWidth={0} />
+                <blockquote className="text-[15px] leading-relaxed text-slate-600">{t.quote}</blockquote>
                 <figcaption className="mt-4 text-[13px] font-medium text-slate-400">{t.role}</figcaption>
               </figure>
             </ScrollReveal>

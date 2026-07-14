@@ -107,8 +107,21 @@ export default function FeatureMyProductPage() {
             </ScrollReveal>
 
             <ScrollReveal delayMs={120}>
-              <div className="max-w-sm mx-auto lg:max-w-none">
-                <PlacementMockup type="toolPage" />
+              <div className="relative max-w-sm mx-auto lg:max-w-none">
+                <div
+                  className="absolute -inset-8 -z-10 rounded-[40px] bg-gradient-to-br from-[#4F46E5]/10 to-[#7C3AED]/10 blur-2xl"
+                  aria-hidden="true"
+                />
+                <div className="drop-shadow-[0_30px_60px_rgba(79,70,229,0.15)]">
+                  <PlacementMockup type="toolPage" />
+                </div>
+                <div className="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-2 rounded-2xl bg-white border border-[#eef0f3] shadow-[0_12px_28px_rgba(15,23,42,0.10)] px-4 py-3">
+                  <span className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-bold shrink-0">↑</span>
+                  <div>
+                    <div className="text-[13px] font-semibold text-[#0B1221] leading-none">Priority ranking</div>
+                    <div className="text-[11px] text-slate-400 mt-1">in your category</div>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>
