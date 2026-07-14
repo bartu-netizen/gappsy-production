@@ -239,6 +239,56 @@ Deno.test("analyzePricingBlocks: drops a plan-shaped heading with no nearby pric
   assert(!names.includes("Plans for every stage of your company"));
 });
 
+Deno.test("analyzePricingBlocks: h4 plan cards under an h1 intro are captured, and the run stops before a later footer-nav false positive (real trunk.io/pricing shape)", () => {
+  // Condensed but structurally faithful reproduction of the live
+  // trunk.io/pricing markdown that originally motivated this fix: real
+  // plan cards are h4s under a non-plan h1 intro, followed by a detailed
+  // comparison table that repeats the same h4 names with no price nearby,
+  // then unrelated sections, ending in a footer nav column ("Connect")
+  // whose body happens to contain "Contact us" — which must NOT be read
+  // as a fourth, custom-priced plan.
+  const md = [
+    "# Plans for every stage of your company",
+    "#### Free",
+    "$0/committer/month",
+    "Free for teams up to 5.",
+    "",
+    "#### Team",
+    "$18/committer/month",
+    "Everything you need to manage your team's workflow.",
+    "",
+    "#### Enterprise",
+    "Custom",
+    "Enterprise includes SSO, on-premise, admin controls, dedicated support, and more.",
+    "",
+    "#### Trusted by top engineering teams",
+    "",
+    "#### Free",
+    "Flaky Tests\nUsers\nUp to 5 committers\nQuarantining\nIncluded",
+    "",
+    "#### Team",
+    "Flaky Tests\nUsers\nUnlimited\nQuarantining\nIncluded",
+    "",
+    "## Security Overview",
+    "Your code is your IP.",
+    "",
+    "## SOC 2 Compliance",
+    "We are independently audited.",
+    "",
+    "## FAQs",
+    "Common questions answered.",
+    "",
+    "# Connect",
+    "[Twitter](https://x.com/trunkio) [Contact us](https://calendly.com/trunk/demo)",
+  ].join("\n");
+  const entries = analyzePricingBlocks(md);
+  assertEquals(entries.map((e) => [e.name, e.price]), [
+    ["Free", "$0"],
+    ["Team", "$18"],
+    ["Enterprise", "Custom pricing"],
+  ]);
+});
+
 Deno.test("classifyPricingModel: a $0 tier alongside a paid tier is Freemium, not just 'Paid because a $ sign exists'", () => {
   const entries = [
     { name: "Free", price: "$0", evidence: "" },

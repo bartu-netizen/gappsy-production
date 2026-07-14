@@ -142,6 +142,14 @@ const FAVICON_RE = /<link\s+[^>]*rel=["'][^"']*icon[^"']*["'][^>]*href=["']([^"'
 const HEADING_RE = /^#{1,3}\s+(.+)$/gm;
 const PRICE_RE = /\$\s?\d[\d,.]*\s*(\/\s*(mo|month|user|seat|yr|year))?/gi;
 const CUSTOM_PRICE_RE = /\b(custom pricing|contact (us|sales)|talk to sales|book a demo|request (a )?demo|get a quote)\b/i;
+// A price "line" that's just the word "Custom" on its own — confirmed
+// against a live crawl of trunk.io/pricing, whose real Enterprise card
+// body is literally "Custom\nEnterprise includes SSO, on-premise, ..." with
+// no "contact us"/"custom pricing" phrase at all. Checked only against the
+// block's first non-empty line (where a price always appears when one
+// exists), not the whole body, so a feature bullet mentioning "custom"
+// deeper in the card's description can't false-positive.
+const STANDALONE_CUSTOM_RE = /^custom\.?$/i;
 // Headings that are short/title-case like a real plan name ("Starter",
 // "Pro", "Enterprise") but are actually unrelated page furniture — this is
 // exactly what previously let Trunk.io's "SOC 2 Compliance"/"Customer
@@ -242,16 +250,17 @@ export interface PricingPlanEntry {
   evidence: string;
 }
 
-// Splits pricing-page markdown into heading -> body blocks (##/###/# only,
-// matching the granularity plan cards are actually written at — a deeper
-// #### inside a plan's own feature list stays part of that plan's body
-// rather than starting a new block).
+// Splits pricing-page markdown into heading -> body blocks. Real pricing
+// cards are commonly written as h4s (confirmed against a live production
+// crawl: trunk.io/pricing uses "#### Free" / "#### Team" / "#### Enterprise"
+// under a single h1 intro) — #{1,4} covers that without going deep enough
+// to fragment on stray sub-headings inside a plan's own feature list.
 function splitPricingBlocks(markdown: string): { heading: string; body: string }[] {
   const lines = markdown.split("\n");
   const blocks: { heading: string; body: string[] }[] = [];
   let current: { heading: string; body: string[] } | null = null;
   for (const line of lines) {
-    const m = line.match(/^#{1,3}\s+(.+)$/);
+    const m = line.match(/^#{1,4}\s+(.+)$/);
     if (m) {
       if (current) blocks.push(current);
       current = { heading: m[1].trim(), body: [] };
@@ -277,7 +286,8 @@ export function looksLikePlanName(heading: string): boolean {
 function extractPriceFromBlock(body: string): string | null {
   const priceMatch = body.match(PRICE_RE);
   if (priceMatch) return priceMatch[0].replace(/\s+/g, " ").trim();
-  if (CUSTOM_PRICE_RE.test(body)) return "Custom pricing";
+  const firstLine = body.split("\n").map((l) => l.trim()).find((l) => l.length > 0) || "";
+  if (STANDALONE_CUSTOM_RE.test(firstLine) || CUSTOM_PRICE_RE.test(body)) return "Custom pricing";
   return null;
 }
 
@@ -285,17 +295,36 @@ function extractPriceFromBlock(body: string): string | null {
 // AND a price signal in the text immediately following it (first ~400
 // chars, before the next heading) — structural evidence, not "any short
 // heading on the pricing page." A block with a plan-like heading but no
-// nearby price is dropped rather than guessed at. Exported for unit
+// nearby price is dropped rather than guessed at.
+//
+// Stops entirely at the first heading that fails to pair, once at least
+// one real plan has already been found. Real pricing cards are always
+// listed together in one contiguous run; everything a page puts AFTER
+// that run (a detailed feature-comparison table that repeats the same
+// plan names with no price nearby, security/compliance sections, FAQs,
+// footer nav columns) is exactly where false positives live — confirmed
+// against a live crawl of trunk.io/pricing, where a footer nav heading
+// ("Connect") landed near unrelated "Contact us" text and would otherwise
+// have been misread as a fourth, custom-priced plan. Scoping to the
+// contiguous run is far more robust than trying to enumerate every
+// possible unrelated section name a page might use. Exported for unit
 // testing.
 export function analyzePricingBlocks(markdown: string): PricingPlanEntry[] {
   const blocks = splitPricingBlocks(markdown);
   const entries: PricingPlanEntry[] = [];
+  const seenNames = new Set<string>();
   for (const block of blocks) {
-    if (!looksLikePlanName(block.heading)) continue;
-    const searchWindow = block.body.slice(0, 400);
-    const price = extractPriceFromBlock(searchWindow);
-    if (!price) continue;
-    entries.push({ name: block.heading, price, evidence: searchWindow.replace(/\s+/g, " ").trim().slice(0, 150) });
+    if (looksLikePlanName(block.heading)) {
+      const searchWindow = block.body.slice(0, 400);
+      const price = extractPriceFromBlock(searchWindow);
+      const key = block.heading.toLowerCase();
+      if (price && !seenNames.has(key)) {
+        seenNames.add(key);
+        entries.push({ name: block.heading, price, evidence: searchWindow.replace(/\s+/g, " ").trim().slice(0, 150) });
+        continue;
+      }
+    }
+    if (entries.length > 0) break; // left the contiguous plan-cards run
   }
   return entries.slice(0, 8);
 }
