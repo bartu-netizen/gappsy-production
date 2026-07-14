@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
-import { computeCompleteness, validateFirstPublishStrict, getMissingPublishRequirements } from "../_shared/toolCompleteness.ts";
+import { computeCompleteness, validateFirstPublishStrict, getMissingPublishRequirements, combinedDescriptionLength } from "../_shared/toolCompleteness.ts";
 import { attachToolCategories, attachToolTags, fetchCompletenessRelations, buildCompletenessInput, getConfiguredFirstPublishRequiredKeys } from "../_shared/toolCompletenessRelations.ts";
 import { writeAuditLog } from "../_shared/adminAuth.ts";
 import { validateCrawlUrl } from "../_shared/crawlUrlSafety.ts";
@@ -647,6 +647,7 @@ Deno.serve(async (req: Request) => {
           faqCount: relations.faqs.get(id) || 0,
           tagCount: relations.tags.get(id) || 0,
           seoTitlePresent: Boolean(tool.seo_title && String(tool.seo_title).trim()),
+          descriptionLength: combinedDescriptionLength(tool.short_description, tool.long_description),
         }, requiredKeys);
 
         return jsonResponse({
@@ -825,6 +826,7 @@ Deno.serve(async (req: Request) => {
                   faqCount: relations.faqs.get(tool.id) || 0,
                   tagCount: relations.tags.get(tool.id) || 0,
                   seoTitlePresent: Boolean(tool.seo_title && String(tool.seo_title).trim()),
+                  descriptionLength: combinedDescriptionLength(tool.short_description, tool.long_description),
                 }, requiredKeys as Set<string>);
                 if (firstPublishMissing.length > 0) {
                   throw new ValidationError(`missing required field(s): ${firstPublishMissing.join(", ")}`);
@@ -1076,6 +1078,10 @@ Deno.serve(async (req: Request) => {
             faqCount: normalized.faqs.length,
             tagCount: Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0,
             seoTitlePresent: Boolean(payload.seo_title && String(payload.seo_title).trim()),
+            descriptionLength: combinedDescriptionLength(
+              payload.short_description as string | null,
+              payload.long_description as string | null,
+            ),
           }, createRequiredKeys);
           if (firstPublishMissing.length > 0) {
             throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
@@ -1235,6 +1241,8 @@ Deno.serve(async (req: Request) => {
           if (existing.status !== "published") {
             const logoPresent = Boolean((Object.prototype.hasOwnProperty.call(payload, "logo") ? payload.logo : existing.logo));
             const seoTitlePresent = Boolean((Object.prototype.hasOwnProperty.call(payload, "seo_title") ? payload.seo_title : existing.seo_title));
+            const updateShortDescription = Object.prototype.hasOwnProperty.call(payload, "short_description") ? (payload.short_description as string | null) : existing.short_description;
+            const updateLongDescription = Object.prototype.hasOwnProperty.call(payload, "long_description") ? (payload.long_description as string | null) : existing.long_description;
             const relations = await fetchCompletenessRelations(supabase, [id]);
             const screenshotCount = normalized.screenshots ? normalized.screenshots.length : (relations.screenshots.get(id) || 0);
             const featureCount = normalized.features ? normalized.features.length : (relations.features.get(id) || 0);
@@ -1243,7 +1251,10 @@ Deno.serve(async (req: Request) => {
               ? (Array.isArray(payload.tag_ids) ? payload.tag_ids.length : 0)
               : (relations.tags.get(id) || 0);
             const updateRequiredKeys = await getConfiguredFirstPublishRequiredKeys(supabase);
-            const firstPublishMissing = validateFirstPublishStrict({ logoPresent, screenshotCount, featureCount, faqCount, tagCount, seoTitlePresent }, updateRequiredKeys);
+            const firstPublishMissing = validateFirstPublishStrict({
+              logoPresent, screenshotCount, featureCount, faqCount, tagCount, seoTitlePresent,
+              descriptionLength: combinedDescriptionLength(updateShortDescription, updateLongDescription),
+            }, updateRequiredKeys);
             if (firstPublishMissing.length > 0) {
               throw new ValidationError(`Cannot publish — missing required field(s): ${firstPublishMissing.join(", ")}`);
             }

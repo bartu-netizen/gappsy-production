@@ -61,6 +61,22 @@ function hasText(value: string | null | undefined): boolean {
   return Boolean(value && value.trim().length > 0);
 }
 
+// A tool can satisfy the base "description" gate (getMissingPublishRequirements,
+// below) with just a one-line short_description and an empty long_description —
+// that gate only checks presence. 92f7b1f caught 14 tools published this way
+// (thin content, zero cons) after the fact; this constant/helper back that gap
+// with an actual depth check, gated behind the configurable first-publish tier
+// (see "description_depth" in FIRST_PUBLISH_DEFAULT_REQUIRED_KEYS) so it can be
+// disabled per-tool-type from publishing_rules without a code change.
+export const MIN_DESCRIPTION_DEPTH_CHARS = 300;
+
+export function combinedDescriptionLength(
+  shortDescription: string | null | undefined,
+  longDescription: string | null | undefined,
+): number {
+  return (shortDescription?.trim().length || 0) + (longDescription?.trim().length || 0);
+}
+
 export function computeCompleteness(input: ToolCompletenessInput): CompletenessResult {
   const items: CompletenessItem[] = [
     { key: "name", label: "Name", required: true, met: hasText(input.name) },
@@ -147,7 +163,7 @@ export function getMissingPublishRequirements(merged: {
 // an editor can disable the "logo" or "tags" check platform-wide without a
 // code change.
 export const FIRST_PUBLISH_DEFAULT_REQUIRED_KEYS = new Set([
-  "logo", "screenshots", "features", "faq", "tags", "seo_title",
+  "logo", "screenshots", "features", "faq", "tags", "seo_title", "description_depth",
 ]);
 
 export function validateFirstPublishStrict(input: {
@@ -157,6 +173,7 @@ export function validateFirstPublishStrict(input: {
   faqCount: number;
   tagCount: number;
   seoTitlePresent: boolean;
+  descriptionLength: number;
 }, requiredKeys: Set<string> = FIRST_PUBLISH_DEFAULT_REQUIRED_KEYS): string[] {
   const missing: string[] = [];
   if (requiredKeys.has("logo") && !input.logoPresent) missing.push("logo");
@@ -165,5 +182,8 @@ export function validateFirstPublishStrict(input: {
   if (requiredKeys.has("faq") && input.faqCount === 0) missing.push("at least one FAQ");
   if (requiredKeys.has("tags") && input.tagCount === 0) missing.push("at least one tag");
   if (requiredKeys.has("seo_title") && !input.seoTitlePresent) missing.push("meta title");
+  if (requiredKeys.has("description_depth") && input.descriptionLength < MIN_DESCRIPTION_DEPTH_CHARS) {
+    missing.push(`expanded description (at least ${MIN_DESCRIPTION_DEPTH_CHARS} characters combined)`);
+  }
   return missing;
 }

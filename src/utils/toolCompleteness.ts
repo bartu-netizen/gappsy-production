@@ -65,6 +65,15 @@ function hasText(value: string | null | undefined): boolean {
   return Boolean(value && value.trim().length > 0);
 }
 
+export const MIN_DESCRIPTION_DEPTH_CHARS = 300;
+
+export function combinedDescriptionLength(
+  shortDescription: string | null | undefined,
+  longDescription: string | null | undefined,
+): number {
+  return (shortDescription?.trim().length || 0) + (longDescription?.trim().length || 0);
+}
+
 export function computeCompleteness(input: ToolCompletenessInput): CompletenessResult {
   const items: CompletenessItem[] = [
     { key: "name", label: "Name", required: true, met: hasText(input.name) },
@@ -122,6 +131,7 @@ export function validateFirstPublishStrict(input: {
   faqCount: number;
   tagCount: number;
   seoTitlePresent: boolean;
+  descriptionLength: number;
 }): string[] {
   const missing: string[] = [];
   if (!input.logoPresent) missing.push("logo");
@@ -130,5 +140,8 @@ export function validateFirstPublishStrict(input: {
   if (input.faqCount === 0) missing.push("at least one FAQ");
   if (input.tagCount === 0) missing.push("at least one tag");
   if (!input.seoTitlePresent) missing.push("meta title");
+  if (input.descriptionLength < MIN_DESCRIPTION_DEPTH_CHARS) {
+    missing.push(`expanded description (at least ${MIN_DESCRIPTION_DEPTH_CHARS} characters combined)`);
+  }
   return missing;
 }
