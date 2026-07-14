@@ -224,6 +224,48 @@ export async function applyApprovedSuggestions(
     }
   }
 
+  // tool_pricing_plans — merge-append, dedupe by plan_name. admin-tools'
+  // own PUT handler replaces this table wholesale (replaceChildRows), same
+  // as features/screenshots — the merge happens here, first, exactly like
+  // every other repeatable field in this file, so existing plans are never
+  // silently dropped by a later enrichment pass.
+  const pricingPlanItems = suggestions.filter((s) => s.field_key === "pricing_plans");
+  if (pricingPlanItems.length > 0) {
+    const { data: existingRows } = await supabase
+      .from("tool_pricing_plans")
+      .select("plan_name, price, billing_cycle, description, features, is_recommended, sort_order")
+      .eq("tool_id", toolId)
+      .order("sort_order", { ascending: true });
+    const existing = existingRows || [];
+    const existingNames = new Set(existing.map((r: any) => String(r.plan_name || "").toLowerCase()));
+    const merged = [...existing];
+    for (const item of pricingPlanItems) {
+      const v = item.value as any;
+      const candidates = Array.isArray(v) ? v : [v];
+      for (const c of candidates) {
+        const planName = typeof c?.plan_name === "string" ? c.plan_name.trim() : "";
+        if (planName && !existingNames.has(planName.toLowerCase())) {
+          merged.push({
+            plan_name: planName,
+            price: typeof c?.price === "string" ? c.price.trim() : null,
+            billing_cycle: typeof c?.billing_cycle === "string" ? c.billing_cycle.trim() : null,
+            description: typeof c?.description === "string" ? c.description.trim() : null,
+            features: Array.isArray(c?.features) ? c.features.map((f: unknown) => String(f).trim()).filter(Boolean) : [],
+            is_recommended: c?.is_recommended === true,
+            sort_order: merged.length,
+          });
+          existingNames.add(planName.toLowerCase());
+        }
+      }
+    }
+    if (merged.length > existing.length) {
+      payload.pricing_plans = merged;
+      appliedFieldKeys.push("pricing_plans");
+    } else {
+      skipped.push({ field_key: "pricing_plans", reason: "No new values to merge" });
+    }
+  }
+
   // tool_integrations — merge-append, dedupe by integration_name.
   const integrationItems = suggestions.filter((s) => s.field_key === "integrations");
   if (integrationItems.length > 0) {

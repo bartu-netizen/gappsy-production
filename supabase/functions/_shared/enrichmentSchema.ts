@@ -17,6 +17,7 @@ export type ApplyTarget =
   | { kind: "faqs" }
   | { kind: "features" }
   | { kind: "integrations" }
+  | { kind: "pricing_plans" }
   | { kind: "category_suggestions" }
   | { kind: "tag_suggestions" };
 
@@ -108,6 +109,14 @@ export const FIELD_REGISTRY: Record<string, FieldDefinition> = {
     defaultClassification: "factual",
     repeatable: true,
     applyTarget: { kind: "integrations" },
+  },
+  pricing_plans: {
+    key: "pricing_plans",
+    label: "Pricing plans",
+    description: "Structured pricing tiers, each with plan_name, price, billing_cycle, a short description, and a features array (plain strings) — grounded in evidence. Distinct from pricing_summary (prose); this populates the actual pricing table shown on the page.",
+    defaultClassification: "factual",
+    repeatable: true,
+    applyTarget: { kind: "pricing_plans" },
   },
   pricing_summary: {
     key: "pricing_summary",

@@ -7,10 +7,13 @@
 // The gateway independently verifies the signature, rejects stale
 // timestamps (replay protection), and logs the request id.
 
-const GATEWAY_TIMEOUT_MS = 90_000; // generous but bounded; the gateway's own
-// hard ceiling (CRAWL_LIMITS.MAX_DURATION_MS, 10 min) governs the crawl
-// itself — this is the edge function's own patience for a synchronous
-// response before giving up and marking the job failed/retryable.
+const GATEWAY_TIMEOUT_MS = 120_000; // raised alongside crawler-gateway/server.js's
+// CRAWL4AI_TIMEOUT_MS (60s -> 90s) and MAX_PAGES (10 -> 15), to preserve the
+// same safety margin between this edge function's patience and the
+// gateway's own internal per-call timeout. The gateway's own hard ceiling
+// (CRAWL_LIMITS.MAX_DURATION_MS, 10 min) governs the crawl itself — this is
+// only the edge function's own patience for a synchronous response before
+// giving up and marking the job failed/retryable.
 
 async function hmacSign(secret: string, message: string): Promise<string> {
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);

@@ -41,14 +41,18 @@ const CRAWL4AI_URL = process.env.CRAWL4AI_URL || "http://127.0.0.1:11235";
 const CRAWL4AI_API_TOKEN = process.env.CRAWL4AI_API_TOKEN || "";
 
 const HARD_LIMITS = {
-  MAX_PAGES: 10,
+  // Raised from 10 to give real content-generation passes enough source
+  // material (pricing + features + integrations + docs + a
+  // customer-stories/use-cases page routinely exhausted the old cap
+  // before reaching anything genuinely differentiating).
+  MAX_PAGES: 15,
   MAX_DEPTH: 2,
   MAX_DURATION_MS: 10 * 60 * 1000,
   MAX_REQUEST_BODY_BYTES: 4096, // the request itself is tiny (a URL + a few ints)
   MAX_RESPONSE_BYTES: 5_000_000, // cap on what we forward back per crawl
   MAX_REDIRECTS: 5,
   TIMESTAMP_TOLERANCE_S: 300,
-  CRAWL4AI_TIMEOUT_MS: 60_000, // per Crawl4AI call; multiple calls happen for homepage + selected pages
+  CRAWL4AI_TIMEOUT_MS: 90_000, // raised alongside MAX_PAGES (was 60s) — still well under the edge function's own 120s patience below
   SCREENSHOT_TIMEOUT_MS: 30_000, // separate, shorter budget — a slow/failed screenshot must never hold up the crawl
   MAX_SCREENSHOT_BASE64_BYTES: 2_000_000, // ~1.5MB PNG; dropped (not truncated) if larger, since a truncated base64 string is just corrupt data
 };
@@ -78,7 +82,11 @@ function isPrivateIPv6(addr) {
 }
 
 const IGNORE_PATH_PATTERNS = [/privacy/i, /terms/i, /careers/i, /^\/blog\//i, /changelog/i, /login|signin|sign-in/i, /signup|sign-up|register/i, /checkout|cart|billing/i, /^\/admin/i, /^\/account/i, /^\/dashboard/i];
-const PRIORITY_PATH_PATTERNS = [/^\/$/, /pricing/i, /features?/i, /product/i, /integrations?/i, /^\/about/i, /faq|help/i, /^\/docs/i, /security|trust/i, /platform|apps/i];
+// customers/case-studies/solutions/use-cases added: this is exactly the
+// page type genuinely in-depth content needs and the old list never
+// prioritized — real use cases and named customer/industry evidence live
+// there, not on the homepage or pricing page.
+const PRIORITY_PATH_PATTERNS = [/^\/$/, /pricing/i, /features?/i, /product/i, /integrations?/i, /^\/about/i, /faq|help/i, /^\/docs/i, /security|trust/i, /platform|apps/i, /customers?/i, /case[-_ ]?stud(y|ies)/i, /use[-_ ]?cases?/i, /solutions?/i];
 
 function registrableDomain(hostname) {
   const labels = hostname.toLowerCase().split(".").filter(Boolean);

@@ -96,6 +96,45 @@ Deno.test("extracts support_channels from the FAQ/help page or homepage", () => 
   assert(matched.includes("email support"));
 });
 
+Deno.test("extracts use_case_candidates from a dedicated customers/use-cases/solutions page, never fabricated when none was crawled", () => {
+  const raw: Crawl4aiRawResponse = {
+    success: true,
+    results: [
+      page({ url: "https://example.com/" }),
+      page({
+        url: "https://example.com/customers",
+        markdown: "# Customer Stories\n## Scaling checkout for e-commerce teams\nSome customer\n## Automating support workflows\nAnother customer",
+      }),
+    ],
+  };
+  const result = normalizeCrawlResult(raw, { discoveryCandidateWebsite: "https://example.com" });
+  const values = result.product.use_case_candidates.map((f) => f.value);
+  assert(values.includes("Scaling checkout for e-commerce teams"));
+  assert(values.includes("Automating support workflows"));
+  for (const f of result.product.use_case_candidates) assertEquals(f.source_url, "https://example.com/customers");
+
+  const noUseCasePage: Crawl4aiRawResponse = { success: true, results: [page({ url: "https://example.com/" })] };
+  const resultEmpty = normalizeCrawlResult(noUseCasePage, { discoveryCandidateWebsite: "https://example.com" });
+  assertEquals(resultEmpty.product.use_case_candidates, []);
+});
+
+Deno.test("extracts platform_indicators as whole-word matches, not substrings of unrelated words", () => {
+  const raw: Crawl4aiRawResponse = {
+    success: true,
+    results: [
+      page({ url: "https://example.com/", markdown: "Available on iOS and Android, with a CLI for power users. Also ships as a Docker image." }),
+    ],
+  };
+  const result = normalizeCrawlResult(raw, { discoveryCandidateWebsite: "https://example.com" });
+  const values = result.product.platform_indicators.map((f) => f.value);
+  assert(values.includes("iOS"));
+  assert(values.includes("Android"));
+  assert(values.includes("CLI"));
+  assert(values.includes("Docker"));
+  // "declining"/"capitalize" must never match "CLI"/"API" as substrings.
+  assert(!values.includes("API"));
+});
+
 Deno.test("api_documentation prefers a docs page whose URL/content references an API", () => {
   const raw: Crawl4aiRawResponse = {
     success: true,

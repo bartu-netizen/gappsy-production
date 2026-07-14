@@ -133,6 +133,7 @@ function classifyPage(url: string): string {
   if (/faq|help|support/.test(path)) return "faq";
   if (/^\/docs|documentation/.test(path)) return "docs";
   if (/security|trust/.test(path)) return "security";
+  if (/case[-_]?stud|use[-_]?case|solution|customer/.test(path)) return "usecases";
   return "other";
 }
 
@@ -172,6 +173,22 @@ const SUPPORT_KEYWORDS = [
   "live chat", "email support", "phone support", "24/7 support", "24/7", "community forum",
   "help center", "helpdesk", "knowledge base", "support ticket",
 ];
+// Display labels, matched as whole words (not plain substring like
+// SECURITY_KEYWORDS above) — several of these are short enough ("CLI",
+// "API") that a naive .includes() would false-positive inside ordinary
+// words ("declining", "rapid").
+const PLATFORM_KEYWORDS = [
+  "iOS", "Android", "Windows", "macOS", "Linux", "Chrome", "Firefox", "Safari",
+  "Docker", "Kubernetes", "CLI", "API", "Slack", "VS Code", "Figma",
+];
+function matchPlatformKeywords(text: string): string[] {
+  const found: string[] = [];
+  for (const kw of PLATFORM_KEYWORDS) {
+    const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (new RegExp(`\\b${escaped}\\b`, "i").test(text)) found.push(kw);
+  }
+  return found;
+}
 
 function absoluteUrl(href: string, base: string): string | null {
   try { return new URL(href, base).toString(); } catch { return null; }
@@ -411,6 +428,7 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
   const integrationsPage = pages.find((p) => classifyPage(pageUrl(p)) === "integrations");
   const docsPage = pages.find((p) => classifyPage(pageUrl(p)) === "docs");
   const securityPage = pages.find((p) => classifyPage(pageUrl(p)) === "security");
+  const usecasesPage = pages.find((p) => classifyPage(pageUrl(p)) === "usecases");
 
   // ---- Identity ----
   const homeUrl = homepage ? pageUrl(homepage) : opts.discoveryCandidateWebsite;
@@ -489,6 +507,19 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
   const featureHeadings = featuresPage
     ? [...getMarkdown(featuresPage).matchAll(HEADING_RE)].map((m) => m[1].trim()).filter((h) => h.length < 80)
     : [];
+  // Headings from a dedicated customers/case-studies/use-cases/solutions
+  // page (classifyPage's "usecases") — the page type that actually holds
+  // real use-case evidence, previously never crawled or extracted at all
+  // (use_case_candidates was hardcoded empty).
+  const useCaseHeadings = usecasesPage
+    ? [...getMarkdown(usecasesPage).matchAll(HEADING_RE)].map((m) => m[1].trim()).filter((h) => h.length < 80)
+    : [];
+  // Platform/runtime keyword evidence, scanned across homepage + features +
+  // docs (platform mentions show up in hero copy, feature descriptions, or
+  // install instructions, not one single page) — previously never
+  // populated at all (platform_indicators was hardcoded empty).
+  const platformCorpus = [homeMd, featuresPage ? getMarkdown(featuresPage) : "", docsPage ? getMarkdown(docsPage) : ""].join("\n\n");
+  const platformMatches = matchPlatformKeywords(platformCorpus);
   const integrationNames: string[] = [];
   if (integrationsPage) {
     for (const link of integrationsPage.links?.internal || []) {
@@ -617,8 +648,8 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
     },
     product: {
       feature_candidates: featureHeadings.slice(0, 15).map((h) => field(h, featuresPage ? pageUrl(featuresPage) : null, null, 40)),
-      use_case_candidates: [],
-      platform_indicators: [],
+      use_case_candidates: useCaseHeadings.slice(0, 10).map((h) => field(h, usecasesPage ? pageUrl(usecasesPage) : null, null, 40)),
+      platform_indicators: platformMatches.map((p) => field(p, homeUrl, `Matched "${p}" on the homepage, features, or docs page`, 55)),
       integrations: integrationNames.slice(0, 20).map((n) => field(n, integrationsPage ? pageUrl(integrationsPage) : null, null, 35)),
       docs_api_indicators: docsIndicators.slice(0, 5),
       api_documentation: apiDocumentation,

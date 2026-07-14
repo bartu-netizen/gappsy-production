@@ -133,7 +133,11 @@ export function isIgnoredPath(pathname: string): boolean {
 // is unrelated to concurrency and stays as the gateway's own hard resource
 // ceiling (unchanged by the concurrency work).
 export const CRAWL_LIMITS = {
-  MAX_PAGES: 10,
+  // Raised from 10: real pages routinely need a pricing page, a features
+  // page, an integrations page, docs, AND a customer-stories/use-cases
+  // page to have enough source material for genuinely in-depth content —
+  // 10 pages was consistently exhausted by the first 4-5 of those.
+  MAX_PAGES: 15,
   MAX_DEPTH: 2,
   MAX_DURATION_MS: 10 * 60 * 1000,
   MAX_RESPONSE_BYTES: 5_000_000,

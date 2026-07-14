@@ -139,13 +139,14 @@ export async function buildToolExportInput(
   const existingValues: Record<string, unknown> = {};
   for (const col of TOOLS_EXISTING_VALUE_COLUMNS) existingValues[col] = (tool as any)[col] ?? null;
 
-  const [prosRes, consRes, useCasesRes, faqsRes, categoryLinksRes, tagLinksRes] = await Promise.all([
+  const [prosRes, consRes, useCasesRes, faqsRes, categoryLinksRes, tagLinksRes, pricingPlansRes] = await Promise.all([
     supabase.from("tool_pros").select("text").eq("tool_id", toolId),
     supabase.from("tool_cons").select("text").eq("tool_id", toolId),
     supabase.from("tool_use_cases").select("title, description, audience").eq("tool_id", toolId),
     supabase.from("tool_faqs").select("question, answer").eq("tool_id", toolId),
     supabase.from("tool_category_links").select("category_id").eq("tool_id", toolId),
     supabase.from("tool_tag_links").select("tag_id").eq("tool_id", toolId),
+    supabase.from("tool_pricing_plans").select("plan_name, price, billing_cycle").eq("tool_id", toolId),
   ]);
   existingValues.pros = (prosRes.data || []).map((r: any) => r.text);
   existingValues.cons = (consRes.data || []).map((r: any) => r.text);
@@ -153,6 +154,7 @@ export async function buildToolExportInput(
   existingValues.faqs = faqsRes.data || [];
   existingValues.category_ids = (categoryLinksRes.data || []).map((r: any) => r.category_id);
   existingValues.tag_ids = (tagLinksRes.data || []).map((r: any) => r.tag_id);
+  existingValues.pricing_plans = pricingPlansRes.data || [];
 
   // Most recent crawl job that produced this tool draft (if any) — reviewed
   // evidence only, per the input-contract rule.
