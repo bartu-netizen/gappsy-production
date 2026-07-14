@@ -49,7 +49,11 @@ const HARD_LIMITS = {
   MAX_DEPTH: 2,
   MAX_DURATION_MS: 10 * 60 * 1000,
   MAX_REQUEST_BODY_BYTES: 4096, // the request itself is tiny (a URL + a few ints)
-  MAX_RESPONSE_BYTES: 5_000_000, // cap on what we forward back per crawl
+  MAX_RESPONSE_BYTES: 8_000_000, // raised alongside MAX_PAGES (10 -> 15) — a
+  // real 15-page crawl of a content-heavy site now routinely exceeds the
+  // old 5MB cap; truncation past this point is now crash-safe regardless
+  // (see the response-construction block below), this just reduces how
+  // often truncation is needed at all.
   MAX_REDIRECTS: 5,
   TIMESTAMP_TOLERANCE_S: 300,
   CRAWL4AI_TIMEOUT_MS: 90_000, // raised alongside MAX_PAGES (was 60s) — still well under the edge function's own 120s patience below
@@ -368,34 +372,65 @@ const server = http.createServer(async (req, res) => {
       // as its own top-level field.
       const { screenshotBase64, ...rawPortion } = result;
       const serialized = JSON.stringify(rawPortion);
-      const bounded = serialized.length > HARD_LIMITS.MAX_RESPONSE_BYTES ? serialized.slice(0, HARD_LIMITS.MAX_RESPONSE_BYTES) : serialized;
+
+      // Real production incident this comment replaces: at MAX_PAGES=15 a
+      // content-heavy site's serialized response routinely exceeds
+      // MAX_RESPONSE_BYTES, and the naive "find the last '}'" recovery can
+      // land inside a string value that itself contains a literal '}'
+      // (ordinary in crawled HTML/markdown) — producing invalid JSON that
+      // THROWS. That throw always falls back to a *safe* shape now rather
+      // than propagating, because letting it propagate here (after
+      // response-body construction had already started) previously crashed
+      // the entire gateway process, not just this one request — see the
+      // response-construction-order comment below for the other half of
+      // the same incident.
+      let rawForResponse = rawPortion;
+      if (serialized.length > HARD_LIMITS.MAX_RESPONSE_BYTES) {
+        const bounded = serialized.slice(0, HARD_LIMITS.MAX_RESPONSE_BYTES);
+        const lastBrace = bounded.lastIndexOf("}");
+        try {
+          rawForResponse = lastBrace >= 0 ? JSON.parse(bounded.slice(0, lastBrace + 1)) : { success: rawPortion.success, results: [] };
+        } catch {
+          rawForResponse = { success: rawPortion.success, results: [] };
+        }
+      }
+
+      // The FULL response body is built into a string BEFORE writeHead is
+      // called, specifically so a failure while building it can never
+      // happen after headers are already sent — that ordering bug (build
+      // body inline inside res.end(JSON.stringify(...)), after
+      // res.writeHead(200) had already been called) is what turned the
+      // truncation bug above into a process crash: the catch block's own
+      // res.writeHead(502) then threw ERR_HTTP_HEADERS_SENT, uncaught,
+      // killing the whole gateway.
+      const responseBody = JSON.stringify({
+        ok: true,
+        data: {
+          crawl4ai_version: result.crawl4ai_version,
+          discovered_pages: result.discovered,
+          crawled_pages: result.results.length,
+          source_urls: result.results.map((r) => r.url),
+          raw: rawForResponse,
+          screenshot_base64: screenshotBase64 || null,
+        },
+      });
 
       log("crawl_completed", {
         requestId,
         status: 200,
         pages: result.results.length,
         hasScreenshot: Boolean(screenshotBase64),
+        truncated: serialized.length > HARD_LIMITS.MAX_RESPONSE_BYTES,
         durationMs: Date.now() - start,
       });
 
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(
-        JSON.stringify({
-          ok: true,
-          data: {
-            crawl4ai_version: result.crawl4ai_version,
-            discovered_pages: result.discovered,
-            crawled_pages: result.results.length,
-            source_urls: result.results.map((r) => r.url),
-            raw: bounded.length < serialized.length ? JSON.parse(bounded.slice(0, bounded.lastIndexOf("}") + 1) || "{}") : JSON.parse(bounded),
-            screenshot_base64: screenshotBase64 || null,
-          },
-        }),
-      );
+      res.end(responseBody);
     } catch (err) {
       // Redacted — never forward raw exception text/stack to the caller.
       const code = err && err.name === "AbortError" ? "crawl_timeout" : "crawl_failed";
       log("crawl_error", { requestId, code, status: 502, durationMs: Date.now() - start, message: String(err && err.message).slice(0, 200) });
+      if (res.headersSent) return; // never attempt a second writeHead
       res.writeHead(502, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: false, error_code: code, error: "The crawl could not be completed." }));
     } finally {
