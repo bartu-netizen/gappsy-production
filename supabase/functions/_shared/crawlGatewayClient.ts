@@ -36,6 +36,14 @@ export interface GatewayCrawlResponse {
     crawled_pages: number;
     source_urls: string[];
     raw: unknown; // Crawl4aiRawResponse — normalized by crawlExtractionAdapter.ts, never used directly beyond that
+    // Base64 PNG of the homepage only (bounded, best-effort) — a REAL
+    // rendered screenshot from Crawl4AI's own /screenshot endpoint, not the
+    // filename-heuristic guessing crawlExtractionAdapter.ts's
+    // screenshot_candidates does over scraped <img> tags. null whenever the
+    // gateway's screenshot call failed, timed out, or came back oversized —
+    // callers must treat this as optional and never fail the crawl on its
+    // absence (see crawler-gateway/server.js's crawl4aiScreenshot()).
+    screenshot_base64: string | null;
   };
 }
 

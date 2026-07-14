@@ -160,6 +160,34 @@ Deno.test("buildToolPayloadFromExtraction maps scalar fields, features, integrat
   assert(!missingFields.includes("website"));
 });
 
+Deno.test("buildToolPayloadFromExtraction: a real homepage screenshot leads, ahead of filename-guessed screenshot_candidates", () => {
+  const extraction = baseExtraction();
+  const reviewState = buildAutoApproveReviewState(extraction, "system@gappsy.com");
+  const candidate = { id: "candidate-1", name: "Acme (discovered)", official_website: "https://acme.example.com", category_id: "cat-existing" };
+
+  const { payload } = buildToolPayloadFromExtraction(
+    extraction, reviewState, candidate, "job-1", "2026-07-13T00:00:00.000Z",
+    "https://storage.example.com/tool-media/screenshots/crawl/job-1/homepage.png",
+  );
+
+  assertEquals(payload.screenshots, [
+    { image_url: "https://storage.example.com/tool-media/screenshots/crawl/job-1/homepage.png", caption: null, alt_text: null, is_featured: true, sort_order: 0 },
+    { image_url: "https://acme.example.com/shot1.png", caption: null, alt_text: null, is_featured: false, sort_order: 1 },
+  ]);
+});
+
+Deno.test("buildToolPayloadFromExtraction: no real screenshot falls back to screenshot_candidates only (unchanged behavior)", () => {
+  const extraction = baseExtraction();
+  const reviewState = buildAutoApproveReviewState(extraction, "system@gappsy.com");
+  const candidate = { id: "candidate-1", name: "Acme (discovered)", official_website: "https://acme.example.com", category_id: "cat-existing" };
+
+  const { payload } = buildToolPayloadFromExtraction(extraction, reviewState, candidate, "job-1", "2026-07-13T00:00:00.000Z", null);
+
+  assertEquals(payload.screenshots, [
+    { image_url: "https://acme.example.com/shot1.png", caption: null, alt_text: null, is_featured: true, sort_order: 0 },
+  ]);
+});
+
 Deno.test("buildToolPayloadFromExtraction: rejected/edited fields are respected, not just approved", () => {
   const extraction = baseExtraction();
   const candidate = { id: "candidate-1", name: "Acme (discovered)", official_website: "https://acme.example.com", category_id: null };

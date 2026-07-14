@@ -138,6 +138,14 @@ export async function executeCrawlJob(
     const boundedRaw = buildBoundedRawSnapshot(raw);
     const completedAt = new Date();
 
+    // Real, rendered homepage screenshot from Crawl4AI's own /screenshot
+    // call (see crawler-gateway/server.js) — a genuine product image,
+    // unlike screenshot_candidates (which is just a filename/alt-text
+    // guess over scraped <img> tags in crawlExtractionAdapter.ts). Upload
+    // failure is never fatal to the crawl itself, same posture as
+    // admin-tool-media's own "upload succeeded, tracking row failed" case.
+    const homepageScreenshotUrl = await uploadHomepageScreenshot(supabase, job.id, gatewayResult.data.screenshot_base64);
+
     const { data: updatedJob, error: updateError } = await supabase
       .from("crawl_jobs")
       .update({
@@ -151,6 +159,7 @@ export async function executeCrawlJob(
         source_urls: gatewayResult.data.source_urls,
         raw_extraction_ref: boundedRaw,
         normalized_extraction: normalized,
+        homepage_screenshot_url: homepageScreenshotUrl,
         updated_at: completedAt.toISOString(),
       })
       .eq("id", job.id)
@@ -165,6 +174,33 @@ export async function executeCrawlJob(
     const code = err instanceof GatewayError ? err.code : "unknown_error";
     const message = err instanceof GatewayError ? err.message : "An unexpected error occurred while crawling.";
     return failJob(supabase, job, code, message);
+  }
+}
+
+// Decodes and uploads the gateway's base64 PNG to the existing tool-media
+// Storage bucket, same bucket/upload call admin-tool-media.ts uses for
+// manual uploads. Filed under the crawl_jobs id (not a tool id — no tools
+// row exists yet at crawl time); crawlDraftCreation.ts references this same
+// URL by reading it back off the crawl_jobs row, no need to move the file
+// once a draft is created. Returns null on missing input or any upload
+// error — never throws, since a screenshot is strictly best-effort.
+async function uploadHomepageScreenshot(supabase: SupabaseClient, crawlJobId: string, base64: string | null | undefined): Promise<string | null> {
+  if (!base64) return null;
+  try {
+    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const filePath = `screenshots/crawl/${crawlJobId}/homepage.png`;
+    const { error: uploadError } = await supabase.storage
+      .from("tool-media")
+      .upload(filePath, bytes, { contentType: "image/png", upsert: true });
+    if (uploadError) {
+      console.error(`[crawlRunner] homepage screenshot upload failed for job ${crawlJobId}: ${uploadError.message}`);
+      return null;
+    }
+    const { data: urlData } = supabase.storage.from("tool-media").getPublicUrl(filePath);
+    return urlData.publicUrl;
+  } catch (err) {
+    console.error(`[crawlRunner] homepage screenshot decode/upload error for job ${crawlJobId}: ${err instanceof Error ? err.message : "unknown"}`);
+    return null;
   }
 }
 

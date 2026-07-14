@@ -49,6 +49,8 @@ const HARD_LIMITS = {
   MAX_REDIRECTS: 5,
   TIMESTAMP_TOLERANCE_S: 300,
   CRAWL4AI_TIMEOUT_MS: 60_000, // per Crawl4AI call; multiple calls happen for homepage + selected pages
+  SCREENSHOT_TIMEOUT_MS: 30_000, // separate, shorter budget — a slow/failed screenshot must never hold up the crawl
+  MAX_SCREENSHOT_BASE64_BYTES: 2_000_000, // ~1.5MB PNG; dropped (not truncated) if larger, since a truncated base64 string is just corrupt data
 };
 
 const PRIVATE_IPV4_RANGES = [
@@ -169,6 +171,43 @@ async function crawl4aiFetch(urls) {
   }
 }
 
+// Homepage-only, best-effort real screenshot via Crawl4AI's dedicated
+// /screenshot endpoint (distinct from /crawl — this is the ONLY way to get
+// an actual rendered-page image; /crawl's own result objects never include
+// one). Returns null on ANY failure (timeout, non-200, bad/missing body,
+// oversized image) rather than throwing — a screenshot is a nice-to-have
+// enrichment, never something that should fail or slow down the crawl
+// itself. Response shape assumption (Crawl4AI 0.9.x, output_path omitted):
+// `{ success: true, screenshot: "<base64 PNG>" }` — matches the same
+// `result.screenshot` convention as the Python SDK's `CrawlerRunConfig
+// (screenshot=True)`. Checked defensively (a couple of plausible key
+// names) since this wasn't verified against a live call before deploying;
+// if Crawl4AI's actual response shape differs, this simply returns null
+// forever until corrected — it will never corrupt or break page crawling.
+async function crawl4aiScreenshot(url) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), HARD_LIMITS.SCREENSHOT_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${CRAWL4AI_URL}/screenshot`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${CRAWL4AI_API_TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ url, screenshot_wait_for: 2 }),
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    const body = await res.json().catch(() => null);
+    if (!body) return null;
+    const base64 = body.screenshot || body.data || (body.result && body.result.screenshot) || null;
+    if (!base64 || typeof base64 !== "string") return null;
+    if (base64.length > HARD_LIMITS.MAX_SCREENSHOT_BASE64_BYTES) return null;
+    return base64;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function crawl4aiHealth() {
   try {
     const res = await fetch(`${CRAWL4AI_URL}/health`, { signal: AbortSignal.timeout(5000) });
@@ -183,10 +222,16 @@ async function crawl4aiHealth() {
 // scope rules. This orchestration — not Crawl4AI itself — is what enforces
 // "same registrable domain, max N pages, max depth 2" server-side.
 async function orchestrateCrawl(targetUrl, maxPages, _maxDepth) {
-  const home = await crawl4aiFetch([targetUrl]);
+  // Screenshot runs concurrently with the homepage crawl (independent
+  // Crawl4AI calls) so it adds zero latency on the common path; its own
+  // timeout/failure handling is fully isolated in crawl4aiScreenshot.
+  const [home, screenshotBase64] = await Promise.all([
+    crawl4aiFetch([targetUrl]),
+    crawl4aiScreenshot(targetUrl),
+  ]);
   const homeResult = home?.results?.[0];
   if (!homeResult || homeResult.success === false) {
-    return { crawl4ai_version: home?.version || "unknown", results: home?.results || [], discovered: 0 };
+    return { crawl4ai_version: home?.version || "unknown", results: home?.results || [], discovered: 0, screenshotBase64 };
   }
 
   const domain = registrableDomain(new URL(targetUrl).hostname);
@@ -229,6 +274,7 @@ async function orchestrateCrawl(targetUrl, maxPages, _maxDepth) {
     crawl4ai_version: home?.version || "0.9.1",
     results: [homeResult, ...restResults],
     discovered: internalLinks.length,
+    screenshotBase64,
   };
 }
 
@@ -306,13 +352,21 @@ const server = http.createServer(async (req, res) => {
     const jobTimeout = setTimeout(() => jobController.abort(), HARD_LIMITS.MAX_DURATION_MS);
     try {
       const result = await orchestrateCrawl(urlCheck.parsed.toString(), maxPages, maxDepth);
-      const serialized = JSON.stringify(result);
+      // screenshotBase64 is deliberately excluded from `result` before this
+      // truncation pass — it's a single opaque base64 string, and slicing
+      // raw JSON text on byte length can land mid-string. Bounding it
+      // (drop entirely if oversized) already happened in
+      // crawl4aiScreenshot(); it's safe to attach whole, after truncation,
+      // as its own top-level field.
+      const { screenshotBase64, ...rawPortion } = result;
+      const serialized = JSON.stringify(rawPortion);
       const bounded = serialized.length > HARD_LIMITS.MAX_RESPONSE_BYTES ? serialized.slice(0, HARD_LIMITS.MAX_RESPONSE_BYTES) : serialized;
 
       log("crawl_completed", {
         requestId,
         status: 200,
         pages: result.results.length,
+        hasScreenshot: Boolean(screenshotBase64),
         durationMs: Date.now() - start,
       });
 
@@ -326,6 +380,7 @@ const server = http.createServer(async (req, res) => {
             crawled_pages: result.results.length,
             source_urls: result.results.map((r) => r.url),
             raw: bounded.length < serialized.length ? JSON.parse(bounded.slice(0, bounded.lastIndexOf("}") + 1) || "{}") : JSON.parse(bounded),
+            screenshot_base64: screenshotBase64 || null,
           },
         }),
       );

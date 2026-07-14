@@ -130,6 +130,7 @@ export function buildToolPayloadFromExtraction(
   candidate: DraftCandidateInfo,
   crawlJobId: string,
   crawlCompletedAt: string | null,
+  homepageScreenshotUrl: string | null = null,
 ): { payload: Record<string, unknown>; missingFields: string[] } {
   const nameValue = resolveApprovedValue("identity.tool_name_candidate", extraction.identity.tool_name_candidate, reviewState) as string | null;
   const websiteValue = resolveApprovedValue("identity.canonical_website", extraction.identity.canonical_website, reviewState) as string | null;
@@ -205,6 +206,12 @@ export function buildToolPayloadFromExtraction(
   if (faqs.length > 0) payload.faqs = faqs;
 
   const screenshots: { image_url: string; caption: null; alt_text: null; is_featured: boolean; sort_order: number }[] = [];
+  // The real, rendered homepage screenshot (crawlRunner.ts, Crawl4AI's own
+  // /screenshot call) always leads if present — it's an actual product
+  // image, not a filename/alt-text guess like screenshot_candidates below.
+  if (homepageScreenshotUrl) {
+    screenshots.push({ image_url: homepageScreenshotUrl, caption: null, alt_text: null, is_featured: true, sort_order: 0 });
+  }
   extraction.assets.screenshot_candidates.forEach((f, idx) => {
     const v = resolveApprovedValue(`assets.screenshot_candidates[${idx}]`, f, reviewState) as string | null;
     if (v) screenshots.push({ image_url: v, caption: null, alt_text: null, is_featured: screenshots.length === 0, sort_order: screenshots.length });
@@ -269,12 +276,15 @@ export async function createDraftFromCrawlJob(
   const nameValue = resolveApprovedValue("identity.tool_name_candidate", extraction.identity.tool_name_candidate, reviewState) as string | null;
   if (!nameValue && !candidate.name) return { ok: false, error: "No tool name available — approve or edit a name before creating a draft." };
 
+  const { data: crawlJobRow } = await supabase.from("crawl_jobs").select("homepage_screenshot_url").eq("id", job.id).maybeSingle();
+
   const { payload, missingFields } = buildToolPayloadFromExtraction(
     extraction,
     reviewState,
     candidate as DraftCandidateInfo,
     job.id,
     job.completed_at,
+    (crawlJobRow?.homepage_screenshot_url as string | null) || null,
   );
   payload.slug = await uniqueToolSlug(supabase, payload.name as string);
 
