@@ -141,6 +141,13 @@ const OG_TAG_RE = /<meta\s+[^>]*property=["']og:(title|description)["'][^>]*cont
 const FAVICON_RE = /<link\s+[^>]*rel=["'][^"']*icon[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>/gi;
 const HEADING_RE = /^#{1,3}\s+(.+)$/gm;
 const PRICE_RE = /\$\s?\d[\d,.]*\s*(\/\s*(mo|month|user|seat|yr|year))?/gi;
+const CUSTOM_PRICE_RE = /\b(custom pricing|contact (us|sales)|talk to sales|book a demo|request (a )?demo|get a quote)\b/i;
+// Headings that are short/title-case like a real plan name ("Starter",
+// "Pro", "Enterprise") but are actually unrelated page furniture — this is
+// exactly what previously let Trunk.io's "SOC 2 Compliance"/"Customer
+// Stories"/"FAQs" headings leak into plan_candidates as if they were
+// pricing tiers.
+const NON_PLAN_HEADING_RE = /\b(faq|faqs|security|compliance|soc\s*2|customer\s+stor(?:y|ies)|testimonials?|case\s+stud(?:y|ies)|resources?|support|overview|compare|comparison|frequently asked|help|contact|about|why|trust|privacy|terms|guarantee)\b/i;
 const FOUNDED_RE = /\bfounded\s+(?:in\s+)?(\d{4})\b/i;
 const HQ_RE = /\bheadquartered\s+in\s+([A-Z][A-Za-z ,.-]{2,60})/i;
 const COMPANY_SIZE_RE = /\b(\d{1,4}\s?[-–]\s?\d{1,5}|\d{2,5}\+?)\s+employees\b/i;
@@ -229,6 +236,136 @@ function matchTaxonomy(entries: TaxonomyEntry[], corpus: string, sourceUrl: stri
   return matches.slice(0, 10);
 }
 
+export interface PricingPlanEntry {
+  name: string;
+  price: string; // either a "$X/mo"-style match or the literal "Custom pricing"
+  evidence: string;
+}
+
+// Splits pricing-page markdown into heading -> body blocks (##/###/# only,
+// matching the granularity plan cards are actually written at — a deeper
+// #### inside a plan's own feature list stays part of that plan's body
+// rather than starting a new block).
+function splitPricingBlocks(markdown: string): { heading: string; body: string }[] {
+  const lines = markdown.split("\n");
+  const blocks: { heading: string; body: string[] }[] = [];
+  let current: { heading: string; body: string[] } | null = null;
+  for (const line of lines) {
+    const m = line.match(/^#{1,3}\s+(.+)$/);
+    if (m) {
+      if (current) blocks.push(current);
+      current = { heading: m[1].trim(), body: [] };
+    } else if (current) {
+      current.body.push(line);
+    }
+  }
+  if (current) blocks.push(current);
+  return blocks.map((b) => ({ heading: b.heading, body: b.body.join("\n") }));
+}
+
+// A real plan name is short, not a sentence/question, and isn't one of the
+// common non-plan headings a pricing page also contains (FAQ, security,
+// customer stories, etc.) — exported for unit testing in isolation.
+export function looksLikePlanName(heading: string): boolean {
+  if (heading.length === 0 || heading.length > 30) return false;
+  if (NON_PLAN_HEADING_RE.test(heading)) return false;
+  if (/[?.!]$/.test(heading)) return false;
+  if (heading.trim().split(/\s+/).length > 4) return false;
+  return true;
+}
+
+function extractPriceFromBlock(body: string): string | null {
+  const priceMatch = body.match(PRICE_RE);
+  if (priceMatch) return priceMatch[0].replace(/\s+/g, " ").trim();
+  if (CUSTOM_PRICE_RE.test(body)) return "Custom pricing";
+  return null;
+}
+
+// Pairs a plan name with its price by requiring BOTH a plan-shaped heading
+// AND a price signal in the text immediately following it (first ~400
+// chars, before the next heading) — structural evidence, not "any short
+// heading on the pricing page." A block with a plan-like heading but no
+// nearby price is dropped rather than guessed at. Exported for unit
+// testing.
+export function analyzePricingBlocks(markdown: string): PricingPlanEntry[] {
+  const blocks = splitPricingBlocks(markdown);
+  const entries: PricingPlanEntry[] = [];
+  for (const block of blocks) {
+    if (!looksLikePlanName(block.heading)) continue;
+    const searchWindow = block.body.slice(0, 400);
+    const price = extractPriceFromBlock(searchWindow);
+    if (!price) continue;
+    entries.push({ name: block.heading, price, evidence: searchWindow.replace(/\s+/g, " ").trim().slice(0, 150) });
+  }
+  return entries.slice(0, 8);
+}
+
+function parsePriceNumber(price: string): number | null {
+  const m = price.match(/\$\s?([\d,]+(?:\.\d+)?)/);
+  if (!m) return null;
+  const n = parseFloat(m[1].replace(/,/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
+// The lowest numeric price among paired plan entries (Custom-pricing-only
+// entries have no number and are excluded) — a genuinely representative
+// "starting price," not just whichever dollar figure happened to appear
+// first on the page (which is often a mid-tier or a testimonial number).
+// Exported for unit testing.
+export function computeStartingPrice(planEntries: PricingPlanEntry[], fallbackPriceMatches: string[]): string | null {
+  const numeric = planEntries
+    .map((e) => ({ raw: e.price, n: parsePriceNumber(e.price) }))
+    .filter((p): p is { raw: string; n: number } => p.n !== null);
+  if (numeric.length > 0) {
+    numeric.sort((a, b) => a.n - b.n);
+    return numeric[0].raw;
+  }
+  return fallbackPriceMatches[0] || null;
+}
+
+export interface PricingModelClassification {
+  model: string;
+  confidence: number;
+  evidence: string;
+}
+
+// Replaces the old "$ sign anywhere on the page -> Paid" heuristic with a
+// decision grounded in the actual paired plan/price evidence: a real free
+// tier alongside a paid one is Freemium (not just "Paid" because a $ sign
+// exists somewhere); custom-only pricing is its own honest category rather
+// than being silently dropped or mislabeled Paid. Exported for unit
+// testing.
+export function classifyPricingModel(
+  planEntries: PricingPlanEntry[],
+  freePlanMatch: RegExpMatchArray | null,
+  freeTrialMatch: RegExpMatchArray | null,
+): PricingModelClassification | null {
+  const isZero = (price: string) => /^\$?\s?0(\.00)?(\s|$)/.test(price);
+  const hasZeroPrice = planEntries.some((e) => isZero(e.price));
+  const hasCustomPrice = planEntries.some((e) => e.price === "Custom pricing");
+  const hasNumericPaidPrice = planEntries.some((e) => e.price !== "Custom pricing" && !isZero(e.price));
+
+  if (planEntries.length >= 2 && hasZeroPrice && hasNumericPaidPrice) {
+    return { model: "Freemium", confidence: 70, evidence: `Free ($0) tier found alongside ${planEntries.length - 1} paid tier(s) on the pricing page.` };
+  }
+  if (freePlanMatch && hasNumericPaidPrice) {
+    return { model: "Freemium", confidence: 55, evidence: freePlanMatch[0] };
+  }
+  if (hasNumericPaidPrice && hasCustomPrice) {
+    return { model: "Paid", confidence: 55, evidence: "Numeric paid tier(s) plus a custom/contact-sales tier found." };
+  }
+  if (hasNumericPaidPrice) {
+    return { model: freeTrialMatch ? "Paid (free trial available)" : "Paid", confidence: 50, evidence: planEntries.find((e) => !isZero(e.price) && e.price !== "Custom pricing")?.price || "" };
+  }
+  if (hasCustomPrice) {
+    return { model: "Custom / Contact sales", confidence: 45, evidence: "Only custom/contact-sales pricing found on the pricing page — no public numeric price." };
+  }
+  if (freePlanMatch) {
+    return { model: "Freemium", confidence: 40, evidence: freePlanMatch[0] };
+  }
+  return null;
+}
+
 // Turns Crawl4AI's raw multi-page response into the stable internal
 // contract. Never throws on missing/odd data — degrades to empty fields
 // with a warning instead.
@@ -310,9 +447,14 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
   const pricingUrl = pricingPage ? pageUrl(pricingPage) : null;
   const pricingMd = pricingPage ? getMarkdown(pricingPage) : "";
   const priceMatches = [...pricingMd.matchAll(PRICE_RE)].map((m) => m[0]);
-  const planHeadings = [...pricingMd.matchAll(HEADING_RE)].map((m) => m[1].trim()).filter((h) => h.length < 60);
   const freePlanMatch = pricingMd.match(FREE_PLAN_RE);
   const freeTrialMatch = pricingMd.match(FREE_TRIAL_RE);
+  // Structural plan/price pairing (heading + a price found in its own body),
+  // not a flat list of every short heading on the page — see
+  // analyzePricingBlocks/classifyPricingModel above for why.
+  const planEntries = analyzePricingBlocks(pricingMd);
+  const pricingModelClassification = classifyPricingModel(planEntries, freePlanMatch, freeTrialMatch);
+  const startingPrice = computeStartingPrice(planEntries, priceMatches);
 
   // ---- Product ----
   const featureHeadings = featuresPage
@@ -428,11 +570,20 @@ export function normalizeCrawlResult(raw: Crawl4aiRawResponse, opts: NormalizeOp
     },
     pricing: {
       pricing_page_url: pricingUrl ? field(pricingUrl, pricingUrl, null, 90) : EMPTY_FIELD,
-      pricing_model_candidate: freePlanMatch ? field("Freemium", pricingUrl, freePlanMatch[0], 40) : priceMatches.length ? field("Paid", pricingUrl, priceMatches[0], 35) : EMPTY_FIELD,
-      starting_price_candidate: priceMatches[0] ? field(priceMatches[0], pricingUrl, priceMatches[0], 45) : EMPTY_FIELD,
+      pricing_model_candidate: pricingModelClassification
+        ? field(pricingModelClassification.model, pricingUrl, pricingModelClassification.evidence, pricingModelClassification.confidence)
+        : EMPTY_FIELD,
+      starting_price_candidate: startingPrice ? field(startingPrice, pricingUrl, startingPrice, planEntries.length > 0 ? 60 : 45) : EMPTY_FIELD,
       free_plan_evidence: freePlanMatch ? field(freePlanMatch[0], pricingUrl, freePlanMatch[0], 55) : EMPTY_FIELD,
       free_trial_evidence: freeTrialMatch ? field(freeTrialMatch[0], pricingUrl, freeTrialMatch[0], 55) : EMPTY_FIELD,
-      plan_candidates: planHeadings.slice(0, 8).map((h) => field(h, pricingUrl, null, 35)),
+      // Each entry pairs a real plan name with its own price in one string
+      // (e.g. "Pro — $25/mo") rather than two disconnected lists — kept as
+      // plain ProvenanceField<string> so no downstream consumer (review UI,
+      // buildAutoApproveReviewState, AI enrichment grounded_evidence) needs
+      // to change. Deliberately empty (not a noisy fallback) when no block
+      // both looks like a plan AND has a nearby price — see
+      // analyzePricingBlocks.
+      plan_candidates: planEntries.map((e) => field(`${e.name} — ${e.price}`, pricingUrl, e.evidence, 60)),
       raw_pricing_evidence: priceMatches.length ? field(priceMatches.slice(0, 10).join(", "), pricingUrl, null, 40) : EMPTY_FIELD,
     },
     product: {

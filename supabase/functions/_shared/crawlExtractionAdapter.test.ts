@@ -4,7 +4,14 @@
 // normalizeCrawlResult is pure (no network) so it's fully unit-testable
 // against literal Crawl4aiRawResponse fixtures.
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { normalizeCrawlResult, type Crawl4aiRawResponse } from "./crawlExtractionAdapter.ts";
+import {
+  analyzePricingBlocks,
+  classifyPricingModel,
+  computeStartingPrice,
+  looksLikePlanName,
+  normalizeCrawlResult,
+  type Crawl4aiRawResponse,
+} from "./crawlExtractionAdapter.ts";
 
 function page(overrides: Record<string, unknown>) {
   return {
@@ -143,4 +150,180 @@ Deno.test("taxonomy suggestions are empty (never fabricated) when no categories/
   const result = normalizeCrawlResult(raw, { discoveryCandidateWebsite: "https://example.com" });
   assertEquals(result.taxonomy.category_suggestions, []);
   assertEquals(result.taxonomy.tag_suggestions, []);
+});
+
+// ---------------------------------------------------------------------------
+// Pricing extraction — looksLikePlanName / analyzePricingBlocks /
+// classifyPricingModel / computeStartingPrice, plus the full pipeline
+// through normalizeCrawlResult. The Trunk.io fixture below reproduces the
+// real contamination found in production (pricing.plan_candidates included
+// "SOC 2 Compliance", "Corporate Security", "Customer Stories" alongside
+// the real $0/$18 tiers) to prove it's actually fixed, not just plausible.
+// ---------------------------------------------------------------------------
+
+Deno.test("looksLikePlanName: accepts short plan-shaped headings, rejects page furniture", () => {
+  assert(looksLikePlanName("Starter"));
+  assert(looksLikePlanName("Pro"));
+  assert(looksLikePlanName("Enterprise"));
+  assert(looksLikePlanName("Team Plan"));
+  assert(!looksLikePlanName("SOC 2 Compliance"));
+  assert(!looksLikePlanName("Customer Stories"));
+  assert(!looksLikePlanName("Frequently Asked Questions"));
+  assert(!looksLikePlanName("What happens when CI actually works?"));
+  assert(!looksLikePlanName(""));
+  assert(!looksLikePlanName("This is a very long heading that is definitely not a plan name at all"));
+});
+
+Deno.test("analyzePricingBlocks: pairs a plan heading with the price found in its own body", () => {
+  const md = [
+    "## Starter",
+    "$10 /mo",
+    "For small teams getting started.",
+    "",
+    "## Pro",
+    "$25 /mo",
+    "For growing teams.",
+    "",
+    "## Enterprise",
+    "Contact us for a custom quote.",
+  ].join("\n");
+  const entries = analyzePricingBlocks(md);
+  assertEquals(entries.map((e) => [e.name, e.price]), [
+    ["Starter", "$10 /mo"],
+    ["Pro", "$25 /mo"],
+    ["Enterprise", "Custom pricing"],
+  ]);
+});
+
+Deno.test("analyzePricingBlocks: drops a plan-shaped heading with no nearby price, and unrelated page headings entirely (Trunk.io contamination fixture)", () => {
+  // Reproduces the real production shape: pricing page markdown that mixes
+  // genuine plan cards with unrelated security/social-proof/FAQ sections.
+  const md = [
+    "## Plans for every stage of your company",
+    "",
+    "## Free",
+    "$0",
+    "Get started for free.",
+    "",
+    "## Team",
+    "$18 /mo per seat",
+    "For teams that ship fast.",
+    "",
+    "## Security Overview",
+    "",
+    "## SOC 2 Compliance",
+    "We are independently audited.",
+    "",
+    "## Infrastructure and Data Security",
+    "",
+    "## Corporate Security",
+    "",
+    "## Application and Development Security",
+    "",
+    "## Customer Stories",
+    "See what our customers say.",
+    "",
+    "## FAQs",
+    "Common questions answered.",
+  ].join("\n");
+  const entries = analyzePricingBlocks(md);
+  const names = entries.map((e) => e.name);
+  assertEquals(names, ["Free", "Team"]);
+  assert(!names.includes("Security Overview"));
+  assert(!names.includes("SOC 2 Compliance"));
+  assert(!names.includes("Corporate Security"));
+  assert(!names.includes("Customer Stories"));
+  assert(!names.includes("FAQs"));
+  // "Plans for every stage of your company" is plan-shaped-length-wise but
+  // has no price in its body and is correctly dropped, not guessed at.
+  assert(!names.includes("Plans for every stage of your company"));
+});
+
+Deno.test("classifyPricingModel: a $0 tier alongside a paid tier is Freemium, not just 'Paid because a $ sign exists'", () => {
+  const entries = [
+    { name: "Free", price: "$0", evidence: "" },
+    { name: "Team", price: "$18 /mo", evidence: "" },
+  ];
+  const result = classifyPricingModel(entries, null, null);
+  assertEquals(result?.model, "Freemium");
+});
+
+Deno.test("classifyPricingModel: only numeric paid tiers (no free tier) is Paid", () => {
+  const entries = [
+    { name: "Starter", price: "$10 /mo", evidence: "" },
+    { name: "Pro", price: "$25 /mo", evidence: "" },
+  ];
+  const result = classifyPricingModel(entries, null, null);
+  assertEquals(result?.model, "Paid");
+});
+
+Deno.test("classifyPricingModel: paid tiers plus a free trial is labeled distinctly from plain Paid", () => {
+  const entries = [{ name: "Pro", price: "$25 /mo", evidence: "" }];
+  const freeTrialMatch = "free trial".match(/free trial/i);
+  const result = classifyPricingModel(entries, null, freeTrialMatch);
+  assertEquals(result?.model, "Paid (free trial available)");
+});
+
+Deno.test("classifyPricingModel: only custom/contact-sales pricing is its own honest category, not silently dropped or mislabeled", () => {
+  const entries = [{ name: "Enterprise", price: "Custom pricing", evidence: "" }];
+  const result = classifyPricingModel(entries, null, null);
+  assertEquals(result?.model, "Custom / Contact sales");
+});
+
+Deno.test("classifyPricingModel: no plan entries and no free/trial text evidence returns null (never fabricated)", () => {
+  const result = classifyPricingModel([], null, null);
+  assertEquals(result, null);
+});
+
+Deno.test("computeStartingPrice: picks the lowest numeric paired price, not just the first one found on the page", () => {
+  const entries = [
+    { name: "Pro", price: "$25 /mo", evidence: "" },
+    { name: "Starter", price: "$10 /mo", evidence: "" },
+    { name: "Enterprise", price: "Custom pricing", evidence: "" },
+  ];
+  assertEquals(computeStartingPrice(entries, ["$99"]), "$10 /mo");
+});
+
+Deno.test("computeStartingPrice: falls back to the first raw price match when no plan entries were paired", () => {
+  assertEquals(computeStartingPrice([], ["$49 /mo", "$99 /mo"]), "$49 /mo");
+});
+
+Deno.test("normalizeCrawlResult: full pipeline produces clean name+price plan_candidates and a Freemium classification from the Trunk.io-shaped fixture", () => {
+  const pricingMd = [
+    "## Free",
+    "$0",
+    "",
+    "## Team",
+    "$18 /mo",
+    "",
+    "## SOC 2 Compliance",
+    "We are independently audited.",
+    "",
+    "## Customer Stories",
+    "See what our customers say.",
+  ].join("\n");
+  const raw: Crawl4aiRawResponse = {
+    success: true,
+    results: [
+      page({ url: "https://example.com/" }),
+      page({ url: "https://example.com/pricing", markdown: pricingMd }),
+    ],
+  };
+  const result = normalizeCrawlResult(raw, { discoveryCandidateWebsite: "https://example.com" });
+  const planValues = result.pricing.plan_candidates.map((f) => f.value);
+  assertEquals(planValues, ["Free — $0", "Team — $18 /mo"]);
+  assertEquals(result.pricing.pricing_model_candidate.value, "Freemium");
+  assertEquals(result.pricing.starting_price_candidate.value, "$0");
+  for (const f of result.pricing.plan_candidates) assertEquals(f.source_url, "https://example.com/pricing");
+});
+
+Deno.test("normalizeCrawlResult: no pricing page found leaves all pricing fields empty, never guessed", () => {
+  const raw: Crawl4aiRawResponse = {
+    success: true,
+    results: [page({ url: "https://example.com/" })],
+  };
+  const result = normalizeCrawlResult(raw, { discoveryCandidateWebsite: "https://example.com" });
+  assertEquals(result.pricing.pricing_model_candidate.value, null);
+  assertEquals(result.pricing.plan_candidates, []);
+  assertEquals(result.pricing.starting_price_candidate.value, null);
 });
