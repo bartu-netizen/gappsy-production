@@ -295,7 +295,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   if (loading) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <ToolDetailSkeleton />
         <FooterWrapper />
       </div>
@@ -306,7 +306,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Tool Not Found | Gappsy" description="This tool could not be found." path={`/tools/${toolSlug || ''}`} noindex />
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
             <FolderTree className="w-6 h-6 text-slate-400" />
@@ -397,7 +397,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         </div>
       )}
 
-      <SoftwareHeader />
+      <SoftwareHeader variant="premium" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
         <ToolBreadcrumbs

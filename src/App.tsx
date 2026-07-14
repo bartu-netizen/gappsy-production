@@ -37,6 +37,7 @@ const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage
 const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
+const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -364,6 +365,7 @@ export default function App() {
         <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
+        <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />
