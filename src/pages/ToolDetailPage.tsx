@@ -147,14 +147,15 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [notFound, setNotFound] = useState(false);
 
   const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
-  // A pool, not one tool — distributed across up to 5 placements (sidebar
-  // top/bottom + up to 3 spots inline in the article) below, so a page
-  // never shows the same competitor twice. Thin inventory just means later
-  // slots come back undefined and render nothing (see FeaturedToolPromo.tsx).
-  const featuredPool = useFeaturedToolPool(toolSlug || '', 5);
+  // A pool, not one tool — distributed across the sidebar (1 prominent top
+  // slot + up to 2 compact ones further down) and up to 3 spots inline in
+  // the article, so a page never shows the same competitor twice. Thin
+  // inventory just means later slots come back empty and render nothing
+  // (see FeaturedToolPromo.tsx).
+  const featuredPool = useFeaturedToolPool(toolSlug || '', 6);
   const featuredPromo = featuredPool?.[0];
-  const featuredPromoSecondary = featuredPool?.[1];
-  const inlineFeaturedPromos = (featuredPool || []).slice(2);
+  const featuredPromoSecondaryList = (featuredPool || []).slice(1, 3);
+  const inlineFeaturedPromos = (featuredPool || []).slice(3);
 
   useEffect(() => {
     if (previewToolId) {
@@ -501,7 +502,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               naturally ends, so grids/cards get the full content width instead
               of leaving an empty column beside a short sidebar. */}
           <div className="min-w-0 space-y-12">
-            <div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start">
+            <div className="flex flex-col lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start">
               <div className="space-y-10 min-w-0">
                 <QuickSummarySection
                   toolName={tool.name}
@@ -556,7 +557,15 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 languages={tool.languages}
                 quickCompareLinks={quickCompareLinks}
                 categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
-                secondarySlot={tool.featured && featuredPromoSecondary ? <FeaturedToolSidebarCompact tool={featuredPromoSecondary} /> : undefined}
+                secondarySlot={
+                  tool.featured && featuredPromoSecondaryList.length > 0 ? (
+                    <div className="space-y-2">
+                      {featuredPromoSecondaryList.map((promo) => (
+                        <FeaturedToolSidebarCompact key={promo.slug} tool={promo} />
+                      ))}
+                    </div>
+                  ) : undefined
+                }
               >
                 {tool.featured
                   ? featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />
@@ -614,7 +623,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       />
 
       <StickyDesktopToolBar
-        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
+        promos={[featuredPromo, ...featuredPromoSecondaryList.slice(0, 1)].filter((t): t is FeaturedTool => Boolean(t))}
       />
     </div>
   );

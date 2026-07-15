@@ -35,10 +35,13 @@ interface ToolFactsSidebarProps {
    * being clipped by the sticky card's own pinned-scroll overflow the way
    * anything appended after a long list of facts would be. */
   children?: React.ReactNode;
-  /** A second, quieter placement near Category/Tags for desktop visitors who
-   * scroll that far — separate from `children` so the two can hold two
-   * different pool entries (see ToolDetailPage) without either one risking
-   * the sticky-overflow clipping `children`'s placement was fixed for. */
+  /** Rendered immediately after `children`, still near the top of the
+   * sticky card — originally placed near Category/Tags, but that sat just
+   * below the fold for most of the pinned-scroll range on a typical
+   * viewport, making it effectively invisible (the same sticky-overflow
+   * clipping bug `children`'s placement was fixed for). Kept as a separate
+   * prop from `children` so the two can hold two different pool entries
+   * (see ToolDetailPage) rather than one. */
   secondarySlot?: React.ReactNode;
 }
 
@@ -177,6 +180,7 @@ export default function ToolFactsSidebar({
         )}
 
         {children}
+        {secondarySlot}
 
         <div className="flex items-center justify-center gap-1.5">
           <button
@@ -360,8 +364,6 @@ export default function ToolFactsSidebar({
             </div>
           </div>
         )}
-
-        {secondarySlot}
 
         {affiliateUrl && (
           <p className="flex items-start gap-1.5 text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-100">
