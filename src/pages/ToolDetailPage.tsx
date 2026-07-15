@@ -603,17 +603,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       <FooterWrapper />
 
       <StickyMobileToolBar
-        toolName={tool.name}
-        featured={tool.featured}
-        cta={affiliateUrl || websiteUrl}
         featuredPromo={featuredPromo}
         categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
       />
 
       <StickyDesktopToolBar
-        toolName={tool.name}
-        featured={tool.featured}
-        cta={affiliateUrl || websiteUrl}
         promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
       />
     </div>

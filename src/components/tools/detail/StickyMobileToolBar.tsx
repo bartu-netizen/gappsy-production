@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 
 interface FeaturedTool {
   slug: string;
@@ -8,38 +8,22 @@ interface FeaturedTool {
 }
 
 interface StickyMobileToolBarProps {
-  toolName: string;
-  featured: boolean;
-  cta: string | null;
   featuredPromo?: FeaturedTool | null;
   categoryHref?: string | null;
 }
 
-// Mobile-only sticky bottom bar. This slot is a perk of being a featured
-// listing, not a given: a featured tool gets its own persistent "Visit
-// Website" CTA (real conversion value — the CTA in the hero/sidebar scrolls
-// out of view on a long page). A non-featured tool's page instead uses that
-// same slot to surface a featured competitor — same "Featured"-labeled
-// promo pattern as FeaturedToolPromo, just in the one placement that's
-// actually reserved for paying listings. Renders nothing if neither applies
-// (no CTA and no promo candidate).
-export default function StickyMobileToolBar({ toolName, featured, cta, featuredPromo, categoryHref }: StickyMobileToolBarProps) {
-  if (featured && cta) {
-    return (
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
-        <a
-          href={cta}
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          className="flex items-center justify-center gap-1.5 w-full px-5 py-3 rounded-full text-[15px] font-semibold text-white bg-[#4F46E5] active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-        >
-          Visit {toolName}
-          <ExternalLink className="w-4 h-4" aria-hidden="true" />
-        </a>
-      </div>
-    );
-  }
-
+// Mobile-only sticky bottom bar surfacing a featured competitor — same
+// "Featured"-labeled promo pattern as FeaturedToolPromo, just in this one
+// bottom-of-viewport placement. Shows on every tool page, including a
+// featured tool's own: `tools.featured` today is purely an editorial flag
+// (no tool has an actual paid feature subscription yet — see
+// vendor_feature_subscriptions), so there's no real listing whose page
+// this slot should be reserved away from. Once real paid subscriptions
+// exist, that's the point to reintroduce a "paying tool's own page skips
+// the ad" branch, gated on actual payment status rather than the
+// editorial flag. Renders nothing if there's no promo candidate (pool
+// exhausted — no placeholder clutter).
+export default function StickyMobileToolBar({ featuredPromo, categoryHref }: StickyMobileToolBarProps) {
   if (featuredPromo) {
     return (
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
