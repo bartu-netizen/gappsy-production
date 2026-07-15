@@ -31,7 +31,7 @@ export default function StickyMobileToolBar({ toolName, featured, cta, featuredP
           href={cta}
           target="_blank"
           rel="noopener noreferrer nofollow"
-          className="flex items-center justify-center gap-1.5 w-full px-5 py-3 rounded-full text-[15px] font-semibold text-white bg-[#4F46E5] active:scale-[0.99] transition-transform"
+          className="flex items-center justify-center gap-1.5 w-full px-5 py-3 rounded-full text-[15px] font-semibold text-white bg-[#4F46E5] active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
         >
           Visit {toolName}
           <ExternalLink className="w-4 h-4" aria-hidden="true" />
@@ -43,7 +43,7 @@ export default function StickyMobileToolBar({ toolName, featured, cta, featuredP
   if (featuredPromo) {
     return (
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
-        <Link to={`/tools/${featuredPromo.slug}`} className="flex items-center gap-3">
+        <Link to={`/tools/${featuredPromo.slug}`} className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
           {featuredPromo.logo ? (
             <img src={featuredPromo.logo} alt="" className="w-9 h-9 rounded-lg object-contain border border-slate-100 shrink-0" />
           ) : (
@@ -66,7 +66,7 @@ export default function StickyMobileToolBar({ toolName, featured, cta, featuredP
         {categoryHref && (
           <Link
             to={categoryHref}
-            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100"
+            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
           >
             See alternatives
           </Link>

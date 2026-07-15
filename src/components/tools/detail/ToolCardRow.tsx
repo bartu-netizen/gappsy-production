@@ -78,7 +78,7 @@ export default function ToolCardRow({
               type="button"
               onClick={() => scrollByCards(-1)}
               aria-label="Scroll left"
-              className="absolute left-2 top-[calc(50%-8px)] -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-[0_4px_12px_rgba(15,23,42,0.12)] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors"
+              className="absolute left-2 top-[calc(50%-8px)] -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-[0_4px_12px_rgba(15,23,42,0.12)] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -92,7 +92,7 @@ export default function ToolCardRow({
               type="button"
               onClick={() => scrollByCards(1)}
               aria-label="Scroll right"
-              className="absolute right-2 top-[calc(50%-8px)] -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-[0_4px_12px_rgba(15,23,42,0.12)] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors"
+              className="absolute right-2 top-[calc(50%-8px)] -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-slate-200 shadow-[0_4px_12px_rgba(15,23,42,0.12)] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

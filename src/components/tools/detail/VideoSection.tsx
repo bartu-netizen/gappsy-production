@@ -62,7 +62,7 @@ export default function VideoSection({
                 key={cue.seconds}
                 type="button"
                 onClick={() => setStartSeconds(cue.seconds)}
-                className={`w-full text-left flex items-start gap-2 px-2 py-1.5 rounded-lg text-[13px] transition-colors ${
+                className={`w-full text-left flex items-start gap-2 px-2 py-1.5 rounded-lg text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
                   startSeconds === cue.seconds ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'
                 }`}
               >

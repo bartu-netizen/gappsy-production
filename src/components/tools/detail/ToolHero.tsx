@@ -194,7 +194,7 @@ export default function ToolHero({
               href={cta}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-full font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)]"
+              className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-full font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
               Visit Website
               <ExternalLink className="w-3.5 h-3.5" />
@@ -208,7 +208,7 @@ export default function ToolHero({
               href={websiteUrl}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="inline-flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-600 px-6 py-1.5 rounded-full font-medium transition-colors text-xs w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-600 px-6 py-1.5 rounded-full font-medium transition-colors text-xs w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
               Official website
             </a>

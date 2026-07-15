@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useActiveSection } from './useActiveSection';
 import type { TocSection } from './TableOfContents';
@@ -10,6 +10,15 @@ import type { TocSection } from './TableOfContents';
 export default function MobileTableOfContents({ sections }: { sections: TocSection[] }) {
   const { activeId, goToSection } = useActiveSection(sections);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
 
   if (sections.length === 0) return null;
   const activeLabel = sections.find((s) => s.id === activeId)?.label ?? sections[0].label;
@@ -25,7 +34,7 @@ export default function MobileTableOfContents({ sections }: { sections: TocSecti
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex items-center justify-between w-full py-3 text-left"
+        className="flex items-center justify-between w-full py-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-inset rounded-sm"
       >
         <span className="min-w-0">
           <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-400 block">On this page</span>
@@ -43,7 +52,7 @@ export default function MobileTableOfContents({ sections }: { sections: TocSecti
                   type="button"
                   onClick={() => handleSelect(section.id)}
                   aria-current={activeId === section.id ? 'true' : undefined}
-                  className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                  className={`block w-full text-left px-4 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500 ${
                     activeId === section.id ? 'text-indigo-600 font-medium bg-indigo-50/60' : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >

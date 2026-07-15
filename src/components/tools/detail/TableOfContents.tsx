@@ -30,7 +30,7 @@ export default function TableOfContents({ sections }: { sections: TocSection[] }
               href={`#${section.id}`}
               onClick={(e) => handleClick(e, section.id)}
               aria-current={activeId === section.id ? 'true' : undefined}
-              className={`block text-sm py-1.5 pl-3 pr-2 border-l-2 rounded-r-md transition-colors ${
+              className={`block text-sm py-1.5 pl-3 pr-2 border-l-2 rounded-r-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-inset ${
                 activeId === section.id
                   ? 'border-indigo-500 bg-indigo-50/70 text-indigo-600 font-medium'
                   : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200'
