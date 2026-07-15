@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ShieldCheck, Star, ExternalLink, Sparkles, BadgeCheck } from 'lucide-react';
+import { ShieldCheck, Star, Sparkles, BadgeCheck, MessageSquarePlus, GitCompareArrows } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '../../Badge';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
@@ -18,9 +18,12 @@ interface ToolHeroProps {
   startingPrice: string | null;
   primaryCategory: TaxonomyRef | null;
   updatedAt: string | null;
-  websiteUrl: string | null;
-  affiliateUrl: string | null;
   reviewerNames?: string[];
+  /** Real /compare/x-vs-y pages only (see ToolDetailPage's quickCompareLinks
+   * filter) — the hero's Compare button uses the first one, falling back
+   * to the category page so it never promises a head-to-head that dead-ends. */
+  quickCompareLinks?: { label: string; href: string }[];
+  categoryHref?: string | null;
 }
 
 const AVATAR_COLORS = ['bg-indigo-100 text-indigo-600', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
@@ -43,15 +46,15 @@ export default function ToolHero({
   startingPrice,
   primaryCategory,
   updatedAt,
-  websiteUrl,
-  affiliateUrl,
   reviewerNames = [],
+  quickCompareLinks = [],
+  categoryHref = null,
 }: ToolHeroProps) {
-  const cta = affiliateUrl || websiteUrl;
-  const isAffiliateCta = Boolean(cta && cta === affiliateUrl);
   const updatedLabel = formatLastUpdated(updatedAt);
   const visibleReviewers = reviewerNames.slice(0, 4);
   const extraReviewerCount = Math.max(0, reviewerNames.length - visibleReviewers.length);
+  const compareHref = quickCompareLinks[0]?.href || categoryHref;
+  const compareLabel = quickCompareLinks[0]?.label || 'Compare alternatives';
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -188,30 +191,27 @@ export default function ToolHero({
           )}
         </div>
 
+        {/* Not a "Visit Website" repeat — the sidebar CTA is already
+            permanently visible (lg:sticky) and the mobile/desktop sticky
+            bars cover conversion too. This slot instead drives on-site
+            engagement: writing a review (bootstraps the review system)
+            and comparing against a real alternative. */}
         <div className="flex flex-col gap-2 sm:items-end shrink-0 w-full sm:w-auto lg:bg-white/80 lg:border lg:border-slate-100 lg:rounded-2xl lg:shadow-sm lg:p-4">
-          {cta && (
-            <a
-              href={cta}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-full font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          <a
+            href="#reviews"
+            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-full font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          >
+            <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
+            Write a review
+          </a>
+          {compareHref && (
+            <Link
+              to={compareHref}
+              className="inline-flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 hover:border-slate-300 px-6 py-2 rounded-full font-medium transition-colors text-xs w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
-              Visit Website
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          )}
-          {isAffiliateCta && (
-            <p className="text-[10.5px] text-slate-400 text-center sm:text-right w-full sm:w-auto">Affiliate link — we may earn a commission</p>
-          )}
-          {websiteUrl && affiliateUrl && websiteUrl !== affiliateUrl && (
-            <a
-              href={websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="inline-flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-600 px-6 py-1.5 rounded-full font-medium transition-colors text-xs w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-            >
-              Official website
-            </a>
+              <GitCompareArrows className="w-3.5 h-3.5" aria-hidden="true" />
+              {compareLabel}
+            </Link>
           )}
         </div>
       </div>

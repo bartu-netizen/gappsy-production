@@ -8,7 +8,7 @@ export default function AlternativesSection({ toolName, alternatives }: { toolNa
   if (alternatives.length === 0) return null;
 
   return (
-    <section id="alternatives" className="scroll-mt-24">
+    <section>
       <ToolsSectionHeader
         eyebrow="Alternatives"
         title={`${toolName} alternatives`}

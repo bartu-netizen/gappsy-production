@@ -34,7 +34,7 @@ export default function ReviewsSection({ toolId, toolName, reviews }: { toolId: 
   const maxCount = Math.max(...distribution.map((d) => d.count), 1);
 
   return (
-    <section id="reviews" className="scroll-mt-24">
+    <section>
       <ToolsSectionHeader
         eyebrow="Reviews"
         title={`What people are saying about ${toolName}`}

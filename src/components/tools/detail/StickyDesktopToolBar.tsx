@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, X } from 'lucide-react';
+import { Sparkles, ArrowLeft, X } from 'lucide-react';
 import type { FeaturedTool } from './FeaturedToolPromo';
 
 interface StickyDesktopToolBarProps {
@@ -54,10 +54,10 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
 
         <Link
           to="/feature-my-product"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
         >
+          <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
           Get featured here?
-          <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
         </Link>
 
         <button

@@ -485,9 +485,9 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         startingPrice={tool.starting_price}
         primaryCategory={primaryCategory}
         updatedAt={tool.updated_at}
-        websiteUrl={websiteUrl}
-        affiliateUrl={affiliateUrl}
         reviewerNames={reviews.map((r) => r.reviewer_name)}
+        quickCompareLinks={quickCompareLinks}
+        categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
       />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
@@ -581,17 +581,17 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               {mergedFeatures.length > 0 && <FeatureGrid toolName={tool.name} features={mergedFeatures} />}
               <PricingSection toolName={tool.name} plans={pricingPlans} websiteUrl={websiteUrl} affiliateUrl={affiliateUrl} />
               {(mergedPros.length > 0 || mergedCons.length > 0) && <ProsConsSection toolName={tool.name} pros={mergedPros} cons={mergedCons} />}
-              <LazyLoad component={() => import('../components/tools/detail/ScreenshotGallery')} componentProps={{ toolName: tool.name, screenshots: safeScreenshots, websiteUrl }} />
-              <LazyLoad component={() => import('../components/tools/detail/VideoSection')} componentProps={{ toolName: tool.name, youtubeUrl: tool.youtube_url, transcript: extendedContent?.transcript }} />
-              <LazyLoad component={() => import('../components/tools/detail/IntegrationsSection')} componentProps={{ toolName: tool.name, integrations }} />
+              <LazyLoad id="screenshots" className="scroll-mt-24" component={() => import('../components/tools/detail/ScreenshotGallery')} componentProps={{ toolName: tool.name, screenshots: safeScreenshots, websiteUrl, sectionId: 'screenshots-gallery' }} />
+              <LazyLoad id="video" className="scroll-mt-24" component={() => import('../components/tools/detail/VideoSection')} componentProps={{ toolName: tool.name, youtubeUrl: tool.youtube_url, transcript: extendedContent?.transcript }} />
+              <LazyLoad id="integrations" className="scroll-mt-24" component={() => import('../components/tools/detail/IntegrationsSection')} componentProps={{ toolName: tool.name, integrations }} />
               {mergedUseCases.length > 0 && <UseCasesSection toolName={tool.name} useCases={mergedUseCases} />}
-              <LazyLoad component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolId: tool.id, toolName: tool.name, reviews }} />
+              <LazyLoad id="reviews" className="scroll-mt-24" component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolId: tool.id, toolName: tool.name, reviews }} />
               {mergedFaqs.length > 0 && <FAQSection toolName={tool.name} faqs={mergedFaqs} />}
               {extendedContent && (
-                <LazyLoad component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
+                <LazyLoad id="alternatives" className="scroll-mt-24" component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
               )}
               {extendedContent && (
-                <LazyLoad component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: extendedContent.comparisons }} />
+                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: extendedContent.comparisons }} />
               )}
             </div>
           </div>

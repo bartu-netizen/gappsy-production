@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, Rocket } from 'lucide-react';
+import { Sparkles, ArrowRight, ArrowUp, Rocket } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
 
 export interface FeaturedTool {
@@ -63,6 +63,20 @@ export function planInlinePromoSlots<T>(totalBlocks: number, promos: T[]): { ind
   return slots;
 }
 
+// Every featured-ad placement carries this same "want in on this?" nudge
+// toward the paying-customer funnel — not just the sidebar's top slot.
+function WantYourProductHereLink({ className = '' }: { className?: string }) {
+  return (
+    <Link
+      to="/feature-my-product"
+      className={`flex items-center gap-1 text-[11px] font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm ${className}`}
+    >
+      <ArrowUp className="w-3 h-3" aria-hidden="true" />
+      Want your product here?
+    </Link>
+  );
+}
+
 function FeaturedBadge({ large = false }: { large?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
@@ -95,13 +109,7 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
           {tool.short_description && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mt-0.5">{tool.short_description}</p>}
         </div>
       </Link>
-      <Link
-        to="/feature-my-product"
-        className="flex items-center gap-1 text-[11px] font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors mt-2.5 pt-2.5 border-t border-indigo-100/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
-      >
-        Want your product here?
-        <ArrowRight className="w-3 h-3" aria-hidden="true" />
-      </Link>
+      <WantYourProductHereLink className="mt-2.5 pt-2.5 border-t border-indigo-100/80" />
     </div>
   );
 }
@@ -111,21 +119,24 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
 // featured pool actually has a second, different tool to show.
 export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
   return (
-    <Link
-      to={`/tools/${tool.slug}`}
-      className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-br from-indigo-50/70 to-purple-50/70 border border-indigo-100 px-3 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-    >
-      {tool.logo ? (
-        <img src={tool.logo} alt="" className="w-8 h-8 rounded-lg object-contain border border-white bg-white shrink-0" />
-      ) : (
-        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{tool.name.charAt(0)}</div>
-      )}
-      <div className="min-w-0 flex-1">
-        <FeaturedBadge />
-        <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">{tool.name}</p>
-      </div>
-      <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
-    </Link>
+    <div className="rounded-xl bg-gradient-to-br from-indigo-50/70 to-purple-50/70 border border-indigo-100 px-3 py-2.5">
+      <Link
+        to={`/tools/${tool.slug}`}
+        className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+      >
+        {tool.logo ? (
+          <img src={tool.logo} alt="" className="w-8 h-8 rounded-lg object-contain border border-white bg-white shrink-0" />
+        ) : (
+          <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{tool.name.charAt(0)}</div>
+        )}
+        <div className="min-w-0 flex-1">
+          <FeaturedBadge />
+          <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">{tool.name}</p>
+        </div>
+        <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
+      </Link>
+      <WantYourProductHereLink className="mt-2 pt-2 border-t border-indigo-100/80" />
+    </div>
   );
 }
 
@@ -159,7 +170,8 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
 // not a plain paragraph) so it's never mistaken for editorial content.
 export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
   return (
-    <div className="not-prose rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 to-purple-50/40 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="not-prose rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 to-purple-50/40 p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {tool.logo ? (
           <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-white bg-white shrink-0 shadow-sm" />
@@ -181,6 +193,8 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
         View listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
       </Link>
+      </div>
+      <WantYourProductHereLink className="mt-3 pt-3 border-t border-indigo-100/80" />
     </div>
   );
 }

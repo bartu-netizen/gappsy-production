@@ -7,7 +7,7 @@ export default function ComparisonLinksSection({ toolName, comparisons }: { tool
   if (comparisons.length === 0) return null;
 
   return (
-    <section id="comparisons" className="scroll-mt-24">
+    <section>
       <ToolsSectionHeader eyebrow="Comparisons" title={`Compare ${toolName} to other tools`} />
       <div className="flex flex-wrap gap-2.5">
         {comparisons.map((comparison) => (

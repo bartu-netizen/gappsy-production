@@ -57,7 +57,7 @@ export default function IntegrationsSection({ toolName, integrations }: { toolNa
   if (integrations.length === 0) return null;
 
   return (
-    <section id="integrations" className="scroll-mt-24">
+    <section>
       <ToolsSectionHeader eyebrow="Integrations" title={`${toolName} integrations`} />
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {integrations.map((integration) => {

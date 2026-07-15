@@ -26,7 +26,7 @@ export default function VideoSection({
   if (!videoId) return null;
 
   return (
-    <section id="video" className="scroll-mt-24">
+    <section>
       <ToolsSectionHeader eyebrow="Video" title={`See ${toolName} in action`} />
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-5">
         <div className="aspect-video rounded-2xl overflow-hidden border border-[#eef0f3] bg-black">
