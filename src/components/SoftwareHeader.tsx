@@ -79,61 +79,68 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
     return (
       <header className="sticky top-3 z-40">
         {/* Floating, inset card — mirrors FooterWrapper/Footer's own
-            rounded #0A1735 box (side-inset via max-w + px, rounded-[32px],
-            shadow), so the header and footer read as the same design
-            language instead of the header stretching edge-to-edge. */}
+            rounded #0A1735 box (side-inset via max-w + px, shadow), so the
+            header and footer read as the same design language instead of
+            the header stretching edge-to-edge. Radius is closer to the
+            "Feature My Product" button's own rounded-xl than a full pill. */}
         <div className="max-w-[1366px] mx-auto px-6 sm:px-8">
-          <div className={`rounded-[32px] bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
+          <div className={`rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
             <div className="px-6 sm:px-8">
               {/* Desktop */}
-          <div className="hidden md:flex items-center gap-8 h-[70px]">
-            <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
-              <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-10 w-auto" />
-            </Link>
+              <div className="hidden md:flex items-center justify-center h-[70px]">
+                {/* Centered as one unit (not logo-left/buttons-right
+                    stretched to the row's edges) — capped narrower than the
+                    outer card so there's equal breathing room on both sides
+                    even on very wide screens. */}
+                <div className="flex items-center gap-8 w-full max-w-5xl">
+                  <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
+                    <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-10 w-auto" />
+                  </Link>
 
-            <div className="flex-1 min-w-0 max-w-[400px]">
-              <button
-                type="button"
-                onClick={openSearch}
-                aria-label="Search software"
-                className="flex items-center w-full h-10 rounded-full bg-white pl-4 pr-2 gap-2 transition-all duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 text-left"
-              >
-                <Search className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
-                <span className="flex-1 min-w-0 text-sm text-slate-400">Search software...</span>
-                <kbd className="hidden lg:inline-flex items-center justify-center h-5 px-1.5 rounded-md bg-slate-50 border border-slate-200 text-[10px] font-medium text-slate-400 shrink-0">
-                  ⌘K
-                </kbd>
-              </button>
-            </div>
+                  <div className="flex-1 min-w-0 max-w-[400px]">
+                    <button
+                      type="button"
+                      onClick={openSearch}
+                      aria-label="Search software"
+                      className="flex items-center w-full h-10 rounded-full bg-white pl-4 pr-2 gap-2 transition-all duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 text-left"
+                    >
+                      <Search className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
+                      <span className="flex-1 min-w-0 text-sm text-slate-400">Search software...</span>
+                      <kbd className="hidden lg:inline-flex items-center justify-center h-5 px-1.5 rounded-md bg-slate-50 border border-slate-200 text-[10px] font-medium text-slate-400 shrink-0">
+                        ⌘K
+                      </kbd>
+                    </button>
+                  </div>
 
-            <nav aria-label="Software directory" className="flex items-center gap-1 shrink-0">
-              {PREMIUM_NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="px-4 py-2.5 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+                  <nav aria-label="Software directory" className="flex items-center gap-1 shrink-0">
+                    {PREMIUM_NAV_ITEMS.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        className="px-4 py-2.5 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </nav>
 
-            <div className="flex items-center gap-3 shrink-0">
-              <Link
-                to={accountHref}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
-                {accountLabel}
-              </Link>
-              <Link
-                to="/feature-my-product"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[15px] font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
-              >
-                Feature My Product
-              </Link>
-            </div>
-          </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <Link
+                      to={accountHref}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
+                      {accountLabel}
+                    </Link>
+                    <Link
+                      to="/feature-my-product"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[15px] font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
+                    >
+                      Feature My Product
+                    </Link>
+                  </div>
+                </div>
+              </div>
 
           {/* Mobile */}
           <div className="md:hidden">
