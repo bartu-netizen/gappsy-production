@@ -99,18 +99,24 @@ export default function VendorClaimPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa] flex flex-col">
+    <div className="min-h-screen bg-[#0A1735] flex flex-col relative overflow-hidden">
       <EntitySEOTags title="Claim Your Listing Account | Gappsy" description="Create your vendor account to manage your featured Gappsy listing." path="/vendor/claim" noindex />
 
-      <header className="flex items-center justify-center pt-8 pb-2">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{ background: 'radial-gradient(60% 50% at 50% 0%, rgba(79,71,230,0.25), transparent)' }}
+        aria-hidden="true"
+      />
+
+      <header className="flex items-center justify-center pt-10 pb-2 relative">
         <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
-          <img src="/logos/Gappsy-Logo-4A5DFF-transparent-background.png" alt="Gappsy" className="h-7 w-auto" />
+          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-8 w-auto" />
         </Link>
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-4 py-10">
+      <main className="flex-1 flex items-center justify-center px-4 py-10 relative">
         <div className="w-full max-w-sm">
-          <div className="bg-white border border-[#eef0f3] rounded-3xl p-7 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+          <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)]">
             {loadState === 'loading' && (
               <div className="flex items-center justify-center py-10"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
             )}
@@ -232,8 +238,8 @@ export default function VendorClaimPage() {
             )}
           </div>
 
-          <p className="text-center mt-5">
-            <Link to="/" className="text-[13px] text-slate-400 hover:text-slate-600 transition-colors">← Back to Gappsy</Link>
+          <p className="text-center mt-6">
+            <Link to="/" className="text-[13px] text-white/50 hover:text-white/80 transition-colors">← Back to Gappsy</Link>
           </p>
         </div>
       </main>

@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Loader2, Mail, Lock, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { Loader2, Mail, Lock, ArrowRight, LayoutDashboard, Rocket } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../hooks/useAuth';
 import EntitySEOTags from '../components/EntitySEOTags';
 import { useNoindex } from '../components/NoindexMeta';
 
+// A focused, single-purpose screen — full navy backdrop (the same #0A1735
+// as the site's sticky header) rather than the light page chrome used
+// everywhere else, so the white Gappsy logo reads the same way here as it
+// does there. Account creation is never open here (see vendor-claim-
+// account): only businesses with a paid, ownership-verified listing ever
+// get one, so that's stated plainly with a real CTA to Feature My Product
+// rather than a vague "contact us" footnote.
 export default function VendorLoginPage() {
   useNoindex();
   const navigate = useNavigate();
@@ -29,19 +36,25 @@ export default function VendorLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa] flex flex-col">
+    <div className="min-h-screen bg-[#0A1735] flex flex-col relative overflow-hidden">
       <EntitySEOTags title="Sign In | Gappsy" description="Sign in to manage your featured listing on Gappsy." path="/login" noindex />
 
-      <header className="flex items-center justify-center pt-8 pb-2">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{ background: 'radial-gradient(60% 50% at 50% 0%, rgba(79,71,230,0.25), transparent)' }}
+        aria-hidden="true"
+      />
+
+      <header className="flex items-center justify-center pt-10 pb-2 relative">
         <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
-          <img src="/logos/Gappsy-Logo-4A5DFF-transparent-background.png" alt="Gappsy" className="h-7 w-auto" />
+          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-8 w-auto" />
         </Link>
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-4 py-10">
+      <main className="flex-1 flex items-center justify-center px-4 py-10 relative">
         <div className="w-full max-w-sm">
           {!authLoading && user ? (
-            <div className="bg-white border border-[#eef0f3] rounded-3xl p-7 shadow-[0_8px_24px_rgba(15,23,42,0.06)] text-center">
+            <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)] text-center">
               <div className="w-11 h-11 rounded-2xl bg-[#EEF0FE] flex items-center justify-center mx-auto mb-4">
                 <LayoutDashboard className="w-5 h-5 text-[#4F47E6]" />
               </div>
@@ -56,10 +69,10 @@ export default function VendorLoginPage() {
               </Link>
             </div>
           ) : (
-            <div className="bg-white border border-[#eef0f3] rounded-3xl p-7 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+            <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)]">
               <h1 className="text-xl font-bold text-[#0B1221] tracking-tight">Vendor sign in</h1>
               <p className="text-[13px] text-slate-500 mt-1.5 mb-6 leading-relaxed">
-                For businesses that have featured a listing on Gappsy and verified ownership.
+                For businesses with a featured, ownership-verified listing on Gappsy.
               </p>
 
               {error && (
@@ -107,15 +120,26 @@ export default function VendorLoginPage() {
                   Sign in
                 </button>
               </form>
-
-              <p className="text-[12px] text-slate-400 text-center mt-5 leading-relaxed">
-                Don't have an account yet? You'll get an invite by email after your listing's ownership is verified.
-              </p>
             </div>
           )}
 
-          <p className="text-center mt-5">
-            <Link to="/" className="text-[13px] text-slate-400 hover:text-slate-600 transition-colors">← Back to Gappsy</Link>
+          {(authLoading || !user) && (
+            <div className="mt-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-4 text-center">
+              <p className="text-[13px] text-white/70 leading-relaxed">
+                Accounts are only created for businesses with a paid, verified listing — there's no open sign-up.
+              </p>
+              <Link
+                to="/feature-my-product"
+                className="inline-flex items-center justify-center gap-1.5 w-full mt-3 bg-white/10 hover:bg-white/15 border border-white/15 text-white px-4 py-2.5 rounded-xl font-semibold text-[13px] transition-colors"
+              >
+                <Rocket className="w-3.5 h-3.5" aria-hidden="true" />
+                Feature your product to get one
+              </Link>
+            </div>
+          )}
+
+          <p className="text-center mt-6">
+            <Link to="/" className="text-[13px] text-white/50 hover:text-white/80 transition-colors">← Back to Gappsy</Link>
           </p>
         </div>
       </main>

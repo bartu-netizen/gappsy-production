@@ -95,17 +95,17 @@ export default function VendorDashboardPage() {
     <div className="min-h-screen bg-[#f7f8fa]">
       <EntitySEOTags title="Vendor Dashboard | Gappsy" description="Manage your featured Gappsy listing." path="/vendor/dashboard" noindex />
 
-      <header className="sticky top-0 z-30 bg-white border-b border-[#F1F3F5]">
+      <header className="sticky top-0 z-30 bg-[#0A1735]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link to="/" aria-label="Gappsy home" className="flex items-center">
-            <img src="/logos/Gappsy-Logo-4A5DFF-transparent-background.png" alt="Gappsy" className="h-6 w-auto" />
+            <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-7 w-auto" />
           </Link>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-[13px] text-slate-400">{user.email}</span>
+            <span className="hidden sm:inline text-[13px] text-white/50">{user.email}</span>
             <button
               type="button"
               onClick={() => signOut()}
-              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-slate-500 hover:text-red-600 transition-colors px-3 py-1.5 rounded-lg hover:bg-red-50"
+              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/70 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
             >
               <LogOut className="w-3.5 h-3.5" /> Sign out
             </button>
