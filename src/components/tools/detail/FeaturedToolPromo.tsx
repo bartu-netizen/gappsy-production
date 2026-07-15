@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, ArrowUp, Rocket } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
+import OverflowMarqueeText from './OverflowMarqueeText';
 
 export interface FeaturedTool {
   slug: string;
@@ -106,7 +107,9 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
         )}
         <div className="min-w-0">
           <p className="font-bold text-[#0B1221] text-sm group-hover:text-[#4F47E6] transition-colors">{tool.name}</p>
-          {tool.short_description && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mt-0.5">{tool.short_description}</p>}
+          {tool.short_description && (
+            <OverflowMarqueeText text={tool.short_description} className="text-xs text-slate-600 leading-relaxed mt-0.5" />
+          )}
         </div>
       </Link>
       <WantYourProductHereLink className="mt-2.5 pt-2.5 border-t border-[#E0E3FC]/80" />
@@ -183,7 +186,9 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
             <FeaturedBadge large />
           </div>
           <p className="font-bold text-[#0B1221] text-[15px]">{tool.name}</p>
-          {tool.short_description && <p className="text-[13px] text-slate-600 leading-relaxed line-clamp-1">{tool.short_description}</p>}
+          {tool.short_description && (
+            <OverflowMarqueeText text={tool.short_description} className="text-[13px] text-slate-600 leading-relaxed" />
+          )}
         </div>
       </div>
       <Link

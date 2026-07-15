@@ -82,8 +82,12 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
             rounded #0A1735 box (side-inset via max-w + px, shadow), so the
             header and footer read as the same design language instead of
             the header stretching edge-to-edge. Radius is closer to the
-            "Feature My Product" button's own rounded-xl than a full pill. */}
-        <div className="max-w-[1366px] mx-auto px-6 sm:px-8">
+            "Feature My Product" button's own rounded-xl than a full pill.
+            max-w-6xl + px-4 sm:px-6 matches the tool-detail/tools-index/
+            categories page content container exactly, so the header's
+            edges line up with the page's left/right column edges instead
+            of overhanging them. */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className={`rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
             <div className="px-6 sm:px-8">
               {/* Desktop */}
@@ -92,7 +96,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                     stretched to the row's edges) — capped narrower than the
                     outer card so there's equal breathing room on both sides
                     even on very wide screens. */}
-                <div className="flex items-center gap-8 w-full max-w-5xl">
+                <div className="flex items-center gap-8 w-full max-w-4xl">
                   <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
                     <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-10 w-auto" />
                   </Link>
