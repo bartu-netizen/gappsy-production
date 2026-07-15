@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X, LayoutDashboard } from 'lucide-react';
 import GlobalSearch from './search/GlobalSearch';
+import { useAuth } from '../hooks/useAuth';
 
 interface NavItem {
   label: string;
@@ -36,6 +37,9 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const isPremium = variant === 'premium';
+  const { user } = useAuth();
+  const accountHref = user ? '/vendor/dashboard' : '/login';
+  const accountLabel = user ? 'Dashboard' : 'Sign In';
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -114,10 +118,11 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
 
             <div className="flex items-center gap-3 shrink-0">
               <Link
-                to="/login"
-                className="px-4 py-2 rounded-full text-[15px] font-medium text-slate-600 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
+                to={accountHref}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-slate-600 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
               >
-                Sign In
+                {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
+                {accountLabel}
               </Link>
               <Link
                 to="/feature-my-product"
@@ -178,11 +183,12 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                 ))}
                 <div className="pt-2 mt-2 border-t border-slate-100 flex flex-col gap-2">
                   <Link
-                    to="/login"
+                    to={accountHref}
                     onClick={() => setMenuOpen(false)}
-                    className="w-full text-center px-4 py-2.5 rounded-full text-sm font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-1.5 text-center px-4 py-2.5 rounded-full text-sm font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
                   >
-                    Sign In
+                    {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
+                    {accountLabel}
                   </Link>
                   <Link
                     to="/feature-my-product"
@@ -255,10 +261,11 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
 
           <div className="flex items-center gap-2 shrink-0">
             <Link
-              to="/login"
-              className="px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
+              to={accountHref}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
             >
-              Sign In
+              {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
+              {accountLabel}
             </Link>
             <button
               type="button"
@@ -328,11 +335,12 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
               )}
               <div className="pt-2 mt-2 border-t border-slate-100 flex flex-col gap-2">
                 <Link
-                  to="/login"
+                  to={accountHref}
                   onClick={() => setMenuOpen(false)}
-                  className="w-full text-center px-4 py-2.5 rounded-full text-sm font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-1.5 text-center px-4 py-2.5 rounded-full text-sm font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
                 >
-                  Sign In
+                  {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
+                  {accountLabel}
                 </Link>
                 <button
                   type="button"

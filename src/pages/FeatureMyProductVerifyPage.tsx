@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Check, Loader2, Copy, ShieldCheck } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { Check, Loader2, Copy, ShieldCheck, ArrowRight } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import { vendorOwnershipVerify, vendorOnboarding } from '../lib/vendorOnboardingApi';
@@ -82,6 +82,13 @@ export default function FeatureMyProductVerifyPage() {
               <p className="mt-2 text-[15px] text-slate-500 leading-relaxed">
                 You're all set. Your featured listing will activate once our editorial team completes its eligibility review.
               </p>
+              <Link
+                to={`/vendor/claim?token=${encodeURIComponent(token || '')}`}
+                className="mt-6 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] transition-opacity hover:opacity-95"
+              >
+                Create your account to manage this listing
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           )}
 

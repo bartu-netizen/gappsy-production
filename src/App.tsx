@@ -40,6 +40,9 @@ const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
+const VendorLoginPage = lazy(() => import("./pages/VendorLoginPage"));
+const VendorClaimPage = lazy(() => import("./pages/VendorClaimPage"));
+const VendorDashboardPage = lazy(() => import("./pages/VendorDashboardPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -376,6 +379,11 @@ export default function App() {
         <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
         <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
         <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
+
+        {/* Vendor account — real Supabase Auth, gated behind a verified ownership token (see vendor-claim-account) */}
+        <Route path="/login" element={<VendorLoginPage />} />
+        <Route path="/vendor/claim" element={<VendorClaimPage />} />
+        <Route path="/vendor/dashboard" element={<VendorDashboardPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />
