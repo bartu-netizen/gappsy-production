@@ -409,6 +409,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'PlayCircle',
   },
   {
+    id: 'vendor-accounts',
+    label: 'Vendor Accounts',
+    description: 'See linked vendor login accounts and manually create one for testing',
+    href: '/wp-admin/vendor-accounts',
+    keywords: ['vendor', 'account', 'login', 'dashboard', 'test', 'claim'],
+    group: 'Content',
+    scopes: ['software'],
+    iconName: 'UserCog',
+  },
+  {
     id: 'agency-reviews-import',
     label: 'Import Agency Reviews',
     description: 'Bulk import agency reviews from CSV or JSON with validation and uniqueness scoring',

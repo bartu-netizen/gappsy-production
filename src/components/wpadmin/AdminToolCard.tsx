@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, ShieldOff, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, GitMerge, Upload, UploadCloud, Building2, MailOpen, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, Bell, Link2, Compass, PlusCircle, ShieldCheck, Plug, PlayCircle } from 'lucide-react';
+import { ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, ShieldOff, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, GitMerge, Upload, UploadCloud, Building2, MailOpen, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, Bell, Link2, Compass, PlusCircle, ShieldCheck, Plug, PlayCircle, UserCog } from 'lucide-react';
 import { AdminTool } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
   PlayCircle: <PlayCircle className="w-5 h-5" />,
+  UserCog: <UserCog className="w-5 h-5" />,
   Edit2: <Edit2 className="w-5 h-5" />,
   FileJson: <FileJson className="w-5 h-5" />,
   Image: <Image className="w-5 h-5" />,

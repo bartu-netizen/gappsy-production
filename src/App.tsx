@@ -99,6 +99,7 @@ const AdminSidebarAdsPage = lazy(() => import("./pages/AdminSidebarAdsPage"));
 const AdminAgencyReviewsPage = lazy(() => import("./pages/AdminAgencyReviewsPage"));
 const WpAdminToolReviewsPage = lazy(() => import("./pages/WpAdminToolReviewsPage"));
 const WpAdminVideoEmbedsPage = lazy(() => import("./pages/WpAdminVideoEmbedsPage"));
+const WpAdminVendorAccountsPage = lazy(() => import("./pages/WpAdminVendorAccountsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
 const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscoveryDashboardPage"));
@@ -228,6 +229,7 @@ export default function App() {
         <Route path="/wp-admin/agency-reviews" element={<AdminRoute><AdminAgencyReviewsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-reviews" element={<AdminRoute><WpAdminToolReviewsPage /></AdminRoute>} />
         <Route path="/wp-admin/video-embeds" element={<AdminRoute><WpAdminVideoEmbedsPage /></AdminRoute>} />
+        <Route path="/wp-admin/vendor-accounts" element={<AdminRoute><WpAdminVendorAccountsPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/import" element={<AdminRoute><AdminAgencyReviewsImportPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/new" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/edit/:id" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
