@@ -1,4 +1,5 @@
 import { Target, Wallet, MonitorSmartphone, Sparkle } from 'lucide-react';
+import { categoryToolsPhrase } from '../../../utils/categoryPhrasing';
 
 interface QuickSummarySectionProps {
   toolName: string;
@@ -48,7 +49,7 @@ export default function QuickSummarySection({
   const facts: Fact[] = [];
 
   if (categoryName) {
-    facts.push({ icon: Target, label: 'Best for', value: `Teams evaluating ${categoryName.toLowerCase()} tools` });
+    facts.push({ icon: Target, label: 'Best for', value: `Teams evaluating ${categoryToolsPhrase(categoryName)}` });
   }
   if (pricingModel || startingPrice) {
     facts.push({
