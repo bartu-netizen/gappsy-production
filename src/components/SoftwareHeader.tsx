@@ -106,7 +106,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                       type="button"
                       onClick={openSearch}
                       aria-label="Search software"
-                      className="flex items-center w-full h-10 rounded-full bg-white pl-4 pr-2 gap-2 transition-all duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 text-left"
+                      className="flex items-center w-full h-10 rounded-xl bg-white pl-4 pr-2 gap-2 transition-all duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 text-left"
                     >
                       <Search className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
                       <span className="flex-1 min-w-0 text-sm text-slate-400">Search software...</span>
@@ -121,7 +121,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                       <Link
                         key={item.label}
                         to={item.href}
-                        className="px-4 py-2.5 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
+                        className="px-4 py-2.5 rounded-xl text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -131,7 +131,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   <div className="flex items-center gap-3 shrink-0">
                     <Link
                       to={accountHref}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-[15px] font-medium text-white border border-white/30 hover:bg-white/10 transition-colors"
                     >
                       {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
                       {accountLabel}
