@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, Rocket } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
 import Card from './Card';
 
@@ -76,6 +76,32 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
       >
         Want your product here?
         <ArrowRight className="w-3 h-3" aria-hidden="true" />
+      </Link>
+    </Card>
+  );
+}
+
+// Shown instead of FeaturedToolSidebarCard when the current tool is NOT
+// featured — nudging the (possible) owner toward Feature My Product rather
+// than spending that sidebar slot on a competitor ad. Prefills the
+// onboarding wizard's URL step via ?url= so they don't have to retype it.
+export function ClaimListingCard({ toolName, website }: { toolName: string; website: string | null }) {
+  const onboardingHref = website ? `/feature-my-product/onboarding?url=${encodeURIComponent(website)}` : '/feature-my-product/onboarding';
+  return (
+    <Card className="p-5">
+      <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center mb-3">
+        <Rocket className="w-4.5 h-4.5 text-[#4F46E5]" aria-hidden="true" />
+      </div>
+      <p className="font-semibold text-[#0B1221] text-sm">Are you the maker of {toolName}?</p>
+      <p className="text-xs text-slate-500 leading-relaxed mt-1">
+        Claim this listing to manage it directly and get featured placement across the directory.
+      </p>
+      <Link
+        to={onboardingHref}
+        className="flex items-center justify-center gap-1.5 w-full mt-3.5 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity"
+      >
+        Claim & feature this listing
+        <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
       </Link>
     </Card>
   );

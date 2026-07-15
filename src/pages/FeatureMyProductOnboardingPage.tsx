@@ -100,6 +100,15 @@ export default function FeatureMyProductOnboardingPage() {
       return;
     }
 
+    // Arrived via a "Claim this listing" link from a tool page — prefill the
+    // URL step instead of resuming any stale stored session, since the
+    // visitor explicitly wants to start a fresh claim for this specific URL.
+    const urlParam = searchParams.get('url');
+    if (urlParam) {
+      setRawUrl(urlParam);
+      return;
+    }
+
     const stored = getStoredSessionId();
     if (stored) {
       vendorOnboarding.sessionStatus({ sessionId: stored }).then((res) => {

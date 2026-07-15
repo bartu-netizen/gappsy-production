@@ -22,7 +22,8 @@ import MobileTableOfContents from '../components/tools/detail/MobileTableOfConte
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
-import { useFeaturedToolPromo, FeaturedToolSidebarCard, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPromo, FeaturedToolSidebarCard, FeaturedToolInlineCard, ClaimListingCard } from '../components/tools/detail/FeaturedToolPromo';
+import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
 import ProsConsSection from '../components/tools/detail/ProsConsSection';
 import PricingSection from '../components/tools/detail/PricingSection';
@@ -367,6 +368,15 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
   ];
 
+  // Only real, published comparison pages — never a link that promises a
+  // head-to-head and then dead-ends. extendedContent.comparisons mixes real
+  // /compare/ pages with category-page fallbacks for pairs that don't have
+  // one yet (see data/toolContent/canva.ts); the quick-compare popover only
+  // offers the former.
+  const quickCompareLinks = (extendedContent?.comparisons || [])
+    .filter((c) => c.href.startsWith('/compare/'))
+    .map((c) => ({ label: c.label, href: c.href }));
+
   const jsonLd = buildToolJsonLd({
     slug: tool.slug,
     name: tool.name,
@@ -506,8 +516,12 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 companySize={tool.company_size}
                 headquarters={tool.headquarters}
                 languages={tool.languages}
+                quickCompareLinks={quickCompareLinks}
+                categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
               >
-                {featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />}
+                {tool.featured
+                  ? featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />
+                  : <ClaimListingCard toolName={tool.name} website={websiteUrl} />}
               </ToolFactsSidebar>
             </div>
 
@@ -554,6 +568,13 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       </div>
 
       <FooterWrapper />
+
+      <StickyMobileToolBar
+        toolName={tool.name}
+        featured={tool.featured}
+        cta={affiliateUrl || websiteUrl}
+        featuredPromo={featuredPromo}
+      />
     </div>
   );
 }

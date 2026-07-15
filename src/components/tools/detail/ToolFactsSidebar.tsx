@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Star, ExternalLink, FolderTree, Tag as TagIcon, CheckCircle2, Plug, Globe, Calendar,
@@ -28,6 +28,8 @@ interface ToolFactsSidebarProps {
   companySize: string | null;
   headquarters: string | null;
   languages: string[];
+  quickCompareLinks?: { label: string; href: string }[];
+  categoryHref?: string | null;
   children?: React.ReactNode;
 }
 
@@ -72,11 +74,25 @@ export default function ToolFactsSidebar({
   companySize,
   headquarters,
   languages,
+  quickCompareLinks = [],
+  categoryHref = null,
   children,
 }: ToolFactsSidebarProps) {
   const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
-  const [compareAdded, setCompareAdded] = useState(false);
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
+  const [compareOpen, setCompareOpen] = useState(false);
+  const comparePopoverRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!compareOpen) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (comparePopoverRef.current && !comparePopoverRef.current.contains(e.target as Node)) {
+        setCompareOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [compareOpen]);
 
   const cta = affiliateUrl || websiteUrl;
   const tagSlugs = new Set(tags.map((t) => t.slug));
@@ -168,16 +184,46 @@ export default function ToolFactsSidebar({
             <Share2 className="w-3.5 h-3.5" />
             {shareState === 'copied' ? 'Copied!' : 'Share'}
           </button>
-          <button
-            type="button"
-            onClick={() => setCompareAdded((v) => !v)}
-            aria-pressed={compareAdded}
-            aria-label={compareAdded ? 'Remove from comparison' : 'Add to comparison'}
-            className={`flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors ${compareAdded ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
-          >
-            <GitCompareArrows className="w-3.5 h-3.5" />
-            Compare
-          </button>
+          <div className="relative flex-1" ref={comparePopoverRef}>
+            <button
+              type="button"
+              onClick={() => setCompareOpen((v) => !v)}
+              aria-expanded={compareOpen}
+              aria-label="Quick compare"
+              className={`w-full inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors ${compareOpen ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
+            >
+              <GitCompareArrows className="w-3.5 h-3.5" />
+              Compare
+            </button>
+            {compareOpen && (
+              <div className="absolute z-20 top-full mt-2 left-1/2 -translate-x-1/2 w-56 rounded-xl bg-white border border-[#eef0f3] shadow-[0_12px_28px_rgba(15,23,42,0.14)] p-1.5">
+                {quickCompareLinks.length > 0 ? (
+                  quickCompareLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      onClick={() => setCompareOpen(false)}
+                      className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors"
+                    >
+                      <GitCompareArrows className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      {link.label}
+                    </Link>
+                  ))
+                ) : categoryHref ? (
+                  <Link
+                    to={categoryHref}
+                    onClick={() => setCompareOpen(false)}
+                    className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors"
+                  >
+                    <FolderTree className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    Browse similar tools
+                  </Link>
+                ) : (
+                  <p className="px-2.5 py-2 text-xs text-slate-400">No comparisons available yet.</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {(hasFreePlan || hasFreeTrial || hasApi) && (
