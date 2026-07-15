@@ -5,8 +5,6 @@ interface KeyFactsSectionProps {
   shortDescription: string | null;
   categoryName: string | null;
   pricingModel: string | null;
-  startingPrice: string | null;
-  platformsLabel: string | null;
   hasFreePlan: boolean;
   hasApi: boolean;
   verified: boolean;
@@ -19,24 +17,24 @@ interface KeyFactsSectionProps {
 // Perplexity) and traditional crawlers alike can extract clean key/value
 // facts without guessing at visual structure. Visible heading reads
 // naturally for a human reader.
+//
+// Category/Pricing/Platforms are deliberately NOT repeated in the dl below —
+// they're already stated in the definition sentence just above (so crawlers
+// still see them in plain text) and again in QuickSummarySection right
+// above this section. A human scrolling past two near-identical fact grids
+// back to back reads as broken, not thorough; the dl here only adds the
+// facts that aren't already visible a few lines up.
 export default function KeyFactsSection({
   toolName,
   shortDescription,
   categoryName,
   pricingModel,
-  startingPrice,
-  platformsLabel,
   hasFreePlan,
   hasApi,
   verified,
   updatedLabel,
 }: KeyFactsSectionProps) {
   const facts: [string, string][] = [];
-  if (categoryName) facts.push(['Category', categoryName]);
-  if (pricingModel || startingPrice) {
-    facts.push(['Pricing', [pricingModel, startingPrice ? `from ${startingPrice}` : null].filter(Boolean).join(', ')]);
-  }
-  if (platformsLabel) facts.push(['Platforms', platformsLabel]);
   facts.push(['Free plan', hasFreePlan ? 'Yes' : 'No']);
   facts.push(['API access', hasApi ? 'Yes' : 'No']);
   facts.push(['Verified listing', verified ? 'Yes' : 'Not yet']);

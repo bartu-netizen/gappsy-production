@@ -57,6 +57,8 @@ export const PLATFORM_TAGS: { slug: string; label: string; icon: typeof Smartpho
   { slug: 'mobile-app', label: 'Mobile App', icon: Smartphone },
 ];
 
+const TAG_PREVIEW_COUNT = 8;
+
 function hostnameOf(url: string): string {
   try {
     return new URL(url).hostname.replace(/^www\./, '');
@@ -91,6 +93,7 @@ export default function ToolFactsSidebar({
   const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
   const [compareOpen, setCompareOpen] = useState(false);
+  const [tagsExpanded, setTagsExpanded] = useState(false);
   const comparePopoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -328,7 +331,7 @@ export default function ToolFactsSidebar({
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400 mb-2">Tags</p>
             <div className="flex flex-wrap gap-1.5">
-              {tags.map((t) => (
+              {(tagsExpanded ? tags : tags.slice(0, TAG_PREVIEW_COUNT)).map((t) => (
                 <Link
                   key={t.slug}
                   to={`/tool-tags/${t.slug}`}
@@ -338,6 +341,15 @@ export default function ToolFactsSidebar({
                   {t.name}
                 </Link>
               ))}
+              {!tagsExpanded && tags.length > TAG_PREVIEW_COUNT && (
+                <button
+                  type="button"
+                  onClick={() => setTagsExpanded(true)}
+                  className="inline-flex items-center text-xs font-medium text-indigo-600 px-2.5 py-1 rounded-full border border-indigo-100 hover:bg-indigo-50 transition-colors"
+                >
+                  +{tags.length - TAG_PREVIEW_COUNT} more
+                </button>
+              )}
             </div>
           </div>
         )}

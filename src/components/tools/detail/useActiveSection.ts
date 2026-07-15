@@ -22,12 +22,35 @@ export function useActiveSection(sections: TocSection[]) {
       { rootMargin: '-96px 0px -70% 0px', threshold: 0 }
     );
 
-    sections.forEach((section) => {
-      const el = document.getElementById(section.id);
-      if (el) observerRef.current?.observe(el);
-    });
+    const observed = new Set<string>();
+    function observeAnyNewSections() {
+      sections.forEach((section) => {
+        if (observed.has(section.id)) return;
+        const el = document.getElementById(section.id);
+        if (el) {
+          observed.add(section.id);
+          observerRef.current?.observe(el);
+        }
+      });
+    }
 
-    return () => observerRef.current?.disconnect();
+    observeAnyNewSections();
+
+    // Several sections below the fold (screenshots, integrations, reviews,
+    // alternatives, ...) render via LazyLoad and don't exist in the DOM yet
+    // at mount time — they mount later, once scrolled near, as an
+    // independent state update inside LazyLoad that never bubbles up to
+    // re-render this list. Without this, those sections are silently never
+    // observed and the active highlight gets stuck on whatever was last
+    // tracked. Watch the document for them appearing instead of assuming a
+    // single pass at mount finds everything.
+    const mutationObserver = new MutationObserver(observeAnyNewSections);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observerRef.current?.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [sections]);
 
   function goToSection(id: string) {

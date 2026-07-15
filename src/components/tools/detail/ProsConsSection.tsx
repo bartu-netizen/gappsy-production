@@ -19,13 +19,13 @@ export default function ProsConsSection({ toolName, pros, cons }: { toolName: st
         <Scale className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
         {verdict}
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
         {pros.length > 0 && (
           <Card className="p-5 sm:p-6">
             <h3 className="font-semibold text-emerald-700 text-sm uppercase tracking-wide mb-4">Pros</h3>
-            <ul className="space-y-3">
+            <ul className={`space-y-3 ${pros.length >= 8 ? 'sm:columns-2 sm:gap-x-6 sm:space-y-0 [&>li]:mb-3' : ''}`}>
               {pros.map((pro) => (
-                <li key={pro} className="flex items-start gap-2.5 text-[14.5px] text-slate-600 leading-relaxed">
+                <li key={pro} className="flex items-start gap-2.5 text-[14.5px] text-slate-600 leading-relaxed break-inside-avoid">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   {pro}
                 </li>
@@ -36,9 +36,9 @@ export default function ProsConsSection({ toolName, pros, cons }: { toolName: st
         {cons.length > 0 && (
           <Card className="p-5 sm:p-6">
             <h3 className="font-semibold text-rose-600 text-sm uppercase tracking-wide mb-4">Cons</h3>
-            <ul className="space-y-3">
+            <ul className={`space-y-3 ${cons.length >= 8 ? 'sm:columns-2 sm:gap-x-6 sm:space-y-0 [&>li]:mb-3' : ''}`}>
               {cons.map((con) => (
-                <li key={con} className="flex items-start gap-2.5 text-[14.5px] text-slate-600 leading-relaxed">
+                <li key={con} className="flex items-start gap-2.5 text-[14.5px] text-slate-600 leading-relaxed break-inside-avoid">
                   <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                   {con}
                 </li>

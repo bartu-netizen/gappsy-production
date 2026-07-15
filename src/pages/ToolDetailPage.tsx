@@ -230,13 +230,12 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           supabase.from('tool_integrations').select('id, integration_name, integration_slug, integration_logo, description').eq('tool_id', data.id),
           supabase.from('tool_reviews').select('id, author_name, author_title, rating, quote, source, created_at').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('rating', { ascending: false }).limit(6),
-          supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').neq('id', data.id).order('updated_at', { ascending: false }).limit(6),
           supabase.from('tool_features').select('title, description').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_pros').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_cons').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_use_cases').select('title, description, audience').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_faqs').select('question, answer').eq('tool_id', data.id).order('sort_order', { ascending: true }),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, recentlyUpdatedResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult]) => {
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -258,7 +257,6 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           setIntegrations(integrationsResult.data || []);
           setReviews(reviewsResult.data || []);
           setEditorPicks(editorPicksResult.data || []);
-          setRecentlyUpdated(recentlyUpdatedResult.data || []);
           setDbFeatures((featuresResult.data || []).map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] })));
           setDbPros((prosResult.data || []).map((r) => r.text));
           setDbCons((consResult.data || []).map((r) => r.text));
@@ -266,20 +264,39 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           setDbFaqs(faqsResult.data || []);
 
           if (primaryCategoryId) {
-            supabase
-              .from('tool_category_links')
-              .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status)')
-              .eq('category_id', primaryCategoryId)
-              .neq('tool_id', data.id)
-              .eq('tools.status', 'published')
-              .order('featured', { ascending: false, referencedTable: 'tools' })
-              .order('rating', { ascending: false, referencedTable: 'tools' })
-              .limit(8)
-              .then(({ data: relatedLinks }) => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const related = ((relatedLinks || []) as any[]).map((r) => r.tools).filter(Boolean);
-                setRelatedTools(related);
-              });
+            Promise.all([
+              supabase
+                .from('tool_category_links')
+                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status)')
+                .eq('category_id', primaryCategoryId)
+                .neq('tool_id', data.id)
+                .eq('tools.status', 'published')
+                .order('featured', { ascending: false, referencedTable: 'tools' })
+                .order('rating', { ascending: false, referencedTable: 'tools' })
+                .limit(8),
+              // Scoped to the same category as "Same Category" above — a
+              // sitewide "recently updated" query (no category filter)
+              // surfaced completely unrelated tools (e.g. dev-ops software on
+              // a design tool's page) any time something outside this tool's
+              // category happened to have a fresher updated_at.
+              supabase
+                .from('tool_category_links')
+                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status, updated_at)')
+                .eq('category_id', primaryCategoryId)
+                .neq('tool_id', data.id)
+                .eq('tools.status', 'published')
+                .order('updated_at', { ascending: false, referencedTable: 'tools' })
+                .limit(8),
+            ]).then(([{ data: relatedLinks }, { data: freshLinks }]) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const related = ((relatedLinks || []) as any[]).map((r) => r.tools).filter(Boolean);
+              setRelatedTools(related);
+
+              const relatedSlugs = new Set(related.map((t) => t.slug));
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const fresh = ((freshLinks || []) as any[]).map((r) => r.tools).filter(Boolean).filter((t) => !relatedSlugs.has(t.slug));
+              setRecentlyUpdated(fresh);
+            });
           }
 
           setLoading(false);
@@ -493,8 +510,6 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                   shortDescription={extendedContent ? null : tool.short_description}
                   categoryName={primaryCategory?.name || null}
                   pricingModel={tool.pricing_model}
-                  startingPrice={tool.starting_price}
-                  platformsLabel={platformsLabel}
                   hasFreePlan={hasFreePlan}
                   hasApi={hasApi}
                   verified={tool.verified}

@@ -1,4 +1,4 @@
-import { CheckCircle2, LayoutGrid } from 'lucide-react';
+import { CheckCircle2, LayoutGrid, Sparkles } from 'lucide-react';
 import type { ToolFeature } from '../../../data/toolContent/types';
 import { resolveLucideIcon } from '../../../utils/lucideIconMap';
 import ToolsSectionHeader from '../ToolsSectionHeader';
@@ -15,6 +15,38 @@ export default function FeatureGrid({ toolName, features }: { toolName: string; 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature, index) => {
           const Icon = resolveLucideIcon(feature.icon) || LayoutGrid;
+          // The first feature is the same one surfaced as "Standout feature"
+          // in the quick-facts strip up top — giving it identical visual
+          // weight to "Template library" here undersells it. A wider,
+          // tinted card with its own badge makes it read as the headline
+          // capability instead of one of N equal tiles.
+          if (index === 0) {
+            return (
+              <Card key={feature.title} className="p-5 sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-100">
+                <div className="flex items-center gap-2 mb-3.5">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white shadow-sm text-indigo-600">
+                    <Icon className="w-[18px] h-[18px]" />
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-full px-2.5 py-1">
+                    <Sparkles className="w-3 h-3" aria-hidden="true" />
+                    Standout
+                  </span>
+                </div>
+                <h3 className="font-semibold text-[#0B1221] text-[16px] mb-1.5">{feature.title}</h3>
+                <p className="text-[14px] text-slate-600 leading-relaxed mb-3 max-w-2xl">{feature.description}</p>
+                {feature.benefits.length > 0 && (
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                    {feature.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-start gap-1.5 text-[13px] text-slate-600">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Card>
+            );
+          }
           return (
             <Card key={feature.title} hoverLift className="p-5">
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3.5 ${ICON_TILE_COLORS[index % ICON_TILE_COLORS.length]}`}>
