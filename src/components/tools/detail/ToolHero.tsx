@@ -62,12 +62,12 @@ export default function ToolHero({
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-8 relative overflow-hidden">
       <div
-        className="absolute inset-x-0 top-0 h-64 -z-10 opacity-60"
+        className="absolute inset-x-0 top-0 h-40 sm:h-64 -z-10 opacity-60"
         style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(79,70,229,0.08), transparent)' }}
         aria-hidden="true"
       />
       <div
-        className="absolute inset-x-0 top-0 h-72 -z-10 opacity-40"
+        className="absolute inset-x-0 top-0 h-48 sm:h-72 -z-10 opacity-40"
         style={{
           background: 'radial-gradient(45% 80% at 85% 0%, rgba(139,92,246,0.10), transparent)',
           backgroundImage:
@@ -78,7 +78,7 @@ export default function ToolHero({
       />
 
       <div
-        className={`flex flex-col sm:flex-row sm:items-start gap-6 transition-all duration-500 ease-out ${
+        className={`flex flex-wrap sm:flex-nowrap sm:items-start gap-x-4 sm:gap-x-6 gap-y-5 transition-all duration-500 ease-out ${
           mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
         }`}
       >
