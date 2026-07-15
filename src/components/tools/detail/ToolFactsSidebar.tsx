@@ -182,7 +182,7 @@ export default function ToolFactsSidebar({
             href={cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F46E5] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-full font-semibold transition-all text-sm"
+            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F46E5] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
           >
             Visit Website
             <ExternalLink className="w-3.5 h-3.5" />

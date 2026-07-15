@@ -140,7 +140,7 @@ export default function ToolCategoriesIndexPage() {
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
+                  className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
                 >
                   Clear filter
                 </button>

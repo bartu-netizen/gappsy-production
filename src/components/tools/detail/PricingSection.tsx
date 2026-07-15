@@ -62,7 +62,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
                   href={cta}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className={`mt-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-all active:scale-[0.98] ${
+                  className={`mt-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all active:scale-[0.98] ${
                     isRecommended
                       ? 'bg-[#4F46E5] hover:bg-[#4338CA] text-white'
                       : 'bg-slate-50 hover:bg-slate-100 text-[#0B1221]'

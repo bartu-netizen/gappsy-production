@@ -276,7 +276,7 @@ export default function ToolsIndexPage() {
                 <button
                   type="submit"
                   disabled
-                  className="w-full sm:w-auto shrink-0 h-11 px-6 rounded-full bg-white text-[#0F172A] text-sm font-semibold cursor-not-allowed opacity-90"
+                  className="w-full sm:w-auto shrink-0 h-11 px-6 rounded-xl bg-white text-[#0F172A] text-sm font-semibold cursor-not-allowed opacity-90"
                 >
                   Notify me
                 </button>

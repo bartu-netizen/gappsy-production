@@ -28,7 +28,7 @@ export default function ToolConversionBand({ toolName, websiteUrl, affiliateUrl,
           href={cta}
           target="_blank"
           rel="noopener noreferrer nofollow"
-          className="inline-flex items-center gap-1.5 bg-white text-[#0B1221] px-6 py-3 rounded-full font-semibold text-sm hover:bg-slate-100 active:scale-[0.98] transition-all"
+          className="inline-flex items-center gap-1.5 bg-white text-[#0B1221] px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-100 active:scale-[0.98] transition-all"
         >
           {hasFreeOffering ? `Try ${toolName} Free` : `Visit ${toolName}`}
           <ExternalLink className="w-3.5 h-3.5" />
@@ -36,7 +36,7 @@ export default function ToolConversionBand({ toolName, websiteUrl, affiliateUrl,
         {hasVideo && (
           <a
             href="#video"
-            className="inline-flex items-center gap-1.5 border border-white/20 text-white px-6 py-3 rounded-full font-semibold text-sm hover:bg-white/10 active:scale-[0.98] transition-all"
+            className="inline-flex items-center gap-1.5 border border-white/20 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-white/10 active:scale-[0.98] transition-all"
           >
             <PlayCircle className="w-4 h-4" />
             Watch Demo

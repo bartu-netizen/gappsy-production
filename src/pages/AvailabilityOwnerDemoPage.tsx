@@ -175,7 +175,7 @@ function DemoOwnerStickyHeader({
     <div className="mt-3 flex flex-col items-center gap-2">
       <button
         onClick={onActivate}
-        className="bg-[#151f34] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#1e2d4a] transition-colors shadow-sm whitespace-nowrap"
+        className="bg-[#151f34] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#1e2d4a] transition-colors shadow-sm whitespace-nowrap"
       >
         Show my missed requests →
       </button>

@@ -157,7 +157,7 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
       </p>
       <Link
         to={onboardingHref}
-        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
       >
         Claim & feature this listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -188,7 +188,7 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
       </div>
       <Link
         to={`/tools/${tool.slug}`}
-        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shrink-0 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shrink-0 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
       >
         View listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

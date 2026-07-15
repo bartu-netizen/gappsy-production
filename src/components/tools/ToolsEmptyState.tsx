@@ -52,7 +52,7 @@ export default function ToolsEmptyState({
       {actionLabel && actionHref && (
         <Link
           to={actionHref}
-          className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
+          className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
         >
           {actionLabel}
           <ArrowRight className="w-3.5 h-3.5" />
