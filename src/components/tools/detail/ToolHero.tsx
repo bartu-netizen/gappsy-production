@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { ShieldCheck, Star, Sparkles, BadgeCheck, MessageSquarePlus } from 'lucide-react';
+import { ShieldCheck, Star, Sparkles, BadgeCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '../../Badge';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
+import AskGappsyChat from '../../askGappsy/AskGappsyChat';
 import type { TaxonomyRef } from './types';
 
 interface ToolHeroProps {
+  slug: string;
   name: string;
   logo: string | null;
   shortDescription: string | null;
@@ -29,6 +31,7 @@ function initialsOf(name: string): string {
 }
 
 export default function ToolHero({
+  slug,
   name,
   logo,
   shortDescription,
@@ -71,6 +74,10 @@ export default function ToolHero({
         aria-hidden="true"
       />
 
+      {/* Top identity row — logo, name, badges, description, rating. No CTA
+          column squeezed in beside it anymore: the chat card below gets the
+          hero's full width instead of sharing a cramped sidebar slot, which
+          is what "See Reviews" + a compare link used to sit in. */}
       <div
         className={`flex flex-wrap sm:flex-nowrap sm:items-start gap-x-4 sm:gap-x-6 gap-y-5 transition-all duration-500 ease-out ${
           mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
@@ -181,25 +188,21 @@ export default function ToolHero({
             </div>
           )}
         </div>
+      </div>
 
-        {/* Not a "Visit Website" repeat — the sidebar CTA is already
-            permanently visible (lg:sticky) and the mobile/desktop sticky
-            bars cover conversion too. This slot instead drives on-site
-            engagement: seeing (and writing) a review, bootstrapping the
-            review system. Deliberately just one CTA now — a "Compare"
-            link used to sit here too, but that's fully redundant with the
-            sidebar's own Compare quick-action (Save/Share/Compare row),
-            so pairing them here was two mismatched-weight elements doing
-            the same job rather than one clean action. */}
-        <div className="shrink-0 w-full sm:w-auto">
-          <a
-            href="#reviews"
-            className="inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
-          >
-            <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
-            See Reviews
-          </a>
-        </div>
+      {/* Full-width "Ask Gappsy" chat — the crucial, highly-visible slot the
+          old CTA column used to occupy. Wide enough here for a real
+          conversation instead of a cramped sidebar-width widget. */}
+      <div className="mt-6 rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
+        <AskGappsyChat
+          toolSlug={slug}
+          toolName={name}
+          suggestedQuestions={[
+            `Is ${name} free to use?`,
+            `What's ${name} best for?`,
+            `Is it easy to learn?`,
+          ]}
+        />
       </div>
     </section>
   );

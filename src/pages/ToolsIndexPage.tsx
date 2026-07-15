@@ -10,6 +10,7 @@ import CategoryTile, { type CategoryTileData } from '../components/tools/Categor
 import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState from '../components/tools/ToolsEmptyState';
+import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { supabase } from '../lib/supabase';
 
 interface ToolRow extends ToolCardData {
@@ -288,6 +289,7 @@ export default function ToolsIndexPage() {
       </main>
 
       <FooterWrapper />
+      <AskGappsyBubble />
     </div>
   );
 }

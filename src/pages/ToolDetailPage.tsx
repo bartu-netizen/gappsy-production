@@ -481,6 +481,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       </div>
 
       <ToolHero
+        slug={tool.slug}
         name={tool.name}
         logo={safeLogo}
         shortDescription={tool.short_description}
