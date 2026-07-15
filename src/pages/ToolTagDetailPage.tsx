@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Tag as TagIcon, ArrowLeft } from 'lucide-react';
-import MiniHeader from '../components/MiniHeader';
+import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ToolCard, { type ToolCardData } from '../components/ToolCard';
@@ -90,7 +90,7 @@ export default function ToolTagDetailPage() {
   if (loading) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <div className="pt-6 pb-2"><MiniHeader /></div>
+        <SoftwareHeader variant="premium" />
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <ToolsSkeletonGrid count={6} />
         </main>
@@ -103,7 +103,7 @@ export default function ToolTagDetailPage() {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Tag Not Found | Gappsy" description="This tag could not be found." path={`/tool-tags/${tagSlug || ''}`} noindex />
-        <div className="pt-6 pb-2"><MiniHeader /></div>
+        <SoftwareHeader variant="premium" />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
             <TagIcon className="w-6 h-6 text-slate-400" />
@@ -130,7 +130,7 @@ export default function ToolTagDetailPage() {
         jsonLd={[{ '@type': 'CollectionPage', '@id': `https://www.gappsy.com/tool-tags/${tag.slug}/#collection`, name: `${tag.name} Tools` }]}
       />
 
-      <div className="pt-6 pb-2"><MiniHeader /></div>
+      <SoftwareHeader variant="premium" />
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10 sm:pb-12 text-center">
         <Link to="/tools" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors mb-5">

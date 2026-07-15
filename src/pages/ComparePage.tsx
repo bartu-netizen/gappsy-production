@@ -112,7 +112,7 @@ export default function ComparePage() {
         breadcrumbs={[{ name: 'Compare', path: '/compare' }]}
       />
 
-      <SoftwareHeader />
+      <SoftwareHeader variant="premium" />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
         <div className="text-center max-w-2xl mx-auto mb-10">

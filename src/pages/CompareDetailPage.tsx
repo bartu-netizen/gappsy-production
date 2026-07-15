@@ -226,7 +226,7 @@ export default function CompareDetailPage() {
   if (loading) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20 animate-pulse space-y-8">
           <div className="h-8 bg-slate-200 rounded-lg w-2/3 mx-auto" />
           <div className="flex justify-center gap-10">
@@ -244,7 +244,7 @@ export default function CompareDetailPage() {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Comparison Not Found | Gappsy" description="This comparison could not be found." path={`/compare/${comparisonSlug || ''}`} noindex />
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
             <FolderTree className="w-6 h-6 text-slate-400" />
@@ -319,7 +319,7 @@ export default function CompareDetailPage() {
         jsonLd={faqJsonLd}
       />
 
-      <SoftwareHeader />
+      <SoftwareHeader variant="premium" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6">
         <ToolBreadcrumbs items={[{ name: 'Compare', path: '/compare' }, { name: `${aRow.name} vs ${bRow.name}` }]} />

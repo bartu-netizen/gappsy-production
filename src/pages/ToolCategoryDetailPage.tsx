@@ -193,7 +193,7 @@ export default function ToolCategoryDetailPage() {
   if (loading) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <ToolsSkeletonGrid count={6} />
         </main>
@@ -206,7 +206,7 @@ export default function ToolCategoryDetailPage() {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
         <EntitySEOTags title="Category Not Found | Gappsy" description="This category could not be found." path={`/tool-categories/${categorySlug || ''}`} noindex />
-        <SoftwareHeader />
+        <SoftwareHeader variant="premium" />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
             <FolderTree className="w-6 h-6 text-slate-400" />
@@ -272,7 +272,7 @@ export default function ToolCategoryDetailPage() {
         ]}
       />
 
-      <SoftwareHeader />
+      <SoftwareHeader variant="premium" />
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 text-center">
         <Link to="/tool-categories" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors mb-5">

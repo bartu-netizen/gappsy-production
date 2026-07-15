@@ -77,7 +77,7 @@ export default function ToolCategoriesIndexPage() {
         jsonLd={itemListJsonLd}
       />
 
-      <SoftwareHeader />
+      <SoftwareHeader variant="premium" />
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-indigo-600 mb-3">Browse</p>

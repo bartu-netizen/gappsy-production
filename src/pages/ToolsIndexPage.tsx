@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Sparkles, Tag as TagIcon, Clock, Mail, X } from 'lucide-react';
-import MiniHeader from '../components/MiniHeader';
+import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ToolCard, { type ToolCardData } from '../components/ToolCard';
@@ -103,9 +103,7 @@ export default function ToolsIndexPage() {
         jsonLd={[{ '@type': 'CollectionPage', '@id': 'https://www.gappsy.com/tools/#collection', name: 'Tools Directory' }]}
       />
 
-      <div className="pt-6 pb-2">
-        <MiniHeader />
-      </div>
+      <SoftwareHeader variant="premium" />
 
       {/* Hero */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10 sm:pb-14 text-center">
