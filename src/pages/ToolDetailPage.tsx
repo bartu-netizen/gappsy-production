@@ -606,6 +606,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         featured={tool.featured}
         cta={affiliateUrl || websiteUrl}
         featuredPromo={featuredPromo}
+        categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
       />
     </div>
   );

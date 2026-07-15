@@ -12,6 +12,7 @@ interface StickyMobileToolBarProps {
   featured: boolean;
   cta: string | null;
   featuredPromo?: FeaturedTool | null;
+  categoryHref?: string | null;
 }
 
 // Mobile-only sticky bottom bar. This slot is a perk of being a featured
@@ -22,7 +23,7 @@ interface StickyMobileToolBarProps {
 // promo pattern as FeaturedToolPromo, just in the one placement that's
 // actually reserved for paying listings. Renders nothing if neither applies
 // (no CTA and no promo candidate).
-export default function StickyMobileToolBar({ toolName, featured, cta, featuredPromo }: StickyMobileToolBarProps) {
+export default function StickyMobileToolBar({ toolName, featured, cta, featuredPromo, categoryHref }: StickyMobileToolBarProps) {
   if (featured && cta) {
     return (
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
@@ -57,6 +58,19 @@ export default function StickyMobileToolBar({ toolName, featured, cta, featuredP
           </div>
           <ArrowRight className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
         </Link>
+        {/* A neutral escape hatch for visitors who aren't interested in the
+            one competitor being promoted here — this slot is reserved for a
+            paying feature, so it can only ever show a single ad; this link
+            is how a non-featured page still offers a route to "something
+            else" without turning the bar into a multi-ad carousel. */}
+        {categoryHref && (
+          <Link
+            to={categoryHref}
+            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100"
+          >
+            See alternatives
+          </Link>
+        )}
       </div>
     );
   }
