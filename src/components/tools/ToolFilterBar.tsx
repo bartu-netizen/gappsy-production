@@ -94,7 +94,7 @@ export default function ToolFilterBar({
             value={sort}
             onChange={(e) => onSortChange(e.target.value as ToolSortOption)}
             aria-label="Sort tools"
-            className="appearance-none pl-3 pr-8 py-2 rounded-full border border-slate-200 bg-white text-xs font-medium text-slate-600 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+            className="appearance-none pl-3 pr-8 py-2 rounded-full border border-slate-200 bg-white text-xs font-medium text-slate-600 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 cursor-pointer"
           >
             {(Object.keys(SORT_LABELS) as ToolSortOption[]).map((key) => (
               <option key={key} value={key}>
@@ -116,7 +116,7 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
       onClick={onClick}
       aria-pressed={active}
       className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-        active ? 'bg-blue-50 border-blue-200 text-blue-700' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'
+        active ? 'bg-[#EEF1F7] border-[#C7CEE3] text-[#132952]' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'
       }`}
     >
       {children}
@@ -141,8 +141,8 @@ function SelectPill({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label={placeholder}
-        className={`appearance-none pl-3 pr-7 py-1.5 rounded-full border text-xs font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
-          value ? 'bg-blue-50 border-blue-200 text-blue-700' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-white'
+        className={`appearance-none pl-3 pr-7 py-1.5 rounded-full border text-xs font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 ${
+          value ? 'bg-[#EEF1F7] border-[#C7CEE3] text-[#132952]' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-white'
         }`}
       >
         <option value="">{placeholder}</option>

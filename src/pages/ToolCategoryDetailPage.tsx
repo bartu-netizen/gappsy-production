@@ -213,7 +213,7 @@ export default function ToolCategoryDetailPage() {
           </div>
           <h1 className="text-2xl font-bold text-[#0B1221] mb-2">Category not found</h1>
           <p className="text-slate-500 mb-6">This category doesn't exist or is no longer published.</p>
-          <Link to="/tool-categories" className="inline-flex items-center gap-1.5 text-blue-600 font-semibold hover:text-blue-700">
+          <Link to="/tool-categories" className="inline-flex items-center gap-1.5 text-[#0A1735] font-semibold hover:text-[#132952]">
             <ArrowLeft className="w-4 h-4" />
             Browse all categories
           </Link>
@@ -279,7 +279,7 @@ export default function ToolCategoryDetailPage() {
           <ArrowLeft className="w-3 h-3" />
           All categories
         </Link>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-3">Category</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-3">Category</p>
         <h1 className="text-3xl sm:text-[38px] font-bold text-[#0B1221] leading-[1.1] mb-4">{category.name}</h1>
         {category.description && (
           <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto">{category.description}</p>
@@ -428,7 +428,7 @@ export default function ToolCategoryDetailPage() {
                     <Link
                       key={c.href}
                       to={c.href}
-                      className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-blue-600 hover:border-blue-200 px-3.5 py-1.5 rounded-full transition-colors"
+                      className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-[#0A1735] hover:border-[#C7CEE3] px-3.5 py-1.5 rounded-full transition-colors"
                     >
                       {c.label}
                     </Link>

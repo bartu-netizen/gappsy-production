@@ -28,7 +28,7 @@ export default function FAQSection({ toolName, faqs }: { toolName: string; faqs:
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${index}`}
-                className="w-full flex items-center justify-between gap-3 text-left px-5 py-4 hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                className="w-full flex items-center justify-between gap-3 text-left px-5 py-4 hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0A1735]"
               >
                 <span className="font-medium text-[#0B1221] text-[15px]">{faq.question}</span>
                 <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />

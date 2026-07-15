@@ -51,7 +51,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
                 <ul className="space-y-2 pt-3 border-t border-slate-100 mb-4">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-[13px] text-slate-600">
-                      <Check className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
+                      <Check className="w-3.5 h-3.5 text-[#0A1735] shrink-0 mt-0.5" />
                       {feature}
                     </li>
                   ))}

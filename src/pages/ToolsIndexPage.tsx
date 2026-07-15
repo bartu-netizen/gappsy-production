@@ -107,7 +107,7 @@ export default function ToolsIndexPage() {
 
       {/* Hero */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10 sm:pb-14 text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-3">Tools Directory</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-3">Tools Directory</p>
         <h1 className="text-3xl sm:text-[40px] font-bold text-[#0B1221] leading-[1.1] mb-4">
           Software worth building your stack around
         </h1>
@@ -219,7 +219,7 @@ export default function ToolsIndexPage() {
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#0B1221] group-hover:text-blue-600 transition-colors truncate">
+                        <p className="text-sm font-semibold text-[#0B1221] group-hover:text-[#0A1735] transition-colors truncate">
                           {tool.name}
                         </p>
                         {tool.short_description && (
@@ -244,7 +244,7 @@ export default function ToolsIndexPage() {
                       <Link
                         key={tag.slug}
                         to={`/tool-tags/${tag.slug}`}
-                        className={`inline-flex items-center gap-1.5 bg-white border border-[#eef0f3] rounded-full font-medium text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors ${scaleClass}`}
+                        className={`inline-flex items-center gap-1.5 bg-white border border-[#eef0f3] rounded-full font-medium text-slate-600 hover:text-[#0A1735] hover:border-[#C7CEE3] transition-colors ${scaleClass}`}
                       >
                         <TagIcon className="w-3 h-3 text-slate-300" />
                         {tag.name}

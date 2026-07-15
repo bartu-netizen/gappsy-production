@@ -4,7 +4,7 @@ import { resolveLucideIcon } from '../../../utils/lucideIconMap';
 import ToolsSectionHeader from '../ToolsSectionHeader';
 import Card from './Card';
 
-const ICON_TILE_COLORS = ['bg-blue-50 text-blue-600', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-700'];
+const ICON_TILE_COLORS = ['bg-[#EEF1F7] text-[#0A1735]', 'bg-violet-50 text-violet-600', 'bg-emerald-50 text-emerald-600', 'bg-amber-50 text-amber-700'];
 
 export default function FeatureGrid({ toolName, features }: { toolName: string; features: ToolFeature[] }) {
   if (features.length === 0) return null;
@@ -22,9 +22,9 @@ export default function FeatureGrid({ toolName, features }: { toolName: string; 
           // capability instead of one of N equal tiles.
           if (index === 0) {
             return (
-              <Card key={feature.title} className="p-5 sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-blue-50 to-purple-50 border-blue-100">
+              <Card key={feature.title} className="p-5 sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-[#EEF1F7] to-purple-50 border-[#DEE3EF]">
                 <div className="flex items-center gap-2 mb-3.5">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white shadow-sm text-blue-600">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white shadow-sm text-[#0A1735]">
                     <Icon className="w-[18px] h-[18px]" />
                   </div>
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.06em] text-white bg-[#0A1735] rounded-full px-2.5 py-1">

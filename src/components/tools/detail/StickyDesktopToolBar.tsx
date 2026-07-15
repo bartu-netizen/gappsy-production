@@ -88,7 +88,7 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
             <Link
               key={promo.slug}
               to={`/tools/${promo.slug}`}
-              className="group flex items-center gap-2.5 min-w-0 flex-1 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-1.5 hover:bg-blue-50 hover:border-blue-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="group flex items-center gap-2.5 min-w-0 flex-1 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-1.5 hover:bg-[#EEF1F7] hover:border-[#DEE3EF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735]"
             >
               {promo.logo ? (
                 <img src={promo.logo} alt="" className="w-8 h-8 rounded-lg object-contain border border-slate-100 shrink-0 bg-white" />
@@ -96,19 +96,19 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
                 <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{promo.name.charAt(0)}</div>
               )}
               <span className="min-w-0 flex-1">
-                <span className="block text-[13px] font-semibold text-[#0B1221] leading-tight truncate group-hover:text-blue-600 transition-colors">{promo.name}</span>
+                <span className="block text-[13px] font-semibold text-[#0B1221] leading-tight truncate group-hover:text-[#0A1735] transition-colors">{promo.name}</span>
                 {promo.short_description && (
                   <OverflowMarqueeText text={promo.short_description} className="text-[11.5px] text-slate-500 max-w-[160px] lg:max-w-[220px]" />
                 )}
               </span>
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 transition-colors shrink-0" aria-hidden="true" />
+              <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0A1735] transition-colors shrink-0" aria-hidden="true" />
             </Link>
           ))}
         </div>
 
         <Link
           to="/feature-my-product"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-[#2952CC] hover:text-[#1F3FA3] transition-colors shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-[#2952CC] hover:text-[#1F3FA3] transition-colors shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] rounded-sm"
         >
           <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
           Get featured here?
@@ -118,7 +118,7 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="Dismiss"
-          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735]"
         >
           <X className="w-4 h-4" aria-hidden="true" />
         </button>

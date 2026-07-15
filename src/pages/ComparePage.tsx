@@ -116,8 +116,8 @@ export default function ComparePage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
-            <GitCompareArrows className="w-5 h-5 text-blue-500" />
+          <div className="w-12 h-12 rounded-2xl bg-[#EEF1F7] flex items-center justify-center mx-auto mb-4">
+            <GitCompareArrows className="w-5 h-5 text-[#0A1735]" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#0B1221] tracking-tight">Compare Software, Side by Side</h1>
           <p className="text-slate-500 mt-3 text-[15px]">
@@ -135,7 +135,7 @@ export default function ComparePage() {
               disabled={!toolA && !toolB}
               aria-label="Swap Tool A and Tool B"
               title="Swap tools"
-              className="hidden sm:inline-flex items-center justify-center w-8 h-14 shrink-0 text-slate-300 rounded-xl hover:bg-slate-50 hover:text-blue-500 disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-300 transition-colors"
+              className="hidden sm:inline-flex items-center justify-center w-8 h-14 shrink-0 text-slate-300 rounded-xl hover:bg-slate-50 hover:text-[#0A1735] disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-300 transition-colors"
             >
               <ArrowLeftRight className="w-4 h-4" />
             </button>
@@ -144,7 +144,7 @@ export default function ComparePage() {
               onClick={handleSwap}
               disabled={!toolA && !toolB}
               aria-label="Swap Tool A and Tool B"
-              className="sm:hidden inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium text-slate-400 hover:text-blue-500 disabled:opacity-40 transition-colors"
+              className="sm:hidden inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium text-slate-400 hover:text-[#0A1735] disabled:opacity-40 transition-colors"
             >
               <ArrowLeftRight className="w-3.5 h-3.5" />
               Swap

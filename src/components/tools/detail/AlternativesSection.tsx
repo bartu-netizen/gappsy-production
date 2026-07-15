@@ -65,7 +65,7 @@ export default function AlternativesSection({ toolName, alternatives }: { toolNa
 
             <p className="text-[12.5px] text-slate-400 mt-auto pt-3 border-t border-slate-100 mb-3">{alt.pricingSummary}</p>
 
-            <Link to={alt.href} className="inline-flex items-center text-xs font-semibold text-blue-600 hover:text-blue-700">
+            <Link to={alt.href} className="inline-flex items-center text-xs font-semibold text-[#0A1735] hover:text-[#132952]">
               Browse similar tools &rarr;
             </Link>
           </Card>

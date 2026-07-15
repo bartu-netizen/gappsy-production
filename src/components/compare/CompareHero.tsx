@@ -36,24 +36,24 @@ function ToolIdentity({
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
           />
         ) : (
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-400 font-bold text-2xl">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#EEF1F7] flex items-center justify-center text-[#5A6B94] font-bold text-2xl">
             {tool.name.charAt(0)}
           </div>
         )}
       </div>
 
       <div className="flex items-center gap-1.5 mb-1">
-        <Link to={`/tools/${tool.slug}`} className="font-bold text-[#0B1221] text-lg hover:text-blue-600 transition-colors">
+        <Link to={`/tools/${tool.slug}`} className="font-bold text-[#0B1221] text-lg hover:text-[#0A1735] transition-colors">
           {tool.name}
         </Link>
-        {tool.verified && <ShieldCheck className="w-4 h-4 text-blue-500 shrink-0" aria-label="Verified" />}
+        {tool.verified && <ShieldCheck className="w-4 h-4 text-[#0A1735] shrink-0" aria-label="Verified" />}
       </div>
 
       <div className="flex items-center justify-center gap-2 flex-wrap mb-2.5">
         {tool.primaryCategory && (
           <Link
             to={`/tool-categories/${tool.primaryCategory.slug}`}
-            className="inline-flex items-center text-[11px] font-medium bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full hover:bg-blue-100 transition-colors"
+            className="inline-flex items-center text-[11px] font-medium bg-[#EEF1F7] text-[#132952] px-2.5 py-1 rounded-full hover:bg-[#DEE3EF] transition-colors"
           >
             {tool.primaryCategory.name}
           </Link>
@@ -112,7 +112,7 @@ function ToolIdentity({
           <button
             type="button"
             onClick={() => setSwitching(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-blue-600 transition-colors mt-1"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-[#0A1735] transition-colors mt-1"
           >
             <RefreshCw className="w-3 h-3" />
             Compare a different tool

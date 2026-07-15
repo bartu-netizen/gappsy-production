@@ -95,7 +95,7 @@ export default function ScreenshotGallery({
         key={shot.id}
         type="button"
         onClick={() => setActiveIndex(index)}
-        className="group w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
+        className="group w-full text-left focus:outline-none focus:ring-2 focus:ring-[#0A1735] rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
       >
         <BrowserFrame hostname={hostname} className="shadow-sm group-hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)] transition-shadow duration-200">
           <div className="relative aspect-video overflow-hidden">

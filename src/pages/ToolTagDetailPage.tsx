@@ -110,7 +110,7 @@ export default function ToolTagDetailPage() {
           </div>
           <h1 className="text-2xl font-bold text-[#0B1221] mb-2">Tag not found</h1>
           <p className="text-slate-500 mb-6">This tag doesn't exist or has no published tools.</p>
-          <Link to="/tools" className="inline-flex items-center gap-1.5 text-blue-600 font-semibold hover:text-blue-700">
+          <Link to="/tools" className="inline-flex items-center gap-1.5 text-[#0A1735] font-semibold hover:text-[#132952]">
             <ArrowLeft className="w-4 h-4" />
             Browse all tools
           </Link>
@@ -137,7 +137,7 @@ export default function ToolTagDetailPage() {
           <ArrowLeft className="w-3 h-3" />
           All tools
         </Link>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-3 inline-flex items-center gap-1.5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-3 inline-flex items-center gap-1.5">
           <TagIcon className="w-3 h-3" />
           Tag
         </p>

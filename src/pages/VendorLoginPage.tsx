@@ -42,14 +42,14 @@ export default function VendorLoginPage() {
         <div className="w-full max-w-sm">
           {!authLoading && user ? (
             <div className="bg-white border border-[#eef0f3] rounded-3xl p-7 shadow-[0_8px_24px_rgba(15,23,42,0.06)] text-center">
-              <div className="w-11 h-11 rounded-2xl bg-indigo-50 flex items-center justify-center mx-auto mb-4">
-                <LayoutDashboard className="w-5 h-5 text-indigo-500" />
+              <div className="w-11 h-11 rounded-2xl bg-[#EEF1F7] flex items-center justify-center mx-auto mb-4">
+                <LayoutDashboard className="w-5 h-5 text-[#0A1735]" />
               </div>
               <h1 className="text-lg font-bold text-[#0B1221]">You're already signed in</h1>
               <p className="text-sm text-slate-500 mt-1.5 mb-5">{user.email}</p>
               <Link
                 to="/vendor/dashboard"
-                className="inline-flex items-center justify-center gap-1.5 w-full bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all"
+                className="inline-flex items-center justify-center gap-1.5 w-full bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all"
               >
                 Go to dashboard
                 <ArrowRight className="w-4 h-4" />
@@ -77,7 +77,7 @@ export default function VendorLoginPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-300 transition-shadow"
+                      className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow"
                       placeholder="you@company.com"
                     />
                   </div>
@@ -92,7 +92,7 @@ export default function VendorLoginPage() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-300 transition-shadow"
+                      className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow"
                       placeholder="••••••••"
                     />
                   </div>
@@ -101,7 +101,7 @@ export default function VendorLoginPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60 mt-1"
+                  className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60 mt-1"
                 >
                   {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   Sign in

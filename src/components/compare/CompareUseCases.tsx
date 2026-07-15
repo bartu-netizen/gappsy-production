@@ -55,7 +55,7 @@ export default function CompareUseCases({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
           {whoShouldChooseA && (
             <Card className="p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-500 mb-1.5">Choose {toolA.name}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-[#0A1735] mb-1.5">Choose {toolA.name}</p>
               <p className="text-[13px] text-slate-600 leading-relaxed">{whoShouldChooseA}</p>
             </Card>
           )}

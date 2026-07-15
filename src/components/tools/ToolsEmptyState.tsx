@@ -31,13 +31,13 @@ export default function ToolsEmptyState({
   exploreLabel = 'Explore instead',
 }: ToolsEmptyStateProps) {
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
-      <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-blue-100 shadow-sm flex items-center justify-center mb-6">
-        <Icon className="w-6 h-6 text-blue-600" strokeWidth={1.75} />
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#EEF1F7] via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
+      <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-[#DEE3EF] shadow-sm flex items-center justify-center mb-6">
+        <Icon className="w-6 h-6 text-[#0A1735]" strokeWidth={1.75} />
       </div>
 
       {eyebrow && (
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-2">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-2">
           {eyebrow}
         </p>
       )}
@@ -69,7 +69,7 @@ export default function ToolsEmptyState({
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-blue-600 hover:border-blue-200 px-3.5 py-1.5 rounded-full transition-colors"
+                className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-[#0A1735] hover:border-[#C7CEE3] px-3.5 py-1.5 rounded-full transition-colors"
               >
                 {link.label}
               </Link>

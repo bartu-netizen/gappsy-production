@@ -34,7 +34,7 @@ export default function MobileTableOfContents({ sections }: { sections: TocSecti
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex items-center justify-between w-full py-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded-sm"
+        className="flex items-center justify-between w-full py-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] focus-visible:ring-inset rounded-sm"
       >
         <span className="min-w-0">
           <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-400 block">On this page</span>
@@ -52,8 +52,8 @@ export default function MobileTableOfContents({ sections }: { sections: TocSecti
                   type="button"
                   onClick={() => handleSelect(section.id)}
                   aria-current={activeId === section.id ? 'true' : undefined}
-                  className={`block w-full text-left px-4 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 ${
-                    activeId === section.id ? 'text-blue-600 font-medium bg-blue-50/60' : 'text-slate-600 hover:bg-slate-50'
+                  className={`block w-full text-left px-4 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0A1735] ${
+                    activeId === section.id ? 'text-[#0A1735] font-medium bg-[#EEF1F7]/60' : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   {section.label}

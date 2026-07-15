@@ -36,7 +36,7 @@ export default function StickyMobileToolBar({ featuredPromo, categoryHref }: Sti
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
         <Link
           to={`/tools/${featuredPromo.slug}`}
-          className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-2 active:bg-blue-50 active:border-blue-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-2 active:bg-[#EEF1F7] active:border-[#DEE3EF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735]"
         >
           {featuredPromo.logo ? (
             <img src={featuredPromo.logo} alt="" className="w-9 h-9 rounded-lg object-contain border border-slate-100 shrink-0 bg-white" />
@@ -60,7 +60,7 @@ export default function StickyMobileToolBar({ featuredPromo, categoryHref }: Sti
         {categoryHref && (
           <Link
             to={categoryHref}
-            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
+            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] rounded-sm"
           >
             See alternatives
           </Link>
