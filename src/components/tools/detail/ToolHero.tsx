@@ -195,8 +195,11 @@ export default function ToolHero({
             permanently visible (lg:sticky) and the mobile/desktop sticky
             bars cover conversion too. This slot instead drives on-site
             engagement: writing a review (bootstraps the review system)
-            and comparing against a real alternative. */}
-        <div className="flex flex-col gap-2 sm:items-end shrink-0 w-full sm:w-auto lg:bg-white/80 lg:border lg:border-slate-100 lg:rounded-2xl lg:shadow-sm lg:p-4">
+            and comparing against a real alternative. One clear primary
+            action plus a quiet text link reads as an intentional pair, not
+            two competing buttons — the earlier bordered-pill treatment for
+            Compare looked like a shrunken copy of the CTA above it. */}
+        <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0 w-full sm:w-auto">
           <a
             href="#reviews"
             className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-full font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
@@ -207,7 +210,7 @@ export default function ToolHero({
           {compareHref && (
             <Link
               to={compareHref}
-              className="inline-flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 hover:border-slate-300 px-6 py-2 rounded-full font-medium transition-colors text-xs w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
             >
               <GitCompareArrows className="w-3.5 h-3.5" aria-hidden="true" />
               {compareLabel}
