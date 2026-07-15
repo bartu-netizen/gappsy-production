@@ -112,7 +112,7 @@ export default function VendorClaimPage() {
         <div className="w-full max-w-sm">
           <div className="bg-white border border-[#eef0f3] rounded-3xl p-7 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
             {loadState === 'loading' && (
-              <div className="flex items-center justify-center py-10"><Loader2 className="w-6 h-6 text-[#0A1735] animate-spin" /></div>
+              <div className="flex items-center justify-center py-10"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
             )}
 
             {loadState === 'not_found' && <ClaimNotice title="Link not found" body="Double-check the link from your verification email, or contact support for a new one." />}
@@ -154,7 +154,7 @@ export default function VendorClaimPage() {
                         minLength={8}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow"
+                        className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow"
                         placeholder="At least 8 characters"
                       />
                     </div>
@@ -169,7 +169,7 @@ export default function VendorClaimPage() {
                         required
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow"
+                        className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow"
                         placeholder="Repeat password"
                       />
                     </div>
@@ -178,7 +178,7 @@ export default function VendorClaimPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60 mt-1"
+                    className="w-full inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60 mt-1"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     Create account
@@ -189,8 +189,8 @@ export default function VendorClaimPage() {
 
             {step === 'confirm_email' && (
               <div className="text-center py-2">
-                <div className="w-11 h-11 rounded-2xl bg-[#EEF1F7] flex items-center justify-center mx-auto mb-4">
-                  <MailCheck className="w-5 h-5 text-[#0A1735]" />
+                <div className="w-11 h-11 rounded-2xl bg-[#EEF0FE] flex items-center justify-center mx-auto mb-4">
+                  <MailCheck className="w-5 h-5 text-[#4F47E6]" />
                 </div>
                 <h1 className="text-lg font-bold text-[#0B1221]">Confirm your email</h1>
                 <p className="text-[13px] text-slate-500 mt-1.5 mb-5 leading-relaxed">
@@ -201,7 +201,7 @@ export default function VendorClaimPage() {
                   type="button"
                   onClick={handleConfirmedContinue}
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60"
+                  className="w-full inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-60"
                 >
                   {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   I've confirmed — continue
@@ -219,7 +219,7 @@ export default function VendorClaimPage() {
                 <button
                   type="button"
                   onClick={() => navigate('/vendor/dashboard')}
-                  className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all"
+                  className="w-full inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all"
                 >
                   Go to dashboard
                   <ArrowRight className="w-4 h-4" />
@@ -247,7 +247,7 @@ function ClaimNotice({ title, body, action }: { title: string; body: string; act
       <h1 className="text-lg font-bold text-[#0B1221]">{title}</h1>
       <p className="text-[13px] text-slate-500 mt-1.5 mb-4 leading-relaxed">{body}</p>
       {action && (
-        <Link to={action.href} className="inline-flex items-center gap-1 text-sm font-medium text-[#0A1735] hover:text-[#132952]">
+        <Link to={action.href} className="inline-flex items-center gap-1 text-sm font-medium text-[#4F47E6] hover:text-[#4338CA]">
           {action.label} <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       )}

@@ -76,7 +76,7 @@ export default function VendorDashboardPage() {
   }, [authLoading, user]);
 
   if (authLoading) {
-    return <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]"><Loader2 className="w-6 h-6 text-[#0A1735] animate-spin" /></div>;
+    return <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>;
   }
 
   if (!user) {
@@ -85,7 +85,7 @@ export default function VendorDashboardPage() {
         <div className="text-center">
           <h1 className="text-lg font-bold text-[#0B1221] mb-2">Sign in required</h1>
           <p className="text-sm text-slate-500 mb-4">You need to sign in to view your vendor dashboard.</p>
-          <Link to="/login" className="inline-flex items-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-2.5 rounded-xl font-semibold text-sm">Sign in</Link>
+          <Link to="/login" className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-2.5 rounded-xl font-semibold text-sm">Sign in</Link>
         </div>
       </div>
     );
@@ -115,7 +115,7 @@ export default function VendorDashboardPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         {loading && (
-          <div className="flex items-center justify-center py-24"><Loader2 className="w-6 h-6 text-[#0A1735] animate-spin" /></div>
+          <div className="flex items-center justify-center py-24"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
         )}
 
         {!loading && loadError && (
@@ -135,7 +135,7 @@ export default function VendorDashboardPage() {
                     type="button"
                     onClick={() => setTab(key)}
                     className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-colors text-left ${
-                      tab === key ? 'bg-[#EEF1F7] text-[#132952]' : 'text-slate-500 hover:bg-white hover:text-[#0B1221]'
+                      tab === key ? 'bg-[#EEF0FE] text-[#4338CA]' : 'text-slate-500 hover:bg-white hover:text-[#0B1221]'
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
@@ -177,12 +177,12 @@ function OverviewTab({ tool, subscription, reviews }: { tool: ToolRow; subscript
           {tool.logo ? (
             <img src={tool.logo} alt={tool.name} className="w-14 h-14 rounded-2xl object-contain border border-slate-100 bg-white shrink-0" />
           ) : (
-            <div className="w-14 h-14 rounded-2xl bg-[#EEF1F7] flex items-center justify-center text-[#5A6B94] font-bold text-xl shrink-0">{tool.name.charAt(0)}</div>
+            <div className="w-14 h-14 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-xl shrink-0">{tool.name.charAt(0)}</div>
           )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-lg font-bold text-[#0B1221] truncate">{tool.name}</h1>
-              {tool.verified && <ShieldCheck className="w-4 h-4 text-[#0A1735] shrink-0" aria-label="Verified" />}
+              {tool.verified && <ShieldCheck className="w-4 h-4 text-[#4F47E6] shrink-0" aria-label="Verified" />}
             </div>
             <div className="flex items-center gap-3 mt-1.5 text-[13px] text-slate-500 flex-wrap">
               <span className="inline-flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />{tool.rating.toFixed(1)} ({tool.review_count})</span>
@@ -193,7 +193,7 @@ function OverviewTab({ tool, subscription, reviews }: { tool: ToolRow; subscript
                 {isActive ? 'Featured' : 'Not featured'}
               </span>
             </div>
-            <Link to={`/tools/${tool.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[13px] font-medium text-[#0A1735] hover:text-[#132952] mt-2.5">
+            <Link to={`/tools/${tool.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA] mt-2.5">
               View live listing <ExternalLink className="w-3 h-3" />
             </Link>
           </div>
@@ -226,7 +226,7 @@ function FieldInput({ label, value, onChange, placeholder, type = 'text' }: { la
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-10 rounded-xl border border-slate-200 px-3.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow"
+        className="w-full h-10 rounded-xl border border-slate-200 px-3.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow"
       />
     </div>
   );
@@ -240,7 +240,7 @@ function FieldTextarea({ label, value, onChange, rows = 3 }: { label: string; va
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={rows}
-        className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] transition-shadow resize-y"
+        className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow resize-y"
       />
     </div>
   );
@@ -326,7 +326,7 @@ function ListingTab({ tool, onSaved }: { tool: ToolRow; onSaved: (t: ToolRow) =>
           type="button"
           onClick={handleSave}
           disabled={saving}
-          className="inline-flex items-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all disabled:opacity-60"
+          className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all disabled:opacity-60"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save changes
@@ -387,15 +387,15 @@ function FeaturesEditor({ features, onSaved }: { features: FeatureRow[]; onSaved
     <Card>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-bold text-[#0B1221]">Key features</h2>
-        <button type="button" onClick={add} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#0A1735] hover:text-[#132952]"><Plus className="w-3.5 h-3.5" /> Add</button>
+        <button type="button" onClick={add} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
       </div>
       <div className="space-y-3">
         {items.length === 0 && <p className="text-[13px] text-slate-400">No features yet — add your first one.</p>}
         {items.map((it, i) => (
           <div key={i} className="flex items-start gap-2 border border-slate-100 rounded-xl p-3">
             <div className="flex-1 min-w-0 space-y-2">
-              <input value={it.title} onChange={(e) => update(i, 'title', e.target.value)} placeholder="Feature title" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4]" />
-              <textarea value={it.description} onChange={(e) => update(i, 'description', e.target.value)} placeholder="Short description (optional)" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] resize-y" />
+              <input value={it.title} onChange={(e) => update(i, 'title', e.target.value)} placeholder="Feature title" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
+              <textarea value={it.description} onChange={(e) => update(i, 'description', e.target.value)} placeholder="Short description (optional)" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y" />
             </div>
             <button type="button" onClick={() => remove(i)} aria-label="Remove feature" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
@@ -444,13 +444,13 @@ function ListTextEditor({
     <Card>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-bold text-[#0B1221]">{title}</h2>
-        <button type="button" onClick={() => setValues((prev) => [...prev, ''])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#0A1735] hover:text-[#132952]"><Plus className="w-3.5 h-3.5" /> Add</button>
+        <button type="button" onClick={() => setValues((prev) => [...prev, ''])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
       </div>
       <div className="space-y-2">
         {values.length === 0 && <p className="text-[13px] text-slate-400">Nothing added yet.</p>}
         {values.map((v, i) => (
           <div key={i} className="flex items-center gap-2">
-            <input value={v} onChange={(e) => update(i, e.target.value)} placeholder={placeholder} className="flex-1 h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4]" />
+            <input value={v} onChange={(e) => update(i, e.target.value)} placeholder={placeholder} className="flex-1 h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
             <button type="button" onClick={() => remove(i)} aria-label="Remove" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
         ))}
@@ -494,15 +494,15 @@ function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) 
     <Card>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-bold text-[#0B1221]">FAQs</h2>
-        <button type="button" onClick={() => setItems((prev) => [...prev, { question: '', answer: '' }])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#0A1735] hover:text-[#132952]"><Plus className="w-3.5 h-3.5" /> Add</button>
+        <button type="button" onClick={() => setItems((prev) => [...prev, { question: '', answer: '' }])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
       </div>
       <div className="space-y-3">
         {items.length === 0 && <p className="text-[13px] text-slate-400">No FAQs yet.</p>}
         {items.map((it, i) => (
           <div key={i} className="flex items-start gap-2 border border-slate-100 rounded-xl p-3">
             <div className="flex-1 min-w-0 space-y-2">
-              <input value={it.question} onChange={(e) => update(i, 'question', e.target.value)} placeholder="Question" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4]" />
-              <textarea value={it.answer} onChange={(e) => update(i, 'answer', e.target.value)} placeholder="Answer" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] resize-y" />
+              <input value={it.question} onChange={(e) => update(i, 'question', e.target.value)} placeholder="Question" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
+              <textarea value={it.answer} onChange={(e) => update(i, 'answer', e.target.value)} placeholder="Answer" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y" />
             </div>
             <button type="button" onClick={() => remove(i)} aria-label="Remove FAQ" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
@@ -586,8 +586,8 @@ function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: Rev
       {!isPending && (
         <div className="mt-4 pt-4 border-t border-slate-100">
           {review.vendor_response && (
-            <div className="bg-[#EEF1F7]/60 rounded-xl p-3 mb-3">
-              <p className="text-[11px] font-semibold text-[#0A1735] mb-1">Your response</p>
+            <div className="bg-[#EEF0FE]/60 rounded-xl p-3 mb-3">
+              <p className="text-[11px] font-semibold text-[#4F47E6] mb-1">Your response</p>
               <p className="text-sm text-slate-700">{review.vendor_response}</p>
             </div>
           )}
@@ -597,7 +597,7 @@ function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: Rev
               onChange={(e) => setResponseText(e.target.value)}
               placeholder="Write a public response…"
               rows={2}
-              className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735]/20 focus:border-[#8A9AC4] resize-y"
+              className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y"
             />
             <button
               type="button"
@@ -631,7 +631,7 @@ function BillingTab({ subscription, toolSlug }: { subscription: SubscriptionRow 
   return (
     <Card>
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-[#EEF1F7] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#0A1735]" /></div>
+        <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
         <div>
           <p className="text-sm font-bold text-[#0B1221]">Featured placement — {toolSlug}</p>
           <p className={`text-[13px] font-medium ${subscription.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>

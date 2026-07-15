@@ -351,7 +351,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           </div>
           <h1 className="text-2xl font-bold text-[#0B1221] mb-2">This tool isn't available</h1>
           <p className="text-slate-500 mb-6">It doesn't exist, or it's no longer published.</p>
-          <Link to="/tools" className="inline-flex items-center gap-1.5 text-[#0A1735] font-semibold hover:text-[#132952]">
+          <Link to="/tools" className="inline-flex items-center gap-1.5 text-[#4F47E6] font-semibold hover:text-[#4338CA]">
             <ArrowLeft className="w-4 h-4" />
             Browse the directory
           </Link>

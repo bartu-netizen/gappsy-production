@@ -37,7 +37,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
               className={`p-5 flex flex-col ${isRecommended ? 'lg:scale-105 z-10' : ''}`}
             >
               {isRecommended && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2952CC] text-white text-[10px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
                   Most Popular
                 </span>
               )}
@@ -51,7 +51,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
                 <ul className="space-y-2 pt-3 border-t border-slate-100 mb-4">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-[13px] text-slate-600">
-                      <Check className="w-3.5 h-3.5 text-[#0A1735] shrink-0 mt-0.5" />
+                      <Check className="w-3.5 h-3.5 text-[#4F47E6] shrink-0 mt-0.5" />
                       {feature}
                     </li>
                   ))}
@@ -64,7 +64,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
                   rel="noopener noreferrer nofollow"
                   className={`mt-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all active:scale-[0.98] ${
                     isRecommended
-                      ? 'bg-[#2952CC] hover:bg-[#1F3FA3] text-white'
+                      ? 'bg-[#4F47E6] hover:bg-[#4338CA] text-white'
                       : 'bg-slate-50 hover:bg-slate-100 text-[#0B1221]'
                   }`}
                 >

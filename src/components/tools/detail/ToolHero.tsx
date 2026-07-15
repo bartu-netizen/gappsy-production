@@ -26,7 +26,7 @@ interface ToolHeroProps {
   categoryHref?: string | null;
 }
 
-const AVATAR_COLORS = ['bg-[#DEE3EF] text-[#0A1735]', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
+const AVATAR_COLORS = ['bg-[#E0E3FC] text-[#4F47E6]', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
 
 function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -101,7 +101,7 @@ export default function ToolHero({
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
             />
           ) : (
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#EEF1F7] flex items-center justify-center text-[#5A6B94] font-bold text-3xl">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-3xl">
               {name.charAt(0)}
             </div>
           )}
@@ -110,7 +110,7 @@ export default function ToolHero({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h1 className="text-3xl sm:text-[42px] font-bold text-[#0B1221] leading-tight tracking-[-0.02em]">{name}</h1>
-            {verified && <ShieldCheck className="w-6 h-6 text-[#0A1735] shrink-0" aria-label="Verified" />}
+            {verified && <ShieldCheck className="w-6 h-6 text-[#4F47E6] shrink-0" aria-label="Verified" />}
           </div>
 
           <div className="flex items-center gap-2 flex-wrap mb-3">
@@ -124,7 +124,7 @@ export default function ToolHero({
             {primaryCategory && (
               <Link
                 to={`/tool-categories/${primaryCategory.slug}`}
-                className="inline-flex items-center text-xs font-medium bg-[#EEF1F7] text-[#132952] px-2.5 py-1 rounded-full hover:bg-[#DEE3EF] transition-colors"
+                className="inline-flex items-center text-xs font-medium bg-[#EEF0FE] text-[#4338CA] px-2.5 py-1 rounded-full hover:bg-[#E0E3FC] transition-colors"
               >
                 {primaryCategory.name}
               </Link>
@@ -132,7 +132,7 @@ export default function ToolHero({
             {verified && (
               <Link
                 to="/editorial-policy"
-                className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-[#0A1735] transition-colors"
+                className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-[#4F47E6] transition-colors"
               >
                 <BadgeCheck className="w-3.5 h-3.5" />
                 How we review
@@ -202,7 +202,7 @@ export default function ToolHero({
         <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0 w-full sm:w-auto">
           <a
             href="#reviews"
-            className="inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
             Write a review
@@ -210,7 +210,7 @@ export default function ToolHero({
           {compareHref && (
             <Link
               to={compareHref}
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-[#0A1735] transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] rounded-sm"
+              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-[#4F47E6] transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded-sm"
             >
               <GitCompareArrows className="w-3.5 h-3.5" aria-hidden="true" />
               {compareLabel}

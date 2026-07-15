@@ -251,7 +251,7 @@ export default function CompareDetailPage() {
           </div>
           <h1 className="text-2xl font-bold text-[#0B1221] mb-2">This comparison isn't available</h1>
           <p className="text-slate-500 mb-6">It doesn't exist, or it hasn't been approved for publishing yet.</p>
-          <Link to="/compare" className="inline-flex items-center gap-1.5 text-[#0A1735] font-semibold hover:text-[#132952]">
+          <Link to="/compare" className="inline-flex items-center gap-1.5 text-[#4F47E6] font-semibold hover:text-[#4338CA]">
             <ArrowLeft className="w-4 h-4" />
             Browse comparisons
           </Link>
@@ -397,16 +397,16 @@ export default function CompareDetailPage() {
             <section>
               <h2 className="text-xl font-bold text-[#0B1221] mb-4">Explore More</h2>
               <div className="flex flex-wrap gap-2.5">
-                <Link to={`/tools/${aRow.slug}`} className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CEE3] hover:text-[#0A1735] transition-colors">
+                <Link to={`/tools/${aRow.slug}`} className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CCF7] hover:text-[#4F47E6] transition-colors">
                   Full {aRow.name} review
                 </Link>
-                <Link to={`/tools/${bRow.slug}`} className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CEE3] hover:text-[#0A1735] transition-colors">
+                <Link to={`/tools/${bRow.slug}`} className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CCF7] hover:text-[#4F47E6] transition-colors">
                   Full {bRow.name} review
                 </Link>
                 {factsA.primaryCategory && (
                   <Link
                     to={`/tool-categories/${factsA.primaryCategory.slug}`}
-                    className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CEE3] hover:text-[#0A1735] transition-colors"
+                    className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CCF7] hover:text-[#4F47E6] transition-colors"
                   >
                     More {factsA.primaryCategory.name} tools
                   </Link>
@@ -414,7 +414,7 @@ export default function CompareDetailPage() {
                 {factsB.primaryCategory && factsB.primaryCategory.slug !== factsA.primaryCategory?.slug && (
                   <Link
                     to={`/tool-categories/${factsB.primaryCategory.slug}`}
-                    className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CEE3] hover:text-[#0A1735] transition-colors"
+                    className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-[#C7CCF7] hover:text-[#4F47E6] transition-colors"
                   >
                     More {factsB.primaryCategory.name} tools
                   </Link>

@@ -31,12 +31,12 @@ export default function ComparisonCard({ slug, toolA, toolB }: { slug: string; t
         <ToolAvatar tool={toolB} />
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-[#0B1221] text-[15px] truncate group-hover:text-[#0A1735] transition-colors">
+        <h3 className="font-semibold text-[#0B1221] text-[15px] truncate group-hover:text-[#4F47E6] transition-colors">
           {toolA.name} vs {toolB.name}
         </h3>
         <p className="text-xs text-slate-400 mt-0.5">Full comparison</p>
       </div>
-      <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#0A1735] transition-colors shrink-0" />
+      <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#4F47E6] transition-colors shrink-0" />
     </Link>
   );
 }

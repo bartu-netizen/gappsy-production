@@ -49,11 +49,11 @@ export default function VideoSection({
                 key={cue.seconds}
                 type="button"
                 onClick={() => setStartSeconds(cue.seconds)}
-                className={`w-full text-left flex items-start gap-2 px-2 py-1.5 rounded-lg text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] ${
-                  startSeconds === cue.seconds ? 'bg-[#EEF1F7] text-[#132952]' : 'text-slate-600 hover:bg-slate-50'
+                className={`w-full text-left flex items-start gap-2 px-2 py-1.5 rounded-lg text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] ${
+                  startSeconds === cue.seconds ? 'bg-[#EEF0FE] text-[#4338CA]' : 'text-slate-600 hover:bg-slate-50'
                 }`}
               >
-                <span className="inline-flex items-center gap-1 text-[#0A1735] font-mono text-[11px] shrink-0 mt-0.5">
+                <span className="inline-flex items-center gap-1 text-[#4F47E6] font-mono text-[11px] shrink-0 mt-0.5">
                   <Play className="w-2.5 h-2.5" />
                   {formatSeconds(cue.seconds)}
                 </span>

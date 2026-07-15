@@ -20,10 +20,10 @@ export default function LongFormContent({ blocks }: { blocks: ToolContentBlock[]
           <div
             key={block.id}
             id={block.id}
-            className={isVerdict ? 'scroll-mt-24 bg-[#EEF1F7]/50 border border-[#DEE3EF] rounded-2xl p-5 sm:p-6' : 'scroll-mt-24'}
+            className={isVerdict ? 'scroll-mt-24 bg-[#EEF0FE]/50 border border-[#E0E3FC] rounded-2xl p-5 sm:p-6' : 'scroll-mt-24'}
           >
             {isVerdict && (
-              <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-2">
+              <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#4F47E6] mb-2">
                 <Award className="w-3.5 h-3.5" />
                 Editor's Verdict
               </p>

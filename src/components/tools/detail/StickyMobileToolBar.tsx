@@ -36,7 +36,7 @@ export default function StickyMobileToolBar({ featuredPromo, categoryHref }: Sti
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-4 py-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
         <Link
           to={`/tools/${featuredPromo.slug}`}
-          className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-2 active:bg-[#EEF1F7] active:border-[#DEE3EF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735]"
+          className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/70 px-3 py-2 active:bg-[#EEF0FE] active:border-[#E0E3FC] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6]"
         >
           {featuredPromo.logo ? (
             <img src={featuredPromo.logo} alt="" className="w-9 h-9 rounded-lg object-contain border border-slate-100 shrink-0 bg-white" />
@@ -44,13 +44,13 @@ export default function StickyMobileToolBar({ featuredPromo, categoryHref }: Sti
             <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-sm shrink-0">{featuredPromo.name.charAt(0)}</div>
           )}
           <div className="min-w-0 flex-1">
-            <span className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.06em] text-[#2952CC]">
+            <span className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.06em] text-[#4F47E6]">
               <Sparkles className="w-2.5 h-2.5" aria-hidden="true" />
               Featured
             </span>
             <p className="text-[13px] font-semibold text-[#0B1221] leading-tight truncate">{featuredPromo.name}</p>
           </div>
-          <ArrowRight className="w-4 h-4 text-[#2952CC] shrink-0" aria-hidden="true" />
+          <ArrowRight className="w-4 h-4 text-[#4F47E6] shrink-0" aria-hidden="true" />
         </Link>
         {/* A neutral escape hatch for visitors who aren't interested in the
             one competitor being promoted here — this slot is reserved for a
@@ -60,7 +60,7 @@ export default function StickyMobileToolBar({ featuredPromo, categoryHref }: Sti
         {categoryHref && (
           <Link
             to={categoryHref}
-            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] rounded-sm"
+            className="block text-center text-[10.5px] text-slate-400 hover:text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded-sm"
           >
             See alternatives
           </Link>

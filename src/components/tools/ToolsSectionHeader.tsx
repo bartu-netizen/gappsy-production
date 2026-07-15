@@ -24,8 +24,8 @@ export default function ToolsSectionHeader({
     <div className={`flex items-start justify-between gap-4 mb-6 ${isCenter ? 'flex-col items-center text-center' : 'flex-wrap'}`}>
       <div className={isCenter ? 'max-w-xl' : ''}>
         {eyebrow && (
-          <p className={`flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-1.5 ${isCenter ? 'justify-center' : ''}`}>
-            <span className="inline-block w-3 h-[3px] rounded-full bg-[#0A1735]" aria-hidden="true" />
+          <p className={`flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#4F47E6] mb-1.5 ${isCenter ? 'justify-center' : ''}`}>
+            <span className="inline-block w-3 h-[3px] rounded-full bg-[#4F47E6]" aria-hidden="true" />
             {eyebrow}
           </p>
         )}

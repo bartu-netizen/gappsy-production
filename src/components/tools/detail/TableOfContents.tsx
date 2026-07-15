@@ -30,9 +30,9 @@ export default function TableOfContents({ sections }: { sections: TocSection[] }
               href={`#${section.id}`}
               onClick={(e) => handleClick(e, section.id)}
               aria-current={activeId === section.id ? 'true' : undefined}
-              className={`block text-sm py-1.5 pl-3 pr-2 border-l-2 rounded-r-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] focus-visible:ring-inset ${
+              className={`block text-sm py-1.5 pl-3 pr-2 border-l-2 rounded-r-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-inset ${
                 activeId === section.id
-                  ? 'border-[#0A1735] bg-[#EEF1F7]/70 text-[#0A1735] font-medium'
+                  ? 'border-[#4F47E6] bg-[#EEF0FE]/70 text-[#4F47E6] font-medium'
                   : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200'
               }`}
             >

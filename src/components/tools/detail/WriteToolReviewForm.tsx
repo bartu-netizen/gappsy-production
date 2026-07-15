@@ -81,7 +81,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735]"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6]"
         >
           <X className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -100,7 +100,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
                 onClick={() => setRating(value)}
                 onMouseEnter={() => setHoverRating(value)}
                 aria-label={`Rate ${value} out of 5`}
-                className="p-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] rounded"
+                className="p-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded"
               >
                 <Star className={`w-6 h-6 ${active ? 'text-amber-500 fill-amber-500' : 'text-slate-200 fill-slate-200'}`} />
               </button>
@@ -120,7 +120,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735] focus:border-transparent"
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6] focus:border-transparent"
             placeholder="Displayed publicly"
           />
         </div>
@@ -133,7 +133,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735] focus:border-transparent"
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6] focus:border-transparent"
             placeholder="you@example.com"
           />
         </div>
@@ -149,7 +149,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           maxLength={120}
-          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735] focus:border-transparent"
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6] focus:border-transparent"
           placeholder="Sum up your experience in a few words"
         />
       </div>
@@ -164,7 +164,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
           onChange={(e) => setBody(e.target.value)}
           required
           rows={4}
-          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A1735] focus:border-transparent resize-none"
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6] focus:border-transparent resize-none"
           placeholder="What did you use it for, and how did it go?"
         />
       </div>
@@ -175,7 +175,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#2952CC] hover:bg-[#1F3FA3] disabled:opacity-60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A1735] focus-visible:ring-offset-2"
+          className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:bg-[#4338CA] disabled:opacity-60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
         >
           {submitting ? 'Submitting…' : 'Submit review'}
         </button>

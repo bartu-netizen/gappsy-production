@@ -80,7 +80,7 @@ export default function ToolCategoriesIndexPage() {
       <SoftwareHeader variant="premium" />
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0A1735] mb-3">Browse</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#4F47E6] mb-3">Browse</p>
         <h1 className="text-3xl sm:text-[38px] font-bold text-[#0B1221] leading-[1.1] mb-4">
           Find tools by category
         </h1>
@@ -89,7 +89,7 @@ export default function ToolCategoriesIndexPage() {
         </p>
 
         <div className="relative max-w-lg mx-auto">
-          <div className="flex items-center w-full h-12 rounded-full bg-white border border-slate-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]/20 focus-within:border-[#8A9AC4] transition-shadow">
+          <div className="flex items-center w-full h-12 rounded-full bg-white border border-slate-200 shadow-sm focus-within:ring-2 focus-within:ring-[#4F47E6]/20 focus-within:border-[#A8AEF0] transition-shadow">
             <Search className="ml-4 h-4 w-4 text-slate-400 shrink-0" strokeWidth={2} aria-hidden="true" />
             <input
               type="text"
@@ -131,16 +131,16 @@ export default function ToolCategoriesIndexPage() {
                 ))}
               </div>
             ) : (
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#EEF1F7] via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
-                <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-[#DEE3EF] shadow-sm flex items-center justify-center mb-6">
-                  <Search className="w-6 h-6 text-[#0A1735]" strokeWidth={1.75} />
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#EEF0FE] via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
+                <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-[#E0E3FC] shadow-sm flex items-center justify-center mb-6">
+                  <Search className="w-6 h-6 text-[#4F47E6]" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B1221] mb-3 max-w-lg mx-auto leading-snug">No categories match that filter</h3>
                 <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mx-auto mb-7">Try a different word, or browse the full list below.</p>
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="inline-flex items-center gap-1.5 bg-[#2952CC] hover:bg-[#1F3FA3] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+                  className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
                 >
                   Clear filter
                 </button>
