@@ -79,7 +79,7 @@ function WantYourProductHereLink({ className = '' }: { className?: string }) {
 
 function FeaturedBadge({ large = false }: { large?: boolean }) {
   return (
-    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#2952CC] to-[#0A1735] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
+    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-[#0A1735] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
       Featured
     </span>
@@ -157,7 +157,7 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
       </p>
       <Link
         to={onboardingHref}
-        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#0A1735] hover:bg-[#132952] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       >
         Claim & feature this listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

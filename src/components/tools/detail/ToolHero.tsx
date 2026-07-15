@@ -202,7 +202,7 @@ export default function ToolHero({
         <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0 w-full sm:w-auto">
           <a
             href="#reviews"
-            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:from-[#1F3FA3] hover:to-[#060D20] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(41,82,204,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
             Write a review

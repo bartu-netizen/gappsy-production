@@ -87,7 +87,7 @@ function ToolIdentity({
             href={cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:from-[#1F3FA3] hover:to-[#060D20] active:scale-[0.98] text-white px-5 py-2.5 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(41,82,204,0.25)]"
+            className="inline-flex items-center justify-center gap-1.5 bg-[#0A1735] hover:bg-[#132952] active:scale-[0.98] text-white px-5 py-2.5 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.25)]"
           >
             Visit {tool.name}
             <ExternalLink className="w-3.5 h-3.5" />

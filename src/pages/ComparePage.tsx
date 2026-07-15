@@ -156,7 +156,7 @@ export default function ComparePage() {
               onClick={handleCompare}
               disabled={!canCompare}
               aria-disabled={!canCompare}
-              className="h-14 shrink-0 inline-flex items-center justify-center gap-2 px-6 rounded-2xl bg-gradient-to-br from-[#2952CC] to-[#0A1735] text-white font-semibold text-sm transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 enabled:hover:from-[#1F3FA3] enabled:hover:to-[#060D20] enabled:shadow-[0_8px_20px_rgba(41,82,204,0.25)]"
+              className="h-14 shrink-0 inline-flex items-center justify-center gap-2 px-6 rounded-2xl bg-[#0A1735] text-white font-semibold text-sm transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 enabled:hover:bg-[#132952] enabled:shadow-[0_8px_20px_rgba(10,23,53,0.25)]"
             >
               Compare
               <ArrowRight className="w-4 h-4" />

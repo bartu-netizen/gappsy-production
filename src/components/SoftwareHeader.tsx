@@ -86,10 +86,10 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8 h-[70px]">
             <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
-              <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 w-auto" />
+              <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-10 w-auto" />
             </Link>
 
-            <div className="flex-1 min-w-0 max-w-xl">
+            <div className="flex-1 min-w-0 max-w-[400px]">
               <button
                 type="button"
                 onClick={openSearch}
@@ -272,7 +272,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
               disabled
               aria-disabled="true"
               title="Coming soon"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#2952CC] to-[#0A1735] opacity-50 cursor-not-allowed"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white/70 bg-[#0A1735] opacity-50 cursor-not-allowed"
             >
               Submit Software
             </button>
@@ -346,7 +346,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   type="button"
                   disabled
                   aria-disabled="true"
-                  className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#2952CC] to-[#0A1735] opacity-50 cursor-not-allowed"
+                  className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white/70 bg-[#0A1735] opacity-50 cursor-not-allowed"
                 >
                   Submit Software
                 </button>

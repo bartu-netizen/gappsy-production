@@ -27,7 +27,7 @@ export default function FeatureGrid({ toolName, features }: { toolName: string; 
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white shadow-sm text-blue-600">
                     <Icon className="w-[18px] h-[18px]" />
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#2952CC] to-[#0A1735] rounded-full px-2.5 py-1">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.06em] text-white bg-[#0A1735] rounded-full px-2.5 py-1">
                     <Sparkles className="w-3 h-3" aria-hidden="true" />
                     Standout
                   </span>
