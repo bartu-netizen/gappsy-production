@@ -2,20 +2,24 @@ import { Check, ArrowRight } from 'lucide-react';
 import type { PricingPlanItem } from './types';
 import ToolsSectionHeader from '../ToolsSectionHeader';
 import Card from './Card';
+import { buildOutboundUrl } from '../../../utils/outboundLink';
+import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 
 interface PricingSectionProps {
+  toolSlug: string;
   toolName: string;
   plans: PricingPlanItem[];
   websiteUrl?: string | null;
   affiliateUrl?: string | null;
 }
 
-export default function PricingSection({ toolName, plans, websiteUrl, affiliateUrl }: PricingSectionProps) {
+export default function PricingSection({ toolSlug, toolName, plans, websiteUrl, affiliateUrl }: PricingSectionProps) {
   if (plans.length === 0) return null;
 
   const sorted = [...plans].sort((a, b) => a.sort_order - b.sort_order);
   const recommendedIndex = sorted.length > 1 ? 1 : -1;
   const cta = affiliateUrl || websiteUrl;
+  const outboundCta = cta ? buildOutboundUrl(cta) : null;
   const cheapest = sorted[0]?.price;
   const priciest = sorted[sorted.length - 1]?.price;
   const summary =
@@ -57,11 +61,12 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
                   ))}
                 </ul>
               )}
-              {cta && (
+              {outboundCta && (
                 <a
-                  href={cta}
+                  href={outboundCta}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
+                  onClick={() => trackToolOutboundClick(toolSlug, affiliateUrl ? 'affiliate' : 'visit_website', outboundCta)}
                   className={`mt-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all active:scale-[0.98] ${
                     isRecommended
                       ? 'bg-[#4F47E6] hover:bg-[#4338CA] text-white'

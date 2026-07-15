@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ShieldCheck, Star, Sparkles, BadgeCheck, MessageSquarePlus, GitCompareArrows } from 'lucide-react';
+import { ShieldCheck, Star, Sparkles, BadgeCheck, MessageSquarePlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '../../Badge';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
@@ -19,11 +19,6 @@ interface ToolHeroProps {
   primaryCategory: TaxonomyRef | null;
   updatedAt: string | null;
   reviewerNames?: string[];
-  /** Real /compare/x-vs-y pages only (see ToolDetailPage's quickCompareLinks
-   * filter) — the hero's Compare button uses the first one, falling back
-   * to the category page so it never promises a head-to-head that dead-ends. */
-  quickCompareLinks?: { label: string; href: string }[];
-  categoryHref?: string | null;
 }
 
 const AVATAR_COLORS = ['bg-[#E0E3FC] text-[#4F47E6]', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
@@ -47,14 +42,10 @@ export default function ToolHero({
   primaryCategory,
   updatedAt,
   reviewerNames = [],
-  quickCompareLinks = [],
-  categoryHref = null,
 }: ToolHeroProps) {
   const updatedLabel = formatLastUpdated(updatedAt);
   const visibleReviewers = reviewerNames.slice(0, 4);
   const extraReviewerCount = Math.max(0, reviewerNames.length - visibleReviewers.length);
-  const compareHref = quickCompareLinks[0]?.href || categoryHref;
-  const compareLabel = quickCompareLinks[0]?.label || 'Compare alternatives';
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -194,28 +185,20 @@ export default function ToolHero({
         {/* Not a "Visit Website" repeat — the sidebar CTA is already
             permanently visible (lg:sticky) and the mobile/desktop sticky
             bars cover conversion too. This slot instead drives on-site
-            engagement: writing a review (bootstraps the review system)
-            and comparing against a real alternative. One clear primary
-            action plus a quiet text link reads as an intentional pair, not
-            two competing buttons — the earlier bordered-pill treatment for
-            Compare looked like a shrunken copy of the CTA above it. */}
-        <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0 w-full sm:w-auto">
+            engagement: seeing (and writing) a review, bootstrapping the
+            review system. Deliberately just one CTA now — a "Compare"
+            link used to sit here too, but that's fully redundant with the
+            sidebar's own Compare quick-action (Save/Share/Compare row),
+            so pairing them here was two mismatched-weight elements doing
+            the same job rather than one clean action. */}
+        <div className="shrink-0 w-full sm:w-auto">
           <a
             href="#reviews"
             className="inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
-            Write a review
+            See Reviews
           </a>
-          {compareHref && (
-            <Link
-              to={compareHref}
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-[#4F47E6] transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded-sm"
-            >
-              <GitCompareArrows className="w-3.5 h-3.5" aria-hidden="true" />
-              {compareLabel}
-            </Link>
-          )}
         </div>
       </div>
     </section>

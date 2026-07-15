@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ShieldCheck, Star, ExternalLink, RefreshCw } from 'lucide-react';
 import ToolSelectCombobox, { type ToolOption } from './ToolSelectCombobox';
 import type { CompareToolFacts } from './types';
+import { buildOutboundUrl } from '../../utils/outboundLink';
+import { trackToolOutboundClick } from '../../lib/trackToolEvent';
 
 function ToolIdentity({
   tool,
@@ -18,6 +20,7 @@ function ToolIdentity({
   const [switching, setSwitching] = useState(false);
   const cta = tool.affiliateUrl || tool.websiteUrl;
   const isAffiliateCta = Boolean(cta && cta === tool.affiliateUrl);
+  const outboundCta = cta ? buildOutboundUrl(cta) : null;
 
   return (
     <div className="flex-1 min-w-0 flex flex-col items-center text-center">
@@ -82,11 +85,12 @@ function ToolIdentity({
       )}
 
       <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
-        {cta && (
+        {outboundCta && (
           <a
-            href={cta}
+            href={outboundCta}
             target="_blank"
             rel="noopener noreferrer nofollow"
+            onClick={() => trackToolOutboundClick(tool.slug, isAffiliateCta ? 'affiliate' : 'visit_website', outboundCta)}
             className="inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-5 py-2.5 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(10,23,53,0.25)]"
           >
             Visit {tool.name}

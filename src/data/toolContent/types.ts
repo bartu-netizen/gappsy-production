@@ -35,6 +35,10 @@ export interface ToolAlternative {
   cons: string[];
   pricingSummary: string;
   href: string;
+  /** Same Google favicon-service convention as tools.logo elsewhere in the
+   * app. Optional — older/future alternative entries without one fall back
+   * to the initial-letter placeholder. */
+  logo?: string;
 }
 
 export interface ToolComparison {

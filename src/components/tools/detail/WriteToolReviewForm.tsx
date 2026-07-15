@@ -8,14 +8,17 @@ interface WriteToolReviewFormProps {
   onClose: () => void;
 }
 
-// Direct anon insert, not an edge function — the tool_user_reviews INSERT
-// policy forces status='pending' and validates the tool itself (see
-// migration 20260715040000), so there's nothing server-side logic needs to
-// add here. Deliberately never chains .select() after the insert: the
-// table has no SELECT policy for anon at all (by design — reviewer_email
-// must never be publicly queryable), and Postgres RLS evaluates a
-// RETURNING clause against SELECT policies too, so .insert(...).select()
-// would fail even for a perfectly valid pending row.
+// Direct anon insert, not an edge function — a BEFORE INSERT trigger
+// (tool_user_reviews_spam_gate, see migration 20260716040000) does the
+// real work server-side: it publishes clean reviews immediately
+// (status='approved', no admin queue) and aborts the insert entirely with
+// a specific error if it finds a link, email, phone number, or an
+// obfuscated domain ("example . com", "example (dot) com") — surfaced
+// below via insertError.message. Deliberately never chains .select()
+// after the insert: the table has no SELECT policy for anon at all (by
+// design — reviewer_email must never be publicly queryable), and Postgres
+// RLS evaluates a RETURNING clause against SELECT policies too, so
+// .insert(...).select() would fail even for a perfectly valid review.
 export default function WriteToolReviewForm({ toolId, toolName, onClose }: WriteToolReviewFormProps) {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -49,7 +52,10 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
     });
     setSubmitting(false);
     if (insertError) {
-      setError('Something went wrong submitting your review. Please try again.');
+      // The spam-gate trigger raises a specific, user-facing message
+      // ("Reviews can't include links.", etc.) — show it directly rather
+      // than a generic failure so the submitter knows exactly what to fix.
+      setError(insertError.message.includes('Reviews can') ? insertError.message : 'Something went wrong submitting your review. Please try again.');
       return;
     }
     setSubmitted(true);
@@ -60,7 +66,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
       <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center">
         <p className="font-semibold text-emerald-800">Thanks for your review!</p>
         <p className="text-sm text-emerald-700 mt-1">
-          It's been submitted for moderation and will appear here once approved.
+          It's live now — thanks for sharing your experience.
         </p>
         <button
           type="button"
@@ -179,7 +185,7 @@ export default function WriteToolReviewForm({ toolId, toolName, onClose }: Write
         >
           {submitting ? 'Submitting…' : 'Submit review'}
         </button>
-        <p className="text-[11.5px] text-slate-400">Reviews are moderated before appearing publicly.</p>
+        <p className="text-[11.5px] text-slate-400">Your review goes live right away — no links, emails, or phone numbers.</p>
       </div>
     </form>
   );

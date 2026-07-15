@@ -41,9 +41,13 @@ export default function AlternativesSection({ toolName, alternatives }: { toolNa
         {alternatives.map((alt) => (
           <Card key={alt.name} hoverLift className="p-5 flex flex-col">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold shrink-0">
-                {alt.name.charAt(0)}
-              </div>
+              {alt.logo ? (
+                <img src={alt.logo} alt="" className="w-10 h-10 rounded-xl object-contain border border-slate-100 bg-white shrink-0" />
+              ) : (
+                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold shrink-0">
+                  {alt.name.charAt(0)}
+                </div>
+              )}
               <h3 className="font-semibold text-[#0B1221] text-[15px]">{alt.name}</h3>
             </div>
             <p className="text-[13.5px] text-slate-500 leading-relaxed mb-3">{alt.description}</p>

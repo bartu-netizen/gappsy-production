@@ -442,6 +442,7 @@ const canvaContent: ToolExtendedContent = {
       cons: ['Smaller template library than Canva', 'Less mature real-time collaboration', 'Some premium features tied to broader Creative Cloud plans'],
       pricingSummary: 'Free plan available; Premium from around $9.99/month.',
       href: '/tool-categories/graphic-design',
+      logo: 'https://www.google.com/s2/favicons?domain=adobe.com&sz=256',
     },
     {
       name: 'Figma',
@@ -450,6 +451,7 @@ const canvaContent: ToolExtendedContent = {
       cons: ['Steeper learning curve than Canva', 'Fewer ready-made marketing templates', 'Not built for physical print production'],
       pricingSummary: 'Free plan available; paid seats from around $3–$5 per editor/month.',
       href: '/tools/figma',
+      logo: 'https://www.google.com/s2/favicons?domain=figma.com&sz=256',
     },
     {
       name: 'VistaCreate',
@@ -458,6 +460,7 @@ const canvaContent: ToolExtendedContent = {
       cons: ['Smaller ecosystem and community than Canva', 'Fewer AI features', 'Less robust team and enterprise tooling'],
       pricingSummary: 'Free plan available; Pro from around $10/month.',
       href: '/tool-categories/graphic-design',
+      logo: 'https://www.google.com/s2/favicons?domain=create.vista.com&sz=256',
     },
     {
       name: 'Microsoft Designer',
@@ -466,6 +469,7 @@ const canvaContent: ToolExtendedContent = {
       cons: ['Much smaller template and asset library', 'Limited collaboration and brand-management tools', 'Less mature print and merchandise ecosystem'],
       pricingSummary: 'Free with a Microsoft account; deeper features via Microsoft 365 Copilot Pro.',
       href: '/tool-categories/graphic-design',
+      logo: 'https://www.google.com/s2/favicons?domain=designer.microsoft.com&sz=256',
     },
     {
       name: 'Affinity Designer',
@@ -474,6 +478,7 @@ const canvaContent: ToolExtendedContent = {
       cons: ['Steeper learning curve for beginners', 'No built-in template ecosystem like Canva', 'Fewer real-time collaboration features'],
       pricingSummary: 'One-time purchase, around $70, no subscription.',
       href: '/tool-categories/graphic-design',
+      logo: 'https://www.google.com/s2/favicons?domain=affinity.serif.com&sz=256',
     },
   ],
 

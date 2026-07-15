@@ -287,7 +287,13 @@ export default function ToolFactsSidebar({
             <div className="flex items-center justify-between gap-3">
               <dt className="inline-flex items-center gap-1.5 text-slate-500"><Globe className="w-3.5 h-3.5" />Website</dt>
               <dd className="truncate max-w-[150px] text-right">
-                <a href={websiteUrl} target="_blank" rel="noopener noreferrer nofollow" className="text-[#4F47E6] hover:text-[#4338CA] font-medium">
+                <a
+                  href={buildOutboundUrl(websiteUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  onClick={() => trackToolOutboundClick(slug, 'visit_website', buildOutboundUrl(websiteUrl))}
+                  className="text-[#4F47E6] hover:text-[#4338CA] font-medium"
+                >
                   {hostnameOf(websiteUrl)}
                 </a>
               </dd>

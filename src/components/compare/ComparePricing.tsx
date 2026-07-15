@@ -3,9 +3,12 @@ import ToolsSectionHeader from '../tools/ToolsSectionHeader';
 import Card from '../tools/detail/Card';
 import type { PricingPlanItem } from '../tools/detail/types';
 import type { CompareToolFacts } from './types';
+import { buildOutboundUrl } from '../../utils/outboundLink';
+import { trackToolOutboundClick } from '../../lib/trackToolEvent';
 
 function PricingColumn({ tool, plans }: { tool: CompareToolFacts; plans: PricingPlanItem[] }) {
   const cta = tool.affiliateUrl || tool.websiteUrl;
+  const outboundCta = cta ? buildOutboundUrl(cta) : null;
   const sorted = [...plans].sort((a, b) => a.sort_order - b.sort_order);
 
   return (
@@ -40,11 +43,12 @@ function PricingColumn({ tool, plans }: { tool: CompareToolFacts; plans: Pricing
         </Card>
       )}
 
-      {cta && (
+      {outboundCta && (
         <a
-          href={cta}
+          href={outboundCta}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          onClick={() => trackToolOutboundClick(tool.slug, tool.affiliateUrl ? 'affiliate' : 'visit_website', outboundCta)}
           className="mt-3 inline-flex items-center justify-center gap-1.5 w-full px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#0B1221] font-semibold text-[13px] transition-colors"
         >
           See {tool.name} pricing
