@@ -2,20 +2,7 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import type { ToolTranscriptCue } from '../../../data/toolContent/types';
 import ToolsSectionHeader from '../ToolsSectionHeader';
-
-function extractYouTubeId(url: string): string | null {
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname.includes('youtu.be')) return parsed.pathname.slice(1) || null;
-    if (parsed.hostname.includes('youtube.com')) {
-      if (parsed.pathname === '/watch') return parsed.searchParams.get('v');
-      if (parsed.pathname.startsWith('/embed/')) return parsed.pathname.split('/embed/')[1] || null;
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
+import { extractYouTubeId } from '../../../utils/youtube';
 
 function formatSeconds(seconds: number): string {
   const m = Math.floor(seconds / 60);

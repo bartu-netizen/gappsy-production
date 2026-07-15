@@ -399,6 +399,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Star',
   },
   {
+    id: 'video-embeds',
+    label: 'Video Embeds',
+    description: 'Place YouTube / Shorts videos on specific pages and track views',
+    href: '/wp-admin/video-embeds',
+    keywords: ['video', 'youtube', 'shorts', 'embed', 'seo'],
+    group: 'Content',
+    scopes: ['software', 'shared'],
+    iconName: 'PlayCircle',
+  },
+  {
     id: 'agency-reviews-import',
     label: 'Import Agency Reviews',
     description: 'Bulk import agency reviews from CSV or JSON with validation and uniqueness scoring',

@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar, PlayCircle } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS, ADMIN_VIEWS, TOOL_GROUPS, isToolVisibleInView, inferScopeForPath, type AdminScope, type AdminTool } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -19,6 +19,7 @@ const FILTERABLE_SECTIONS: { scope: AdminScope; label: string }[] = [
 ];
 
 const ICON_MAP: Record<string, JSX.Element> = {
+  PlayCircle: <PlayCircle className="w-4 h-4" />,
   Edit2: <Edit2 className="w-4 h-4" />,
   FileJson: <FileJson className="w-4 h-4" />,
   Image: <Image className="w-4 h-4" />,

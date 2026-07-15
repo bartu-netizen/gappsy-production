@@ -20,6 +20,7 @@ import ToolFactsSidebar, { PLATFORM_TAGS } from '../components/tools/detail/Tool
 import TableOfContents, { type TocSection } from '../components/tools/detail/TableOfContents';
 import MobileTableOfContents from '../components/tools/detail/MobileTableOfContents';
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
+import VideoEmbedSection from '../components/tools/detail/VideoEmbedSection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
 import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCard, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
@@ -512,6 +513,8 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                   platformsLabel={platformsLabel}
                   standoutFeature={standoutFeature}
                 />
+
+                <VideoEmbedSection pagePath={`/tools/${tool.slug}`} />
 
                 <KeyFactsSection
                   toolName={tool.name}
