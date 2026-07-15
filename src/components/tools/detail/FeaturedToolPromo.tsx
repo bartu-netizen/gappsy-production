@@ -69,7 +69,7 @@ function WantYourProductHereLink({ className = '' }: { className?: string }) {
   return (
     <Link
       to="/feature-my-product"
-      className={`flex items-center gap-1 text-[11px] font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm ${className}`}
+      className={`flex items-center gap-1 text-[11px] font-semibold text-[#2952CC] hover:text-[#1F3FA3] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm ${className}`}
     >
       <ArrowUp className="w-3 h-3" aria-hidden="true" />
       Want your product here?
@@ -79,7 +79,7 @@ function WantYourProductHereLink({ className = '' }: { className?: string }) {
 
 function FeaturedBadge({ large = false }: { large?: boolean }) {
   return (
-    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
+    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#2952CC] to-[#0A1735] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
       Featured
     </span>
@@ -94,22 +94,22 @@ function FeaturedBadge({ large = false }: { large?: boolean }) {
 // distinct thing at a glance.
 export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 p-4">
+    <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100 p-4">
       <div className="flex items-center justify-between mb-2.5">
         <FeaturedBadge large />
       </div>
-      <Link to={`/tools/${tool.slug}`} className="group flex items-start gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+      <Link to={`/tools/${tool.slug}`} className="group flex items-start gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
         {tool.logo ? (
           <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-white bg-white shrink-0 shadow-sm" />
         ) : (
           <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-slate-400 font-semibold shrink-0 shadow-sm">{tool.name.charAt(0)}</div>
         )}
         <div className="min-w-0">
-          <p className="font-bold text-[#0B1221] text-sm group-hover:text-indigo-600 transition-colors">{tool.name}</p>
+          <p className="font-bold text-[#0B1221] text-sm group-hover:text-blue-600 transition-colors">{tool.name}</p>
           {tool.short_description && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mt-0.5">{tool.short_description}</p>}
         </div>
       </Link>
-      <WantYourProductHereLink className="mt-2.5 pt-2.5 border-t border-indigo-100/80" />
+      <WantYourProductHereLink className="mt-2.5 pt-2.5 border-t border-blue-100/80" />
     </div>
   );
 }
@@ -119,10 +119,10 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
 // featured pool actually has a second, different tool to show.
 export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
   return (
-    <div className="rounded-xl bg-gradient-to-br from-indigo-50/70 to-purple-50/70 border border-indigo-100 px-3 py-2.5">
+    <div className="rounded-xl bg-gradient-to-br from-blue-50/70 to-purple-50/70 border border-blue-100 px-3 py-2.5">
       <Link
         to={`/tools/${tool.slug}`}
-        className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+        className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
       >
         {tool.logo ? (
           <img src={tool.logo} alt="" className="w-8 h-8 rounded-lg object-contain border border-white bg-white shrink-0" />
@@ -131,11 +131,11 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
         )}
         <div className="min-w-0 flex-1">
           <FeaturedBadge />
-          <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">{tool.name}</p>
+          <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-blue-600 transition-colors">{tool.name}</p>
         </div>
         <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
       </Link>
-      <WantYourProductHereLink className="mt-2 pt-2 border-t border-indigo-100/80" />
+      <WantYourProductHereLink className="mt-2 pt-2 border-t border-blue-100/80" />
     </div>
   );
 }
@@ -147,9 +147,9 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
 export function ClaimListingCard({ toolName, website }: { toolName: string; website: string | null }) {
   const onboardingHref = website ? `/feature-my-product/onboarding?url=${encodeURIComponent(website)}` : '/feature-my-product/onboarding';
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 p-4">
+    <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100 p-4">
       <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center mb-2.5 shadow-sm">
-        <Rocket className="w-4.5 h-4.5 text-[#4F46E5]" aria-hidden="true" />
+        <Rocket className="w-4.5 h-4.5 text-[#2952CC]" aria-hidden="true" />
       </div>
       <p className="font-bold text-[#0B1221] text-sm">Are you the maker of {toolName}?</p>
       <p className="text-xs text-slate-600 leading-relaxed mt-1">
@@ -157,7 +157,7 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
       </p>
       <Link
         to={onboardingHref}
-        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       >
         Claim & feature this listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -170,7 +170,7 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
 // not a plain paragraph) so it's never mistaken for editorial content.
 export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
   return (
-    <div className="not-prose rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 to-purple-50/40 p-5">
+    <div className="not-prose rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/60 to-purple-50/40 p-5">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {tool.logo ? (
@@ -188,13 +188,13 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
       </div>
       <Link
         to={`/tools/${tool.slug}`}
-        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shrink-0 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-[#2952CC] hover:bg-[#1F3FA3] transition-colors shrink-0 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       >
         View listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
       </Link>
       </div>
-      <WantYourProductHereLink className="mt-3 pt-3 border-t border-indigo-100/80" />
+      <WantYourProductHereLink className="mt-3 pt-3 border-t border-blue-100/80" />
     </div>
   );
 }

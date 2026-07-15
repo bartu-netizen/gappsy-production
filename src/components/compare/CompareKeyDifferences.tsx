@@ -26,8 +26,8 @@ export default function CompareKeyDifferences({
           <Card key={diff.title} hoverLift className="p-5 sm:p-6">
             <h3 className="font-semibold text-[#0B1221] text-[15px] mb-3">{diff.title}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <div className="border-l-2 border-indigo-200 pl-3">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-indigo-500 mb-1">{toolAName}</p>
+              <div className="border-l-2 border-blue-200 pl-3">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-500 mb-1">{toolAName}</p>
                 <p className="text-[13.5px] text-slate-600 leading-relaxed">{diff.toolA}</p>
               </div>
               <div className="border-l-2 border-violet-200 pl-3">

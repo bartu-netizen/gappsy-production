@@ -76,7 +76,7 @@ export default function QuickSummarySection({
     >
       {facts.map((fact) => (
         <div key={fact.label} className="flex items-start gap-2.5 px-5 py-4 min-w-0 bg-white">
-          <fact.icon className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+          <fact.icon className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-400">{fact.label}</p>
             <p className="text-[13.5px] text-[#0B1221] font-medium leading-snug" title={fact.fullValue ?? fact.value}>{fact.value}</p>

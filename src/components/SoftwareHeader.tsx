@@ -272,7 +272,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
               disabled
               aria-disabled="true"
               title="Coming soon"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] opacity-50 cursor-not-allowed"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#2952CC] to-[#0A1735] opacity-50 cursor-not-allowed"
             >
               Submit Software
             </button>
@@ -346,7 +346,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   type="button"
                   disabled
                   aria-disabled="true"
-                  className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] opacity-50 cursor-not-allowed"
+                  className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white/70 bg-gradient-to-br from-[#2952CC] to-[#0A1735] opacity-50 cursor-not-allowed"
                 >
                   Submit Software
                 </button>

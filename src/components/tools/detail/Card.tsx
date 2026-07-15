@@ -13,7 +13,7 @@ interface CardProps {
 // One place to tune the premium-SaaS card treatment instead of eight.
 export default function Card({ children, className = '', hoverLift = false, highlight = false }: CardProps) {
   const border = highlight
-    ? 'border-2 border-indigo-500 shadow-[0_16px_32px_rgba(79,70,229,0.12)]'
+    ? 'border-2 border-blue-500 shadow-[0_16px_32px_rgba(41,82,204,0.12)]'
     : 'border border-[#eef0f3]';
   return (
     <div

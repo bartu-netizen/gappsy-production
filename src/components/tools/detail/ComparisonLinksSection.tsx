@@ -14,7 +14,7 @@ export default function ComparisonLinksSection({ toolName, comparisons }: { tool
           <Link
             key={comparison.label}
             to={comparison.href}
-            className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-indigo-200 hover:text-indigo-600 transition-colors"
+            className="inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:border-blue-200 hover:text-blue-600 transition-colors"
           >
             <GitCompareArrows className="w-3.5 h-3.5 text-slate-400" />
             {comparison.label}

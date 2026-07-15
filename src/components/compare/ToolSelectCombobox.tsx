@@ -141,7 +141,7 @@ export default function ToolSelectCombobox({
         aria-label={compact ? label : undefined}
         className={`w-full flex items-center gap-2.5 ${heightClass} px-4 rounded-2xl border border-slate-200 bg-white text-left transition-colors ${
           disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-slate-300'
-        } ${open ? 'border-indigo-400 ring-2 ring-indigo-100' : ''}`}
+        } ${open ? 'border-blue-400 ring-2 ring-blue-100' : ''}`}
       >
         {value ? (
           <>
@@ -169,7 +169,7 @@ export default function ToolSelectCombobox({
                   }
                 }}
                 aria-label={`Clear ${label}`}
-                className="text-slate-400 hover:text-slate-600 shrink-0 rounded focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                className="text-slate-400 hover:text-slate-600 shrink-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 <X className="w-4 h-4" />
               </span>
@@ -205,7 +205,7 @@ export default function ToolSelectCombobox({
               className="flex-1 min-w-0 bg-transparent outline-none text-sm text-[#0B1221] placeholder-slate-400"
               autoComplete="off"
             />
-            {loading && <Loader2 className="w-3.5 h-3.5 text-indigo-400 animate-spin shrink-0" aria-hidden="true" />}
+            {loading && <Loader2 className="w-3.5 h-3.5 text-blue-400 animate-spin shrink-0" aria-hidden="true" />}
           </div>
           <ul id={listboxId} role="listbox" aria-label={`${label} results`} className="max-h-72 overflow-y-auto py-1.5">
             {loading && results.length === 0 && <li className="px-3.5 py-3 text-xs text-slate-400">Searching…</li>}
@@ -220,7 +220,7 @@ export default function ToolSelectCombobox({
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => selectTool(tool)}
                   className={`w-full flex items-center gap-2.5 px-3.5 py-2 text-left transition-colors ${
-                    index === activeIndex ? 'bg-indigo-50' : 'hover:bg-slate-50'
+                    index === activeIndex ? 'bg-blue-50' : 'hover:bg-slate-50'
                   }`}
                 >
                   {tool.logo ? (

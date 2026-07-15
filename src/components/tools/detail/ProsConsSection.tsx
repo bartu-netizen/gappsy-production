@@ -16,7 +16,7 @@ export default function ProsConsSection({ toolName, pros, cons }: { toolName: st
     <section id="pros-and-cons" className="scroll-mt-24">
       <ToolsSectionHeader eyebrow="Pros & Cons" title={`Is ${toolName} worth it?`} />
       <p className="flex items-start gap-2 text-[14px] text-slate-600 leading-relaxed mb-5 max-w-2xl">
-        <Scale className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+        <Scale className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
         {verdict}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">

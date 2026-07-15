@@ -26,7 +26,7 @@ interface ToolHeroProps {
   categoryHref?: string | null;
 }
 
-const AVATAR_COLORS = ['bg-indigo-100 text-indigo-600', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
+const AVATAR_COLORS = ['bg-blue-100 text-blue-600', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700'];
 
 function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -66,7 +66,7 @@ export default function ToolHero({
     <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-8 relative overflow-hidden">
       <div
         className="absolute inset-x-0 top-0 h-40 sm:h-64 -z-10 opacity-60"
-        style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(79,70,229,0.08), transparent)' }}
+        style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(41,82,204,0.08), transparent)' }}
         aria-hidden="true"
       />
       <div
@@ -74,7 +74,7 @@ export default function ToolHero({
         style={{
           background: 'radial-gradient(45% 80% at 85% 0%, rgba(139,92,246,0.10), transparent)',
           backgroundImage:
-            'radial-gradient(45% 80% at 85% 0%, rgba(139,92,246,0.10), transparent), radial-gradient(circle, rgba(79,70,229,0.06) 1px, transparent 1px)',
+            'radial-gradient(45% 80% at 85% 0%, rgba(139,92,246,0.10), transparent), radial-gradient(circle, rgba(41,82,204,0.06) 1px, transparent 1px)',
           backgroundSize: 'auto, 22px 22px',
         }}
         aria-hidden="true"
@@ -88,7 +88,7 @@ export default function ToolHero({
         <div className="relative shrink-0">
           <div
             className="absolute -inset-3 -z-10 rounded-full opacity-70 blur-xl"
-            style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.18), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(41,82,204,0.18), transparent 70%)' }}
             aria-hidden="true"
           />
           {logo ? (
@@ -101,7 +101,7 @@ export default function ToolHero({
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
             />
           ) : (
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-400 font-bold text-3xl">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-400 font-bold text-3xl">
               {name.charAt(0)}
             </div>
           )}
@@ -110,7 +110,7 @@ export default function ToolHero({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h1 className="text-3xl sm:text-[42px] font-bold text-[#0B1221] leading-tight tracking-[-0.02em]">{name}</h1>
-            {verified && <ShieldCheck className="w-6 h-6 text-indigo-500 shrink-0" aria-label="Verified" />}
+            {verified && <ShieldCheck className="w-6 h-6 text-blue-500 shrink-0" aria-label="Verified" />}
           </div>
 
           <div className="flex items-center gap-2 flex-wrap mb-3">
@@ -124,7 +124,7 @@ export default function ToolHero({
             {primaryCategory && (
               <Link
                 to={`/tool-categories/${primaryCategory.slug}`}
-                className="inline-flex items-center text-xs font-medium bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full hover:bg-indigo-100 transition-colors"
+                className="inline-flex items-center text-xs font-medium bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full hover:bg-blue-100 transition-colors"
               >
                 {primaryCategory.name}
               </Link>
@@ -132,7 +132,7 @@ export default function ToolHero({
             {verified && (
               <Link
                 to="/editorial-policy"
-                className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-indigo-600 transition-colors"
+                className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-blue-600 transition-colors"
               >
                 <BadgeCheck className="w-3.5 h-3.5" />
                 How we review
@@ -202,7 +202,7 @@ export default function ToolHero({
         <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0 w-full sm:w-auto">
           <a
             href="#reviews"
-            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:from-[#1F3FA3] hover:to-[#060D20] active:scale-[0.98] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(41,82,204,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
             Write a review
@@ -210,7 +210,7 @@ export default function ToolHero({
           {compareHref && (
             <Link
               to={compareHref}
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-indigo-600 transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
+              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-blue-600 transition-colors text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
             >
               <GitCompareArrows className="w-3.5 h-3.5" aria-hidden="true" />
               {compareLabel}

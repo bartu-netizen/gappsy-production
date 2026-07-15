@@ -182,7 +182,7 @@ export default function ToolFactsSidebar({
             href={cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F46E5] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
+            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#2952CC] hover:bg-[#1F3FA3] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
           >
             Visit Website
             <ExternalLink className="w-3.5 h-3.5" />
@@ -198,16 +198,16 @@ export default function ToolFactsSidebar({
             onClick={toggleBookmark}
             aria-pressed={bookmarked}
             aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark this tool'}
-            className={`flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 ${bookmarked ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
+            className={`flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${bookmarked ? 'bg-blue-50 border-blue-200 text-blue-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
           >
-            <Bookmark className={`w-3.5 h-3.5 ${bookmarked ? 'fill-indigo-600' : ''}`} />
+            <Bookmark className={`w-3.5 h-3.5 ${bookmarked ? 'fill-blue-600' : ''}`} />
             Save
           </button>
           <button
             type="button"
             onClick={handleShare}
             aria-label="Share this tool"
-            className="flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border border-slate-200 text-xs font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-full border border-slate-200 text-xs font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <Share2 className="w-3.5 h-3.5" />
             {shareState === 'copied' ? 'Copied!' : 'Share'}
@@ -218,7 +218,7 @@ export default function ToolFactsSidebar({
               onClick={() => setCompareOpen((v) => !v)}
               aria-expanded={compareOpen}
               aria-label="Quick compare"
-              className={`w-full inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 ${compareOpen ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
+              className={`w-full inline-flex items-center justify-center gap-1.5 p-2 rounded-full border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${compareOpen ? 'bg-blue-50 border-blue-200 text-blue-600' : 'border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}
             >
               <GitCompareArrows className="w-3.5 h-3.5" />
               Compare
@@ -231,7 +231,7 @@ export default function ToolFactsSidebar({
                       key={link.href}
                       to={link.href}
                       onClick={() => setCompareOpen(false)}
-                      className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                      className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                     >
                       <GitCompareArrows className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       {link.label}
@@ -241,7 +241,7 @@ export default function ToolFactsSidebar({
                   <Link
                     to={categoryHref}
                     onClick={() => setCompareOpen(false)}
-                    className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                    className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   >
                     <FolderTree className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     Browse similar tools
@@ -283,7 +283,7 @@ export default function ToolFactsSidebar({
             <div className="flex items-center justify-between gap-3">
               <dt className="inline-flex items-center gap-1.5 text-slate-500"><Globe className="w-3.5 h-3.5" />Website</dt>
               <dd className="truncate max-w-[150px] text-right">
-                <a href={websiteUrl} target="_blank" rel="noopener noreferrer nofollow" className="text-indigo-600 hover:text-indigo-700 font-medium">
+                <a href={websiteUrl} target="_blank" rel="noopener noreferrer nofollow" className="text-blue-600 hover:text-blue-700 font-medium">
                   {hostnameOf(websiteUrl)}
                 </a>
               </dd>
@@ -326,7 +326,7 @@ export default function ToolFactsSidebar({
         </dl>
 
         {integrationCount > 0 && (
-          <a href="#integrations" className="flex items-center justify-between text-sm text-slate-600 hover:text-indigo-600 transition-colors">
+          <a href="#integrations" className="flex items-center justify-between text-sm text-slate-600 hover:text-blue-600 transition-colors">
             <span className="inline-flex items-center gap-1.5"><Plug className="w-3.5 h-3.5" />Integrations</span>
             <span className="font-medium">{integrationCount}</span>
           </a>
@@ -340,7 +340,7 @@ export default function ToolFactsSidebar({
                 <Link
                   key={c.slug}
                   to={`/tool-categories/${c.slug}`}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full hover:bg-indigo-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full hover:bg-blue-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   <FolderTree className="w-3 h-3" />
                   {c.name}
@@ -358,7 +358,7 @@ export default function ToolFactsSidebar({
                 <Link
                   key={t.slug}
                   to={`/tool-tags/${t.slug}`}
-                  className="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full hover:bg-slate-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1"
+                  className="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full hover:bg-slate-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   <TagIcon className="w-3 h-3" />
                   {t.name}
@@ -368,7 +368,7 @@ export default function ToolFactsSidebar({
                 <button
                   type="button"
                   onClick={() => setTagsExpanded(true)}
-                  className="inline-flex items-center text-xs font-medium text-indigo-600 px-2.5 py-1 rounded-full border border-indigo-100 hover:bg-indigo-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1"
+                  className="inline-flex items-center text-xs font-medium text-blue-600 px-2.5 py-1 rounded-full border border-blue-100 hover:bg-blue-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   +{tags.length - TAG_PREVIEW_COUNT} more
                 </button>

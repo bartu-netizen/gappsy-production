@@ -6,7 +6,7 @@ import WriteToolReviewForm from './WriteToolReviewForm';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
 import type { ReviewItem } from './types';
 
-const AVATAR_COLORS = ['bg-indigo-100 text-indigo-600', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-600'];
+const AVATAR_COLORS = ['bg-blue-100 text-blue-600', 'bg-violet-100 text-violet-600', 'bg-emerald-100 text-emerald-600', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-600'];
 
 function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -70,7 +70,7 @@ export default function ReviewsSection({ toolId, toolName, reviews }: { toolId: 
           <button
             type="button"
             onClick={() => setWriting(true)}
-            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#2952CC] hover:bg-[#1F3FA3] transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
             Write a review
@@ -90,7 +90,7 @@ export default function ReviewsSection({ toolId, toolName, reviews }: { toolId: 
           <button
             type="button"
             onClick={() => setWriting(true)}
-            className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#2952CC] hover:bg-[#1F3FA3] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
             Be the first to review it

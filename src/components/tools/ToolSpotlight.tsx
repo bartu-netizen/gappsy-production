@@ -21,18 +21,18 @@ export default function ToolSpotlight({ tool, eyebrow = 'Spotlight' }: { tool: T
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-contain border border-slate-100 bg-white"
             />
           ) : (
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-400 font-bold text-2xl">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-400 font-bold text-2xl">
               {tool.name.charAt(0)}
             </div>
           )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-indigo-600 mb-2">{eyebrow}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-2">{eyebrow}</p>
 
           <div className="flex items-center gap-2 mb-2">
             <h3 className="text-2xl sm:text-[28px] font-bold text-[#0B1221] leading-tight">{tool.name}</h3>
-            {tool.verified && <ShieldCheck className="w-5 h-5 text-indigo-500 shrink-0" />}
+            {tool.verified && <ShieldCheck className="w-5 h-5 text-blue-500 shrink-0" />}
           </div>
 
           {tool.short_description && (
@@ -51,7 +51,7 @@ export default function ToolSpotlight({ tool, eyebrow = 'Spotlight' }: { tool: T
             {tool.starting_price && (
               <span className="text-sm font-medium text-slate-500">From {tool.starting_price}</span>
             )}
-            <span className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 group-hover:gap-2 transition-all ml-auto sm:ml-0">
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all ml-auto sm:ml-0">
               Explore {tool.name}
               <ArrowRight className="w-3.5 h-3.5" />
             </span>

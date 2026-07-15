@@ -31,13 +31,13 @@ export default function ToolsEmptyState({
   exploreLabel = 'Explore instead',
 }: ToolsEmptyStateProps) {
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50 via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
-      <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-indigo-100 shadow-sm flex items-center justify-center mb-6">
-        <Icon className="w-6 h-6 text-indigo-600" strokeWidth={1.75} />
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
+      <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-blue-100 shadow-sm flex items-center justify-center mb-6">
+        <Icon className="w-6 h-6 text-blue-600" strokeWidth={1.75} />
       </div>
 
       {eyebrow && (
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-indigo-600 mb-2">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-blue-600 mb-2">
           {eyebrow}
         </p>
       )}
@@ -52,7 +52,7 @@ export default function ToolsEmptyState({
       {actionLabel && actionHref && (
         <Link
           to={actionHref}
-          className="inline-flex items-center gap-1.5 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+          className="inline-flex items-center gap-1.5 bg-[#2952CC] hover:bg-[#1F3FA3] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
         >
           {actionLabel}
           <ArrowRight className="w-3.5 h-3.5" />
@@ -69,7 +69,7 @@ export default function ToolsEmptyState({
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-indigo-600 hover:border-indigo-200 px-3.5 py-1.5 rounded-full transition-colors"
+                className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-blue-600 hover:border-blue-200 px-3.5 py-1.5 rounded-full transition-colors"
               >
                 {link.label}
               </Link>

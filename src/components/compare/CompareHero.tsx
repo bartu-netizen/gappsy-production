@@ -24,7 +24,7 @@ function ToolIdentity({
       <div className="relative mb-3">
         <div
           className="absolute -inset-3 -z-10 rounded-full opacity-60 blur-xl"
-          style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.16), transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(41,82,204,0.16), transparent 70%)' }}
           aria-hidden="true"
         />
         {tool.logo ? (
@@ -36,24 +36,24 @@ function ToolIdentity({
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
           />
         ) : (
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-400 font-bold text-2xl">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-400 font-bold text-2xl">
             {tool.name.charAt(0)}
           </div>
         )}
       </div>
 
       <div className="flex items-center gap-1.5 mb-1">
-        <Link to={`/tools/${tool.slug}`} className="font-bold text-[#0B1221] text-lg hover:text-indigo-600 transition-colors">
+        <Link to={`/tools/${tool.slug}`} className="font-bold text-[#0B1221] text-lg hover:text-blue-600 transition-colors">
           {tool.name}
         </Link>
-        {tool.verified && <ShieldCheck className="w-4 h-4 text-indigo-500 shrink-0" aria-label="Verified" />}
+        {tool.verified && <ShieldCheck className="w-4 h-4 text-blue-500 shrink-0" aria-label="Verified" />}
       </div>
 
       <div className="flex items-center justify-center gap-2 flex-wrap mb-2.5">
         {tool.primaryCategory && (
           <Link
             to={`/tool-categories/${tool.primaryCategory.slug}`}
-            className="inline-flex items-center text-[11px] font-medium bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full hover:bg-indigo-100 transition-colors"
+            className="inline-flex items-center text-[11px] font-medium bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full hover:bg-blue-100 transition-colors"
           >
             {tool.primaryCategory.name}
           </Link>
@@ -87,7 +87,7 @@ function ToolIdentity({
             href={cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:from-[#4338CA] hover:to-[#6D28D9] active:scale-[0.98] text-white px-5 py-2.5 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(79,70,229,0.25)]"
+            className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#2952CC] to-[#0A1735] hover:from-[#1F3FA3] hover:to-[#060D20] active:scale-[0.98] text-white px-5 py-2.5 rounded-xl font-semibold transition-all text-sm w-full sm:w-auto shadow-[0_8px_20px_rgba(41,82,204,0.25)]"
           >
             Visit {tool.name}
             <ExternalLink className="w-3.5 h-3.5" />
@@ -112,7 +112,7 @@ function ToolIdentity({
           <button
             type="button"
             onClick={() => setSwitching(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-indigo-600 transition-colors mt-1"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-blue-600 transition-colors mt-1"
           >
             <RefreshCw className="w-3 h-3" />
             Compare a different tool
@@ -142,7 +142,7 @@ export default function CompareHero({
     <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 pb-8 relative overflow-hidden">
       <div
         className="absolute inset-x-0 top-0 h-64 -z-10 opacity-60"
-        style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(79,70,229,0.08), transparent)' }}
+        style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(41,82,204,0.08), transparent)' }}
         aria-hidden="true"
       />
 

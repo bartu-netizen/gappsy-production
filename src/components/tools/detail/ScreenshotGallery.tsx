@@ -95,7 +95,7 @@ export default function ScreenshotGallery({
         key={shot.id}
         type="button"
         onClick={() => setActiveIndex(index)}
-        className="group w-full text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
+        className="group w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
       >
         <BrowserFrame hostname={hostname} className="shadow-sm group-hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)] transition-shadow duration-200">
           <div className="relative aspect-video overflow-hidden">
@@ -123,7 +123,7 @@ export default function ScreenshotGallery({
       <div className="relative mb-4">
         <div
           className="absolute -inset-6 -z-10 rounded-[32px] opacity-60 blur-2xl"
-          style={{ background: 'radial-gradient(60% 70% at 50% 30%, rgba(79,70,229,0.10), transparent)' }}
+          style={{ background: 'radial-gradient(60% 70% at 50% 30%, rgba(41,82,204,0.10), transparent)' }}
           aria-hidden="true"
         />
         {renderThumb(featured, 0)}
