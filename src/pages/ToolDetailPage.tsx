@@ -22,8 +22,9 @@ import MobileTableOfContents from '../components/tools/detail/MobileTableOfConte
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
-import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCard, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCard, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
+import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
 import ProsConsSection from '../components/tools/detail/ProsConsSection';
 import PricingSection from '../components/tools/detail/PricingSection';
@@ -607,6 +608,13 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         cta={affiliateUrl || websiteUrl}
         featuredPromo={featuredPromo}
         categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
+      />
+
+      <StickyDesktopToolBar
+        toolName={tool.name}
+        featured={tool.featured}
+        cta={affiliateUrl || websiteUrl}
+        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
       />
     </div>
   );
