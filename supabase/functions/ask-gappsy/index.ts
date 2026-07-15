@@ -43,19 +43,24 @@ async function buildToolSystemPrompt(supabase: any, toolSlug: string): Promise<{
     .from("tools")
     .select(
       `id, name, slug, short_description, long_description, pricing_model, starting_price, best_for, target_audience,
-       pricing_summary, features_summary, integrations_summary, company_summary, rating, review_count, verified, featured`
+       pricing_summary, features_summary, integrations_summary, company_summary, founded_year, company_size,
+       headquarters, languages, rating, review_count, verified, featured`
     )
     .eq("slug", toolSlug)
     .eq("status", "published")
     .maybeSingle();
   if (!tool) return null;
 
-  const [plansResult, featuresResult, prosResult, consResult, faqsResult] = await Promise.all([
+  const [plansResult, featuresResult, prosResult, consResult, faqsResult, useCasesResult, integrationsResult, categoryResult, reviewsResult] = await Promise.all([
     supabase.from("tool_pricing_plans").select("plan_name, price, billing_cycle, features").eq("tool_id", tool.id).order("sort_order"),
-    supabase.from("tool_features").select("title, description").eq("tool_id", tool.id).order("sort_order").limit(15),
+    supabase.from("tool_features").select("title, description").eq("tool_id", tool.id).order("sort_order").limit(20),
     supabase.from("tool_pros").select("text").eq("tool_id", tool.id).order("sort_order"),
     supabase.from("tool_cons").select("text").eq("tool_id", tool.id).order("sort_order"),
     supabase.from("tool_faqs").select("question, answer").eq("tool_id", tool.id).eq("status", "published").order("sort_order"),
+    supabase.from("tool_use_cases").select("title, description, audience").eq("tool_id", tool.id).order("sort_order"),
+    supabase.from("tool_integrations").select("integration_name, description").eq("tool_id", tool.id).limit(20),
+    supabase.from("tool_category_links").select("tool_categories(name)").eq("tool_id", tool.id),
+    supabase.from("tool_user_reviews").select("reviewer_name, rating, title, body").eq("tool_id", tool.id).eq("status", "approved").order("created_at", { ascending: false }).limit(8),
   ]);
 
   const plans = (plansResult.data || []).map((p: { plan_name: string | null; price: string | null; billing_cycle: string | null }) =>
@@ -65,16 +70,31 @@ async function buildToolSystemPrompt(supabase: any, toolSlug: string): Promise<{
   const pros = (prosResult.data || []).map((p: { text: string }) => `- ${p.text}`).join("\n") || "Not documented.";
   const cons = (consResult.data || []).map((c: { text: string }) => `- ${c.text}`).join("\n") || "Not documented.";
   const faqs = (faqsResult.data || []).map((f: { question: string; answer: string }) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n") || "None yet.";
+  const useCases = (useCasesResult.data || []).map((u: { title: string; description: string | null; audience: string | null }) =>
+    `- ${u.title}${u.audience ? ` (for ${u.audience})` : ""}${u.description ? `: ${u.description}` : ""}`
+  ).join("\n") || "Not documented.";
+  const integrations = (integrationsResult.data || []).map((i: { integration_name: string; description: string | null }) => `- ${i.integration_name}${i.description ? `: ${i.description}` : ""}`).join("\n") || "Not documented.";
+  // deno-lint-ignore no-explicit-any
+  const categories = (categoryResult.data || []).map((c: any) => c.tool_categories?.name).filter(Boolean).join(", ") || "Not documented.";
+  const reviews = (reviewsResult.data || []).map((r: { reviewer_name: string; rating: number; title: string | null; body: string }) =>
+    `"${r.title ? `${r.title} — ` : ""}${r.body}" — ${r.reviewer_name}, ${r.rating}/5`
+  ).join("\n\n") || "No real reviews yet.";
 
-  const prompt = `You are "Ask Gappsy", a helpful, honest assistant embedded on the Gappsy software directory's page for ${tool.name}. Answer questions about ${tool.name} using ONLY the information below — never invent pricing, features, or facts that aren't here. If something isn't covered, say so plainly and suggest checking the official website or the "Visit Website" button on this page, rather than guessing.
+  const prompt = `You are "Ask Gappsy", a helpful, honest assistant embedded on the Gappsy software directory's page for ${tool.name}. Answer questions using ONLY the information below, which is everything actually published on this page — never invent pricing, features, or facts that aren't here. If something isn't covered, say so plainly and suggest checking the official website or the "Visit Website" button on this page, rather than guessing.
 
-${tool.name} — overview:
-${tool.short_description || tool.long_description || "No description available."}
+${tool.name} — category: ${categories}
+Short description: ${tool.short_description || "Not documented."}
+
+Full description (the main article on this page):
+${tool.long_description || "Not documented."}
 
 Best for: ${tool.best_for || "Not documented."}
 Target audience: ${tool.target_audience || "Not documented."}
+Company: founded ${tool.founded_year || "unknown"}, ${tool.company_size || "size not documented"}, headquartered in ${tool.headquarters || "an undocumented location"}.
+Supported languages: ${Array.isArray(tool.languages) && tool.languages.length > 0 ? tool.languages.join(", ") : "Not documented."}
 Pricing model: ${tool.pricing_model || "Not documented."}${tool.starting_price ? `, starting at ${tool.starting_price}` : ""}
 Rating: ${tool.rating > 0 ? `${tool.rating}/5 from ${tool.review_count} reviews` : "No reviews yet."}
+${tool.featured ? "This is one of Gappsy's Featured (paid, sponsored) listings." : "This is a standard, non-featured listing."}
 
 Pricing plans:
 ${plans}
@@ -88,8 +108,19 @@ ${pros}
 Cons:
 ${cons}
 
+Use cases:
+${useCases}
+
+Integrations:
+${integrations}
+
 FAQs:
 ${faqs}
+
+Real user reviews published on this page:
+${reviews}
+
+Disclosure rule: if you mention that ${tool.name} is a Featured/sponsored Gappsy listing, say so plainly (Gappsy already labels these visibly on the page) — never let featured status make you oversell it or hide a real weakness listed in its Cons above. Being featured means it paid for visibility, not that it's objectively the best fit for every visitor.
 
 If the visitor asks whether a different tool might suit them better, you may mention that Gappsy has other options in the same category and suggest they browse gappsy.com/tool-categories — but don't fabricate specific competitor details you don't actually know. Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text.`;
 
@@ -100,21 +131,23 @@ If the visitor asks whether a different tool might suit them better, you may men
 async function buildDirectorySystemPrompt(supabase: any): Promise<string> {
   const { data: tools } = await supabase
     .from("tools")
-    .select("name, slug, short_description, pricing_model, starting_price, rating")
+    .select("name, slug, short_description, pricing_model, starting_price, rating, featured")
     .eq("status", "published")
     .order("featured", { ascending: false })
     .order("rating", { ascending: false })
     .limit(200);
 
   const catalog = (tools || [])
-    .map((t: { name: string; slug: string; short_description: string | null; pricing_model: string | null; starting_price: string | null }) =>
-      `- ${t.name} (/tools/${t.slug}): ${t.short_description || "No description."}${t.pricing_model ? ` | ${t.pricing_model}` : ""}${t.starting_price ? ` from ${t.starting_price}` : ""}`
+    .map((t: { name: string; slug: string; short_description: string | null; pricing_model: string | null; starting_price: string | null; featured: boolean }) =>
+      `- ${t.name} (/tools/${t.slug})${t.featured ? " [Featured/sponsored listing]" : ""}: ${t.short_description || "No description."}${t.pricing_model ? ` | ${t.pricing_model}` : ""}${t.starting_price ? ` from ${t.starting_price}` : ""}`
     )
     .join("\n");
 
   return `You are "Ask Gappsy", a helpful, honest assistant on Gappsy, a software tools directory. Help visitors find the right software tool for what they're trying to do, using ONLY the real catalog below — never invent tools or facts that aren't here. When you recommend a tool, mention its name and that they can find it at gappsy.com/tools/{slug}. If nothing in the catalog fits well, say so honestly rather than forcing a recommendation. Keep answers concise and conversational.
 
-Catalog (name, page, description, pricing):
+Some listings are marked [Featured/sponsored listing] — these tools paid Gappsy for visibility. You may recommend a featured tool when it's genuinely a good fit, but never let featured status override a better-fitting free or non-featured tool, and if it feels relevant, mention plainly that it's a featured/sponsored listing rather than letting the visitor assume it's an unbiased top pick. Prioritize being genuinely useful over favoring featured tools.
+
+Catalog (name, page, description, pricing; [Featured/sponsored listing] tag shown where applicable):
 ${catalog}`;
 }
 
