@@ -38,7 +38,7 @@ export default function PricingSection({ toolName, plans, websiteUrl, affiliateU
             >
               {isRecommended && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
-                  Most Popular
+                  Popular
                 </span>
               )}
               <h3 className="font-semibold text-[#0B1221] text-base mb-1">{plan.plan_name || 'Plan'}</h3>
