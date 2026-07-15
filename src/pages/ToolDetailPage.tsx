@@ -22,7 +22,7 @@ import MobileTableOfContents from '../components/tools/detail/MobileTableOfConte
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
-import { useFeaturedToolPromo, FeaturedToolSidebarCard, FeaturedToolInlineCard, ClaimListingCard } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCard, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
 import ProsConsSection from '../components/tools/detail/ProsConsSection';
@@ -146,7 +146,14 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [notFound, setNotFound] = useState(false);
 
   const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
-  const featuredPromo = useFeaturedToolPromo(toolSlug || '');
+  // A pool, not one tool — distributed across up to 5 placements (sidebar
+  // top/bottom + up to 3 spots inline in the article) below, so a page
+  // never shows the same competitor twice. Thin inventory just means later
+  // slots come back undefined and render nothing (see FeaturedToolPromo.tsx).
+  const featuredPool = useFeaturedToolPool(toolSlug || '', 5);
+  const featuredPromo = featuredPool?.[0];
+  const featuredPromoSecondary = featuredPool?.[1];
+  const inlineFeaturedPromos = (featuredPool || []).slice(2);
 
   useEffect(() => {
     if (previewToolId) {
@@ -377,6 +384,23 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     .filter((c) => c.href.startsWith('/compare/'))
     .map((c) => ({ label: c.label, href: c.href }));
 
+  const inlinePromoSlots = planInlinePromoSlots(extendedContent?.longForm.length || 0, inlineFeaturedPromos);
+
+  // Interleave article segments with inline promo cards in reading order —
+  // segment, promo, segment, promo, ..., final segment. Built as a plain
+  // element list up front rather than inline in JSX so the ordering is
+  // impossible to get backwards.
+  const longFormWithPromos: React.ReactNode[] = [];
+  if (extendedContent) {
+    let cursor = 0;
+    inlinePromoSlots.forEach((slot, i) => {
+      longFormWithPromos.push(<LongFormContent key={`segment-${i}`} blocks={extendedContent.longForm.slice(cursor, slot.index)} />);
+      longFormWithPromos.push(<FeaturedToolInlineCard key={`promo-${slot.promo.slug}`} tool={slot.promo} />);
+      cursor = slot.index;
+    });
+    longFormWithPromos.push(<LongFormContent key="segment-final" blocks={extendedContent.longForm.slice(cursor)} />);
+  }
+
   const jsonLd = buildToolJsonLd({
     slug: tool.slug,
     name: tool.name,
@@ -478,15 +502,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 />
 
                 {extendedContent ? (
-                  featuredPromo && extendedContent.longForm.length > 6 ? (
-                    <>
-                      <LongFormContent blocks={extendedContent.longForm.slice(0, 4)} />
-                      <FeaturedToolInlineCard tool={featuredPromo} />
-                      <LongFormContent blocks={extendedContent.longForm.slice(4)} />
-                    </>
-                  ) : (
-                    <LongFormContent blocks={extendedContent.longForm} />
-                  )
+                  <>{longFormWithPromos}</>
                 ) : (
                   tool.long_description && (
                     <section id="overview" className="scroll-mt-24">
@@ -518,6 +534,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 languages={tool.languages}
                 quickCompareLinks={quickCompareLinks}
                 categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
+                secondarySlot={tool.featured && featuredPromoSecondary ? <FeaturedToolSidebarCompact tool={featuredPromoSecondary} /> : undefined}
               >
                 {tool.featured
                   ? featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />

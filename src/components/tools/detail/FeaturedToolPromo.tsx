@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Rocket } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
-import Card from './Card';
 
-interface FeaturedTool {
+export interface FeaturedTool {
   slug: string;
   name: string;
   logo: string | null;
@@ -18,11 +17,17 @@ interface FeaturedTool {
 // today that's a couple of editorially-marked tools (Canva, Figma); as real
 // paid subscriptions land (see vendor_feature_subscriptions), those tools
 // get featured=true too and start rotating through here automatically, no
-// code change needed. Renders nothing if there's no eligible candidate
-// (excludes the tool whose own page this is) — same "no placeholder
-// clutter" convention as ToolCardRow.
-export function useFeaturedToolPromo(excludeSlug: string) {
-  const [tool, setTool] = useState<FeaturedTool | null | undefined>(undefined);
+// code change needed.
+//
+// Returns a shuffled POOL (up to `count`, excluding the tool whose own page
+// this is), not a single tool — the page distributes pool[0], pool[1], ...
+// across multiple placements (sidebar top/bottom, a few spots inline in the
+// article) so a page never shows the *same* competitor twice. When
+// inventory is thin (today: 1-2 tools total), later slots simply come back
+// `undefined` and those placements render nothing — no repeats, no
+// placeholder clutter, same convention as ToolCardRow.
+export function useFeaturedToolPool(excludeSlug: string, count: number): FeaturedTool[] | undefined {
+  const [pool, setPool] = useState<FeaturedTool[] | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
@@ -32,52 +37,95 @@ export function useFeaturedToolPromo(excludeSlug: string) {
       .eq('featured', true)
       .eq('status', 'published')
       .neq('slug', excludeSlug)
-      .limit(5)
+      .limit(20)
       .then(({ data }) => {
         if (cancelled) return;
-        if (!data || data.length === 0) { setTool(null); return; }
-        setTool(data[Math.floor(Math.random() * data.length)]);
+        const shuffled = [...(data || [])].sort(() => Math.random() - 0.5);
+        setPool(shuffled.slice(0, count));
       });
     return () => { cancelled = true; };
-  }, [excludeSlug]);
+  }, [excludeSlug, count]);
 
-  return tool;
+  return pool;
 }
 
-function FeaturedBadge() {
+// Distributes up to `promos.length` inline cards evenly through a long-form
+// article's block list, skipping entirely on short articles (an ad in the
+// first or last paragraph reads as spam, not placement) and never using
+// more slots than the article can comfortably absorb.
+export function planInlinePromoSlots<T>(totalBlocks: number, promos: T[]): { index: number; promo: T }[] {
+  if (promos.length === 0 || totalBlocks < 6) return [];
+  const usable = Math.min(promos.length, Math.floor(totalBlocks / 5));
+  const slots: { index: number; promo: T }[] = [];
+  for (let i = 1; i <= usable; i++) {
+    slots.push({ index: Math.round((totalBlocks * i) / (usable + 1)), promo: promos[i - 1] });
+  }
+  return slots;
+}
+
+function FeaturedBadge({ large = false }: { large?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.06em] text-[#4F46E5] bg-indigo-50 px-2 py-0.5 rounded-full">
-      <Sparkles className="w-3 h-3" aria-hidden="true" />
+    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
+      <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
       Featured
     </span>
   );
 }
 
+// The prominent placement — right after the "Visit Website" CTA in the
+// sidebar (see ToolFactsSidebar), so it's always in view without scrolling.
+// Deliberately NOT styled like the plain white fact rows around it (that
+// was the original bug report: it "looked too much like the tags section")
+// — a tinted gradient card with a bold badge is meant to read as its own
+// distinct thing at a glance.
 export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
   return (
-    <Card className="p-5">
-      <div className="flex items-center justify-between mb-3">
-        <FeaturedBadge />
+    <div className="rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 p-4">
+      <div className="flex items-center justify-between mb-2.5">
+        <FeaturedBadge large />
       </div>
       <Link to={`/tools/${tool.slug}`} className="group flex items-start gap-3">
         {tool.logo ? (
-          <img src={tool.logo} alt="" className="w-10 h-10 rounded-xl object-contain border border-slate-100 shrink-0" />
+          <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-white bg-white shrink-0 shadow-sm" />
         ) : (
-          <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-semibold shrink-0">{tool.name.charAt(0)}</div>
+          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-slate-400 font-semibold shrink-0 shadow-sm">{tool.name.charAt(0)}</div>
         )}
         <div className="min-w-0">
-          <p className="font-semibold text-[#0B1221] text-sm group-hover:text-indigo-600 transition-colors">{tool.name}</p>
-          {tool.short_description && <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mt-0.5">{tool.short_description}</p>}
+          <p className="font-bold text-[#0B1221] text-sm group-hover:text-indigo-600 transition-colors">{tool.name}</p>
+          {tool.short_description && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mt-0.5">{tool.short_description}</p>}
         </div>
       </Link>
       <Link
         to="/feature-my-product"
-        className="flex items-center gap-1 text-[11px] font-medium text-slate-400 hover:text-indigo-600 transition-colors mt-3 pt-3 border-t border-slate-100"
+        className="flex items-center gap-1 text-[11px] font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors mt-2.5 pt-2.5 border-t border-indigo-100/80"
       >
         Want your product here?
         <ArrowRight className="w-3 h-3" aria-hidden="true" />
       </Link>
-    </Card>
+    </div>
+  );
+}
+
+// A second, quieter placement further down the sidebar (near Category/Tags)
+// for the desktop visitors who do scroll that far — only rendered when the
+// featured pool actually has a second, different tool to show.
+export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
+  return (
+    <Link
+      to={`/tools/${tool.slug}`}
+      className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-br from-indigo-50/70 to-purple-50/70 border border-indigo-100 px-3 py-2.5"
+    >
+      {tool.logo ? (
+        <img src={tool.logo} alt="" className="w-8 h-8 rounded-lg object-contain border border-white bg-white shrink-0" />
+      ) : (
+        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{tool.name.charAt(0)}</div>
+      )}
+      <div className="min-w-0 flex-1">
+        <FeaturedBadge />
+        <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">{tool.name}</p>
+      </div>
+      <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
+    </Link>
   );
 }
 
@@ -88,40 +136,42 @@ export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
 export function ClaimListingCard({ toolName, website }: { toolName: string; website: string | null }) {
   const onboardingHref = website ? `/feature-my-product/onboarding?url=${encodeURIComponent(website)}` : '/feature-my-product/onboarding';
   return (
-    <Card className="p-5">
-      <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center mb-3">
+    <div className="rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 p-4">
+      <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center mb-2.5 shadow-sm">
         <Rocket className="w-4.5 h-4.5 text-[#4F46E5]" aria-hidden="true" />
       </div>
-      <p className="font-semibold text-[#0B1221] text-sm">Are you the maker of {toolName}?</p>
-      <p className="text-xs text-slate-500 leading-relaxed mt-1">
+      <p className="font-bold text-[#0B1221] text-sm">Are you the maker of {toolName}?</p>
+      <p className="text-xs text-slate-600 leading-relaxed mt-1">
         Claim this listing to manage it directly and get featured placement across the directory.
       </p>
       <Link
         to={onboardingHref}
-        className="flex items-center justify-center gap-1.5 w-full mt-3.5 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity"
+        className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity"
       >
         Claim & feature this listing
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
       </Link>
-    </Card>
+    </div>
   );
 }
 
+// Inline mid-article placement — visually distinct from prose (tinted card,
+// not a plain paragraph) so it's never mistaken for editorial content.
 export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
   return (
-    <div className="not-prose rounded-2xl border border-indigo-100 bg-indigo-50/30 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="not-prose rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 to-purple-50/40 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {tool.logo ? (
-          <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-slate-100 bg-white shrink-0" />
+          <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-white bg-white shrink-0 shadow-sm" />
         ) : (
-          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-slate-400 font-semibold shrink-0 border border-slate-100">{tool.name.charAt(0)}</div>
+          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-slate-400 font-semibold shrink-0 shadow-sm">{tool.name.charAt(0)}</div>
         )}
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <FeaturedBadge />
+            <FeaturedBadge large />
           </div>
-          <p className="font-semibold text-[#0B1221] text-[15px]">{tool.name}</p>
-          {tool.short_description && <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-1">{tool.short_description}</p>}
+          <p className="font-bold text-[#0B1221] text-[15px]">{tool.name}</p>
+          {tool.short_description && <p className="text-[13px] text-slate-600 leading-relaxed line-clamp-1">{tool.short_description}</p>}
         </div>
       </div>
       <Link

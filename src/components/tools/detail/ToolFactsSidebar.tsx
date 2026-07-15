@@ -30,7 +30,16 @@ interface ToolFactsSidebarProps {
   languages: string[];
   quickCompareLinks?: { label: string; href: string }[];
   categoryHref?: string | null;
+  /** Rendered right after the "Visit Website" CTA, inside the sticky card —
+   * high in the visible viewport by construction, so it's never at risk of
+   * being clipped by the sticky card's own pinned-scroll overflow the way
+   * anything appended after a long list of facts would be. */
   children?: React.ReactNode;
+  /** A second, quieter placement near Category/Tags for desktop visitors who
+   * scroll that far — separate from `children` so the two can hold two
+   * different pool entries (see ToolDetailPage) without either one risking
+   * the sticky-overflow clipping `children`'s placement was fixed for. */
+  secondarySlot?: React.ReactNode;
 }
 
 // Tag slugs (from the shared tool_tags taxonomy) that this sidebar reads to
@@ -77,6 +86,7 @@ export default function ToolFactsSidebar({
   quickCompareLinks = [],
   categoryHref = null,
   children,
+  secondarySlot,
 }: ToolFactsSidebarProps) {
   const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
@@ -122,16 +132,8 @@ export default function ToolFactsSidebar({
   }
 
   return (
-    <div className="space-y-4 order-first lg:order-none">
-      {/* Only the facts card itself sticks — when this card alone is
-          already taller than the viewport (common on a long tool page),
-          anything appended *inside* a sticky element that overflows the
-          viewport stays permanently clipped for the entire pinned scroll
-          range. Content after the card (e.g. a featured-tool promo) is a
-          plain sibling instead, so it scrolls into view predictably once
-          the sticky card's pinned range ends. */}
-      <aside className="lg:sticky lg:top-[88px]">
-        <Card className="p-5 space-y-5">
+    <aside className="lg:sticky lg:top-[88px] order-first lg:order-none">
+      <Card className="p-5 space-y-5">
         {rating > 0 && (
           <div>
             <div className="flex items-center gap-1">
@@ -163,6 +165,8 @@ export default function ToolFactsSidebar({
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         )}
+
+        {children}
 
         <div className="flex items-center justify-center gap-1.5">
           <button
@@ -338,6 +342,8 @@ export default function ToolFactsSidebar({
           </div>
         )}
 
+        {secondarySlot}
+
         {affiliateUrl && (
           <p className="flex items-start gap-1.5 text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-100">
             <Package className="w-3.5 h-3.5 shrink-0 mt-0.5" />
@@ -345,8 +351,6 @@ export default function ToolFactsSidebar({
           </p>
         )}
       </Card>
-      </aside>
-      {children}
-    </div>
+    </aside>
   );
 }
