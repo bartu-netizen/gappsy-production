@@ -32,12 +32,14 @@ export interface IntegrationItem {
   description: string | null;
 }
 
+// A real, publicly-submitted review (tool_user_reviews_public view) —
+// approved only, no reviewer_email (never exposed publicly, see migration
+// 20260715040000_20260715_tool_user_reviews.sql).
 export interface ReviewItem {
   id: string;
-  author_name: string;
-  author_title: string | null;
+  reviewer_name: string;
   rating: number;
-  quote: string;
-  source: string | null;
+  title: string | null;
+  body: string;
   created_at: string | null;
 }

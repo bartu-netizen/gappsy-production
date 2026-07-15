@@ -23,7 +23,7 @@ interface BuildToolJsonLdInput {
   rating: number;
   reviewCount: number;
   pricingPlans: Pick<PricingPlanItem, 'plan_name' | 'price'>[];
-  reviews: Pick<ReviewItem, 'author_name' | 'rating' | 'quote' | 'created_at'>[];
+  reviews: Pick<ReviewItem, 'reviewer_name' | 'rating' | 'body' | 'created_at'>[];
   faqs: Array<{ question: string; answer: string }>;
 }
 
@@ -39,9 +39,9 @@ export function buildToolJsonLd(input: BuildToolJsonLdInput): Record<string, any
 
   const reviewJsonLd = input.reviews.map((review) => ({
     '@type': 'Review',
-    author: { '@type': 'Person', name: review.author_name },
+    author: { '@type': 'Person', name: review.reviewer_name },
     reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: 5, worstRating: 1 },
-    reviewBody: review.quote,
+    reviewBody: review.body,
     ...(review.created_at ? { datePublished: formatSchemaDate(review.created_at) || undefined } : {}),
   }));
 

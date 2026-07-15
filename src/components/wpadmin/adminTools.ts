@@ -389,6 +389,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'Star',
   },
   {
+    id: 'tool-reviews',
+    label: 'Tool Reviews',
+    description: 'Moderate publicly-submitted tool reviews before they go live',
+    href: '/wp-admin/tool-reviews',
+    keywords: ['reviews', 'ratings', 'tools', 'submissions', 'moderation'],
+    group: 'Content',
+    scopes: ['software'],
+    iconName: 'Star',
+  },
+  {
     id: 'agency-reviews-import',
     label: 'Import Agency Reviews',
     description: 'Bulk import agency reviews from CSV or JSON with validation and uniqueness scoring',

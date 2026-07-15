@@ -519,7 +519,7 @@ export default function WpAdminToolEditorPage() {
     rating: formData.rating,
     reviewCount: formData.review_count,
     pricingPlans: formData.pricing_plans.map((p) => ({ plan_name: p.plan_name || null, price: p.price || null })),
-    reviews: formData.reviews.map((r) => ({ author_name: r.author_name, rating: r.rating, quote: r.quote, created_at: null })),
+    reviews: formData.reviews.map((r) => ({ reviewer_name: r.author_name, rating: r.rating, body: r.quote, created_at: null })),
     faqs: formData.faqs.filter((f) => f.status === 'published').map((f) => ({ question: f.question, answer: f.answer })),
   });
 

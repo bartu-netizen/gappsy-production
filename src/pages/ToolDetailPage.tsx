@@ -188,7 +188,13 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           }))
         );
         setIntegrations(t.integrations);
-        setReviews(t.reviews);
+        // Admin preview only ever sees the old editorial-quote shape (this
+        // draft/unpublished-tool path predates tool_user_reviews and isn't
+        // wired to it) — remapped into the real-review shape so the preview
+        // still renders something reasonable instead of a type mismatch.
+        setReviews(
+          t.reviews.map((r) => ({ id: r.id, reviewer_name: r.author_name, rating: r.rating, title: r.author_title, body: r.quote, created_at: r.created_at }))
+        );
         setDbFeatures(t.features.map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] })));
         setDbPros(t.pros);
         setDbCons(t.cons);
@@ -229,7 +235,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           supabase.from('tool_screenshots').select('id, image_url, caption').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_pricing_plans').select('id, plan_name, price, billing_cycle, description, features, sort_order').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_integrations').select('id, integration_name, integration_slug, integration_logo, description').eq('tool_id', data.id),
-          supabase.from('tool_reviews').select('id, author_name, author_title, rating, quote, source, created_at').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_user_reviews_public').select('id, reviewer_name, rating, title, body, created_at').eq('tool_id', data.id).order('created_at', { ascending: false }),
           supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('rating', { ascending: false }).limit(6),
           supabase.from('tool_features').select('title, description').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_pros').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
@@ -387,7 +393,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     ...(tool.youtube_url ? [{ id: 'video', label: 'Video' }] : []),
     ...(integrations.length ? [{ id: 'integrations', label: 'Integrations' }] : []),
     ...(mergedUseCases.length ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
-    ...(reviews.length ? [{ id: 'reviews', label: 'Reviews' }] : []),
+    { id: 'reviews', label: 'Reviews' },
     ...(mergedFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(extendedContent?.alternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
@@ -479,7 +485,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         updatedAt={tool.updated_at}
         websiteUrl={websiteUrl}
         affiliateUrl={affiliateUrl}
-        reviewerNames={reviews.map((r) => r.author_name)}
+        reviewerNames={reviews.map((r) => r.reviewer_name)}
       />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
@@ -567,7 +573,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               <LazyLoad component={() => import('../components/tools/detail/VideoSection')} componentProps={{ toolName: tool.name, youtubeUrl: tool.youtube_url, transcript: extendedContent?.transcript }} />
               <LazyLoad component={() => import('../components/tools/detail/IntegrationsSection')} componentProps={{ toolName: tool.name, integrations }} />
               {mergedUseCases.length > 0 && <UseCasesSection toolName={tool.name} useCases={mergedUseCases} />}
-              <LazyLoad component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolName: tool.name, reviews }} />
+              <LazyLoad component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolId: tool.id, toolName: tool.name, reviews }} />
               {mergedFaqs.length > 0 && <FAQSection toolName={tool.name} faqs={mergedFaqs} />}
               {extendedContent && (
                 <LazyLoad component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
