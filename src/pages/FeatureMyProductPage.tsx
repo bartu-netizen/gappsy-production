@@ -71,12 +71,12 @@ export default function FeatureMyProductPage() {
         {/* Hero */}
         <section className="relative overflow-hidden">
           <div
-            className="absolute inset-0 -z-10 bg-gradient-to-b from-indigo-50/60 via-white to-white"
+            className="absolute inset-0 -z-10 bg-gradient-to-b from-[#EEF0FE]/60 via-white to-white"
             aria-hidden="true"
           />
           <div className="max-w-6xl mx-auto px-6 sm:px-8 pt-16 sm:pt-24 pb-16 sm:pb-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <ScrollReveal>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F46E5] bg-indigo-50 rounded-full px-3 py-1.5">
+              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F47E6] bg-[#EEF0FE] rounded-full px-3 py-1.5">
                 <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
                 Featured Listings
               </span>
@@ -91,7 +91,7 @@ export default function FeatureMyProductPage() {
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/feature-my-product/onboarding"
-                  className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity active:scale-[0.99]"
+                  className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
                   Get featured — $37/mo
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -109,10 +109,10 @@ export default function FeatureMyProductPage() {
             <ScrollReveal delayMs={120}>
               <div className="relative max-w-sm mx-auto lg:max-w-none">
                 <div
-                  className="absolute -inset-8 -z-10 rounded-[40px] bg-gradient-to-br from-[#4F46E5]/10 to-[#7C3AED]/10 blur-2xl"
+                  className="absolute -inset-8 -z-10 rounded-[40px] bg-[#4F47E6]/10 blur-2xl"
                   aria-hidden="true"
                 />
-                <div className="drop-shadow-[0_30px_60px_rgba(79,70,229,0.15)]">
+                <div className="drop-shadow-[0_30px_60px_rgba(79,71,230,0.15)]">
                   <PlacementMockup type="toolPage" />
                 </div>
                 <div className="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-2 rounded-2xl bg-white border border-[#eef0f3] shadow-[0_12px_28px_rgba(15,23,42,0.10)] px-4 py-3">
@@ -141,7 +141,7 @@ export default function FeatureMyProductPage() {
             <ScrollReveal>
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1221] to-[#1e2440] px-6 sm:px-16 py-14 sm:py-16 text-center">
                 <div
-                  className="absolute inset-0 -z-0 bg-gradient-to-br from-[#4F46E5]/20 to-[#7C3AED]/20"
+                  className="absolute inset-0 -z-0 bg-[#4F47E6]/20"
                   aria-hidden="true"
                 />
                 <div className="relative">
@@ -171,7 +171,7 @@ export default function FeatureMyProductPage() {
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#f1f3f5] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <Link
           to="/feature-my-product/onboarding"
-          className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] active:scale-[0.99] transition-transform"
+          className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] active:scale-[0.99] transition-transform"
         >
           Get featured — $37/mo
         </Link>

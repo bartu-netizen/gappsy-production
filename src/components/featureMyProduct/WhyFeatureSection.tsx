@@ -51,8 +51,8 @@ export default function WhyFeatureSection() {
           {REASONS.map((r, i) => (
             <ScrollReveal key={r.title} delayMs={(i % 3) * 80}>
               <div className="h-full rounded-2xl border border-[#eef0f3] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] hover:border-slate-200">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center mb-4">
-                  <r.icon className="w-5 h-5 text-[#4F46E5]" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center mb-4">
+                  <r.icon className="w-5 h-5 text-[#4F47E6]" aria-hidden="true" />
                 </div>
                 <h3 className="text-[17px] font-semibold text-[#0B1221]">{r.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-slate-500">{r.body}</p>

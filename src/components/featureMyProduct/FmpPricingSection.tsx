@@ -22,8 +22,8 @@ export default function FmpPricingSection() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <div className="relative rounded-3xl border-2 border-[#4F46E5] bg-white p-8 sm:p-10 shadow-[0_20px_48px_rgba(79,70,229,0.14)]">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] text-white text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
+          <div className="relative rounded-3xl border-2 border-[#4F47E6] bg-white p-8 sm:p-10 shadow-[0_20px_48px_rgba(79,71,230,0.14)]">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
               Launch pricing
             </span>
 
@@ -40,7 +40,7 @@ export default function FmpPricingSection() {
             <ul className="mt-8 space-y-3">
               {INCLUDED.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[15px] text-slate-600">
-                  <Check className="w-5 h-5 text-[#4F46E5] shrink-0 mt-0.5" aria-hidden="true" />
+                  <Check className="w-5 h-5 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -48,7 +48,7 @@ export default function FmpPricingSection() {
 
             <Link
               to="/feature-my-product/onboarding"
-              className="mt-8 flex items-center justify-center w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity active:scale-[0.99]"
+              className="mt-8 flex items-center justify-center w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
             >
               Get featured — $37/mo
             </Link>

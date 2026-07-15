@@ -109,7 +109,7 @@ export default function TrustSection() {
           {TESTIMONIALS.map((t, i) => (
             <ScrollReveal key={t.role} delayMs={i * 100}>
               <figure className="h-full rounded-2xl bg-white border border-[#eef0f3] p-6">
-                <Quote className="w-5 h-5 text-[#4F46E5]/30 mb-3" aria-hidden="true" fill="currentColor" strokeWidth={0} />
+                <Quote className="w-5 h-5 text-[#4F47E6]/30 mb-3" aria-hidden="true" fill="currentColor" strokeWidth={0} />
                 <blockquote className="text-[15px] leading-relaxed text-slate-600">{t.quote}</blockquote>
                 <figcaption className="mt-4 text-[13px] font-medium text-slate-400">{t.role}</figcaption>
               </figure>

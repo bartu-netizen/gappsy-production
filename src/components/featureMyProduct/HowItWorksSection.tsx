@@ -23,10 +23,10 @@ export default function HowItWorksSection() {
             <Fragment key={s.title}>
               <ScrollReveal delayMs={i * 100} className="flex-1">
                 <div className="h-full rounded-2xl bg-white border border-[#eef0f3] p-6 text-center">
-                  <div className="w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center mx-auto mb-4">
-                    <s.icon className="w-5 h-5 text-[#4F46E5]" aria-hidden="true" />
+                  <div className="w-11 h-11 rounded-xl bg-[#EEF0FE] flex items-center justify-center mx-auto mb-4">
+                    <s.icon className="w-5 h-5 text-[#4F47E6]" aria-hidden="true" />
                   </div>
-                  <div className="text-[12px] font-semibold uppercase tracking-wide text-[#4F46E5]">Step {i + 1}</div>
+                  <div className="text-[12px] font-semibold uppercase tracking-wide text-[#4F47E6]">Step {i + 1}</div>
                   <h3 className="mt-1 text-[17px] font-semibold text-[#0B1221]">{s.title}</h3>
                   <p className="mt-2 text-[14px] leading-relaxed text-slate-500">{s.body}</p>
                 </div>

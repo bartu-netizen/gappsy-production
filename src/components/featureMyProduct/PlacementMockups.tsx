@@ -17,8 +17,8 @@ interface PlacementMockupProps {
 }
 
 const AVATAR = 'w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-[11px] font-bold text-slate-400 shrink-0';
-const FEATURED_AVATAR = 'w-7 h-7 rounded-lg bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] flex items-center justify-center text-[11px] font-bold text-white shrink-0';
-const FEATURED_BADGE = 'inline-flex items-center text-[9px] font-semibold uppercase tracking-wide text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-full px-1.5 py-0.5';
+const FEATURED_AVATAR = 'w-7 h-7 rounded-lg bg-[#4F47E6] flex items-center justify-center text-[11px] font-bold text-white shrink-0';
+const FEATURED_BADGE = 'inline-flex items-center text-[9px] font-semibold uppercase tracking-wide text-white bg-[#4F47E6] rounded-full px-1.5 py-0.5';
 const SOON_BADGE = 'inline-flex items-center text-[9px] font-semibold uppercase tracking-wide text-slate-400 bg-slate-100 rounded-full px-1.5 py-0.5';
 
 function Frame({ children }: { children: React.ReactNode }) {
@@ -36,7 +36,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 
 function Row({ label, sub, featured }: { label: string; sub: string; featured?: boolean }) {
   return (
-    <div className={`flex items-center gap-2.5 rounded-xl px-2.5 py-2 ${featured ? 'bg-indigo-50/70 ring-1 ring-[#4F46E5]/20' : ''}`}>
+    <div className={`flex items-center gap-2.5 rounded-xl px-2.5 py-2 ${featured ? 'bg-[#EEF0FE]/70 ring-1 ring-[#4F47E6]/20' : ''}`}>
       <div className={featured ? FEATURED_AVATAR : AVATAR}>{label.charAt(0)}</div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
@@ -78,7 +78,7 @@ export default function PlacementMockup({ type }: PlacementMockupProps) {
       return (
         <Frame>
           <div className="flex items-center justify-between gap-2">
-            <div className="flex-1 rounded-xl bg-indigo-50/70 ring-1 ring-[#4F46E5]/20 p-2.5">
+            <div className="flex-1 rounded-xl bg-[#EEF0FE]/70 ring-1 ring-[#4F47E6]/20 p-2.5">
               <div className={`${FEATURED_AVATAR} mb-1.5`}>Y</div>
               <div className="text-[11px] font-semibold text-slate-700">Your Product</div>
               <span className={`${FEATURED_BADGE} mt-1`}>Featured</span>
@@ -117,7 +117,7 @@ export default function PlacementMockup({ type }: PlacementMockupProps) {
               <div className={`${AVATAR} mx-auto mb-1`}>P</div>
               <div className="text-[9px] text-slate-400 truncate">Plandeck</div>
             </div>
-            <div className="rounded-lg bg-indigo-50/70 ring-1 ring-[#4F46E5]/20 p-1.5 text-center">
+            <div className="rounded-lg bg-[#EEF0FE]/70 ring-1 ring-[#4F47E6]/20 p-1.5 text-center">
               <div className={`${FEATURED_AVATAR} mx-auto mb-1`}>Y</div>
               <div className="text-[9px] font-semibold text-slate-700 truncate">Your Product</div>
             </div>
@@ -143,7 +143,7 @@ export default function PlacementMockup({ type }: PlacementMockupProps) {
             <div className="min-w-0">
               <div className="flex items-center gap-1">
                 <span className="text-[13px] font-bold text-slate-800">Your Product</span>
-                <ShieldCheck className="w-3 h-3 text-[#4F46E5]" />
+                <ShieldCheck className="w-3 h-3 text-[#4F47E6]" />
               </div>
               <div className="flex items-center gap-1 mt-1">
                 <span className={FEATURED_BADGE}>Editor's Pick</span>
@@ -158,7 +158,7 @@ export default function PlacementMockup({ type }: PlacementMockupProps) {
       return (
         <Frame>
           <div className="flex items-center gap-1.5 mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#7C3AED]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#4F47E6]" />
             <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">AI recommendation</span>
             <span className={SOON_BADGE}>Soon</span>
           </div>
