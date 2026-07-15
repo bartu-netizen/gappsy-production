@@ -8,7 +8,7 @@ import LazyLoad from '../components/LazyLoad';
 import { supabase } from '../lib/supabase';
 import { adminApiFetch } from '../lib/adminApiFetch';
 import { getToolContent } from '../data/toolContent';
-import type { ToolFeature, ToolFAQ, ToolUseCase } from '../data/toolContent/types';
+import type { ToolFeature, ToolFAQ, ToolUseCase, ToolAlternative, ToolComparison, ToolContentBlock } from '../data/toolContent/types';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
 import { trackToolPageView } from '../lib/trackToolEvent';
 import { formatLastUpdated } from '../utils/formatLastUpdated';
@@ -145,6 +145,9 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [dbCons, setDbCons] = useState<string[]>([]);
   const [dbUseCases, setDbUseCases] = useState<ToolUseCase[]>([]);
   const [dbFaqs, setDbFaqs] = useState<ToolFAQ[]>([]);
+  const [dbAlternatives, setDbAlternatives] = useState<ToolAlternative[]>([]);
+  const [dbComparisons, setDbComparisons] = useState<ToolComparison[]>([]);
+  const [dbLongForm, setDbLongForm] = useState<ToolContentBlock[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -252,7 +255,10 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           supabase.from('tool_cons').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_use_cases').select('title, description, audience').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_faqs').select('question, answer').eq('tool_id', data.id).order('sort_order', { ascending: true }),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult]) => {
+          supabase.from('tool_alternatives').select('alternative_name, alternative_url, alternative_logo, description, pros, cons, pricing_summary').eq('tool_id', data.id).not('description', 'is', null).order('sort_order', { ascending: true }),
+          supabase.from('tool_comparison_links').select('label, href').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase.from('tool_content_blocks').select('block_key, heading, level, paragraphs').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonLinksResult, contentBlocksResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -279,6 +285,26 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           setDbCons((consResult.data || []).map((r) => r.text));
           setDbUseCases((useCasesResult.data || []).map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' })));
           setDbFaqs(faqsResult.data || []);
+          setDbAlternatives(
+            (alternativesResult.data || []).map((a) => ({
+              name: a.alternative_name || '',
+              description: a.description || '',
+              pros: a.pros || [],
+              cons: a.cons || [],
+              pricingSummary: a.pricing_summary || '',
+              href: a.alternative_url || '#',
+              logo: a.alternative_logo || undefined,
+            }))
+          );
+          setDbComparisons(comparisonLinksResult.data || []);
+          setDbLongForm(
+            (contentBlocksResult.data || []).map((b) => ({
+              id: b.block_key,
+              heading: b.heading,
+              level: b.level as 2 | 3,
+              paragraphs: b.paragraphs || [],
+            }))
+          );
 
           if (primaryCategoryId) {
             Promise.all([
@@ -374,13 +400,16 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const safeScreenshots = screenshots.filter((shot) => isSafeHttpUrl(shot.image_url));
   const extendedContent = getToolContent(tool.slug);
   // DB-first, file-fallback per field — see the dbFeatures/dbPros/etc state
-  // comment above. longForm/alternatives/comparisons/transcript have no DB
-  // equivalent yet, so those stay purely file-based (extendedContent only).
+  // comment above. transcript has no DB equivalent yet, so it stays purely
+  // file-based (extendedContent only).
   const mergedFeatures = dbFeatures.length > 0 ? dbFeatures : extendedContent?.features || [];
   const mergedPros = dbPros.length > 0 ? dbPros : extendedContent?.pros || [];
   const mergedCons = dbCons.length > 0 ? dbCons : extendedContent?.cons || [];
   const mergedUseCases = dbUseCases.length > 0 ? dbUseCases : extendedContent?.useCases || [];
   const mergedFaqs = dbFaqs.length > 0 ? dbFaqs : extendedContent?.faqs || [];
+  const mergedAlternatives = dbAlternatives.length > 0 ? dbAlternatives : extendedContent?.alternatives || [];
+  const mergedComparisons = dbComparisons.length > 0 ? dbComparisons : extendedContent?.comparisons || [];
+  const mergedLongForm = dbLongForm.length > 0 ? dbLongForm : extendedContent?.longForm || [];
   const tagSlugs = new Set(tags.map((t) => t.slug));
   const hasAI = tagSlugs.has('ai');
   const hasFreePlan = tagSlugs.has('free-plan') || tagSlugs.has('freemium');
@@ -395,7 +424,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     : null;
 
   const tocSections: TocSection[] = [
-    ...(extendedContent?.longForm.filter((b) => b.level === 2).map((b) => ({ id: b.id, label: b.heading })) || []),
+    ...mergedLongForm.filter((b) => b.level === 2).map((b) => ({ id: b.id, label: b.heading })),
     ...(mergedFeatures.length ? [{ id: 'features', label: 'Features' }] : []),
     ...(mergedPros.length || mergedCons.length ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
     ...(pricingPlans.length ? [{ id: 'pricing', label: 'Pricing' }] : []),
@@ -405,34 +434,34 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     ...(mergedUseCases.length ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
     { id: 'reviews', label: 'Reviews' },
     ...(mergedFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
-    ...(extendedContent?.alternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
-    ...(extendedContent?.comparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
+    ...(mergedAlternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
+    ...(mergedComparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
   ];
 
   // Only real, published comparison pages — never a link that promises a
-  // head-to-head and then dead-ends. extendedContent.comparisons mixes real
-  // /compare/ pages with category-page fallbacks for pairs that don't have
-  // one yet (see data/toolContent/canva.ts); the quick-compare popover only
-  // offers the former.
-  const quickCompareLinks = (extendedContent?.comparisons || [])
+  // head-to-head and then dead-ends. mergedComparisons mixes real /compare/
+  // pages with category-page fallbacks for pairs that don't have one yet
+  // (see data/toolContent/canva.ts or the tool_comparison_links table); the
+  // quick-compare popover only offers the former.
+  const quickCompareLinks = mergedComparisons
     .filter((c) => c.href.startsWith('/compare/'))
     .map((c) => ({ label: c.label, href: c.href }));
 
-  const inlinePromoSlots = planInlinePromoSlots(extendedContent?.longForm.length || 0, inlineFeaturedPromos);
+  const inlinePromoSlots = planInlinePromoSlots(mergedLongForm.length, inlineFeaturedPromos);
 
   // Interleave article segments with inline promo cards in reading order —
   // segment, promo, segment, promo, ..., final segment. Built as a plain
   // element list up front rather than inline in JSX so the ordering is
   // impossible to get backwards.
   const longFormWithPromos: React.ReactNode[] = [];
-  if (extendedContent) {
+  if (mergedLongForm.length > 0) {
     let cursor = 0;
     inlinePromoSlots.forEach((slot, i) => {
-      longFormWithPromos.push(<LongFormContent key={`segment-${i}`} blocks={extendedContent.longForm.slice(cursor, slot.index)} />);
+      longFormWithPromos.push(<LongFormContent key={`segment-${i}`} blocks={mergedLongForm.slice(cursor, slot.index)} />);
       longFormWithPromos.push(<FeaturedToolInlineCard key={`promo-${slot.promo.slug}`} tool={slot.promo} />);
       cursor = slot.index;
     });
-    longFormWithPromos.push(<LongFormContent key="segment-final" blocks={extendedContent.longForm.slice(cursor)} />);
+    longFormWithPromos.push(<LongFormContent key="segment-final" blocks={mergedLongForm.slice(cursor)} />);
   }
 
   const jsonLd = buildToolJsonLd({
@@ -525,7 +554,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
 
                 <KeyFactsSection
                   toolName={tool.name}
-                  shortDescription={extendedContent ? null : tool.short_description}
+                  shortDescription={mergedLongForm.length > 0 ? null : tool.short_description}
                   categoryName={primaryCategory?.name || null}
                   pricingModel={tool.pricing_model}
                   hasFreePlan={hasFreePlan}
@@ -534,7 +563,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                   updatedLabel={updatedLabel}
                 />
 
-                {extendedContent ? (
+                {mergedLongForm.length > 0 ? (
                   <>{longFormWithPromos}</>
                 ) : (
                   tool.long_description && (
@@ -587,11 +616,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               {mergedUseCases.length > 0 && <UseCasesSection toolName={tool.name} useCases={mergedUseCases} />}
               <LazyLoad id="reviews" className="scroll-mt-24" component={() => import('../components/tools/detail/ReviewsSection')} componentProps={{ toolId: tool.id, toolName: tool.name, reviews }} />
               {mergedFaqs.length > 0 && <FAQSection toolName={tool.name} faqs={mergedFaqs} />}
-              {extendedContent && (
-                <LazyLoad id="alternatives" className="scroll-mt-24" component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: extendedContent.alternatives }} />
+              {mergedAlternatives.length > 0 && (
+                <LazyLoad id="alternatives" className="scroll-mt-24" component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: mergedAlternatives }} />
               )}
-              {extendedContent && (
-                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: extendedContent.comparisons }} />
+              {mergedComparisons.length > 0 && (
+                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: mergedComparisons }} />
               )}
             </div>
           </div>

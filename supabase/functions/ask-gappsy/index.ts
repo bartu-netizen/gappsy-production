@@ -51,7 +51,7 @@ async function buildToolSystemPrompt(supabase: any, toolSlug: string): Promise<{
     .maybeSingle();
   if (!tool) return null;
 
-  const [plansResult, featuresResult, prosResult, consResult, faqsResult, useCasesResult, integrationsResult, categoryResult, reviewsResult] = await Promise.all([
+  const [plansResult, featuresResult, prosResult, consResult, faqsResult, useCasesResult, integrationsResult, categoryResult, reviewsResult, contentBlocksResult, alternativesResult, comparisonLinksResult] = await Promise.all([
     supabase.from("tool_pricing_plans").select("plan_name, price, billing_cycle, features").eq("tool_id", tool.id).order("sort_order"),
     supabase.from("tool_features").select("title, description").eq("tool_id", tool.id).order("sort_order").limit(20),
     supabase.from("tool_pros").select("text").eq("tool_id", tool.id).order("sort_order"),
@@ -61,6 +61,9 @@ async function buildToolSystemPrompt(supabase: any, toolSlug: string): Promise<{
     supabase.from("tool_integrations").select("integration_name, description").eq("tool_id", tool.id).limit(20),
     supabase.from("tool_category_links").select("tool_categories(name)").eq("tool_id", tool.id),
     supabase.from("tool_user_reviews").select("reviewer_name, rating, title, body").eq("tool_id", tool.id).eq("status", "approved").order("created_at", { ascending: false }).limit(8),
+    supabase.from("tool_content_blocks").select("heading, paragraphs").eq("tool_id", tool.id).order("sort_order"),
+    supabase.from("tool_alternatives").select("alternative_name, description, pros, cons, pricing_summary").eq("tool_id", tool.id).not("description", "is", null).order("sort_order"),
+    supabase.from("tool_comparison_links").select("label, href").eq("tool_id", tool.id).order("sort_order"),
   ]);
 
   const plans = (plansResult.data || []).map((p: { plan_name: string | null; price: string | null; billing_cycle: string | null }) =>
@@ -79,14 +82,24 @@ async function buildToolSystemPrompt(supabase: any, toolSlug: string): Promise<{
   const reviews = (reviewsResult.data || []).map((r: { reviewer_name: string; rating: number; title: string | null; body: string }) =>
     `"${r.title ? `${r.title} — ` : ""}${r.body}" — ${r.reviewer_name}, ${r.rating}/5`
   ).join("\n\n") || "No real reviews yet.";
+  const article = (contentBlocksResult.data || []).map((b: { heading: string; paragraphs: string[] }) =>
+    `### ${b.heading}\n${(b.paragraphs || []).join("\n\n")}`
+  ).join("\n\n") || tool.long_description || "Not documented.";
+  const alternatives = (alternativesResult.data || []).map((a: { alternative_name: string | null; description: string | null; pros: string[]; cons: string[]; pricing_summary: string | null }) =>
+    `- ${a.alternative_name}: ${a.description || ""}${a.pricing_summary ? ` Pricing: ${a.pricing_summary}.` : ""}${(a.pros || []).length ? ` Pros: ${a.pros.join("; ")}.` : ""}${(a.cons || []).length ? ` Cons: ${a.cons.join("; ")}.` : ""}`
+  ).join("\n") || "Not documented.";
+  const realComparisonPages = (comparisonLinksResult.data || []).filter((c: { href: string }) => c.href.startsWith("/compare/"));
+  const comparisons = realComparisonPages.length > 0
+    ? realComparisonPages.map((c: { label: string; href: string }) => `- ${c.label}: gappsy.com${c.href}`).join("\n")
+    : "None published yet.";
 
   const prompt = `You are "Ask Gappsy", a helpful, honest assistant embedded on the Gappsy software directory's page for ${tool.name}. Answer questions using ONLY the information below, which is everything actually published on this page — never invent pricing, features, or facts that aren't here. If something isn't covered, say so plainly and suggest checking the official website or the "Visit Website" button on this page, rather than guessing.
 
 ${tool.name} — category: ${categories}
 Short description: ${tool.short_description || "Not documented."}
 
-Full description (the main article on this page):
-${tool.long_description || "Not documented."}
+Full article published on this page:
+${article}
 
 Best for: ${tool.best_for || "Not documented."}
 Target audience: ${tool.target_audience || "Not documented."}
@@ -120,35 +133,57 @@ ${faqs}
 Real user reviews published on this page:
 ${reviews}
 
+Alternatives listed on this page:
+${alternatives}
+
+Dedicated head-to-head comparison pages that actually exist on Gappsy for ${tool.name} (only recommend one of these URLs if the visitor wants a full side-by-side comparison — never invent a /compare/ URL that isn't in this list):
+${comparisons}
+
 Disclosure rule: if you mention that ${tool.name} is a Featured/sponsored Gappsy listing, say so plainly (Gappsy already labels these visibly on the page) — never let featured status make you oversell it or hide a real weakness listed in its Cons above. Being featured means it paid for visibility, not that it's objectively the best fit for every visitor.
 
-If the visitor asks whether a different tool might suit them better, you may mention that Gappsy has other options in the same category and suggest they browse gappsy.com/tool-categories — but don't fabricate specific competitor details you don't actually know. Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text.`;
+If the visitor asks whether a different tool might suit them better, recommend from the Alternatives list above when it's genuinely relevant, and only link to gappsy.com/tool-categories or a real /compare/ page from the list above — never fabricate a comparison page or competitor detail you don't actually know. Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text.`;
 
   return { prompt, toolName: tool.name };
 }
 
 // deno-lint-ignore no-explicit-any
 async function buildDirectorySystemPrompt(supabase: any): Promise<string> {
-  const { data: tools } = await supabase
-    .from("tools")
-    .select("name, slug, short_description, pricing_model, starting_price, rating, featured")
-    .eq("status", "published")
-    .order("featured", { ascending: false })
-    .order("rating", { ascending: false })
-    .limit(200);
+  const [toolsResult, comparisonsResult] = await Promise.all([
+    supabase
+      .from("tools")
+      .select("name, slug, short_description, pricing_model, starting_price, rating, featured")
+      .eq("status", "published")
+      .order("featured", { ascending: false })
+      .order("rating", { ascending: false })
+      .limit(200),
+    supabase
+      .from("tool_comparisons")
+      .select("slug, tool_a:tools!tool_comparisons_tool_a_id_fkey(name), tool_b:tools!tool_comparisons_tool_b_id_fkey(name)")
+      .eq("status", "published")
+      .limit(200),
+  ]);
 
-  const catalog = (tools || [])
+  const catalog = (toolsResult.data || [])
     .map((t: { name: string; slug: string; short_description: string | null; pricing_model: string | null; starting_price: string | null; featured: boolean }) =>
       `- ${t.name} (/tools/${t.slug})${t.featured ? " [Featured/sponsored listing]" : ""}: ${t.short_description || "No description."}${t.pricing_model ? ` | ${t.pricing_model}` : ""}${t.starting_price ? ` from ${t.starting_price}` : ""}`
     )
     .join("\n");
+
+  const comparisonPages = (comparisonsResult.data || [])
+    // deno-lint-ignore no-explicit-any
+    .map((c: any) => (c.tool_a?.name && c.tool_b?.name ? `- ${c.tool_a.name} vs ${c.tool_b.name}: gappsy.com/compare/${c.slug}` : null))
+    .filter(Boolean)
+    .join("\n") || "None published yet.";
 
   return `You are "Ask Gappsy", a helpful, honest assistant on Gappsy, a software tools directory. Help visitors find the right software tool for what they're trying to do, using ONLY the real catalog below — never invent tools or facts that aren't here. When you recommend a tool, mention its name and that they can find it at gappsy.com/tools/{slug}. If nothing in the catalog fits well, say so honestly rather than forcing a recommendation. Keep answers concise and conversational.
 
 Some listings are marked [Featured/sponsored listing] — these tools paid Gappsy for visibility. You may recommend a featured tool when it's genuinely a good fit, but never let featured status override a better-fitting free or non-featured tool, and if it feels relevant, mention plainly that it's a featured/sponsored listing rather than letting the visitor assume it's an unbiased top pick. Prioritize being genuinely useful over favoring featured tools.
 
 Catalog (name, page, description, pricing; [Featured/sponsored listing] tag shown where applicable):
-${catalog}`;
+${catalog}
+
+Dedicated head-to-head comparison pages that actually exist on Gappsy (only ever link one of these — never invent a /compare/ URL that isn't in this list, and never claim one exists for a pair not listed here):
+${comparisonPages}`;
 }
 
 async function checkRateLimit(

@@ -78,10 +78,11 @@ async function fetchRelatedData(supabase, toolIds) {
     return {
       categoryLinksByTool: new Map(), tagLinksByTool: new Map(), pricingByTool: new Map(), reviewsByTool: new Map(),
       featuresByTool: new Map(), prosByTool: new Map(), consByTool: new Map(), useCasesByTool: new Map(), faqsByTool: new Map(),
+      alternativesByTool: new Map(), comparisonLinksByTool: new Map(), contentBlocksByTool: new Map(),
     };
   }
 
-  const [catResult, tagResult, pricingResult, reviewsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult] = await Promise.all([
+  const [catResult, tagResult, pricingResult, reviewsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonLinksResult, contentBlocksResult] = await Promise.all([
     supabase
       .from('tool_category_links')
       .select('tool_id, category_id, primary_category, tool_categories!inner(slug, name, status)')
@@ -107,6 +108,9 @@ async function fetchRelatedData(supabase, toolIds) {
     supabase.from('tool_cons').select('tool_id, text, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
     supabase.from('tool_use_cases').select('tool_id, title, description, audience, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
     supabase.from('tool_faqs').select('tool_id, question, answer, sort_order').in('tool_id', toolIds).eq('status', 'published').order('sort_order', { ascending: true }),
+    supabase.from('tool_alternatives').select('tool_id, alternative_name, alternative_url, alternative_logo, description, pros, cons, pricing_summary, sort_order').in('tool_id', toolIds).not('description', 'is', null).order('sort_order', { ascending: true }),
+    supabase.from('tool_comparison_links').select('tool_id, label, href, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    supabase.from('tool_content_blocks').select('tool_id, block_key, heading, level, paragraphs, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
   ]);
 
   if (catResult.error) throw new Error(`Failed to fetch tool categories: ${catResult.error.message}`);
@@ -118,6 +122,9 @@ async function fetchRelatedData(supabase, toolIds) {
   if (consResult.error) throw new Error(`Failed to fetch tool cons: ${consResult.error.message}`);
   if (useCasesResult.error) throw new Error(`Failed to fetch tool use cases: ${useCasesResult.error.message}`);
   if (faqsResult.error) throw new Error(`Failed to fetch tool faqs: ${faqsResult.error.message}`);
+  if (alternativesResult.error) throw new Error(`Failed to fetch tool alternatives: ${alternativesResult.error.message}`);
+  if (comparisonLinksResult.error) throw new Error(`Failed to fetch tool comparison links: ${comparisonLinksResult.error.message}`);
+  if (contentBlocksResult.error) throw new Error(`Failed to fetch tool content blocks: ${contentBlocksResult.error.message}`);
 
   return {
     categoryLinksByTool: groupBy(catResult.data, (r) => r.tool_id),
@@ -129,6 +136,9 @@ async function fetchRelatedData(supabase, toolIds) {
     consByTool: groupBy(consResult.data, (r) => r.tool_id),
     useCasesByTool: groupBy(useCasesResult.data, (r) => r.tool_id),
     faqsByTool: groupBy(faqsResult.data, (r) => r.tool_id),
+    alternativesByTool: groupBy(alternativesResult.data, (r) => r.tool_id),
+    comparisonLinksByTool: groupBy(comparisonLinksResult.data, (r) => r.tool_id),
+    contentBlocksByTool: groupBy(contentBlocksResult.data, (r) => r.tool_id),
   };
 }
 
@@ -145,13 +155,21 @@ function mergeExtendedContent(extendedContent, related, toolId) {
   const dbCons = related.consByTool.get(toolId) || [];
   const dbUseCases = related.useCasesByTool.get(toolId) || [];
   const dbFaqs = related.faqsByTool.get(toolId) || [];
+  const dbAlternatives = related.alternativesByTool.get(toolId) || [];
+  const dbComparisons = related.comparisonLinksByTool.get(toolId) || [];
+  const dbContentBlocks = related.contentBlocksByTool.get(toolId) || [];
 
-  if (dbFeatures.length === 0 && dbPros.length === 0 && dbCons.length === 0 && dbUseCases.length === 0 && dbFaqs.length === 0) {
+  if (
+    dbFeatures.length === 0 && dbPros.length === 0 && dbCons.length === 0 && dbUseCases.length === 0 && dbFaqs.length === 0 &&
+    dbAlternatives.length === 0 && dbComparisons.length === 0 && dbContentBlocks.length === 0
+  ) {
     return extendedContent;
   }
 
   return {
-    longForm: extendedContent?.longForm || [],
+    longForm: dbContentBlocks.length > 0
+      ? dbContentBlocks.map((b) => ({ id: b.block_key, heading: b.heading, level: b.level, paragraphs: b.paragraphs || [] }))
+      : extendedContent?.longForm || [],
     features: dbFeatures.length > 0
       ? dbFeatures.map((f) => ({ icon: DB_FEATURE_ICON, title: f.title, description: f.description || '', benefits: [] }))
       : extendedContent?.features || [],
@@ -161,8 +179,20 @@ function mergeExtendedContent(extendedContent, related, toolId) {
     useCases: dbUseCases.length > 0
       ? dbUseCases.map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' }))
       : extendedContent?.useCases || [],
-    alternatives: extendedContent?.alternatives || [],
-    comparisons: extendedContent?.comparisons || [],
+    alternatives: dbAlternatives.length > 0
+      ? dbAlternatives.map((a) => ({
+          name: a.alternative_name || '',
+          description: a.description || '',
+          pros: a.pros || [],
+          cons: a.cons || [],
+          pricingSummary: a.pricing_summary || '',
+          href: a.alternative_url || '#',
+          logo: a.alternative_logo || undefined,
+        }))
+      : extendedContent?.alternatives || [],
+    comparisons: dbComparisons.length > 0
+      ? dbComparisons.map((c) => ({ label: c.label, href: c.href }))
+      : extendedContent?.comparisons || [],
     transcript: extendedContent?.transcript,
   };
 }
