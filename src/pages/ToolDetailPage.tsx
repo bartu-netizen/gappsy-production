@@ -23,7 +23,7 @@ import QuickSummarySection from '../components/tools/detail/QuickSummarySection'
 import VideoEmbedSection from '../components/tools/detail/VideoEmbedSection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
-import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCard, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, planInlinePromoSlots, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
@@ -565,7 +565,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 tertiarySlot={tool.featured && featuredPromoTertiary ? <FeaturedToolSidebarCompact tool={featuredPromoTertiary} /> : undefined}
               >
                 {tool.featured
-                  ? featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />
+                  ? featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />
                   : <ClaimListingCard toolName={tool.name} website={websiteUrl} />}
               </ToolFactsSidebar>
             </div>

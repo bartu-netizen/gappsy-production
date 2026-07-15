@@ -87,39 +87,12 @@ function FeaturedBadge({ large = false }: { large?: boolean }) {
   );
 }
 
-// The prominent placement — right after the "Visit Website" CTA in the
-// sidebar (see ToolFactsSidebar), so it's always in view without scrolling.
-// Deliberately NOT styled like the plain white fact rows around it (that
-// was the original bug report: it "looked too much like the tags section")
-// — a tinted gradient card with a bold badge is meant to read as its own
-// distinct thing at a glance.
-export function FeaturedToolSidebarCard({ tool }: { tool: FeaturedTool }) {
-  return (
-    <div className="rounded-2xl bg-gradient-to-br from-[#EEF0FE] to-purple-50 border border-[#E0E3FC] p-4">
-      <div className="flex items-center justify-between mb-2.5">
-        <FeaturedBadge large />
-      </div>
-      <Link to={`/tools/${tool.slug}`} className="group flex items-start gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6]">
-        {tool.logo ? (
-          <img src={tool.logo} alt="" className="w-11 h-11 rounded-xl object-contain border border-white bg-white shrink-0 shadow-sm" />
-        ) : (
-          <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center text-slate-400 font-semibold shrink-0 shadow-sm">{tool.name.charAt(0)}</div>
-        )}
-        <div className="min-w-0">
-          <p className="font-bold text-[#0B1221] text-sm group-hover:text-[#4F47E6] transition-colors">{tool.name}</p>
-          {tool.short_description && (
-            <OverflowMarqueeText text={tool.short_description} className="text-xs text-slate-600 leading-relaxed mt-0.5" />
-          )}
-        </div>
-      </Link>
-      <WantYourProductHereLink className="mt-2.5 pt-2.5 border-t border-[#E0E3FC]/80" />
-    </div>
-  );
-}
-
-// A second, quieter placement further down the sidebar (near Category/Tags)
-// for the desktop visitors who do scroll that far — only rendered when the
-// featured pool actually has a second, different tool to show.
+// Every sidebar featured-ad slot (the prominent one right after "Visit
+// Website" and the quieter ones further down near Category/Tags) uses this
+// same compact card — kept deliberately consistent rather than giving the
+// first slot its own larger treatment. short_description rotates in on its
+// own full-width row under the name (not squeezed next to the logo), same
+// pause-on-hover-only-when-overflowing behavior as the sticky bottom bar.
 export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
   return (
     <div className="rounded-xl bg-gradient-to-br from-[#EEF0FE]/70 to-purple-50/70 border border-[#E0E3FC] px-3 py-2.5">
@@ -138,12 +111,15 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
         </div>
         <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
       </Link>
+      {tool.short_description && (
+        <OverflowMarqueeText text={tool.short_description} className="text-[11.5px] text-slate-500 mt-1.5 w-full" />
+      )}
       <WantYourProductHereLink className="mt-2 pt-2 border-t border-[#E0E3FC]/80" />
     </div>
   );
 }
 
-// Shown instead of FeaturedToolSidebarCard when the current tool is NOT
+// Shown instead of FeaturedToolSidebarCompact when the current tool is NOT
 // featured — nudging the (possible) owner toward Feature My Product rather
 // than spending that sidebar slot on a competitor ad. Prefills the
 // onboarding wizard's URL step via ?url= so they don't have to retype it.
