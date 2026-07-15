@@ -44,7 +44,7 @@ function OverflowMarqueeText({ text, className }: { text: string; className: str
       {overflowing ? (
         <span
           className={`flex whitespace-nowrap animate-marquee-left motion-reduce:animate-none ${paused ? 'paused' : ''}`}
-          style={{ width: 'max-content' }}
+          style={{ width: 'max-content', animationDuration: '42s' }}
         >
           <span className="pr-10">{text}</span>
           <span className="pr-10" aria-hidden="true">{text}</span>
@@ -98,7 +98,7 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
               <span className="min-w-0 flex-1">
                 <span className="block text-[13px] font-semibold text-[#0B1221] leading-tight truncate group-hover:text-[#0A1735] transition-colors">{promo.name}</span>
                 {promo.short_description && (
-                  <OverflowMarqueeText text={promo.short_description} className="text-[11.5px] text-slate-500 max-w-[160px] lg:max-w-[220px]" />
+                  <OverflowMarqueeText text={promo.short_description} className="text-[11.5px] text-slate-500 w-full" />
                 )}
               </span>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0A1735] transition-colors shrink-0" aria-hidden="true" />
