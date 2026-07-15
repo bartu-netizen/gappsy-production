@@ -18,7 +18,7 @@ export default function ToolConversionBand({ toolName, websiteUrl, affiliateUrl,
   if (!cta) return null;
 
   return (
-    <section className="bg-gradient-to-br from-[#0B1221] to-[#1E1B4B] rounded-[28px] px-6 sm:px-12 py-12 sm:py-16 text-center">
+    <section className="bg-[#0A1735] rounded-[28px] px-6 sm:px-12 py-12 sm:py-16 text-center">
       <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">Ready to try {toolName}?</h2>
       <p className="text-slate-300 max-w-lg mx-auto mb-7 text-[15px] leading-relaxed">
         Head to the official site to get started in minutes.
