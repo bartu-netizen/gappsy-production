@@ -1,46 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useActiveSection } from './useActiveSection';
 
 export interface TocSection {
   id: string;
   label: string;
 }
 
-// Sticky, scroll-spy table of contents. Generic against any `{id, label}[]`
-// list, so it works for the long-form sections here and for any future
-// section list a different tool page composes.
+// Sticky, scroll-spy table of contents (desktop sidebar). Generic against any
+// `{id, label}[]` list, so it works for the long-form sections here and for
+// any future section list a different tool page composes. See
+// MobileTableOfContents for the < lg breakpoint equivalent — both share the
+// same active-section logic via useActiveSection.
 export default function TableOfContents({ sections }: { sections: TocSection[] }) {
-  const [activeId, setActiveId] = useState<string | null>(sections[0]?.id ?? null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    if (sections.length === 0) return;
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          const topMost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b));
-          setActiveId(topMost.target.id);
-        }
-      },
-      { rootMargin: '-96px 0px -70% 0px', threshold: 0 }
-    );
-
-    sections.forEach((section) => {
-      const el = document.getElementById(section.id);
-      if (el) observerRef.current?.observe(el);
-    });
-
-    return () => observerRef.current?.disconnect();
-  }, [sections]);
+  const { activeId, goToSection } = useActiveSection(sections);
 
   function handleClick(e: React.MouseEvent, id: string) {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveId(id);
-    }
+    goToSection(id);
   }
 
   if (sections.length === 0) return null;

@@ -18,6 +18,7 @@ import ToolBreadcrumbs from '../components/tools/detail/ToolBreadcrumbs';
 import ToolHero from '../components/tools/detail/ToolHero';
 import ToolFactsSidebar, { PLATFORM_TAGS } from '../components/tools/detail/ToolFactsSidebar';
 import TableOfContents, { type TocSection } from '../components/tools/detail/TableOfContents';
+import MobileTableOfContents from '../components/tools/detail/MobileTableOfContents';
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
@@ -432,6 +433,8 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           <div className="hidden lg:block">
             <TableOfContents sections={tocSections} />
           </div>
+
+          <MobileTableOfContents sections={tocSections} />
 
           {/* Content stack: Zone A pairs the narrative with the facts sidebar;
               Zone B (below) drops the sidebar column entirely once its content
