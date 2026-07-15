@@ -419,6 +419,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'UserCog',
   },
   {
+    id: 'tool-analytics',
+    label: 'Tool Analytics',
+    description: 'Page views and outbound "Visit Website" clicks per tool, with country/IP breakdown',
+    href: '/wp-admin/tool-analytics',
+    keywords: ['analytics', 'clicks', 'views', 'outbound', 'tracking', 'visit website', 'country', 'ip'],
+    group: 'Content',
+    scopes: ['software'],
+    iconName: 'MousePointerClick',
+  },
+  {
     id: 'agency-reviews-import',
     label: 'Import Agency Reviews',
     description: 'Bulk import agency reviews from CSV or JSON with validation and uniqueness scoring',

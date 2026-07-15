@@ -10,6 +10,7 @@ import { adminApiFetch } from '../lib/adminApiFetch';
 import { getToolContent } from '../data/toolContent';
 import type { ToolFeature, ToolFAQ, ToolUseCase } from '../data/toolContent/types';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
+import { trackToolPageView } from '../lib/trackToolEvent';
 import { formatLastUpdated } from '../utils/formatLastUpdated';
 import { buildToolJsonLd } from '../utils/toolJsonLd';
 import type { ToolCardData } from '../components/ToolCard';
@@ -148,6 +149,12 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [notFound, setNotFound] = useState(false);
 
   const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
+
+  // Real visits only — an admin previewing an unpublished draft shouldn't
+  // inflate the same analytics a real visitor's page view feeds into.
+  useEffect(() => {
+    if (!isPreview && tool?.slug) trackToolPageView(tool.slug);
+  }, [tool?.slug, isPreview]);
   // A pool, not one tool — distributed across the sidebar (1 prominent top
   // slot, 1 compact one right under it, and a 3rd spread further down) and
   // up to 3 spots inline in the article, so a page never shows the same
@@ -604,6 +611,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
         />
         <ToolCardRow eyebrow="History" title="Recently viewed" tools={recentTools} minToShow={1} />
         <ToolConversionBand
+          toolSlug={tool.slug}
           toolName={tool.name}
           websiteUrl={websiteUrl}
           affiliateUrl={affiliateUrl}

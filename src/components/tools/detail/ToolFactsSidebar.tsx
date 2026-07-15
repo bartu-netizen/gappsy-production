@@ -8,6 +8,8 @@ import {
 import Card from './Card';
 import { useBookmarkedTool } from '../../../hooks/useBookmarkedTools';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
+import { buildOutboundUrl } from '../../../utils/outboundLink';
+import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 import type { TaxonomyRef } from './types';
 
 interface ToolFactsSidebarProps {
@@ -35,22 +37,23 @@ interface ToolFactsSidebarProps {
    * being clipped by the sticky card's own pinned-scroll overflow the way
    * anything appended after a long list of facts would be. */
   children?: React.ReactNode;
-  /** Rendered immediately after `children`, still near the top of the
-   * sticky card — originally placed near Category/Tags, but that sat just
-   * below the fold for most of the pinned-scroll range on a typical
-   * viewport, making it effectively invisible (the same sticky-overflow
-   * clipping bug `children`'s placement was fixed for). Kept as a separate
-   * prop from `children` so the two can hold two different pool entries
-   * (see ToolDetailPage) rather than one. */
+  /** Rendered right after Category — spreads the 3 ad slots further apart
+   * per explicit request, but this is deep enough in the card (Category is
+   * the 7th+ section down) that it risks the same sticky-overflow clipping
+   * bug `children`'s original placement was fixed for: on a typical laptop
+   * viewport the sidebar is pinned via `lg:sticky`, so anything past
+   * roughly (viewport height - 88px) from the top of the card is outside
+   * the visible window for the entire scroll through the main article,
+   * only reachable once the sidebar un-pins near the page's end. Kept here
+   * because it's what was explicitly asked for — verify live and move it
+   * higher (e.g. right after the Platforms section) if it's landing below
+   * the fold in practice. */
   secondarySlot?: React.ReactNode;
-  /** A 3rd placement, spread further down so all 3 ad slots aren't stacked
-   * in one cluster — deliberately rendered right after Save/Share/Compare
-   * rather than near Integrations/Category/Tags further below: measured at
-   * ~640px into the card, comfortably inside the visible window even on a
-   * 768px-tall laptop screen (viewport height minus the ~88px sticky
-   * offset), where Integrations/Category/Tags (1000px+ into the card) are
-   * already clipped for most of the pinned-scroll range — the same bug
-   * `children`'s placement was fixed for. */
+  /** Rendered right after Save/Share/Compare — deliberately NOT stacked
+   * directly under `children` (that read as one cluster of ads at the very
+   * top of the card). Measured at ~640px into the card, comfortably inside
+   * the visible pinned-scroll window even on a 768px-tall laptop screen
+   * (viewport height minus the ~88px sticky offset). */
   tertiarySlot?: React.ReactNode;
 }
 
@@ -128,6 +131,7 @@ export default function ToolFactsSidebar({
   }, [compareOpen]);
 
   const cta = affiliateUrl || websiteUrl;
+  const outboundCta = cta ? buildOutboundUrl(cta) : null;
   const tagSlugs = new Set(tags.map((t) => t.slug));
   const hasFreePlan = tagSlugs.has('free-plan') || tagSlugs.has('freemium');
   const hasFreeTrial = tagSlugs.has('free-trial');
@@ -179,9 +183,10 @@ export default function ToolFactsSidebar({
 
         {cta && (
           <a
-            href={cta}
+            href={outboundCta || cta}
             target="_blank"
             rel="noopener noreferrer nofollow"
+            onClick={() => trackToolOutboundClick(slug, affiliateUrl ? 'affiliate' : 'visit_website', outboundCta || cta)}
             className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
           >
             Visit Website
@@ -190,7 +195,6 @@ export default function ToolFactsSidebar({
         )}
 
         {children}
-        {secondarySlot}
 
         <div className="flex items-center justify-center gap-1.5">
           <button
@@ -349,6 +353,8 @@ export default function ToolFactsSidebar({
             </div>
           </div>
         )}
+
+        {secondarySlot}
 
         {tags.length > 0 && (
           <div>

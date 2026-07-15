@@ -1,6 +1,9 @@
 import { ExternalLink, PlayCircle } from 'lucide-react';
+import { buildOutboundUrl } from '../../../utils/outboundLink';
+import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 
 interface ToolConversionBandProps {
+  toolSlug: string;
   toolName: string;
   websiteUrl: string | null;
   affiliateUrl: string | null;
@@ -13,9 +16,10 @@ interface ToolConversionBandProps {
 // backend wired up for the Tools module yet (see Recommended Database
 // Improvements); adding a fake "Subscribed!" form would be worse than
 // omitting it.
-export default function ToolConversionBand({ toolName, websiteUrl, affiliateUrl, hasVideo, hasFreeOffering = false }: ToolConversionBandProps) {
+export default function ToolConversionBand({ toolSlug, toolName, websiteUrl, affiliateUrl, hasVideo, hasFreeOffering = false }: ToolConversionBandProps) {
   const cta = affiliateUrl || websiteUrl;
   if (!cta) return null;
+  const outboundCta = buildOutboundUrl(cta);
 
   return (
     <section className="bg-[#0A1735] rounded-[28px] px-6 sm:px-12 py-12 sm:py-16 text-center">
@@ -25,9 +29,10 @@ export default function ToolConversionBand({ toolName, websiteUrl, affiliateUrl,
       </p>
       <div className="flex items-center justify-center gap-3 flex-wrap">
         <a
-          href={cta}
+          href={outboundCta}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          onClick={() => trackToolOutboundClick(toolSlug, affiliateUrl ? 'affiliate' : 'visit_website', outboundCta)}
           className="inline-flex items-center gap-1.5 bg-white text-[#0B1221] px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-100 active:scale-[0.98] transition-all"
         >
           {hasFreeOffering ? `Try ${toolName} Free` : `Visit ${toolName}`}

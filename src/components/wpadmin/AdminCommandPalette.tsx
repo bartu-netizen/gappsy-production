@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, LayoutDashboard, PlayCircle, UserCog } from 'lucide-react';
+import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, LayoutDashboard, PlayCircle, UserCog, MousePointerClick } from 'lucide-react';
 import { ADMIN_TOOLS, TOOL_GROUPS, AdminTool } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
   PlayCircle: <PlayCircle className="w-4 h-4" />,
   UserCog: <UserCog className="w-4 h-4" />,
+  MousePointerClick: <MousePointerClick className="w-4 h-4" />,
   Edit2: <Edit2 className="w-4 h-4" />,
   FileJson: <FileJson className="w-4 h-4" />,
   Image: <Image className="w-4 h-4" />,
