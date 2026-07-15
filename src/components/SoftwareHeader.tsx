@@ -77,13 +77,15 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
 
   if (isPremium) {
     return (
-      <header
-        className={`sticky top-0 z-40 bg-[#0A1735] border-b border-white/10 transition-shadow duration-200 ${
-          scrolled ? 'shadow-[0_1px_3px_rgba(0,0,0,0.2)]' : ''
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          {/* Desktop */}
+      <header className="sticky top-3 z-40">
+        {/* Floating, inset card — mirrors FooterWrapper/Footer's own
+            rounded #0A1735 box (side-inset via max-w + px, rounded-[32px],
+            shadow), so the header and footer read as the same design
+            language instead of the header stretching edge-to-edge. */}
+        <div className="max-w-[1366px] mx-auto px-6 sm:px-8">
+          <div className={`rounded-[32px] bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
+            <div className="px-6 sm:px-8">
+              {/* Desktop */}
           <div className="hidden md:flex items-center gap-8 h-[70px]">
             <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
               <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-10 w-auto" />
@@ -200,6 +202,8 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                 </div>
               </div>
             )}
+              </div>
+            </div>
           </div>
         </div>
 
