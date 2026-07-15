@@ -78,23 +78,23 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
   if (isPremium) {
     return (
       <header
-        className={`sticky top-0 z-40 bg-white border-b border-[#F1F3F5] transition-shadow duration-200 ${
-          scrolled ? 'shadow-[0_1px_3px_rgba(15,23,42,0.06)]' : ''
+        className={`sticky top-0 z-40 bg-[#0A1735] border-b border-white/10 transition-shadow duration-200 ${
+          scrolled ? 'shadow-[0_1px_3px_rgba(0,0,0,0.2)]' : ''
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8 h-[70px]">
             <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
-              <img src="/logos/Gappsy-Logo-4A5DFF-transparent-background.png" alt="Gappsy" className="h-7 w-auto" />
+              <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 w-auto" />
             </Link>
 
-            <div className="flex-1 min-w-0 max-w-2xl">
+            <div className="flex-1 min-w-0 max-w-xl">
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Search software"
-                className="flex items-center w-full h-11 rounded-full bg-white border border-slate-200 pl-4 pr-2 gap-2 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/20 text-left"
+                className="flex items-center w-full h-10 rounded-full bg-white pl-4 pr-2 gap-2 transition-all duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 text-left"
               >
                 <Search className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
                 <span className="flex-1 min-w-0 text-sm text-slate-400">Search software...</span>
@@ -109,7 +109,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="px-4 py-2.5 rounded-full text-[15px] font-medium text-slate-700 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2.5 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -119,14 +119,14 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 to={accountHref}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-slate-600 hover:text-[#0B1221] hover:bg-slate-50 transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[15px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
                 {accountLabel}
               </Link>
               <Link
                 to="/feature-my-product"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[15px] font-medium text-white bg-[#7C3AED] hover:bg-[#6D28D9] transition-colors"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[15px] font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
               >
                 Feature My Product
               </Link>
@@ -142,12 +142,12 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   onClick={() => setMenuOpen((v) => !v)}
                   aria-expanded={menuOpen}
                   aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                  className="w-9 h-9 shrink-0 rounded-full border border-slate-200 flex items-center justify-center text-slate-500"
+                  className="w-9 h-9 shrink-0 rounded-full border border-white/20 flex items-center justify-center text-white"
                 >
                   {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
                 </button>
                 <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center min-w-0">
-                  <img src="/logos/Gappsy-Logo-4A5DFF-transparent-background.png" alt="Gappsy" className="h-6 w-auto" />
+                  <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-5 w-auto" />
                 </Link>
               </div>
 
@@ -156,13 +156,13 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   type="button"
                   onClick={openSearch}
                   aria-label="Search software"
-                  className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-300 transition-colors"
+                  className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-white/40 transition-colors"
                 >
                   <Search className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <Link
                   to="/feature-my-product"
-                  className="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium text-white bg-[#7C3AED] whitespace-nowrap"
+                  className="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium text-[#0A1735] bg-white whitespace-nowrap"
                 >
                   Feature
                 </Link>
@@ -170,22 +170,22 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
             </div>
 
             {menuOpen && (
-              <div className="pb-4 border-t border-slate-100 pt-3 space-y-1 animate-slideDown">
+              <div className="pb-4 border-t border-white/10 pt-3 space-y-1 animate-slideDown">
                 {PREMIUM_NAV_ITEMS.map((item) => (
                   <Link
                     key={item.label}
                     to={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-[#0B1221] transition-colors"
+                    className="flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-colors"
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="pt-2 mt-2 border-t border-slate-100 flex flex-col gap-2">
+                <div className="pt-2 mt-2 border-t border-white/10 flex flex-col gap-2">
                   <Link
                     to={accountHref}
                     onClick={() => setMenuOpen(false)}
-                    className="w-full inline-flex items-center justify-center gap-1.5 text-center px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-1.5 text-center px-4 py-2.5 rounded-xl text-sm font-medium text-white border border-white/20 hover:bg-white/10 transition-colors"
                   >
                     {user && <LayoutDashboard className="w-3.5 h-3.5" aria-hidden="true" />}
                     {accountLabel}
@@ -193,7 +193,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   <Link
                     to="/feature-my-product"
                     onClick={() => setMenuOpen(false)}
-                    className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-[#7C3AED] hover:bg-[#6D28D9] transition-colors"
+                    className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
                   >
                     Feature My Product
                   </Link>
