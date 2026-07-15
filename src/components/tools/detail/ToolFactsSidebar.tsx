@@ -43,6 +43,15 @@ interface ToolFactsSidebarProps {
    * prop from `children` so the two can hold two different pool entries
    * (see ToolDetailPage) rather than one. */
   secondarySlot?: React.ReactNode;
+  /** A 3rd placement, spread further down so all 3 ad slots aren't stacked
+   * in one cluster — deliberately rendered right after Save/Share/Compare
+   * rather than near Integrations/Category/Tags further below: measured at
+   * ~640px into the card, comfortably inside the visible window even on a
+   * 768px-tall laptop screen (viewport height minus the ~88px sticky
+   * offset), where Integrations/Category/Tags (1000px+ into the card) are
+   * already clipped for most of the pinned-scroll range — the same bug
+   * `children`'s placement was fixed for. */
+  tertiarySlot?: React.ReactNode;
 }
 
 // Tag slugs (from the shared tool_tags taxonomy) that this sidebar reads to
@@ -92,6 +101,7 @@ export default function ToolFactsSidebar({
   categoryHref = null,
   children,
   secondarySlot,
+  tertiarySlot,
 }: ToolFactsSidebarProps) {
   const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
@@ -243,6 +253,8 @@ export default function ToolFactsSidebar({
             )}
           </div>
         </div>
+
+        {tertiarySlot}
 
         {(hasFreePlan || hasFreeTrial || hasApi) && (
           <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-slate-600">

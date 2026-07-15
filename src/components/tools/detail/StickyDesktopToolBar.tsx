@@ -45,7 +45,7 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
               <span className="min-w-0">
                 <span className="block text-[13px] font-semibold text-[#0B1221] leading-tight group-hover:text-indigo-600 transition-colors truncate">{promo.name}</span>
                 {promo.short_description && (
-                  <span className="hidden xl:block text-[11.5px] text-slate-500 truncate max-w-[220px]">{promo.short_description}</span>
+                  <span className="block text-[11.5px] text-slate-500 truncate max-w-[160px] lg:max-w-[220px]">{promo.short_description}</span>
                 )}
               </span>
             </Link>

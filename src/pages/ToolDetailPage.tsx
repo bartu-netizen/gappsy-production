@@ -149,13 +149,14 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
 
   const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
   // A pool, not one tool — distributed across the sidebar (1 prominent top
-  // slot + up to 2 compact ones further down) and up to 3 spots inline in
-  // the article, so a page never shows the same competitor twice. Thin
-  // inventory just means later slots come back empty and render nothing
-  // (see FeaturedToolPromo.tsx).
+  // slot, 1 compact one right under it, and a 3rd spread further down) and
+  // up to 3 spots inline in the article, so a page never shows the same
+  // competitor twice. Thin inventory just means later slots come back
+  // empty and render nothing (see FeaturedToolPromo.tsx).
   const featuredPool = useFeaturedToolPool(toolSlug || '', 6);
   const featuredPromo = featuredPool?.[0];
-  const featuredPromoSecondaryList = (featuredPool || []).slice(1, 3);
+  const featuredPromoSecondary = featuredPool?.[1];
+  const featuredPromoTertiary = featuredPool?.[2];
   const inlineFeaturedPromos = (featuredPool || []).slice(3);
 
   useEffect(() => {
@@ -560,15 +561,8 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 languages={tool.languages}
                 quickCompareLinks={quickCompareLinks}
                 categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
-                secondarySlot={
-                  tool.featured && featuredPromoSecondaryList.length > 0 ? (
-                    <div className="space-y-2">
-                      {featuredPromoSecondaryList.map((promo) => (
-                        <FeaturedToolSidebarCompact key={promo.slug} tool={promo} />
-                      ))}
-                    </div>
-                  ) : undefined
-                }
+                secondarySlot={tool.featured && featuredPromoSecondary ? <FeaturedToolSidebarCompact tool={featuredPromoSecondary} /> : undefined}
+                tertiarySlot={tool.featured && featuredPromoTertiary ? <FeaturedToolSidebarCompact tool={featuredPromoTertiary} /> : undefined}
               >
                 {tool.featured
                   ? featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />
@@ -626,7 +620,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       />
 
       <StickyDesktopToolBar
-        promos={[featuredPromo, ...featuredPromoSecondaryList.slice(0, 1)].filter((t): t is FeaturedTool => Boolean(t))}
+        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
       />
     </div>
   );

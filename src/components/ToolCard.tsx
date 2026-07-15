@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Star } from 'lucide-react';
+import { ShieldCheck, Star, ArrowUpRight } from 'lucide-react';
 
 export interface ToolCardData {
   slug: string;
@@ -18,9 +18,12 @@ export default function ToolCard({ tool }: { tool: ToolCardData }) {
   return (
     <Link
       to={`/tools/${tool.slug}`}
-      className="group flex flex-col bg-white border border-[#eef0f3] rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] hover:border-slate-200"
+      className="group relative flex flex-col bg-white border border-[#eef0f3] rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] hover:border-slate-200"
     >
-      <div className="flex items-start gap-3 mb-3.5">
+      <span className="absolute top-3.5 right-3.5 w-6 h-6 rounded-full bg-slate-50 group-hover:bg-indigo-50 flex items-center justify-center transition-colors" aria-hidden="true">
+        <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 transition-colors" />
+      </span>
+      <div className="flex items-start gap-3 mb-3.5 pr-7">
         {tool.logo ? (
           <img src={tool.logo} alt={tool.name} className="w-11 h-11 rounded-xl object-contain border border-slate-100 bg-white shrink-0" />
         ) : (
