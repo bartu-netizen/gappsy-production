@@ -28,6 +28,7 @@ interface ToolFactsSidebarProps {
   companySize: string | null;
   headquarters: string | null;
   languages: string[];
+  children?: React.ReactNode;
 }
 
 // Tag slugs (from the shared tool_tags taxonomy) that this sidebar reads to
@@ -71,6 +72,7 @@ export default function ToolFactsSidebar({
   companySize,
   headquarters,
   languages,
+  children,
 }: ToolFactsSidebarProps) {
   const { bookmarked, toggle: toggleBookmark } = useBookmarkedTool(slug);
   const [compareAdded, setCompareAdded] = useState(false);
@@ -104,8 +106,16 @@ export default function ToolFactsSidebar({
   }
 
   return (
-    <aside className="lg:sticky lg:top-[88px] space-y-4 order-first lg:order-none">
-      <Card className="p-5 space-y-5">
+    <div className="space-y-4 order-first lg:order-none">
+      {/* Only the facts card itself sticks — when this card alone is
+          already taller than the viewport (common on a long tool page),
+          anything appended *inside* a sticky element that overflows the
+          viewport stays permanently clipped for the entire pinned scroll
+          range. Content after the card (e.g. a featured-tool promo) is a
+          plain sibling instead, so it scrolls into view predictably once
+          the sticky card's pinned range ends. */}
+      <aside className="lg:sticky lg:top-[88px]">
+        <Card className="p-5 space-y-5">
         {rating > 0 && (
           <div>
             <div className="flex items-center gap-1">
@@ -289,6 +299,8 @@ export default function ToolFactsSidebar({
           </p>
         )}
       </Card>
-    </aside>
+      </aside>
+      {children}
+    </div>
   );
 }

@@ -22,6 +22,7 @@ import MobileTableOfContents from '../components/tools/detail/MobileTableOfConte
 import QuickSummarySection from '../components/tools/detail/QuickSummarySection';
 import KeyFactsSection from '../components/tools/detail/KeyFactsSection';
 import LongFormContent from '../components/tools/detail/LongFormContent';
+import { useFeaturedToolPromo, FeaturedToolSidebarCard, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
 import FeatureGrid from '../components/tools/detail/FeatureGrid';
 import ProsConsSection from '../components/tools/detail/ProsConsSection';
 import PricingSection from '../components/tools/detail/PricingSection';
@@ -144,6 +145,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [notFound, setNotFound] = useState(false);
 
   const recentSlugs = useRecentlyViewedTools(isPreview ? '' : toolSlug || '');
+  const featuredPromo = useFeaturedToolPromo(toolSlug || '');
 
   useEffect(() => {
     if (previewToolId) {
@@ -466,7 +468,15 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 />
 
                 {extendedContent ? (
-                  <LongFormContent blocks={extendedContent.longForm} />
+                  featuredPromo && extendedContent.longForm.length > 6 ? (
+                    <>
+                      <LongFormContent blocks={extendedContent.longForm.slice(0, 4)} />
+                      <FeaturedToolInlineCard tool={featuredPromo} />
+                      <LongFormContent blocks={extendedContent.longForm.slice(4)} />
+                    </>
+                  ) : (
+                    <LongFormContent blocks={extendedContent.longForm} />
+                  )
                 ) : (
                   tool.long_description && (
                     <section id="overview" className="scroll-mt-24">
@@ -496,7 +506,9 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 companySize={tool.company_size}
                 headquarters={tool.headquarters}
                 languages={tool.languages}
-              />
+              >
+                {featuredPromo && <FeaturedToolSidebarCard tool={featuredPromo} />}
+              </ToolFactsSidebar>
             </div>
 
             {/* Zone B — full width, no sidebar column */}
