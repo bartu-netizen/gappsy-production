@@ -56,6 +56,49 @@ export default function Footer({ currentState }: FooterProps = {}) {
                   letterSpacing: '0.5px'
                 }}
               >
+                Marketing Agencies
+              </h3>
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <Link
+                  to="/marketing-agencies"
+                  style={{
+                    color: '#94A3B8',
+                    textDecoration: 'none',
+                    fontSize: '15px',
+                    transition: 'color 0.2s'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#94A3B8'; }}
+                >
+                  Top 25 Agency Lists
+                </Link>
+                <Link
+                  to="/marketing-agencies/usa"
+                  style={{
+                    color: '#94A3B8',
+                    textDecoration: 'none',
+                    fontSize: '15px',
+                    transition: 'color 0.2s'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#94A3B8'; }}
+                >
+                  Browse by State
+                </Link>
+              </nav>
+            </div>
+
+            <div>
+              <h3
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  marginBottom: '20px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}
+              >
                 Company
               </h3>
               <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
@@ -251,15 +294,20 @@ export default function Footer({ currentState }: FooterProps = {}) {
           }}
         >
           <p style={{ color: '#64748B', fontSize: '14px' }}>
-            © 2025 Gappsy. All rights reserved.
+            © {new Date().getFullYear()} Gappsy. All rights reserved.
           </p>
         </div>
       </div>
 
       <style>{`
-        @media (min-width: 768px) {
+        @media (min-width: 640px) {
           .footer-grid {
-            grid-template-columns: 1fr 1fr 1fr 1fr !important;
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr !important;
           }
         }
       `}</style>

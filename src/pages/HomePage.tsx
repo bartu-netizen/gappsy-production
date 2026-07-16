@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, MapPin } from 'lucide-react';
-import MiniHeader from '../components/MiniHeader';
+import HomeStickyHeader from '../components/HomeStickyHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import ThreeColumnLayout from '../components/ThreeColumnLayout';
 import TrustPill from '../components/ui/TrustPill';
@@ -72,9 +72,7 @@ export default function HomePage() {
 
   const centerContent = (
     <>
-      <div className="mt-0 mb-6">
-        <MiniHeader />
-      </div>
+      <HomeStickyHeader searchAnchorId="find-agency-search" />
 
       <div className="text-center mb-8">
         <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '12px' }}>
@@ -85,7 +83,7 @@ export default function HomePage() {
           <TrustPill />
         </div>
 
-        <div className="relative max-w-2xl mx-auto">
+        <div id="find-agency-search" className="relative max-w-2xl mx-auto scroll-mt-28">
           <div className="flex items-center w-full h-14 rounded-full bg-white text-gray-900 border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
             <Search className="ml-5 h-5 w-5 text-slate-400" strokeWidth={2} aria-hidden="true" />
             <input
@@ -335,9 +333,7 @@ export default function HomePage() {
           <TopAdRail />
         </div>
 
-        <div className="mt-2 md:mt-6">
-          <MiniHeader />
-        </div>
+        <HomeStickyHeader searchAnchorId="find-agency-search-mobile" />
 
         <div className="text-center mb-6 sm:mb-8 mt-2">
           <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-2 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>
@@ -347,7 +343,7 @@ export default function HomePage() {
           <div className="flex justify-center mb-2 sm:mb-5">
             <TrustPill />
           </div>
-          <div className="relative max-w-[390px] sm:max-w-2xl mx-auto mb-4 sm:mb-8">
+          <div id="find-agency-search-mobile" className="relative max-w-[390px] sm:max-w-2xl mx-auto mb-4 sm:mb-8 scroll-mt-24">
             <div className="flex items-center h-8 sm:h-14 px-1.5 sm:px-4 gap-1 sm:gap-3 rounded-full bg-white border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
               <div className="flex items-center justify-center flex-shrink-0">
                 <Search className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-slate-400 opacity-80" />
