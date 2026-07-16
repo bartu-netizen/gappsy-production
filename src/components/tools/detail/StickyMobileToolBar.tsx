@@ -52,7 +52,7 @@ export default function StickyMobileToolBar({ featuredPromo }: StickyMobileToolB
             <OverflowMarqueeText text={featuredPromo.short_description} className="text-[11px] text-slate-500 mt-0.5 w-full" />
           )}
         </div>
-        <div className="absolute bottom-1.5 right-2">
+        <div className="absolute top-1.5 right-1.5 scale-90 origin-top-right">
           <FeaturedBadge />
         </div>
       </Link>

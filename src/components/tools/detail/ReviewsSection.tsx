@@ -25,7 +25,9 @@ function colorFor(name: string): string {
 // once populated can never bootstrap itself, so a 0-review tool instead
 // shows an invitation to be the first.
 export default function ReviewsSection({ toolId, toolName, reviews }: { toolId: string; toolName: string; reviews: ReviewItem[] }) {
-  const [writing, setWriting] = useState(false);
+  // A 0-review tool has no "invite to write a review" middle step — the
+  // form is just there, open, from the start.
+  const [writing, setWriting] = useState(reviews.length === 0);
   const average = reviews.length > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
   const distribution = [5, 4, 3, 2, 1].map((star) => ({
     star,
@@ -85,17 +87,14 @@ export default function ReviewsSection({ toolId, toolName, reviews }: { toolId: 
       )}
 
       {reviews.length === 0 && !writing && (
-        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 p-8 text-center">
-          <p className="text-slate-500 text-sm mb-4">Nobody has reviewed {toolName} yet.</p>
-          <button
-            type="button"
-            onClick={() => setWriting(true)}
-            className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:bg-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
-          >
-            <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
-            Be the first to review it
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setWriting(true)}
+          className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:bg-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
+        >
+          <MessageSquarePlus className="w-4 h-4" aria-hidden="true" />
+          Write a review
+        </button>
       )}
 
       {reviews.length > 0 && (
