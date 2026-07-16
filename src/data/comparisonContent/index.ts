@@ -1,5 +1,6 @@
 import type { ToolComparisonContent } from './types';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
+import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
 import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
 import backblazeVsIdriveContent from './backblaze-vs-idrive';
@@ -13,6 +14,7 @@ import chatgptVsGoogleGeminiContent from './chatgpt-vs-google-gemini';
 import chatgptVsPerplexityContent from './chatgpt-vs-perplexity';
 import claudeVsGoogleGeminiContent from './claude-vs-google-gemini';
 import clearscopeVsSurferSeoContent from './clearscope-vs-surfer-seo';
+import clickfunnelsVsUnbounceContent from './clickfunnels-vs-unbounce';
 import copyAiVsJasperContent from './copy-ai-vs-jasper';
 import copyAiVsWritesonicContent from './copy-ai-vs-writesonic';
 import cursorVsGithubCopilotContent from './cursor-vs-github-copilot';
@@ -25,6 +27,9 @@ import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
+import hubspotCrmVsPipedriveContent from './hubspot-crm-vs-pipedrive';
+import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
+import instapageVsUnbounceContent from './instapage-vs-unbounce';
 import klingAiVsRunwayContent from './kling-ai-vs-runway';
 import lookerVsTableauContent from './looker-vs-tableau';
 import lovableVsReplitContent from './lovable-vs-replit';
@@ -32,16 +37,20 @@ import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sen
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import pikaVsRunwayContent from './pika-vs-runway';
+import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
 import ringcentralVsVonageContent from './ringcentral-vs-vonage';
 import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
+import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
+import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
+  'aircall-vs-openphone': aircallVsOpenphoneContent,
   'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
   'backblaze-vs-carbonite': backblazeVsCarboniteContent,
   'backblaze-vs-idrive': backblazeVsIdriveContent,
@@ -55,6 +64,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'chatgpt-vs-perplexity': chatgptVsPerplexityContent,
   'claude-vs-google-gemini': claudeVsGoogleGeminiContent,
   'clearscope-vs-surfer-seo': clearscopeVsSurferSeoContent,
+  'clickfunnels-vs-unbounce': clickfunnelsVsUnbounceContent,
   'copy-ai-vs-jasper': copyAiVsJasperContent,
   'copy-ai-vs-writesonic': copyAiVsWritesonicContent,
   'cursor-vs-github-copilot': cursorVsGithubCopilotContent,
@@ -67,6 +77,9 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
+  'hubspot-crm-vs-pipedrive': hubspotCrmVsPipedriveContent,
+  'hubspot-crm-vs-salesforce': hubspotCrmVsSalesforceContent,
+  'instapage-vs-unbounce': instapageVsUnbounceContent,
   'kling-ai-vs-runway': klingAiVsRunwayContent,
   'looker-vs-tableau': lookerVsTableauContent,
   'lovable-vs-replit': lovableVsReplitContent,
@@ -74,10 +87,13 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'pika-vs-runway': pikaVsRunwayContent,
+  'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
   'ringcentral-vs-vonage': ringcentralVsVonageContent,
   'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
+  'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
+  'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
 };
 
 export function getComparisonContent(slug: string): ToolComparisonContent | undefined {
