@@ -44,6 +44,7 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>(getSessionId());
 
   useEffect(() => {
@@ -104,8 +105,18 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
     sendMessage(input);
   }
 
+  // Tapping a suggested question is often the very first interaction with
+  // this widget — on a tool page's mobile hero, the card can be tall enough
+  // that the reply streams in below the fold. Scroll the whole card into
+  // view so the conversation that's about to start is actually visible,
+  // full width, rather than requiring a manual scroll to discover it.
+  function handleSuggestedQuestion(q: string) {
+    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    sendMessage(q);
+  }
+
   return (
-    <div className="flex flex-col h-full">
+    <div ref={containerRef} className="flex flex-col h-full">
       <div className="flex items-center gap-2.5 px-4 sm:px-5 py-3.5 border-b border-slate-100 shrink-0">
         <div className="w-8 h-8 rounded-lg bg-[#0A1735] flex items-center justify-center shrink-0">
           <Sparkles className="w-4 h-4 text-white" aria-hidden="true" />
@@ -124,7 +135,7 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
               <button
                 key={q}
                 type="button"
-                onClick={() => sendMessage(q)}
+                onClick={() => handleSuggestedQuestion(q)}
                 className="text-left text-[12.5px] font-medium text-[#4F47E6] bg-[#EEF0FE] hover:bg-[#E0E3FC] px-3 py-2 rounded-xl transition-colors"
               >
                 {q}

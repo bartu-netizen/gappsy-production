@@ -57,7 +57,7 @@ export default function ToolHero({
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-8 relative overflow-hidden">
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 sm:pt-10 pb-8 relative overflow-hidden">
       <div
         className="absolute inset-x-0 top-0 h-40 sm:h-64 -z-10 opacity-60"
         style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(41,82,204,0.08), transparent)' }}
@@ -106,15 +106,29 @@ export default function ToolHero({
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap mb-0.5 sm:mb-1">
+          <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
             <h1 className="text-2xl sm:text-[42px] font-bold text-[#0B1221] leading-tight tracking-[-0.02em]">{name}</h1>
             {verified && <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#4F47E6] shrink-0" aria-label="Verified" />}
+            {/* Pushed to the far right of this same row (falls to its own
+                line only if the name+shield already fill it, e.g. very
+                long names) — was previously in the badges row below, where
+                it was the item most likely to get clipped by the mobile
+                horizontal scroll. */}
+            {verified && (
+              <Link
+                to="/editorial-policy"
+                className="ml-auto shrink-0 inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium text-slate-400 hover:text-[#4F47E6] transition-colors"
+              >
+                <BadgeCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                How we review
+              </Link>
+            )}
           </div>
 
           {/* Mobile: forced single row (flex-nowrap + horizontal scroll) so
               these never wrap to a second line regardless of how many are
               present — restores normal wrapping from sm: up. */}
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-nowrap overflow-x-auto scrollbar-hide sm:flex-wrap sm:overflow-visible mb-2 sm:mb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-nowrap overflow-x-auto scrollbar-hide sm:flex-wrap sm:overflow-visible mb-1.5 sm:mb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
             {featured && <Badge compact className="bg-amber-100 text-amber-700 shrink-0">Editor's Pick</Badge>}
             {hasAI && (
               <Badge compact className="bg-violet-50 text-violet-600 shrink-0">
@@ -130,19 +144,10 @@ export default function ToolHero({
                 {primaryCategory.name}
               </Link>
             )}
-            {verified && (
-              <Link
-                to="/editorial-policy"
-                className="inline-flex items-center shrink-0 gap-1 text-[10px] sm:text-xs font-medium text-slate-400 hover:text-[#4F47E6] transition-colors"
-              >
-                <BadgeCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                How we review
-              </Link>
-            )}
           </div>
 
           {shortDescription && (
-            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed max-w-2xl mb-3 sm:mb-4">{shortDescription}</p>
+            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed max-w-2xl mb-2 sm:mb-4 line-clamp-2 sm:line-clamp-none">{shortDescription}</p>
           )}
 
           <div className="flex items-center gap-x-5 gap-y-2 flex-wrap text-sm">
@@ -170,7 +175,7 @@ export default function ToolHero({
           </div>
 
           {visibleReviewers.length > 0 && (
-            <div className="flex items-center gap-2 mt-3">
+            <div className="flex items-center gap-2 mt-2 sm:mt-3">
               <div className="flex -space-x-2">
                 {visibleReviewers.map((reviewer, i) => (
                   <span
@@ -196,7 +201,7 @@ export default function ToolHero({
       {/* Full-width "Ask Gappsy" chat — the crucial, highly-visible slot the
           old CTA column used to occupy. Wide enough here for a real
           conversation instead of a cramped sidebar-width widget. */}
-      <div className="mt-3 sm:mt-6 rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
+      <div className="mt-2 sm:mt-6 rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
         <AskGappsyChat
           toolSlug={slug}
           toolName={name}
