@@ -57,6 +57,28 @@ function groupBy(rows, keyFn) {
   return map;
 }
 
+// PostgREST builds `.in()` filters as a literal query-string parameter, so a
+// single call with hundreds of UUIDs produces a multi-KB URL that undici's
+// fetch silently fails on (no HTTP error — a bare "TypeError: fetch failed").
+// Chunking keeps each request's `.in()` list small regardless of how many
+// tools exist, preserving the "fixed queries at any scale" contract above.
+const IN_CLAUSE_CHUNK_SIZE = 100;
+
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
+  return chunks;
+}
+
+export async function fetchInChunks(ids, queryFactory) {
+  const chunks = chunkArray(ids, IN_CLAUSE_CHUNK_SIZE);
+  const results = await Promise.all(chunks.map((chunk) => queryFactory(chunk)));
+  for (const r of results) {
+    if (r.error) return { data: null, error: r.error };
+  }
+  return { data: results.flatMap((r) => r.data || []), error: null };
+}
+
 async function fetchAllPublishedTools(supabase) {
   const { data: tools, error } = await supabase
     .from('tools')
@@ -83,34 +105,34 @@ async function fetchRelatedData(supabase, toolIds) {
   }
 
   const [catResult, tagResult, pricingResult, reviewsResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonLinksResult, contentBlocksResult] = await Promise.all([
-    supabase
+    fetchInChunks(toolIds, (ids) => supabase
       .from('tool_category_links')
       .select('tool_id, category_id, primary_category, tool_categories!inner(slug, name, status)')
-      .in('tool_id', toolIds)
-      .eq('tool_categories.status', 'published'),
-    supabase.from('tool_tag_links').select('tool_id, tool_tags(slug, name)').in('tool_id', toolIds),
-    supabase
+      .in('tool_id', ids)
+      .eq('tool_categories.status', 'published')),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_tag_links').select('tool_id, tool_tags(slug, name)').in('tool_id', ids)),
+    fetchInChunks(toolIds, (ids) => supabase
       .from('tool_pricing_plans')
       .select('tool_id, id, plan_name, price, billing_cycle, description, features, sort_order')
-      .in('tool_id', toolIds)
-      .order('sort_order', { ascending: true }),
-    supabase
+      .in('tool_id', ids)
+      .order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase
       .from('tool_reviews')
       .select('tool_id, id, author_name, author_title, rating, quote, source, created_at')
-      .in('tool_id', toolIds)
+      .in('tool_id', ids)
       .eq('status', 'published')
-      .order('sort_order', { ascending: true }),
+      .order('sort_order', { ascending: true })),
     // Database-backed editorial content — DB-first, file-fallback per field
     // (mirrors src/pages/ToolDetailPage.tsx's dbFeatures/dbPros/etc, so the
     // prerendered HTML crawlers see always matches what hydrates).
-    supabase.from('tool_features').select('tool_id, title, description, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
-    supabase.from('tool_pros').select('tool_id, text, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
-    supabase.from('tool_cons').select('tool_id, text, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
-    supabase.from('tool_use_cases').select('tool_id, title, description, audience, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
-    supabase.from('tool_faqs').select('tool_id, question, answer, sort_order').in('tool_id', toolIds).eq('status', 'published').order('sort_order', { ascending: true }),
-    supabase.from('tool_alternatives').select('tool_id, alternative_name, alternative_url, alternative_logo, description, pros, cons, pricing_summary, sort_order').in('tool_id', toolIds).not('description', 'is', null).order('sort_order', { ascending: true }),
-    supabase.from('tool_comparison_links').select('tool_id, label, href, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
-    supabase.from('tool_content_blocks').select('tool_id, block_key, heading, level, paragraphs, sort_order').in('tool_id', toolIds).order('sort_order', { ascending: true }),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_features').select('tool_id, title, description, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_pros').select('tool_id, text, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_cons').select('tool_id, text, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_use_cases').select('tool_id, title, description, audience, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_faqs').select('tool_id, question, answer, sort_order').in('tool_id', ids).eq('status', 'published').order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_alternatives').select('tool_id, alternative_name, alternative_url, alternative_logo, description, pros, cons, pricing_summary, sort_order').in('tool_id', ids).not('description', 'is', null).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_comparison_links').select('tool_id, label, href, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
+    fetchInChunks(toolIds, (ids) => supabase.from('tool_content_blocks').select('tool_id, block_key, heading, level, paragraphs, sort_order').in('tool_id', ids).order('sort_order', { ascending: true })),
   ]);
 
   if (catResult.error) throw new Error(`Failed to fetch tool categories: ${catResult.error.message}`);

@@ -5,7 +5,7 @@ import { tmpdir } from 'os';
 import { createClient } from '@supabase/supabase-js';
 import { build as esbuildBuild } from 'esbuild';
 import { injectToolSEOTags } from './tool-seo-generator.js';
-import { loadGetToolContent } from './prerender-tools.js';
+import { loadGetToolContent, fetchInChunks } from './prerender-tools.js';
 import { generateComparisonSEOData, generateComparisonJSONLD, generateComparisonStaticBodyHTML } from './comparison-seo-generator.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -74,7 +74,7 @@ async function fetchPublishedComparisons(supabase) {
 
 async function fetchTagsByToolId(supabase, toolIds) {
   if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase.from('tool_tag_links').select('tool_id, tool_tags(slug)').in('tool_id', toolIds);
+  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase.from('tool_tag_links').select('tool_id, tool_tags(slug)').in('tool_id', ids));
   if (error) throw new Error(`Failed to fetch tool tags: ${error.message}`);
   const map = new Map();
   for (const row of data || []) {
@@ -87,11 +87,11 @@ async function fetchTagsByToolId(supabase, toolIds) {
 
 async function fetchCategoriesByToolId(supabase, toolIds) {
   if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase
+  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase
     .from('tool_category_links')
     .select('tool_id, primary_category, tool_categories!inner(slug, name, status)')
-    .in('tool_id', toolIds)
-    .eq('tool_categories.status', 'published');
+    .in('tool_id', ids)
+    .eq('tool_categories.status', 'published'));
   if (error) throw new Error(`Failed to fetch tool categories: ${error.message}`);
   const map = new Map();
   for (const row of data || []) {
@@ -103,11 +103,11 @@ async function fetchCategoriesByToolId(supabase, toolIds) {
 
 async function fetchPricingPlansByToolId(supabase, toolIds) {
   if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase
+  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase
     .from('tool_pricing_plans')
     .select('tool_id, plan_name, price, billing_cycle, sort_order')
-    .in('tool_id', toolIds)
-    .order('sort_order', { ascending: true });
+    .in('tool_id', ids)
+    .order('sort_order', { ascending: true }));
   if (error) throw new Error(`Failed to fetch tool pricing plans: ${error.message}`);
   const map = new Map();
   for (const row of data || []) {
