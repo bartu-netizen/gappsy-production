@@ -1,5 +1,8 @@
 import type { ToolComparisonContent } from './types';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
+import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
+import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
+import backblazeVsIdriveContent from './backblaze-vs-idrive';
 import boltNewVsV0Content from './bolt-new-vs-v0';
 import canvaVsFigmaContent from './canva-vs-figma';
 import canvaVsMicrosoftDesignerContent from './canva-vs-microsoft-designer';
@@ -23,17 +26,25 @@ import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
 import klingAiVsRunwayContent from './kling-ai-vs-runway';
+import lookerVsTableauContent from './looker-vs-tableau';
 import lovableVsReplitContent from './lovable-vs-replit';
+import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sense';
+import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import pikaVsRunwayContent from './pika-vs-runway';
 import plausibleVsUmamiContent from './plausible-vs-umami';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
+import ringcentralVsVonageContent from './ringcentral-vs-vonage';
+import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
+  'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
+  'backblaze-vs-carbonite': backblazeVsCarboniteContent,
+  'backblaze-vs-idrive': backblazeVsIdriveContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
   'canva-vs-figma': canvaVsFigmaContent,
   'canva-vs-microsoft-designer': canvaVsMicrosoftDesignerContent,
@@ -57,11 +68,16 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
   'kling-ai-vs-runway': klingAiVsRunwayContent,
+  'looker-vs-tableau': lookerVsTableauContent,
   'lovable-vs-replit': lovableVsReplitContent,
+  'microsoft-power-bi-vs-qlik-sense': microsoftPowerBiVsQlikSenseContent,
+  'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'pika-vs-runway': pikaVsRunwayContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
+  'ringcentral-vs-vonage': ringcentralVsVonageContent,
+  'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
 };
 
 export function getComparisonContent(slug: string): ToolComparisonContent | undefined {
