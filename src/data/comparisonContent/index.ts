@@ -11,7 +11,15 @@ import chatgptVsPerplexityContent from './chatgpt-vs-perplexity';
 import claudeVsGoogleGeminiContent from './claude-vs-google-gemini';
 import cursorVsGithubCopilotContent from './cursor-vs-github-copilot';
 import cursorVsWindsurfContent from './cursor-vs-windsurf';
+import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
+import dallEVsStableDiffusionContent from './dall-e-vs-stable-diffusion';
+import descriptVsVeedContent from './descript-vs-veed';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
+import heygenVsSynthesiaContent from './heygen-vs-synthesia';
+import klingAiVsRunwayContent from './kling-ai-vs-runway';
+import lovableVsReplitContent from './lovable-vs-replit';
+import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
+import pikaVsRunwayContent from './pika-vs-runway';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
@@ -29,7 +37,15 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'claude-vs-google-gemini': claudeVsGoogleGeminiContent,
   'cursor-vs-github-copilot': cursorVsGithubCopilotContent,
   'cursor-vs-windsurf': cursorVsWindsurfContent,
+  'dall-e-vs-midjourney': dallEVsMidjourneyContent,
+  'dall-e-vs-stable-diffusion': dallEVsStableDiffusionContent,
+  'descript-vs-veed': descriptVsVeedContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
+  'heygen-vs-synthesia': heygenVsSynthesiaContent,
+  'kling-ai-vs-runway': klingAiVsRunwayContent,
+  'lovable-vs-replit': lovableVsReplitContent,
+  'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
+  'pika-vs-runway': pikaVsRunwayContent,
 };
 
 export function getComparisonContent(slug: string): ToolComparisonContent | undefined {
