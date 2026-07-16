@@ -61,9 +61,12 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
     // to fit just the header. mb-6 here (instead of on a wrapper) keeps the
     // visual gap before the hero without reintroducing that wrapper.
     <header className="static md:sticky md:top-3 z-40 mb-6">
-      <div className="max-w-[900px] mx-auto px-4 sm:px-6">
-        <div className={`rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
-          <div className="px-5 sm:px-6">
+      {/* Edge-to-edge on mobile (no inset, no rounding), matching
+          Top25Header's mobile bar — the floating inset/rounded card is a
+          md:+ (desktop) treatment only. */}
+      <div className="max-w-full md:max-w-[900px] mx-auto px-0 md:px-6">
+        <div className={`rounded-none md:rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
+          <div className="px-4 md:px-6">
             {/* Desktop */}
             <div className="hidden md:flex items-center justify-between h-[64px] gap-4">
               <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">

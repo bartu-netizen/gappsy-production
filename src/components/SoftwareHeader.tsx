@@ -77,19 +77,22 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
 
   if (isPremium) {
     return (
-      <header className="sticky top-3 z-40">
-        {/* Floating, inset card — mirrors FooterWrapper/Footer's own
-            rounded #0A1735 box (side-inset via max-w + px, shadow), so the
-            header and footer read as the same design language instead of
-            the header stretching edge-to-edge. Radius is closer to the
-            "Feature My Product" button's own rounded-xl than a full pill.
-            max-w-6xl + px-4 sm:px-6 matches the tool-detail/tools-index/
-            categories page content container exactly, so the header's
-            edges line up with the page's left/right column edges instead
-            of overhanging them. */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className={`rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
-            <div className="px-6 sm:px-8">
+      <header className="sticky top-0 md:top-3 z-40">
+        {/* Floating, inset card from md: (desktop) up — mirrors
+            FooterWrapper/Footer's own rounded #0A1735 box (side-inset via
+            max-w + px, shadow), so the header and footer read as the same
+            design language instead of the header stretching edge-to-edge.
+            Radius is closer to the "Feature My Product" button's own
+            rounded-xl than a full pill. max-w-6xl + md:px-6 matches the
+            tool-detail/tools-index/categories page content container
+            exactly, so the header's edges line up with the page's
+            left/right column edges instead of overhanging them.
+            Below md, it's edge-to-edge/flush instead (no inset, no
+            rounding, sitting flush at top-0) — matches Top25Header's
+            mobile bar elsewhere on the site. */}
+        <div className="max-w-full md:max-w-6xl mx-auto px-0 md:px-6">
+          <div className={`rounded-none md:rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
+            <div className="px-4 md:px-8">
               {/* Desktop */}
               <div className="hidden md:flex items-center justify-center h-[70px]">
                 {/* Centered as one unit (not logo-left/buttons-right
