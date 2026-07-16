@@ -112,17 +112,41 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+/* #root (not html/body) gets height:100% — once body is left to its
+   natural content height below, #root's 100% resolves against that real
+   height instead of clamping to the viewport. */
+#root {
   height: 100%;
 }
 
+/* html/body deliberately do NOT get height:100% here. Combined with
+   overflow-x:hidden below, that used to force body into an internally
+   auto-scrolling box (per the CSS spec, overflow-x:hidden with no
+   explicit overflow-y forces overflow-y to compute as 'auto', not
+   'visible' — setting overflow-y: visible explicitly doesn't override
+   this, the UA still coerces it) — scrolling then happened via
+   document.body.scrollTop instead of the normal window/document scroll.
+   Every scroll-aware bit of code in this app (header "scrolled" shadow
+   states, ScrollToTop, sticky positioning) assumes the standard
+   window-level scroll, and this pattern is also a known source of
+   scroll-freeze bugs on iOS Safari specifically. Removing height:100%
+   here restores normal document scrolling: body is just as tall as its
+   content, and the window scrolls it. */
 html {
   overflow-x: hidden;
   overscroll-behavior-y: none;
 }
 
+/* body deliberately does NOT also get overflow-x:hidden — html having it
+   is enough to prevent horizontal scrollbars, and having BOTH html and
+   body compute overflow-y:auto made them two competing "scroll
+   containers" nested inside each other. Since body's own box was always
+   exactly as tall as its content (nothing genuinely overflowed IT), that
+   second scroll container never actually scrolled — but any
+   position:sticky element inside body bound to body (the nearer one) as
+   its scroll boundary instead of html (the one that actually scrolls),
+   so sticky headers silently stopped sticking site-wide. */
 body {
-  overflow-x: hidden;
   overscroll-behavior-y: none;
 }
 

@@ -96,25 +96,28 @@ export default function ToolHero({
               width={96}
               height={96}
               fetchPriority="high"
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
+              className="w-14 h-14 sm:w-24 sm:h-24 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm"
             />
           ) : (
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-3xl">
+            <div className="w-14 h-14 sm:w-24 sm:h-24 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-xl sm:text-3xl">
               {name.charAt(0)}
             </div>
           )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h1 className="text-3xl sm:text-[42px] font-bold text-[#0B1221] leading-tight tracking-[-0.02em]">{name}</h1>
-            {verified && <ShieldCheck className="w-6 h-6 text-[#4F47E6] shrink-0" aria-label="Verified" />}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap mb-0.5 sm:mb-1">
+            <h1 className="text-2xl sm:text-[42px] font-bold text-[#0B1221] leading-tight tracking-[-0.02em]">{name}</h1>
+            {verified && <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#4F47E6] shrink-0" aria-label="Verified" />}
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap mb-3">
-            {featured && <Badge className="bg-amber-100 text-amber-700">Editor's Pick</Badge>}
+          {/* Mobile: forced single row (flex-nowrap + horizontal scroll) so
+              these never wrap to a second line regardless of how many are
+              present — restores normal wrapping from sm: up. */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-nowrap overflow-x-auto scrollbar-hide sm:flex-wrap sm:overflow-visible mb-2 sm:mb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {featured && <Badge compact className="bg-amber-100 text-amber-700 shrink-0">Editor's Pick</Badge>}
             {hasAI && (
-              <Badge className="bg-violet-50 text-violet-600">
+              <Badge compact className="bg-violet-50 text-violet-600 shrink-0">
                 <Sparkles className="w-3 h-3 mr-1 inline -mt-0.5" />
                 AI-Powered
               </Badge>
@@ -122,7 +125,7 @@ export default function ToolHero({
             {primaryCategory && (
               <Link
                 to={`/tool-categories/${primaryCategory.slug}`}
-                className="inline-flex items-center text-xs font-medium bg-[#EEF0FE] text-[#4338CA] px-2.5 py-1 rounded-full hover:bg-[#E0E3FC] transition-colors"
+                className="inline-flex items-center shrink-0 text-[10px] sm:text-xs font-medium bg-[#EEF0FE] text-[#4338CA] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full hover:bg-[#E0E3FC] transition-colors"
               >
                 {primaryCategory.name}
               </Link>
@@ -130,16 +133,16 @@ export default function ToolHero({
             {verified && (
               <Link
                 to="/editorial-policy"
-                className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-[#4F47E6] transition-colors"
+                className="inline-flex items-center shrink-0 gap-1 text-[10px] sm:text-xs font-medium text-slate-400 hover:text-[#4F47E6] transition-colors"
               >
-                <BadgeCheck className="w-3.5 h-3.5" />
+                <BadgeCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 How we review
               </Link>
             )}
           </div>
 
           {shortDescription && (
-            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed max-w-2xl mb-4">{shortDescription}</p>
+            <p className="text-slate-600 text-[15px] sm:text-lg leading-relaxed max-w-2xl mb-3 sm:mb-4">{shortDescription}</p>
           )}
 
           <div className="flex items-center gap-x-5 gap-y-2 flex-wrap text-sm">
@@ -193,7 +196,7 @@ export default function ToolHero({
       {/* Full-width "Ask Gappsy" chat — the crucial, highly-visible slot the
           old CTA column used to occupy. Wide enough here for a real
           conversation instead of a cramped sidebar-width widget. */}
-      <div className="mt-6 rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
+      <div className="mt-3 sm:mt-6 rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
         <AskGappsyChat
           toolSlug={slug}
           toolName={name}

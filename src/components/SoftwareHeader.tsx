@@ -163,7 +163,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
                 </button>
                 <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center min-w-0">
-                  <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-5 w-auto" />
+                  <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-9 w-auto" />
                 </Link>
               </div>
 
@@ -180,7 +180,7 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   to="/feature-my-product"
                   className="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium text-[#0A1735] bg-white whitespace-nowrap"
                 >
-                  Feature
+                  Get Featured
                 </Link>
               </div>
             </div>

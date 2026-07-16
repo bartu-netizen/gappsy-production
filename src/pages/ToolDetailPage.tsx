@@ -650,10 +650,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
 
       <FooterWrapper />
 
-      <StickyMobileToolBar
-        featuredPromo={featuredPromo}
-        categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
-      />
+      <StickyMobileToolBar featuredPromo={featuredPromo} />
 
       <StickyDesktopToolBar
         promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}

@@ -78,7 +78,7 @@ function WantYourProductHereLink({ className = '' }: { className?: string }) {
   );
 }
 
-function FeaturedBadge({ large = false }: { large?: boolean }) {
+export function FeaturedBadge({ large = false }: { large?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-[#4F47E6] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
