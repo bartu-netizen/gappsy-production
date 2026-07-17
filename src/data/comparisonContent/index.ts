@@ -1,6 +1,8 @@
 import type { ToolComparisonContent } from './types';
+import activecampaignVsMailchimpContent from './activecampaign-vs-mailchimp';
 import activepiecesVsZapierContent from './activepieces-vs-zapier';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
+import adpWorkforceNowVsPaychexFlexContent from './adp-workforce-now-vs-paychex-flex';
 import airbyteVsFivetranContent from './airbyte-vs-fivetran';
 import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
@@ -10,6 +12,7 @@ import awsVsGoogleCloudContent from './aws-vs-google-cloud';
 import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
 import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
 import backblazeVsIdriveContent from './backblaze-vs-idrive';
+import bamboohrVsRipplingContent from './bamboohr-vs-rippling';
 import betterProposalsVsProposifyContent from './better-proposals-vs-proposify';
 import bigcommerceVsShopifyContent from './bigcommerce-vs-shopify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
@@ -24,6 +27,7 @@ import chatgptVsPerplexityContent from './chatgpt-vs-perplexity';
 import claudeVsGoogleGeminiContent from './claude-vs-google-gemini';
 import clearscopeVsSurferSeoContent from './clearscope-vs-surfer-seo';
 import clickfunnelsVsUnbounceContent from './clickfunnels-vs-unbounce';
+import constantContactVsMailchimpContent from './constant-contact-vs-mailchimp';
 import copyAiVsJasperContent from './copy-ai-vs-jasper';
 import copyAiVsWritesonicContent from './copy-ai-vs-writesonic';
 import crispVsTidioContent from './crisp-vs-tidio';
@@ -32,6 +36,7 @@ import cursorVsWindsurfContent from './cursor-vs-windsurf';
 import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
 import dallEVsStableDiffusionContent from './dall-e-vs-stable-diffusion';
 import datadogVsNewRelicContent from './datadog-vs-new-relic';
+import deelVsRemoteContent from './deel-vs-remote';
 import descriptVsVeedContent from './descript-vs-veed';
 import docusignVsDropboxSignContent from './docusign-vs-dropbox-sign';
 import docusignVsSignnowContent from './docusign-vs-signnow';
@@ -40,6 +45,7 @@ import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
 import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
+import googleFormsVsJotformContent from './google-forms-vs-jotform';
 import gumroadVsSellfyContent from './gumroad-vs-sellfy';
 import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
@@ -50,6 +56,7 @@ import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
 import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
 import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
+import jotformVsWufooContent from './jotform-vs-wufoo';
 import kajabiVsTeachableContent from './kajabi-vs-teachable';
 import kitVsMailchimpContent from './kit-vs-mailchimp';
 import klaviyoVsMailchimpContent from './klaviyo-vs-mailchimp';
@@ -75,14 +82,17 @@ import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
 import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
 import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
+import tallyVsTypeformContent from './tally-vs-typeform';
 import teachableVsThinkificContent from './teachable-vs-thinkific';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
+  'activecampaign-vs-mailchimp': activecampaignVsMailchimpContent,
   'activepieces-vs-zapier': activepiecesVsZapierContent,
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
+  'adp-workforce-now-vs-paychex-flex': adpWorkforceNowVsPaychexFlexContent,
   'airbyte-vs-fivetran': airbyteVsFivetranContent,
   'aircall-vs-openphone': aircallVsOpenphoneContent,
   'amazon-redshift-vs-snowflake': amazonRedshiftVsSnowflakeContent,
@@ -92,6 +102,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
   'backblaze-vs-carbonite': backblazeVsCarboniteContent,
   'backblaze-vs-idrive': backblazeVsIdriveContent,
+  'bamboohr-vs-rippling': bamboohrVsRipplingContent,
   'better-proposals-vs-proposify': betterProposalsVsProposifyContent,
   'bigcommerce-vs-shopify': bigcommerceVsShopifyContent,
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
@@ -106,6 +117,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'claude-vs-google-gemini': claudeVsGoogleGeminiContent,
   'clearscope-vs-surfer-seo': clearscopeVsSurferSeoContent,
   'clickfunnels-vs-unbounce': clickfunnelsVsUnbounceContent,
+  'constant-contact-vs-mailchimp': constantContactVsMailchimpContent,
   'copy-ai-vs-jasper': copyAiVsJasperContent,
   'copy-ai-vs-writesonic': copyAiVsWritesonicContent,
   'crisp-vs-tidio': crispVsTidioContent,
@@ -114,6 +126,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'dall-e-vs-midjourney': dallEVsMidjourneyContent,
   'dall-e-vs-stable-diffusion': dallEVsStableDiffusionContent,
   'datadog-vs-new-relic': datadogVsNewRelicContent,
+  'deel-vs-remote': deelVsRemoteContent,
   'descript-vs-veed': descriptVsVeedContent,
   'docusign-vs-dropbox-sign': docusignVsDropboxSignContent,
   'docusign-vs-signnow': docusignVsSignnowContent,
@@ -122,6 +135,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
   'google-analytics-vs-plausible': googleAnalyticsVsPlausibleContent,
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
+  'google-forms-vs-jotform': googleFormsVsJotformContent,
   'gumroad-vs-sellfy': gumroadVsSellfyContent,
   'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
@@ -132,6 +146,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
   'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
+  'jotform-vs-wufoo': jotformVsWufooContent,
   'kajabi-vs-teachable': kajabiVsTeachableContent,
   'kit-vs-mailchimp': kitVsMailchimpContent,
   'klaviyo-vs-mailchimp': klaviyoVsMailchimpContent,
@@ -157,6 +172,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
   'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
+  'tally-vs-typeform': tallyVsTypeformContent,
   'teachable-vs-thinkific': teachableVsThinkificContent,
 };
 
