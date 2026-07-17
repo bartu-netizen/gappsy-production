@@ -55,10 +55,42 @@ export function useActiveSection(sections: TocSection[]) {
 
   function goToSection(id: string) {
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveId(id);
-    }
+    if (!el) return;
+    setActiveId(id);
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Sections above the target may still be LazyLoad placeholders (zero
+    // height until scrolled near — see LazyLoad.tsx) at the instant this
+    // click fires. The scroll above computes its distance from their
+    // current (collapsed) layout, so as they mount their real content
+    // mid-animation the page grows underneath an already-in-progress
+    // scroll and the target drifts — e.g. clicking "Comparisons" can land
+    // on "Reviews" once everything above finishes expanding. Track the
+    // target's *own* viewport position (not overall document height,
+    // which also reacts to unrelated content loading elsewhere on the
+    // page) and keep re-snapping to it while it's still moving, then stop
+    // once several consecutive frames show it holding still.
+    let lastTop = el.getBoundingClientRect().top;
+    let stableFrames = 0;
+    const deadline = performance.now() + 3000;
+
+    const settle = () => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      const top = target.getBoundingClientRect().top;
+      if (Math.abs(top - lastTop) > 2) {
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        lastTop = target.getBoundingClientRect().top;
+        stableFrames = 0;
+      } else {
+        lastTop = top;
+        stableFrames++;
+      }
+      if (stableFrames < 6 && performance.now() < deadline) {
+        requestAnimationFrame(settle);
+      }
+    };
+    requestAnimationFrame(settle);
   }
 
   return { activeId, goToSection };
