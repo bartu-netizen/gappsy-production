@@ -37,7 +37,8 @@ function dq(str) {
 function slugToVarName(slug) {
   const parts = slug.split('-');
   const camel = parts.map((p, i) => (i === 0 ? p : p.charAt(0).toUpperCase() + p.slice(1))).join('');
-  return `${camel}Content`;
+  const safe = /^[0-9]/.test(camel) ? `_${camel}` : camel;
+  return `${safe}Content`;
 }
 
 const batch = JSON.parse(readFileSync(inputPath, 'utf-8'));

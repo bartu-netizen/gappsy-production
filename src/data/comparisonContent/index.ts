@@ -1,6 +1,10 @@
 import type { ToolComparisonContent } from './types';
+import _1passwordVsLastpassContent from './1password-vs-lastpass';
+import _7shiftsVsDeputyContent from './7shifts-vs-deputy';
+import _7shiftsVsHomebaseContent from './7shifts-vs-homebase';
 import activecampaignVsMailchimpContent from './activecampaign-vs-mailchimp';
 import activepiecesVsZapierContent from './activepieces-vs-zapier';
+import acuitySchedulingVsCalendlyContent from './acuity-scheduling-vs-calendly';
 import adaloVsBubbleContent from './adalo-vs-bubble';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
 import adpWorkforceNowVsPaychexFlexContent from './adp-workforce-now-vs-paychex-flex';
@@ -60,11 +64,13 @@ import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
 import dallEVsStableDiffusionContent from './dall-e-vs-stable-diffusion';
 import datadogVsNewRelicContent from './datadog-vs-new-relic';
 import deelVsRemoteContent from './deel-vs-remote';
+import deputyVsWhenIWorkContent from './deputy-vs-when-i-work';
 import descriptVsVeedContent from './descript-vs-veed';
 import docusignVsDropboxSignContent from './docusign-vs-dropbox-sign';
 import docusignVsSignnowContent from './docusign-vs-signnow';
 import dropboxVsGoogleDriveContent from './dropbox-vs-google-drive';
 import evernoteVsNotionContent from './evernote-vs-notion';
+import expressvpnVsNordvpnContent from './expressvpn-vs-nordvpn';
 import firebaseVsSupabaseContent from './firebase-vs-supabase';
 import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
@@ -78,12 +84,14 @@ import gumroadVsSellfyContent from './gumroad-vs-sellfy';
 import harvestVsTogglTrackContent from './harvest-vs-toggl-track';
 import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
+import homebaseVsWhenIWorkContent from './homebase-vs-when-i-work';
 import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
 import housecallProVsJobberContent from './housecall-pro-vs-jobber';
 import housecallProVsServicetitanContent from './housecall-pro-vs-servicetitan';
 import hubspotCrmVsPipedriveContent from './hubspot-crm-vs-pipedrive';
 import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
+import hubstaffVsTimeDoctorContent from './hubstaff-vs-time-doctor';
 import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
 import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
@@ -129,8 +137,12 @@ import ukgProVsWorkdayContent from './ukg-pro-vs-workday';
 // A published tool_comparisons row with no entry here still renders on
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
+  '1password-vs-lastpass': _1passwordVsLastpassContent,
+  '7shifts-vs-deputy': _7shiftsVsDeputyContent,
+  '7shifts-vs-homebase': _7shiftsVsHomebaseContent,
   'activecampaign-vs-mailchimp': activecampaignVsMailchimpContent,
   'activepieces-vs-zapier': activepiecesVsZapierContent,
+  'acuity-scheduling-vs-calendly': acuitySchedulingVsCalendlyContent,
   'adalo-vs-bubble': adaloVsBubbleContent,
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
   'adp-workforce-now-vs-paychex-flex': adpWorkforceNowVsPaychexFlexContent,
@@ -190,11 +202,13 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'dall-e-vs-stable-diffusion': dallEVsStableDiffusionContent,
   'datadog-vs-new-relic': datadogVsNewRelicContent,
   'deel-vs-remote': deelVsRemoteContent,
+  'deputy-vs-when-i-work': deputyVsWhenIWorkContent,
   'descript-vs-veed': descriptVsVeedContent,
   'docusign-vs-dropbox-sign': docusignVsDropboxSignContent,
   'docusign-vs-signnow': docusignVsSignnowContent,
   'dropbox-vs-google-drive': dropboxVsGoogleDriveContent,
   'evernote-vs-notion': evernoteVsNotionContent,
+  'expressvpn-vs-nordvpn': expressvpnVsNordvpnContent,
   'firebase-vs-supabase': firebaseVsSupabaseContent,
   'gainsight-vs-totango': gainsightVsTotangoContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
@@ -208,12 +222,14 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'harvest-vs-toggl-track': harvestVsTogglTrackContent,
   'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
+  'homebase-vs-when-i-work': homebaseVsWhenIWorkContent,
   'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
   'housecall-pro-vs-jobber': housecallProVsJobberContent,
   'housecall-pro-vs-servicetitan': housecallProVsServicetitanContent,
   'hubspot-crm-vs-pipedrive': hubspotCrmVsPipedriveContent,
   'hubspot-crm-vs-salesforce': hubspotCrmVsSalesforceContent,
+  'hubstaff-vs-time-doctor': hubstaffVsTimeDoctorContent,
   'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
   'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
