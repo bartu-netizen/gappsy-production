@@ -8,6 +8,8 @@ import acuitySchedulingVsCalendlyContent from './acuity-scheduling-vs-calendly';
 import adaloVsBubbleContent from './adalo-vs-bubble';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
 import adpWorkforceNowVsPaychexFlexContent from './adp-workforce-now-vs-paychex-flex';
+import ahrefsVsMozProContent from './ahrefs-vs-moz-pro';
+import ahrefsVsSemrushContent from './ahrefs-vs-semrush';
 import airbyteVsFivetranContent from './airbyte-vs-fivetran';
 import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
@@ -18,6 +20,7 @@ import asanaVsLinearContent from './asana-vs-linear';
 import asanaVsMondayContent from './asana-vs-monday';
 import asanaVsTrelloContent from './asana-vs-trello';
 import ashbyVsGreenhouseContent from './ashby-vs-greenhouse';
+import auth0VsOktaContent from './auth0-vs-okta';
 import autodeskConstructionCloudVsProcoreContent from './autodesk-construction-cloud-vs-procore';
 import automatischVsZapierContent from './automatisch-vs-zapier';
 import awsVsGoogleCloudContent from './aws-vs-google-cloud';
@@ -28,6 +31,7 @@ import bamboohrVsRipplingContent from './bamboohr-vs-rippling';
 import betterProposalsVsProposifyContent from './better-proposals-vs-proposify';
 import bigcommerceVsShopifyContent from './bigcommerce-vs-shopify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
+import bitdefenderVsNorton360Content from './bitdefender-vs-norton-360';
 import blackboardLearnVsCanvasLmsContent from './blackboard-learn-vs-canvas-lms';
 import boltNewVsV0Content from './bolt-new-vs-v0';
 import breezyHrVsJazzhrContent from './breezy-hr-vs-jazzhr';
@@ -58,6 +62,7 @@ import copyAiVsJasperContent from './copy-ai-vs-jasper';
 import copyAiVsWritesonicContent from './copy-ai-vs-writesonic';
 import courseraVsUdemyContent from './coursera-vs-udemy';
 import crispVsTidioContent from './crisp-vs-tidio';
+import crowdstrikeFalconVsSentineloneContent from './crowdstrike-falcon-vs-sentinelone';
 import cursorVsGithubCopilotContent from './cursor-vs-github-copilot';
 import cursorVsWindsurfContent from './cursor-vs-windsurf';
 import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
@@ -94,6 +99,7 @@ import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
 import hubstaffVsTimeDoctorContent from './hubstaff-vs-time-doctor';
 import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
+import jamfVsKandjiContent from './jamf-vs-kandji';
 import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
 import jotformVsWufooContent from './jotform-vs-wufoo';
 import kajabiVsTeachableContent from './kajabi-vs-teachable';
@@ -104,12 +110,14 @@ import klingAiVsRunwayContent from './kling-ai-vs-runway';
 import livechatVsTidioContent from './livechat-vs-tidio';
 import lookerVsTableauContent from './looker-vs-tableau';
 import lovableVsReplitContent from './lovable-vs-replit';
+import mcafeeVsNorton360Content from './mcafee-vs-norton-360';
 import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sense';
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import mondayVsTrelloContent from './monday-vs-trello';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
 import netlifyVsVercelContent from './netlify-vs-vercel';
+import nordvpnVsSurfsharkContent from './nordvpn-vs-surfshark';
 import notionVsOnenoteContent from './notion-vs-onenote';
 import paypalVsStripeContent from './paypal-vs-stripe';
 import pikaVsRunwayContent from './pika-vs-runway';
@@ -146,6 +154,8 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'adalo-vs-bubble': adaloVsBubbleContent,
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
   'adp-workforce-now-vs-paychex-flex': adpWorkforceNowVsPaychexFlexContent,
+  'ahrefs-vs-moz-pro': ahrefsVsMozProContent,
+  'ahrefs-vs-semrush': ahrefsVsSemrushContent,
   'airbyte-vs-fivetran': airbyteVsFivetranContent,
   'aircall-vs-openphone': aircallVsOpenphoneContent,
   'amazon-redshift-vs-snowflake': amazonRedshiftVsSnowflakeContent,
@@ -156,6 +166,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'asana-vs-monday': asanaVsMondayContent,
   'asana-vs-trello': asanaVsTrelloContent,
   'ashby-vs-greenhouse': ashbyVsGreenhouseContent,
+  'auth0-vs-okta': auth0VsOktaContent,
   'autodesk-construction-cloud-vs-procore': autodeskConstructionCloudVsProcoreContent,
   'automatisch-vs-zapier': automatischVsZapierContent,
   'aws-vs-google-cloud': awsVsGoogleCloudContent,
@@ -166,6 +177,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'better-proposals-vs-proposify': betterProposalsVsProposifyContent,
   'bigcommerce-vs-shopify': bigcommerceVsShopifyContent,
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
+  'bitdefender-vs-norton-360': bitdefenderVsNorton360Content,
   'blackboard-learn-vs-canvas-lms': blackboardLearnVsCanvasLmsContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
   'breezy-hr-vs-jazzhr': breezyHrVsJazzhrContent,
@@ -196,6 +208,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'copy-ai-vs-writesonic': copyAiVsWritesonicContent,
   'coursera-vs-udemy': courseraVsUdemyContent,
   'crisp-vs-tidio': crispVsTidioContent,
+  'crowdstrike-falcon-vs-sentinelone': crowdstrikeFalconVsSentineloneContent,
   'cursor-vs-github-copilot': cursorVsGithubCopilotContent,
   'cursor-vs-windsurf': cursorVsWindsurfContent,
   'dall-e-vs-midjourney': dallEVsMidjourneyContent,
@@ -232,6 +245,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'hubstaff-vs-time-doctor': hubstaffVsTimeDoctorContent,
   'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
+  'jamf-vs-kandji': jamfVsKandjiContent,
   'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
   'jotform-vs-wufoo': jotformVsWufooContent,
   'kajabi-vs-teachable': kajabiVsTeachableContent,
@@ -242,12 +256,14 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'livechat-vs-tidio': livechatVsTidioContent,
   'looker-vs-tableau': lookerVsTableauContent,
   'lovable-vs-replit': lovableVsReplitContent,
+  'mcafee-vs-norton-360': mcafeeVsNorton360Content,
   'microsoft-power-bi-vs-qlik-sense': microsoftPowerBiVsQlikSenseContent,
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'monday-vs-trello': mondayVsTrelloContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
   'netlify-vs-vercel': netlifyVsVercelContent,
+  'nordvpn-vs-surfshark': nordvpnVsSurfsharkContent,
   'notion-vs-onenote': notionVsOnenoteContent,
   'paypal-vs-stripe': paypalVsStripeContent,
   'pika-vs-runway': pikaVsRunwayContent,
