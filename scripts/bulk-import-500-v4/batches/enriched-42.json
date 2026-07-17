@@ -1,0 +1,591 @@
+[
+  {
+    "tool_id": "567932b8-eb63-435b-a35e-b252afd5a120",
+    "slug": "opentelemetry",
+    "name": "OpenTelemetry",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source, vendor-neutral framework for collecting traces, metrics, and logs from cloud-native applications.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OpenTelemetry is a CNCF-graduated open source observability framework for capturing traces, metrics, and logs across 12+ languages.",
+      "features": [
+        { "title": "Auto-instrumentation", "description": "Zero-code agents automatically capture telemetry for many popular languages and frameworks." },
+        { "title": "Vendor-neutral APIs and SDKs", "description": "A single set of client libraries spans 12+ languages, including Java, Python, Go, JavaScript, and .NET." },
+        { "title": "OpenTelemetry Collector", "description": "A standalone service with 200+ components for receiving, processing, and exporting telemetry data." },
+        { "title": "Unified signal model", "description": "Traces, metrics, and logs are correlated through shared context propagation." },
+        { "title": "Backend flexibility", "description": "Export telemetry to any OTLP-compatible observability backend without changing instrumentation code." },
+        { "title": "CNCF governance", "description": "A CNCF graduated project, formed from the merger of OpenTracing and OpenCensus." }
+      ],
+      "pros": [
+        "Fully open source and free with no licensing cost",
+        "Avoids vendor lock-in by decoupling instrumentation from any specific backend",
+        "Broad language support (12+ languages) and a large contributor community",
+        "CNCF graduated status signals project maturity and long-term stability"
+      ],
+      "cons": [
+        "Requires engineering effort to instrument applications and operate the Collector pipeline",
+        "No built-in storage, visualization, or alerting — a separate backend is required",
+        "Auto-instrumentation coverage and stability varies by language"
+      ],
+      "faqs": [
+        { "question": "Is OpenTelemetry free to use?", "answer": "Yes, OpenTelemetry is a fully open source project with no licensing fees." },
+        { "question": "Who maintains OpenTelemetry?", "answer": "It's a CNCF graduated project formed from the merger of the OpenTracing and OpenCensus projects." },
+        { "question": "Does OpenTelemetry include a dashboard or storage product?", "answer": "No, OpenTelemetry only handles instrumentation, collection, and export; you send data to a separate observability backend of your choice." },
+        { "question": "What languages does OpenTelemetry support?", "answer": "It provides SDKs for 12+ languages, including Java, Python, Go, JavaScript, .NET, Ruby, PHP, Rust, C++, and Swift." }
+      ],
+      "use_cases": [
+        { "title": "Cloud-native application observability", "description": "Engineering teams instrument microservices to capture distributed traces, metrics, and logs without vendor lock-in.", "audience": "Platform and SRE teams" },
+        { "title": "Vendor migration and multi-backend export", "description": "Teams route the same telemetry to multiple or new observability backends without re-instrumenting code.", "audience": "DevOps and observability teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is OpenTelemetry?", "level": 2, "paragraphs": [
+          "OpenTelemetry is an open source observability framework that provides a single set of APIs, SDKs, and agents for capturing distributed traces, metrics, and logs from applications.",
+          "It is a CNCF graduated project, formed from the 2019 merger of the OpenTracing and OpenCensus projects, and its Collector component includes 200+ components for processing and exporting telemetry to any OTLP-compatible backend."
+        ]},
+        { "id": "who-its-for", "heading": "Who OpenTelemetry is for", "level": 2, "paragraphs": [
+          "OpenTelemetry is built for platform, SRE, and backend engineering teams who need vendor-neutral instrumentation across cloud-native applications and want to avoid locking their telemetry pipeline into a single observability vendor."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "af41f8fc-b90f-4d77-80ef-840d3baf8120",
+    "slug": "streamsets",
+    "name": "StreamSets",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "StreamSets (now IBM StreamSets) is a hybrid, multi-cloud platform for building and running streaming and batch data pipelines.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "IBM StreamSets is a hybrid data integration platform for building real-time and batch pipelines across cloud and on-prem systems.",
+      "features": [
+        { "title": "Pre-built connectors", "description": "A library of connectors for databases, applications, and cloud services with a drag-and-drop pipeline designer." },
+        { "title": "No-code/low-code pipeline builder", "description": "An intuitive visual interface for building data pipelines without heavy coding." },
+        { "title": "Automatic data drift handling", "description": "Pipelines automatically adapt to schema changes in source data." },
+        { "title": "Streaming and batch in one platform", "description": "Real-time streaming and scheduled batch processing are supported from the same tool." },
+        { "title": "Multi-cloud and hybrid deployment", "description": "Deployable on AWS, Azure, Google Cloud, in a private VPC, or on local infrastructure." },
+        { "title": "Central control plane", "description": "A unified interface for monitoring and managing pipelines across environments." }
+      ],
+      "pros": [
+        "Handles both streaming and batch data integration in one platform",
+        "Automatic data drift handling reduces pipeline maintenance",
+        "Broad deployment flexibility across multi-cloud, hybrid, and on-prem environments",
+        "Now backed by IBM's enterprise support and ecosystem"
+      ],
+      "cons": [
+        "Pricing is not publicly listed and requires contacting sales",
+        "Enterprise-oriented tool that is likely a heavier lift for very small teams",
+        "Now sold and supported as an IBM product following its acquisition"
+      ],
+      "faqs": [
+        { "question": "Is StreamSets free to use?", "answer": "No, StreamSets (now IBM StreamSets) is a commercial platform priced by contacting IBM sales; no public free tier is listed." },
+        { "question": "Who owns StreamSets today?", "answer": "StreamSets is now part of IBM's product portfolio and is marketed as IBM StreamSets." },
+        { "question": "Can StreamSets run outside the public cloud?", "answer": "Yes, it supports deployment on AWS, Azure, Google Cloud, in a private VPC, or on local infrastructure." },
+        { "question": "Does StreamSets support both streaming and batch pipelines?", "answer": "Yes, it can ingest and transform structured, semi-structured, and unstructured data in both real-time streaming and batch modes." }
+      ],
+      "use_cases": [
+        { "title": "Hybrid, multi-cloud data pipelines", "description": "Organizations connect on-prem and cloud data sources into unified pipelines for real-time decision-making.", "audience": "Enterprise data engineering teams" },
+        { "title": "Resilient pipelines with schema drift", "description": "Teams running pipelines against evolving source schemas rely on automatic drift handling instead of manual pipeline fixes.", "audience": "Data engineers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is StreamSets?", "level": 2, "paragraphs": [
+          "StreamSets is a hybrid, multi-cloud data integration platform for building, running, and monitoring streaming and batch data pipelines, with pre-built connectors and automatic handling of upstream schema changes.",
+          "StreamSets was acquired and is now marketed and sold as IBM StreamSets, deployable on AWS, Azure, Google Cloud, in a private VPC, or on local infrastructure."
+        ]},
+        { "id": "who-its-for", "heading": "Who StreamSets is for", "level": 2, "paragraphs": [
+          "StreamSets targets enterprise data engineering teams that need to move structured, semi-structured, and unstructured data across hybrid and multi-cloud environments with minimal pipeline maintenance."
+        ]}
+      ],
+      "tags": ["self-hosted"]
+    }
+  },
+  {
+    "tool_id": "8fe9ecc9-4076-431c-b5a3-fbde13581137",
+    "slug": "debezium",
+    "name": "Debezium",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Debezium is an open source change data capture (CDC) platform that streams row-level database changes into Kafka in real time.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 2016,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Debezium is an open source CDC platform that streams real-time row-level changes from databases like MySQL, PostgreSQL, and MongoDB into Kafka.",
+      "features": [
+        { "title": "Low-latency change data capture", "description": "Captures row-level changes from multiple database systems with low latency." },
+        { "title": "Durable, replicated event log", "description": "Change events are recorded in Kafka topics, providing a durable and replicated log." },
+        { "title": "Broad database connector support", "description": "Connectors are available for MySQL, PostgreSQL, MongoDB, Oracle, SQL Server, MariaDB, and generic JDBC sources." },
+        { "title": "Fault-tolerant resumption", "description": "Applications can resume from the last processed change after a restart without losing events." },
+        { "title": "Flexible deployment", "description": "Runs via Kafka Connect or can be embedded directly inside applications." }
+      ],
+      "pros": [
+        "Fully open source under the Apache License 2.0",
+        "Supports a wide range of major relational and NoSQL databases",
+        "Strong fault tolerance backed by Kafka's durability guarantees",
+        "Active community with 12.9k+ GitHub stars and 3k+ forks"
+      ],
+      "cons": [
+        "Requires operating and understanding Kafka or Kafka Connect infrastructure",
+        "No official managed/hosted offering from the Debezium project itself",
+        "Initial setup and tuning of connectors can require CDC expertise"
+      ],
+      "faqs": [
+        { "question": "Is Debezium free?", "answer": "Yes, Debezium is fully open source under the Apache License 2.0 (with ANTLR grammars under the MIT License)." },
+        { "question": "What databases does Debezium support?", "answer": "Connectors are available for MySQL, PostgreSQL, MongoDB, Oracle, SQL Server, MariaDB, and generic JDBC sources." },
+        { "question": "Does Debezium require Kafka?", "answer": "Debezium typically runs via Kafka Connect, though it can also be embedded directly into applications." },
+        { "question": "Who maintains Debezium?", "answer": "The project is maintained by the Commonhaus Foundation with an active open source community." }
+      ],
+      "use_cases": [
+        { "title": "Real-time data synchronization", "description": "Teams stream database changes into Kafka to keep downstream systems, caches, or search indexes in sync.", "audience": "Data engineering teams" },
+        { "title": "Event-driven microservices", "description": "Applications react to row-level database changes as events rather than polling for updates.", "audience": "Backend and platform engineers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Debezium?", "level": 2, "paragraphs": [
+          "Debezium is an open source change data capture (CDC) platform that monitors databases and streams row-level changes into Kafka topics as a durable, replicated event log.",
+          "Started in 2016, Debezium is licensed under the Apache License 2.0, maintained by the Commonhaus Foundation, and provides connectors for MySQL, PostgreSQL, MongoDB, Oracle, SQL Server, and MariaDB."
+        ]},
+        { "id": "who-its-for", "heading": "Who Debezium is for", "level": 2, "paragraphs": [
+          "Debezium is for data engineering and backend teams who need to stream real-time database changes into Kafka for synchronization, caching, or event-driven microservice architectures."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "c4addc67-46f9-4aeb-9550-246f4f8c3d78",
+    "slug": "estuary-flow",
+    "name": "Estuary Flow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Estuary Flow is a real-time data integration platform with 200+ connectors for streaming ETL/ELT, CDC, and batch pipelines.",
+      "pricing_model": "Freemium",
+      "starting_price": "$0.50/GB + $100/connector per month (Cloud plan)",
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": "New York, NY, USA",
+      "languages": [],
+      "seo_meta_description": "Estuary Flow is a real-time data integration platform offering 200+ connectors, CDC, and streaming ETL/ELT with a free developer tier.",
+      "features": [
+        { "title": "200+ connectors", "description": "Pre-built connectors spanning databases, data warehouses, and SaaS applications." },
+        { "title": "Real-time CDC and streaming", "description": "Log-based change data capture and streaming with sub-100ms latency." },
+        { "title": "Batch processing support", "description": "Batch pipelines are supported alongside real-time streaming." },
+        { "title": "Flexible deployment models", "description": "Available as Public Cloud, Private Cloud, or Bring-Your-Own-Cloud (BYOC)." },
+        { "title": "Access controls", "description": "Role-based access control and SSH tunnel support for secure connections." },
+        { "title": "Ecosystem integrations", "description": "Works with dbt Cloud, Kafka, Snowflake, and Apache Iceberg." }
+      ],
+      "pros": [
+        "Free Developer plan with 10GB/month and 2 concurrent connectors",
+        "Broad connector library covering 200+ sources and destinations",
+        "Sub-100ms latency for real-time use cases",
+        "Flexible deployment options, including BYOC for data residency needs"
+      ],
+      "cons": [
+        "Cloud plan pricing is usage-based ($/GB plus per-connector), which can be less predictable than flat pricing",
+        "Enterprise features like SSO, custom SLAs, and HIPAA reports require the negotiated Enterprise tier",
+        "No fully self-hosted open source option confirmed on the pricing page"
+      ],
+      "faqs": [
+        { "question": "Does Estuary Flow have a free plan?", "answer": "Yes, the Developer plan is free and includes 10GB/month of data and 2 concurrent connectors." },
+        { "question": "How is the paid Cloud plan priced?", "answer": "It's usage-based at $0.50 per GB plus $100 per connector, billed monthly, with a 30-day free trial." },
+        { "question": "Does Estuary Flow support change data capture?", "answer": "Yes, it supports log-based CDC as well as streaming and batch data movement." },
+        { "question": "Is there an Enterprise plan?", "answer": "Yes, Enterprise pricing is custom and adds SOC 2/HIPAA compliance reports, SSO, custom SLAs, and BYOC/private deployments." }
+      ],
+      "use_cases": [
+        { "title": "Real-time analytics pipelines", "description": "Teams stream operational data into warehouses like Snowflake or BigQuery within milliseconds for up-to-date analytics.", "audience": "Data engineering teams" },
+        { "title": "AI application data feeds", "description": "Teams feed current, real-time data into AI agents and applications instead of relying on stale batch exports.", "audience": "AI and ML engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Developer", "price": "Free", "billing_cycle": null, "features": ["10GB/month data allowance", "2 concurrent connectors"] },
+        { "plan_name": "Cloud", "price": "$0.50/GB + $100/connector", "billing_cycle": "monthly", "features": ["200+ fully-managed connectors", "Unlimited users", "Role-based access control and SSH tunnel support", "Bring your own cloud storage", "dbt Cloud and Kafka integration", "30-day free trial"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Volume-based discounts", "SOC 2 and HIPAA compliance reports", "Single sign-on and custom SLAs", "Private and BYOC deployments", "Custom connector development"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Estuary Flow?", "level": 2, "paragraphs": [
+          "Estuary Flow is a real-time data integration platform that moves and transforms data using streaming, change data capture, and batch processing across more than 200 connectors.",
+          "Founded in 2019 and headquartered in New York, Estuary offers a free Developer tier, a usage-based Cloud plan, and a negotiated Enterprise tier with BYOC and compliance features."
+        ]},
+        { "id": "who-its-for", "heading": "Who Estuary Flow is for", "level": 2, "paragraphs": [
+          "Estuary Flow is built for data engineering teams that need real-time or near-real-time data delivery for analytics, operations, or AI applications, without waiting on scheduled batch jobs."
+        ]}
+      ],
+      "tags": ["api", "free-plan", "free-trial", "freemium"]
+    }
+  },
+  {
+    "tool_id": "45050474-ebf1-4a46-89d7-f47f4521c45f",
+    "slug": "growthloop",
+    "name": "GrowthLoop",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "GrowthLoop is an agentic, composable customer data platform that activates cloud data warehouses for AI-driven marketing campaigns.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": 2015,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "GrowthLoop is a composable CDP that uses AI agents to build audiences, orchestrate journeys, and activate marketing campaigns from cloud data.",
+      "features": [
+        { "title": "AI Studio", "description": "An agentic interface for building campaigns using natural-language goals instead of SQL." },
+        { "title": "Visual audience segmentation", "description": "A no-code audience builder with AI-generated segment suggestions." },
+        { "title": "Universal Journeys", "description": "Multi-channel campaign orchestration across batch, real-time, or automated delivery." },
+        { "title": "Data Manager", "description": "A visual interface for mapping and connecting cloud data warehouse datasets." },
+        { "title": "Composable AI decisioning", "description": "Measures incremental lift and continuously optimizes campaign performance." },
+        { "title": "Warehouse-native integrations", "description": "Connects directly to Google BigQuery, Snowflake, Databricks, and Amazon Redshift." }
+      ],
+      "pros": [
+        "Built directly on top of existing cloud data warehouses rather than a separate data silo",
+        "AI agent interface reduces reliance on SQL and engineering for campaign building",
+        "Named a 2025 Google Cloud Partner of the Year",
+        "Integrates with 50+ advertising, CRM, and customer success destinations"
+      ],
+      "cons": [
+        "Pricing is not publicly listed and requires a sales demo",
+        "The composable, warehouse-native model requires an existing cloud data warehouse investment",
+        "Enterprise-focused, likely not suited for very small teams or budgets"
+      ],
+      "faqs": [
+        { "question": "Does GrowthLoop publish its pricing?", "answer": "No, pricing isn't publicly listed; companies must request a custom quote through a demo." },
+        { "question": "What data warehouses does GrowthLoop connect to?", "answer": "It integrates with Google BigQuery, Snowflake, Databricks, and Amazon Redshift." },
+        { "question": "What is GrowthLoop's AI Studio?", "answer": "It's an agentic interface that lets marketers describe campaign goals in natural language instead of writing SQL." },
+        { "question": "Who is GrowthLoop built for?", "answer": "Enterprise marketing and data teams across industries like retail, finance, media, telecom, and commerce." }
+      ],
+      "use_cases": [
+        { "title": "Warehouse-native audience activation", "description": "Marketing teams build and sync audience segments directly from their cloud data warehouse to ad and CRM platforms.", "audience": "Enterprise marketing teams" },
+        { "title": "AI-assisted campaign orchestration", "description": "Teams use natural-language AI agents to launch and optimize multi-channel journeys without writing SQL.", "audience": "Growth and lifecycle marketers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is GrowthLoop?", "level": 2, "paragraphs": [
+          "GrowthLoop is an agentic, composable customer data platform that activates data directly from cloud warehouses like BigQuery, Snowflake, Databricks, and Redshift, rather than duplicating it into a separate CDP.",
+          "The platform combines a visual audience builder, multi-channel journey orchestration, and an AI agent interface (AI Studio) that lets marketers describe campaign goals in natural language."
+        ]},
+        { "id": "who-its-for", "heading": "Who GrowthLoop is for", "level": 2, "paragraphs": [
+          "GrowthLoop targets enterprise marketing and data teams in industries such as retail, finance, media and entertainment, telecom, and commerce that already run a cloud data warehouse and want to activate that data for marketing without SQL bottlenecks."
+        ]}
+      ],
+      "tags": ["ai", "no-code"]
+    }
+  },
+  {
+    "tool_id": "b4fe35bb-b786-4c89-83e9-c43385bfe93b",
+    "slug": "redash",
+    "name": "Redash",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Redash is an open source tool for querying multiple data sources and building shareable SQL dashboards, now maintained under Databricks.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Redash is an open source SQL query and dashboard tool for connecting to multiple databases, visualizing data, and sharing dashboards.",
+      "features": [
+        { "title": "SQL editor", "description": "A query interface with schema browsing and click-to-insert query building." },
+        { "title": "Drag-and-drop dashboards", "description": "Build and customize dashboards from query results." },
+        { "title": "Broad data source support", "description": "Connects to SQL, NoSQL, Big Data, and API-based data sources." },
+        { "title": "Scheduled refresh", "description": "Automatically refreshes data from connected sources on a schedule." },
+        { "title": "Sharing and alerting", "description": "Share dashboards with teammates or the public, and set alerts on query results." },
+        { "title": "Reusable query snippets", "description": "Save query snippets for reuse across dashboards." }
+      ],
+      "pros": [
+        "Fully open source with no vendor lock-in and self-hosting support",
+        "Connects to a wide range of SQL, NoSQL, and API data sources",
+        "Simple, lightweight setup for teams that just need SQL dashboards"
+      ],
+      "cons": [
+        "Owned by Databricks since 2020 and now in maintenance mode, with infrequent releases",
+        "The original hosted Redash Cloud service was shut down in November 2021",
+        "The community forum is read-only, limiting official support channels",
+        "Lacks the AI and semantic-layer features found in newer open source BI tools"
+      ],
+      "faqs": [
+        { "question": "Is Redash free?", "answer": "Yes, Redash is an open source, self-hosted project with no licensing cost." },
+        { "question": "Is Redash still actively developed?", "answer": "Redash has been in maintenance mode since Databricks acquired it in 2020, with infrequent releases." },
+        { "question": "Is there a hosted version of Redash?", "answer": "No, the original Redash Cloud hosted service was discontinued in November 2021; only self-hosting is currently available." },
+        { "question": "What data sources does Redash support?", "answer": "It supports SQL, NoSQL, Big Data, and API-based data sources." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted SQL dashboards", "description": "Teams that want a lightweight, self-hosted way to query databases and share dashboards without a commercial BI license.", "audience": "Small data and engineering teams" },
+        { "title": "Ad hoc data exploration", "description": "Analysts write and save SQL queries against connected databases to explore data without building a full BI project.", "audience": "Data analysts" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Redash?", "level": 2, "paragraphs": [
+          "Redash is an open source data analytics and visualization platform for connecting to multiple data sources, writing SQL queries, and building shareable dashboards.",
+          "Databricks acquired Redash in 2020; the hosted Redash Cloud service was shut down in November 2021, and the open source project has since been in maintenance mode with infrequent releases."
+        ]},
+        { "id": "who-its-for", "heading": "Who Redash is for", "level": 2, "paragraphs": [
+          "Redash suits small data and engineering teams that want a free, self-hosted SQL query and dashboard tool without needing the newer AI or semantic-layer capabilities found in actively developed BI platforms."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "c32a6cb9-22d2-4149-b6bc-129ecd02b8c3",
+    "slug": "lightdash",
+    "name": "Lightdash",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Lightdash is an open source, AI-native BI platform built on dbt that lets teams build governed dashboards as code.",
+      "pricing_model": "Freemium",
+      "starting_price": "$3,000/month (Cloud Pro, unlimited users)",
+      "founded_year": 2021,
+      "company_size": null,
+      "headquarters": "London, United Kingdom",
+      "languages": [],
+      "seo_meta_description": "Lightdash is an open source, dbt-native BI platform with AI agents, a governed semantic layer, and BI-as-code workflows.",
+      "features": [
+        { "title": "Agentic analytics", "description": "AI agents that build dashboards and answer questions autonomously." },
+        { "title": "Conversational interface", "description": "Ask data questions in natural language via the UI or Slack." },
+        { "title": "BI-as-code", "description": "Review, version control, and CI/CD-integrate analytics changes." },
+        { "title": "Native dbt integration", "description": "Syncs models and metrics directly from dbt projects." },
+        { "title": "Governed semantic layer", "description": "An open semantic layer for consistent metric definitions across the organization." },
+        { "title": "Developer tooling", "description": "CLI, preview environments, and automated validation for analytics engineers." }
+      ],
+      "pros": [
+        "Open source core available for self-hosting at no cost",
+        "Cloud Pro pricing is flat and unlimited-seat rather than per-user",
+        "Deep native dbt integration for teams already using dbt",
+        "BI-as-code workflow suits engineering-led analytics teams"
+      ],
+      "cons": [
+        "Cloud Pro starts at $3,000/month, a significant jump from the free self-hosted tier",
+        "Self-hosted tier only includes community Slack support",
+        "Best suited to teams already invested in dbt; less turnkey for non-dbt users"
+      ],
+      "faqs": [
+        { "question": "Is Lightdash free?", "answer": "Yes, the open source version can be self-hosted for free; Cloud Pro and Enterprise are paid tiers." },
+        { "question": "How much does Lightdash Cloud Pro cost?", "answer": "Cloud Pro is $3,000/month with unlimited users rather than per-seat pricing." },
+        { "question": "Does Lightdash require dbt?", "answer": "It's built around native dbt integration, syncing models and metrics directly from dbt projects." },
+        { "question": "Can Lightdash be self-hosted?", "answer": "Yes, the open source edition can be self-hosted on your own infrastructure." }
+      ],
+      "use_cases": [
+        { "title": "dbt-native self-serve analytics", "description": "Analytics engineering teams expose governed dbt metrics to business users without duplicating logic in a separate BI tool.", "audience": "Analytics engineers" },
+        { "title": "AI-assisted dashboard building", "description": "Business users ask questions in natural language and let AI agents build dashboards grounded in the semantic layer.", "audience": "Business analysts" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source (Self-Hosted)", "price": "Free", "billing_cycle": null, "features": ["Core BI features", "Self-hosted deployment on your own infrastructure", "Community Slack support"] },
+        { "plan_name": "Cloud Pro", "price": "$3,000/month", "billing_cycle": "monthly", "features": ["Unlimited users and visualizations", "Native dbt integration and open semantic layer", "Scheduled reports and alerting", "Charts and dashboards as code", "AI agents and MCP capabilities", "Dedicated support"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Cloud or on-premise deployment", "SSO, SAML, and SCIM 2.0", "SOC 2 compliance with HIPAA and BAA support", "Hands-on migration support", "Priority support with defined SLAs"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Lightdash?", "level": 2, "paragraphs": [
+          "Lightdash is an open source business intelligence platform built around a governed semantic layer and native dbt integration, letting teams build dashboards as code and review them via version control and CI/CD.",
+          "Founded in 2021 and based in London, Lightdash offers a free, self-hostable open source edition alongside a flat-priced Cloud Pro plan and a custom Enterprise tier."
+        ]},
+        { "id": "who-its-for", "heading": "Who Lightdash is for", "level": 2, "paragraphs": [
+          "Lightdash is built for analytics engineers and data teams already using dbt who want a BI-as-code workflow, plus business users who want AI-assisted, self-serve access to governed metrics."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "ai", "freemium", "api"]
+    }
+  },
+  {
+    "tool_id": "5512df11-bacf-4edc-8977-91af599645ef",
+    "slug": "evidence",
+    "name": "Evidence",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Evidence is an open source, code-first BI framework that builds interactive data products and reports using SQL and Markdown.",
+      "pricing_model": "Freemium",
+      "starting_price": "$15/user/month (Team plan)",
+      "founded_year": 2021,
+      "company_size": null,
+      "headquarters": "Toronto, Canada",
+      "languages": [],
+      "seo_meta_description": "Evidence is an open source BI-as-code framework for building fast, interactive data reports and dashboards using SQL and Markdown.",
+      "features": [
+        { "title": "Code-based development", "description": "Build reports using SQL and Markdown instead of a drag-and-drop UI." },
+        { "title": "Interactive visualizations", "description": "Publication-quality, responsive charts and data apps." },
+        { "title": "High performance querying", "description": "Sub-second query times on millions of records via intelligent caching." },
+        { "title": "Broad data source support", "description": "Connects to Snowflake, BigQuery, ClickHouse, PostgreSQL, MySQL, and DuckDB, among others." },
+        { "title": "Enterprise security", "description": "Row-level security, page-level access control, and single sign-on on paid tiers." },
+        { "title": "AI development tools", "description": "AI agent assistance for documentation lookup, schema checking, and error debugging." }
+      ],
+      "pros": [
+        "Open source core framework free to self-host",
+        "Code-first, git-friendly workflow suits engineering-led data teams",
+        "Backed by Y Combinator, with SOC 2 Type II compliance on the Cloud product",
+        "Cloud plans include unlimited users and unlimited projects"
+      ],
+      "cons": [
+        "Requires comfort writing SQL and Markdown rather than a drag-and-drop UI",
+        "Paid Cloud tiers are billed per user, which can add up for larger teams",
+        "Advanced features like SSO and white-labeling require the Pro or Enterprise tier"
+      ],
+      "faqs": [
+        { "question": "Is Evidence open source?", "answer": "Yes, Evidence is built on an open source framework with a free, self-hostable core." },
+        { "question": "How much does Evidence Cloud cost?", "answer": "The Team plan starts at $15/user/month, with Pro at $25/user/month and custom Enterprise pricing." },
+        { "question": "Do I need to know SQL to use Evidence?", "answer": "Yes, Evidence reports are built using SQL and Markdown rather than a drag-and-drop interface." },
+        { "question": "What data sources does Evidence support?", "answer": "It connects to warehouses and databases including Snowflake, BigQuery, ClickHouse, PostgreSQL, MySQL, and DuckDB." }
+      ],
+      "use_cases": [
+        { "title": "Code-based data reports", "description": "Data teams build and version-control polished reports and dashboards using SQL and Markdown in a git workflow.", "audience": "Analytics engineers" },
+        { "title": "Embedded, white-labeled reporting", "description": "Companies embed branded, interactive reports for customers using the Enterprise tier's white-labeling.", "audience": "Product and data teams building customer-facing reports" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Team", "price": "$15/user/month", "billing_cycle": "monthly", "features": ["Unlimited users and projects", "Row-level security", "Page-level access control", "Log in with Google", "1,000 AI credits/user/month"] },
+        { "plan_name": "Pro", "price": "$25/user/month", "billing_cycle": "monthly", "features": ["Everything in Team", "Single sign-on (SSO)", "Directory sync (SCIM)", "Private Slack support", "3,000 AI credits/user/month"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Everything in Pro", "White labeling", "Embedded reports", "Multi-region support", "Dedicated support", "Custom AI credit volume"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Evidence?", "level": 2, "paragraphs": [
+          "Evidence is an open source, code-first business intelligence framework for building interactive, publication-quality data reports and dashboards using only SQL and Markdown.",
+          "Founded in 2021 in Toronto and backed by Y Combinator, Evidence offers a free open source core plus paid Cloud tiers (Team, Pro, Enterprise) billed per user, with unlimited users and projects on every Cloud plan."
+        ]},
+        { "id": "who-its-for", "heading": "Who Evidence is for", "level": 2, "paragraphs": [
+          "Evidence is for analytics engineers and data teams who prefer a code-first, version-controlled workflow over drag-and-drop BI tools, including teams that need to embed white-labeled reports for customers."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "ai", "freemium", "api"]
+    }
+  },
+  {
+    "tool_id": "7ae35df8-1db0-4f11-b030-bac3223a2cbe",
+    "slug": "cube",
+    "name": "Cube",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Cube is an open source semantic layer and agentic analytics platform for governed BI and embedded, AI-powered analytics.",
+      "pricing_model": "Freemium",
+      "starting_price": "$40/developer/month (Starter plan)",
+      "founded_year": 2016,
+      "company_size": null,
+      "headquarters": "San Francisco, CA, USA",
+      "languages": [],
+      "seo_meta_description": "Cube is an open source semantic layer platform offering AI analytics chat, dashboards, and embedded analytics for SaaS products.",
+      "features": [
+        { "title": "Analytics Chat", "description": "Natural-language querying grounded in a governed semantic model." },
+        { "title": "Workbooks and dashboards", "description": "Governed analytics surfaces for internal business intelligence." },
+        { "title": "Embedded analytics", "description": "Multi-tenant, AI-powered analytics embedded into customer-facing products." },
+        { "title": "Core Data APIs", "description": "Customizable programmatic access to the semantic data layer." },
+        { "title": "Ecosystem integrations", "description": "Works with Claude, ChatGPT, Slack, and Power BI via a DAX API." },
+        { "title": "Open source semantic layer", "description": "A community-driven core with 18,000+ GitHub stars and 350+ contributors." }
+      ],
+      "pros": [
+        "Free-forever tier available for hobbyist and small projects",
+        "Large, active open source community (18,000+ GitHub stars, 350+ contributors)",
+        "Serves both internal BI and embedded, customer-facing analytics from one semantic layer",
+        "Used in production by large companies such as Walmart, Tesla, and Webflow"
+      ],
+      "cons": [
+        "Paid Starter and Premium tiers are priced per developer, which can scale with team size",
+        "Enterprise-grade SLAs, BYOC, and SSO are reserved for the top paid tier",
+        "Requires modeling effort to build out the semantic layer before value is realized"
+      ],
+      "faqs": [
+        { "question": "Is Cube free?", "answer": "Yes, Cube offers a free-forever tier for small projects, plus paid Starter, Premium, and Enterprise tiers." },
+        { "question": "How much does Cube cost?", "answer": "The Starter plan is $40 per developer/month and Premium is $80 per developer/month; Enterprise is custom-priced." },
+        { "question": "Is Cube open source?", "answer": "Yes, Cube maintains an open source repository with 18,000+ GitHub stars and 350+ contributors." },
+        { "question": "Can Cube power embedded analytics for a SaaS product?", "answer": "Yes, the Premium and Enterprise tiers support multi-tenant embedded dashboards and analytics chat for customers." }
+      ],
+      "use_cases": [
+        { "title": "Governed internal BI", "description": "Data teams build a single semantic layer so dashboards, chat, and APIs all return consistent metrics.", "audience": "Data and analytics engineering teams" },
+        { "title": "Embedded customer-facing analytics", "description": "SaaS companies embed multi-tenant dashboards and AI analytics chat directly into their own products.", "audience": "SaaS product teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "Free", "billing_cycle": null, "features": ["Connect any data source", "Semantic layer IDE", "Data exploration in workbooks", "Publish dashboards", "Analytics chat"] },
+        { "plan_name": "Starter", "price": "$40/developer/month", "billing_cycle": "monthly", "features": ["Everything in Free", "Extended agent limits", "Premium LLMs", "Unlimited workbooks", "Cube Store caching", "Semantic Layer Sync"] },
+        { "plan_name": "Premium", "price": "$80/developer/month", "billing_cycle": "monthly", "features": ["Everything in Starter", "Explorer and Viewer roles", "Embedded dashboards", "Embedded analytics chat", "Unlimited queries", "99.950% uptime SLA"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Everything in Premium", "99.990% uptime SLA", "Single-tenant installation", "Bring Your Own Cloud (BYOC)", "Bring Your Own LLM", "SSO with SAML 2.0", "DAX API for Power BI"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Cube?", "level": 2, "paragraphs": [
+          "Cube is an agentic analytics platform built on an open source semantic layer, providing consistent, governed answers across internal dashboards, analytics chat, and embedded customer-facing analytics.",
+          "Founded in 2016 and based in San Francisco, Cube offers a free-forever tier plus paid Starter, Premium, and custom Enterprise plans priced per developer."
+        ]},
+        { "id": "who-its-for", "heading": "Who Cube is for", "level": 2, "paragraphs": [
+          "Cube is for data and analytics engineering teams that need a governed semantic layer for internal BI, and for SaaS product teams that need to embed multi-tenant analytics or AI chat directly into their applications."
+        ]}
+      ],
+      "tags": ["open-source", "ai", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "5c5bacf6-63dd-435b-b336-2b016854189b",
+    "slug": "sqlmesh",
+    "name": "SQLMesh",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SQLMesh is an open source SQL/Python data transformation framework from Tobiko Data, with dbt-compatible pipelines and virtual environments.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": 2022,
+      "company_size": null,
+      "headquarters": "San Mateo, CA, USA",
+      "languages": [],
+      "seo_meta_description": "SQLMesh is an open source data transformation framework with virtual environments, unit testing, and dbt-compatible pipelines.",
+      "features": [
+        { "title": "Virtual Data Environments", "description": "Isolated development environments without extra data warehouse costs." },
+        { "title": "Plan/Apply workflow", "description": "A Terraform-style workflow to preview the impact of changes before deploying." },
+        { "title": "Automated testing and audits", "description": "Automatic unit test generation and built-in data audits." },
+        { "title": "Column-level lineage", "description": "Lineage tracking and pre-execution error detection." },
+        { "title": "Multi-dialect SQL support", "description": "Transpiles across 10+ SQL dialects using the SQLGlot library." },
+        { "title": "dbt compatibility", "description": "Designed to be backward compatible with existing dbt projects." }
+      ],
+      "pros": [
+        "Core framework is free and open source under the Apache License 2.0",
+        "Virtual environments reduce warehouse costs during development",
+        "Built-in testing, auditing, and lineage reduce the need for extra tooling",
+        "dbt-compatible, easing migration for existing dbt users"
+      ],
+      "cons": [
+        "Tobiko Cloud pricing isn't public and requires contacting sales",
+        "Newer project than dbt, so its community and ecosystem are smaller",
+        "Tobiko Data was acquired by Fivetran in September 2025, which may affect its roadmap"
+      ],
+      "faqs": [
+        { "question": "Is SQLMesh free?", "answer": "Yes, the core SQLMesh framework is open source and free under the Apache License 2.0." },
+        { "question": "What is Tobiko Cloud?", "answer": "It's the paid commercial platform built on SQLMesh, adding collaboration, observability, and cost tracking, priced via a platform fee plus consumption." },
+        { "question": "Is SQLMesh compatible with dbt?", "answer": "Yes, SQLMesh is designed to be backward compatible with existing dbt projects." },
+        { "question": "Who built SQLMesh?", "answer": "SQLMesh was created by Tobiko Data, which was acquired by Fivetran in September 2025." }
+      ],
+      "use_cases": [
+        { "title": "Cost-efficient dbt alternative", "description": "Data teams migrate from or run alongside dbt while cutting warehouse costs using virtual development environments.", "audience": "Data engineering teams" },
+        { "title": "Safer pipeline changes", "description": "Teams use the Plan/Apply workflow to preview downstream impact before deploying SQL or Python transformation changes.", "audience": "Analytics engineers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "SQLMesh (Open Source)", "price": "Free", "billing_cycle": null, "features": ["Virtual Data Environments", "Plan/Apply workflow", "Unit testing and audits", "Column-level lineage", "10+ SQL dialect support"] },
+        { "plan_name": "Tobiko Cloud", "price": "Custom (platform fee + consumption)", "billing_cycle": null, "features": ["Everything in SQLMesh", "Collaboration", "Observability", "Cost tracking", "No seat or project limits"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is SQLMesh?", "level": 2, "paragraphs": [
+          "SQLMesh is an open source data transformation framework for running and deploying SQL and Python pipelines, with virtual development environments, automated testing, and column-level lineage.",
+          "Created by Tobiko Data (founded 2022, San Mateo, CA; acquired by Fivetran in September 2025), SQLMesh is free and open source under the Apache License 2.0, with a paid Tobiko Cloud platform for teams needing collaboration and observability."
+        ]},
+        { "id": "who-its-for", "heading": "Who SQLMesh is for", "level": 2, "paragraphs": [
+          "SQLMesh is for data engineering and analytics engineering teams looking for a dbt-compatible transformation framework with lower warehouse costs and safer, previewable deployments."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "freemium"]
+    }
+  }
+]

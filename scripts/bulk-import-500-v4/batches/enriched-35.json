@@ -1,0 +1,694 @@
+[
+  {
+    "tool_id": "ff195225-a15d-4993-96da-c517414aa5f5",
+    "slug": "woodpecker-ci",
+    "name": "Woodpecker CI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Woodpecker CI is a free, open-source CI/CD engine that runs pipeline steps in Docker containers, forked from Drone CI in 2019.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Woodpecker CI is a free, self-hosted, open-source CI/CD engine built on Docker containers, forked from Drone CI's last Apache 2.0 release.",
+      "features": [
+        { "title": "Docker-based pipeline execution", "description": "Each pipeline step runs inside a Docker container, keeping build environments isolated and reproducible." },
+        { "title": "YAML pipeline configuration", "description": "Workflows are defined in YAML files stored in a .woodpecker/ directory, with steps, images, commands, and 'when' triggers for events like push." },
+        { "title": "Plugin ecosystem", "description": "Plugins are ordinary Docker images (e.g. woodpeckerci/plugin-s3) referenced in a step, so deployment and notification logic can be shared across projects." },
+        { "title": "Multiple dependent workflows", "description": "A project can define several workflows that depend on one another, rather than a single linear pipeline." },
+        { "title": "Secret injection", "description": "Sensitive values are referenced with from_secret in step settings so credentials aren't exposed in the pipeline file." },
+        { "title": "Self-hosted deployment", "description": "Woodpecker runs entirely on infrastructure you control; there is no vendor-hosted cloud offering." }
+      ],
+      "pros": [
+        "Fully open source under Apache 2.0 and stated to remain free forever",
+        "Lightweight, container-native architecture keeps pipeline steps isolated",
+        "Plugins are ordinary Docker images, making the ecosystem easy to extend",
+        "Active community project with 7.5k+ GitHub stars"
+      ],
+      "cons": [
+        "No official hosted/cloud offering — requires self-hosting",
+        "Some administration and forge-setup documentation pages were unavailable at the time of review",
+        "Smaller plugin catalog than larger commercial CI platforms"
+      ],
+      "faqs": [
+        { "question": "Is Woodpecker CI free to use?", "answer": "Yes. Woodpecker is fully open source under the Apache 2.0 license and the project states it will remain free forever." },
+        { "question": "Is Woodpecker CI related to Drone CI?", "answer": "Yes. Woodpecker was forked from Drone 0.8 in April 2019 after Drone's license changed from Apache 2.0 to a proprietary license, and was renamed Woodpecker in August 2019." },
+        { "question": "Does Woodpecker offer a hosted cloud version?", "answer": "No official hosted cloud service is documented; Woodpecker is designed to be self-hosted." },
+        { "question": "What format are Woodpecker pipelines written in?", "answer": "Pipelines are defined as YAML files in a .woodpecker/ directory, with steps that specify a Docker image and commands to run." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted CI for privacy-conscious teams", "description": "Teams that want full control over their CI infrastructure and data can run Woodpecker on their own servers.", "audience": "DevOps teams avoiding third-party CI clouds" },
+        { "title": "Container-native build pipelines", "description": "Projects already built around Docker can reuse existing images as pipeline steps and plugins.", "audience": "Teams standardized on Docker/Kubernetes" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-hosted (Open Source)", "price": "Free", "billing_cycle": null, "features": ["Apache 2.0 licensed", "Unlimited self-hosted use", "Community support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Woodpecker CI?",
+          "level": 2,
+          "paragraphs": [
+            "Woodpecker CI is a free, open-source continuous integration and delivery engine that runs each pipeline step inside a Docker container. It was forked from Drone CI's last Apache 2.0-licensed release (0.8) in 2019 after Drone changed to a proprietary license, and has since grown into a distinct project maintained by the Woodpecker Authors community.",
+            "Pipelines are described in YAML files stored in a .woodpecker/ directory. Steps reference a Docker image and a list of commands, and plugins are simply Docker images that can be shared across projects for tasks like deployments and notifications."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Woodpecker CI is for",
+          "level": 2,
+          "paragraphs": [
+            "Woodpecker suits engineering teams that want a lightweight, self-hosted CI/CD engine without a hosted-cloud dependency, particularly teams already comfortable running Docker-based infrastructure."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "web-app"]
+    }
+  },
+  {
+    "tool_id": "b721f7a1-30be-4fe9-aaef-0d63697db57b",
+    "slug": "drone-ci",
+    "name": "Drone CI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Drone CI is a container-native continuous integration platform from Harness, offered as an open-source Community Edition and a commercial Enterprise Edition.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Drone CI is a container-native CI platform from Harness with a free open-source Community Edition and a paid Enterprise Edition.",
+      "features": [
+        { "title": "Container-based pipelines", "description": "Each pipeline step executes inside an isolated Docker container, keeping builds reproducible across environments." },
+        { "title": "YAML pipeline configuration", "description": "Builds are defined as version-controlled YAML files rather than a UI-driven pipeline builder." },
+        { "title": "Plugin ecosystem", "description": "Hundreds of pre-built plugins handle common deployment and integration tasks." },
+        { "title": "Multi-forge source control support", "description": "Connects to GitHub, GitLab, Bitbucket, and other source control systems to trigger builds." },
+        { "title": "Single-binary deployment", "description": "The server ships as a single binary or Docker image that can scale automatically." },
+        { "title": "Community and Enterprise editions", "description": "Community Edition is open source with no proprietary code; Enterprise Edition adds commercial features and support." }
+      ],
+      "pros": [
+        "Community Edition is open source and free to self-host",
+        "Simple, container-native architecture with a large existing plugin library",
+        "Backed by Harness, giving it commercial support options via the Enterprise Edition",
+        "Cited example of a large customer (eBay) deploying about 15,000 times a quarter"
+      ],
+      "cons": [
+        "Now maintained under Harness rather than as an independent open-source project",
+        "Enterprise Edition pricing is not published and requires contacting sales",
+        "The dedicated drone.io pricing page returned a not-found error at the time of review, making current cloud-offering details unclear"
+      ],
+      "faqs": [
+        { "question": "Is Drone CI free?", "answer": "The Community Edition is open source and free to self-host. The Enterprise Edition is a commercial product with pricing available on request from Harness." },
+        { "question": "Who maintains Drone CI?", "answer": "Drone is maintained by Harness, which acquired Drone.io in 2020." },
+        { "question": "Does Drone CI still exist as a separate product?", "answer": "Yes, Drone continues to be developed and is now branded 'Drone by Harness,' offered in Community and Enterprise editions." },
+        { "question": "How are Drone pipelines configured?", "answer": "Pipelines are defined in version-controlled YAML files, with each step running in an isolated Docker container." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted container-native CI", "description": "Teams that want an open-source, Docker-based CI server can self-host the Community Edition.", "audience": "Engineering teams running their own infrastructure" },
+        { "title": "Enterprise CI with vendor support", "description": "Organizations needing commercial support and additional features can use the Enterprise Edition.", "audience": "Larger organizations needing SLA-backed support" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Open source, no proprietary code", "Self-hosted"] },
+        { "plan_name": "Enterprise Edition", "price": "Custom", "billing_cycle": null, "features": ["Commercial support", "Additional enterprise features"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Drone CI?",
+          "level": 2,
+          "paragraphs": [
+            "Drone is a container-native continuous integration platform originally built by Drone.io and acquired by Harness in 2020. It automates build, test, and release workflows using YAML pipeline files, with each step executed inside an isolated Docker container.",
+            "Drone is distributed in two editions: a Community Edition that is open source with no proprietary code, and a commercial Enterprise Edition maintained by Harness that adds further features and paid support."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Drone CI is for",
+          "level": 2,
+          "paragraphs": [
+            "Drone suits teams that want a container-native, self-hosted CI server and are comfortable with Harness as the maintaining vendor, whether running the free Community Edition or paying for Enterprise support."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "a86a598d-f117-4b86-8cbc-fd8500f829db",
+    "slug": "concourse-ci",
+    "name": "Concourse CI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Concourse is a free, open-source CI/CD system that models pipelines as YAML-defined resources, jobs, and tasks running in isolated containers.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Concourse CI is a free, open-source, self-hosted CI/CD system built around resources, jobs, and containerized tasks defined in YAML.",
+      "features": [
+        { "title": "Resource-based pipeline model", "description": "External artifacts like Git repos and Docker images are declared as 'resources' that Concourse automatically monitors for changes." },
+        { "title": "Containerized tasks", "description": "Every task runs in an isolated container with a specified image, keeping builds reproducible." },
+        { "title": "Visual pipeline UI", "description": "A web UI graphs the pipeline so failed jobs can be traced back to their root cause." },
+        { "title": "fly CLI for local testing", "description": "The fly execute command lets you run pipeline task logic locally before committing it." },
+        { "title": "Interactive container debugging", "description": "The fly intercept command opens a shell directly inside a running or failed task's container." }
+      ],
+      "pros": [
+        "Fully open source and free to self-host",
+        "Declarative, resource-based model version-controls the entire pipeline",
+        "Local CLI testing (fly execute) speeds up pipeline development",
+        "Visual pipeline UI aids debugging of complex, multi-stage workflows"
+      ],
+      "cons": [
+        "No official hosted/cloud offering — requires self-hosting",
+        "Resource-type abstraction has a steeper learning curve than plugin-based CI tools",
+        "Deployment requires managing systemd, Docker Compose, or manual server setup"
+      ],
+      "faqs": [
+        { "question": "Is Concourse CI free?", "answer": "Yes, Concourse is open-source software and free to download and self-host." },
+        { "question": "How does Concourse define pipelines?", "answer": "Pipelines are written in YAML and modeled as resources, jobs, and tasks, described as a distributed, continuous Makefile." },
+        { "question": "Can I test Concourse pipelines locally?", "answer": "Yes, the fly CLI includes a fly execute command for running task logic locally before pushing it to the pipeline." },
+        { "question": "How is Concourse deployed?", "answer": "Concourse provides documented installation guides for systemd, Docker Compose, and manual configuration for self-hosted deployment." }
+      ],
+      "use_cases": [
+        { "title": "Declarative, containerized CI/CD", "description": "Teams that want their entire pipeline defined as version-controlled YAML resources can adopt Concourse's model.", "audience": "Platform and DevOps engineers" },
+        { "title": "Debugging complex multi-stage pipelines", "description": "The visual pipeline graph and fly intercept command help trace failures back to their source.", "audience": "Teams running large, interdependent pipelines" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Concourse CI?",
+          "level": 2,
+          "paragraphs": [
+            "Concourse is an open-source continuous integration and delivery system that models pipelines as resources, jobs, and tasks defined in YAML. Rather than relying on a plugin marketplace, it uses a resource-type abstraction so external artifacts like Git repositories and Docker images are automatically monitored for changes.",
+            "Every task in a Concourse pipeline runs inside an isolated container with a specified image. The fly CLI supports local testing of task logic with fly execute and direct debugging of running containers with fly intercept."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Concourse CI is for",
+          "level": 2,
+          "paragraphs": [
+            "Concourse fits teams that want a declarative, container-based CI/CD system they fully control and are willing to self-host, particularly those comfortable working with its resource/job/task model instead of a plugin-driven pipeline builder."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "c7c25a31-e4a6-4f92-befe-498598b09f32",
+    "slug": "buildbot",
+    "name": "Buildbot",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Buildbot is a free, open-source Python framework for automating build, test, and release pipelines across distributed workers.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Buildbot is a free, open-source, GPL-licensed Python framework for automating distributed software build and test pipelines.",
+      "features": [
+        { "title": "Master-worker architecture", "description": "One or more masters coordinate build jobs across workers running on different operating systems." },
+        { "title": "Python-based configuration", "description": "Buildbot is configured with a Python script, enabling dynamic pipeline generation and custom components." },
+        { "title": "Distributed, parallel job execution", "description": "Jobs are queued and executed in parallel across available worker resources." },
+        { "title": "Version control monitoring", "description": "Buildbot watches source repositories for changes and triggers builds automatically." },
+        { "title": "Extensive status reporting", "description": "Provides detailed reporting on build and test results." }
+      ],
+      "pros": [
+        "Fully open source under GPL-2.0 and free to use",
+        "Highly customizable via Python configuration scripts",
+        "Mature project used by high-profile projects like WebKit and CPython",
+        "Cross-platform worker support"
+      ],
+      "cons": [
+        "Requires Python scripting knowledge to configure, unlike YAML-based competitors",
+        "No official hosted/cloud offering — requires self-hosting",
+        "Less modern UI compared to newer commercial CI platforms"
+      ],
+      "faqs": [
+        { "question": "Is Buildbot free?", "answer": "Yes, Buildbot is open-source software licensed under GPL-2.0." },
+        { "question": "What language is Buildbot written in and configured with?", "answer": "Buildbot is written in Python (using Twisted) and is configured via a Python script rather than YAML; it requires Python 3.6+." },
+        { "question": "What operating systems does Buildbot support?", "answer": "Buildbot's master-worker architecture is compatible with all major operating systems." },
+        { "question": "Who uses Buildbot?", "answer": "The project cites use by high-profile projects including WebKit, Python, and Twisted." }
+      ],
+      "use_cases": [
+        { "title": "Highly customized build pipelines", "description": "Teams needing pipeline logic beyond what YAML config supports can write custom Python configuration.", "audience": "Engineering teams with complex, non-standard build requirements" },
+        { "title": "Cross-platform build farms", "description": "Projects that need to build and test across many operating systems can distribute jobs across workers.", "audience": "Open-source projects and low-level software teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Buildbot?",
+          "level": 2,
+          "paragraphs": [
+            "Buildbot is an open-source framework, written in Python using Twisted, for automating software build, test, and release processes. It uses a master-worker architecture in which one or more masters queue and distribute jobs to workers running on different operating systems, then collect and report the results.",
+            "Configuration is done through a Python script rather than a fixed YAML schema, allowing dynamic pipeline generation and custom components. Buildbot is licensed under GPL-2.0 and requires Python 3.6+."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Buildbot is for",
+          "level": 2,
+          "paragraphs": [
+            "Buildbot suits teams that need highly customized, code-driven build automation and are comfortable writing Python to configure their CI system, including maintainers of large open-source projects like WebKit and CPython who already use it."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "74b2d4e2-99dc-4bc1-bfaa-f10e06aac809",
+    "slug": "gocd",
+    "name": "GoCD",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "GoCD is a free, open-source continuous delivery server from Thoughtworks that visualizes complex deployment pipelines end to end.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "GoCD is a free, open-source, Apache 2.0-licensed CD server from Thoughtworks with end-to-end pipeline visualization.",
+      "features": [
+        { "title": "Value stream map", "description": "Visualizes the entire path from commit to production deployment in a single view." },
+        { "title": "Complex workflow modeling", "description": "Supports parallel execution and dependency management for multi-stage delivery pipelines." },
+        { "title": "End-to-end traceability", "description": "Tracks changes from commit through deployment in real time, enabling comparisons across builds." },
+        { "title": "Cloud-native integrations", "description": "Works with Kubernetes, Docker, AWS, and other cloud environments." },
+        { "title": "Plugin architecture", "description": "An extensible plugin system integrates with many external tools." }
+      ],
+      "pros": [
+        "Fully open source under the Apache License 2.0",
+        "Maintained and sponsored by Thoughtworks",
+        "Strong visualization of complex, multi-stage delivery pipelines via the value stream map",
+        "Free to self-host with no license cost"
+      ],
+      "cons": [
+        "No official hosted/cloud offering — requires self-hosting",
+        "UI and setup are dated compared to newer SaaS CI/CD tools",
+        "Steeper learning curve for modeling complex pipelines"
+      ],
+      "faqs": [
+        { "question": "Is GoCD free?", "answer": "Yes, GoCD is free, open-source software released under the Apache License 2.0." },
+        { "question": "Who maintains GoCD?", "answer": "GoCD is sponsored and maintained by Thoughtworks." },
+        { "question": "Does GoCD support cloud-native deployments?", "answer": "Yes, GoCD works with Kubernetes, Docker, AWS, and other cloud environments." },
+        { "question": "Where can I find GoCD documentation?", "answer": "Documentation is available at docs.gocd.org, alongside download and getting-started guides on the main site." }
+      ],
+      "use_cases": [
+        { "title": "Complex, multi-stage delivery pipelines", "description": "Teams with intricate deployment workflows can model parallel execution and dependencies visually.", "audience": "Release and DevOps engineers managing complex CD pipelines" },
+        { "title": "End-to-end deployment traceability", "description": "Organizations that need to trace a change from commit to production can use GoCD's value stream map and comparison tools.", "audience": "Regulated or audit-conscious engineering teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is GoCD?",
+          "level": 2,
+          "paragraphs": [
+            "GoCD is a free, open-source continuous delivery and release automation server sponsored and maintained by Thoughtworks. It is released under the Apache License 2.0 and is designed for self-hosted deployment.",
+            "Its value stream map visualizes the entire path to production in a single view, supporting parallel execution and dependency management for complex delivery workflows, with real-time traceability of changes from commit to deployment."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who GoCD is for",
+          "level": 2,
+          "paragraphs": [
+            "GoCD suits teams that manage complex, multi-stage continuous delivery pipelines and want strong end-to-end visualization and traceability from a free, self-hosted, open-source server."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "cadd3f44-16e6-4e56-b77d-f1fdc0a1ac44",
+    "slug": "circleci",
+    "name": "CircleCI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "CircleCI is a CI/CD platform offering a free tier plus credit-based paid plans for building, testing, and deploying software.",
+      "pricing_model": "Freemium",
+      "starting_price": "$15/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "CircleCI is a CI/CD platform with a free 6,000-minute tier and credit-based Performance and Scale plans for teams.",
+      "features": [
+        { "title": "Free plan", "description": "Up to 6,000 build minutes per month with up to 5 active users and 30x concurrency." },
+        { "title": "Multiple execution environments", "description": "Supports Docker, Linux, Windows, Arm, macOS, and self-hosted runners." },
+        { "title": "MCP server", "description": "Connects AI tools to CircleCI logs, job metadata, and failure context." },
+        { "title": "Rollback pipelines", "description": "Automatic rollback support for failed releases." },
+        { "title": "Docker layer caching and workflows", "description": "Optimizes build speed with caching, parallelism, and multi-job workflows." },
+        { "title": "Credit-based paid plans", "description": "Performance and Scale plans use a credit system with a pricing calculator to size plans." }
+      ],
+      "pros": [
+        "Genuine free tier with 6,000 build minutes per month",
+        "Broad platform support including Docker, Windows, Arm, and macOS",
+        "Startup program offers up to $20,000 in free compute credits for qualifying companies",
+        "Client list on the site includes well-known companies such as Google and Okta"
+      ],
+      "cons": [
+        "Paid plans use a credit-based system that can be harder to predict than flat per-seat pricing",
+        "Scale plan requires contacting sales for custom, annually billed pricing",
+        "Extra active users on the Performance plan cost $15/month each"
+      ],
+      "faqs": [
+        { "question": "Does CircleCI have a free plan?", "answer": "Yes, the Free plan includes up to 6,000 build minutes per month, up to 5 active users, and 30x concurrency." },
+        { "question": "How much does CircleCI's paid plan cost?", "answer": "The Performance plan starts at $15/month and includes 30,000 credits and 5 active users, with additional users at $15/month each." },
+        { "question": "Does CircleCI offer enterprise pricing?", "answer": "Yes, the Scale plan offers custom, annually billed pricing with enterprise controls like SSO and unlimited concurrency." },
+        { "question": "What environments does CircleCI support?", "answer": "CircleCI supports Docker, Linux, Windows, Arm, macOS, and self-hosted runners." }
+      ],
+      "use_cases": [
+        { "title": "Small teams starting with CI/CD", "description": "The free plan's 6,000 monthly build minutes and 5 users suit small projects getting started.", "audience": "Startups and small engineering teams" },
+        { "title": "Multi-platform build and release", "description": "Teams needing macOS, Windows, Arm, or GPU builds alongside Linux can use CircleCI's varied execution environments.", "audience": "Teams shipping across multiple OS/architecture targets" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["Up to 6,000 build minutes", "Up to 5 active users", "30x concurrency", "2 GB storage, 1 GB network", "Community support"] },
+        { "plan_name": "Performance", "price": "$15/month", "billing_cycle": "monthly", "features": ["30,000 credits included", "5 active users (extra $15/mo each)", "80x concurrency", "2 GB storage, 5 GB network", "Optional 8x5 support add-on"] },
+        { "plan_name": "Scale", "price": "Custom", "billing_cycle": "annual", "features": ["Largest resource classes, all environments including GPU", "Unlimited concurrency", "200 GB storage, 50 GB network", "SSO and config policies", "Optional 24/7 support add-on"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is CircleCI?",
+          "level": 2,
+          "paragraphs": [
+            "CircleCI is a continuous integration and continuous delivery platform that automates testing, building, and deployment. It offers a free tier alongside credit-based paid plans, and supports execution environments including Docker, Linux, Windows, Arm, and macOS, as well as self-hosted runners.",
+            "The platform includes workflow features like parallelism, Docker layer caching, and rollback pipelines, plus an MCP server that connects AI tools to build logs, job metadata, and failure context."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who CircleCI is for",
+          "level": 2,
+          "paragraphs": [
+            "CircleCI suits teams ranging from small projects using the free tier to larger organizations on the custom-priced Scale plan that need enterprise controls like SSO, unlimited concurrency, and GPU environments."
+          ]
+        }
+      ],
+      "tags": ["api", "web-app", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "32135d16-f5f2-4da3-94f9-bb49145ae75e",
+    "slug": "semaphore",
+    "name": "Semaphore",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Semaphore is an open-source, pay-as-you-go CI/CD platform built for coding agents, giving every organization $15 of free usage per month.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Semaphore is an open-source, agent-native CI/CD platform with pay-as-you-go pricing and $15 of free usage every month.",
+      "features": [
+        { "title": "Agent-native CI", "description": "Built to integrate directly with coding agents such as Claude and Codex, which can trigger CI setup and execution." },
+        { "title": "Pre-push sandbox testing", "description": "A sandbox environment checks changes before they reach CI." },
+        { "title": "Pay-as-you-go pricing", "description": "No per-seat fees; organizations pay only for CI execution beyond the $15 free monthly usage." },
+        { "title": "Self-hosted agent option", "description": "Supports running your own agents in addition to Semaphore-hosted compute." },
+        { "title": "Test reports and monorepo support", "description": "Includes test reporting and support for monorepo projects." },
+        { "title": "Enterprise security controls", "description": "SOC 2 Type II certified, with SAML SSO, role-based access control, and audit logs." }
+      ],
+      "pros": [
+        "$15 of free usage every month for every organization, with no per-seat fees",
+        "Open source — source code can be reviewed and self-hosted",
+        "SOC 2 Type II certification with SSO, RBAC, and audit logs for enterprise needs",
+        "Native integration with coding agents like Claude and Codex"
+      ],
+      "cons": [
+        "Usage-based pricing makes costs less predictable than flat-rate plans",
+        "Specific per-minute/per-resource pricing isn't published on the marketing site",
+        "Agent-native positioning may be less relevant for teams not using AI coding agents"
+      ],
+      "faqs": [
+        { "question": "Is Semaphore free?", "answer": "Every organization gets $15 of free usage each month; usage-based charges apply for CI execution beyond that." },
+        { "question": "Is Semaphore the same product as semaphoreci.com?", "answer": "Yes, semaphoreci.com now redirects to semaphore.io, the current site for the product." },
+        { "question": "Is Semaphore open source?", "answer": "Yes, Semaphore is open source and can be self-hosted; the source is available on GitHub." },
+        { "question": "Does Semaphore integrate with coding agents?", "answer": "Yes, Semaphore is built for agent-native workflows and integrates with coding agents like Claude and Codex." }
+      ],
+      "use_cases": [
+        { "title": "Agent-driven CI setup", "description": "Teams using AI coding agents can have the agent configure and trigger CI runs directly.", "audience": "Teams adopting AI coding agents in their workflow" },
+        { "title": "Usage-based CI without per-seat costs", "description": "Organizations that want to avoid per-seat licensing can pay only for the compute their pipelines use.", "audience": "Cost-conscious engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Pay-as-you-go", "price": "$15 free usage/month, then usage-based", "billing_cycle": "monthly", "features": ["No per-seat fees", "Self-hosted agent option", "SOC 2 Type II, SAML SSO, RBAC, audit logs"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Semaphore?",
+          "level": 2,
+          "paragraphs": [
+            "Semaphore is a continuous integration and delivery platform, formerly at semaphoreci.com and now at semaphore.io, positioned around agent-native automation — letting coding agents like Claude and Codex configure and trigger CI runs directly.",
+            "It uses pay-as-you-go pricing with no per-seat fees; every organization receives $15 of free usage each month before usage-based charges apply. Semaphore is open source and supports self-hosted agents alongside its hosted compute."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Semaphore is for",
+          "level": 2,
+          "paragraphs": [
+            "Semaphore fits teams that want usage-based CI pricing without per-seat costs, and especially teams building workflows around AI coding agents that need CI to be triggerable directly by an agent."
+          ]
+        }
+      ],
+      "tags": ["ai", "self-hosted", "open-source", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "e080ec1f-f731-4575-b1da-0167d0092eb9",
+    "slug": "buildkite",
+    "name": "Buildkite",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Buildkite is a hybrid CI/CD platform that runs pipelines on your own self-hosted agents while Buildkite manages orchestration and UI.",
+      "pricing_model": "Freemium",
+      "starting_price": "$30/user/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Buildkite is a hybrid CI/CD platform with a free Personal plan and a $30/user/month Pro plan, running jobs on your own agents.",
+      "features": [
+        { "title": "Hybrid architecture", "description": "Pipelines run on your own self-hosted agents (or Buildkite-hosted Mac/Linux agents), while Buildkite hosts the orchestration, UI, and API." },
+        { "title": "Dynamic pipelines", "description": "Supports conditional logic, wait steps, block steps, and trigger steps for complex workflows." },
+        { "title": "Test Engine", "description": "Provides intelligent test splitting, flaky test isolation, and real-time test analytics across 15+ testing frameworks." },
+        { "title": "Package Registries", "description": "Manages build artifacts and packages across multiple ecosystems for supply-chain security." },
+        { "title": "Mobile Delivery Cloud", "description": "A hosted environment optimized for iOS and Android app builds." },
+        { "title": "Unlimited parallelism", "description": "No cap on simultaneous jobs, limited only by available agent capacity." }
+      ],
+      "pros": [
+        "Free-forever Personal plan with no credit card required",
+        "Hybrid model keeps source code and secrets on your own infrastructure while Buildkite manages orchestration",
+        "Test Engine supports 15+ testing frameworks with flaky-test isolation",
+        "Customer case studies report large-scale usage, including Uber running 100,000 concurrent agents"
+      ],
+      "cons": [
+        "Pro plan is priced per active user ($30/month), which can scale up quickly for larger teams",
+        "Enterprise plan requires a 30-user minimum and custom pricing",
+        "Free Personal plan is limited to 3 concurrent jobs and 1 user"
+      ],
+      "faqs": [
+        { "question": "Is Buildkite free?", "answer": "The Personal plan is free forever for a single user with 3 concurrent jobs and 90-day build retention. A 30-day All Access Trial with full features is also available." },
+        { "question": "How much does Buildkite's Pro plan cost?", "answer": "The Pro plan costs $30 per active user per month and includes unlimited users, unlimited test executions, and all agent sizes including Mac M4." },
+        { "question": "What is Buildkite's hybrid architecture?", "answer": "Buildkite hosts the orchestration, UI, and API, while build jobs run on agents you host yourself or on Buildkite-hosted Mac/Linux agents." },
+        { "question": "Does Buildkite support mobile app builds?", "answer": "Yes, its Mobile Delivery Cloud provides an environment optimized for iOS and Android deployment." }
+      ],
+      "use_cases": [
+        { "title": "Large-scale, self-hosted CI", "description": "Organizations that need to keep build infrastructure and secrets on their own network can run Buildkite agents on-premise or in their own cloud.", "audience": "Large engineering orgs with strict infrastructure/security requirements" },
+        { "title": "Test flakiness reduction", "description": "Teams with large test suites can use Test Engine to split tests intelligently and isolate flaky tests.", "audience": "QA and engineering teams managing large test suites" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "All Access Trial", "price": "$0", "billing_cycle": null, "features": ["30-day full platform access", "No credit card required", "Dedicated Developer Success Engineer"] },
+        { "plan_name": "Personal", "price": "Free", "billing_cycle": null, "features": ["3 concurrent jobs", "1 user", "90-day build retention", "Community support"] },
+        { "plan_name": "Pro", "price": "$30/user/month", "billing_cycle": "monthly", "features": ["Unlimited users and test executions", "All agent sizes including Mac M4", "Priority email support and SSO", "250 managed tests included, then $0.10/test"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["30-user minimum", "Premium support SLA", "SCIM/SAML/ADFS", "Audit logs and build exports", "Pipeline templates"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Buildkite?",
+          "level": 2,
+          "paragraphs": [
+            "Buildkite is a CI/CD platform built around a hybrid architecture: Buildkite hosts the pipeline orchestration, UI, and API, while build jobs execute on agents you run yourself (or on Buildkite-hosted Mac and Linux agents). This keeps source code and secrets on infrastructure you control.",
+            "The platform includes dynamic pipelines with conditional logic and trigger steps, a Test Engine for intelligent test splitting and flaky test isolation across 15+ testing frameworks, Package Registries for artifact management, and a Mobile Delivery Cloud for iOS/Android builds."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Buildkite is for",
+          "level": 2,
+          "paragraphs": [
+            "Buildkite suits engineering teams — from solo developers on the free Personal plan to large organizations like Uber and Reddit cited in its case studies — that want CI orchestration as a service while keeping build execution on their own agents."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "a8f6b931-ead8-4549-9325-5d2d323f59c8",
+    "slug": "buddy",
+    "name": "Buddy",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Buddy is a DevOps platform combining CI/CD pipelines, deployment automation, environment provisioning, and visual testing in one suite.",
+      "pricing_model": "Freemium",
+      "starting_price": "€29/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Buddy combines CI/CD pipelines, deployment automation, environments, and visual testing, with a free plan and plans from €29/month.",
+      "features": [
+        { "title": "Remote deployments", "description": "Deploys to VPS, bare metal, CDNs, and mixed clouds with agent and agentless options, one-click rollbacks, and manual approvals." },
+        { "title": "Pipelines", "description": "Pipelines can be triggered by GitHub, AWS, Slack, or server events and designed via UI or YAML, running on Intel, ARM, Linux, Windows, Mac, or NixOS." },
+        { "title": "Environments", "description": "Automated provisioning of dev, staging, and production environments on Buddy's cloud or your own infrastructure." },
+        { "title": "Visual Reviews", "description": "Browser and viewport testing with interaction tests and snapshot diffing, supporting Playwright, Selenium, and Cypress." },
+        { "title": "Tunnels", "description": "Secure connectivity to external networks protected by OAuth, SAML, and OIDC." },
+        { "title": "Domains", "description": "Multi-tenant domain management with automated SSL and DNS records managed via Git, UI, or API." }
+      ],
+      "pros": [
+        "Free plan available with a 14-day trial and no credit card required",
+        "Combines CI/CD, deployment automation, environment provisioning, and visual testing in a single product",
+        "Supports pipeline design via either a visual UI or YAML",
+        "SOC 2 certified"
+      ],
+      "cons": [
+        "Free plan is limited to 1 seat and 1 concurrent pipeline",
+        "Adding seats or concurrency on paid plans carries per-unit surcharges (e.g. extra seat $9/mo on Pro)",
+        "Pricing is quoted in euros, which may complicate budgeting for USD-based teams"
+      ],
+      "faqs": [
+        { "question": "Does Buddy have a free plan?", "answer": "Yes, the Free plan includes 1 seat, 1 concurrent pipeline, 300 pipeline GB-minutes, and 1 GB of pipeline cache." },
+        { "question": "How much does Buddy's Pro plan cost?", "answer": "The Pro plan costs €29/month and includes 2 seats and 1 concurrent pipeline, with extra seats and concurrency billed separately." },
+        { "question": "What testing frameworks does Buddy's Visual Reviews support?", "answer": "Visual Reviews supports Playwright, Selenium, and Cypress for browser and viewport testing." },
+        { "question": "What operating systems can Buddy pipelines run on?", "answer": "Pipelines can run on Intel, ARM, Linux, Windows, Mac, or NixOS." }
+      ],
+      "use_cases": [
+        { "title": "All-in-one CI/CD and deployment", "description": "Teams that want pipelines, deployments, and environment provisioning in one product rather than stitching together separate tools.", "audience": "Small-to-mid engineering teams" },
+        { "title": "Visual regression testing in CI", "description": "Teams can add browser/viewport snapshot testing directly into their pipelines using Visual Reviews.", "audience": "Frontend teams needing visual QA" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "€0", "billing_cycle": null, "features": ["1 seat", "1 concurrent pipeline", "300 pipeline GB-minutes", "1 GB pipeline cache", "300 sandbox CPU-minutes", "730 sandbox GB-hours"] },
+        { "plan_name": "Pro", "price": "€29/month", "billing_cycle": "monthly", "features": ["2 seats (extra $9/mo per seat)", "1 concurrent (extra $50/mo per concurrent)", "3,000 pipeline GB-minutes", "10 GB pipeline cache"] },
+        { "plan_name": "Hyper", "price": "€99/month", "billing_cycle": "monthly", "features": ["5 seats (extra $29/mo per seat)", "2 concurrents", "6,000 pipeline GB-minutes", "20 GB pipeline cache", "Advanced permissions", "SAML & OIDC SSO"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Buddy?",
+          "level": 2,
+          "paragraphs": [
+            "Buddy is a DevOps and platform engineering suite that combines CI/CD pipelines, remote deployment automation, environment provisioning, and visual testing into one product. Pipelines can be triggered by GitHub, AWS, Slack, or server events and designed either visually or in YAML, running across Intel, ARM, Linux, Windows, Mac, or NixOS.",
+            "Beyond pipelines, Buddy includes Environments for automated dev/staging/production provisioning, Visual Reviews for browser and viewport snapshot testing with Playwright, Selenium, and Cypress, Tunnels for secure external connectivity, and Domains for multi-tenant DNS/SSL management."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Buddy is for",
+          "level": 2,
+          "paragraphs": [
+            "Buddy suits teams that want CI/CD, deployment automation, environment provisioning, and visual testing consolidated in one platform rather than assembled from separate tools, from small teams on the free plan to larger teams on Pro or Hyper."
+          ]
+        }
+      ],
+      "tags": ["api", "web-app", "freemium", "free-plan", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "82b1ccc3-3f53-4e7a-8f43-b0c0dcbf7a7f",
+    "slug": "harness",
+    "name": "Harness",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Harness is a software delivery platform covering CI, CD/GitOps, feature flags, security testing, and cloud cost management, with a free tier.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Harness is a modular software delivery platform covering CI, CD, feature flags, and security, with a free plan and custom-priced tiers.",
+      "features": [
+        { "title": "Continuous Integration", "description": "Runs build and test pipelines as part of the broader Harness platform." },
+        { "title": "Continuous Delivery & GitOps", "description": "Automates deployment workflows with GitOps-based delivery." },
+        { "title": "Internal Developer Portal", "description": "Provides a developer portal module alongside the CI/CD pipeline tooling." },
+        { "title": "Feature Management & Experimentation", "description": "Feature flag management and experimentation tooling." },
+        { "title": "AI Test Automation and AI SRE", "description": "AI-assisted testing and site-reliability modules." },
+        { "title": "Cloud & AI cost management", "description": "Cost optimization tooling for cloud and AI spend." },
+        { "title": "100+ integrations", "description": "Supports major cloud providers (AWS, Azure, GCP, OCI) and other technologies." }
+      ],
+      "pros": [
+        "Free tier available for individual developers and small teams",
+        "Broad, modular platform spanning CI, CD, feature flags, security, and cost management",
+        "Open-source starter platform available (Harness Open Source)",
+        "Also owns and maintains Drone CI, giving it deep container-native CI heritage"
+      ],
+      "cons": [
+        "Paid Essentials and Enterprise tiers require contacting sales for pricing — no public pricing",
+        "Broad module set can be more complex than single-purpose CI tools",
+        "Detailed free-tier CI limits (concurrency, runners) are only shown at the Essentials level and above"
+      ],
+      "faqs": [
+        { "question": "Does Harness have a free plan?", "answer": "Yes, Harness offers a Free plan aimed at individual developers and small teams, alongside an open-source starter platform." },
+        { "question": "How much does Harness cost beyond the free tier?", "answer": "The Essentials and Enterprise plans require contacting Harness sales; specific pricing is not published." },
+        { "question": "What modules does Harness offer?", "answer": "Modules include Continuous Integration, Continuous Delivery & GitOps, Internal Developer Portal, Infrastructure as Code Management, Feature Management & Experimentation, AI Test Automation, AI SRE, security testing, and cloud/AI cost management." },
+        { "question": "Is Harness related to Drone CI?", "answer": "Yes, Harness acquired Drone.io in 2020 and continues to develop Drone as 'Drone by Harness.'" }
+      ],
+      "use_cases": [
+        { "title": "End-to-end software delivery platform", "description": "Organizations wanting CI, CD, feature flags, and security testing under one modular platform rather than separate point tools.", "audience": "Mid-to-large engineering organizations" },
+        { "title": "AI-assisted delivery and reliability", "description": "Teams can adopt AI Test Automation and AI SRE modules alongside core CI/CD.", "audience": "Teams investing in AI-assisted DevOps tooling" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Individual developers and small teams", "Basic CI capabilities", "Open source starter platform available"] },
+        { "plan_name": "Essentials", "price": "Custom", "billing_cycle": null, "features": ["250GB code repository storage", "Up to 60 concurrent pipeline executions", "Up to 60 self-hosted runners"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["250GB code repository storage", "Unlimited concurrent pipeline executions", "Unlimited self-hosted runners", "Modular selection of any module", "Dedicated account manager"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Harness?",
+          "level": 2,
+          "paragraphs": [
+            "Harness is a software delivery platform covering the lifecycle from code to production, including Continuous Integration, Continuous Delivery & GitOps, an Internal Developer Portal, feature flag management, AI-assisted testing, security testing, and cloud/AI cost management. It supports 100+ integrations across major cloud providers including AWS, Azure, GCP, and OCI.",
+            "Harness offers a Free plan for individual developers and small teams, plus quote-only Essentials and Enterprise plans for larger organizations. The company also owns and maintains Drone CI, which it acquired in 2020."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Harness is for",
+          "level": 2,
+          "paragraphs": [
+            "Harness suits organizations that want a single modular platform spanning CI, CD, feature flags, security, and cost management rather than assembling separate point tools, from individual developers on the free tier to enterprises negotiating custom Essentials or Enterprise contracts."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "web-app", "freemium", "free-plan", "open-source"]
+    }
+  }
+]

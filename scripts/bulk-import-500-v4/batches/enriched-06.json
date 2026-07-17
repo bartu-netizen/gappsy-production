@@ -1,0 +1,634 @@
+[
+  {
+    "tool_id": "309b9728-2f66-4911-9e11-c40f64054a67",
+    "slug": "attendize",
+    "name": "Attendize",
+    "status": "skip",
+    "skip_reason": "Project appears unmaintained: latest GitHub release (v2.8.0) and most recent commits date to January 2023, over three years ago, with no newer releases or active development visible on the repository. Facts are too stale to enrich confidently.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "8e0b83b6-71ce-4357-81d5-6f9274821112",
+    "slug": "nocodb",
+    "name": "NocoDB",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "NocoDB is a no-code database platform that turns spreadsheets or existing SQL databases into collaborative, self-hostable apps.",
+      "pricing_model": "Freemium",
+      "starting_price": "$12/user/month (billed annually)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "Chinese", "French", "German", "Spanish", "Portuguese", "Italian", "Japanese", "Korean", "Russian", "Bengali"],
+      "seo_meta_description": "NocoDB no-code database platform: pricing, self-hosting license, features, and how it compares as an Airtable alternative.",
+      "features": [
+        {"title": "Multiple views", "description": "Grid, Gallery, Form, Kanban, and Calendar views over the same underlying data."},
+        {"title": "Spreadsheet-style editing", "description": "Linked records, lookups, rollups, and formula fields with create/read/update/delete operations."},
+        {"title": "Connect to existing databases", "description": "Point NocoDB at an existing Postgres or MySQL database instead of migrating data into its own storage."},
+        {"title": "Auto-generated REST APIs", "description": "Every base gets REST APIs, webhooks, and an SDK for programmatic access and automation."},
+        {"title": "Role-based access control", "description": "Fine-grained permissions across five user roles."},
+        {"title": "App Store integrations", "description": "Built-in connectors for Slack, Discord, AWS SES/S3, SMTP, and other services."},
+        {"title": "Self-hosted Community Edition", "description": "Free deployment via Docker or binary installers for macOS, Linux, and Windows."},
+        {"title": "AI on paid tiers", "description": "Single- and multi-provider AI options available on Business and Scale plans."}
+      ],
+      "pros": [
+        "Free, unlimited-seat self-hosted Community Edition",
+        "Can connect directly to an existing Postgres or MySQL database instead of requiring data migration",
+        "Large community per vendor claims: 64k+ GitHub stars and 20M+ Docker downloads",
+        "Auto-generated REST APIs and a built-in App Store of integrations",
+        "Both cloud-hosted and self-hosted deployment options, with a genuine free cloud tier"
+      ],
+      "cons": [
+        "The self-hosted Community Edition moved from AGPLv3 to the Sustainable Use License, a source-available license rather than an OSI-approved open-source license, which drew criticism from parts of the self-hosting community",
+        "Cloud free plan is capped at 1,000 records and 1GB storage",
+        "SSO, audit logs, and row-level security are reserved for Business/Scale/Enterprise tiers",
+        "The Scale plan requires a minimum of 3 seats"
+      ],
+      "faqs": [
+        {"question": "Is NocoDB free?", "answer": "Yes. NocoDB offers a free cloud plan (3 editor seats, 1,000 records) and a free, self-hosted Community Edition."},
+        {"question": "What license does NocoDB use?", "answer": "The self-hosted Community Edition is distributed under the Sustainable Use License, a source-available license, after the project moved away from AGPLv3."},
+        {"question": "Can NocoDB connect to an existing database?", "answer": "Yes, NocoDB can turn an existing Postgres or MySQL database into a spreadsheet-style interface rather than requiring data import."},
+        {"question": "Does NocoDB provide an API?", "answer": "Yes, every base gets auto-generated REST APIs, webhooks, and an SDK."},
+        {"question": "Is NocoDB available self-hosted?", "answer": "Yes, via Docker, binary installers for macOS/Linux/Windows, or an install script."}
+      ],
+      "use_cases": [
+        {"title": "Internal business databases", "description": "Teams replace spreadsheets with a shared, permissioned database for tracking projects, inventory, or CRM-style records.", "audience": "Small business and operations teams"},
+        {"title": "UI layer over an existing SQL database", "description": "Developers connect NocoDB to a Postgres/MySQL database to give non-technical staff a spreadsheet interface without migrating data.", "audience": "Developers and IT teams"},
+        {"title": "Self-hosted data platform", "description": "Organizations that need to keep data on their own infrastructure deploy the free Community Edition via Docker.", "audience": "IT and compliance teams needing data residency control"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free (Cloud)", "price": "$0", "billing_cycle": null, "features": ["3 editor seats", "10 commenter seats", "1,000 records", "1GB storage", "100 automation runs", "1,000 API calls/month"]},
+        {"plan_name": "Plus (Cloud)", "price": "$12/seat/month annual, $15/seat/month monthly", "billing_cycle": "monthly", "features": ["Unlimited seats", "50,000 records", "20GB storage", "10,000 automation runs", "100,000 APIs/month"]},
+        {"plan_name": "Business (Cloud)", "price": "$24/seat/month annual, $30/seat/month monthly", "billing_cycle": "monthly", "features": ["300,000 records", "100GB storage", "50,000 automation runs", "10 external databases", "private bases", "SAML SSO"]},
+        {"plan_name": "Scale (Cloud)", "price": "$45/seat/month annual, $54/seat/month monthly", "billing_cycle": "monthly", "features": ["Minimum 3 seats", "1 million records", "5 million APIs/month", "row-level security", "audit logs"]},
+        {"plan_name": "Enterprise (Cloud)", "price": null, "billing_cycle": null, "features": ["SCIM", "SSO", "air-gapped installation", "staging environment", "priority support"]},
+        {"plan_name": "Community (Self-Hosted)", "price": "$0", "billing_cycle": null, "features": ["Unlimited records & storage", "unlimited seats", "6 views", "community support"]}
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is NocoDB?",
+          "level": 2,
+          "paragraphs": [
+            "NocoDB is a no-code database platform that presents data through a familiar spreadsheet-style interface while storing it in a real relational database. It can either use its own database or connect directly to an existing Postgres or MySQL database, turning that data into views (Grid, Gallery, Form, Kanban, Calendar) that teams can filter, sort, and edit.",
+            "It is available as a hosted cloud product with tiered pricing, and as a self-hosted Community Edition that can be deployed with Docker or binary installers. The self-hosted edition is distributed under the Sustainable Use License, a source-available license the project adopted after moving away from AGPLv3."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who NocoDB is for",
+          "level": 2,
+          "paragraphs": [
+            "NocoDB suits teams and developers who want a spreadsheet-like interface over structured data without giving up SQL underneath, especially those who already have a Postgres or MySQL database and want a collaborative UI on top of it, or who want to self-host their database tooling."
+          ]
+        }
+      ],
+      "tags": ["no-code", "api", "web-app", "mac", "windows", "self-hosted", "freemium", "free-plan", "ai"]
+    }
+  },
+  {
+    "tool_id": "8a277ff8-0957-4069-9f79-4ef1be818b6e",
+    "slug": "baserow",
+    "name": "Baserow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Baserow is an open-source, self-hostable no-code database and application builder positioned as an Airtable alternative.",
+      "pricing_model": "Freemium",
+      "starting_price": "$10/user/month (billed annually)",
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Baserow open-source no-code database: pricing plans, self-hosting options, MIT-licensed core, and key features compared.",
+      "features": [
+        {"title": "Database Builder", "description": "Structure and view data through Grid, Gallery, Kanban, Calendar, Timeline, Form, and Survey views."},
+        {"title": "Application Builder", "description": "Build front-end apps and portals on top of Baserow data without code, publishable to a custom domain."},
+        {"title": "Automation Builder", "description": "Workflow automations with triggers, branches, conditions, and loops."},
+        {"title": "Dashboards", "description": "Chart-based dashboards for visualizing data stored in Baserow."},
+        {"title": "Kuma AI assistant", "description": "Builds data structures and automations from natural-language descriptions, available on paid plans."},
+        {"title": "Integrations", "description": "Native HTTP, email, and webhook support, plus connectors for Zapier, Make, and n8n."},
+        {"title": "Flexible hosting", "description": "Cloud-hosted, or self-hosted via Docker, Docker Compose, Helm, Cloudron, Railway, Elestio, Heroku, DigitalOcean, or AWS."},
+        {"title": "Enterprise compliance", "description": "The cloud offering is GDPR, HIPAA, and SOC 2 Type II compliant."}
+      ],
+      "pros": [
+        "MIT-licensed open-source core with a genuine self-hosting option",
+        "Combines database, application, automation, and dashboard builders in one platform",
+        "Cloud version is GDPR, HIPAA, and SOC 2 Type II compliant",
+        "65+ templates included on the free plan",
+        "Multiple self-hosting paths, including one-click deploys on Cloudron, Railway, Elestio, and Heroku"
+      ],
+      "cons": [
+        "Free plan is capped at 3,000 rows per workspace and 2GB storage",
+        "Kuma AI assistant and other premium features require a paid plan",
+        "Audit logs and custom roles are limited to Advanced/Enterprise tiers",
+        "Smaller open-source community (about 5,400 GitHub stars) than some rival no-code database tools"
+      ],
+      "faqs": [
+        {"question": "Is Baserow open source?", "answer": "Yes, Baserow's core is released under the MIT license; premium and enterprise features are offered as a source-available add-on under an open-core model."},
+        {"question": "Can Baserow be self-hosted?", "answer": "Yes, via Docker, Docker Compose, Helm, or hosted providers like Cloudron, Railway, Elestio, Heroku, Render, DigitalOcean, and AWS."},
+        {"question": "Does Baserow have a free plan?", "answer": "Yes. The Free plan includes 3,000 rows per workspace, 2GB storage, and 65+ templates."},
+        {"question": "Is Baserow HIPAA and SOC 2 compliant?", "answer": "According to Baserow's website, the cloud-hosted version is GDPR, HIPAA, and SOC 2 Type II compliant."},
+        {"question": "Does Baserow include AI features?", "answer": "Yes, its Kuma AI assistant can generate data structures and automations from natural-language descriptions, starting on the Premium plan."}
+      ],
+      "use_cases": [
+        {"title": "No-code internal database and app", "description": "Operations teams build a shared database plus a simple front-end app on top of it without writing code.", "audience": "Operations and business teams"},
+        {"title": "Self-hosted Airtable alternative", "description": "Teams that want full data ownership migrate from Airtable to a self-hosted Baserow instance.", "audience": "IT teams and privacy-conscious organizations"},
+        {"title": "Workflow automation", "description": "Teams use the Automation Builder to replace manual, spreadsheet-driven processes with triggers and conditional logic.", "audience": "Small business and process owners"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["3,000 rows per workspace", "2GB storage", "2,000 automation credits", "500 external app users", "65+ templates"]},
+        {"plan_name": "Premium", "price": "$10/user/month annual, $12/user/month monthly", "billing_cycle": "monthly", "features": ["50,000 rows per workspace", "20GB storage", "100,000 automation credits", "all views", "AI features"]},
+        {"plan_name": "Advanced", "price": "$18/user/month annual, $22/user/month monthly", "billing_cycle": "monthly", "features": ["250,000 rows per workspace", "100GB storage", "500,000 automation credits", "role-based permissions", "audit logs", "180-day row history"]},
+        {"plan_name": "Enterprise", "price": null, "billing_cycle": null, "features": ["1,000,000 rows per workspace", "1,000GB storage", "2,000,000 automation credits", "unlimited external app users", "implementation support", "custom roles"]}
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Baserow?",
+          "level": 2,
+          "paragraphs": [
+            "Baserow is an open-source no-code platform for building databases and applications. Its core product lets teams structure data in Grid, Gallery, Kanban, Calendar, Timeline, Form, and Survey views, and pairs that with an Application Builder for creating front-end apps, an Automation Builder for workflows, and dashboards for visualization.",
+            "The core is MIT-licensed and can be self-hosted via Docker, Docker Compose, Helm, or one-click deploys on providers such as Cloudron, Railway, Elestio, Heroku, and DigitalOcean, in addition to Baserow's own cloud-hosted plans."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Baserow is for",
+          "level": 2,
+          "paragraphs": [
+            "Baserow fits teams looking for an Airtable-style database and app builder but who want the option to self-host for data ownership or compliance reasons, as well as organizations that need HIPAA, GDPR, or SOC 2 Type II compliance on a cloud-hosted no-code platform."
+          ]
+        }
+      ],
+      "tags": ["no-code", "api", "web-app", "self-hosted", "open-source", "freemium", "free-plan", "ai", "templates"]
+    }
+  },
+  {
+    "tool_id": "b0a59332-e7cb-4428-afe9-3934017982dd",
+    "slug": "grist",
+    "name": "Grist",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Grist is an open-source spreadsheet-database hybrid that lets teams build no-code apps, forms, and automations from their data.",
+      "pricing_model": "Freemium",
+      "starting_price": "$8/user/month (billed annually)",
+      "founded_year": 2014,
+      "company_size": null,
+      "headquarters": "New York City, USA",
+      "languages": ["English"],
+      "seo_meta_description": "Grist open-source spreadsheet-database: pricing plans, self-hosting with grist-core, and key formula and access-control features.",
+      "features": [
+        {"title": "Python-syntax formulas", "description": "Calculated columns support Python-syntax formulas alongside common Excel-compatible functions."},
+        {"title": "Multiple linked views", "description": "Grid, card, calendar, and chart widgets that stay linked to the same underlying data."},
+        {"title": "Access rules", "description": "Granular row-, column-, and table-level permissions for controlling who can see or edit data."},
+        {"title": "Native forms", "description": "Built-in form widget for data collection that writes directly into a Grist table."},
+        {"title": "AI Assistant", "description": "Conversational assistant for building formulas and analyzing data, with credit-based usage limits."},
+        {"title": "SQLite-based documents", "description": "Each Grist document is a self-contained, portable SQLite file."},
+        {"title": "Self-hosted Community Edition", "description": "Free, open-source (Apache 2.0) deployment via Docker, plus a desktop app for Linux, macOS, and Windows."},
+        {"title": "REST API and webhooks", "description": "Programmatic access to documents, with Zapier integration for automation."}
+      ],
+      "pros": [
+        "Core (grist-core) is licensed under Apache License 2.0, an OSI-approved open-source license",
+        "Documents are portable, self-contained SQLite files, easing backup and export",
+        "Desktop apps available for Linux, macOS, and Windows in addition to web and self-hosted use",
+        "Row-, column-, and table-level access rules for granular permission control",
+        "Eligible small organizations (under $1M annual revenue) can request free activation keys for hosted features"
+      ],
+      "cons": [
+        "Free cloud plan is capped at 5,000 records per document and only 100 AI Assistant credits total, not recurring monthly",
+        "Business plan requires a minimum of 5 users; Enterprise requires a minimum of 50 users",
+        "Admin controls, automations, and the full AI Assistant on the self-hosted paid tier still require per-user licensing"
+      ],
+      "faqs": [
+        {"question": "Is Grist open source?", "answer": "Yes, the core (grist-core) is released under the Apache License 2.0 and available on GitHub."},
+        {"question": "Can Grist be self-hosted for free?", "answer": "Yes, the Community Edition is free and open source; organizations under $1M in annual revenue can also request free activation keys."},
+        {"question": "What format does Grist store data in?", "answer": "Each Grist document is a self-contained SQLite file."},
+        {"question": "Does Grist support formulas?", "answer": "Yes, formulas can be written in Python syntax and also support common Excel functions."},
+        {"question": "Is there a Grist desktop app?", "answer": "Yes, grist-desktop runs on Linux, macOS, and Windows."}
+      ],
+      "use_cases": [
+        {"title": "Team databases with granular permissions", "description": "Organizations that need row- and column-level access control for shared data, such as HR or finance records.", "audience": "HR, finance, and operations teams"},
+        {"title": "Self-hosted data workspace", "description": "Teams run Grist on their own infrastructure for intranet operation or regulatory compliance using the open-source Community Edition.", "audience": "IT and compliance-focused organizations"},
+        {"title": "Formula-driven reporting", "description": "Analysts use Python-syntax formulas to build calculated views and reports directly from raw data.", "audience": "Analysts and data-literate teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Up to 5,000 records per document", "100 AI Assistant credits (lifetime)", "2 guests per doc", "30-day backups"]},
+        {"plan_name": "Pro", "price": "$8/user/month annual, $10/user/month monthly", "billing_cycle": "monthly", "features": ["Up to 100,000 records per document", "3-year snapshot history", "100 AI Assistant credits/month", "unlimited documents"]},
+        {"plan_name": "Business", "price": "$24/user/month annual, $30/user/month monthly", "billing_cycle": "monthly", "features": ["Minimum 5 users", "Up to 150,000 records per document", "5-year snapshot history", "2,000 AI Assistant credits/month", "automations", "priority email support"]},
+        {"plan_name": "Enterprise", "price": null, "billing_cycle": null, "features": ["Minimum 50 users", "custom record limits", "dedicated server with regional selection", "custom SSO and branding", "audit log streaming"]},
+        {"plan_name": "Community Edition (Self-Hosted)", "price": "$0", "billing_cycle": null, "features": ["Free and open source", "community support", "custom SSO, domain, and branding"]}
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Grist?",
+          "level": 2,
+          "paragraphs": [
+            "Grist is a relational spreadsheet-database hybrid built by Grist Labs. It combines a familiar spreadsheet grid with Python-syntax formulas, linked card and chart views, native forms, and row/column-level access rules, storing each document as a portable, self-contained SQLite file.",
+            "The core, grist-core, is open source under the Apache License 2.0 and can be self-hosted via Docker or run as a desktop app on Linux, macOS, and Windows. Grist Labs also offers a cloud-hosted product with Free, Pro, Business, and Enterprise plans, plus paid self-hosted tiers with added admin and AI features."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Grist is for",
+          "level": 2,
+          "paragraphs": [
+            "Grist suits teams that want spreadsheet-like flexibility with database-grade structure and access control, particularly organizations that value data portability (SQLite files), open-source self-hosting, or need row- and column-level permissions that typical spreadsheets don't offer."
+          ]
+        }
+      ],
+      "tags": ["no-code", "api", "web-app", "mac", "windows", "self-hosted", "open-source", "freemium", "free-plan", "ai"]
+    }
+  },
+  {
+    "tool_id": "0909fefb-ee91-4a8f-972b-d6cce78f8b1e",
+    "slug": "seatable",
+    "name": "SeaTable",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SeaTable combines a spreadsheet interface with database power for no-code app building, automation, and team collaboration, hosted in the EU or self-hosted.",
+      "pricing_model": "Freemium",
+      "starting_price": "€7/user/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Mainz, Germany",
+      "languages": ["German", "English", "French", "Spanish", "Portuguese", "Russian"],
+      "seo_meta_description": "SeaTable: no-code spreadsheet-database platform with automation, AI credits, EU cloud hosting, and self-hosted on-premises options.",
+      "features": [
+        {"title": "Base Editor & multiple views", "description": "Organize data in tables with Gallery, Kanban, Timeline, and Calendar views alongside the standard grid, plus linked records between bases."},
+        {"title": "Automation rules & Python scripts", "description": "Build workflows with built-in automation rules and run Python scripts against your data, with usage limits scaling by plan (from 100 script runs/month on Free up to 1,000/user on Enterprise)."},
+        {"title": "AI-assisted workflows", "description": "Paid plans include monthly AI credits (12.5 on Free up to 500/user on Enterprise) for AI-supported automations, plus a self-hosted AI server option for GDPR-compliant deployments."},
+        {"title": "REST API and integrations", "description": "A documented SeaTable API (api.seatable.com) plus native integrations with Zapier, Make, and n8n let teams connect SeaTable to other tools."},
+        {"title": "Flexible deployment", "description": "Choose EU-hosted cloud (certified German data centers), SeaTable Dedicated, or fully self-hosted on-premises server licenses, including a permanently free 3-user on-premises license."},
+        {"title": "Templates", "description": "Pre-built, customizable templates help teams start new bases quickly for common use cases."}
+      ],
+      "pros": [
+        "Multiple deployment options including EU cloud hosting and self-hosted on-premises servers",
+        "Generous view types (Gallery, Kanban, Timeline, Calendar) beyond a standard grid",
+        "Built-in Python scripting and automation rules for custom workflows",
+        "A permanently free 3-user on-premises license is available",
+        "Lists large organizations such as the United Nations and Max Planck Society as users, per SeaTable's site"
+      ],
+      "cons": [
+        "Core server components (e.g., dtable-server) are proprietary, not fully open source",
+        "Row, storage, API call, and AI credit limits vary by plan and are limited on the Free tier (10,000 rows, 2GB storage)",
+        "Higher-tier on-premises licensing (50+ users) requires contacting sales for custom pricing",
+        "Multi-year on-premises license terms are needed to unlock discounted pricing"
+      ],
+      "faqs": [
+        {"question": "Is SeaTable open source?", "answer": "SeaTable's codebase uses a mix of licenses: some components (dtable-web, dtable-events, thumbnail-server) are Apache License v2, the seaf-server component is AGPLv3, and dtable-server is proprietary — so it is not a single fully open-source stack."},
+        {"question": "Can SeaTable be self-hosted?", "answer": "Yes. SeaTable offers on-premises server licenses, including a permanently free plan for up to 3 users, in addition to its EU cloud and Dedicated Cloud hosting options."},
+        {"question": "Does SeaTable have a free plan?", "answer": "Yes, the Free cloud plan supports up to 25 users with 10,000 rows, 2GB storage, 3,000 API calls, and 12.5 AI credits."},
+        {"question": "What automation options does SeaTable support?", "answer": "SeaTable includes built-in automation rules and Python script execution, plus integrations with Zapier, Make, and n8n."},
+        {"question": "Where is SeaTable's data hosted?", "answer": "SeaTable's cloud plans are hosted in certified German data centers within the EU; on-premises and Dedicated Cloud options let organizations control data location directly."}
+      ],
+      "use_cases": [
+        {"title": "No-code internal app building", "description": "Teams use SeaTable's App Builder and Base Editor to create custom internal tools without writing code.", "audience": "Operations and business teams"},
+        {"title": "Project and workflow tracking", "description": "Kanban, Timeline, and Calendar views combined with automation rules support project management and task tracking.", "audience": "Project managers and cross-functional teams"},
+        {"title": "GDPR-sensitive data management", "description": "EU-hosted cloud plans and self-hosted on-premises licenses let regulated organizations keep data within Germany or on their own infrastructure.", "audience": "Organizations with strict data residency requirements"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "€0", "billing_cycle": "monthly", "features": ["Up to 25 users", "10,000 rows", "2GB storage", "1-month snapshots", "100 Python script runs", "3,000 API calls", "12.5 AI credits"]},
+        {"plan_name": "Plus", "price": "€7/user/month (billed annually) or €9/user/month (billed monthly)", "billing_cycle": "annual", "features": ["Unlimited users", "50,000 rows", "50GB storage", "6-month snapshots", "250 Python script runs/user", "10,000 API calls/user", "50 AI credits/user"]},
+        {"plan_name": "Enterprise", "price": "€14/user/month (billed annually) or €18/user/month (billed monthly)", "billing_cycle": "annual", "features": ["Unlimited users, rows, and bases", "100GB storage", "12-month snapshots", "1,000 Python script runs/user", "50,000 API calls/user", "500 AI credits/user", "5,000 automations/user", "Advanced customization"]},
+        {"plan_name": "Dedicated Cloud", "price": "Custom (100-user minimum, annual billing)", "billing_cycle": "annual", "features": ["1,000GB storage", "24-month snapshots", "Unlimited rows, Python runs, API calls, and automations", "Enterprise admin panel", "SAML/OAuth support"]},
+        {"plan_name": "On-Premises 3-User License", "price": "€0", "billing_cycle": null, "features": ["Permanently free", "Self-hosted", "Up to 3 users"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is SeaTable?", "level": 2, "paragraphs": [
+          "SeaTable is a database and app-building platform that pairs a familiar spreadsheet interface with database-level structure — support for linked records, multiple view types, and unlimited rows within a single base. It is developed by SeaTable GmbH, headquartered in Mainz, Germany, and offers EU cloud hosting alongside self-hosted on-premises deployment.",
+          "Beyond data storage, SeaTable includes a no-code App Builder for creating custom applications, built-in automation rules, Python script execution, and paid-tier AI credits for AI-assisted workflows. Its component licensing is mixed: some parts are Apache-2.0 or AGPLv3, while the core dtable-server component is proprietary."
+        ]},
+        {"id": "who-its-for", "heading": "Who SeaTable is for", "level": 2, "paragraphs": [
+          "SeaTable suits teams that need database-grade data management without writing SQL, particularly organizations with data-residency requirements that want the option of EU-hosted or fully self-hosted deployment. It's used for internal app building, project tracking, and automation by organizations including the United Nations and the Max Planck Society, per SeaTable's website."
+        ]}
+      ],
+      "tags": ["no-code", "api", "web-app", "self-hosted", "ai", "freemium", "free-plan", "templates"]
+    }
+  },
+  {
+    "tool_id": "29ae5ed4-0528-4ac2-93c1-e33536bd6b2f",
+    "slug": "teable",
+    "name": "Teable",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Teable is an open-source, no-code database platform built on Postgres that combines a spreadsheet interface with AI-assisted app and workflow building.",
+      "pricing_model": "Freemium",
+      "starting_price": "$10/seat/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Teable: open-source, Postgres-backed no-code database with AI fields, automation, and self-hosted or cloud deployment options.",
+      "features": [
+        {"title": "Postgres-backed no-code database", "description": "Teable stores data in PostgreSQL, letting it scale to millions of rows while still offering a spreadsheet-like grid interface."},
+        {"title": "Multiple views", "description": "Grid, Form, Kanban, Gallery, and Calendar views let teams visualize and interact with the same underlying data."},
+        {"title": "AI fields and AI chat", "description": "Plans include AI-assisted features such as AI fields, AI chat, an app builder for natural-language app generation, and an AI agent called CuppyClaw."},
+        {"title": "Automation with a credit system", "description": "Workflows use triggers, actions, and rules, with usage metered through a credit system (200 credits on Free up to 2,000/seat on Business)."},
+        {"title": "Self-hosting via Docker", "description": "The Community Edition is AGPL-3.0 licensed and can be self-hosted with Docker or one-click deployed to platforms like Railway, Sealos, and Zeabur."},
+        {"title": "SQL querying and API access", "description": "Teable supports direct SQL querying, formulas, filtering, aggregation, and API access alongside import/export and version history."}
+      ],
+      "pros": [
+        "Built on PostgreSQL, so it handles millions of rows rather than the row limits typical of no-code tools",
+        "Community Edition is open source (AGPL-3.0) and self-hostable via Docker",
+        "Includes AI-assisted features (AI fields, AI chat, app builder) starting on the free tier",
+        "ISO 9001 and ISO 27001 certifications, per Teable's site",
+        "Multiple one-click deployment options (Railway, Sealos, Zeabur) in addition to Docker"
+      ],
+      "cons": [
+        "Enterprise Edition features are proprietary and not part of the open-source Community Edition",
+        "AI and automation usage is metered by a credit system, which can add cost for heavy users",
+        "Free plan is limited to 1,000 rows and 1GB of attachments",
+        "Headquarters and founding year are not clearly published on the official site"
+      ],
+      "faqs": [
+        {"question": "Is Teable open source?", "answer": "Teable's Community Edition is licensed under AGPL-3.0 and free to self-host; an Enterprise Edition with additional features is available under a proprietary license."},
+        {"question": "Can Teable be self-hosted?", "answer": "Yes, the Community Edition can be self-hosted via Docker, with one-click deployment options for platforms like Railway, Sealos, and Zeabur."},
+        {"question": "What database does Teable use?", "answer": "Teable is built on PostgreSQL, which lets it handle millions of rows — more than typical spreadsheet-style no-code tools."},
+        {"question": "Does Teable have a free plan?", "answer": "Yes, the Free plan includes 200 credits, 100 automation runs per month, 1,000 rows, and 1GB of attachments per seat."},
+        {"question": "What AI features does Teable offer?", "answer": "Teable includes AI chat, AI-powered fields, a natural-language app builder, and an AI agent called CuppyClaw, available starting on the Free plan."}
+      ],
+      "use_cases": [
+        {"title": "No-code app and workflow building", "description": "Teams use Teable's app builder and automation rules to turn spreadsheet-style data into workflows and internal applications without code.", "audience": "Operations teams and no-code builders"},
+        {"title": "Large-scale data management", "description": "Because Teable runs on PostgreSQL, it supports datasets with millions of rows that would exceed typical spreadsheet-tool limits.", "audience": "Teams migrating from spreadsheets or legacy systems"},
+        {"title": "Self-hosted database applications", "description": "Organizations that need to keep data on their own infrastructure can self-host the AGPL-3.0 Community Edition via Docker.", "audience": "Engineering teams with data residency or compliance requirements"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0/seat/month", "billing_cycle": "monthly", "features": ["200 credits", "100 automation runs", "1,000 rows", "1GB attachments", "AI chat, AI field, app builder, CuppyClaw agent access"]},
+        {"plan_name": "Pro", "price": "$10/seat/month (yearly) or $12/seat/month (monthly)", "billing_cycle": "annual", "features": ["1,000 credits/seat", "25,000 automation runs", "250,000 rows", "10GB attachments", "All field types", "Credit subscriptions"]},
+        {"plan_name": "Business", "price": "$20/seat/month (yearly) or $24/seat/month (monthly)", "billing_cycle": "annual", "features": ["2,000 credits/seat", "100,000 automation runs", "1,000,000 rows", "100GB attachments", "Custom app domain", "Authority matrix", "Domain verification", "SSO", "3-year data retention history"]},
+        {"plan_name": "500 Credits Add-on", "price": "$5/space/month (yearly) or $6/month", "billing_cycle": "annual", "features": ["Additional credits billed at cost with 0% markup", "Available for Pro plan and above"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Teable?", "level": 2, "paragraphs": [
+          "Teable is a no-code database platform that pairs a spreadsheet-style grid with a PostgreSQL backend, letting it scale to millions of rows while keeping an Airtable-like editing experience. It offers Grid, Form, Kanban, Gallery, and Calendar views, formulas, filtering, SQL querying, and version history.",
+          "The Community Edition is open source under AGPL-3.0 and can be self-hosted via Docker or deployed to platforms like Railway, Sealos, and Zeabur. An Enterprise Edition adds proprietary features such as SSO and custom domains, and Teable's cloud offering layers on AI features — AI fields, AI chat, an app builder, and a credit-based automation system — across Free, Pro, and Business plans."
+        ]},
+        {"id": "who-its-for", "heading": "Who Teable is for", "level": 2, "paragraphs": [
+          "Teable fits teams that have outgrown spreadsheet row limits but still want a no-code, spreadsheet-like editing experience, as well as engineering teams that want a self-hostable, Postgres-backed alternative to proprietary no-code database tools."
+        ]}
+      ],
+      "tags": ["no-code", "api", "web-app", "self-hosted", "open-source", "ai", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "b425d59b-1c35-4d02-b5ba-62b13f0c3db7",
+    "slug": "mathesar",
+    "name": "Mathesar",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mathesar is a free, open-source spreadsheet-like web interface for viewing, editing, and querying PostgreSQL databases without writing SQL.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Mathesar: open-source (GPLv3), self-hosted spreadsheet interface for PostgreSQL, maintained by the nonprofit Mathesar Foundation.",
+      "features": [
+        {"title": "Spreadsheet-like interface for Postgres", "description": "Mathesar lets users view, edit, and query PostgreSQL data through a spreadsheet-style UI without writing SQL."},
+        {"title": "Works with native Postgres permissions", "description": "Access control is built on Postgres's own schemas and permissions rather than a separate abstraction layer."},
+        {"title": "Self-hosted via Docker", "description": "Mathesar installs on your own infrastructure using Docker, so data stays on your own servers."},
+        {"title": "Forms and query builders", "description": "Includes forms, query builders, schema management, and relationship mapping for working with relational data."},
+        {"title": "Production-ready scalability", "description": "Because it operates directly on Postgres, Mathesar's scalability follows PostgreSQL's own capabilities rather than a separate data layer."}
+      ],
+      "pros": [
+        "100% open source (GPLv3) and maintained by the nonprofit Mathesar Foundation, a 501(c)(3)",
+        "No pricing tiers or paid lock-in — free to self-host",
+        "Works directly on your existing PostgreSQL database using native permissions, not a separate abstraction",
+        "Docker-based install described by the project as installable in minutes"
+      ],
+      "cons": [
+        "Public Beta status — the project describes itself as stable enough for production but has not reached a stable 1.0 release",
+        "Requires an existing PostgreSQL database and self-hosting/Docker setup; no first-party managed hosting was confirmed",
+        "No documented native mobile apps",
+        "Limited public information on team size, roadmap timeline, or enterprise support options"
+      ],
+      "faqs": [
+        {"question": "Is Mathesar free?", "answer": "Yes. Mathesar is 100% open source under GPLv3 and maintained by the nonprofit Mathesar Foundation, with no paid tiers required to use it."},
+        {"question": "Do I need my own PostgreSQL database to use Mathesar?", "answer": "Yes, Mathesar is a UI layer that connects to and operates directly on an existing PostgreSQL database using Postgres's native schemas and permissions."},
+        {"question": "How is Mathesar deployed?", "answer": "Mathesar is self-hosted using Docker on your own infrastructure, so your data does not leave your own servers."},
+        {"question": "Is Mathesar production-ready?", "answer": "Mathesar is in Public Beta. The project describes it as stable enough for production deployment, but it has not reached a stable 1.0 release."},
+        {"question": "Who maintains Mathesar?", "answer": "Mathesar is maintained by the Mathesar Foundation, a 501(c)(3) nonprofit organization."}
+      ],
+      "use_cases": [
+        {"title": "No-code database administration", "description": "Non-technical staff can view, filter, and edit PostgreSQL data through a spreadsheet-like UI instead of writing SQL.", "audience": "Non-technical database users"},
+        {"title": "Self-hosted data management for regulated teams", "description": "Organizations that must keep data on their own infrastructure can self-host Mathesar via Docker against their existing Postgres instance.", "audience": "Engineering and IT teams with data residency requirements"},
+        {"title": "Collaborative Postgres data editing", "description": "Teams collaborate on viewing, editing, and querying shared Postgres data using native Postgres permissions for access control.", "audience": "Cross-functional teams sharing a Postgres database"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Mathesar?", "level": 2, "paragraphs": [
+          "Mathesar is an open-source web application that gives PostgreSQL databases a spreadsheet-like interface for viewing, editing, and querying data. It's built to work directly with Postgres's own schemas and permissions rather than introducing a separate data layer, and it's licensed under GPLv3.",
+          "The project is maintained by the Mathesar Foundation, a registered 501(c)(3) nonprofit, and is currently in Public Beta. It is self-hosted via Docker so that data remains on the user's own infrastructure, and includes forms, query builders, and relationship mapping for relational data."
+        ]},
+        {"id": "who-its-for", "heading": "Who Mathesar is for", "level": 2, "paragraphs": [
+          "Mathesar is aimed at teams and individuals who want spreadsheet-like ease of use over a real PostgreSQL database — including non-technical users who need to edit data without SQL, and engineering teams that want a free, self-hosted, open-source alternative to proprietary no-code database tools."
+        ]}
+      ],
+      "tags": ["no-code", "self-hosted", "open-source", "web-app"]
+    }
+  },
+  {
+    "tool_id": "0ae551c4-e1e4-4011-b3e4-9ec706fc44ff",
+    "slug": "keystonejs",
+    "name": "KeystoneJS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "KeystoneJS is a free, open-source Node.js headless CMS that generates a GraphQL API and admin UI from a schema you define.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "KeystoneJS: free, open-source (MIT) Node.js headless CMS with an auto-generated GraphQL API, admin UI, and Prisma-based database migrations.",
+      "features": [
+        {"title": "Schema-driven GraphQL API", "description": "Define your data schema once and Keystone automatically generates a full GraphQL API with pagination, sorting, filtering, and CRUD operations."},
+        {"title": "Auto-generated Admin UI", "description": "A customizable admin interface is generated from your schema, including a rich text WYSIWYG editor for content editing."},
+        {"title": "Fine-grained access control", "description": "Built-in access control lets developers restrict operations at the field, list, and operation level."},
+        {"title": "Prisma-based migrations", "description": "Database schema migrations are handled automatically through Prisma."},
+        {"title": "Session management", "description": "Includes built-in user session handling for authentication flows."},
+        {"title": "Custom logic via hooks", "description": "Supports event hooks and custom GraphQL queries/mutations for extending default behavior."},
+        {"title": "TypeScript-first", "description": "Written in TypeScript (99% of the codebase) with full TypeScript or JavaScript support for application code."}
+      ],
+      "pros": [
+        "Free and fully open source under the MIT license, with no vendor lock-in",
+        "Auto-generates both a GraphQL API and an admin UI from a single schema definition",
+        "Over 1 million npm installs and 250+ contributors, per the project's own site",
+        "Deployable to a wide range of hosts (DigitalOcean, Heroku, Render, Vercel, AWS, Azure, Google Cloud) or custom infrastructure",
+        "Database migrations handled automatically via Prisma"
+      ],
+      "cons": [
+        "Requires Node.js development skills — it is a developer framework, not a no-code tool",
+        "Keystone 5 is in maintenance mode; only Keystone 6 receives active development",
+        "Paid support is only available as a separate enterprise contract through Thinkmill, not a packaged pricing tier",
+        "No official managed hosting/cloud product — self-hosting or third-party PaaS deployment is required"
+      ],
+      "faqs": [
+        {"question": "Is KeystoneJS free?", "answer": "Yes, KeystoneJS is free and open source under the MIT license. Paid enterprise support is available separately through Thinkmill."},
+        {"question": "What does KeystoneJS generate from my schema?", "answer": "Defining a schema in Keystone automatically produces a GraphQL API with CRUD, pagination, sorting, and filtering, plus a customizable admin UI."},
+        {"question": "What database tooling does KeystoneJS use?", "answer": "Keystone uses Prisma to handle database migrations automatically."},
+        {"question": "Is Keystone 5 still supported?", "answer": "Keystone 5 is in maintenance mode; Keystone 6 (published under the @keystone-6/* npm namespace) is the actively developed version."},
+        {"question": "Who maintains KeystoneJS?", "answer": "KeystoneJS is developed and maintained by Thinkmill, an Australian design and development consultancy, with contributions from 250+ people since the project's first commit in 2013."}
+      ],
+      "use_cases": [
+        {"title": "Headless CMS for custom front ends", "description": "Developers use Keystone's generated GraphQL API to power custom websites, apps, or storefronts while editors use the auto-generated admin UI.", "audience": "Developers building custom content-driven applications"},
+        {"title": "Internal admin tools and data APIs", "description": "Because Keystone generates a full CRUD GraphQL API and admin UI from a schema, teams use it to quickly stand up internal data management tools.", "audience": "Engineering teams needing a fast backend and admin UI"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is KeystoneJS?", "level": 2, "paragraphs": [
+          "KeystoneJS is a free, open-source (MIT-licensed) headless content management framework for Node.js. Developers define a data schema, and Keystone automatically generates a GraphQL API — with pagination, sorting, filtering, and CRUD operations — along with a customizable admin UI.",
+          "Built with TypeScript, GraphQL, and Prisma, Keystone handles database migrations automatically and includes built-in session management, fine-grained access control, and support for custom hooks and GraphQL queries/mutations. The current major version is Keystone 6 (Keystone 5 is in maintenance mode), maintained by Thinkmill with over 1 million npm installs and 250+ contributors since its first commit in 2013."
+        ]},
+        {"id": "who-its-for", "heading": "Who KeystoneJS is for", "level": 2, "paragraphs": [
+          "KeystoneJS is built for developers who want a code-first, schema-driven headless CMS rather than a no-code tool — teams that need a customizable GraphQL API and admin UI backing a custom-built front end, and that are comfortable deploying and hosting a Node.js application themselves."
+        ]}
+      ],
+      "tags": ["api", "web-app", "self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "10cff4ac-f281-4d9e-998a-dc5742fcfd08",
+    "slug": "tinacms",
+    "name": "TinaCMS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, Git-backed headless CMS with visual editing for Markdown/MDX content, self-hostable or via Tina Cloud.",
+      "pricing_model": "Freemium",
+      "starting_price": "$24/month",
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "TinaCMS: open-source, Git-backed headless CMS with visual editing, a GraphQL API, and free or paid Tina Cloud hosting plans.",
+      "features": [
+        {"title": "Git-backed content storage", "description": "Content is saved directly to your Git repository (e.g. GitHub) as Markdown, MDX, JSON, or YAML, giving full version history."},
+        {"title": "Visual, in-context editing", "description": "Content authors can edit live pages through a visual editor, with changes synced back to Git."},
+        {"title": "GraphQL content API", "description": "An auto-generated GraphQL API lets any frontend query and mutate content."},
+        {"title": "Framework integrations", "description": "Documented integrations with Next.js, Astro, Hugo, and Jekyll."},
+        {"title": "Editorial workflow", "description": "Approval-based editorial workflows are available on Team Plus and higher Tina Cloud plans."},
+        {"title": "Self-hostable backend", "description": "The Apache-2.0 licensed backend can be self-hosted on any platform supporting Express, as an alternative to Tina Cloud."},
+        {"title": "Role-based access", "description": "Tina Cloud plans include configurable user roles for managing team permissions."}
+      ],
+      "pros": [
+        "Open source (Apache-2.0) with a self-hostable backend, avoiding vendor lock-in.",
+        "Free Tina Cloud tier available for individuals with 2 users.",
+        "Content is stored as plain Markdown/MDX/JSON/YAML in Git, preserving full version history.",
+        "Visual, in-context editing experience aimed at non-technical content editors.",
+        "Active open-source project with over 13,000 GitHub stars and frequent releases."
+      ],
+      "cons": [
+        "Editorial workflow and API access are gated behind paid Team Plus/Business Tina Cloud tiers.",
+        "AI features on Tina Cloud were still in development at time of review.",
+        "Self-hosting the backend requires developer setup of a Git provider, database adapter, and auth provider.",
+        "Tina Cloud paid plans are billed per project, which can add up for agencies managing many sites."
+      ],
+      "faqs": [
+        {"question": "Is TinaCMS free?", "answer": "TinaCMS's code is open-source under Apache-2.0, and Tina Cloud offers a free plan with 2 users; paid Tina Cloud plans start at $24/month for more users and features."},
+        {"question": "Does TinaCMS require Tina Cloud?", "answer": "No. TinaCMS can be self-hosted using your own database, Git provider, and auth provider instead of the hosted Tina Cloud service."},
+        {"question": "What content formats does TinaCMS support?", "answer": "TinaCMS supports Markdown, MDX, JSON, and YAML content stored in a Git repository."},
+        {"question": "Who maintains TinaCMS?", "answer": "TinaCMS was originally launched by Forestry.io and has been maintained by SSW, an Australian software consultancy, since SSW acquired the project in 2024."},
+        {"question": "What frameworks does TinaCMS integrate with?", "answer": "TinaCMS documents integrations with Next.js, Astro, Hugo, and Jekyll, among other static site generators."}
+      ],
+      "use_cases": [
+        {"title": "Developer-led marketing sites", "description": "Teams building Next.js, Astro, or Hugo sites who want Git-based content with a visual editor for marketing content.", "audience": "Web development teams and agencies"},
+        {"title": "Documentation and blog sites", "description": "Projects storing Markdown/MDX docs or blog posts in Git that need a friendlier editing UI for non-technical writers.", "audience": "Content writers and technical bloggers"},
+        {"title": "Self-hosted enterprise content", "description": "Organizations needing full control over their CMS backend and data by self-hosting instead of using Tina Cloud.", "audience": "Enterprises with data sovereignty requirements"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["2 users", "2 roles", "Community support"]},
+        {"plan_name": "Team", "price": "$24/month or $290/year", "billing_cycle": "monthly", "features": ["Up to 3 users (10 max with add-ons)", "2 roles", "Team support", "Additional seats $90/year"]},
+        {"plan_name": "Team Plus", "price": "$41/month or $490/year", "billing_cycle": "monthly", "features": ["Up to 5 users (20 max with add-ons)", "2 roles", "Team support", "Editorial workflow", "AI features in development"]},
+        {"plan_name": "Business", "price": "$249/month or $2,990/year", "billing_cycle": "monthly", "features": ["20 users (unlimited with add-ons)", "3 roles (beta)", "Business support", "Editorial workflow", "API (beta)", "AI features in development"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom user counts and roles", "Enterprise support", "GitHub Enterprise support", "SSO", "No user limits"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is TinaCMS?", "level": 2, "paragraphs": [
+          "TinaCMS is an open-source, Git-backed headless CMS that stores content as Markdown, MDX, JSON, or YAML files directly in a Git repository. It combines a GraphQL content API with a visual, in-context editor that lets content authors edit live pages and sync changes back to Git.",
+          "The project, originally launched by Forestry.io, has been maintained by SSW, an Australian software consultancy, since SSW acquired TinaCMS in 2024. TinaCMS's backend is Apache-2.0 licensed and can be self-hosted, or run through the hosted Tina Cloud service, which offers a free tier plus paid Team, Team Plus, Business, and Enterprise plans."
+        ]},
+        {"id": "who-its-for", "heading": "Who TinaCMS is for", "level": 2, "paragraphs": [
+          "TinaCMS suits developers and content teams already working with Git-based static sites (Next.js, Astro, Hugo, Jekyll) who want a visual editing layer without giving up version-controlled, file-based content. It also fits organizations wanting to self-host their CMS backend for full data control."
+        ]}
+      ],
+      "tags": ["api", "web-app", "self-hosted", "open-source", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "26315baf-61aa-4fda-b2de-4986fe3babe9",
+    "slug": "cockpit-cms",
+    "name": "Cockpit CMS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Self-hosted, MIT-licensed headless CMS with REST/GraphQL APIs, flexible content models, and optional paid Pro addons.",
+      "pricing_model": "Freemium",
+      "starting_price": "€299 one-time",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Cockpit CMS: free, self-hosted, MIT-licensed API-first headless CMS with optional one-time-purchase Pro addons.",
+      "features": [
+        {"title": "API-first architecture", "description": "REST and GraphQL APIs for querying content, compatible with Next.js, React, Vue, Svelte, PHP, and Node.js."},
+        {"title": "Flexible content models", "description": "Collections, Singletons, and Trees with custom and conditional fields for structuring content."},
+        {"title": "Self-hosted deployment", "description": "Runs on your own server (PHP 7.3+, SQLite or MongoDB) with no vendor lock-in and no required account."},
+        {"title": "Localization", "description": "Built-in multi-language content and key-based language strings, with optional AI-assisted translation via DeepL or LibreTranslate."},
+        {"title": "Asset management", "description": "Cloud storage support, nestable asset folders, automatic color extraction, and an image API for thumbnail generation."},
+        {"title": "Role-based permissions", "description": "Fine-grained access control for multiple user roles."},
+        {"title": "Content revisions", "description": "Ability to revert content to previous versions."},
+        {"title": "Pro addons", "description": "Optional paid add-ons including Autopilot (AI assistant), Detektivo (Meilisearch full-text search), Sync (environment deployment), and Layouts & Pages (visual page builder)."}
+      ],
+      "pros": [
+        "MIT-licensed open-source core that is free forever, with no required account or vendor lock-in.",
+        "Fully self-hosted, giving organizations complete control over their data.",
+        "Supports both REST and GraphQL APIs, usable with a wide range of frontend and backend stacks.",
+        "One-time Pro license (€299) instead of a mandatory recurring subscription.",
+        "Flexible content modeling with Collections, Singletons, and Trees."
+      ],
+      "cons": [
+        "Advanced features (AI assistant, full-text search, visual page builder, environment sync) require the paid Pro add-on license.",
+        "Self-hosting requires managing your own PHP server environment (PHP 7.3+, SQLite/MongoDB, Apache with mod_rewrite).",
+        "Pro license renewal (€99/year) is needed to keep receiving updates after the first year.",
+        "Smaller GitHub community than some competitors, with under 6k stars on the legacy agentejo/cockpit repository."
+      ],
+      "faqs": [
+        {"question": "Is Cockpit CMS free?", "answer": "Yes, the Cockpit core is MIT-licensed and free forever; a paid Pro tier (€299 one-time per project, €99/year for continued updates) unlocks additional addons, and custom Enterprise pricing is also available."},
+        {"question": "Is Cockpit CMS self-hosted?", "answer": "Yes, Cockpit is designed to be installed on your own server and requires PHP 7.3+, PDO with SQLite or MongoDB, and Apache with mod_rewrite."},
+        {"question": "Does Cockpit CMS support GraphQL?", "answer": "Yes, Cockpit offers both REST and GraphQL APIs for content access."},
+        {"question": "What are Cockpit's Pro addons?", "answer": "Paid Pro addons include Autopilot (AI content and image generation), Detektivo (Meilisearch-powered full-text search), Sync (environment-to-environment deployment), Layouts & Pages (visual page building with SEO tools), and Inbox (form submissions)."},
+        {"question": "Who makes Cockpit CMS?", "answer": "Cockpit is made by Agentejo, with current development continuing under the Cockpit-HQ organization on GitHub."}
+      ],
+      "use_cases": [
+        {"title": "Custom frontend content backends", "description": "Developers building sites or apps in Next.js, React, Vue, or Svelte who need a lightweight, self-hosted API-first CMS.", "audience": "Frontend and full-stack developers"},
+        {"title": "Data-sovereign content management", "description": "Organizations needing to keep content on their own infrastructure for data control or compliance reasons.", "audience": "Public sector and education organizations"},
+        {"title": "Multi-language content projects", "description": "Teams managing localized content across multiple languages using Cockpit's built-in localization and optional AI translation add-ons.", "audience": "Content teams managing multilingual sites"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Core (Open Source)", "price": "Free", "billing_cycle": null, "features": ["MIT-licensed core CMS", "Self-hosted", "REST & GraphQL APIs", "No account required"]},
+        {"plan_name": "Pro", "price": "€299 one-time per project", "billing_cycle": null, "features": ["All Pro addons (Autopilot, Detektivo, Sync, Layouts & Pages, Inbox)", "Covers one production instance plus unlimited dev/staging environments", "One year of updates included", "€99/year optional renewal for continued updates"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom licensing terms", "Individual consulting", "High-level support"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Cockpit CMS?", "level": 2, "paragraphs": [
+          "Cockpit is a self-hosted, API-first headless content management platform made by Agentejo. Its core is MIT-licensed and free to use, letting developers structure content with Collections, Singletons, and Trees, and expose it through REST or GraphQL APIs to any frontend or backend stack.",
+          "Beyond the free core, Cockpit offers a one-time-purchase Pro tier (€299 per project, with optional €99/year update renewals) that unlocks addons such as Autopilot (AI content generation), Detektivo (full-text search via Meilisearch), Sync (environment deployment), and Layouts & Pages (visual page building). Custom Enterprise pricing is also available for organizations with specific licensing or support needs."
+        ]},
+        {"id": "who-its-for", "heading": "Who Cockpit CMS is for", "level": 2, "paragraphs": [
+          "Cockpit fits developers and organizations that want to self-host their content backend rather than use a SaaS CMS, particularly those with data sovereignty requirements or teams that prefer a one-time license over recurring subscription costs."
+        ]}
+      ],
+      "tags": ["api", "web-app", "self-hosted", "open-source", "freemium", "free-plan"]
+    }
+  }
+]

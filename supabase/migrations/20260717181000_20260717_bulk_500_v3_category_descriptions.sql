@@ -1,0 +1,9 @@
+-- Follow-up fix (same pattern as the first bulk-500 batch): the prerender
+-- category-page build hard-fails without a description/seo_description on
+-- every category row, so the 5 new categories from the companion migration
+-- need one before the next build runs.
+UPDATE tool_categories SET description = $q$ERP and business-management platforms that unify accounting, inventory, manufacturing, and operations in one system.$q$, seo_description = $q$Compare the best ERP and business-management software for unifying accounting, inventory, and operations.$q$ WHERE slug = $q$erp$q$ AND description IS NULL;
+UPDATE tool_categories SET description = $q$Procurement and spend-management software for purchase orders, vendor management, and SaaS spend control.$q$, seo_description = $q$Compare the best procurement and spend-management tools for purchase orders and vendor management.$q$ WHERE slug = $q$procurement$q$ AND description IS NULL;
+UPDATE tool_categories SET description = $q$Reputation-management platforms for monitoring, collecting, and responding to online customer reviews.$q$, seo_description = $q$Compare the best reputation-management software for monitoring and responding to customer reviews.$q$ WHERE slug = $q$reputation-management$q$ AND description IS NULL;
+UPDATE tool_categories SET description = $q$Community platforms for hosting branded discussion forums, member spaces, and customer communities.$q$, seo_description = $q$Compare the best community platforms for hosting branded forums and member communities.$q$ WHERE slug = $q$community$q$ AND description IS NULL;
+UPDATE tool_categories SET description = $q$Podcast hosting platforms for publishing, distributing, and monetizing podcast episodes across listening apps.$q$, seo_description = $q$Compare the best podcast hosting platforms for publishing and distributing episodes.$q$ WHERE slug = $q$podcast-hosting$q$ AND description IS NULL;

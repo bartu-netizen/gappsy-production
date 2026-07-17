@@ -1,0 +1,592 @@
+[
+  {
+    "tool_id": "b95ba4cb-96d7-4478-9722-2807aa591486",
+    "slug": "permify",
+    "name": "Permify",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Permify is an open-source, Zanzibar-inspired authorization service for building fine-grained RBAC, ABAC, and ReBAC access control.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Permify: open-source, Zanzibar-inspired authorization service with RBAC, ABAC, and ReBAC support for developers, self-hosted or cloud.",
+      "features": [
+        {"title": "Centralized authorization engine", "description": "Abstracts permission logic out of individual applications into a single service, based on the relationship-modeling approach of Google's Zanzibar paper."},
+        {"title": "Multiple access control models", "description": "Supports role-based (RBAC), attribute-based (ABAC), and relationship-based (ReBAC) access control within one schema language."},
+        {"title": "Fast access checks", "description": "Permify's documentation reports access-check response times as fast as 10ms for permission evaluation."},
+        {"title": "Multi-tenant support", "description": "Isolated authorization logic can be configured per tenant within a single Permify deployment."},
+        {"title": "Self-hosted or managed cloud", "description": "Runs as a self-hosted, AGPL-3.0 licensed service, or as Permify Cloud, a managed offering with SOC2 and GDPR compliance across AWS, GCP, and Azure."},
+        {"title": "Schema-as-code modeling", "description": "Authorization rules are defined in a dedicated schema language that can be version-controlled alongside application code."}
+      ],
+      "pros": [
+        "Open source under AGPL-3.0 with a fully self-hostable Community edition",
+        "Modeled on Google's Zanzibar authorization approach used for large-scale systems",
+        "Supports RBAC, ABAC, and ReBAC in a single unified engine",
+        "Backed by FusionAuth following its November 2025 acquisition, which committed to keeping Permify open source",
+        "Managed Permify Cloud option available for teams that don't want to self-host"
+      ],
+      "cons": [
+        "Now part of FusionAuth's product family, with a unified pricing model planned for 2026 that may change today's standalone offering",
+        "Managed Permify Cloud pricing is not publicly listed and requires contacting sales",
+        "Requires learning Permify's own schema language to model authorization logic",
+        "Best suited to teams already comfortable running a dedicated authorization microservice"
+      ],
+      "faqs": [
+        {"question": "Is Permify free to use?", "answer": "Yes. Permify's core authorization engine is open source under the AGPL-3.0 license and can be self-hosted for free. A paid, managed Permify Cloud offering is also available."},
+        {"question": "Who maintains Permify?", "answer": "Permify was acquired by FusionAuth in November 2025. FusionAuth has stated Permify remains open source and continues to be developed as a standalone authorization engine."},
+        {"question": "What authorization models does Permify support?", "answer": "Permify supports role-based access control (RBAC), attribute-based access control (ABAC), and relationship-based access control (ReBAC) within a single schema."},
+        {"question": "Can Permify run in the cloud?", "answer": "Yes. Permify Cloud is a managed hosting option with SOC2 and GDPR compliance, available across AWS, GCP, and Azure regions."}
+      ],
+      "use_cases": [
+        {"title": "Fine-grained permissions for SaaS applications", "description": "Teams building multi-tenant SaaS products use Permify to centralize resource-level and role-based permission checks instead of hardcoding authorization logic into each service.", "audience": "SaaS engineering teams"},
+        {"title": "Replacing ad hoc authorization code", "description": "Organizations migrating away from scattered if/else permission checks adopt Permify's schema language to define, test, and audit access rules in one place.", "audience": "Platform and backend engineers"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community (Self-Hosted)", "price": "Free", "billing_cycle": null, "features": ["Open source under AGPL-3.0", "Full self-hosted deployment", "RBAC, ABAC, and ReBAC support"]},
+        {"plan_name": "Permify Cloud", "price": "Custom (usage-based)", "billing_cycle": null, "features": ["Managed hosting on AWS, GCP, or Azure", "SOC2 and GDPR compliance", "Premium support"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Permify?", "level": 2, "paragraphs": [
+          "Permify is an open-source authorization-as-a-service platform that helps developers build and manage fine-grained, scalable access control systems, inspired by Google's Zanzibar authorization model.",
+          "It stores permission data as structured relationships and exposes a check API for evaluating access decisions, supporting RBAC, ABAC, and ReBAC models in one schema. Permify was acquired by FusionAuth in November 2025 and remains open source under AGPL-3.0."
+        ]},
+        {"id": "who-its-for", "heading": "Who Permify is for", "level": 2, "paragraphs": [
+          "Permify suits engineering teams that need centralized, auditable authorization across multiple applications or services rather than reimplementing permission logic in each codebase."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "05c2f6b8-9698-410f-a6a2-b3cdf7f98777",
+    "slug": "casbin",
+    "name": "Casbin",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Apache Casbin is an open-source access control library supporting multiple authorization models across 15+ programming languages.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Apache Casbin: open-source access control library for RBAC, ABAC, and other authorization models, available in 15+ languages.",
+      "features": [
+        {"title": "Hybrid access control models", "description": "Uses PERM metamodel .conf policy files to configure RBAC, ABAC, ACL, and other access control models declaratively."},
+        {"title": "Multi-language implementations", "description": "Provides libraries for Go, Java, C/C++, Node.js, PHP, Python, .NET, Rust, Ruby, Swift, Lua, Dart, and more."},
+        {"title": "Pluggable policy storage", "description": "Policies can be stored in MySQL, Postgres, Oracle, MongoDB, Redis, Cassandra, AWS S3, and other adapters."},
+        {"title": "Filtered policy loading", "description": "Supports loading a subset of policy rules for large-scale deployments with many policies."},
+        {"title": "Role manager integrations", "description": "Role hierarchies can be synced with external identity providers such as LDAP, Okta, Auth0, and Azure AD."},
+        {"title": "Online policy editor", "description": "An interactive editor lets developers test and debug authorization models and policies in the browser."}
+      ],
+      "pros": [
+        "Fully open source under the Apache License 2.0",
+        "Available in 15+ programming languages with consistent APIs",
+        "Supports many storage backends via a pluggable adapter system",
+        "Used in production by large organizations including Intel, VMware, Cisco, and Alibaba, per the project site",
+        "Undergoing incubation at the Apache Software Foundation, indicating formal governance"
+      ],
+      "cons": [
+        "Apache Casbin is still labeled '(Incubating)' at the ASF, meaning governance and infrastructure are not yet fully finalized",
+        "No official hosted or managed offering; teams must integrate and operate it themselves",
+        "Policy modeling with the PERM metamodel has a learning curve for teams new to declarative authorization config"
+      ],
+      "faqs": [
+        {"question": "Is Casbin free to use?", "answer": "Yes. Casbin is a fully open-source library licensed under Apache License 2.0, with no paid tier."},
+        {"question": "What programming languages does Casbin support?", "answer": "Casbin has implementations in Golang, Java, C/C++, Node.js, JavaScript, PHP, Python, .NET (C#), Rust, Ruby, Swift, Lua, Dart, Elixir, and more."},
+        {"question": "What access control models does Casbin support?", "answer": "Casbin supports ACL, RBAC, ABAC, and other hybrid access control models defined through its PERM metamodel configuration files."},
+        {"question": "Where can Casbin policies be stored?", "answer": "Casbin supports pluggable storage adapters including MySQL, Postgres, Oracle, MongoDB, Redis, Cassandra, and AWS S3."}
+      ],
+      "use_cases": [
+        {"title": "Adding authorization to a new service", "description": "Developers embed the Casbin library directly into an application to enforce RBAC or ABAC policies without building an authorization system from scratch.", "audience": "Backend developers"},
+        {"title": "Standardizing access control across microservices", "description": "Teams use Casbin's consistent multi-language APIs to apply the same authorization model across services written in different languages.", "audience": "Platform engineering teams"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Casbin?", "level": 2, "paragraphs": [
+          "Apache Casbin is an open-source access control library that supports multiple authorization models, including ACL, RBAC, and ABAC, through a declarative PERM metamodel configuration.",
+          "It is implemented across more than a dozen programming languages and can persist policies in a range of databases via pluggable adapters. The project is currently undergoing incubation at the Apache Software Foundation."
+        ]},
+        {"id": "who-its-for", "heading": "Who Casbin is for", "level": 2, "paragraphs": [
+          "Casbin is aimed at developers who need to embed flexible, model-driven authorization directly into an application or service rather than relying on an external authorization API."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "c1a8c047-6445-4dbd-ae16-412f8a2807f2",
+    "slug": "open-policy-agent",
+    "name": "Open Policy Agent",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open Policy Agent (OPA) is a CNCF-graduated, open-source policy engine for enforcing policy-as-code across cloud-native infrastructure.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Open Policy Agent (OPA): CNCF-graduated, open-source Rego policy engine for authorization, compliance, and Kubernetes admission control.",
+      "features": [
+        {"title": "Rego policy language", "description": "Policies are written in Rego, a declarative language purpose-built for expressing rules over structured data."},
+        {"title": "Decoupled policy enforcement", "description": "Separates policy decision-making from application code, letting teams update authorization or compliance rules without redeploying services."},
+        {"title": "Kubernetes admission control", "description": "OPA Gatekeeper, a related CNCF project, enforces Rego policies as Kubernetes admission controllers."},
+        {"title": "Configuration testing", "description": "Conftest, a companion tool in the OPA ecosystem, tests configuration files such as Kubernetes manifests and Terraform plans against Rego policies."},
+        {"title": "Interactive policy playground", "description": "The OPA website provides a 'Play' environment for writing and testing Rego policies directly in the browser."}
+      ],
+      "pros": [
+        "Fully open source under the Apache License 2.0",
+        "Graduated CNCF project (graduated January 2021), indicating mature governance and broad adoption",
+        "Used by large enterprises including Atlassian, Bloomberg, Capital One, Cisco, Goldman Sachs, and Pinterest, per the project site",
+        "General-purpose engine that applies to authorization, Kubernetes policy, CI/CD, and infrastructure-as-code checks",
+        "Active ecosystem of companion tools (Gatekeeper, Conftest, Regal)"
+      ],
+      "cons": [
+        "Rego is a domain-specific language with its own learning curve distinct from general-purpose programming languages",
+        "No official managed cloud offering directly from the OPA project; commercial support is available through third parties such as Styra",
+        "Requires operational work to deploy, scale, and keep policy bundles in sync across environments"
+      ],
+      "faqs": [
+        {"question": "Is Open Policy Agent free?", "answer": "Yes. OPA is fully open source under the Apache License 2.0 with no paid tier from the project itself."},
+        {"question": "What is Rego?", "answer": "Rego is the declarative policy language used to write OPA policies, designed for expressing rules over structured data such as JSON."},
+        {"question": "Is OPA a CNCF project?", "answer": "Yes. OPA was accepted into the CNCF in March 2018 and reached Graduated maturity status in January 2021."},
+        {"question": "Can OPA enforce policy in Kubernetes?", "answer": "Yes, via OPA Gatekeeper, a related project that runs OPA policies as Kubernetes admission controllers."}
+      ],
+      "use_cases": [
+        {"title": "Kubernetes admission control", "description": "Platform teams use OPA Gatekeeper to enforce policies on Kubernetes resources at admission time, blocking non-compliant deployments.", "audience": "Platform and DevOps engineers"},
+        {"title": "Application-level authorization", "description": "Engineering teams call OPA as a policy decision point to centralize authorization logic across microservices, decoupling it from application code.", "audience": "Backend and security engineers"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Open Policy Agent?", "level": 2, "paragraphs": [
+          "Open Policy Agent (OPA) is an open-source, general-purpose policy engine that lets organizations define, manage, and enforce policies as code using the Rego language.",
+          "OPA is a graduated project of the Cloud Native Computing Foundation and is used to enforce policy across microservices, Kubernetes, CI/CD pipelines, and API gateways."
+        ]},
+        {"id": "who-its-for", "heading": "Who Open Policy Agent is for", "level": 2, "paragraphs": [
+          "OPA is built for platform, security, and DevOps teams that need a unified, code-based way to enforce authorization and compliance policies across heterogeneous infrastructure."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "0b888188-3d57-4941-b06a-2c4600263666",
+    "slug": "conjur",
+    "name": "Conjur",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Conjur Open Source is CyberArk's secrets management and machine-identity platform for securing credentials in cloud-native environments.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Conjur Open Source: CyberArk's secrets management and RBAC engine for securing machine identities and credentials in DevOps pipelines.",
+      "features": [
+        {"title": "Centralized secret store", "description": "Provides a REST-based secret store with a role-based access control engine, defined using its Machine Authorization Markup Language (MAML)."},
+        {"title": "Machine identity authentication", "description": "Includes built-in authenticators for Kubernetes, OpenShift, AWS IAM, and OIDC to let workloads fetch secrets without static credentials."},
+        {"title": "Secretless Broker", "description": "Lets applications connect to backend services without ever fetching or managing passwords and keys directly."},
+        {"title": "DevOps toolchain integrations", "description": "Integrates with Ansible, Jenkins, Puppet, and Terraform, as well as CI/CD and container orchestration platforms."},
+        {"title": "Multi-language client SDKs", "description": "Official client libraries are available for .NET, Go, Java, Python, and Ruby."}
+      ],
+      "pros": [
+        "Conjur server is licensed under GNU LGPL v3.0, with client libraries under Apache License 2.0",
+        "Actively maintained on GitHub, with releases as recent as mid-2026 and over 900 GitHub stars",
+        "Built-in authenticators cover major cloud and container platforms (Kubernetes, OpenShift, AWS IAM, OIDC)",
+        "Backed by CyberArk, an established identity security vendor, with commercial licenses and support available"
+      ],
+      "cons": [
+        "CyberArk was acquired by Palo Alto Networks, and the conjur.org marketing domain now redirects to Palo Alto Networks' secrets management product page, which can make it harder to find dedicated Conjur Open Source resources",
+        "The full-featured enterprise edition and commercial support require a paid CyberArk/Palo Alto Networks license",
+        "Configuration uses a proprietary policy language (MAML) rather than a more widely known format"
+      ],
+      "faqs": [
+        {"question": "Is Conjur open source?", "answer": "Yes. The Conjur server is licensed under GNU LGPL v3.0 and client libraries under Apache License 2.0. Commercial licenses are also available from CyberArk."},
+        {"question": "What does Conjur do?", "answer": "Conjur is a secrets management and machine-identity platform that stores secrets, authenticates workloads, and enforces role-based access to credentials."},
+        {"question": "Which platforms can authenticate to Conjur?", "answer": "Conjur includes built-in authenticators for Kubernetes, OpenShift, AWS IAM, and OIDC, among others."},
+        {"question": "Who maintains Conjur today?", "answer": "Conjur is maintained by CyberArk, which was acquired by Palo Alto Networks; the open-source project remains actively developed on GitHub."}
+      ],
+      "use_cases": [
+        {"title": "Securing Kubernetes workload secrets", "description": "Platform teams use Conjur's Kubernetes authenticator to let pods retrieve secrets dynamically instead of storing credentials in manifests or environment variables.", "audience": "Platform and DevOps engineers"},
+        {"title": "CI/CD pipeline credential management", "description": "Organizations integrate Conjur with Jenkins, Ansible, or Terraform so pipelines fetch secrets at runtime rather than hardcoding them.", "audience": "DevOps and security engineers"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Conjur Open Source", "price": "Free", "billing_cycle": null, "features": ["Secret store and RBAC engine", "Kubernetes, OpenShift, AWS IAM, OIDC authenticators", "Secretless Broker", "Community Discourse support"]},
+        {"plan_name": "CyberArk Commercial License", "price": "Custom", "billing_cycle": null, "features": ["Enterprise support", "Additional enterprise features", "Commercial license terms"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Conjur?", "level": 2, "paragraphs": [
+          "Conjur is a secrets management and application-identity platform originally built by CyberArk. It provides a centralized secret store, a role-based access policy engine, and authenticators that let machines and CI/CD pipelines retrieve credentials securely.",
+          "The Conjur server is open source under GNU LGPL v3.0, with commercial licenses and enterprise support available from CyberArk, now part of Palo Alto Networks following its 2025 acquisition."
+        ]},
+        {"id": "who-its-for", "heading": "Who Conjur is for", "level": 2, "paragraphs": [
+          "Conjur is built for DevOps and security teams running containerized or cloud-native infrastructure who need to eliminate hardcoded secrets and manage machine identities at scale."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "257eca99-6ff2-4447-96da-fbf120b70160",
+    "slug": "thehive",
+    "name": "TheHive",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "TheHive is a collaborative security incident response and case management platform for SOCs, CSIRTs, and CERTs, developed by StrangeBee.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "TheHive: collaborative security case management platform for incident response, with a free Community edition and paid Gold/Platinum tiers.",
+      "features": [
+        {"title": "Case and alert management", "description": "Organizes SOC work around Cases, Tasks, and Observables, letting teams triage alerts and track incident-response activity."},
+        {"title": "Observable analysis via Cortex", "description": "Integrates with Cortex, StrangeBee's analysis and active-response engine, to automatically enrich and analyze indicators such as IPs, hashes, and URLs."},
+        {"title": "MISP integration", "description": "Connects to MISP threat intelligence servers to import and correlate indicators of compromise directly within cases."},
+        {"title": "300+ integrations", "description": "StrangeBee's site lists 300+ integrations for pulling alerts from other security tools into TheHive."},
+        {"title": "Multiple deployment options", "description": "Available as a self-hosted on-premises install, prebuilt cloud images for AWS/Azure, or a fully managed TheHive Cloud Platform SaaS."}
+      ],
+      "pros": [
+        "Free Community edition is available for self-hosting, supporting up to 2 users and 1 organization",
+        "Deep native integration with Cortex and MISP for threat intelligence and observable analysis",
+        "Used by a large community: StrangeBee cites 3,500+ users across 50+ countries",
+        "Flexible deployment: self-hosted, cloud images, or managed SaaS"
+      ],
+      "cons": [
+        "Since StrangeBee took over development in 2018, TheHive 4 and 5 no longer accept external code contributions, and TheHive's earlier fully open-source versions (3 and 4) were discontinued and their repositories archived in 2023",
+        "The free Community edition is capped at 2 users and 1 organization; larger teams need a paid Gold or Platinum license",
+        "Gold and Platinum plan pricing is not publicly listed and requires contacting StrangeBee",
+        "Advanced support (business-hours or priority response) is only available on paid tiers"
+      ],
+      "faqs": [
+        {"question": "Is TheHive free?", "answer": "TheHive offers a free Community edition limited to 2 users and 1 organization. Paid Gold and Platinum editions remove those limits and add support and enterprise features."},
+        {"question": "What is Cortex?", "answer": "Cortex is StrangeBee's companion observable-analysis and active-response engine that TheHive uses to automatically enrich indicators of compromise."},
+        {"question": "Who develops TheHive?", "answer": "TheHive has been developed by StrangeBee since 2018. The current versions (4 and 5) are developed exclusively by StrangeBee's team rather than the open community."},
+        {"question": "Can TheHive integrate with MISP?", "answer": "Yes, TheHive natively integrates with MISP threat intelligence servers to import and correlate indicators."}
+      ],
+      "use_cases": [
+        {"title": "SOC alert triage and case management", "description": "Security operations centers use TheHive to centralize alerts from multiple sources into cases, assign tasks, and track investigation progress.", "audience": "SOC analysts"},
+        {"title": "Incident response for CSIRTs/CERTs", "description": "Incident response teams use TheHive's case and observable model, combined with Cortex analyzers, to investigate and respond to security incidents collaboratively.", "audience": "CSIRT and CERT teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community", "price": "Free", "billing_cycle": null, "features": ["Up to 2 users, 1 organization", "1 Cortex server, 1 MISP server", "Community-based support"]},
+        {"plan_name": "Gold", "price": "Custom (per user/org)", "billing_cycle": null, "features": ["5+ users, up to 5 organizations", "Up to 5 Cortex/MISP servers", "Custom views, white labeling", "Business-hours EU support, 2-business-day response"]},
+        {"plan_name": "Platinum", "price": "Custom (per user/org)", "billing_cycle": null, "features": ["5+ users, multiple organizations", "Unlimited Cortex/MISP servers", "Business-hours EU support via email, chat, and video, 1-business-day response"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is TheHive?", "level": 2, "paragraphs": [
+          "TheHive is a collaborative security case management platform used by SOCs, CSIRTs, and CERTs to manage alerts, cases, and incident-response tasks in one place.",
+          "It is developed by StrangeBee and integrates tightly with Cortex for observable analysis and MISP for threat intelligence. A free Community edition remains available alongside paid Gold and Platinum plans and a managed cloud platform."
+        ]},
+        {"id": "who-its-for", "heading": "Who TheHive is for", "level": 2, "paragraphs": [
+          "TheHive is aimed at security operations centers, incident-response teams, and MSSPs that need a structured, collaborative way to manage security cases and investigations."
+        ]}
+      ],
+      "tags": ["self-hosted", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "b56d7d7d-6b4d-47bb-b82f-c7a9036e4a72",
+    "slug": "misp",
+    "name": "MISP",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "MISP is a free, open-source threat intelligence platform for collecting, correlating, and sharing indicators of compromise among security teams.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "MISP: free, open-source threat intelligence platform for storing, correlating, and sharing IOCs via STIX, OpenIOC, and TAXII.",
+      "features": [
+        {"title": "Structured indicator storage", "description": "Stores threat indicators in a structured format that enables correlation, automated export for IDS/SIEM systems, and analysis."},
+        {"title": "STIX and OpenIOC export", "description": "Exports threat data in open standard formats including STIX and OpenIOC for interoperability with other security tools."},
+        {"title": "Taxonomies and Galaxy classification", "description": "Includes classification systems such as MITRE ATT&CK and Exploit-Kit taxonomies to tag and categorize threat data."},
+        {"title": "Community sync and sharing", "description": "Supports multi-instance synchronization so organizations can share threat intelligence across trusted communities."},
+        {"title": "PyMISP API", "description": "Provides a REST API and the PyMISP Python library for programmatic access and automation."}
+      ],
+      "pros": [
+        "Completely free to use, with the software, data format, and API released under open standards and OSI-approved open source licenses",
+        "Governed by an interlocked contributor license so no single organization can change MISP's open-source model",
+        "Large, active community of users creating and maintaining shared threat-intelligence communities",
+        "Broad interoperability via STIX, OpenIOC, and TAXII export formats"
+      ],
+      "cons": [
+        "Self-hosting and configuring MISP requires security and infrastructure expertise",
+        "No official managed SaaS hosting from the MISP project itself; commercial hosting/support comes from third parties",
+        "Effective threat-intel sharing depends on joining or building trusted communities, which takes ongoing effort"
+      ],
+      "faqs": [
+        {"question": "Is MISP free?", "answer": "Yes. MISP is free and open source software, with its data format and API also released as open standards."},
+        {"question": "What formats does MISP export to?", "answer": "MISP supports export to STIX, OpenIOC, and other formats, plus TAXII push for automated distribution to IDS or SIEM systems."},
+        {"question": "Who uses MISP?", "answer": "MISP is used by incident analysts, security and ICT professionals, and malware reversers who need structured threat information sharing."},
+        {"question": "Can I run my own MISP community?", "answer": "Yes. MISP supports multi-instance synchronization, allowing organizations to build and operate their own sharing communities."}
+      ],
+      "use_cases": [
+        {"title": "Threat intelligence sharing between organizations", "description": "Security teams use MISP to share indicators of compromise with trusted partners or sector-specific ISACs through synchronized MISP instances.", "audience": "Threat intelligence teams and ISACs"},
+        {"title": "Feeding IOCs into SIEM/IDS", "description": "Analysts export structured indicators from MISP in STIX or OpenIOC format to automatically populate detection rules in SIEM and IDS platforms.", "audience": "SOC and detection engineering teams"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is MISP?", "level": 2, "paragraphs": [
+          "MISP is an open-source threat intelligence platform for collecting, storing, correlating, and sharing indicators related to targeted attacks, financial fraud, and other cyber threats.",
+          "It is free to use, with an open data format and API, and is maintained by a large community that operates shared threat-intelligence communities on top of the platform."
+        ]},
+        {"id": "who-its-for", "heading": "Who MISP is for", "level": 2, "paragraphs": [
+          "MISP is built for incident analysts, security operations teams, and threat intelligence practitioners who need to structure, correlate, and share IOCs across organizations."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "51b8b175-b3a3-4820-80ba-3b5c9cb31c4e",
+    "slug": "opencti",
+    "name": "OpenCTI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OpenCTI is an open-source cyber threat intelligence platform by Filigran for structuring, analyzing, and sharing CTI knowledge.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OpenCTI: open-source cyber threat intelligence platform from Filigran, with a free Community edition and paid Enterprise Edition.",
+      "features": [
+        {"title": "STIX2-based knowledge graph", "description": "Structures threat intelligence as a knowledge graph, letting analysts link threat actors, malware, campaigns, and indicators."},
+        {"title": "230+ connectors", "description": "Filigran's site cites 230+ one-click connectors for integrating OpenCTI with other tools across the security stack."},
+        {"title": "Enterprise Edition add-ons", "description": "OpenCTI Enterprise Edition adds professional support and additional capabilities on top of the open-source Community Edition."},
+        {"title": "Dashboards and enrichment", "description": "Provides dashboards and automated enrichment workflows for turning raw threat data into actionable intelligence."},
+        {"title": "Part of the XTM platform", "description": "OpenCTI is positioned by Filigran as part of a broader eXtended Threat Management (XTM) product suite."}
+      ],
+      "pros": [
+        "OpenCTI Community Edition is fully open source under the Apache License 2.0",
+        "Large connector ecosystem (230+) for integrating with other security tools",
+        "Backed by Filigran, a dedicated cybersecurity company, with professional training (Filigran Academy) and support",
+        "Used by a stated 6,000+ cybersecurity practitioners across individuals, enterprises, and government organizations"
+      ],
+      "cons": [
+        "Enterprise Edition features are governed by a separate, non-open-source license and require a paid subscription",
+        "Enterprise Edition and SaaS pricing are not publicly listed and require contacting Filigran",
+        "Running a knowledge-graph-based CTI platform at scale requires infrastructure and analyst expertise"
+      ],
+      "faqs": [
+        {"question": "Is OpenCTI free?", "answer": "The OpenCTI Community Edition is free and open source under the Apache License 2.0. A paid OpenCTI Enterprise Edition adds additional features and support."},
+        {"question": "Who develops OpenCTI?", "answer": "OpenCTI is developed by Filigran, a cybersecurity company."},
+        {"question": "How many integrations does OpenCTI support?", "answer": "Filigran's site states OpenCTI offers 230+ one-click connectors to integrate with other security tools."},
+        {"question": "What data model does OpenCTI use?", "answer": "OpenCTI structures threat intelligence using the STIX2 standard within a knowledge graph."}
+      ],
+      "use_cases": [
+        {"title": "Centralizing threat intelligence analysis", "description": "CTI teams use OpenCTI's knowledge graph to link threat actors, malware, and indicators, turning scattered reports into structured, actionable intelligence.", "audience": "Threat intelligence analysts"},
+        {"title": "Automating intel enrichment via connectors", "description": "Security teams use OpenCTI's connector ecosystem to automatically pull and enrich data from feeds, sandboxes, and other tools into a single platform.", "audience": "SOC and CTI teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Open source under Apache License 2.0", "STIX2 knowledge graph", "230+ connectors"]},
+        {"plan_name": "Enterprise Edition", "price": "Custom", "billing_cycle": null, "features": ["Additional enterprise capabilities", "Professional support", "Filigran Academy training access"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is OpenCTI?", "level": 2, "paragraphs": [
+          "OpenCTI is an open-source cyber threat intelligence platform that organizes threat data as a STIX2-based knowledge graph, helping analysts structure, analyze, and disseminate actionable intelligence.",
+          "It is developed by Filigran, which offers a free Apache 2.0-licensed Community Edition alongside a paid Enterprise Edition with additional features and support."
+        ]},
+        {"id": "who-its-for", "heading": "Who OpenCTI is for", "level": 2, "paragraphs": [
+          "OpenCTI is aimed at threat intelligence teams, SOCs, and MSSPs that need to structure and correlate CTI data from many sources rather than tracking it in spreadsheets or disconnected tools."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "e37166a1-5273-4465-ae0c-fa12188ba286",
+    "slug": "velociraptor",
+    "name": "Velociraptor",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Velociraptor is a free, open-source digital forensics and incident response tool for endpoint monitoring and threat hunting.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Velociraptor: free, open-source DFIR tool for endpoint monitoring, evidence collection, and threat hunting, maintained by Rapid7.",
+      "features": [
+        {"title": "Velociraptor Query Language (VQL)", "description": "Investigators write custom VQL queries to build targeted hunts and forensic collections tailored to specific investigations."},
+        {"title": "Targeted evidence collection", "description": "Collects forensic evidence simultaneously across multiple endpoints for incident response."},
+        {"title": "Continuous endpoint monitoring", "description": "Monitors endpoint events such as logs, file changes, and processes, with centralized, indefinite storage of that event data."},
+        {"title": "Built-in artifact library", "description": "Ships with a library of forensic artifacts that can be used directly or customized for proactive threat hunting."},
+        {"title": "Large-scale hunts", "description": "Designed to run hunts across large deployments, with reported use against tens of thousands of endpoints in real incident response operations."}
+      ],
+      "pros": [
+        "Fully open source under the AGPL license and free to use",
+        "Powerful custom query language (VQL) for building tailored forensic collections and hunts",
+        "Maintained by Rapid7, which acquired the Velociraptor team in 2021, providing ongoing development resources",
+        "Scales to large, distributed endpoint fleets for enterprise-wide incident response"
+      ],
+      "cons": [
+        "Rapid7 also integrates Velociraptor into its own commercial InsightIDR/XDR products, which are separate paid offerings from the free open-source tool",
+        "VQL has a learning curve for analysts unfamiliar with its query syntax",
+        "Requires self-hosting and operational management; there is no vendor-run SaaS version of the open-source tool itself"
+      ],
+      "faqs": [
+        {"question": "Is Velociraptor free?", "answer": "Yes. Velociraptor is open source under the AGPL license and free to use."},
+        {"question": "Who maintains Velociraptor?", "answer": "Velociraptor is maintained by Rapid7, which acquired the Velociraptor team in 2021, though the tool remains free and open source."},
+        {"question": "What is VQL?", "answer": "VQL (Velociraptor Query Language) is the query language used to write custom forensic collections and threat-hunting queries in Velociraptor."},
+        {"question": "What platforms does Velociraptor support?", "answer": "Velociraptor is used for endpoint monitoring and forensics across large, distributed fleets of endpoints in incident response operations."}
+      ],
+      "use_cases": [
+        {"title": "Enterprise-wide incident response", "description": "IR teams deploy Velociraptor across thousands of endpoints to simultaneously collect forensic evidence during active security incidents.", "audience": "Incident response teams"},
+        {"title": "Proactive threat hunting", "description": "Security teams use Velociraptor's built-in artifact library and VQL to hunt for indicators of compromise across the endpoint fleet before an incident is confirmed.", "audience": "Threat hunters and SOC analysts"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["AGPL-licensed", "Full VQL query engine", "Endpoint monitoring and evidence collection"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Velociraptor?", "level": 2, "paragraphs": [
+          "Velociraptor is an open-source digital forensics and incident response (DFIR) tool that gives security teams visibility into endpoints through targeted evidence collection, continuous monitoring, and proactive threat hunting.",
+          "It uses its own query language, VQL, to build custom collections and hunts, and is designed to operate across large, distributed endpoint fleets. The project is maintained by Rapid7, which acquired the Velociraptor team in 2021."
+        ]},
+        {"id": "who-its-for", "heading": "Who Velociraptor is for", "level": 2, "paragraphs": [
+          "Velociraptor is aimed at incident responders and threat hunters who need deep, queryable visibility into endpoint activity across large organizations."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted"]
+    }
+  },
+  {
+    "tool_id": "a79e35cf-f4a5-404f-8138-ace452376ebd",
+    "slug": "fleetdm",
+    "name": "FleetDM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Fleet (FleetDM) is an open-source device management platform built on osquery for managing macOS, Linux, Windows, iOS, and Android.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Fleet (FleetDM): open-source device management platform for macOS, Linux, Windows, iOS, and Android, free and premium tiers.",
+      "features": [
+        {"title": "Cross-platform device inventory", "description": "Manages device inventory across macOS, Linux, Windows, iOS, and Android from a single console."},
+        {"title": "Real-time device reporting", "description": "Fleet's site states devices can report data back in under 30 seconds."},
+        {"title": "Patch and vulnerability management", "description": "Provides software update and patch management alongside vulnerability visibility across managed devices."},
+        {"title": "Infrastructure as code", "description": "Device configuration and policies can be managed as code, and automated via a single REST API."},
+        {"title": "Cloud or self-hosted deployment", "description": "Can be run as a self-hosted open-source deployment or as a hosted cloud service."},
+        {"title": "Live queries and diagnostics", "description": "Supports live reports, scripting, and diagnostics against endpoints, built on the osquery agent."}
+      ],
+      "pros": [
+        "Free, open-source version is available and stated to always remain free",
+        "Manages a wide range of operating systems (macOS, Linux, Windows, iOS, Android) from one console",
+        "Fleet states it is used by 1,300+ organizations across 90+ countries managing 2,000,000+ devices",
+        "Offers both self-hosted and cloud deployment options",
+        "Single API supports automation and infrastructure-as-code workflows"
+      ],
+      "cons": [
+        "Premium tier pricing is not publicly detailed on the marketing site and requires contacting sales",
+        "Advanced features (beyond the free/open-source tier) require a paid premium license",
+        "Self-hosting requires infrastructure and operational overhead compared to a fully managed MDM"
+      ],
+      "faqs": [
+        {"question": "Is Fleet free?", "answer": "Fleet maintains a free, open-source version that the company states will always be free, alongside paid premium tiers with additional features."},
+        {"question": "What operating systems does Fleet manage?", "answer": "Fleet can manage macOS, Linux, Windows, iOS, and Android devices from a single console."},
+        {"question": "Can Fleet be self-hosted?", "answer": "Yes. Fleet can be deployed self-hosted or used as a hosted cloud service."},
+        {"question": "How many organizations use Fleet?", "answer": "Fleet's site states it is used by 1,300+ organizations across 90+ countries, managing over 2,000,000 devices."}
+      ],
+      "use_cases": [
+        {"title": "Managing heterogeneous device fleets", "description": "IT and security teams use Fleet to inventory and manage devices across multiple operating systems, including subsidiaries or acquired companies with mixed environments.", "audience": "IT and security operations teams"},
+        {"title": "Patch and vulnerability management at scale", "description": "Organizations use Fleet's patch management and reporting to track and remediate vulnerabilities across large device fleets via a single API.", "audience": "Vulnerability management teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "Free", "billing_cycle": null, "features": ["Open source", "Core device management and inventory", "Self-hosted deployment"]},
+        {"plan_name": "Premium", "price": "Custom", "billing_cycle": null, "features": ["Additional management and automation features", "Cloud or self-hosted deployment", "Vendor support"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Fleet (FleetDM)?", "level": 2, "paragraphs": [
+          "Fleet is an open-source device management platform, built on osquery, that provides inventory, patch management, vulnerability visibility, and automation across macOS, Linux, Windows, iOS, and Android devices from a single console.",
+          "It offers a free, open-source tier alongside premium plans, and can be deployed self-hosted or as a hosted cloud service."
+        ]},
+        {"id": "who-its-for", "heading": "Who Fleet is for", "level": 2, "paragraphs": [
+          "Fleet is aimed at IT and security teams managing large, mixed-OS device fleets who want open, API-driven device management rather than a closed proprietary MDM."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "2bf3de07-cc2a-49cd-8239-4d711fd37c68",
+    "slug": "osquery",
+    "name": "osquery",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "osquery is a free, open-source tool that exposes an operating system as a relational database for SQL-based security monitoring.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "osquery: free, open-source tool that exposes OS state as SQL tables for security monitoring across Linux, macOS, and Windows.",
+      "features": [
+        {"title": "SQL-based OS instrumentation", "description": "Exposes operating system information such as running processes, network connections, and file hashes as queryable SQL tables."},
+        {"title": "100+ built-in tables", "description": "Ships with an extensive schema of pre-built tables representing operating system concepts across supported platforms."},
+        {"title": "Ad hoc and scheduled queries", "description": "Supports interactive querying through the osqueryi shell and continuous scheduled monitoring via the osqueryd daemon."},
+        {"title": "Thrift API extensions", "description": "Provides Thrift-based APIs for building custom applications and extensions on top of the query engine."},
+        {"title": "Cross-platform support", "description": "Runs on Linux, macOS, and Windows."}
+      ],
+      "pros": [
+        "Free and open source, dual-licensed under Apache License 2.0 and GPL 2.0",
+        "Governed under an open foundation model (the osquery project moved to the Linux Foundation), providing vendor-neutral governance",
+        "Widely adopted, with 23.4k+ GitHub stars and 2.6k+ forks at the time of research",
+        "Large, extensible schema (100+ tables) covering processes, network, kernel, and file system data",
+        "Regular release cadence, with minor releases roughly every two months"
+      ],
+      "cons": [
+        "Requires SQL and systems knowledge to write effective queries and schedules",
+        "No vendor-run managed service from the osquery project itself; fleet management typically requires a separate tool such as Fleet",
+        "Deploying and tuning scheduled queries at scale requires ongoing operational effort"
+      ],
+      "faqs": [
+        {"question": "Is osquery free?", "answer": "Yes. osquery is free and open source, dual-licensed under Apache License 2.0 and GPL 2.0."},
+        {"question": "What platforms does osquery support?", "answer": "osquery supports Linux, macOS, and Windows."},
+        {"question": "How do I query with osquery?", "answer": "osquery can be queried ad hoc via the osqueryi interactive shell, or scheduled continuously via the osqueryd daemon."},
+        {"question": "Who governs the osquery project?", "answer": "osquery is a community-driven open-source project with GitHub-based issue tracking and a regular release cadence."}
+      ],
+      "use_cases": [
+        {"title": "Endpoint security monitoring", "description": "Security teams schedule osquery queries to continuously monitor processes, network connections, and file changes across a fleet of endpoints.", "audience": "SOC and detection engineering teams"},
+        {"title": "Incident response investigation", "description": "Responders run ad hoc osquery queries via osqueryi to quickly inspect the state of a compromised or suspicious host.", "audience": "Incident responders"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Apache 2.0 / GPL 2.0 dual license", "100+ built-in tables", "osqueryi and osqueryd"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is osquery?", "level": 2, "paragraphs": [
+          "osquery is an open-source tool that exposes an operating system's state as a set of relational database tables, letting security and IT teams write SQL queries to explore processes, network connections, file hashes, and other OS data.",
+          "It is free to use, dual-licensed under Apache 2.0 and GPL 2.0, and supports Linux, macOS, and Windows. It can be queried interactively or run as a scheduled monitoring daemon."
+        ]},
+        {"id": "who-its-for", "heading": "Who osquery is for", "level": 2, "paragraphs": [
+          "osquery is aimed at security and IT teams who want a lightweight, SQL-queryable way to monitor endpoint state, often as the underlying agent for a fleet management layer such as Fleet."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  }
+]

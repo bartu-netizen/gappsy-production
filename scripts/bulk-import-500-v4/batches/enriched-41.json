@@ -1,0 +1,677 @@
+[
+  {
+    "tool_id": "a66f3bc4-b0a5-4c55-9356-c797b9ad54a2",
+    "slug": "thanos",
+    "name": "Thanos",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source system that extends Prometheus with a global query view and unlimited metrics retention via object storage.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Thanos is an open source, CNCF incubating project that adds highly available, long-term Prometheus metrics storage and querying.",
+      "features": [
+        { "title": "Global Query View", "description": "Query metrics across multiple Prometheus servers and clusters from a single endpoint." },
+        { "title": "Unlimited Retention", "description": "Store historical metrics indefinitely by offloading data to object storage such as S3, GCS, Azure, Swift, or Tencent COS." },
+        { "title": "Prometheus API Compatible", "description": "Works with Grafana and any other tool that supports the Prometheus Query API." },
+        { "title": "Downsampling & Compaction", "description": "Optimizes long-range historical queries and lets teams configure data retention policies." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "CNCF incubating project with an active community and Slack",
+        "Works natively with existing Grafana and Prometheus tooling",
+        "Enables effectively unlimited metrics retention via object storage",
+        "Used in production by large organizations including Adobe, ByteDance, eBay, and Monzo"
+      ],
+      "cons": [
+        "Self-hosted only; no managed cloud offering",
+        "Requires configuring and operating an object storage backend",
+        "Adds operational complexity on top of running Prometheus itself"
+      ],
+      "faqs": [
+        { "question": "Is Thanos free to use?", "answer": "Yes. Thanos is open source under the Apache 2.0 license with no paid tier." },
+        { "question": "Does Thanos replace Prometheus?", "answer": "No. Thanos extends Prometheus by adding global querying across clusters and long-term storage in object storage." },
+        { "question": "Does Thanos work with Grafana?", "answer": "Yes. Thanos exposes a Prometheus-compatible query API that Grafana and other Prometheus-aware tools can use." },
+        { "question": "Is Thanos a CNCF project?", "answer": "Yes, Thanos is a Cloud Native Computing Foundation incubating project." }
+      ],
+      "use_cases": [
+        { "title": "Multi-cluster metrics querying", "description": "Teams running Prometheus across multiple clusters use Thanos to query metrics globally from one place.", "audience": "Platform and SRE teams" },
+        { "title": "Long-term metrics retention", "description": "Organizations that need to retain metrics beyond Prometheus's local storage limits offload data to object storage via Thanos.", "audience": "DevOps and infrastructure teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Thanos?",
+          "level": 2,
+          "paragraphs": [
+            "Thanos is an open source, highly available Prometheus setup with long-term storage capabilities. It extends Prometheus by enabling a global query view across multiple Prometheus servers and clusters, plus unlimited metrics retention using object storage providers like S3, GCS, Azure Blob Storage, and Tencent COS.",
+            "Thanos is a CNCF incubating project, originally founded by Improbable, and is used in production by organizations including Adobe, ByteDance, eBay, Monzo, and SoundCloud."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Thanos is for",
+          "level": 2,
+          "paragraphs": [
+            "Thanos is built for platform, SRE, and infrastructure teams running Prometheus at scale who need cross-cluster querying, long-term metrics retention, and Grafana-compatible dashboards without switching monitoring tools."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "5f805c48-e5b0-4af0-83dd-98deb8ee69d9",
+    "slug": "graylog",
+    "name": "Graylog",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Centralized log management and SIEM platform with a free open-source edition and paid enterprise/security tiers.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Houston, TX, USA",
+      "languages": [],
+      "seo_meta_description": "Graylog is a log management and SIEM platform offering a free open-source edition plus paid Enterprise, Security, and Cloud tiers.",
+      "features": [
+        { "title": "AI-powered anomaly detection", "description": "Uses AI-assisted analytics to surface unusual activity and potential threats in log data." },
+        { "title": "Pipeline management and log routing", "description": "Built-in processing pipelines let teams route, transform, and enrich log data as it's ingested." },
+        { "title": "Tiered data archival", "description": "Archives older data to cheaper storage tiers to control retention costs." },
+        { "title": "UEBA", "description": "User and Entity Behavior Analytics to identify risky or anomalous user activity." },
+        { "title": "Investigation automation and SOAR", "description": "Automates security investigations and response workflows in the Security edition." },
+        { "title": "Flexible deployment", "description": "Available as cloud-hosted, on-premises, or hybrid deployments." }
+      ],
+      "pros": [
+        "Free, source-available Graylog Open edition available",
+        "Scales up to full SIEM capabilities via the Security tier",
+        "Supports cloud, on-premises, and hybrid deployment models",
+        "Tiered/archival storage helps control long-term log retention costs"
+      ],
+      "cons": [
+        "Pricing for paid tiers is not published and requires contacting sales",
+        "Advanced SIEM, UEBA, and SOAR features are limited to paid editions",
+        "Multiple product tiers (Security, Enterprise, API Security, Cloud, Small Business) can make choosing the right plan confusing"
+      ],
+      "faqs": [
+        { "question": "Is Graylog free?", "answer": "Yes, Graylog Open is a free, source-available edition. Paid tiers (Security, Enterprise, Cloud, Small Business) add additional capabilities and require a license." },
+        { "question": "Can Graylog be self-hosted?", "answer": "Yes. Graylog supports cloud, on-premises, and hybrid deployment models." },
+        { "question": "Is Graylog a SIEM?", "answer": "Graylog Security is positioned as a full SIEM offering with threat detection, UEBA, and investigation automation on top of Graylog's log management core." },
+        { "question": "Where is Graylog headquartered?", "answer": "Graylog's headquarters is in Houston, TX, with additional offices in London, UK and Hamburg, Germany." }
+      ],
+      "use_cases": [
+        { "title": "Centralized log management", "description": "Teams aggregate logs from applications and infrastructure into Graylog for search and analysis.", "audience": "DevOps and IT operations teams" },
+        { "title": "Security operations and SIEM", "description": "Security teams use Graylog Security for threat detection, UEBA, and automated investigations.", "audience": "SecOps and security teams at lean security organizations" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Graylog?",
+          "level": 2,
+          "paragraphs": [
+            "Graylog is a centralized log management and SIEM platform designed for lean security and operations teams, offering real-time threat detection, log analysis, and automated investigations.",
+            "It ships as Graylog Open, a free source-available edition, alongside paid tiers — Graylog Security, Graylog Enterprise, Graylog API Security, Graylog Cloud Platform, and Graylog Small Business — that add SIEM, SOAR, and cloud-hosted capabilities."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Graylog is for",
+          "level": 2,
+          "paragraphs": [
+            "Graylog suits IT operations teams that need centralized log search and lean security teams that need SIEM-level threat detection and investigation automation without a large security operations budget."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-plan", "web-app"]
+    }
+  },
+  {
+    "tool_id": "0d623697-0839-419d-b74c-5c99fda783e0",
+    "slug": "fluentd",
+    "name": "Fluentd",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source, CNCF-graduated data collector that unifies logging across systems with over 500 plugins.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Fluentd is a free, open source, CNCF-graduated log collector with 500+ plugins used by AWS, Microsoft, and Nintendo.",
+      "features": [
+        { "title": "Unified logging layer", "description": "Decouples data sources from backend systems so logs can be collected once and routed anywhere." },
+        { "title": "500+ plugins", "description": "A large plugin ecosystem connects Fluentd to a wide range of data sources and output destinations." },
+        { "title": "Simple core, flexible extensibility", "description": "A minimal core architecture is extended through plugins rather than built-in feature bloat." },
+        { "title": "CNCF graduated project", "description": "Governed as a Cloud Native Computing Foundation graduated project." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "CNCF graduated project with mature governance",
+        "Very large plugin ecosystem (500+ plugins)",
+        "Proven at scale, used by AWS, Microsoft, Atlassian, Nintendo, and Twilio",
+        "Reported to be used by 5,000+ data-driven companies"
+      ],
+      "cons": [
+        "Fluentd is a data collector only — it has no built-in storage or dashboard, so it must be paired with tools like Elasticsearch or Grafana for visualization",
+        "Requires selecting and configuring plugins for most real-world source/output combinations"
+      ],
+      "faqs": [
+        { "question": "Is Fluentd free?", "answer": "Yes. Fluentd is fully open source under the Apache 2.0 license." },
+        { "question": "Is Fluentd a CNCF project?", "answer": "Yes, Fluentd is a Cloud Native Computing Foundation graduated project." },
+        { "question": "Does Fluentd include a dashboard?", "answer": "No. Fluentd is a data collector that forwards logs to backend systems; visualization is handled by downstream tools." },
+        { "question": "How many plugins does Fluentd support?", "answer": "Fluentd has more than 500 plugins for various data sources and output destinations." }
+      ],
+      "use_cases": [
+        { "title": "Unified log collection", "description": "Organizations use Fluentd to collect logs from many sources and route them to one or more backend systems.", "audience": "DevOps and platform engineering teams" },
+        { "title": "Large-scale log aggregation", "description": "Companies with large server fleets use Fluentd to centralize logging; the largest reported deployment collects logs from over 50,000 servers.", "audience": "Large-scale infrastructure teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Fluentd?",
+          "level": 2,
+          "paragraphs": [
+            "Fluentd is an open source data collector that provides a unified logging layer, decoupling data sources from backend systems. It is a CNCF graduated project with a plugin ecosystem of more than 500 plugins covering data sources and outputs.",
+            "Fluentd is used by over 5,000 data-driven companies, including AWS, Microsoft, Atlassian, Nintendo, Twilio, and Line, with its largest known deployment collecting logs from more than 50,000 servers."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Fluentd is for",
+          "level": 2,
+          "paragraphs": [
+            "Fluentd is for DevOps and platform teams that need a vendor-neutral, extensible log collector to unify data from many sources before sending it to storage, analytics, or SIEM systems."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "c5592933-959b-4725-9845-baccff52192d",
+    "slug": "fluent-bit",
+    "name": "Fluent Bit",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Lightweight, CNCF-graduated telemetry agent for collecting, processing, and forwarding logs, metrics, and traces.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Fluent Bit is a free, open source, CNCF-graduated telemetry agent with native OpenTelemetry support and a ~450KB footprint.",
+      "features": [
+        { "title": "Native OpenTelemetry support", "description": "Ingests and delivers data using the OTLP protocol natively." },
+        { "title": "Dynamic routing", "description": "Routes data across multiple destinations using a zero-copy strategy." },
+        { "title": "100+ plugins", "description": "Over 100 input, filter, and output plugins for connecting to different sources and backends." },
+        { "title": "Minimal footprint", "description": "Roughly 450KB in size with zero external dependencies, suited to containerized environments." },
+        { "title": "Event-driven architecture", "description": "Asynchronous, event-driven design built for high-throughput telemetry pipelines." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "CNCF graduated project under the Fluent organization",
+        "Extremely lightweight (~450KB) with no external dependencies",
+        "Native OpenTelemetry (OTLP) ingestion and delivery",
+        "Used by major cloud and observability vendors including Google Cloud, Microsoft, AWS, Datadog, and Splunk"
+      ],
+      "cons": [
+        "A telemetry pipeline agent only — no built-in storage or dashboard, so it requires pairing with a backend for visualization",
+        "As a C-based agent, custom plugin development has a steeper learning curve than higher-level tools"
+      ],
+      "faqs": [
+        { "question": "Is Fluent Bit free?", "answer": "Yes, Fluent Bit is open source and free to use." },
+        { "question": "Is Fluent Bit related to Fluentd?", "answer": "Yes, both are CNCF graduated projects under the Fluent organization." },
+        { "question": "Does Fluent Bit support OpenTelemetry?", "answer": "Yes, Fluent Bit has native OTLP ingestion and delivery support." },
+        { "question": "How lightweight is Fluent Bit?", "answer": "Fluent Bit has a footprint of roughly 450KB with zero external dependencies." }
+      ],
+      "use_cases": [
+        { "title": "Container and Kubernetes log collection", "description": "Teams deploy Fluent Bit as a lightweight agent inside containers and Kubernetes clusters to forward telemetry data.", "audience": "Platform and cloud infrastructure teams" },
+        { "title": "High-throughput telemetry pipelines", "description": "Organizations processing large volumes of logs, metrics, and traces use Fluent Bit for its high-throughput, low-resource design.", "audience": "SRE and observability teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Fluent Bit?",
+          "level": 2,
+          "paragraphs": [
+            "Fluent Bit is a fast, lightweight, and highly scalable logging, metrics, and traces processor and forwarder designed for cloud and containerized environments. It is a CNCF graduated project under the Fluent organization, with native OpenTelemetry (OTLP) support and more than 100 input, filter, and output plugins.",
+            "The project is used by major cloud and observability vendors including Google Cloud, Microsoft, AWS, Datadog, and Splunk, and the site cites throughput of over 1 petabyte of data per day across its user base."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Fluent Bit is for",
+          "level": 2,
+          "paragraphs": [
+            "Fluent Bit is built for teams running containerized or cloud-native infrastructure who need a low-overhead agent to collect and route telemetry data without adding significant CPU or memory cost."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "8ccfa422-ec09-4a81-8ffc-cee3d57641ca",
+    "slug": "vector",
+    "name": "Vector",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Rust-built, open source observability pipeline tool for collecting, transforming, and routing logs and metrics.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Vector is a free, open source, Rust-built observability pipeline tool maintained by Datadog, with 47 sources and 62 sinks.",
+      "features": [
+        { "title": "Built in Rust", "description": "A memory-efficient, high-performance runtime built in Rust." },
+        { "title": "Vector Remap Language (VRL)", "description": "A programmable transform language for parsing and reshaping observability data in the pipeline." },
+        { "title": "Flexible deployment topologies", "description": "Can be deployed as a daemon, sidecar, or aggregator across distributed, centralized, or stream-based architectures." },
+        { "title": "47 sources and 62 sinks", "description": "Broad connectivity including Kafka, Elasticsearch, AWS S3, Splunk, Datadog, and Kubernetes logs." },
+        { "title": "Single static binary", "description": "Ships as a single binary with no dependencies and no external runtime required." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Maintained by Datadog with an active GitHub project (13k+ stars, 300+ contributors)",
+        "High performance thanks to its Rust implementation",
+        "Wide range of integrations: 47 sources, 18 transforms, and 62 sinks",
+        "Simple deployment as a single dependency-free binary"
+      ],
+      "cons": [
+        "A pipeline tool only — no built-in storage or visualization, so it must be paired with a backend",
+        "Maintained primarily by a single vendor (Datadog) rather than a neutral foundation"
+      ],
+      "faqs": [
+        { "question": "Is Vector free?", "answer": "Yes, Vector is open source and free to use." },
+        { "question": "Who maintains Vector?", "answer": "Vector is maintained by Datadog." },
+        { "question": "What language is Vector written in?", "answer": "Vector is built in Rust for performance and memory efficiency." },
+        { "question": "How many integrations does Vector support?", "answer": "Vector supports 47 sources, 18 transforms, and 62 sinks according to its website." }
+      ],
+      "use_cases": [
+        { "title": "Building observability pipelines", "description": "Teams use Vector to collect, transform, and route logs and metrics between many sources and destinations.", "audience": "DevOps and observability engineers" },
+        { "title": "High-throughput log/metric routing", "description": "Organizations needing a low-overhead, high-performance pipeline component deploy Vector as a daemon, sidecar, or aggregator.", "audience": "Platform teams running large-scale infrastructure" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Vector?",
+          "level": 2,
+          "paragraphs": [
+            "Vector is a lightweight, ultra-fast, open source tool for building observability pipelines, built in Rust and maintained by Datadog. It collects, transforms, and routes logs and metrics using the Vector Remap Language (VRL) for programmable transforms.",
+            "It ships as a single dependency-free binary and supports 47 sources, 18 transforms, and 62 sinks, including Kafka, Elasticsearch, AWS S3, Splunk, and Datadog."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Vector is for",
+          "level": 2,
+          "paragraphs": [
+            "Vector is for DevOps and observability teams that need a fast, resource-efficient pipeline to move logs and metrics between many different sources and destinations."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "dbaa6caa-3a8b-44a6-a307-4debcee9af7a",
+    "slug": "logstash",
+    "name": "Logstash",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source server-side data processing pipeline that ingests, transforms, and ships data into the Elastic Stack.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Logstash is a free, open source data processing pipeline by Elastic with 200+ plugins for ingesting and transforming data.",
+      "features": [
+        { "title": "Broad input support", "description": "Pulls data from logs, metrics, web applications, data stores, and AWS services." },
+        { "title": "In-flight filtering", "description": "Parses and transforms data using grok parsing, geo-coordinate extraction, and PII anonymization." },
+        { "title": "200+ plugins", "description": "A plugin ecosystem with a development API for extending inputs, filters, and outputs." },
+        { "title": "Persistent queues", "description": "Guarantees at-least-once delivery with dead letter queue support for failed events." },
+        { "title": "Pipeline Management UI", "description": "Centralized UI for orchestrating and monitoring pipeline deployments." }
+      ],
+      "pros": [
+        "Open source and free to download",
+        "Large plugin ecosystem (200+ plugins)",
+        "Tightly integrated with Elasticsearch and the rest of the Elastic Stack",
+        "Persistent queues and dead letter queues improve delivery reliability"
+      ],
+      "cons": [
+        "Designed to pair with the Elastic Stack (Elasticsearch/Kibana) as its primary destination",
+        "Pricing and tiering for the broader Elastic Stack are not detailed on the Logstash product page"
+      ],
+      "faqs": [
+        { "question": "Is Logstash free?", "answer": "Yes, Logstash is open source and free to download." },
+        { "question": "What does Logstash do?", "answer": "Logstash ingests data from many sources, transforms it in-flight using filters, and sends it to a destination such as Elasticsearch." },
+        { "question": "How many plugins does Logstash have?", "answer": "Logstash has more than 200 plugins for inputs, filters, and outputs." },
+        { "question": "Is Logstash part of the Elastic Stack?", "answer": "Yes, Logstash is a core component of the Elastic Stack alongside Elasticsearch and Kibana." }
+      ],
+      "use_cases": [
+        { "title": "Log ingestion and transformation", "description": "Teams use Logstash to parse and enrich log data before sending it to Elasticsearch for search and analysis.", "audience": "DevOps and data engineering teams" },
+        { "title": "PII redaction and data normalization", "description": "Organizations use Logstash filters to anonymize sensitive fields and normalize data formats in-flight.", "audience": "Compliance-conscious engineering teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Logstash?",
+          "level": 2,
+          "paragraphs": [
+            "Logstash is an open source server-side data processing pipeline that ingests data from a multitude of sources, transforms it, and sends it to a destination such as Elasticsearch. It includes filters for grok parsing, geo-coordinate extraction, and PII anonymization, plus persistent queues for at-least-once delivery.",
+            "Logstash is part of the Elastic Stack and offers a plugin ecosystem of more than 200 inputs, filters, and outputs, along with a Pipeline Management UI for orchestrating deployments."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Logstash is for",
+          "level": 2,
+          "paragraphs": [
+            "Logstash suits engineering teams already using or planning to use the Elastic Stack who need a flexible pipeline for ingesting, transforming, and routing log and event data."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "117d354d-ba1d-4901-852d-f37b6680c972",
+    "slug": "jaeger",
+    "name": "Jaeger",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source, CNCF-graduated distributed tracing platform for monitoring and troubleshooting microservices.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Jaeger is a free, open source, CNCF-graduated distributed tracing platform with native OpenTelemetry and ClickHouse support.",
+      "features": [
+        { "title": "Distributed request tracing", "description": "Maps request flow across distributed microservice systems." },
+        { "title": "Root cause analysis", "description": "Helps identify performance bottlenecks and track down the root causes of errors." },
+        { "title": "Service dependency analysis", "description": "Analyzes and visualizes dependencies between services." },
+        { "title": "Native OTLP support", "description": "Natively supports the OpenTelemetry Protocol as of version 1.35." },
+        { "title": "ClickHouse storage backend", "description": "Native ClickHouse support was added as a storage backend in version 2.18.0, alongside other storage options." }
+      ],
+      "pros": [
+        "Free and open source",
+        "CNCF graduated project with an open governance model",
+        "Native OpenTelemetry (OTLP) support",
+        "Multiple storage backend options including ClickHouse",
+        "Open governance with mentorship programs and maintainer pathways"
+      ],
+      "cons": [
+        "Requires setting up and operating a separate storage backend (e.g. ClickHouse, Elasticsearch, or Cassandra)",
+        "Focused on distributed tracing only — no built-in metrics or log collection",
+        "Self-hosted only; no managed cloud offering mentioned"
+      ],
+      "faqs": [
+        { "question": "Is Jaeger free?", "answer": "Yes, Jaeger is 100% open source and free to use." },
+        { "question": "Is Jaeger a CNCF project?", "answer": "Yes, Jaeger is a Cloud Native Computing Foundation graduated project." },
+        { "question": "Does Jaeger support OpenTelemetry?", "answer": "Yes, Jaeger has native OTLP support as of version 1.35." },
+        { "question": "What storage backends does Jaeger support?", "answer": "Jaeger supports multiple storage backends, including native ClickHouse support added in version 2.18.0." }
+      ],
+      "use_cases": [
+        { "title": "Microservices troubleshooting", "description": "Teams use Jaeger to trace requests across microservices and identify latency or error root causes.", "audience": "SRE and backend engineering teams" },
+        { "title": "Service dependency mapping", "description": "Organizations use Jaeger's dependency analysis to understand how services interact in complex architectures.", "audience": "Platform and architecture teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Jaeger?",
+          "level": 2,
+          "paragraphs": [
+            "Jaeger is an open source, distributed tracing platform for monitoring and troubleshooting complex microservices-based systems. It maps request flow across distributed systems, identifies performance bottlenecks, and tracks the root causes of errors.",
+            "Jaeger is a CNCF graduated project with an open governance model, native OpenTelemetry (OTLP) support since version 1.35, and native ClickHouse storage support since version 2.18.0."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Jaeger is for",
+          "level": 2,
+          "paragraphs": [
+            "Jaeger is for SRE and backend teams running microservices architectures who need distributed tracing to diagnose latency and errors across service boundaries."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "b18b84bf-1a80-44d2-8619-43e15614d140",
+    "slug": "zipkin",
+    "name": "Zipkin",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source distributed tracing system originally built at Twitter to troubleshoot latency in microservice architectures.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Zipkin is a free, open source distributed tracing system originally built at Twitter for troubleshooting microservice latency.",
+      "features": [
+        { "title": "Trace collection and lookup", "description": "Gathers timing data across services and lets you look up individual traces." },
+        { "title": "Query by service, tag, or duration", "description": "Search traces by service, operation name, tags, and duration." },
+        { "title": "Dependency diagrams", "description": "Visualizes request flows and dependencies between applications." },
+        { "title": "Multiple transport protocols", "description": "Supports HTTP, Kafka, Apache ActiveMQ, gRPC, and RabbitMQ for reporting trace data." },
+        { "title": "Pluggable storage", "description": "Stores trace data in-memory or in persistent backends like Apache Cassandra or Elasticsearch." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Originated from and battle-tested at Twitter's scale",
+        "Flexible transport protocol support (HTTP, Kafka, gRPC, RabbitMQ, ActiveMQ)",
+        "Pluggable storage backends including Cassandra and Elasticsearch",
+        "Includes dependency diagram visualization out of the box"
+      ],
+      "cons": [
+        "Requires a separate persistent storage backend (Cassandra or Elasticsearch) for production use",
+        "Requires instrumenting applications with tracer libraries",
+        "Focused on distributed tracing only — no built-in metrics or log collection"
+      ],
+      "faqs": [
+        { "question": "Is Zipkin free?", "answer": "Yes, Zipkin is open source software available on GitHub." },
+        { "question": "Where did Zipkin originate?", "answer": "Zipkin was initially built to store data on Cassandra, reflecting its origins and heavy internal use at Twitter." },
+        { "question": "What storage does Zipkin use?", "answer": "Zipkin supports in-memory storage for testing or persistent storage such as Apache Cassandra or Elasticsearch for production." },
+        { "question": "What transport protocols does Zipkin support?", "answer": "Zipkin supports HTTP, Kafka, Apache ActiveMQ, gRPC, and RabbitMQ." }
+      ],
+      "use_cases": [
+        { "title": "Latency troubleshooting", "description": "Teams use Zipkin to identify and resolve latency issues in microservice architectures.", "audience": "Backend and SRE teams" },
+        { "title": "Service dependency visualization", "description": "Organizations use Zipkin's dependency diagrams to understand how requests flow between applications.", "audience": "Platform engineering teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Zipkin?",
+          "level": 2,
+          "paragraphs": [
+            "Zipkin is an open source distributed tracing system that gathers timing data to troubleshoot latency problems in service architectures. It was initially built to store data on Cassandra, reflecting its origins and heavy use within Twitter.",
+            "Zipkin supports multiple transport protocols (HTTP, Kafka, ActiveMQ, gRPC, RabbitMQ) and pluggable storage backends including in-memory, Cassandra, and Elasticsearch, with dependency diagram visualization included."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Zipkin is for",
+          "level": 2,
+          "paragraphs": [
+            "Zipkin is for engineering teams running microservice architectures who need a free, open source tool to trace requests and diagnose latency across services."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "b5e89d16-61c3-4ade-882a-138e2a553e12",
+    "slug": "bugsink",
+    "name": "Bugsink",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Self-hosted, open source error tracking platform that's a Sentry SDK-compatible drop-in alternative to Sentry.",
+      "pricing_model": "Freemium",
+      "starting_price": "€16/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Bugsink is an open source, Sentry SDK-compatible error tracking tool with a free self-hosted option and hosted plans from €16/month.",
+      "features": [
+        { "title": "Stacktrace analysis", "description": "Shows local variables and code context alongside stack traces for debugging." },
+        { "title": "Automatic issue grouping", "description": "Consolidates related errors into single issues automatically." },
+        { "title": "Search and tagging", "description": "Search and filter errors by release, environment, user, and other tags." },
+        { "title": "Sourcemap support", "description": "Resolves minified code back to original sources using sourcemaps." },
+        { "title": "Sentry SDK compatibility", "description": "Works as a drop-in replacement for Sentry, using the existing Sentry SDKs." },
+        { "title": "Alerting notifications", "description": "Sends alerts when new or recurring errors occur." }
+      ],
+      "pros": [
+        "Self-hosted deployment is free with unlimited users and all features",
+        "Drop-in compatibility with existing Sentry SDKs simplifies migration",
+        "Open source with 1.9K GitHub stars",
+        "Hosted plans start at a low entry price (€16/month for 75K events)",
+        "Free hosted tier available for evaluation (15K events/month)"
+      ],
+      "cons": [
+        "Free hosted tier is capped at 15K events/month with single-user access",
+        "Self-hosted event volume is limited by your own hardware capacity",
+        "Higher-volume hosted plans (600K to 50M+ events/month) add meaningfully to cost"
+      ],
+      "faqs": [
+        { "question": "Is Bugsink free?", "answer": "Self-hosted Bugsink is free with unlimited users and all features. The hosted version has a free tier limited to 15K events/month." },
+        { "question": "Is Bugsink compatible with Sentry?", "answer": "Yes, Bugsink is designed to be a drop-in replacement using existing Sentry SDKs." },
+        { "question": "How much does hosted Bugsink cost?", "answer": "Hosted plans start at €16/month for 75K events, scaling up to €158/month for 3M events, with higher-volume plans available." },
+        { "question": "Can Bugsink be self-hosted?", "answer": "Yes, self-hosting is free and includes unlimited users and all features, with event volume limited by your own hardware." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted error monitoring", "description": "Teams that want full control over their error data self-host Bugsink for free.", "audience": "Engineering teams with self-hosting infrastructure" },
+        { "title": "Cost-effective Sentry alternative", "description": "Teams looking to reduce error-tracking costs at scale switch to Bugsink's hosted plans while keeping their existing Sentry SDK integrations.", "audience": "Cost-conscious engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-hosted", "price": "Free", "billing_cycle": null, "features": ["Unlimited users", "All features included", "Event volume depends on your own hardware"] },
+        { "plan_name": "Hosted Free", "price": "Free", "billing_cycle": "monthly", "features": ["15K events/month", "Single user", "5K events retained"] },
+        { "plan_name": "Hosted 75K", "price": "€16/month", "billing_cycle": "monthly", "features": ["75K events/month"] },
+        { "plan_name": "Hosted 600K", "price": "€50/month", "billing_cycle": "monthly", "features": ["600K events/month"] },
+        { "plan_name": "Hosted 3M", "price": "€158/month", "billing_cycle": "monthly", "features": ["3M events/month"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Bugsink?",
+          "level": 2,
+          "paragraphs": [
+            "Bugsink is a self-hosted error tracking platform for monitoring when and why code fails in production. It is designed as a Sentry-compatible drop-in alternative, working with existing Sentry SDKs.",
+            "Bugsink is open source (1.9K GitHub stars) and offers both a free self-hosted deployment and hosted plans starting at €16/month for 75K events, up to higher-volume tiers for 50M+ events/month."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Bugsink is for",
+          "level": 2,
+          "paragraphs": [
+            "Bugsink is for engineering teams already using Sentry's SDKs who want a self-hosted or lower-cost alternative for error tracking without changing their instrumentation."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-plan", "api", "web-app"]
+    }
+  },
+  {
+    "tool_id": "883b2808-6d12-4830-b483-eca7281f59f1",
+    "slug": "coroot",
+    "name": "Coroot",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open source, eBPF-based observability platform offering AI-powered root cause analysis with zero code instrumentation.",
+      "pricing_model": "Freemium",
+      "starting_price": "$1/monitored CPU core/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Coroot is an open source eBPF observability platform with AI-powered root cause analysis, a free Community Edition, and plans from $1/core.",
+      "features": [
+        { "title": "eBPF-based zero instrumentation", "description": "Collects metrics, logs, traces, and profiles without requiring code changes to applications." },
+        { "title": "AI-powered root cause analysis", "description": "Identifies issues and suggests fixes using AI-driven analysis." },
+        { "title": "Service maps and continuous profiling", "description": "Visualizes service relationships and continuously profiles application performance." },
+        { "title": "SLO tracking and smart alerting", "description": "Tracks service-level objectives and generates alerts based on them." },
+        { "title": "Cost monitoring", "description": "Tracks infrastructure cost alongside performance data." },
+        { "title": "SSO and RBAC", "description": "Single sign-on and role-based access control available on the Standard edition and above." }
+      ],
+      "pros": [
+        "Free, open source Community Edition available on GitHub (7,300+ stars, 25M+ downloads)",
+        "Zero-instrumentation monitoring via eBPF, requiring no code changes",
+        "Transparent, usage-based pricing for the Standard edition ($1 per monitored CPU core/month)",
+        "14-day full-feature trial with no credit card required",
+        "Self-hosted deployment gives full control over data"
+      ],
+      "cons": [
+        "Community Edition lacks SSO, RBAC, and premium support included in paid tiers",
+        "Premium edition pricing requires contacting sales",
+        "Standard/Premium editions require ongoing per-core billing that scales with cluster size"
+      ],
+      "faqs": [
+        { "question": "Is Coroot free?", "answer": "Yes, the Community Edition is free and available on GitHub. Paid Standard and Premium editions add features like SSO, RBAC, and 24x7 support." },
+        { "question": "How is Coroot's Standard edition priced?", "answer": "The Standard edition is priced at $1 per monitored CPU core per month, with volume discounts available." },
+        { "question": "Does Coroot require code instrumentation?", "answer": "No, Coroot uses eBPF to collect metrics, logs, traces, and profiles without requiring code changes." },
+        { "question": "Is there a free trial?", "answer": "Yes, Coroot offers a 14-day full-feature trial with no credit card required." }
+      ],
+      "use_cases": [
+        { "title": "Kubernetes and container observability", "description": "SRE and DevOps teams use Coroot's eBPF-based monitoring to get full-stack visibility into containerized environments without instrumenting code.", "audience": "SRE and DevOps teams" },
+        { "title": "Cost-effective Datadog/New Relic alternative", "description": "Teams looking to reduce observability spend use Coroot's self-hosted or per-core pricing as an alternative to Datadog or New Relic.", "audience": "Cost-conscious platform teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Self-hosted", "eBPF-based monitoring", "Available on GitHub"] },
+        { "plan_name": "Standard Edition", "price": "$1/monitored CPU core/month", "billing_cycle": "monthly", "features": ["eBPF-based monitoring", "SLO tracking", "Smart alerting", "Slack/PagerDuty/Teams integration", "Deployment tracking", "Cost monitoring", "Continuous profiling", "AI-powered root cause analysis", "SSO and RBAC", "Business-hours support"] },
+        { "plan_name": "Premium Edition", "price": "Contact sales", "billing_cycle": null, "features": ["24x7 support with phone", "Premium onboarding", "Capacity planning", "Air-gapped installation support", "Team training"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Coroot?",
+          "level": 2,
+          "paragraphs": [
+            "Coroot is a full-stack observability platform that uses eBPF technology and AI for root cause analysis, providing metrics, logs, traces, and continuous profiling without requiring code instrumentation. It covers applications, databases, infrastructure, cloud, and network monitoring in a unified interface.",
+            "Coroot offers a free, open source Community Edition (7,300+ GitHub stars, 25M+ downloads) alongside a paid Standard edition priced at $1 per monitored CPU core per month, and a Premium edition available via sales for larger organizations."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Coroot is for",
+          "level": 2,
+          "paragraphs": [
+            "Coroot is for SREs and DevOps teams running Kubernetes and containerized environments who want observability and AI-assisted root cause analysis without instrumenting application code, at a lower cost than traditional APM vendors."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-trial", "free-plan", "ai", "api", "web-app"]
+    }
+  }
+]

@@ -1,0 +1,640 @@
+[
+  {
+    "tool_id": "a24c79b2-2532-4586-980b-a77abc122161",
+    "slug": "flowise",
+    "name": "Flowise",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, drag-and-drop platform for building AI agents, chatbots, and RAG workflows.",
+      "pricing_model": "Freemium",
+      "starting_price": "$35/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Flowise is an open-source visual builder for AI agents and LLM workflows, with a free self-hosted version and paid Flowise Cloud plans.",
+      "features": [
+        { "title": "Agentflow", "description": "Build multi-agent systems with visual workflow orchestration and human-in-the-loop task review." },
+        { "title": "Chatflow", "description": "Create single-agent chatbots with tool calling and retrieval-augmented generation (RAG)." },
+        { "title": "100+ model integrations", "description": "Connect to a wide range of LLMs, embedding models, and vector databases." },
+        { "title": "Execution traces", "description": "Observe agent runs with tracing support for Prometheus and OpenTelemetry." },
+        { "title": "Developer APIs and SDKs", "description": "Embed flows into external applications using TypeScript and Python SDKs, APIs, and embeddable chat widgets." }
+      ],
+      "pros": [
+        "Free, Apache-2.0-licensed open-source version that can be self-hosted",
+        "Visual drag-and-drop builder needs little to no code",
+        "Supports a large number of LLMs, embeddings, and vector databases",
+        "Managed Flowise Cloud option removes the need to self-host",
+        "Built-in observability via OpenTelemetry and Prometheus"
+      ],
+      "cons": [
+        "Free Flowise Cloud tier is limited to 2 flows and 100 predictions per month",
+        "Paid cloud tiers require a recurring monthly subscription on top of any LLM API costs",
+        "Self-hosting requires managing your own infrastructure and updates"
+      ],
+      "faqs": [
+        { "question": "Is Flowise free?", "answer": "The core Flowise software is open source under the Apache 2.0 license and can be self-hosted for free. Flowise also offers a hosted Flowise Cloud with a limited free tier and paid Starter and Pro plans." },
+        { "question": "Can Flowise be self-hosted?", "answer": "Yes, Flowise can be installed and run on your own infrastructure via npm, in addition to using the hosted Flowise Cloud." },
+        { "question": "What can I build with Flowise?", "answer": "Flowise is used to build AI agents, chatbots, and RAG applications using a visual, low-code interface called Chatflow and Agentflow." },
+        { "question": "Does Flowise support multiple LLM providers?", "answer": "Yes, Flowise supports 100+ LLMs, embedding models, and vector databases through its integration library." }
+      ],
+      "use_cases": [
+        { "title": "Rapid AI agent prototyping", "description": "Developers use Flowise's visual builder to prototype and iterate on AI agents without writing extensive code.", "audience": "Developers and AI teams" },
+        { "title": "Customer-facing chatbots", "description": "Teams embed Flowise-built chatbots into websites and products using the provided widgets and APIs.", "audience": "Product and support teams" },
+        { "title": "Enterprise AI workflow orchestration", "description": "Organizations use Agentflow to coordinate multi-agent systems with review and observability.", "audience": "Enterprise engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["2 flows", "100 predictions/month", "5MB storage"] },
+        { "plan_name": "Starter", "price": "$35/month", "billing_cycle": "monthly", "features": ["Unlimited flows", "10,000 predictions/month", "1GB storage"] },
+        { "plan_name": "Pro", "price": "$65/month", "billing_cycle": "monthly", "features": ["50,000 predictions/month", "10GB storage", "Unlimited workspaces", "Admin roles"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Flowise?",
+          "level": 2,
+          "paragraphs": [
+            "Flowise is an open-source, visual development platform for building AI agents and LLM-powered applications. It provides a drag-and-drop interface for assembling chatbots and multi-agent workflows without writing extensive code.",
+            "The project is licensed under Apache 2.0 and can be self-hosted, or run through the managed Flowise Cloud service, which offers a free tier plus paid Starter and Pro plans."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Flowise is for",
+          "level": 2,
+          "paragraphs": [
+            "Flowise suits developers and AI teams who want to prototype and deploy AI agents quickly using a visual builder, as well as organizations that need to embed conversational AI or automated workflows into existing products via API."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "063d9724-1713-4fc5-9347-e4e03f6040a1",
+    "slug": "langflow",
+    "name": "Langflow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, low-code visual builder for creating AI agents and RAG applications.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Langflow is an MIT-licensed, open-source low-code platform for building AI agents and RAG apps, with a free self-hosted option and paid cloud hosting.",
+      "features": [
+        { "title": "Visual flow builder", "description": "Assemble AI agent and RAG applications using a drag-and-drop canvas." },
+        { "title": "Python customization", "description": "Extend or modify any component's behavior with custom Python code." },
+        { "title": "Interactive playground", "description": "Test and refine flows in real time before deployment." },
+        { "title": "Multi-agent orchestration", "description": "Coordinate multiple agents with conversation management and retrieval." },
+        { "title": "API and MCP deployment", "description": "Deploy flows as REST APIs or as MCP servers that expose flows as callable tools." }
+      ],
+      "pros": [
+        "Open source under the MIT license and free to self-host",
+        "Combines a visual builder with full Python customization for advanced control",
+        "Supports major LLM providers and vector databases",
+        "Can be deployed as an API or an MCP server for use in other applications",
+        "Active community with Discord, GitHub, and YouTube presence"
+      ],
+      "cons": [
+        "Paid cloud hosting and enterprise support pricing are not published and require contacting sales",
+        "Advanced multi-agent orchestration can require Python knowledge to fully customize",
+        "Self-hosted deployments require managing your own infrastructure"
+      ],
+      "faqs": [
+        { "question": "Is Langflow free?", "answer": "Yes. Langflow is open source under the MIT license and free to self-host. Langflow also offers a free cloud account plus paid, enterprise-grade cloud hosting." },
+        { "question": "Do I need to know Python to use Langflow?", "answer": "No, the core builder is drag-and-drop, but Python customization is available for users who want deeper control over components." },
+        { "question": "Can Langflow flows be used as an API?", "answer": "Yes, flows can be deployed as a REST API or exported as JSON for use in external Python applications, and can also be deployed as an MCP server." },
+        { "question": "Is Langflow's cloud hosting paid?", "answer": "Langflow offers both a free cloud account option and enterprise-grade paid cloud hosting with professional services and premier support." }
+      ],
+      "use_cases": [
+        { "title": "RAG application development", "description": "Teams build retrieval-augmented generation pipelines visually and connect them to vector databases.", "audience": "AI engineers" },
+        { "title": "Agentic workflow prototyping", "description": "Developers rapidly prototype multi-agent workflows using pre-built and custom components.", "audience": "Development teams" },
+        { "title": "Exposing flows as tools", "description": "Organizations deploy Langflow flows as MCP servers so other AI systems can call them as tools.", "audience": "Platform and AI infrastructure teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Langflow?",
+          "level": 2,
+          "paragraphs": [
+            "Langflow is an open-source, low-code visual platform for building and deploying AI agents and RAG (retrieval-augmented generation) applications. It combines a drag-and-drop interface with Python customization for advanced users.",
+            "Langflow is licensed under MIT and can be self-hosted for free. A hosted cloud option is also available, ranging from a free account to enterprise-grade paid hosting with professional support."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Langflow is for",
+          "level": 2,
+          "paragraphs": [
+            "Langflow is aimed at AI development teams and engineers who want to build agentic and RAG applications quickly using a visual interface, while retaining the option to customize components in Python or deploy flows as APIs and MCP servers."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "b9045b0b-a0f9-495a-a06c-21acb051ac12",
+    "slug": "anythingllm",
+    "name": "AnythingLLM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source desktop and self-hosted app for chatting with local or private LLMs over your own documents.",
+      "pricing_model": "Freemium",
+      "starting_price": "$50/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "AnythingLLM is an MIT-licensed, open-source AI app for private document chat, free as a desktop app or Docker install, with paid cloud plans from $50/month.",
+      "features": [
+        { "title": "Document integration", "description": "Chat with PDFs, Word documents, CSV files, codebases, and other online sources." },
+        { "title": "Local-first privacy", "description": "Runs and stores everything locally on the machine running AnythingLLM by default." },
+        { "title": "Multi-model support", "description": "Works with local models or enterprise LLM providers such as OpenAI, Azure, and AWS." },
+        { "title": "Developer API", "description": "Built-in API for custom development and integration with other systems." },
+        { "title": "Custom agents and connectors", "description": "Extend functionality with custom agents, data connectors, and community-built extensions." }
+      ],
+      "pros": [
+        "Free, MIT-licensed desktop app with no account required",
+        "Can be self-hosted for free via Docker",
+        "Supports both local models and major cloud LLM providers",
+        "Handles multiple document types and multimodal models",
+        "Paid cloud plans available for teams that don't want to self-host"
+      ],
+      "cons": [
+        "Paid cloud tiers add a recurring monthly cost on top of any LLM API usage",
+        "Enterprise plan pricing is custom and not published",
+        "Cloud Basic plan is limited to small teams (under 5 users, fewer than 100 documents)"
+      ],
+      "faqs": [
+        { "question": "Is AnythingLLM free?", "answer": "Yes, the desktop application is free and open source under the MIT license, and it can also be self-hosted for free via Docker. Paid cloud plans (Basic, Pro, Enterprise) are available for teams that want a hosted instance." },
+        { "question": "Does AnythingLLM run locally?", "answer": "Yes, by default everything is stored and run locally on the machine running AnythingLLM, and it can also connect to your own local LLMs." },
+        { "question": "Who makes AnythingLLM?", "answer": "AnythingLLM is developed by Mintplex Labs Inc." },
+        { "question": "What platforms does AnythingLLM support?", "answer": "AnythingLLM is available as a desktop app for macOS, Windows, and Linux, as a Docker deployment, and as a hosted cloud service." }
+      ],
+      "use_cases": [
+        { "title": "Private document Q&A", "description": "Individuals and teams chat with their own PDFs, spreadsheets, and codebases without sending data to third parties.", "audience": "Privacy-conscious individuals and businesses" },
+        { "title": "Team knowledge base chat", "description": "Organizations deploy a private hosted or self-hosted instance so teams can query shared documents.", "audience": "Business teams" },
+        { "title": "Custom AI integrations", "description": "Developers use the built-in API to embed AnythingLLM's document chat capabilities into other applications.", "audience": "Developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Basic", "price": "$50/month", "billing_cycle": "monthly", "features": ["Private instance", "Custom subdomain", "RAG and agents out of the box", "Bring your own LLM API key", "For teams under 5 users, under 100 documents"] },
+        { "plan_name": "Pro", "price": "$99/month", "billing_cycle": "monthly", "features": ["Private instance", "RAG and agents out of the box", "For larger teams", "72-hour support SLA"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["On-premise installation", "Custom support SLA", "Custom domain", "Custom integration support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is AnythingLLM?",
+          "level": 2,
+          "paragraphs": [
+            "AnythingLLM is an open-source application, developed by Mintplex Labs, that lets users chat with large language models over their own documents locally and privately. It supports PDFs, Word documents, CSVs, codebases, and other data sources.",
+            "The desktop app is free and MIT-licensed, and can also be self-hosted via Docker at no cost. AnythingLLM also offers paid, hosted cloud plans (Basic, Pro, and custom Enterprise) for teams that prefer a managed instance."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who AnythingLLM is for",
+          "level": 2,
+          "paragraphs": [
+            "AnythingLLM is suited to non-technical users who want a private, local AI assistant, as well as businesses and developers who need team collaboration, custom agents, or API integration for document-based AI workflows."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source", "freemium", "free-plan", "mac", "windows"]
+    }
+  },
+  {
+    "tool_id": "362996ad-6cda-41f1-8ec2-066aa387a46c",
+    "slug": "open-webui",
+    "name": "Open WebUI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Self-hosted, extensible web interface for running and managing local and remote LLMs offline.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Open WebUI is a free, self-hosted AI platform for Ollama and OpenAI-compatible models, with an optional paid Enterprise plan for SLA and custom branding.",
+      "features": [
+        { "title": "Broad model support", "description": "Connects to Ollama, OpenAI-compatible APIs, LMStudio, GroqCloud, Mistral, and other providers." },
+        { "title": "Local RAG and search", "description": "Retrieval-augmented generation with support for 9 vector database options plus web search integration." },
+        { "title": "Team collaboration tools", "description": "Built-in voice/video calling, channels, and persistent memory across conversations." },
+        { "title": "Access control", "description": "Granular role-based access control with LDAP/Active Directory and OAuth support." },
+        { "title": "Plugin architecture", "description": "Extend the platform with filters, actions, pipes, tools, and Model Context Protocol (MCP) integrations." },
+        { "title": "Flexible deployment", "description": "Runs via Docker, Kubernetes (kubectl, kustomize, helm), or Python pip, with optional GPU support." }
+      ],
+      "pros": [
+        "Free and open source, designed to run entirely offline",
+        "Supports many LLM backends and vector databases out of the box",
+        "Extensive access-control and enterprise authentication options (LDAP, OAuth)",
+        "Highly extensible plugin architecture with MCP support",
+        "Multiple deployment paths including Docker, Kubernetes, and native desktop apps"
+      ],
+      "cons": [
+        "Licensing is split across multiple terms, with some components requiring branding to be preserved",
+        "Enterprise plan pricing (SLA, custom branding, LTS) is not public and requires contacting sales",
+        "Self-hosting requires managing your own infrastructure and updates"
+      ],
+      "faqs": [
+        { "question": "Is Open WebUI free?", "answer": "Yes, Open WebUI is free and open source and can be self-hosted. An optional paid Enterprise plan adds custom theming/branding, SLA support, and Long-Term Support (LTS) versions." },
+        { "question": "Does Open WebUI require an internet connection?", "answer": "No, it's designed to operate entirely offline when paired with local models such as those served by Ollama." },
+        { "question": "How is Open WebUI deployed?", "answer": "It can be deployed via Docker, Kubernetes, or Python pip, and native desktop apps are also available for macOS, Windows, and Linux." },
+        { "question": "Can Open WebUI connect to cloud LLM providers?", "answer": "Yes, it supports OpenAI-compatible APIs and providers such as GroqCloud and Mistral in addition to local models via Ollama." }
+      ],
+      "use_cases": [
+        { "title": "Private, offline AI chat", "description": "Individuals and organizations run a fully offline chat interface against local models for data privacy.", "audience": "Privacy-focused individuals and organizations" },
+        { "title": "Team AI workspace", "description": "Companies deploy Open WebUI with LDAP/OAuth access control as a shared internal AI assistant.", "audience": "IT and enterprise teams" },
+        { "title": "Custom AI tooling", "description": "Developers extend Open WebUI with plugins, pipes, and MCP tools for specialized workflows.", "audience": "Developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "$0", "billing_cycle": null, "features": ["Self-hosted", "Full feature set", "Community support"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom theming and branding", "SLA support", "Long-Term Support (LTS) versions"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Open WebUI?",
+          "level": 2,
+          "paragraphs": [
+            "Open WebUI is an extensible, self-hosted AI platform designed to operate entirely offline. It provides a web interface for interacting with local models served through Ollama as well as OpenAI-compatible APIs and other providers.",
+            "The core software is free and open source, with a plugin architecture, RAG support, and enterprise authentication options. An optional paid Enterprise plan adds custom branding, SLA support, and Long-Term Support versions."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Open WebUI is for",
+          "level": 2,
+          "paragraphs": [
+            "Open WebUI suits individuals and organizations that want a private, offline-capable chat interface for local or remote LLMs, including IT teams that need access control and enterprise authentication for shared internal deployments."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source", "freemium", "mac", "windows"]
+    }
+  },
+  {
+    "tool_id": "465b7b09-9fa2-4ab9-9a80-e441a1effd0a",
+    "slug": "librechat",
+    "name": "LibreChat",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, self-hosted chat platform that unifies multiple AI models and providers in one interface.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "LibreChat is a free, MIT-licensed, open-source AI chat platform that unifies OpenAI, Anthropic, Azure, and other model providers in one self-hosted app.",
+      "features": [
+        { "title": "Multi-provider model support", "description": "Connects to Anthropic (Claude), AWS Bedrock, OpenAI, Azure OpenAI, Google, Vertex AI, and compatible APIs." },
+        { "title": "Code Interpreter", "description": "Runs sandboxed code execution in Python, Node.js, Go, C/C++, Java, PHP, Rust, and Fortran." },
+        { "title": "LibreChat Agents", "description": "No-code custom assistants with Model Context Protocol (MCP) support for tools." },
+        { "title": "Artifacts", "description": "Generates React, HTML, and Mermaid diagrams directly within the chat interface." },
+        { "title": "Enterprise authentication", "description": "Multi-user support with OAuth2, LDAP, email login, and a browser-based admin UI for managing users, groups, and roles." },
+        { "title": "Search and web access", "description": "Built-in message, file, and code search plus live web search integration." }
+      ],
+      "pros": [
+        "Fully free and open source under the MIT license",
+        "Wide multi-provider LLM support in a single interface",
+        "Sandboxed code interpreter supports many programming languages",
+        "Enterprise-grade authentication options (OAuth2, LDAP, SAML-style SSO, 2FA)",
+        "Large, active community with a demo instance for evaluation"
+      ],
+      "cons": [
+        "No official managed cloud hosting plan; deployment and infrastructure are the user's responsibility",
+        "Self-hosting requires technical setup and ongoing maintenance",
+        "Advanced features like code interpreter and agents depend on correctly configuring external API keys"
+      ],
+      "faqs": [
+        { "question": "Is LibreChat free?", "answer": "Yes, LibreChat is free and open source under the MIT license. It is self-hosted, so users provide their own infrastructure and API keys for the model providers they connect." },
+        { "question": "Which AI providers does LibreChat support?", "answer": "LibreChat supports Anthropic, OpenAI, Azure OpenAI, AWS Bedrock, Google, Vertex AI, and other OpenAI-compatible APIs." },
+        { "question": "Can I try LibreChat without installing it?", "answer": "Yes, a public demo is available at chat.librechat.ai." },
+        { "question": "Does LibreChat support multiple users?", "answer": "Yes, it includes multi-user authentication with OAuth2, LDAP, and email login, plus an admin UI for managing users, groups, and roles." }
+      ],
+      "use_cases": [
+        { "title": "Unified internal AI chat", "description": "Organizations self-host LibreChat to give employees a single interface for multiple LLM providers.", "audience": "IT and engineering teams" },
+        { "title": "Custom AI assistants", "description": "Teams build no-code agents with tool access using LibreChat Agents and MCP support.", "audience": "Developers and technical teams" },
+        { "title": "Code-assisted workflows", "description": "Developers use the sandboxed Code Interpreter to run and test code across multiple languages inside chat.", "audience": "Developers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is LibreChat?",
+          "level": 2,
+          "paragraphs": [
+            "LibreChat is a free, open-source AI platform that brings together conversations with multiple AI models and providers, including Anthropic, OpenAI, Azure, AWS Bedrock, and Google, into a single customizable interface.",
+            "The project is MIT-licensed and self-hosted, with features such as a sandboxed code interpreter, no-code agents with MCP tool support, and enterprise authentication options like OAuth2 and LDAP. LibreChat has joined ClickHouse to support an open-source agentic data stack."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who LibreChat is for",
+          "level": 2,
+          "paragraphs": [
+            "LibreChat is aimed at developers, organizations, and enterprises that want a self-hosted, customizable AI chat platform supporting multiple model providers, code execution, and enterprise-grade authentication."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "b5d7cf28-5eac-4ad6-a24a-dff47bd3edc7",
+    "slug": "lobechat",
+    "name": "LobeChat",
+    "status": "skip",
+    "skip_reason": "The product has rebranded: the GitHub repository (lobehub/lobe-chat) and website (lobehub.com) now present the project as \"LobeHub\", a broader AI-agent operations platform, not \"LobeChat\". The README explicitly states 'The project is now called LobeHub (not LobeChat)'. Enriching under the manifest name \"LobeChat\" would misrepresent the current product.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "9cc30e55-3b4a-4b57-88bd-393a5082ac87",
+    "slug": "jan",
+    "name": "Jan",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, privacy-focused desktop app for running local and cloud AI models as a ChatGPT alternative.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Jan is a free, Apache 2.0-licensed, open-source desktop app for chatting with local or cloud AI models, available for Mac, Windows, and Linux.",
+      "features": [
+        { "title": "Local model downloads", "description": "Download and run LLMs such as Llama, Gemma, and Qwen directly from HuggingFace." },
+        { "title": "Cloud provider integration", "description": "Connect to cloud providers including OpenAI and Anthropic alongside local models." },
+        { "title": "Custom AI assistants", "description": "Create custom assistants tailored to specific tasks." },
+        { "title": "OpenAI-compatible local API", "description": "Exposes an OpenAI-compatible API on localhost for use with other applications." },
+        { "title": "Model Context Protocol support", "description": "Supports MCP for connecting external tools to models." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "Runs entirely locally for privacy, with the option to connect to cloud providers when needed",
+        "Available on Windows, macOS, and Linux",
+        "Exposes a local OpenAI-compatible API for integration with other tools",
+        "Large, active community with over 6 million downloads"
+      ],
+      "cons": [
+        "No paid or enterprise tier, so there is no vendor support contract available",
+        "Local model performance depends on the user's own hardware",
+        "Some features, such as persistent memory, are still in development"
+      ],
+      "faqs": [
+        { "question": "Is Jan free?", "answer": "Yes, Jan is free and open source under the Apache 2.0 license." },
+        { "question": "Does Jan require an internet connection?", "answer": "No, Jan can run models entirely locally, though it can also connect to cloud providers such as OpenAI and Anthropic if desired." },
+        { "question": "What platforms does Jan support?", "answer": "Jan is available for Windows 10+, macOS 13.6+, and Linux (deb, AppImage, and Arm64 builds)." },
+        { "question": "Can Jan be used with other applications?", "answer": "Yes, Jan exposes an OpenAI-compatible API on localhost that other applications can call." }
+      ],
+      "use_cases": [
+        { "title": "Private local AI chat", "description": "Users run AI models entirely on their own device without sending data to the cloud.", "audience": "Privacy-conscious individuals" },
+        { "title": "Multi-model experimentation", "description": "Developers download and compare different open models from HuggingFace within a single app.", "audience": "Developers and AI enthusiasts" },
+        { "title": "Local API for custom tools", "description": "Developers build applications against Jan's local OpenAI-compatible API endpoint.", "audience": "Developers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Jan?",
+          "level": 2,
+          "paragraphs": [
+            "Jan is a free, open-source desktop application that lets users run AI models locally as a privacy-focused alternative to cloud chat assistants. It supports downloading open models such as Llama, Gemma, and Qwen from HuggingFace, as well as connecting to cloud providers like OpenAI and Anthropic.",
+            "Jan is licensed under Apache 2.0 and available for Windows, macOS, and Linux. It also exposes a local, OpenAI-compatible API so other applications can use the models it runs."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Jan is for",
+          "level": 2,
+          "paragraphs": [
+            "Jan is designed for users who want a private, local-first AI chat experience without vendor lock-in, including developers who want to experiment with open models or build tools against a local API."
+          ]
+        }
+      ],
+      "tags": ["ai", "open-source", "mac", "windows", "api"]
+    }
+  },
+  {
+    "tool_id": "bdd55166-9401-4b99-9213-184d1c7c5807",
+    "slug": "gpt4all",
+    "name": "GPT4All",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source desktop app for running open-source LLMs privately on your own computer.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "GPT4All is a free, MIT-licensed, open-source desktop app by Nomic AI for running local LLMs privately on Windows, macOS, and Linux.",
+      "features": [
+        { "title": "Local model execution", "description": "Runs open-source language models directly on Windows, macOS, and Linux without cloud connectivity." },
+        { "title": "LocalDocs", "description": "Chat with your own local documents privately, without sending data externally." },
+        { "title": "No API or GPU required", "description": "Can be downloaded and used immediately without API calls or dedicated GPU hardware." },
+        { "title": "Vulkan GPU support", "description": "Accelerates inference using NVIDIA and AMD graphics cards via Vulkan." },
+        { "title": "Python client", "description": "Integrates with LangChain and vector databases through an official Python client." }
+      ],
+      "pros": [
+        "Free and open source under the MIT license, including for commercial use",
+        "Runs entirely on-device with no cloud dependency",
+        "Available on Windows, macOS, and Linux",
+        "LocalDocs feature enables private document chat",
+        "Backed by Nomic AI, an active maintainer"
+      ],
+      "cons": [
+        "Performance is limited by the user's local hardware",
+        "No official managed cloud or enterprise support tier for GPT4All itself",
+        "Model selection and quality depend on which open-source models are available to load"
+      ],
+      "faqs": [
+        { "question": "Is GPT4All free?", "answer": "Yes, GPT4All is open source under the MIT license and free to use, including for commercial purposes." },
+        { "question": "Does GPT4All need the internet?", "answer": "No, GPT4All runs language models locally on your device and does not require cloud connectivity or API calls." },
+        { "question": "What platforms does GPT4All support?", "answer": "GPT4All supports Windows (including Windows ARM), macOS, and Ubuntu/Linux." },
+        { "question": "Who develops GPT4All?", "answer": "GPT4All is developed by Nomic AI." }
+      ],
+      "use_cases": [
+        { "title": "Offline AI chat", "description": "Users run LLMs on their own laptop or desktop without needing an internet connection.", "audience": "Privacy-focused individuals" },
+        { "title": "Private document chat", "description": "Users query their own local files privately using the LocalDocs feature.", "audience": "Individuals and small teams" },
+        { "title": "Local AI development", "description": "Developers integrate GPT4All models into Python applications via the official client and LangChain.", "audience": "Developers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is GPT4All?",
+          "level": 2,
+          "paragraphs": [
+            "GPT4All is a free, open-source desktop application, developed by Nomic AI, that runs open-source language models privately on a user's own computer. It requires no cloud connectivity, API calls, or dedicated GPU.",
+            "The project is MIT-licensed and available for Windows, macOS, and Linux. It includes a LocalDocs feature for private, local document chat and a Python client that integrates with LangChain and vector databases."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who GPT4All is for",
+          "level": 2,
+          "paragraphs": [
+            "GPT4All is aimed at individuals, developers, and teams who want to run AI models fully on-device for privacy, security, or offline use, without relying on cloud infrastructure."
+          ]
+        }
+      ],
+      "tags": ["ai", "open-source", "mac", "windows"]
+    }
+  },
+  {
+    "tool_id": "c830bb2b-1cd7-47d7-b6a1-c48147945ecf",
+    "slug": "ollama",
+    "name": "Ollama",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Tool for running open-source LLMs locally, with optional paid cloud plans for scaled usage.",
+      "pricing_model": "Freemium",
+      "starting_price": "$20/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Ollama lets you run open-source LLMs locally for free, with optional paid Pro ($20/mo) and Max ($100/mo) cloud plans for extra usage.",
+      "features": [
+        { "title": "Local model execution", "description": "Run open-source language models on your own machine via a command-line install." },
+        { "title": "Cloud scaling", "description": "Scale beyond local hardware using Ollama's cloud infrastructure when needed." },
+        { "title": "Offline capability", "description": "Run models fully offline for mission-critical or disconnected work." },
+        { "title": "Data privacy", "description": "Ollama states that user data is never trained on." },
+        { "title": "Ecosystem integrations", "description": "Integrates with applications such as Claude Code." }
+      ],
+      "pros": [
+        "Free to run models locally with no account required",
+        "Simple command-line installation and model management",
+        "Available on macOS, Windows, and Linux",
+        "Optional cloud tiers add hosted capacity for running multiple models concurrently",
+        "States that user data is not used for training"
+      ],
+      "cons": [
+        "Local performance depends entirely on the user's own hardware",
+        "Cloud Pro and Max plans add a recurring subscription cost for higher usage",
+        "Running larger models locally can require significant RAM/VRAM"
+      ],
+      "faqs": [
+        { "question": "Is Ollama free?", "answer": "Yes, running Ollama locally is free. Paid Pro ($20/month or $200/year) and Max ($100/month) plans add expanded cloud usage for running multiple models concurrently." },
+        { "question": "What platforms does Ollama support?", "answer": "Ollama can be downloaded and installed on macOS (14 Sonoma or later), Windows, and Linux." },
+        { "question": "Does Ollama require the cloud?", "answer": "No, Ollama can run entirely offline using local models, with cloud usage as an optional add-on for extra capacity." },
+        { "question": "What's the difference between Ollama's Pro and Max plans?", "answer": "Pro ($20/month) allows running 3 cloud models simultaneously with increased usage, while Max ($100/month) allows 10 concurrent cloud models with even higher usage limits." }
+      ],
+      "use_cases": [
+        { "title": "Local LLM development", "description": "Developers run and test open models on their own machines for building AI-powered applications.", "audience": "Developers" },
+        { "title": "Offline / air-gapped AI work", "description": "Teams that need models to run without internet access rely on Ollama's fully local execution.", "audience": "Security-sensitive teams" },
+        { "title": "Scaled cloud inference", "description": "Users who need more concurrent model capacity than local hardware allows upgrade to a paid cloud plan.", "audience": "Power users and small teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Local Ollama usage", "Basic cloud access with an account"] },
+        { "plan_name": "Pro", "price": "$20/month", "billing_cycle": "monthly", "features": ["3 concurrent cloud models", "50x increased cloud usage vs. free"] },
+        { "plan_name": "Max", "price": "$100/month", "billing_cycle": "monthly", "features": ["10 concurrent cloud models", "5x more usage than Pro"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Ollama?",
+          "level": 2,
+          "paragraphs": [
+            "Ollama is a tool for running open-source language models locally on macOS, Windows, and Linux via a simple command-line install. It is free to use for local execution.",
+            "Ollama also offers optional cloud infrastructure, with datacenters in the United States, Europe, and Singapore, and paid Pro and Max plans for users who need to run more models concurrently or need extra usage beyond the free tier."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Ollama is for",
+          "level": 2,
+          "paragraphs": [
+            "Ollama is used by developers and organizations building applications with open models, ranging from hobbyists running models on personal hardware to teams that scale up using Ollama's paid cloud plans."
+          ]
+        }
+      ],
+      "tags": ["ai", "freemium", "free-plan", "mac", "windows", "api"]
+    }
+  },
+  {
+    "tool_id": "c416cb1e-8524-43e0-a740-2a092903d5fe",
+    "slug": "localai",
+    "name": "LocalAI",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source, self-hosted runtime for running LLMs, vision, speech, and image models on your own hardware.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "LocalAI is a free, MIT-licensed, open-source runtime for self-hosting text, vision, speech, and image AI models on your own hardware.",
+      "features": [
+        { "title": "Modular backend architecture", "description": "60+ backends that load on demand to support different model types." },
+        { "title": "Multi-modal support", "description": "Runs language, vision, voice, image generation, and agentic models in one runtime." },
+        { "title": "Hardware flexibility", "description": "Runs on CPU, NVIDIA, AMD, Intel, Apple Silicon, and other accelerators." },
+        { "title": "Built-in agents", "description": "Supports MCP tools, memory, and RAG for agentic use cases." },
+        { "title": "Realtime voice", "description": "WebRTC streaming with transcription and text-to-speech." },
+        { "title": "Privacy controls", "description": "Keeps data on-premise, with PII detection and redaction options." }
+      ],
+      "pros": [
+        "Completely free and open source under the MIT license",
+        "Runs many model types (text, vision, speech, image) in a single runtime",
+        "Broad hardware support, including CPU-only and Apple Silicon",
+        "Extensible via open gRPC backend contracts",
+        "Keeps data on-premise for privacy-sensitive deployments"
+      ],
+      "cons": [
+        "No managed cloud or enterprise support tier; deployment and scaling are self-managed",
+        "Running multiple model types can require substantial local hardware resources",
+        "Setup and backend configuration require technical familiarity"
+      ],
+      "faqs": [
+        { "question": "Is LocalAI free?", "answer": "Yes, LocalAI is completely free and open source under the MIT license, with no paid tiers." },
+        { "question": "What kinds of models can LocalAI run?", "answer": "LocalAI can run text, vision, speech, image generation, and agentic models through its modular backend system." },
+        { "question": "What hardware does LocalAI support?", "answer": "LocalAI runs on CPU as well as NVIDIA, AMD, Intel, and Apple Silicon accelerators." },
+        { "question": "How is LocalAI deployed?", "answer": "LocalAI can be installed via Docker or traditional installation methods for self-hosting." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted multi-modal AI", "description": "Teams run text, vision, speech, and image models on their own infrastructure without cloud dependency.", "audience": "Developers and infrastructure teams" },
+        { "title": "Privacy-sensitive AI deployment", "description": "Organizations that must keep data on-premise use LocalAI's PII detection and redaction features.", "audience": "Regulated or privacy-focused organizations" },
+        { "title": "Custom AI agents", "description": "Developers build agentic workflows using LocalAI's built-in MCP tools, memory, and RAG support.", "audience": "Developers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is LocalAI?",
+          "level": 2,
+          "paragraphs": [
+            "LocalAI is a free, open-source runtime that lets users deploy multiple types of AI models, including text, vision, speech, image, and agentic models, on their own hardware, from laptops to distributed GPU clusters.",
+            "The project is MIT-licensed and features a modular backend architecture with 60+ on-demand backends, support for a wide range of hardware accelerators, and built-in privacy controls such as on-premise data handling and PII redaction."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who LocalAI is for",
+          "level": 2,
+          "paragraphs": [
+            "LocalAI is aimed at developers and organizations that want private, self-hosted AI infrastructure independent of cloud providers, ranging from individual users to enterprise teams needing authentication and distributed scaling."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "self-hosted", "open-source"]
+    }
+  }
+]

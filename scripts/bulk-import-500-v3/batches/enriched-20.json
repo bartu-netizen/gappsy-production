@@ -1,0 +1,627 @@
+[
+  {
+    "tool_id": "07f5df46-0b11-4627-b5f3-78e1a12e546e",
+    "slug": "falco",
+    "name": "Falco",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Falco is a CNCF-graduated, open-source runtime security tool that detects abnormal behavior across hosts, containers, Kubernetes, and cloud services.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Falco is a free, open-source CNCF runtime security tool that detects threats across Kubernetes, containers, hosts, and cloud using eBPF and custom rules.",
+      "features": [
+        {"title": "eBPF-based runtime monitoring", "description": "Uses eBPF to observe Linux kernel events with low overhead across hosts and containers."},
+        {"title": "Custom detection rules", "description": "Ships with pre-configured rules that can be customized to match organization-specific threats."},
+        {"title": "Kubernetes-native deployment", "description": "Deploys via an official Helm chart across GKE, EKS, AKS, and other Kubernetes distributions."},
+        {"title": "Streaming JSON alerts", "description": "Generates real-time alerts in JSON format for automated response pipelines."},
+        {"title": "50+ integrations", "description": "Forwards alerts to SIEM and data lake systems for centralized security operations."},
+        {"title": "Multi-architecture support", "description": "Runs on both x64 and ARM CPU architectures."}
+      ],
+      "pros": [
+        "Free and fully open source with no licensing fees",
+        "CNCF graduated project backed by an active community",
+        "Low-overhead eBPF-based monitoring suited to cloud-native workloads",
+        "Wide integration ecosystem for forwarding alerts to existing security tooling",
+        "Used in production by companies such as Shopify and GitLab"
+      ],
+      "cons": [
+        "Requires familiarity with Linux kernel concepts and rule syntax to customize effectively",
+        "No official managed or hosted offering from the Falco project itself, requiring self-hosting",
+        "Rule tuning is needed to reduce noisy alerts in complex environments"
+      ],
+      "faqs": [
+        {"question": "Is Falco free to use?", "answer": "Yes, Falco is fully open source with no licensing fees."},
+        {"question": "What does Falco monitor?", "answer": "Falco monitors hosts, containers, Kubernetes, and cloud services for abnormal behavior using eBPF and custom rules."},
+        {"question": "Does Falco run on Kubernetes?", "answer": "Yes, Falco can be deployed to Kubernetes clusters such as GKE, EKS, and AKS using its official Helm chart."},
+        {"question": "Who maintains Falco?", "answer": "Falco is a CNCF graduated project under The Linux Foundation, originally created by Sysdig."},
+        {"question": "What alert format does Falco use?", "answer": "Falco streams real-time alerts in JSON format that can be forwarded to over 50 supported integrations."}
+      ],
+      "use_cases": [
+        {"title": "Kubernetes runtime threat detection", "description": "Security teams deploy Falco across Kubernetes clusters to detect abnormal container and pod behavior in real time.", "audience": "Platform and security engineering teams"},
+        {"title": "Compliance monitoring", "description": "Organizations use Falco's rule engine to flag activity relevant to regulatory compliance requirements.", "audience": "Compliance and security operations teams"},
+        {"title": "Cloud workload protection", "description": "Falco monitors cloud service activity alongside hosts and containers to extend runtime visibility beyond Kubernetes.", "audience": "Cloud security teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["eBPF-based runtime monitoring", "Custom rules", "Helm chart deployment", "50+ integrations"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Falco?", "level": 2, "paragraphs": [
+          "Falco is a cloud-native runtime security tool that detects abnormal behavior and security threats across hosts, containers, Kubernetes, and cloud environments. It applies custom rules to Linux kernel events captured via eBPF, along with data from plugins, to identify suspicious activity as it happens.",
+          "Falco is a CNCF graduated project under The Linux Foundation, originally created by Sysdig. It is fully open source, runs on x64 and ARM architectures, and can be deployed to Kubernetes clusters using an official Helm chart."
+        ]},
+        {"id": "who-its-for", "heading": "Who Falco is for", "level": 2, "paragraphs": [
+          "Falco is built for organizations running cloud-native infrastructure who need real-time runtime security monitoring for Kubernetes, containers, and hosts, including teams with regulatory compliance monitoring requirements."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "2d2c7247-cad0-4d55-bf16-9fd4c2b6499d",
+    "slug": "trivy",
+    "name": "Trivy",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Trivy is Aqua Security's open-source, all-in-one scanner for vulnerabilities, misconfigurations, secrets, and SBOMs across code, images, and clusters.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Trivy is a free, open-source scanner from Aqua Security that finds vulnerabilities, misconfigurations, and secrets in code, images, and Kubernetes.",
+      "features": [
+        {"title": "Vulnerability scanning", "description": "Detects known CVEs in OS packages and application dependencies."},
+        {"title": "Misconfiguration detection", "description": "Scans Infrastructure as Code files for security misconfigurations."},
+        {"title": "Secret scanning", "description": "Finds exposed secrets such as API keys and credentials in code and images."},
+        {"title": "SBOM generation", "description": "Produces a Software Bill of Materials for container images and file systems."},
+        {"title": "License checking", "description": "Identifies license risks in project dependencies."},
+        {"title": "Kubernetes scanning", "description": "Assesses running Kubernetes clusters for vulnerabilities and misconfigurations."}
+      ],
+      "pros": [
+        "Free and open source under the permissive Apache-2.0 license",
+        "Combines vulnerability, misconfiguration, secret, and SBOM scanning in a single tool",
+        "Integrates with Docker, GitLab, Azure Container Registry, and Harbor",
+        "Actively maintained by Aqua Security with broad industry adoption"
+      ],
+      "cons": [
+        "Requires CI/CD or command-line setup rather than offering a hosted dashboard out of the box",
+        "No official enterprise support plan documented on the website",
+        "As a CLI-first tool, it is less accessible to non-technical users without additional tooling"
+      ],
+      "faqs": [
+        {"question": "Is Trivy free?", "answer": "Yes, Trivy is open source under the Apache-2.0 license."},
+        {"question": "What can Trivy scan?", "answer": "Trivy scans code repositories, binary artifacts, container images, and Kubernetes clusters for vulnerabilities and misconfigurations."},
+        {"question": "Who develops Trivy?", "answer": "Trivy is developed by Aqua Security Software Ltd."},
+        {"question": "Does Trivy generate SBOMs?", "answer": "Yes, Trivy can generate a Software Bill of Materials for scanned artifacts."},
+        {"question": "What language is Trivy written in?", "answer": "Trivy is written in Go."}
+      ],
+      "use_cases": [
+        {"title": "Container image scanning in CI/CD", "description": "Development teams integrate Trivy into pipelines such as GitLab CI to catch vulnerable images before deployment.", "audience": "DevOps and platform engineering teams"},
+        {"title": "Kubernetes cluster security assessment", "description": "Security teams run Trivy against live clusters to identify vulnerabilities and misconfigurations.", "audience": "Security operations teams"},
+        {"title": "Dependency and secret auditing", "description": "Engineering teams use Trivy to catch exposed secrets and vulnerable dependencies in source repositories.", "audience": "Application security teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Vulnerability scanning", "Misconfiguration detection", "Secret scanning", "SBOM generation", "License checking"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Trivy?", "level": 2, "paragraphs": [
+          "Trivy is an all-in-one security scanner developed by Aqua Security that identifies vulnerabilities (CVEs) and misconfigurations across code repositories, binary artifacts, container images, and Kubernetes clusters.",
+          "Beyond vulnerability scanning, Trivy also detects exposed secrets, generates Software Bills of Materials, and checks dependency licenses. It is open source under the Apache-2.0 license and written in Go."
+        ]},
+        {"id": "who-its-for", "heading": "Who Trivy is for", "level": 2, "paragraphs": [
+          "Trivy is for DevOps, platform, and security teams who need a single tool to scan code, container images, and Kubernetes clusters for vulnerabilities, misconfigurations, secrets, and license issues."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "0b665ac9-1776-455f-ad7c-c82e3c8843e9",
+    "slug": "grype",
+    "name": "Grype",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Grype is Anchore's open-source vulnerability scanner for container images, filesystems, and SBOMs across major OS and language package ecosystems.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Grype is a free, open-source vulnerability scanner from Anchore for container images, filesystems, and SBOMs, with EPSS and KEV-based prioritization.",
+      "features": [
+        {"title": "Broad OS ecosystem coverage", "description": "Scans packages from Alpine, Debian, Ubuntu, RHEL, Oracle Linux, and Amazon Linux."},
+        {"title": "Language package support", "description": "Detects vulnerabilities in Ruby, Java, JavaScript, Python, .NET, Go, PHP, and Rust dependencies."},
+        {"title": "Multiple image format support", "description": "Works with Docker, OCI, and Singularity image formats."},
+        {"title": "SBOM input scanning", "description": "Scans pre-generated SBOM files directly, including those produced by Syft."},
+        {"title": "Risk-based prioritization", "description": "Uses EPSS scores, CISA KEV data, and risk scoring to help prioritize which vulnerabilities to fix first."},
+        {"title": "OpenVEX support", "description": "Filters and enhances scan results using VEX (Vulnerability Exploitability eXchange) data."}
+      ],
+      "pros": [
+        "Free and open source under Apache-2.0",
+        "Broad ecosystem support across OS packages and multiple programming languages",
+        "Vulnerability prioritization via EPSS and KEV reduces noise",
+        "Multiple install methods, including curl, Homebrew, Docker, Chocolatey, and MacPorts",
+        "Active GitHub community with 12.6k+ stars"
+      ],
+      "cons": [
+        "Command-line tool with no built-in graphical dashboard",
+        "Some workflows require pairing with a separate SBOM tool like Syft",
+        "No official managed or hosted service documented"
+      ],
+      "faqs": [
+        {"question": "Is Grype free?", "answer": "Yes, Grype is open source under the Apache-2.0 license, sponsored by Anchore."},
+        {"question": "What can Grype scan?", "answer": "Grype scans container images, filesystems, and SBOM files for known vulnerabilities."},
+        {"question": "Does Grype support SBOM files?", "answer": "Yes, Grype can scan SBOM files directly, including CycloneDX and SPDX formats."},
+        {"question": "How is Grype installed?", "answer": "Grype can be installed via a curl script, Homebrew, Docker, Chocolatey, or MacPorts."},
+        {"question": "Does Grype prioritize vulnerabilities?", "answer": "Yes, it uses EPSS scores, CISA's Known Exploited Vulnerabilities list, and risk scoring to help prioritize remediation."}
+      ],
+      "use_cases": [
+        {"title": "Container image vulnerability scanning", "description": "Teams scan container images before deployment to catch known CVEs.", "audience": "DevOps and security engineers"},
+        {"title": "SBOM-based vulnerability analysis", "description": "Security teams scan SBOM files generated by tools like Syft to assess dependency risk without rescanning images.", "audience": "Application security teams"},
+        {"title": "CI/CD vulnerability gating", "description": "Engineering teams add Grype scans to pipelines to block builds with critical vulnerabilities.", "audience": "Platform engineering teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Container image scanning", "Filesystem scanning", "SBOM scanning", "EPSS/KEV prioritization"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Grype?", "level": 2, "paragraphs": [
+          "Grype is an open-source vulnerability scanner sponsored by Anchore that identifies security issues in container images, filesystems, and Software Bills of Materials. It covers major OS package ecosystems as well as language-specific packages across Ruby, Java, JavaScript, Python, .NET, Go, PHP, and Rust.",
+          "Grype is released under the Apache-2.0 license and can be installed via curl, Homebrew, Docker, Chocolatey, or MacPorts. It supports risk-based prioritization using EPSS and CISA's Known Exploited Vulnerabilities data."
+        ]},
+        {"id": "who-its-for", "heading": "Who Grype is for", "level": 2, "paragraphs": [
+          "Grype is for developers, DevOps engineers, and security teams who need to assess container images, filesystems, and SBOMs for known vulnerabilities as part of security reviews or CI/CD pipelines."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "8c83d263-30f5-472f-9408-4e9883759bcd",
+    "slug": "syft",
+    "name": "Syft",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Syft is Anchore's open-source CLI and Go library for generating Software Bills of Materials from container images and filesystems.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Syft is a free, open-source tool from Anchore that generates SBOMs from container images and filesystems in CycloneDX, SPDX, and Syft JSON formats.",
+      "features": [
+        {"title": "SBOM generation", "description": "Creates SBOMs from container images, filesystems, and archives."},
+        {"title": "Broad ecosystem coverage", "description": "Supports Alpine, Debian, RPM, Go, Python, Java, JavaScript, Ruby, Rust, PHP, and .NET packages."},
+        {"title": "Multiple output formats", "description": "Exports SBOMs in CycloneDX, SPDX, and Syft's own JSON format."},
+        {"title": "Signed attestations", "description": "Creates signed SBOM attestations using the in-toto specification."},
+        {"title": "Format conversion", "description": "Converts SBOMs between supported standards."},
+        {"title": "Multiple image format support", "description": "Works with OCI, Docker, and Singularity image formats."}
+      ],
+      "pros": [
+        "Free and open source under Apache-2.0",
+        "Wide package ecosystem coverage across OS and language-specific dependencies",
+        "Supports industry-standard SBOM formats, including CycloneDX and SPDX",
+        "Designed to pair directly with Grype for vulnerability scanning",
+        "Multiple install options, including Homebrew, Docker, Scoop, Chocolatey, and Nix"
+      ],
+      "cons": [
+        "Command-line tool without a built-in graphical interface",
+        "Best used alongside a separate scanner such as Grype for vulnerability detection, adding a setup step",
+        "No official managed or hosted service documented"
+      ],
+      "faqs": [
+        {"question": "Is Syft free?", "answer": "Yes, Syft is open source under Apache-2.0, sponsored by Anchore."},
+        {"question": "What formats does Syft output?", "answer": "Syft can output SBOMs in CycloneDX, SPDX, and its own Syft JSON format."},
+        {"question": "Does Syft work with Grype?", "answer": "Yes, Syft is designed to generate SBOMs that Grype can then scan for vulnerabilities."},
+        {"question": "Can Syft sign SBOMs?", "answer": "Yes, Syft can create signed SBOM attestations using the in-toto specification."},
+        {"question": "What is Syft written in?", "answer": "Syft is written in Go."}
+      ],
+      "use_cases": [
+        {"title": "Software supply chain inventory", "description": "Organizations generate SBOMs with Syft to document dependencies across container images and codebases.", "audience": "Security and compliance teams"},
+        {"title": "SBOM generation for vulnerability scanning", "description": "Teams generate SBOMs with Syft and scan them with Grype to identify vulnerable dependencies.", "audience": "DevOps and application security teams"},
+        {"title": "SBOM format conversion", "description": "Teams convert SBOMs between CycloneDX and SPDX formats using Syft to satisfy different downstream tooling requirements.", "audience": "Compliance teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["SBOM generation", "CycloneDX/SPDX export", "Signed attestations", "Format conversion"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Syft?", "level": 2, "paragraphs": [
+          "Syft is an open-source CLI tool and Go library, sponsored by Anchore, that generates Software Bills of Materials from container images and filesystems. It supports dozens of package ecosystems, including Alpine, Debian, RPM, Go, Python, Java, JavaScript, Ruby, Rust, PHP, and .NET.",
+          "Syft outputs SBOMs in industry-standard formats such as CycloneDX and SPDX, as well as its own Syft JSON format, and can create signed SBOM attestations using the in-toto specification. It is released under the Apache-2.0 license and written in Go."
+        ]},
+        {"id": "who-its-for", "heading": "Who Syft is for", "level": 2, "paragraphs": [
+          "Syft is for developers and security teams who need to catalog software dependencies in containerized applications and projects, typically as a precursor to vulnerability scanning with a tool such as Grype."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "caec6253-7f1b-408d-968e-1099f0367648",
+    "slug": "clair",
+    "name": "Clair",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Clair is an open-source application that statically analyzes container images and reports vulnerabilities affecting their contents.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Clair is a free, open-source tool that indexes container images and matches their contents against vulnerability data without executing the image.",
+      "features": [
+        {"title": "Static image analysis", "description": "Parses image contents to report vulnerabilities without executing the container."},
+        {"title": "Manifest indexing", "description": "Indexes container image manifests as part of its analysis workflow."},
+        {"title": "Vulnerability matching", "description": "Matches indexed image contents against continuously ingested vulnerability data."},
+        {"title": "Notification service", "description": "Alerts users when new vulnerabilities are found affecting previously indexed images."},
+        {"title": "Broad distribution support", "description": "Analyzes images based on Ubuntu, Debian, RHEL, SUSE, Oracle, Alpine, Amazon Linux, VMware Photon, and Python packages."},
+        {"title": "ClairCore library", "description": "Built on the ClairCore library, which separates core scanning logic from the service layer."}
+      ],
+      "pros": [
+        "Free and open source, distributed via GitHub",
+        "Static analysis approach avoids running potentially untrusted container images",
+        "Broad Linux distribution and package ecosystem support",
+        "Notification service keeps previously scanned images current as new vulnerabilities emerge",
+        "Used as the vulnerability scanner behind the Quay container registry"
+      ],
+      "cons": [
+        "Requires self-hosting and operational setup, with no hosted SaaS documented on the project site",
+        "No graphical UI is documented on the project's own site; typically consumed via API or an integrated registry like Quay",
+        "Documentation on the project homepage is limited compared to some other scanners"
+      ],
+      "faqs": [
+        {"question": "Is Clair free?", "answer": "Yes, Clair is open source software available on GitHub."},
+        {"question": "How does Clair analyze images?", "answer": "Clair performs static analysis, parsing image contents rather than executing them, to identify vulnerabilities."},
+        {"question": "What is ClairCore?", "answer": "ClairCore is the underlying library that provides Clair's core scanning functionality; Clair itself is a service wrapper around it."},
+        {"question": "Does Clair notify users of new vulnerabilities?", "answer": "Yes, Clair includes a notification service that alerts when new vulnerabilities affect already-indexed images."},
+        {"question": "What container registry uses Clair?", "answer": "Clair is used by the Quay container registry for vulnerability scanning."}
+      ],
+      "use_cases": [
+        {"title": "Container registry vulnerability scanning", "description": "Registries such as Quay integrate Clair to automatically scan pushed images for known vulnerabilities.", "audience": "Platform and registry operators"},
+        {"title": "Static image security analysis", "description": "Security teams run Clair to analyze container images without executing them.", "audience": "Container security teams"},
+        {"title": "Ongoing vulnerability monitoring", "description": "Teams rely on Clair's notification service to learn when newly disclosed vulnerabilities affect previously scanned images.", "audience": "Security operations teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Static image analysis", "Manifest indexing", "Vulnerability matching", "Notification service"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Clair?", "level": 2, "paragraphs": [
+          "Clair is an open-source application for parsing container image contents and reporting vulnerabilities affecting them, using static analysis rather than executing the image. It works through a three-part workflow: indexing manifests, matching vulnerabilities, and sending notifications.",
+          "Clair v4 is built on the ClairCore library, which provides the core scanning engine, with Clair acting as a service wrapper around it. It supports images based on Ubuntu, Debian, RHEL, SUSE, Oracle, Alpine, Amazon Linux, VMware Photon, and Python."
+        ]},
+        {"id": "who-its-for", "heading": "Who Clair is for", "level": 2, "paragraphs": [
+          "Clair is for container security teams and organizations running OCI-compliant container images who need automated, static vulnerability analysis, often integrated into a container registry such as Quay."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "2d037963-f9fb-4d88-bcc4-228a333d83cf",
+    "slug": "openvas",
+    "name": "OpenVAS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OpenVAS is Greenbone's open-source vulnerability scanner, offering authenticated and unauthenticated testing with a daily-updated detection feed.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 2006,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OpenVAS is a free, open-source vulnerability scanner maintained by Greenbone since 2006, with authenticated testing and a daily-updated test feed.",
+      "features": [
+        {"title": "Authenticated and unauthenticated scanning", "description": "Tests systems with or without credentials across many protocol types."},
+        {"title": "Industrial and internet protocol testing", "description": "Supports a range of high-level and low-level internet and industrial protocols."},
+        {"title": "Internal scripting language", "description": "Includes a programming language for writing custom vulnerability tests."},
+        {"title": "Daily-updated feed", "description": "Pulls vulnerability detection tests from a regularly maintained feed updated daily."},
+        {"title": "Large-scale scanning support", "description": "Includes tuning options for running scans at scale."},
+        {"title": "Core of Greenbone Community Edition", "description": "Serves as the scanning engine bundled with other open-source Greenbone modules."}
+      ],
+      "pros": [
+        "Fully open source with source code available on GitHub",
+        "Daily-updated vulnerability test feed",
+        "Supports both authenticated and unauthenticated scanning",
+        "Extensible through its own internal scripting language",
+        "Backed by Greenbone, which has maintained it since 2006"
+      ],
+      "cons": [
+        "Best used as part of the broader Greenbone Community Edition rather than standalone",
+        "Enterprise features and support require Greenbone's commercial products",
+        "Requires self-hosting and infrastructure to run at scale"
+      ],
+      "faqs": [
+        {"question": "Is OpenVAS free?", "answer": "Yes, OpenVAS is open source and forms the core of the free Greenbone Community Edition."},
+        {"question": "Who maintains OpenVAS?", "answer": "Greenbone has developed and maintained OpenVAS since 2006."},
+        {"question": "Does OpenVAS require authentication to scan?", "answer": "OpenVAS supports both unauthenticated and authenticated testing."},
+        {"question": "How often is OpenVAS's vulnerability feed updated?", "answer": "OpenVAS pulls detection tests from a feed that is updated daily."},
+        {"question": "Is there a commercial version of OpenVAS?", "answer": "Yes, OpenVAS is integrated into Greenbone's commercial OPENVAS SCAN product family for enterprise use."}
+      ],
+      "use_cases": [
+        {"title": "Network vulnerability scanning", "description": "Security teams run OpenVAS to identify vulnerabilities across networked systems using authenticated and unauthenticated tests.", "audience": "Security operations teams"},
+        {"title": "Custom vulnerability test development", "description": "Advanced users write custom tests using OpenVAS's internal scripting language for specific environments.", "audience": "Security researchers and engineers"},
+        {"title": "Industrial protocol security testing", "description": "Organizations use OpenVAS to test industrial and internet protocols for weaknesses.", "audience": "OT/ICS security teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Authenticated and unauthenticated scanning", "Daily-updated test feed", "Internal scripting language"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is OpenVAS?", "level": 2, "paragraphs": [
+          "OpenVAS is an open-source vulnerability scanning platform that identifies security weaknesses in IT systems through authenticated and unauthenticated testing across a range of internet and industrial protocols. It has been developed and continuously advanced by Greenbone since 2006.",
+          "OpenVAS includes an internal scripting language for writing custom vulnerability tests and draws on a vulnerability detection feed that is updated daily. It forms the core scanning engine of the free Greenbone Community Edition and also underpins Greenbone's commercial OPENVAS SCAN product family."
+        ]},
+        {"id": "who-its-for", "heading": "Who OpenVAS is for", "level": 2, "paragraphs": [
+          "OpenVAS is for security teams and organizations that need a free, self-hosted vulnerability scanner for networked systems, including those testing industrial and internet protocols."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  },
+  {
+    "tool_id": "baf8d62c-e7cc-47b0-a3b3-4bebcddf4b87",
+    "slug": "greenbone",
+    "name": "Greenbone",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Greenbone is a German vulnerability management company offering the open-source OpenVAS scanner alongside a tiered family of commercial products.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Germany",
+      "languages": [],
+      "seo_meta_description": "Greenbone is a German vulnerability management vendor offering a free open-source scanner and paid OPENVAS product tiers for enterprise security.",
+      "features": [
+        {"title": "Automated vulnerability scanning", "description": "Scans networks and IT infrastructure for security weaknesses."},
+        {"title": "Daily-updated test database", "description": "Maintains a vulnerability test database of 100,000+ tests, updated daily."},
+        {"title": "Multiple deployment options", "description": "Available as hardware appliances, virtual machines, or cloud-based deployments."},
+        {"title": "Tiered product family", "description": "Offers OPENVAS FREE, BASIC, SCAN, SECURITY INTELLIGENCE, and AI product tiers."},
+        {"title": "GDPR-compliant operations", "description": "Operates in compliance with GDPR requirements."},
+        {"title": "ISO-certified operations", "description": "Holds ISO 9001, ISO 27001, and ISO 14001 certifications."}
+      ],
+      "pros": [
+        "Offers both a free open-source edition and paid enterprise products",
+        "Large, daily-updated vulnerability test database with 100,000+ tests",
+        "Multiple deployment options, including hardware, virtual machine, and cloud",
+        "ISO 9001, ISO 27001, and ISO 14001 certified",
+        "Established vendor with 100,000+ installations across 150+ countries"
+      ],
+      "cons": [
+        "Enterprise pricing is not published and requires contacting sales",
+        "Choosing between multiple product tiers (Basic, Scan, Security Intelligence, AI) may require guidance for new buyers",
+        "Advanced features are concentrated in paid tiers, with the free edition offering a base level of scanning"
+      ],
+      "faqs": [
+        {"question": "Is Greenbone free to use?", "answer": "Greenbone offers a free open-source edition (OPENVAS FREE) alongside paid commercial products."},
+        {"question": "Where is Greenbone based?", "answer": "Greenbone is headquartered in Germany."},
+        {"question": "What products does Greenbone offer?", "answer": "Greenbone offers OPENVAS FREE, BASIC, SCAN, SECURITY INTELLIGENCE, and AI product tiers."},
+        {"question": "How is Greenbone priced?", "answer": "Greenbone's paid products are subscription-based and scaled by scanning scope, such as the number of IPs or assets covered."},
+        {"question": "Is Greenbone GDPR-compliant?", "answer": "Yes, Greenbone states its operations are GDPR-compliant."}
+      ],
+      "use_cases": [
+        {"title": "Enterprise vulnerability management", "description": "Organizations use Greenbone's SCAN and SECURITY INTELLIGENCE products to centralize vulnerability management across environments.", "audience": "Enterprise security teams"},
+        {"title": "Small business vulnerability scanning", "description": "Smaller organizations use Greenbone's lower-tier or free products to scan for vulnerabilities on a limited budget.", "audience": "Small and mid-sized businesses"},
+        {"title": "Government and regulated industry scanning", "description": "Government agencies use Greenbone's GDPR-compliant, ISO-certified products for compliance-driven vulnerability scanning.", "audience": "Government and regulated industries"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "OPENVAS FREE", "price": "Free", "billing_cycle": null, "features": ["Open-source vulnerability scanning"]},
+        {"plan_name": "OPENVAS BASIC", "price": "Contact for pricing", "billing_cycle": null, "features": ["Entry-level vulnerability scanner"]},
+        {"plan_name": "OPENVAS SCAN", "price": "Contact for pricing", "billing_cycle": null, "features": ["Core scanning appliance (hardware/VM)"]},
+        {"plan_name": "OPENVAS SECURITY INTELLIGENCE", "price": "Contact for pricing", "billing_cycle": null, "features": ["Multi-environment centralization platform"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Greenbone?", "level": 2, "paragraphs": [
+          "Greenbone is a Germany-headquartered vulnerability management company that develops the open-source OpenVAS scanner along with a family of commercial OPENVAS products, including BASIC, SCAN, SECURITY INTELLIGENCE, and AI tiers, plus a free OPENVAS FREE edition.",
+          "Greenbone maintains a vulnerability test database of over 100,000 tests updated daily, offers hardware, virtual machine, and cloud deployment options, and holds ISO 9001, ISO 27001, and ISO 14001 certifications. The company reports over 100,000 installations across more than 150 countries."
+        ]},
+        {"id": "who-its-for", "heading": "Who Greenbone is for", "level": 2, "paragraphs": [
+          "Greenbone serves organizations of all sizes, from small businesses using its free or entry-level products to enterprises and government agencies requiring centralized, compliance-driven vulnerability management."
+        ]}
+      ],
+      "tags": ["freemium"]
+    }
+  },
+  {
+    "tool_id": "753fe4a9-11ba-48d6-b0b2-d0fabb12b2bb",
+    "slug": "nuclei",
+    "name": "Nuclei",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Nuclei is ProjectDiscovery's open-source, YAML-template-based vulnerability scanner for applications, infrastructure, and cloud platforms.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Nuclei is a free, open-source vulnerability scanner from ProjectDiscovery using 6,500+ YAML templates, with optional paid cloud reporting features.",
+      "features": [
+        {"title": "YAML-based templates", "description": "Uses a library of over 6,500 community-contributed templates to detect vulnerabilities."},
+        {"title": "Flexible targeting", "description": "Scans URLs, IP ranges, ASN ranges, and file-based inputs."},
+        {"title": "Parallel scanning", "description": "Runs scans in parallel to reduce time for large-scale assessments."},
+        {"title": "Multi-protocol support", "description": "Supports TCP, DNS, HTTP, and file-based protocols."},
+        {"title": "Authentication support", "description": "Handles HTTP basic auth, JWT tokens, and other authentication mechanisms."},
+        {"title": "CI/CD integration", "description": "Integrates into CI/CD pipelines for automated security testing."},
+        {"title": "Cloud reporting and ticketing", "description": "Optional cloud features add reporting, CI/CD integration, and ticketing system integrations such as Jira and Splunk."}
+      ],
+      "pros": [
+        "Free and open source CLI tool with a large community template library",
+        "Fast parallel scanning suited to large-scale assessments",
+        "Supports multiple protocols beyond HTTP, including DNS and TCP",
+        "Optional cloud tier adds reporting and ticketing integrations with Jira and Splunk",
+        "Actively maintained by ProjectDiscovery with frequent template contributions"
+      ],
+      "cons": [
+        "Advanced reporting and ticketing integrations require the paid cloud tier",
+        "Effectiveness depends on the quality and coverage of community templates",
+        "Command-line first tool that requires scripting knowledge to use effectively"
+      ],
+      "faqs": [
+        {"question": "Is Nuclei free?", "answer": "Yes, the core Nuclei CLI scanner is open source; ProjectDiscovery also offers optional paid cloud features."},
+        {"question": "What are Nuclei templates?", "answer": "Templates are YAML files that define how Nuclei detects a specific vulnerability or misconfiguration."},
+        {"question": "Does Nuclei integrate with ticketing systems?", "answer": "Yes, the cloud tier supports integrations with ticketing systems such as Jira and Splunk."},
+        {"question": "Who maintains Nuclei?", "answer": "Nuclei is maintained by ProjectDiscovery."},
+        {"question": "Can Nuclei run in CI/CD pipelines?", "answer": "Yes, Nuclei supports integration into CI/CD pipelines for automated scanning."}
+      ],
+      "use_cases": [
+        {"title": "Bug bounty and penetration testing", "description": "Bug bounty hunters and pentesters use Nuclei to quickly scan targets against thousands of known vulnerability templates.", "audience": "Bug bounty hunters and penetration testers"},
+        {"title": "CI/CD security automation", "description": "DevOps teams add Nuclei scans to CI/CD pipelines to catch vulnerabilities before deployment.", "audience": "DevOps and security engineering teams"},
+        {"title": "Large-scale asset scanning", "description": "Security teams use Nuclei's parallel scanning and flexible targeting to assess large numbers of URLs, IPs, or ASN ranges.", "audience": "Security operations teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source (CLI)", "price": "Free", "billing_cycle": null, "features": ["YAML-template scanning", "Parallel scanning", "CI/CD integration"]},
+        {"plan_name": "Cloud", "price": "Contact for pricing", "billing_cycle": null, "features": ["Comprehensive reporting", "CI/CD integration", "Ticketing integrations (Jira, Splunk)"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Nuclei?", "level": 2, "paragraphs": [
+          "Nuclei is a fast, customizable vulnerability scanner from ProjectDiscovery that uses simple YAML-based templates to identify exploitable vulnerabilities in applications, infrastructure, cloud platforms, and networks. It draws on a library of more than 6,500 community-contributed templates.",
+          "Nuclei can target URLs, IP ranges, ASN ranges, and files, and supports protocols including TCP, DNS, and HTTP. The core CLI scanner is open source, while ProjectDiscovery also offers optional cloud features covering reporting, CI/CD integration, and ticketing system integrations such as Jira and Splunk."
+        ]},
+        {"id": "who-its-for", "heading": "Who Nuclei is for", "level": 2, "paragraphs": [
+          "Nuclei is for security engineers, red teams, DevOps teams, bug bounty hunters, and penetration testers who need to automate vulnerability detection across large numbers of targets."
+        ]}
+      ],
+      "tags": ["freemium"]
+    }
+  },
+  {
+    "tool_id": "753226c3-cede-4bbb-9fad-9d73dd9827e4",
+    "slug": "burp-suite",
+    "name": "Burp Suite",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Burp Suite is PortSwigger's web application security testing platform, offered in free Community, paid Professional, and Enterprise DAST editions.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Burp Suite is PortSwigger's web app security testing platform, with a free Community Edition and paid Professional and Enterprise DAST editions.",
+      "features": [
+        {"title": "Manual testing toolkit", "description": "Provides tools for manual web penetration testing, included in the free Community Edition."},
+        {"title": "Web vulnerability scanner", "description": "Includes a dynamic application security testing (DAST) scanner in paid editions."},
+        {"title": "Attack surface visibility", "description": "Helps testers analyze and visualize an application's attack surface."},
+        {"title": "CI/CD integration", "description": "Integrates into CI/CD pipelines for early vulnerability detection."},
+        {"title": "Automated scanning at scale", "description": "Enterprise edition supports automated scanning across many applications."},
+        {"title": "Web Security Academy", "description": "PortSwigger offers free web security training content alongside Burp Suite."}
+      ],
+      "pros": [
+        "Free Community Edition available for learning and manual testing",
+        "Professional edition is described by PortSwigger as a leading web penetration testing toolkit",
+        "Enterprise edition supports automated, CI-integrated scanning at scale",
+        "Backed by PortSwigger's free Web Security Academy training content",
+        "Long-established tool widely used across penetration testing and bug bounty communities"
+      ],
+      "cons": [
+        "Full scanning capabilities require the paid Professional or Enterprise editions",
+        "Pricing is not published on the main product page and requires further inquiry",
+        "Community Edition lacks the automated scanner found in paid tiers"
+      ],
+      "faqs": [
+        {"question": "Is Burp Suite free?", "answer": "The Community Edition is free with manual testing tools; the automated scanner requires the paid Professional or Enterprise editions."},
+        {"question": "What is Burp Suite Professional?", "answer": "Burp Suite Professional is PortSwigger's paid edition aimed at hands-on security professionals and penetration testers, including an automated web vulnerability scanner."},
+        {"question": "What is Burp Suite Enterprise (DAST)?", "answer": "It is PortSwigger's enterprise-focused edition for automated scanning at scale, aimed at AppSec and vulnerability management teams."},
+        {"question": "Who makes Burp Suite?", "answer": "Burp Suite is made by PortSwigger."},
+        {"question": "Does PortSwigger offer security training?", "answer": "Yes, PortSwigger offers free training through its Web Security Academy."}
+      ],
+      "use_cases": [
+        {"title": "Manual penetration testing", "description": "Security professionals use Burp Suite Professional's toolkit for hands-on web application penetration testing.", "audience": "Penetration testers and security consultants"},
+        {"title": "Enterprise application security scanning", "description": "AppSec teams use Burp Suite Enterprise (DAST) to run automated scans across many applications at scale.", "audience": "AppSec and vulnerability management teams"},
+        {"title": "Security learning and bug bounty hunting", "description": "Beginners and bug bounty hunters use the free Community Edition alongside PortSwigger's Web Security Academy to learn web security testing.", "audience": "Students and bug bounty hunters"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Manual testing tools", "Learning-focused toolkit"]},
+        {"plan_name": "Professional", "price": "Contact for pricing", "billing_cycle": null, "features": ["Automated web vulnerability scanner", "Manual testing tools", "CI/CD integration"]},
+        {"plan_name": "Enterprise (DAST)", "price": "Contact for pricing", "billing_cycle": null, "features": ["Automated scanning at scale", "Attack surface visibility", "CI-driven scanning"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Burp Suite?", "level": 2, "paragraphs": [
+          "Burp Suite is a web application security testing platform from PortSwigger, providing tools for identifying, testing, and exploiting web vulnerabilities across the development lifecycle. It is offered in three editions: the free Community Edition, the paid Professional edition, and the enterprise-focused DAST edition.",
+          "Professional is aimed at hands-on penetration testers and includes an automated web vulnerability scanner alongside manual testing tools, while the Enterprise (DAST) edition adds automated scanning at scale and CI/CD pipeline integration for AppSec and vulnerability management teams."
+        ]},
+        {"id": "who-its-for", "heading": "Who Burp Suite is for", "level": 2, "paragraphs": [
+          "Burp Suite is for penetration testers, security professionals, DevSecOps and engineering teams, bug bounty hunters, and AppSec teams, spanning from beginners using the free Community Edition to enterprises running automated scans at scale."
+        ]}
+      ],
+      "tags": ["freemium"]
+    }
+  },
+  {
+    "tool_id": "26fa7763-662c-4590-abb7-062fe17b309e",
+    "slug": "owasp-zap",
+    "name": "OWASP ZAP",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OWASP ZAP (Zed Attack Proxy) is a free, open-source web application security scanner backed by Checkmarx and maintained by the ZAP Dev Team.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OWASP ZAP is a free, open-source web application security scanner with an add-on marketplace, maintained by the independent ZAP Dev Team.",
+      "features": [
+        {"title": "Automated web app scanning", "description": "Scans web applications for security vulnerabilities."},
+        {"title": "Add-on marketplace", "description": "Extensible through a marketplace of community-contributed add-ons."},
+        {"title": "Automation support", "description": "Provides automation options for integrating security testing into workflows."},
+        {"title": "Beginner-friendly resources", "description": "Includes quick-start guides aimed at users new to security testing."},
+        {"title": "Independent open-source governance", "description": "Operates as an independent open-source project backed by Checkmarx."}
+      ],
+      "pros": [
+        "Completely free and open source",
+        "Recognized as a GitHub Top 1000 project with an active community",
+        "Extensible via a marketplace of community add-ons",
+        "Beginner-friendly documentation and quick-start guides",
+        "Backed by Checkmarx while remaining an independent open-source project"
+      ],
+      "cons": [
+        "Homepage documentation is general; deeper technical detail requires visiting separate docs",
+        "As with other scanners, effectiveness depends on proper configuration and tuning",
+        "No official paid support tier documented on the main site"
+      ],
+      "faqs": [
+        {"question": "Is OWASP ZAP free?", "answer": "Yes, ZAP is free and open source."},
+        {"question": "Who maintains ZAP?", "answer": "ZAP is maintained by the ZAP Dev Team and is backed by Checkmarx, while remaining an independent open-source project."},
+        {"question": "Can ZAP be extended with add-ons?", "answer": "Yes, ZAP has a marketplace of community-contributed add-ons."},
+        {"question": "Is ZAP suitable for beginners?", "answer": "Yes, ZAP provides quick-start guides and introductory resources for users new to security testing."},
+        {"question": "Can ZAP be automated?", "answer": "Yes, ZAP supports automation options for integrating security testing into workflows."}
+      ],
+      "use_cases": [
+        {"title": "Web application vulnerability scanning", "description": "Security teams use ZAP to scan web applications for common vulnerabilities.", "audience": "Security teams and penetration testers"},
+        {"title": "Learning web security testing", "description": "Newcomers use ZAP's quick-start guides to learn hands-on web application security testing.", "audience": "Students and security beginners"},
+        {"title": "Automated security testing in pipelines", "description": "Teams automate ZAP scans as part of their development and testing workflows.", "audience": "DevOps and AppSec teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Automated web app scanning", "Add-on marketplace", "Automation support"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is OWASP ZAP?", "level": 2, "paragraphs": [
+          "OWASP ZAP (Zed Attack Proxy) is a free, open-source web application security scanner described as one of the most widely used tools of its kind. It is extensible through a marketplace of community-contributed add-ons and offers automation options for integrating security testing into workflows.",
+          "ZAP is maintained by the ZAP Dev Team and is backed by Checkmarx, while operating as an independent open-source project. It provides quick-start guides and introductory resources aimed at users new to security testing."
+        ]},
+        {"id": "who-its-for", "heading": "Who OWASP ZAP is for", "level": 2, "paragraphs": [
+          "OWASP ZAP is for security practitioners at all levels, from beginners using its quick-start guides to experienced testers extending it with community add-ons for web application security testing."
+        ]}
+      ],
+      "tags": ["free-plan"]
+    }
+  }
+]
