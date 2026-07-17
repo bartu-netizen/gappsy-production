@@ -8,7 +8,7 @@ import LazyLoad from '../components/LazyLoad';
 import { supabase } from '../lib/supabase';
 import { adminApiFetch } from '../lib/adminApiFetch';
 import { getToolContent } from '../data/toolContent';
-import type { ToolFeature, ToolFAQ, ToolUseCase, ToolAlternative, ToolComparison, ToolContentBlock } from '../data/toolContent/types';
+import type { ToolFeature, ToolFAQ, ToolUseCase, ToolAlternative, ToolContentBlock } from '../data/toolContent/types';
 import { useRecentlyViewedTools } from '../hooks/useRecentlyViewedTools';
 import { trackToolPageView } from '../lib/trackToolEvent';
 import { formatLastUpdated } from '../utils/formatLastUpdated';
@@ -61,6 +61,16 @@ interface ToolDetail {
 }
 
 const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
+
+// Rich comparison row (both tools' name/logo) — sourced directly from
+// tool_comparisons, the same table CompareDetailPage's "Related
+// Comparisons" section reads, so this tool's own page can render the
+// identical ComparisonCard instead of the old text-only link.
+interface ToolComparisonRow {
+  slug: string;
+  tool_a: { slug: string; name: string; logo: string | null };
+  tool_b: { slug: string; name: string; logo: string | null };
+}
 
 // Shape returned by admin-tools?id=... (GET) — the admin-authenticated,
 // any-status data path used only in preview mode (see `previewToolId`
@@ -146,7 +156,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [dbUseCases, setDbUseCases] = useState<ToolUseCase[]>([]);
   const [dbFaqs, setDbFaqs] = useState<ToolFAQ[]>([]);
   const [dbAlternatives, setDbAlternatives] = useState<ToolAlternative[]>([]);
-  const [dbComparisons, setDbComparisons] = useState<ToolComparison[]>([]);
+  const [dbComparisons, setDbComparisons] = useState<ToolComparisonRow[]>([]);
   const [dbLongForm, setDbLongForm] = useState<ToolContentBlock[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -256,9 +266,14 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           supabase.from('tool_use_cases').select('title, description, audience').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_faqs').select('question, answer').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_alternatives').select('alternative_name, alternative_url, alternative_logo, description, pros, cons, pricing_summary').eq('tool_id', data.id).not('description', 'is', null).order('sort_order', { ascending: true }),
-          supabase.from('tool_comparison_links').select('label, href').eq('tool_id', data.id).order('sort_order', { ascending: true }),
+          supabase
+            .from('tool_comparisons')
+            .select('slug, tool_a:tools!tool_comparisons_tool_a_id_fkey(slug,name,logo), tool_b:tools!tool_comparisons_tool_b_id_fkey(slug,name,logo)')
+            .or(`tool_a_id.eq.${data.id},tool_b_id.eq.${data.id}`)
+            .eq('status', 'published')
+            .order('slug', { ascending: true }),
           supabase.from('tool_content_blocks').select('block_key, heading, level, paragraphs').eq('tool_id', data.id).order('sort_order', { ascending: true }),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonLinksResult, contentBlocksResult]) => {
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonsResult, contentBlocksResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -296,7 +311,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               logo: a.alternative_logo || undefined,
             }))
           );
-          setDbComparisons(comparisonLinksResult.data || []);
+          setDbComparisons(((comparisonsResult.data || []) as unknown as ToolComparisonRow[]).filter((c) => c.tool_a && c.tool_b));
           setDbLongForm(
             (contentBlocksResult.data || []).map((b) => ({
               id: b.block_key,
@@ -408,7 +423,14 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const mergedUseCases = dbUseCases.length > 0 ? dbUseCases : extendedContent?.useCases || [];
   const mergedFaqs = dbFaqs.length > 0 ? dbFaqs : extendedContent?.faqs || [];
   const mergedAlternatives = dbAlternatives.length > 0 ? dbAlternatives : extendedContent?.alternatives || [];
-  const mergedComparisons = dbComparisons.length > 0 ? dbComparisons : extendedContent?.comparisons || [];
+  // Comparisons don't merge field-by-field like the others above: the DB
+  // rows carry full tool_a/tool_b objects (for the ComparisonCard grid)
+  // while the file-based fallback is only ever {label, href} pairs, so it
+  // renders through the older text-link section instead. In practice every
+  // published tool already has DB rows (see the tool_comparisons audit),
+  // so this fallback path is not currently reachable — kept only so no
+  // existing file-based comparisons data silently stops rendering.
+  const legacyComparisons = dbComparisons.length === 0 ? extendedContent?.comparisons || [] : [];
   const mergedLongForm = dbLongForm.length > 0 ? dbLongForm : extendedContent?.longForm || [];
   const tagSlugs = new Set(tags.map((t) => t.slug));
   const hasAI = tagSlugs.has('ai');
@@ -435,17 +457,20 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     { id: 'reviews', label: 'Reviews' },
     ...(mergedFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(mergedAlternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
-    ...(mergedComparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
+    ...(dbComparisons.length || legacyComparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
   ];
 
   // Only real, published comparison pages — never a link that promises a
-  // head-to-head and then dead-ends. mergedComparisons mixes real /compare/
-  // pages with category-page fallbacks for pairs that don't have one yet
-  // (see data/toolContent/canva.ts or the tool_comparison_links table); the
-  // quick-compare popover only offers the former.
-  const quickCompareLinks = mergedComparisons
-    .filter((c) => c.href.startsWith('/compare/'))
-    .map((c) => ({ label: c.label, href: c.href }));
+  // head-to-head and then dead-ends. The quick-compare popover only offers
+  // real /compare/ pages, never the legacy fallback's non-/compare/ hrefs
+  // (see data/toolContent/canva.ts).
+  const quickCompareLinks =
+    dbComparisons.length > 0
+      ? dbComparisons.map((c) => {
+          const other = c.tool_a.slug === tool.slug ? c.tool_b : c.tool_a;
+          return { label: `vs ${other.name}`, href: `/compare/${c.slug}` };
+        })
+      : legacyComparisons.filter((c) => c.href.startsWith('/compare/')).map((c) => ({ label: c.label, href: c.href }));
 
   const inlinePromoSlots = planInlinePromoSlots(mergedLongForm.length, inlineFeaturedPromos);
 
@@ -619,8 +644,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               {mergedAlternatives.length > 0 && (
                 <LazyLoad id="alternatives" className="scroll-mt-24" component={() => import('../components/tools/detail/AlternativesSection')} componentProps={{ toolName: tool.name, alternatives: mergedAlternatives }} />
               )}
-              {mergedComparisons.length > 0 && (
-                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: mergedComparisons }} />
+              {dbComparisons.length > 0 && (
+                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonCardsSection')} componentProps={{ toolName: tool.name, comparisons: dbComparisons }} />
+              )}
+              {dbComparisons.length === 0 && legacyComparisons.length > 0 && (
+                <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: legacyComparisons }} />
               )}
             </div>
           </div>
