@@ -1,13 +1,16 @@
 import type { ToolComparisonContent } from './types';
+import activepiecesVsZapierContent from './activepieces-vs-zapier';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
 import airbyteVsFivetranContent from './airbyte-vs-fivetran';
 import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
 import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
+import automatischVsZapierContent from './automatisch-vs-zapier';
 import awsVsGoogleCloudContent from './aws-vs-google-cloud';
 import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
 import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
 import backblazeVsIdriveContent from './backblaze-vs-idrive';
+import betterProposalsVsProposifyContent from './better-proposals-vs-proposify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
 import boltNewVsV0Content from './bolt-new-vs-v0';
 import canvaVsFigmaContent from './canva-vs-figma';
@@ -27,7 +30,10 @@ import cursorVsGithubCopilotContent from './cursor-vs-github-copilot';
 import cursorVsWindsurfContent from './cursor-vs-windsurf';
 import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
 import dallEVsStableDiffusionContent from './dall-e-vs-stable-diffusion';
+import datadogVsNewRelicContent from './datadog-vs-new-relic';
 import descriptVsVeedContent from './descript-vs-veed';
+import docusignVsDropboxSignContent from './docusign-vs-dropbox-sign';
+import docusignVsSignnowContent from './docusign-vs-signnow';
 import firebaseVsSupabaseContent from './firebase-vs-supabase';
 import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
@@ -39,6 +45,7 @@ import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
 import hubspotCrmVsPipedriveContent from './hubspot-crm-vs-pipedrive';
 import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
+import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
 import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
 import klingAiVsRunwayContent from './kling-ai-vs-runway';
@@ -54,6 +61,7 @@ import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
+import railwayVsRenderContent from './railway-vs-render';
 import ringcentralVsVonageContent from './ringcentral-vs-vonage';
 import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
 import salesforceServiceCloudVsServicenowContent from './salesforce-service-cloud-vs-servicenow';
@@ -65,15 +73,18 @@ import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 // A published tool_comparisons row with no entry here still renders on
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
+  'activepieces-vs-zapier': activepiecesVsZapierContent,
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
   'airbyte-vs-fivetran': airbyteVsFivetranContent,
   'aircall-vs-openphone': aircallVsOpenphoneContent,
   'amazon-redshift-vs-snowflake': amazonRedshiftVsSnowflakeContent,
   'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
+  'automatisch-vs-zapier': automatischVsZapierContent,
   'aws-vs-google-cloud': awsVsGoogleCloudContent,
   'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
   'backblaze-vs-carbonite': backblazeVsCarboniteContent,
   'backblaze-vs-idrive': backblazeVsIdriveContent,
+  'better-proposals-vs-proposify': betterProposalsVsProposifyContent,
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
   'canva-vs-figma': canvaVsFigmaContent,
@@ -93,7 +104,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'cursor-vs-windsurf': cursorVsWindsurfContent,
   'dall-e-vs-midjourney': dallEVsMidjourneyContent,
   'dall-e-vs-stable-diffusion': dallEVsStableDiffusionContent,
+  'datadog-vs-new-relic': datadogVsNewRelicContent,
   'descript-vs-veed': descriptVsVeedContent,
+  'docusign-vs-dropbox-sign': docusignVsDropboxSignContent,
+  'docusign-vs-signnow': docusignVsSignnowContent,
   'firebase-vs-supabase': firebaseVsSupabaseContent,
   'gainsight-vs-totango': gainsightVsTotangoContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
@@ -105,6 +119,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
   'hubspot-crm-vs-pipedrive': hubspotCrmVsPipedriveContent,
   'hubspot-crm-vs-salesforce': hubspotCrmVsSalesforceContent,
+  'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
   'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
   'kling-ai-vs-runway': klingAiVsRunwayContent,
@@ -120,6 +135,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
+  'railway-vs-render': railwayVsRenderContent,
   'ringcentral-vs-vonage': ringcentralVsVonageContent,
   'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
   'salesforce-service-cloud-vs-servicenow': salesforceServiceCloudVsServicenowContent,
