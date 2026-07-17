@@ -67,6 +67,8 @@ const ALLOWED_PATTERNS = [
   /^\/tool-categories\/[a-z0-9-]+\/$/,
   /^\/compare\/$/,
   /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
+  /^\/roundup\/$/,
+  /^\/roundup\/[a-z0-9-]+\/$/,
 ];
 
 async function fetchPublishedToolSlugs() {
@@ -164,6 +166,30 @@ async function fetchPublishedComparisonSlugs() {
   }
 }
 
+// Only approved, published roundups (3+ tools) — mirrors
+// fetchPublishedComparisonSlugs above for the N-ary comparison page type.
+async function fetchPublishedRoundupSlugs() {
+  try {
+    const env = loadEnv('production', path.join(__dirname, '..'), '');
+    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      console.warn('⚠️  Supabase credentials not found — skipping roundup URLs in sitemap');
+      return [];
+    }
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const { data, error } = await supabase.from('tool_roundups').select('slug').eq('status', 'published');
+    if (error) {
+      console.warn(`⚠️  Failed to fetch roundup slugs for sitemap: ${error.message}`);
+      return [];
+    }
+    return (data || []).map((r) => r.slug);
+  } catch (err) {
+    console.warn(`⚠️  Error fetching roundup slugs for sitemap: ${err.message}`);
+    return [];
+  }
+}
+
 async function generateSitemap() {
   const urls = [];
   const paths = [];
@@ -219,6 +245,20 @@ async function generateSitemap() {
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
   console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
+
+  const roundupHubUrl = '/roundup/';
+  assertAllowed(roundupHubUrl);
+  paths.push(roundupHubUrl);
+  urls.push(generateUrlEntry(roundupHubUrl, TODAY, '0.6', 'weekly'));
+
+  const roundupSlugs = await fetchPublishedRoundupSlugs();
+  roundupSlugs.forEach((slug) => {
+    const url = `/roundup/${slug}/`;
+    assertAllowed(url);
+    paths.push(url);
+    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
+  });
+  console.log(`Roundup URLs included: ${roundupSlugs.length} (+ 1 hub)`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

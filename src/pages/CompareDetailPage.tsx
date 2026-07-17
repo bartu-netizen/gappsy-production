@@ -6,8 +6,6 @@ import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ToolBreadcrumbs from '../components/tools/detail/ToolBreadcrumbs';
 import TableOfContents, { type TocSection } from '../components/tools/detail/TableOfContents';
-import { PLATFORM_TAGS } from '../components/tools/detail/ToolFactsSidebar';
-import type { TaxonomyRef, ScreenshotItem, PricingPlanItem } from '../components/tools/detail/types';
 import CompareHero from '../components/compare/CompareHero';
 import CompareFactsTable from '../components/compare/CompareFactsTable';
 import CompareKeyDifferences from '../components/compare/CompareKeyDifferences';
@@ -19,7 +17,7 @@ import CompareAlternatives from '../components/compare/CompareAlternatives';
 import CompareScreenshots from '../components/compare/CompareScreenshots';
 import ComparisonCard from '../components/compare/ComparisonCard';
 import type { ToolOption } from '../components/compare/ToolSelectCombobox';
-import type { CompareToolFacts } from '../components/compare/types';
+import { fetchToolExtras, buildFacts, type ToolRow, type ToolExtras, EMPTY_EXTRAS } from '../components/compare/compareToolFacts';
 import { supabase } from '../lib/supabase';
 import { getToolContent } from '../data/toolContent';
 import { getComparisonContent } from '../data/comparisonContent';
@@ -27,20 +25,6 @@ import { useRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparis
 import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
-
-interface ToolRow {
-  id: string;
-  slug: string;
-  name: string;
-  logo: string | null;
-  website: string | null;
-  affiliate_link: string | null;
-  pricing_model: string | null;
-  starting_price: string | null;
-  rating: number;
-  review_count: number;
-  verified: boolean;
-}
 
 interface ComparisonRow {
   id: string;
@@ -51,16 +35,6 @@ interface ComparisonRow {
   tool_b: ToolRow;
 }
 
-interface ToolExtras {
-  primaryCategory: TaxonomyRef | null;
-  tagSlugs: Set<string>;
-  integrationCount: number;
-  pricingPlans: PricingPlanItem[];
-  screenshots: ScreenshotItem[];
-}
-
-const EMPTY_EXTRAS: ToolExtras = { primaryCategory: null, tagSlugs: new Set(), integrationCount: 0, pricingPlans: [], screenshots: [] };
-
 function truncateDescription(text: string, max = 160): string {
   const trimmed = text.trim();
   if (trimmed.length <= max) return trimmed;
@@ -68,17 +42,6 @@ function truncateDescription(text: string, max = 160): string {
   const lastSpace = cut.lastIndexOf(' ');
   const clean = lastSpace > max - 20 ? cut.slice(0, lastSpace) : cut;
   return `${clean.trimEnd()}…`;
-}
-
-function isSafeHttpUrl(value: string | null | undefined): value is string {
-  if (!value) return false;
-  if (value.startsWith('//')) return false;
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-  } catch {
-    return false;
-  }
 }
 
 function reverseSlug(slug: string): string | null {
@@ -92,64 +55,6 @@ function reverseSlug(slug: string): string | null {
 
 const COMPARISON_SELECT =
   'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified)';
-
-async function fetchToolExtras(toolId: string): Promise<ToolExtras> {
-  const [catResult, tagResult, integrationsResult, pricingResult, screenshotsResult] = await Promise.all([
-    supabase
-      .from('tool_category_links')
-      .select('primary_category, tool_categories!inner(id, slug, name, status)')
-      .eq('tool_id', toolId)
-      .eq('tool_categories.status', 'published'),
-    supabase.from('tool_tag_links').select('tool_tags(slug)').eq('tool_id', toolId),
-    supabase.from('tool_integrations').select('id', { count: 'exact', head: true }).eq('tool_id', toolId),
-    supabase
-      .from('tool_pricing_plans')
-      .select('id, plan_name, price, billing_cycle, description, features, sort_order')
-      .eq('tool_id', toolId)
-      .order('sort_order', { ascending: true }),
-    supabase.from('tool_screenshots').select('id, image_url, caption').eq('tool_id', toolId).order('sort_order', { ascending: true }),
-  ]);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const categoryLinks = (catResult.data || []) as any[];
-  const primaryLink = categoryLinks.find((r) => r.primary_category) || categoryLinks[0] || null;
-  const primaryCategory: TaxonomyRef | null = primaryLink?.tool_categories || null;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const tagSlugs = new Set(((tagResult.data || []) as any[]).map((r) => r.tool_tags?.slug).filter(Boolean));
-
-  return {
-    primaryCategory,
-    tagSlugs,
-    integrationCount: integrationsResult.count || 0,
-    pricingPlans: (pricingResult.data || []).map((p) => ({ ...p, features: Array.isArray(p.features) ? p.features : [] })),
-    screenshots: (screenshotsResult.data || []).filter((s) => isSafeHttpUrl(s.image_url)),
-  };
-}
-
-function buildFacts(tool: ToolRow, extras: ToolExtras): CompareToolFacts {
-  const platforms = PLATFORM_TAGS.filter((p) => extras.tagSlugs.has(p.slug)).map((p) => p.label);
-  return {
-    slug: tool.slug,
-    name: tool.name,
-    logo: isSafeHttpUrl(tool.logo) ? tool.logo : null,
-    websiteUrl: isSafeHttpUrl(tool.website) ? tool.website : null,
-    affiliateUrl: isSafeHttpUrl(tool.affiliate_link) ? tool.affiliate_link : null,
-    rating: tool.rating,
-    reviewCount: tool.review_count,
-    verified: tool.verified,
-    pricingModel: tool.pricing_model,
-    startingPrice: tool.starting_price,
-    primaryCategory: extras.primaryCategory,
-    hasFreePlan: extras.tagSlugs.has('free-plan') || extras.tagSlugs.has('freemium'),
-    hasFreeTrial: extras.tagSlugs.has('free-trial'),
-    hasApi: extras.tagSlugs.has('api'),
-    hasAI: extras.tagSlugs.has('ai'),
-    hasTeamCollaboration: extras.tagSlugs.has('real-time-collaboration') || extras.tagSlugs.has('team-management'),
-    platforms,
-    integrationCount: extras.integrationCount,
-  };
-}
 
 export default function CompareDetailPage() {
   const { comparisonSlug } = useParams<{ comparisonSlug: string }>();

@@ -37,6 +37,8 @@ const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage
 const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
+const RoundupPage = lazy(() => import("./pages/RoundupPage"));
+const RoundupDetailPage = lazy(() => import("./pages/RoundupDetailPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
@@ -380,6 +382,8 @@ export default function App() {
         <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
+        <Route path="/roundup" element={<RoundupPage />} />
+        <Route path="/roundup/:roundupSlug" element={<RoundupDetailPage />} />
         <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
         <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
         <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
