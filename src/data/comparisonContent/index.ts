@@ -20,11 +20,14 @@ import bigcommerceVsShopifyContent from './bigcommerce-vs-shopify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
 import blackboardLearnVsCanvasLmsContent from './blackboard-learn-vs-canvas-lms';
 import boltNewVsV0Content from './bolt-new-vs-v0';
+import brexVsRampContent from './brex-vs-ramp';
 import bubbleVsSoftrContent from './bubble-vs-softr';
 import canvaVsFigmaContent from './canva-vs-figma';
 import canvaVsMicrosoftDesignerContent from './canva-vs-microsoft-designer';
 import canvaVsPhotoshopContent from './canva-vs-photoshop';
 import canvaVsVistacreateContent from './canva-vs-vistacreate';
+import canvasLmsVsMoodleContent from './canvas-lms-vs-moodle';
+import chargebeeVsRecurlyContent from './chargebee-vs-recurly';
 import chatgptVsClaudeContent from './chatgpt-vs-claude';
 import chatgptVsGoogleGeminiContent from './chatgpt-vs-google-gemini';
 import chatgptVsPerplexityContent from './chatgpt-vs-perplexity';
@@ -37,6 +40,7 @@ import clioVsSmokeballContent from './clio-vs-smokeball';
 import constantContactVsMailchimpContent from './constant-contact-vs-mailchimp';
 import copyAiVsJasperContent from './copy-ai-vs-jasper';
 import copyAiVsWritesonicContent from './copy-ai-vs-writesonic';
+import courseraVsUdemyContent from './coursera-vs-udemy';
 import crispVsTidioContent from './crisp-vs-tidio';
 import cursorVsGithubCopilotContent from './cursor-vs-github-copilot';
 import cursorVsWindsurfContent from './cursor-vs-windsurf';
@@ -77,16 +81,20 @@ import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
 import netlifyVsVercelContent from './netlify-vs-vercel';
+import paypalVsStripeContent from './paypal-vs-stripe';
 import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
 import railwayVsRenderContent from './railway-vs-render';
+import revolutBusinessVsWiseBusinessContent from './revolut-business-vs-wise-business';
 import ringcentralVsVonageContent from './ringcentral-vs-vonage';
 import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
 import salesforceServiceCloudVsServicenowContent from './salesforce-service-cloud-vs-servicenow';
 import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
 import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
+import skillshareVsUdemyContent from './skillshare-vs-udemy';
+import squareVsStripeContent from './square-vs-stripe';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
 import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 import tallyVsTypeformContent from './tally-vs-typeform';
@@ -118,11 +126,14 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
   'blackboard-learn-vs-canvas-lms': blackboardLearnVsCanvasLmsContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
+  'brex-vs-ramp': brexVsRampContent,
   'bubble-vs-softr': bubbleVsSoftrContent,
   'canva-vs-figma': canvaVsFigmaContent,
   'canva-vs-microsoft-designer': canvaVsMicrosoftDesignerContent,
   'canva-vs-photoshop': canvaVsPhotoshopContent,
   'canva-vs-vistacreate': canvaVsVistacreateContent,
+  'canvas-lms-vs-moodle': canvasLmsVsMoodleContent,
+  'chargebee-vs-recurly': chargebeeVsRecurlyContent,
   'chatgpt-vs-claude': chatgptVsClaudeContent,
   'chatgpt-vs-google-gemini': chatgptVsGoogleGeminiContent,
   'chatgpt-vs-perplexity': chatgptVsPerplexityContent,
@@ -135,6 +146,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'constant-contact-vs-mailchimp': constantContactVsMailchimpContent,
   'copy-ai-vs-jasper': copyAiVsJasperContent,
   'copy-ai-vs-writesonic': copyAiVsWritesonicContent,
+  'coursera-vs-udemy': courseraVsUdemyContent,
   'crisp-vs-tidio': crispVsTidioContent,
   'cursor-vs-github-copilot': cursorVsGithubCopilotContent,
   'cursor-vs-windsurf': cursorVsWindsurfContent,
@@ -175,16 +187,20 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
   'netlify-vs-vercel': netlifyVsVercelContent,
+  'paypal-vs-stripe': paypalVsStripeContent,
   'pika-vs-runway': pikaVsRunwayContent,
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
   'railway-vs-render': railwayVsRenderContent,
+  'revolut-business-vs-wise-business': revolutBusinessVsWiseBusinessContent,
   'ringcentral-vs-vonage': ringcentralVsVonageContent,
   'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
   'salesforce-service-cloud-vs-servicenow': salesforceServiceCloudVsServicenowContent,
   'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
   'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
+  'skillshare-vs-udemy': skillshareVsUdemyContent,
+  'square-vs-stripe': squareVsStripeContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
   'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
   'tally-vs-typeform': tallyVsTypeformContent,
