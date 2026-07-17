@@ -1,0 +1,1652 @@
+[
+  {
+    "slug": "baserow-vs-grist",
+    "tool_a_id": "8a277ff8-0957-4069-9f79-4ef1be818b6e",
+    "tool_a_name": "Baserow",
+    "tool_b_id": "b0a59332-e7cb-4428-afe9-3934017982dd",
+    "tool_b_name": "Grist",
+    "content": {
+      "verdict": "Baserow and Grist are both open-source, self-hostable no-code database tools positioned as Airtable alternatives, but they emphasize different layers of the stack: Baserow bundles a Database Builder with a dedicated Application Builder for publishing front-end portals to a custom domain, plus an Automation Builder and Dashboards, while Grist centers on a spreadsheet-database hybrid with Python-syntax formulas, row/column/table-level Access rules, and portable single-file SQLite documents. Baserow's cloud is GDPR, HIPAA, and SOC 2 Type II compliant; Grist's core (grist-core) is a single OSI-approved Apache 2.0 license versus Baserow's open-core MIT-plus-paid-addon model.",
+      "bestForToolA": "Baserow fits teams that want to build an actual front-end app or client portal on top of their data using its Application Builder, and that value 65+ templates and 2,000 automation credits already on the Free plan.",
+      "bestForToolB": "Grist fits teams that think in spreadsheet formulas and need granular data permissions, since its Python-syntax/Excel-compatible formulas and row-, column-, and table-level Access rules suit sensitive or mixed-trust datasets.",
+      "whoNeedsBoth": "A data team could use Grist's Access rules and Python-syntax formulas to model and lock down a sensitive core dataset, then use Baserow's Application Builder to publish a simplified, public-facing intake portal built from a separate, less sensitive Baserow base.",
+      "keyDifferences": [
+        {
+          "title": "Application & Portal Building",
+          "toolA": "Baserow's Application Builder lets teams build front-end apps and portals on top of their data without code, publishable to a custom domain.",
+          "toolB": "Grist's facts document linked grid/card/calendar/chart views and native forms, but no dedicated front-end application or portal builder.",
+          "whyItMatters": "Teams that need to expose data through a branded, standalone web app rather than just an internal spreadsheet-style view need this capability natively.",
+          "benefitsWho": "Teams building customer- or partner-facing portals rather than purely internal tracking tools."
+        },
+        {
+          "title": "Formula Language",
+          "toolA": "Baserow's documented features center on automation credits and views rather than a named spreadsheet formula language.",
+          "toolB": "Grist supports Python-syntax formulas in calculated columns alongside common Excel-compatible functions.",
+          "whyItMatters": "Analysts who already know Python or Excel formulas can express complex calculated logic directly in Grist without learning a new automation model.",
+          "benefitsWho": "Data analysts and spreadsheet power users who rely on formula-driven calculations."
+        },
+        {
+          "title": "Data Access Rules",
+          "toolA": "Baserow's role-based permissions and custom roles are limited to the Advanced ($18/user/month annual) and Enterprise tiers, with audit logs also gated there.",
+          "toolB": "Grist includes row-, column-, and table-level Access rules as a named feature for controlling who can see or edit data.",
+          "whyItMatters": "Organizations with mixed-trust collaborators (e.g. external guests) need granular permission control without paying for the top pricing tier.",
+          "benefitsWho": "Teams managing shared datasets with varying levels of internal and external trust."
+        },
+        {
+          "title": "Automation Credit Scaling",
+          "toolA": "Baserow's Automation Builder is metered by automation credits: 2,000 on Free, 100,000 on Premium, 500,000 on Advanced, up to 2,000,000 on Enterprise.",
+          "toolB": "Grist gates automations as a feature on the Business plan ($24/user/month annual, minimum 5 users) rather than metering them by credit.",
+          "whyItMatters": "Heavy automation users need to understand whether cost scales by usage volume (Baserow's credits) or by plan tier and seat minimums (Grist).",
+          "benefitsWho": "Ops and automation-heavy teams evaluating total cost of scaling workflow automation."
+        },
+        {
+          "title": "Free Tier Data Limits",
+          "toolA": "Baserow's Free plan includes 3,000 rows per workspace, 2GB storage, and 65+ templates.",
+          "toolB": "Grist's Free plan includes 5,000 records per document, 100 AI Assistant credits as a one-time lifetime allotment, and 2 guests per document.",
+          "whyItMatters": "The two free tiers cap different units (per-workspace vs per-document), which changes how far a small team can go before hitting a paywall.",
+          "benefitsWho": "Small teams and solo builders evaluating how much they can accomplish before upgrading."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Data & Views",
+          "rows": [
+            {
+              "feature": "Core view types (grid, kanban, gallery, calendar)",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Baserow documents Grid/Gallery/Kanban/Calendar/Timeline/Form/Survey; Grist documents grid/card/calendar/chart widgets only"
+            },
+            {
+              "feature": "Timeline & Survey views",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Spreadsheet formula language (Python/Excel-style)",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Application/portal builder with custom domain publishing",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Automation & AI",
+          "rows": [
+            {
+              "feature": "Workflow automation builder (triggers, branches, conditions, loops)",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Grist's 'automations' feature is Business-plan only"
+            },
+            {
+              "feature": "AI assistant on Free plan",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Baserow's Kuma AI requires a paid plan; Grist Free includes 100 lifetime AI credits"
+            },
+            {
+              "feature": "Credit-metered automation system",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Baserow: 2,000 (Free) to 2,000,000 (Enterprise) automation credits"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Access",
+          "rows": [
+            {
+              "feature": "Self-hosting",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Baserow via Docker/Cloudron/Railway/Elestio/Heroku/AWS; Grist via Docker Community Edition"
+            },
+            {
+              "feature": "Formal compliance certifications (GDPR, HIPAA, SOC 2 Type II)",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Row/column/table-level access rules",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Baserow's role-based permissions/custom roles are Advanced/Enterprise only"
+            },
+            {
+              "feature": "Desktop app",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Grist has desktop apps for Linux, macOS, and Windows"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Does Baserow or Grist offer a free self-hosted option?",
+          "answer": "Both do. Baserow's MIT-licensed core can be self-hosted via Docker, Docker Compose, Helm, or one-click deploys on Cloudron, Railway, Elestio, and Heroku. Grist's Apache 2.0 grist-core powers a free, self-hostable Community Edition, and organizations under $1M in annual revenue can request free hosted activation keys."
+        },
+        {
+          "question": "Which tool has more generous free-tier limits?",
+          "answer": "It depends on what you're measuring. Baserow's Free plan allows 3,000 rows per workspace and 2GB storage; Grist's Free plan allows 5,000 records per document but only 2 guests per document and a one-time 100 AI Assistant credits (not renewing monthly)."
+        },
+        {
+          "question": "Does either tool support writing formulas like a spreadsheet?",
+          "answer": "Grist does, with Python-syntax formulas plus common Excel-compatible functions in calculated columns. Baserow's documented feature set doesn't describe an equivalent formula language, relying instead on its Automation Builder and credit system."
+        },
+        {
+          "question": "Can I build a customer-facing web app on top of my data?",
+          "answer": "Baserow's Application Builder is designed for this, letting teams build and publish front-end apps or portals to a custom domain. Grist's facts don't document a comparable application-building feature."
+        },
+        {
+          "question": "Which tool gives stronger control over who can see or edit specific data?",
+          "answer": "Grist's Access rules provide row-, column-, and table-level permissions as a standard feature. Baserow's equivalent role-based permissions and custom roles are reserved for the Advanced ($18/user/month annual) and Enterprise tiers."
+        },
+        {
+          "question": "What AI features does each include, and at what cost?",
+          "answer": "Baserow's Kuma AI assistant builds data structures and automations from natural-language descriptions, but requires a paid plan. Grist's AI Assistant is available from the Free plan (100 lifetime credits), scaling to 100 credits/month on Pro and 2,000 credits/month on Business."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "grist-vs-seatable",
+    "tool_a_id": "b0a59332-e7cb-4428-afe9-3934017982dd",
+    "tool_a_name": "Grist",
+    "tool_b_id": "0909fefb-ee91-4a8f-972b-d6cce78f8b1e",
+    "tool_b_name": "SeaTable",
+    "content": {
+      "verdict": "Grist and SeaTable are both freemium spreadsheet-database hybrids with genuine self-hosting options, but they differ on data residency and scripting depth: SeaTable is built around EU-hosted cloud infrastructure (certified German data centers) or on-premises deployment, including a permanently free 3-user on-premises license, with built-in Python script execution against data; Grist's grist-core is a single Apache 2.0 open-source license with Python-syntax formulas, row/column/table Access rules, and portable SQLite documents plus desktop apps for Linux, macOS, and Windows. SeaTable's own codebase mixes licenses (dtable-server is proprietary), while Grist's core license is uniformly open.",
+      "bestForToolA": "Grist suits teams that want a single OSI-licensed open-source core, Python-syntax spreadsheet formulas, and a desktop app for offline work on Linux, macOS, or Windows.",
+      "bestForToolB": "SeaTable suits EU-based or EU-regulated organizations that need certified German data-center hosting or a genuinely free on-premises option for up to 3 users, plus built-in Python scripting for custom data workflows.",
+      "whoNeedsBoth": "An EU-based organization with strict data-residency requirements might run SeaTable on-premises or in its EU cloud for regulated data, while using Grist's desktop app and portable SQLite documents for ad hoc, offline analysis that doesn't need to leave a single analyst's laptop.",
+      "keyDifferences": [
+        {
+          "title": "Data Residency & Hosting Model",
+          "toolA": "Grist is headquartered in New York City, USA, with Community Edition self-hosting and no explicit EU-hosting guarantee documented.",
+          "toolB": "SeaTable is headquartered in Mainz, Germany, and its cloud plans are hosted in certified German data centers within the EU, with Dedicated Cloud and on-premises options for direct data-location control.",
+          "whyItMatters": "Organizations bound by EU data-residency or GDPR requirements need documented proof of where data physically lives.",
+          "benefitsWho": "EU-based companies and public-sector organizations with data-sovereignty obligations."
+        },
+        {
+          "title": "Open-Source Licensing Purity",
+          "toolA": "Grist's core repository (grist-core) is released entirely under the Apache License 2.0, a single OSI-approved license.",
+          "toolB": "SeaTable's components use mixed licenses: dtable-web, dtable-events, and thumbnail-server are Apache 2.0, seaf-server is AGPLv3, and dtable-server itself is proprietary.",
+          "whyItMatters": "Teams with open-source procurement or audit requirements need clarity on whether the entire stack, not just parts of it, is open source.",
+          "benefitsWho": "Engineering teams and procurement reviewers with open-source compliance policies."
+        },
+        {
+          "title": "Built-In Scripting",
+          "toolA": "Grist's computation model is expressed through Python-syntax formulas in calculated columns rather than a general-purpose scripting engine.",
+          "toolB": "SeaTable includes built-in Python script execution against data, scaling from 100 script runs/month on Free to 1,000/user/month on Enterprise, alongside separate automation rules.",
+          "whyItMatters": "Teams needing custom multi-step data processing logic beyond per-column formulas benefit from a dedicated scripting layer.",
+          "benefitsWho": "Technical teams building custom data workflows beyond simple calculated fields."
+        },
+        {
+          "title": "AI Credit Structure",
+          "toolA": "Grist's AI Assistant gives 100 lifetime credits on the Free plan, then 100 credits/month on Pro ($8/user/month annual) and 2,000 credits/month on Business.",
+          "toolB": "SeaTable's AI credits scale from 12.5/month on Free to 500/user/month on Enterprise, plus an optional self-hosted AI server for GDPR-compliant deployments.",
+          "whyItMatters": "The credit scale and renewal cadence determine how much ongoing AI-assisted work a team can do without upgrading.",
+          "benefitsWho": "Teams planning to rely on AI-assisted automation as a recurring part of their workflow."
+        },
+        {
+          "title": "Entry-Level Paid Pricing",
+          "toolA": "Grist's Pro plan starts at $8/user/month billed annually ($10/user/month monthly), with up to 100,000 records per document.",
+          "toolB": "SeaTable's Plus plan starts at €7/user/month billed annually (€9/user/month monthly), with up to 50,000 rows and 50GB storage.",
+          "whyItMatters": "Currency and included limits differ, which matters for budgeting across regions.",
+          "benefitsWho": "Finance and procurement teams comparing total cost across currencies and plan limits."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Views & Data Model",
+          "rows": [
+            {
+              "feature": "Kanban/Gallery/Timeline/Calendar views",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Grist documents card/calendar/chart widgets; SeaTable explicitly names all four"
+            },
+            {
+              "feature": "Linked records/views between bases or documents",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Grist: multiple linked views; SeaTable: linked records between bases"
+            },
+            {
+              "feature": "Spreadsheet formula language",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Pre-built templates",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Automation, Scripting & AI",
+          "rows": [
+            {
+              "feature": "Built-in Python script execution",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "SeaTable: 100 runs/month (Free) to 1,000/user (Enterprise)"
+            },
+            {
+              "feature": "AI assistant/credits",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Grist: 100 lifetime (Free); SeaTable: 12.5/month (Free)"
+            },
+            {
+              "feature": "Self-hosted AI server for GDPR compliance",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Hosting & Compliance",
+          "rows": [
+            {
+              "feature": "Self-hosting",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Grist: Docker Community Edition; SeaTable: on-premises server licenses"
+            },
+            {
+              "feature": "EU-certified data center cloud hosting",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Single OSI-approved open-source license across core",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "SeaTable's dtable-server component is proprietary"
+            },
+            {
+              "feature": "Desktop app",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Grist: Linux, macOS, Windows"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which tool guarantees EU data hosting?",
+          "answer": "SeaTable explicitly hosts its cloud plans in certified German data centers within the EU and offers Dedicated Cloud with regional selection. Grist, headquartered in New York City, doesn't document an equivalent EU-specific hosted tier."
+        },
+        {
+          "question": "Is either tool fully open source?",
+          "answer": "Grist's core (grist-core) is entirely Apache 2.0 licensed. SeaTable's stack is mixed: some components are Apache 2.0, seaf-server is AGPLv3, but dtable-server is proprietary, so it isn't a single fully open-source codebase."
+        },
+        {
+          "question": "Which has more free-tier automation or scripting capability?",
+          "answer": "SeaTable's Free plan includes 100 Python script runs per month plus automation rules. Grist's automation features are documented mainly at the Business-plan level, with computation instead expressed through Python-syntax column formulas."
+        },
+        {
+          "question": "How do the free plans compare on rows and storage?",
+          "answer": "SeaTable's Free plan includes 10,000 rows, 2GB storage, and 3,000 API calls. Grist's Free plan includes 5,000 records per document with 30-day backups, but doesn't list a separate storage cap in the facts."
+        },
+        {
+          "question": "Which offers a genuinely free self-hosted option long-term?",
+          "answer": "SeaTable offers a permanently free on-premises license for up to 3 users. Grist's Community Edition is also free to self-host with unlimited users, and eligible organizations under $1M in annual revenue can request free hosted activation keys."
+        },
+        {
+          "question": "What's the starting price for a paid plan on each?",
+          "answer": "SeaTable's Plus plan starts at €7/user/month billed annually. Grist's Pro plan starts at $8/user/month billed annually."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "seatable-vs-teable",
+    "tool_a_id": "0909fefb-ee91-4a8f-972b-d6cce78f8b1e",
+    "tool_a_name": "SeaTable",
+    "tool_b_id": "29ae5ed4-0528-4ac2-93c1-e33536bd6b2f",
+    "tool_b_name": "Teable",
+    "content": {
+      "verdict": "SeaTable and Teable both combine a spreadsheet interface with database-level power, but they scale and deploy differently: Teable is explicitly Postgres-backed and documents row ceilings up to 1,000,000 rows on its Business plan plus AI features (AI fields, AI chat, a natural-language app builder, and the CuppyClaw agent) starting on the Free plan, while SeaTable emphasizes EU-hosted cloud infrastructure in certified German data centers, on-premises licensing including a permanently free 3-user tier, and built-in Python script execution. Teable's Community Edition is AGPL-3.0 with a separate proprietary Enterprise Edition; SeaTable's components are split across Apache 2.0, AGPLv3, and a proprietary dtable-server.",
+      "bestForToolA": "SeaTable suits EU-regulated teams or small groups that want a permanently free 3-user on-premises license and built-in Python scripting for custom automations.",
+      "bestForToolB": "Teable suits teams expecting to outgrow typical no-code row limits, since its Postgres backend supports up to 1,000,000 rows on the Business plan, and want AI-assisted app building (the CuppyClaw agent, AI fields) starting on the Free tier.",
+      "whoNeedsBoth": "A distributed organization might run SeaTable on-premises in Germany for a dataset with strict EU-residency requirements, while using Teable's cloud AI app builder for a separate, larger-scale, less sensitive dataset that benefits from Postgres-level row capacity.",
+      "keyDifferences": [
+        {
+          "title": "Underlying Database Engine & Scale",
+          "toolA": "SeaTable's row ceilings top out at 50,000 rows on the Plus plan, rising to unlimited only on Enterprise or Dedicated Cloud tiers, without a named underlying database engine.",
+          "toolB": "Teable is explicitly built on PostgreSQL, with documented row limits up to 250,000 (Pro) and 1,000,000 (Business).",
+          "whyItMatters": "Teams anticipating large datasets need to know whether a platform's architecture is designed for scale or optimized for smaller, spreadsheet-sized data.",
+          "benefitsWho": "Teams building data-heavy applications that expect to grow well beyond typical spreadsheet row counts."
+        },
+        {
+          "title": "Licensing Clarity",
+          "toolA": "SeaTable's codebase mixes Apache 2.0 (dtable-web, dtable-events, thumbnail-server), AGPLv3 (seaf-server), and a proprietary dtable-server component.",
+          "toolB": "Teable's Community Edition is fully AGPL-3.0 licensed, with a separate proprietary Enterprise Edition for advanced features.",
+          "whyItMatters": "A cleaner community/enterprise split makes it easier for procurement and engineering teams to understand exactly what's open source.",
+          "benefitsWho": "Open-source-conscious engineering and procurement teams."
+        },
+        {
+          "title": "AI Feature Depth",
+          "toolA": "SeaTable frames AI as credit-metered AI-supported automations (12.5 credits/month on Free) plus an optional self-hosted AI server for GDPR compliance.",
+          "toolB": "Teable includes AI fields, AI chat, a natural-language app builder, and a named AI agent called CuppyClaw, available starting on the Free plan.",
+          "whyItMatters": "Named, purpose-built AI features (like an app builder or agent) suggest a different depth of AI integration than generic credit-metered automation.",
+          "benefitsWho": "Teams that want to use AI to generate apps or interact conversationally with their data, not just automate rule-based tasks."
+        },
+        {
+          "title": "Data Residency Positioning",
+          "toolA": "SeaTable explicitly markets EU-hosted cloud in certified German data centers plus Dedicated Cloud with regional selection.",
+          "toolB": "Teable's documented deployment options are Docker self-hosting or one-click deploys to Railway, Sealos, or Zeabur, without a stated EU-only hosted tier.",
+          "whyItMatters": "Regulated industries or EU public-sector buyers need explicit data-location guarantees, not just self-hosting as an option.",
+          "benefitsWho": "EU-based organizations with GDPR or data-sovereignty requirements."
+        },
+        {
+          "title": "Formal Certifications",
+          "toolA": "SeaTable's facts don't document formal ISO certifications, instead emphasizing German/EU data-center hosting.",
+          "toolB": "Teable states ISO 9001 and ISO 27001 certifications on its site.",
+          "whyItMatters": "Formal ISO certifications can matter for enterprise procurement and security review processes.",
+          "benefitsWho": "Enterprise buyers running formal vendor security assessments."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Data Model & Views",
+          "rows": [
+            {
+              "feature": "Grid/Kanban/Gallery/Calendar views",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Named Form view",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Timeline view",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Direct SQL querying",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Documented underlying database engine",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Teable: PostgreSQL"
+            }
+          ]
+        },
+        {
+          "group": "AI & Automation",
+          "rows": [
+            {
+              "feature": "AI credits on Free plan",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "SeaTable: 12.5/month; Teable: 200 credits + 100 automation runs"
+            },
+            {
+              "feature": "Natural-language app builder",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Named AI agent",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Teable: CuppyClaw"
+            },
+            {
+              "feature": "Built-in Python script execution",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Hosting, Licensing & Scale",
+          "rows": [
+            {
+              "feature": "Self-hosting via Docker",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Teable also offers Railway/Sealos/Zeabur one-click deploys"
+            },
+            {
+              "feature": "Permanently free self-hosted tier",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "SeaTable: free 3-user on-premises license"
+            },
+            {
+              "feature": "EU-certified data center hosting",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Formal ISO certification (9001/27001)",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which tool handles larger datasets?",
+          "answer": "Teable, whose Postgres backend supports up to 1,000,000 rows on the Business plan ($20/seat/month annual). SeaTable's row ceiling on its Plus plan is 50,000 rows, with unlimited rows only available on Enterprise or Dedicated Cloud."
+        },
+        {
+          "question": "Is either platform better suited to EU data-residency requirements?",
+          "answer": "SeaTable explicitly documents EU cloud hosting in certified German data centers and a Dedicated Cloud option with regional selection. Teable's facts don't document an equivalent EU-specific hosted tier."
+        },
+        {
+          "question": "What AI capabilities differ between the two?",
+          "answer": "Teable includes a named AI agent (CuppyClaw), AI chat, AI fields, and a natural-language app builder from the Free plan. SeaTable's AI features are framed as credit-metered AI-supported automations plus an optional self-hosted AI server for GDPR-compliant deployments."
+        },
+        {
+          "question": "Which is more fully open source?",
+          "answer": "Teable's Community Edition is entirely AGPL-3.0. SeaTable's codebase mixes Apache 2.0, AGPLv3, and a proprietary dtable-server component, so it isn't fully open source."
+        },
+        {
+          "question": "Do both support custom data scripting?",
+          "answer": "SeaTable has built-in Python script execution (100 to 1,000 runs/user/month depending on plan). Teable's automation is credit-metered without a documented general-purpose scripting layer."
+        },
+        {
+          "question": "How do starting paid prices compare?",
+          "answer": "Teable's Pro plan starts at $10/seat/month billed annually. SeaTable's Plus plan starts at €7/user/month billed annually."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "mathesar-vs-teable",
+    "tool_a_id": "b425d59b-1c35-4d02-b5ba-62b13f0c3db7",
+    "tool_a_name": "Mathesar",
+    "tool_b_id": "29ae5ed4-0528-4ac2-93c1-e33536bd6b2f",
+    "tool_b_name": "Teable",
+    "content": {
+      "verdict": "Mathesar and Teable both put a spreadsheet-style interface over PostgreSQL, but they solve different problems: Mathesar is a 100% GPLv3, nonprofit-maintained (Mathesar Foundation) UI layer that connects to and operates directly on an existing Postgres database using its native permissions, with no pricing tiers at all; Teable is a standalone freemium no-code platform with its own Postgres backend, seat-based pricing from Free through $20/seat/month (Business), and AI features like AI fields, AI chat, and the CuppyClaw agent. Mathesar is still in Public Beta and has not reached a 1.0 release, while Teable documents ISO 9001 and ISO 27001 certifications.",
+      "bestForToolA": "Mathesar fits teams that already run a production PostgreSQL database and want a free, nonprofit-backed UI for non-SQL-fluent staff to view and edit that exact data using native Postgres permissions.",
+      "bestForToolB": "Teable fits teams starting a new no-code project who want AI-assisted app building and views like Kanban, Gallery, and Calendar without first needing an existing Postgres database, and who accept per-seat pricing as they scale past the Free plan's 1,000-row limit.",
+      "whoNeedsBoth": "A team could use Mathesar as a free internal admin UI directly on its production Postgres database for engineers and support staff, while a separate business team uses Teable to spin up its own no-code app with AI-assisted fields for a project unrelated to that core database.",
+      "keyDifferences": [
+        {
+          "title": "Relationship to Postgres",
+          "toolA": "Mathesar is explicitly a UI layer that connects to and operates directly on an existing PostgreSQL database using Postgres's native schemas and permissions.",
+          "toolB": "Teable is also Postgres-backed, but functions as a standalone no-code platform with its own accounts, seats, and credit system rather than requiring you to bring an existing database.",
+          "whyItMatters": "Teams with an existing production database need a tool that respects that schema and permission model rather than duplicating data into a new system.",
+          "benefitsWho": "Engineering teams that want a lightweight admin UI on top of a database they already run."
+        },
+        {
+          "title": "Pricing Structure",
+          "toolA": "Mathesar has no pricing tiers documented at all — it's entirely free with no paid plans.",
+          "toolB": "Teable is freemium: Free (1,000 rows, 1GB attachments), Pro ($10/seat/month annual), Business ($20/seat/month annual), plus a proprietary Enterprise Edition.",
+          "whyItMatters": "Budget-constrained teams need to know whether a tool has any recurring cost at all versus one that scales with seats and usage.",
+          "benefitsWho": "Cost-sensitive teams and nonprofits evaluating total cost of ownership."
+        },
+        {
+          "title": "Maturity & Release Status",
+          "toolA": "Mathesar is in Public Beta and has not reached a stable 1.0 release, per its own documentation, though it describes itself as stable enough for production.",
+          "toolB": "Teable's facts don't carry an equivalent beta caveat and instead document ISO 9001 and ISO 27001 certifications.",
+          "whyItMatters": "Risk-averse teams may weight formal certifications and release maturity differently when choosing infrastructure to depend on.",
+          "benefitsWho": "IT and compliance teams evaluating production readiness."
+        },
+        {
+          "title": "AI-Assisted Features",
+          "toolA": "Mathesar's documented feature set (spreadsheet-like interface, forms, query builders, schema management) does not mention AI-assisted features.",
+          "toolB": "Teable includes AI fields, AI chat, a natural-language app builder, and the CuppyClaw AI agent starting on its Free plan.",
+          "whyItMatters": "Teams wanting AI-assisted app or query building need a platform where that's a native feature, not a gap.",
+          "benefitsWho": "Non-technical users who want AI help building views, fields, or automations."
+        },
+        {
+          "title": "Governance",
+          "toolA": "Mathesar is maintained by the nonprofit Mathesar Foundation, a 501(c)(3), with a 100% open-source GPLv3 codebase and no proprietary edition.",
+          "toolB": "Teable splits into an AGPL-3.0 Community Edition and a separate proprietary Enterprise Edition.",
+          "whyItMatters": "Organizations with open-source procurement policies may require a project with no proprietary components anywhere in its stack.",
+          "benefitsWho": "Open-source-only procurement environments and nonprofit or public-sector buyers."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Data Access & Setup",
+          "rows": [
+            {
+              "feature": "Works directly on an existing (bring-your-own) Postgres database",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Native Postgres permission model",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Docker self-hosting",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "One-click deploy (Railway, Sealos, Zeabur)",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Views, Forms & AI",
+          "rows": [
+            {
+              "feature": "Spreadsheet-style grid interface",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Kanban/Gallery/Calendar views",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Forms for data collection",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "AI fields, AI chat, and app builder",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Licensing & Cost",
+          "rows": [
+            {
+              "feature": "Fully open source with no proprietary edition",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Teable CE is AGPL-3.0; Enterprise Edition is proprietary"
+            },
+            {
+              "feature": "Free plan/tier available",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Mathesar has no pricing tiers at all; Teable Free caps at 1,000 rows"
+            },
+            {
+              "feature": "Stated stable (non-beta) release status",
+              "toolA": "limited",
+              "toolB": "not-documented",
+              "note": "Mathesar is explicitly Public Beta, pre-1.0"
+            },
+            {
+              "feature": "Paid enterprise tier",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Mathesar has no paid tiers documented"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do I need an existing PostgreSQL database to use either tool?",
+          "answer": "Yes for Mathesar — it's a UI layer that connects to and operates directly on an existing Postgres database. Teable manages its own Postgres backend as part of the platform rather than requiring you to bring one."
+        },
+        {
+          "question": "Is either tool completely free?",
+          "answer": "Mathesar is completely free with no pricing tiers documented at all. Teable is freemium, with a Free plan and paid Pro, Business, and Enterprise tiers."
+        },
+        {
+          "question": "Which tool is more production-ready?",
+          "answer": "Mathesar describes itself as in Public Beta and not yet at a stable 1.0 release, though it says it's stable enough for production use. Teable's facts don't include an equivalent beta caveat and instead cite ISO 9001 and ISO 27001 certifications."
+        },
+        {
+          "question": "Does either include AI features?",
+          "answer": "Teable does, with AI fields, AI chat, a natural-language app builder, and the CuppyClaw AI agent from the Free plan. Mathesar's documented features (spreadsheet interface, forms, query builders) don't include AI-assisted capabilities."
+        },
+        {
+          "question": "How do the two handle scale?",
+          "answer": "Both rely on PostgreSQL, but Teable documents explicit row ceilings by plan (up to 1,000,000 rows on Business), while Mathesar's scalability is described as following PostgreSQL's own capabilities without stated row limits since it operates on your existing database."
+        },
+        {
+          "question": "Which is fully open source?",
+          "answer": "Mathesar is 100% GPLv3 with no proprietary tier, maintained by the nonprofit Mathesar Foundation. Teable's Community Edition is AGPL-3.0, but its Enterprise Edition is proprietary."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "craft-cms-vs-statamic",
+    "tool_a_id": "35e4bc85-6298-43d3-bc27-0854ea063792",
+    "tool_a_name": "Craft CMS",
+    "tool_b_id": "f9925de6-28c3-40f9-a148-3dd0616aa66f",
+    "tool_b_name": "Statamic",
+    "content": {
+      "verdict": "Craft CMS and Statamic are both self-hosted, freemium CMS platforms from small companies with a free single-user tier and paid per-project or per-site licenses, but they differ in storage architecture and hosting: Statamic supports both flat-file and database storage modes and gates its REST API, GraphQL, and Git integration behind the $349-per-site Pro license, while Craft CMS is database-driven with a core GraphQL API, a companion Craft Commerce product, and first-party Craft Cloud managed hosting from $120/month per project. Neither is an OSI-approved open-source project — Craft uses a proprietary Pixel & Tonic license, and Statamic's licensing isn't documented as OSI-approved either.",
+      "bestForToolA": "Craft CMS suits agencies building multi-site, multi-language marketing sites or storefronts that want first-party managed hosting (Craft Cloud) and a bundled e-commerce product (Craft Commerce with Stripe integration).",
+      "bestForToolB": "Statamic suits Laravel developers who want the flexibility to start in flat-file mode and later move to a database, and who value the Bard block editor for building flexible page layouts.",
+      "whoNeedsBoth": "There's no realistic single-project scenario for running both — an agency would more plausibly standardize on one platform per client relationship, maintaining expertise in both only to match whichever CMS a given client already has installed.",
+      "keyDifferences": [
+        {
+          "title": "Content Storage Model",
+          "toolA": "Craft CMS's documented feature set (Twig templating, GraphQL API, built on the Yii framework) describes a database-driven architecture with no flat-file mode mentioned.",
+          "toolB": "Statamic explicitly supports both flat-file and database-backed storage modes, letting a project choose based on scale.",
+          "whyItMatters": "Flat-file support lets small sites run without provisioning or maintaining a separate database server.",
+          "benefitsWho": "Developers running small-to-mid sites who want simpler deployment without a managed database."
+        },
+        {
+          "title": "Headless API Access",
+          "toolA": "Craft CMS documents Twig templating and a GraphQL API as a core feature description, without stating that API access is gated to a paid tier.",
+          "toolB": "Statamic gates REST API and GraphQL access entirely behind the paid Pro license ($349/site first year, $99/year renewal).",
+          "whyItMatters": "Teams planning a headless or decoupled front end need to know upfront whether API access requires the top-tier license.",
+          "benefitsWho": "Developers building headless/JAMstack front ends who want to budget API access accurately."
+        },
+        {
+          "title": "Managed Hosting",
+          "toolA": "Craft offers first-party Craft Cloud managed hosting with push-to-deploy workflows and a global CDN, billed separately at $120–$240/month per project.",
+          "toolB": "Statamic's facts don't document an equivalent first-party managed hosting product.",
+          "whyItMatters": "First-party managed hosting removes the need to separately source and configure infrastructure.",
+          "benefitsWho": "Teams that want a single vendor for both CMS licensing and hosting."
+        },
+        {
+          "title": "Licensing Cost Structure",
+          "toolA": "Craft's Team and Pro self-hosted licenses cost $279 and $399 per project (first year), then $99/year renewal.",
+          "toolB": "Statamic Pro costs $349 per site (first year), then $99/year renewal.",
+          "whyItMatters": "Similar renewal cost but different first-year entry pricing and a per-project vs per-site framing affects budgeting for multi-site portfolios.",
+          "benefitsWho": "Agencies budgeting license costs across multiple client sites or projects."
+        },
+        {
+          "title": "Content Editing Approach",
+          "toolA": "Craft CMS's flagship editing features are in-context Live Preview and an image editor, alongside content versioning and scheduling.",
+          "toolB": "Statamic's flagship editing feature is the Bard block-based rich content editor with fly-out previews for building flexible page layouts.",
+          "whyItMatters": "A block-based editor changes how content editors structure flexible page layouts compared to a more traditional field/template approach.",
+          "benefitsWho": "Content editors who prefer modular, block-based page building over fixed field templates."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Content Modeling & Editing",
+          "rows": [
+            {
+              "feature": "Block-based rich content editor",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Statamic: Bard editor"
+            },
+            {
+              "feature": "Flat-file storage option",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Live Preview",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Content versioning/revisions & scheduling",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Statamic gates revisions/drafts to Pro"
+            }
+          ]
+        },
+        {
+          "group": "Headless/API & Multi-site",
+          "rows": [
+            {
+              "feature": "GraphQL API",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Statamic gates GraphQL to Pro"
+            },
+            {
+              "feature": "REST API",
+              "toolA": "not-documented",
+              "toolB": "limited",
+              "note": "Statamic gates REST API to Pro"
+            },
+            {
+              "feature": "Multi-site support",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Craft: unlimited sites on all editions; Statamic: Pro-tier feature"
+            },
+            {
+              "feature": "Admin/control panel translated into many languages",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Craft: 25 languages"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Hosting",
+          "rows": [
+            {
+              "feature": "Free self-hosted single-user tier",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Craft: Solo edition; Statamic: Core edition"
+            },
+            {
+              "feature": "First-party managed cloud hosting",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Craft Cloud: $120-$240/month per project"
+            },
+            {
+              "feature": "E-commerce companion product",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Craft Commerce with Stripe integration"
+            },
+            {
+              "feature": "Git integration for content changes",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Statamic Pro"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can either CMS run without a database?",
+          "answer": "Statamic supports a flat-file storage mode as an alternative to a database. Craft CMS's documented architecture (Twig templates, GraphQL, built on Yii) is database-driven with no flat-file option mentioned."
+        },
+        {
+          "question": "Do both offer first-party managed hosting?",
+          "answer": "Craft CMS does, through Craft Cloud, priced at $120/month per project (Team) or $240/month (Pro). Statamic's facts don't document an equivalent first-party hosting product."
+        },
+        {
+          "question": "How do the free tiers compare?",
+          "answer": "Craft's Solo edition (self-hosted, one user account) and Statamic's Core edition (one admin user, one content form) are both free forever, but each requires upgrading to a paid tier for multi-user teams."
+        },
+        {
+          "question": "Which is cheaper for a small team's first year?",
+          "answer": "Craft's Team license costs $279 per project versus Statamic Pro at $349 per site, though both renew at $99/year afterward."
+        },
+        {
+          "question": "Is either platform open source?",
+          "answer": "Neither is documented as OSI-approved open source. Craft's source code is publicly viewable on GitHub but distributed under a proprietary Pixel & Tonic license, and Statamic's licensing isn't documented as OSI-approved either, though its Core edition is free forever."
+        },
+        {
+          "question": "Does either include e-commerce functionality out of the box?",
+          "answer": "Craft CMS documents a companion Craft Commerce product with Stripe integration. Statamic's facts don't document a comparable native commerce add-on."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "craft-cms-vs-grav",
+    "tool_a_id": "35e4bc85-6298-43d3-bc27-0854ea063792",
+    "tool_a_name": "Craft CMS",
+    "tool_b_id": "fbbd32cd-6120-4478-b00a-9de654f9e59e",
+    "tool_b_name": "Grav",
+    "content": {
+      "verdict": "Craft CMS and Grav sit at opposite ends of the cost and architecture spectrum: Grav is completely free and MIT-licensed, stores content as Markdown and YAML files with no database, and ships a built-in Model Context Protocol server for AI agents, while Craft CMS is database-driven under a proprietary Pixel & Tonic license, requires paid Team ($279/project) or Pro ($399/project) licenses for multi-user teams, but offers first-party Craft Cloud managed hosting and a Craft Commerce e-commerce add-on that Grav doesn't document.",
+      "bestForToolA": "Craft CMS suits teams that want a managed, push-to-deploy hosting product (Craft Cloud) and integrated e-commerce (Craft Commerce with Stripe) and are willing to pay per-project licensing.",
+      "bestForToolB": "Grav suits developers who want a completely free, database-free CMS with Git-version-controllable content and native AI-agent integration via its built-in MCP server.",
+      "whoNeedsBoth": "There's no natural single-site scenario for combining them since both are full CMS platforms; an agency might keep both in its toolkit — Grav for free, lightweight, database-free client sites and Craft CMS for larger multi-site or commerce-driven engagements — but would deploy each independently per project.",
+      "keyDifferences": [
+        {
+          "title": "License & Cost Model",
+          "toolA": "Craft CMS requires paid Team ($279/project) or Pro ($399/project) licenses for multi-user teams under a proprietary Pixel & Tonic license; only the single-user Solo edition is free.",
+          "toolB": "Grav's core is completely free and MIT-licensed with no per-project licensing fees, only optional premium themes/plugins starting at $50.",
+          "whyItMatters": "Ongoing license cost adds up across a portfolio of client sites, especially for agencies running many projects.",
+          "benefitsWho": "Budget-constrained developers and agencies managing many small sites."
+        },
+        {
+          "title": "Content Storage Architecture",
+          "toolA": "Craft CMS is database-driven, using Twig templates or GraphQL to render and query that database.",
+          "toolB": "Grav stores content as Markdown and YAML files with no database required, making it Git-version-controllable.",
+          "whyItMatters": "A no-database architecture simplifies hosting, backup, and version control for developers who prefer file-based workflows.",
+          "benefitsWho": "Developers who want Git-based content workflows without managing a database."
+        },
+        {
+          "title": "AI Agent Integration",
+          "toolA": "Craft CMS's facts don't document an MCP server or equivalent AI-agent protocol.",
+          "toolB": "Grav includes a built-in Model Context Protocol (MCP) server, allowing AI agents to interact directly with a Grav site.",
+          "whyItMatters": "Native MCP support lets AI coding agents and assistants interact with the CMS without custom integration work.",
+          "benefitsWho": "Teams building AI-agent-assisted content or development workflows."
+        },
+        {
+          "title": "Managed Hosting",
+          "toolA": "Craft CMS offers first-party Craft Cloud hosting with push-to-deploy and a global CDN, from $120/month per project.",
+          "toolB": "Grav has no official managed hosting or cloud plan — self-hosting is required.",
+          "whyItMatters": "First-party hosting removes the need to separately source infrastructure, at an added monthly cost.",
+          "benefitsWho": "Teams that prefer a single vendor for both CMS and hosting versus those comfortable self-hosting for free."
+        },
+        {
+          "title": "Admin Interface Technology",
+          "toolA": "Craft's control panel is described with Live Preview and an image editor, and the admin UI is translated into 25 languages.",
+          "toolB": "Grav ships a SvelteKit 5 and Tailwind 4 admin panel with instant SPA navigation and real-time collaborative editing.",
+          "whyItMatters": "Admin UI technology and language coverage affect editor experience and international team collaboration.",
+          "benefitsWho": "Content teams evaluating day-to-day admin usability and localization needs."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Architecture & Storage",
+          "rows": [
+            {
+              "feature": "Flat-file (no database) content storage",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Git-version-controllable content",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "GraphQL API",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Built-in MCP server for AI agents",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Admin & Developer Experience",
+          "rows": [
+            {
+              "feature": "Modern JS-framework admin panel",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Grav: SvelteKit 5 + Tailwind 4"
+            },
+            {
+              "feature": "Multi-language interface support",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Craft: 25-language control panel; Grav: built-in i18n"
+            },
+            {
+              "feature": "Real-time collaborative editing",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Content versioning & scheduling",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Cost, Hosting & Ecosystem",
+          "rows": [
+            {
+              "feature": "Completely free for multi-user teams",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Craft's free Solo edition is limited to one user"
+            },
+            {
+              "feature": "First-party managed cloud hosting",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Grav's con list states no official hosting/cloud plan"
+            },
+            {
+              "feature": "E-commerce companion product",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Craft Commerce"
+            },
+            {
+              "feature": "Premium theme/plugin marketplace",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Craft: Plugin Store; Grav: individually sold premium themes from $50"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which is genuinely free for a team, not just a single user?",
+          "answer": "Grav's MIT-licensed core is free for unlimited use by any size team. Craft's free Solo edition is capped at one user account, so teams need a paid Team ($279/project) or Pro ($399/project) license."
+        },
+        {
+          "question": "Does either support AI agent integration natively?",
+          "answer": "Grav documents a built-in MCP (Model Context Protocol) server for AI agents. Craft CMS's facts don't mention MCP or a comparable AI-agent protocol."
+        },
+        {
+          "question": "Do I need a database to run either CMS?",
+          "answer": "Grav needs no database — content is stored as Markdown and YAML files. Craft CMS is database-driven, querying content via Twig templates or GraphQL."
+        },
+        {
+          "question": "Which offers first-party managed hosting?",
+          "answer": "Craft Cloud provides managed, push-to-deploy hosting starting at $120/month per project. Grav requires self-hosting, with no official managed hosting or cloud plan documented."
+        },
+        {
+          "question": "How do their admin interfaces differ technically?",
+          "answer": "Grav's admin uses SvelteKit 5 and Tailwind 4 with real-time collaborative editing. Craft's control panel doesn't document a comparable modern JS framework but does offer a 25-language translated interface."
+        },
+        {
+          "question": "Which cites larger recognizable organizations as users?",
+          "answer": "Grav cites Microsoft, Xbox, Cisco, and the USDA as users on its site. Craft CMS cites 150,000+ sites created and 240 partner agencies without naming specific enterprise clients in the available facts."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "grav-vs-october-cms",
+    "tool_a_id": "fbbd32cd-6120-4478-b00a-9de654f9e59e",
+    "tool_a_name": "Grav",
+    "tool_b_id": "960def45-b280-43d5-9fc8-858cdf44c8e2",
+    "tool_b_name": "October CMS",
+    "content": {
+      "verdict": "Grav and October CMS are both PHP-based self-hosted CMS platforms with roots in 2014, but they diverge on licensing and architecture: Grav's MIT-licensed core is free forever with a flat-file, no-database architecture and a built-in MCP server for AI agents, while October CMS is built on Laravel with a database-backed model, gives a free full-featured license for only the first year before requiring a $39/year/site license (or an Unlimited Licenses subscription for agencies), and centers extensibility on its own Marketplace of hundreds of plugins and themes.",
+      "bestForToolA": "Grav suits developers who want a permanently free, flat-file CMS with Git-friendly content and native AI-agent integration, without any ongoing license cost.",
+      "bestForToolB": "October CMS suits Laravel developers who want access to a large plugin and theme Marketplace and reusable page components, and who are comfortable paying $39/year/site (or an agency-wide Unlimited Licenses subscription) after the first free year.",
+      "whoNeedsBoth": "An agency comfortable with both Symfony and Laravel ecosystems might choose per-client based on budget — Grav for clients unwilling to pay any ongoing license fee, October CMS for clients who want Marketplace plugins and accept the post-year-one $39/year/site cost — but no single project would run both simultaneously.",
+      "keyDifferences": [
+        {
+          "title": "Licensing Philosophy",
+          "toolA": "Grav's core is MIT-licensed and free forever, with no licensing fee ever required.",
+          "toolB": "October CMS gives a free full-featured license only for the first year; continuing updates after that require a paid license ($39/year/site) under a proprietary EULA with Responsiv Pty Ltd.",
+          "whyItMatters": "Long-term total cost of ownership differs significantly between a permanently free core and one with a recurring per-site fee after year one.",
+          "benefitsWho": "Budget-conscious developers and long-running projects sensitive to recurring license costs."
+        },
+        {
+          "title": "Underlying Framework",
+          "toolA": "Grav is built on Symfony 7 with Twig 3 templating and a flat-file, no-database architecture.",
+          "toolB": "October CMS is built on the Laravel framework, giving developers access to Laravel's conventions and ecosystem, with a database-backed model implied by its reusable 'components' feature.",
+          "whyItMatters": "Framework familiarity determines the learning curve and available third-party tooling for a development team.",
+          "benefitsWho": "Developers already fluent in either the Symfony or Laravel ecosystem."
+        },
+        {
+          "title": "Content Storage",
+          "toolA": "Grav stores content as Markdown and YAML files, requiring no database.",
+          "toolB": "October CMS's facts don't document a flat-file mode, relying on Laravel's typical database-backed models.",
+          "whyItMatters": "File-based storage simplifies backup, version control, and hosting for smaller sites.",
+          "benefitsWho": "Developers who prefer Git-based content workflows over database administration."
+        },
+        {
+          "title": "AI Agent Integration",
+          "toolA": "Grav documents a built-in MCP server for AI agent interaction with a Grav site.",
+          "toolB": "October CMS's facts don't mention MCP or a comparable AI-agent integration.",
+          "whyItMatters": "Native AI-agent protocol support enables assistants to interact with the CMS without custom integration.",
+          "benefitsWho": "Teams building AI-agent-assisted development or content workflows."
+        },
+        {
+          "title": "Extension Ecosystem Framing",
+          "toolA": "Grav's ecosystem is framed around GitHub stars (15,571+) and individually sold premium themes/plugins (e.g., Helios at $50), with no single unified paid marketplace.",
+          "toolB": "October CMS centers on its Marketplace, offering hundreds of plugins and themes, plus reusable page 'components.'",
+          "whyItMatters": "A unified marketplace can make discovering and purchasing extensions easier than a scattered community ecosystem.",
+          "benefitsWho": "Non-developer site owners wanting a one-stop shop for adding functionality."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Architecture",
+          "rows": [
+            {
+              "feature": "Flat-file (no database) architecture",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Built on a modern PHP framework",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Grav: Symfony 7; October CMS: Laravel"
+            },
+            {
+              "feature": "Git-version-controllable content",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "REST API",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Licensing & Cost Over Time",
+          "rows": [
+            {
+              "feature": "Free forever, no license fee ever",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "October CMS: free year one only, then $39/year/site"
+            },
+            {
+              "feature": "OSI-approved open-source license",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Grav: MIT; October CMS: proprietary EULA"
+            },
+            {
+              "feature": "Publicly viewable source code",
+              "toolA": "available",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Unlimited-site licensing subscription for agencies",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "October CMS: $26-30/month"
+            }
+          ]
+        },
+        {
+          "group": "Extensibility & AI",
+          "rows": [
+            {
+              "feature": "Built-in MCP server for AI agents",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Dedicated plugin/theme marketplace",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Grav sells premium themes/plugins individually; October CMS has a unified Marketplace"
+            },
+            {
+              "feature": "Reusable page \"components\"",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Automatic update delivery mechanism",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "October CMS: Update Gateway"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Does either CMS ever require an ongoing license fee?",
+          "answer": "October CMS does, after the first free year, requiring $39/year per site or an Unlimited Licenses subscription for agencies. Grav's core never requires a license fee."
+        },
+        {
+          "question": "Which CMS avoids using a database entirely?",
+          "answer": "Grav, via its flat-file Markdown/YAML architecture. October CMS is built on Laravel and its facts describe a database-backed model with no flat-file mode documented."
+        },
+        {
+          "question": "Is either project open source?",
+          "answer": "Grav's core is MIT-licensed open source. October CMS's source is publicly viewable on GitHub but distributed under a proprietary EULA with Responsiv Pty Ltd, not an OSI-approved license."
+        },
+        {
+          "question": "Which has a larger dedicated plugin marketplace?",
+          "answer": "October CMS's Marketplace lists hundreds of plugins and themes. Grav's ecosystem relies more on GitHub-hosted community plugins plus individually sold premium themes like the Helios theme."
+        },
+        {
+          "question": "Does either support AI agents natively?",
+          "answer": "Grav includes a built-in MCP server for AI agent interaction. October CMS's facts don't document an equivalent feature."
+        },
+        {
+          "question": "How does licensing scale for an agency running many sites?",
+          "answer": "October CMS offers an Unlimited Licenses subscription ($26/month billed annually or $30/month monthly) covering unlimited sites with Partner Program access. Grav requires no per-site licensing at all since its core is free."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "october-cms-vs-processwire",
+    "tool_a_id": "960def45-b280-43d5-9fc8-858cdf44c8e2",
+    "tool_a_name": "October CMS",
+    "tool_b_id": "41d3c6d5-f1bd-4474-a701-bf4a104a118c",
+    "tool_b_name": "ProcessWire",
+    "content": {
+      "verdict": "October CMS and ProcessWire are both PHP CMS platforms with self-hosted deployment, but their cost and openness differ sharply: ProcessWire's core has been free and open source (mainly Mozilla Public License 2.0) since 2010 with no ongoing license fee, an API-driven core, and built-in multi-language support requiring no third-party plugin, while October CMS is built on Laravel, gives a free full-featured license for the first year only, then requires a $39/year/site license (or an Unlimited Licenses subscription) under a proprietary EULA with Responsiv Pty Ltd, backed by a Marketplace of hundreds of plugins and themes.",
+      "bestForToolA": "October CMS suits Laravel-familiar teams who want a broad plugin Marketplace and reusable page components, and who accept a $39/year/site cost after the first free year.",
+      "bestForToolB": "ProcessWire suits developers who want a genuinely free, OSI-licensed CMS with an API-first core, built-in multi-language support, and a hierarchical unlimited-depth page tree, without ever paying a license fee for the core.",
+      "whoNeedsBoth": "There's no realistic single-project scenario for running both together — a developer or agency would pick one CMS per project based on framework preference (Laravel vs ProcessWire's own API) and budget tolerance for post-year-one licensing costs.",
+      "keyDifferences": [
+        {
+          "title": "License Model",
+          "toolA": "October CMS gives a free full-featured license for the first year only; continuing to receive updates after that requires a paid license ($39/year/site) under a proprietary EULA with Responsiv Pty Ltd.",
+          "toolB": "ProcessWire's core has been free and open source since 2010, mainly under Mozilla Public License 2.0 with some MIT-licensed components, with no license fee ever required.",
+          "whyItMatters": "Total cost of ownership over multiple years diverges significantly between a recurring per-site license and a permanently free core.",
+          "benefitsWho": "Long-running projects and budget-constrained developers sensitive to recurring costs."
+        },
+        {
+          "title": "Framework Foundation",
+          "toolA": "October CMS is built on the Laravel framework, giving developers access to Laravel's conventions and wider ecosystem.",
+          "toolB": "ProcessWire is its own API-driven framework and CMS with a hierarchical, unlimited-depth page tree, rather than being built on top of another framework.",
+          "whyItMatters": "Framework choice determines available tooling, hiring pool familiarity, and integration options.",
+          "benefitsWho": "Developers with existing Laravel expertise versus those who prefer a standalone, purpose-built CMS API."
+        },
+        {
+          "title": "Extension Marketplace vs Pro Shop",
+          "toolA": "October CMS centers extensibility on its Marketplace, offering hundreds of plugins and themes.",
+          "toolB": "ProcessWire's optional paid extensions are limited to a small, named Pro Shop lineup: ProCache, Form Builder, and PAGEGRID Page Builder.",
+          "whyItMatters": "A broad marketplace offers more off-the-shelf functionality, while a small curated Pro Shop suggests a leaner, more developer-driven ecosystem.",
+          "benefitsWho": "Site owners wanting many ready-made plugins versus developers who prefer building custom functionality via an API."
+        },
+        {
+          "title": "Multi-Language Support",
+          "toolA": "October CMS's facts don't document a comparable built-in multi-language capability.",
+          "toolB": "ProcessWire documents built-in multi-language support with language packs (e.g., German) and translatable fields as a core feature requiring no third-party plugins.",
+          "whyItMatters": "Native multi-language support avoids dependency on third-party translation plugins for international sites.",
+          "benefitsWho": "Teams building multilingual sites without wanting to rely on third-party plugins."
+        },
+        {
+          "title": "Ecosystem Size & Recognized Users",
+          "toolA": "October CMS cites large recognizable users (Toyota, KFC, Nestlé, per its own site) and hundreds of Marketplace plugins.",
+          "toolB": "ProcessWire has a smaller GitHub footprint (about 1.1k stars on the core repo), reflecting a more niche, developer-focused community.",
+          "whyItMatters": "Ecosystem size can affect the availability of community support, tutorials, and third-party integrations.",
+          "benefitsWho": "Teams weighing community size and enterprise references against a smaller, more specialized developer community."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Architecture",
+          "rows": [
+            {
+              "feature": "Built on Laravel",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "ProcessWire is its own API-driven framework"
+            },
+            {
+              "feature": "Hierarchical, unlimited-depth page tree",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "API-driven core as primary design principle",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Hooks system to extend core without modifying core files",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Cost & Licensing",
+          "rows": [
+            {
+              "feature": "Free forever, no license fee ever",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "October CMS: free year one only, then $39/year/site"
+            },
+            {
+              "feature": "OSI-approved open-source license",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "ProcessWire: mainly MPL 2.0"
+            },
+            {
+              "feature": "Unlimited-site license subscription for agencies",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "October CMS: $26-30/month"
+            },
+            {
+              "feature": "Published pricing plans",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "ProcessWire has no pricing_plans listed"
+            }
+          ]
+        },
+        {
+          "group": "Extensibility & Localization",
+          "rows": [
+            {
+              "feature": "Dedicated plugin/theme marketplace",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "ProcessWire: small named Pro Shop only"
+            },
+            {
+              "feature": "Built-in multi-language support, no plugin required",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Role-based access control",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Automatic update delivery mechanism",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "October CMS: Update Gateway"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which CMS is free to use indefinitely without any license cost?",
+          "answer": "ProcessWire's core has been free and open source since 2010. October CMS is free only for the first year, then requires a $39/year/site license to continue receiving updates."
+        },
+        {
+          "question": "Which framework does each build on?",
+          "answer": "October CMS is built on Laravel. ProcessWire is a standalone, API-driven CMS and framework with its own hierarchical page-tree architecture."
+        },
+        {
+          "question": "Does either offer native multi-language support?",
+          "answer": "ProcessWire documents built-in multi-language support with language packs as a core feature. October CMS's facts don't document an equivalent built-in capability."
+        },
+        {
+          "question": "How do their paid extension offerings compare?",
+          "answer": "October CMS has a broad Marketplace with hundreds of plugins and themes. ProcessWire's paid add-ons are limited to a small named Pro Shop lineup: ProCache, Form Builder, and PAGEGRID Page Builder."
+        },
+        {
+          "question": "Which is a better fit for an agency running many client sites?",
+          "answer": "October CMS's Unlimited Licenses subscription ($26-30/month) is designed for agencies running multiple sites with Partner Program access. ProcessWire requires no per-site licensing at all since it's free, though it doesn't document an equivalent partner program."
+        },
+        {
+          "question": "Is source code publicly available for both?",
+          "answer": "Yes for both. October CMS's source is publicly viewable on GitHub but under a proprietary Responsiv Pty Ltd EULA, while ProcessWire's is released under an OSI-approved license (mainly Mozilla Public License 2.0)."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "concrete-cms-vs-processwire",
+    "tool_a_id": "7442e6d9-b040-4cc3-a601-2e27ba36cb13",
+    "tool_a_name": "Concrete CMS",
+    "tool_b_id": "41d3c6d5-f1bd-4474-a701-bf4a104a118c",
+    "tool_b_name": "ProcessWire",
+    "content": {
+      "verdict": "Concrete CMS and ProcessWire both have free, self-hostable open-source cores, but Concrete CMS additionally sells paid hosted plans from $4.99/month (Starter) with stated SOC 2/HIPAA-compliant hosting options and ISO 27001-certified security, while ProcessWire documents no first-party hosted plans and instead positions itself as an API-driven core for developers, with built-in multi-language support and a small paid Pro Shop (ProCache, Form Builder, PAGEGRID) rather than a hosted product line.",
+      "bestForToolA": "Concrete CMS suits teams that want in-context, live-page WYSIWYG editing plus compliance-oriented hosting (stated SOC 2/HIPAA options) without managing their own infrastructure.",
+      "bestForToolB": "ProcessWire suits developers who want a minimal, API-driven CMS core with built-in multi-language support and a hierarchical page tree, self-hosted with no ongoing license fee.",
+      "whoNeedsBoth": "There's no realistic scenario for running both on one site — a team would choose Concrete CMS if it wants managed, compliance-oriented hosting, or ProcessWire if it wants full self-hosted control over an API-driven core, but not both for the same project.",
+      "keyDifferences": [
+        {
+          "title": "First-Party Hosted Plans",
+          "toolA": "Concrete CMS sells paid hosted plans starting at $4.99/month (Starter: 1 editor, 10,000 monthly page views, 2GB storage), up to $19/month (Business) and a custom-quoted Custom SLA tier.",
+          "toolB": "ProcessWire's facts document no pricing plans at all — no first-party hosted product, meaning self-hosting is the primary deployment path.",
+          "whyItMatters": "Teams without in-house hosting expertise may prefer a vendor offering managed plans over configuring self-hosted infrastructure from scratch.",
+          "benefitsWho": "Non-technical site owners who want a turnkey hosted option."
+        },
+        {
+          "title": "Editing Philosophy",
+          "toolA": "Concrete CMS's flagship feature is in-context WYSIWYG editing directly on the live page.",
+          "toolB": "ProcessWire is explicitly API-driven, giving developers a simple, minimal-code API for accessing and manipulating content as its headline design principle rather than a live-page editing UI.",
+          "whyItMatters": "In-context editing suits non-technical content editors, while an API-first core suits developers building custom front ends.",
+          "benefitsWho": "Marketing and content teams (Concrete CMS) versus developers building bespoke applications (ProcessWire)."
+        },
+        {
+          "title": "Compliance-Oriented Hosting",
+          "toolA": "Concrete CMS states its hosting can offer SOC 2 and HIPAA-compliant options and describes its security as ISO 27001 certified.",
+          "toolB": "ProcessWire's facts don't document any compliance certifications or hosted-plan compliance options.",
+          "whyItMatters": "Regulated industries (healthcare, finance) often require documented compliance certifications from their hosting vendor.",
+          "benefitsWho": "Organizations in regulated industries needing documented compliance for their web platform."
+        },
+        {
+          "title": "Permission Granularity",
+          "toolA": "Concrete CMS offers role-based permissions down to individual content blocks.",
+          "toolB": "ProcessWire documents a granular role-based access control system controlling what editors and users can do.",
+          "whyItMatters": "Block-level permission granularity can matter for large sites with many contributors editing shared pages.",
+          "benefitsWho": "Large editorial teams needing fine-grained control over who can edit specific page sections."
+        },
+        {
+          "title": "Project Maturity & Lineage",
+          "toolA": "Concrete CMS traces back to 2003 (originally released as concrete5), giving it a longer track record.",
+          "toolB": "ProcessWire launched in 2010, with a smaller GitHub footprint (about 1.1k stars) than mainstream CMS competitors.",
+          "whyItMatters": "Project age can correlate with ecosystem maturity, though smaller projects can still be well-maintained and stable.",
+          "benefitsWho": "Risk-averse teams weighing project longevity in their vendor selection."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Editing & Content Model",
+          "rows": [
+            {
+              "feature": "In-context/live-page WYSIWYG editing",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "API-driven content access as core design",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Hierarchical, unlimited-depth page tree",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Version history & change logs",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Built-in multi-language support",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Permissions & Compliance",
+          "rows": [
+            {
+              "feature": "Role-based permissions",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Concrete CMS: down to individual content blocks"
+            },
+            {
+              "feature": "Built-in approval workflows",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "SOC 2 / HIPAA-compliant hosting options",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "ISO 27001 security certification claim",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Cost & Hosting",
+          "rows": [
+            {
+              "feature": "Free self-hosted core",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Concrete CMS: MIT; ProcessWire: mainly MPL 2.0"
+            },
+            {
+              "feature": "First-party paid hosted plans",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Concrete CMS: from $4.99/month"
+            },
+            {
+              "feature": "Optional paid add-on modules",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "ProcessWire: ProCache, Form Builder, PAGEGRID"
+            },
+            {
+              "feature": "Custom self-managed enterprise deployment (CI/CD)",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Concrete CMS: Custom SLA via GitLab"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are both free to self-host?",
+          "answer": "Yes. Concrete CMS's MIT-licensed core and ProcessWire's mainly MPL 2.0-licensed core can both be self-hosted for free."
+        },
+        {
+          "question": "Does either offer first-party managed hosting?",
+          "answer": "Concrete CMS sells hosted plans starting at $4.99/month (Starter). ProcessWire's facts document no first-party hosted plans, only self-hosting."
+        },
+        {
+          "question": "Which is more compliance-oriented out of the box?",
+          "answer": "Concrete CMS states SOC 2 and HIPAA-compliant hosting options and ISO 27001-certified security. ProcessWire's facts don't document comparable compliance certifications."
+        },
+        {
+          "question": "How do their editing philosophies differ?",
+          "answer": "Concrete CMS emphasizes in-context editing directly on the live page for non-technical editors. ProcessWire is built around a developer-facing API for minimal-code content access."
+        },
+        {
+          "question": "Which has been around longer?",
+          "answer": "Concrete CMS traces to 2003 (originally released as concrete5). ProcessWire was founded in 2010."
+        },
+        {
+          "question": "Does either include paid optional modules beyond the free core?",
+          "answer": "Yes for both. Concrete CMS layers compliance and scale into paid hosted plans, while ProcessWire sells specific Pro Shop modules like ProCache, Form Builder, and PAGEGRID Page Builder."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "concrete-cms-vs-typo3",
+    "tool_a_id": "7442e6d9-b040-4cc3-a601-2e27ba36cb13",
+    "tool_a_name": "Concrete CMS",
+    "tool_b_id": "5534f256-62d0-46af-b02c-4c789873abc7",
+    "tool_b_name": "TYPO3",
+    "content": {
+      "verdict": "Concrete CMS and TYPO3 both have free, open-source self-hosted cores, but they target different scales of deployment: TYPO3 is built from the ground up for native multi-site and multi-language operation, is governed by a nonprofit member association with formal Long-Term Support (LTS) release cycles, and has no paid product tiers documented beyond its free Community plan; Concrete CMS is a company-maintained (PortlandLabs) platform that additionally sells paid hosted plans from $4.99/month with stated SOC 2/HIPAA-compliant options and ISO 27001-certified security, emphasizing in-context editing and block-level permissions.",
+      "bestForToolA": "Concrete CMS suits teams that want in-context WYSIWYG editing, block-level permissions, and a paid managed hosting path with stated SOC 2/HIPAA-compliant options.",
+      "bestForToolB": "TYPO3 suits organizations — especially in Europe's public sector — that need native multi-site, multi-language operation from a single install and value formal LTS release cycles backed by a nonprofit member association.",
+      "whoNeedsBoth": "A multinational organization might run TYPO3 for its complex multi-site, multi-language corporate web presence while a separate department uses Concrete CMS's in-context editing for a smaller, single-language microsite that non-technical staff need to update directly on the page.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Model",
+          "toolA": "Concrete CMS's core is free to self-host, but the company additionally sells paid hosted plans starting at $4.99/month (Starter) up to a custom-quoted Custom SLA tier.",
+          "toolB": "TYPO3's core CMS is entirely free with no paid tiers documented at all beyond its free Community plan.",
+          "whyItMatters": "Buyers evaluating total cost need to know whether a first-party paid product line exists or whether all deployment paths are free and self-managed.",
+          "benefitsWho": "Budget-conscious organizations comparing a fully-free option against one with an optional paid hosted tier."
+        },
+        {
+          "title": "Multi-Site & Multi-Language Architecture",
+          "toolA": "Concrete CMS's facts don't document an equivalent native multi-site/multi-language core capability.",
+          "toolB": "TYPO3 is built from the ground up to run many websites in many languages from a single installation, sharing templates and resources without extra modules.",
+          "whyItMatters": "Native multi-site/multi-language support avoids the complexity of bolting on separate installs or plugins for each site or locale.",
+          "benefitsWho": "Multinational organizations and agencies managing many localized sites from one platform."
+        },
+        {
+          "title": "Governance Model",
+          "toolA": "Concrete CMS is maintained by PortlandLabs, a company based in Portland, Oregon.",
+          "toolB": "TYPO3 is governed by the nonprofit TYPO3 Association (1,000+ members) via a democratic General Assembly voting process, with TYPO3 GmbH — fully owned by the Association — providing commercial services.",
+          "whyItMatters": "Nonprofit, member-governed projects can offer different long-term stability guarantees than a single company's roadmap.",
+          "benefitsWho": "Public-sector and long-horizon institutional buyers valuing vendor-neutral governance."
+        },
+        {
+          "title": "Release & Support Cadence",
+          "toolA": "Concrete CMS's facts don't document a formal Long-Term Support program, instead offering tiered hosted plans and a Custom SLA for enterprise deployment support.",
+          "toolB": "TYPO3 offers formal Long-Term Support (LTS) release cycles with multi-year stability, plus optional Extended LTS (ELTS) for even longer support windows.",
+          "whyItMatters": "Formal LTS commitments give IT teams predictable upgrade timelines for long-running enterprise deployments.",
+          "benefitsWho": "Enterprise IT teams planning multi-year upgrade cycles."
+        },
+        {
+          "title": "Project Age & Adoption",
+          "toolA": "Concrete CMS dates to 2003 (originally released as concrete5), a mature, long-running project.",
+          "toolB": "TYPO3 dates to 1997, created by Kasper Skårhøj, with deep adoption in European government and public-sector organizations.",
+          "whyItMatters": "Longer track records and sector-specific adoption patterns can signal fit for particular institutional buyers.",
+          "benefitsWho": "European public-sector and government organizations evaluating platform track record."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Multi-site & Localization",
+          "rows": [
+            {
+              "feature": "Native multi-site support from a single install",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Native multi-language content support",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": ""
+            },
+            {
+              "feature": "Backend/admin UI translations",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "TYPO3: 40+ languages via Crowdin"
+            },
+            {
+              "feature": "In-context, live-page WYSIWYG editing",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Governance & Support",
+          "rows": [
+            {
+              "feature": "Nonprofit, member-governed project structure",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Concrete CMS is maintained by PortlandLabs, a company"
+            },
+            {
+              "feature": "Formal Long-Term Support (LTS) release cycles",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "TYPO3 also offers optional Extended LTS"
+            },
+            {
+              "feature": "Quote-based enterprise support/partner tier",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Concrete CMS: Custom SLA; TYPO3: certified partner network via TYPO3 GmbH"
+            },
+            {
+              "feature": "Approval workflows & version history",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "group": "Cost & Compliance",
+          "rows": [
+            {
+              "feature": "Fully free core with no paid product tiers",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Concrete CMS sells paid hosted plans from $4.99/month"
+            },
+            {
+              "feature": "First-party paid hosted plans",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Compliance-oriented hosting (SOC 2/HIPAA options)",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            },
+            {
+              "feature": "Role-based, block-level permissions",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": ""
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which is completely free with no paid product tiers?",
+          "answer": "TYPO3's core CMS has no pricing tiers beyond its free Community plan. Concrete CMS's core is also free to self-host, but the company additionally sells paid hosted plans starting at $4.99/month."
+        },
+        {
+          "question": "Which has stronger native multi-site/multi-language support?",
+          "answer": "TYPO3, whose core is built to run many sites and languages from a single installation, with an admin backend translatable into 40+ languages via Crowdin. Concrete CMS's facts don't document a comparable native capability."
+        },
+        {
+          "question": "How is each project governed?",
+          "answer": "TYPO3 is governed by the nonprofit TYPO3 Association via a member General Assembly voting process. Concrete CMS is maintained by PortlandLabs, a company based in Portland, Oregon."
+        },
+        {
+          "question": "Does either offer formal long-term support commitments?",
+          "answer": "TYPO3 documents Long-Term Support (LTS) and optional Extended LTS (ELTS) release cycles. Concrete CMS's facts don't document an equivalent formal LTS program."
+        },
+        {
+          "question": "Which offers first-party compliance-certified hosting?",
+          "answer": "Concrete CMS states SOC 2/HIPAA-compliant hosting options and ISO 27001-certified security on its paid plans. TYPO3's facts don't document comparable compliance certifications for a first-party hosted offering."
+        },
+        {
+          "question": "How old is each project?",
+          "answer": "TYPO3 dates to 1997, created by Kasper Skårhøj. Concrete CMS dates to 2003, originally released as concrete5."
+        }
+      ]
+    }
+  }
+]

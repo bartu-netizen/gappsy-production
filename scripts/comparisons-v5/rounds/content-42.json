@@ -1,0 +1,1519 @@
+[
+  {
+    "slug": "typo3-vs-umbraco",
+    "tool_a_id": "5534f256-62d0-46af-b02c-4c789873abc7",
+    "tool_a_name": "TYPO3",
+    "tool_b_id": "c1977ce3-5ae1-4d22-8fba-55e0bd8412db",
+    "tool_b_name": "Umbraco",
+    "content": {
+      "verdict": "TYPO3 and Umbraco are both open-source enterprise CMS platforms with free self-hosted cores, but they run on different stacks and are governed differently. TYPO3 is a PHP-based, GPL v2-licensed CMS with native multi-site/multi-language architecture built into the core, governed by a nonprofit Association with 1,000+ members and widely adopted in European government and public-sector projects. Umbraco is an MIT-licensed .NET CMS backed by the commercial company Umbraco A/S (owned by growth investor Monterro since 2021), with a published managed-cloud product (Umbraco Cloud, from €45/month) and a backoffice localized into 20+ languages. The right pick largely depends on whether a team's infrastructure favors PHP or .NET, and whether transparent managed-cloud pricing matters.",
+      "bestForToolA": "TYPO3 suits organizations, especially government and public-sector bodies in Europe, that need native multi-site/multi-language publishing from a single install and prefer a nonprofit-governed open-source project with LTS release cycles.",
+      "bestForToolB": "Umbraco suits teams already invested in Microsoft/.NET infrastructure who want a published, tiered managed-cloud pricing path starting at €45/month and built-in AI tooling for content editors.",
+      "whoNeedsBoth": "There's no realistic single-project scenario for running both since they're alternative full CMS platforms on different stacks. A digital agency serving both PHP-shop and .NET-shop clients might maintain expertise in both to match each client's existing infrastructure, but wouldn't deploy both on one site.",
+      "keyDifferences": [
+        {
+          "title": "Underlying Tech Stack",
+          "toolA": "TYPO3 is a PHP-based CMS with a GPL v2 (or later) license.",
+          "toolB": "Umbraco runs on .NET/ASP.NET Core and is licensed under MIT.",
+          "whyItMatters": "The stack determines what hosting environment, developer skills, and existing infrastructure a team needs.",
+          "benefitsWho": "Teams that already standardize on PHP or Microsoft/.NET infrastructure."
+        },
+        {
+          "title": "Managed Cloud Pricing",
+          "toolA": "TYPO3 has no official managed-cloud product documented; paid support is available only via TYPO3 GmbH and certified partners on a quote basis.",
+          "toolB": "Umbraco Cloud publishes tiered pricing: Starter at €45/month, Standard at €280/month, Professional at €730/month, and custom Enterprise.",
+          "whyItMatters": "Published pricing lets teams budget for managed hosting upfront rather than requesting a quote.",
+          "benefitsWho": "Buyers who want to compare hosting costs without a sales call."
+        },
+        {
+          "title": "Multi-Site & Multi-Language Architecture",
+          "toolA": "TYPO3's core natively runs many websites in many languages from a single installation without extra modules, and its admin backend is translatable into 40+ languages via the community-maintained Crowdin project.",
+          "toolB": "Umbraco ships a backoffice localized into 20+ languages, but native multi-site architecture from a single install is not documented in the same way.",
+          "whyItMatters": "Organizations running many localized sites need this built into the core rather than bolted on.",
+          "benefitsWho": "Multinational or multi-brand organizations managing many sites and languages centrally."
+        },
+        {
+          "title": "Governance Model",
+          "toolA": "TYPO3 is governed by the nonprofit TYPO3 Association (1,000+ members) via a General Assembly voting process.",
+          "toolB": "Umbraco is backed by the commercial company Umbraco A/S, owned by growth investor Monterro since a 2021 acquisition.",
+          "whyItMatters": "Nonprofit governance versus commercial ownership affects roadmap priorities and long-term project direction.",
+          "benefitsWho": "Organizations with procurement policies favoring community-governed or vendor-backed open source, respectively."
+        },
+        {
+          "title": "AI Tooling for Editors",
+          "toolA": "Not documented as a TYPO3 core feature.",
+          "toolB": "Umbraco includes built-in AI tools for content editors with governance controls, per umbraco.com.",
+          "whyItMatters": "Built-in AI assistance can speed up content authoring without third-party plugins.",
+          "benefitsWho": "Content teams wanting AI-assisted authoring out of the box."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Licensing & Deployment",
+          "rows": [
+            {
+              "feature": "Open-source self-hosted core",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "TYPO3: GPL v2; Umbraco: MIT"
+            },
+            {
+              "feature": "Official managed cloud hosting",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Umbraco Cloud from €45/month"
+            },
+            {
+              "feature": "Published managed-hosting price list",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "LTS release cycles",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "TYPO3 offers LTS plus optional Extended LTS"
+            }
+          ]
+        },
+        {
+          "group": "Content & Localization",
+          "rows": [
+            {
+              "feature": "Native multi-site from one install",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Backend UI language translations",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "TYPO3: 40+ languages via Crowdin; Umbraco: 20+ languages shipped"
+            },
+            {
+              "feature": "AI tooling for content editors",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Content Delivery API with SLA",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Umbraco Standard tier and above"
+            }
+          ]
+        },
+        {
+          "group": "Governance & Support",
+          "rows": [
+            {
+              "feature": "Nonprofit community governance body",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "TYPO3 Association, 1,000+ members"
+            },
+            {
+              "feature": "Certified implementation partner network",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Extension/add-on repository",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "TYPO3 Extension Repository (TER); Umbraco official add-ons suite"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are both TYPO3 and Umbraco free to self-host?",
+          "answer": "Yes. TYPO3's core is free and open source under GPL v2 (or later), and Umbraco's core is free and open source under the MIT license."
+        },
+        {
+          "question": "Does TYPO3 offer managed cloud hosting like Umbraco Cloud?",
+          "answer": "Not documented as an official product. Umbraco Cloud has published, tiered pricing starting at €45/month (Starter), rising to €730/month (Professional) and custom Enterprise pricing; TYPO3's paid options are quote-based support and implementation services through TYPO3 GmbH and certified partners."
+        },
+        {
+          "question": "Which is better for multi-language, multi-site projects?",
+          "answer": "TYPO3's core is built to run many sites and languages from a single installation without extra modules, and its backend can be translated into 40+ languages via Crowdin. Umbraco's backoffice ships localized into 20+ languages, but native multi-site architecture isn't documented to the same degree."
+        },
+        {
+          "question": "Who governs each project?",
+          "answer": "TYPO3 is governed by the nonprofit TYPO3 Association (1,000+ members) through a General Assembly. Umbraco is backed by the commercial company Umbraco A/S, which was acquired by growth investor Monterro in 2021."
+        },
+        {
+          "question": "What tech stack does each CMS run on?",
+          "answer": "TYPO3 is PHP-based; Umbraco runs on .NET/ASP.NET Core. This affects hosting requirements and the developer skill set needed."
+        },
+        {
+          "question": "Which CMS has notable brand adopters?",
+          "answer": "Umbraco cites Domino's, Volvo, and Heineken as users. TYPO3's facts note broad adoption across European government and public-sector organizations rather than specific named brands."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "backdrop-cms-vs-umbraco",
+    "tool_a_id": "a37dd8ea-c6eb-4027-91e5-148f6db06493",
+    "tool_a_name": "Backdrop CMS",
+    "tool_b_id": "c1977ce3-5ae1-4d22-8fba-55e0bd8412db",
+    "tool_b_name": "Umbraco",
+    "content": {
+      "verdict": "Backdrop CMS and Umbraco are both open source, but sit at opposite ends of cost and infrastructure complexity. Backdrop is a completely free, GPL v2-licensed PHP CMS forked from Drupal 7 in 2013, purpose-built to run on modest or shared hosting with no paid tiers and no official managed-cloud offering. Umbraco is an MIT-licensed .NET CMS with a free self-hosted core plus a published, tiered managed-cloud product (Umbraco Cloud, €45 to €730/month, with custom Enterprise pricing) backed by the commercial company Umbraco A/S. Teams choose based on budget, hosting stack (PHP vs .NET), and whether a vendor-managed cloud path is wanted.",
+      "bestForToolA": "Backdrop suits budget-conscious site owners or Drupal 7 shops wanting a fully free, no-paid-tier CMS with a built-in Drupal 7 upgrade path that runs on inexpensive shared hosting.",
+      "bestForToolB": "Umbraco suits organizations on Microsoft/.NET infrastructure who want a transparent, tiered managed-cloud option starting at €45/month and a backoffice already localized into 20+ languages.",
+      "whoNeedsBoth": "There's no practical scenario for running both on one project since they are competing full CMS platforms on incompatible stacks (PHP vs .NET). An agency that maintains both Drupal/PHP and .NET client bases might keep skills in each to match whichever stack a given client already runs.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Structure",
+          "toolA": "Backdrop CMS is 100% free with no paid tiers or licensing fees of any kind.",
+          "toolB": "Umbraco's core is free, but Umbraco Cloud adds paid managed-hosting tiers from €45/month (Starter) up to €730/month (Professional), plus custom Enterprise.",
+          "whyItMatters": "Total cost of ownership differs sharply depending on whether managed hosting is needed.",
+          "benefitsWho": "Budget-constrained organizations that want zero licensing or hosting-tier costs."
+        },
+        {
+          "title": "Hosting Requirements",
+          "toolA": "Backdrop is explicitly designed for fast performance even on modest or shared/budget hosting.",
+          "toolB": "Umbraco's cons note self-hosting requires .NET hosting knowledge, unlike simpler PHP-based CMS options.",
+          "whyItMatters": "Hosting complexity affects both setup cost and the technical skill needed to run the site.",
+          "benefitsWho": "Small organizations without dedicated .NET infrastructure or DevOps staff."
+        },
+        {
+          "title": "Tech Stack",
+          "toolA": "Backdrop is PHP-based, forked from Drupal 7.",
+          "toolB": "Umbraco runs on .NET/ASP.NET Core.",
+          "whyItMatters": "Determines which developers and hosting providers can support the site long-term.",
+          "benefitsWho": "Teams standardized on PHP hosting versus Microsoft/.NET infrastructure."
+        },
+        {
+          "title": "Managed Cloud Offering",
+          "toolA": "Backdrop has no official managed cloud hosting product; users must self-host or arrange third-party hosting.",
+          "toolB": "Umbraco Cloud is a published managed hosting product on Microsoft Azure with automatic security updates and a Cloudflare CDN.",
+          "whyItMatters": "A vendor-managed hosting path removes infrastructure maintenance burden but adds ongoing cost.",
+          "benefitsWho": "Teams without in-house hosting/ops capacity who are willing to pay for managed infrastructure (Umbraco), versus those happy to self-host cheaply (Backdrop)."
+        },
+        {
+          "title": "Governance Model",
+          "toolA": "Backdrop is governed by a community Project Management Committee (PMC) modeled on Apache Software Foundation governance, and is a member project of the nonprofit Software Freedom Conservancy.",
+          "toolB": "Umbraco is backed by the commercial company Umbraco A/S, owned by growth investor Monterro since 2021.",
+          "whyItMatters": "Nonprofit community governance versus commercial company ownership affects long-term roadmap control.",
+          "benefitsWho": "Organizations with procurement preferences for community-governed versus vendor-backed open source."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Licensing & Cost",
+          "rows": [
+            {
+              "feature": "Free self-hosted core",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Managed cloud hosting",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Umbraco Cloud from €45/month"
+            },
+            {
+              "feature": "Any paid pricing tier",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Umbraco: €45–€730/month plus custom Enterprise"
+            }
+          ]
+        },
+        {
+          "group": "Hosting & Infrastructure",
+          "rows": [
+            {
+              "feature": "Runs well on shared/budget hosting",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Requires .NET hosting expertise",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Built-in Drupal 7 upgrade path",
+              "toolA": "available",
+              "toolB": "unavailable"
+            }
+          ]
+        },
+        {
+          "group": "Ecosystem & Support",
+          "rows": [
+            {
+              "feature": "Community modules / add-ons",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Backdrop: 1,300+ modules; Umbraco: add-ons suite for personalization, e-commerce, forms"
+            },
+            {
+              "feature": "Nonprofit governance body",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Backdrop PMC + Software Freedom Conservancy membership"
+            },
+            {
+              "feature": "Backoffice localized 20+ languages",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Backdrop CMS completely free, unlike Umbraco?",
+          "answer": "Yes. Backdrop CMS has no paid tiers at all. Umbraco's core is also free, but its managed Umbraco Cloud hosting adds paid tiers from €45/month."
+        },
+        {
+          "question": "Can Backdrop run on cheap shared hosting?",
+          "answer": "Yes, Backdrop is specifically designed for fast performance on modest or shared/budget hosting. Umbraco's cons note that self-hosting requires .NET hosting knowledge, which is a heavier lift than simple PHP hosting."
+        },
+        {
+          "question": "Does Backdrop offer a managed cloud product like Umbraco Cloud?",
+          "answer": "No. Backdrop has no official managed cloud hosting product, so users must self-host or arrange third-party hosting. Umbraco Cloud is a published Azure-based managed hosting product starting at €45/month."
+        },
+        {
+          "question": "Who governs each project?",
+          "answer": "Backdrop is governed by a community Project Management Committee modeled on Apache Software Foundation governance and is a member project of the nonprofit Software Freedom Conservancy. Umbraco is backed by the commercial company Umbraco A/S, owned by growth investor Monterro since 2021."
+        },
+        {
+          "question": "Can I migrate a Drupal 7 site to either platform?",
+          "answer": "Backdrop has a built-in upgrade path from Drupal 7, since it was forked from Drupal 7 in 2013. This isn't applicable to Umbraco, which runs on an entirely different .NET stack."
+        },
+        {
+          "question": "Which has bigger brand-name adoption?",
+          "answer": "Umbraco cites brands including Domino's, Volvo, and Heineken. Backdrop's facts report roughly 3,600 known sites and under 3,000 community members, reflecting a smaller, budget-focused user base."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "backdrop-cms-vs-silverstripe-cms",
+    "tool_a_id": "a37dd8ea-c6eb-4027-91e5-148f6db06493",
+    "tool_a_name": "Backdrop CMS",
+    "tool_b_id": "fbbf64a9-d7e7-4ac7-970d-5bf277603dba",
+    "tool_b_name": "Silverstripe CMS",
+    "content": {
+      "verdict": "Backdrop CMS and Silverstripe CMS are both free, open-source PHP CMS platforms, but differ in scale and commercial backing. Backdrop is a GPL v2-licensed fork of Drupal 7 from 2013, governed by a community Project Management Committee and Software Freedom Conservancy membership, with about 3,600 known sites and 1,300+ modules, and no official managed-cloud product. Silverstripe CMS, BSD-licensed since 2000 and backed by commercial company Silverstripe Limited in Wellington, New Zealand, claims 50,000+ live installations, 2,500+ modules, and an ISO/IEC 27001-certified Silverstripe Cloud hosting option, though its pricing is quote-based rather than published. The decision hinges on ecosystem scale, whether a managed-hosting product matters, and licensing preference.",
+      "bestForToolA": "Backdrop suits smaller, budget-conscious teams, especially those migrating from Drupal 7, who want a no-code-friendly CMS that runs on modest shared hosting with zero paid tiers.",
+      "bestForToolB": "Silverstripe CMS suits organizations wanting a larger module ecosystem (2,500+), a track record with enterprise names like Lenovo and Westpac, and the option of certified managed cloud hosting through Silverstripe Limited.",
+      "whoNeedsBoth": "There's no realistic scenario for using both together since they're competing full CMS platforms for the same PHP-based website. An agency supporting many small-business clients might keep both in its toolkit, deploying Backdrop for lean budget sites and Silverstripe for larger sites needing its bigger module ecosystem.",
+      "keyDifferences": [
+        {
+          "title": "License Type",
+          "toolA": "Backdrop CMS is licensed under GPL v2 (or later), a copyleft license.",
+          "toolB": "Silverstripe CMS is licensed under BSD, a permissive license.",
+          "whyItMatters": "Copyleft versus permissive licensing affects how derivative code can be redistributed.",
+          "benefitsWho": "Legal/procurement teams with specific open-source license requirements."
+        },
+        {
+          "title": "Installation Base",
+          "toolA": "Backdrop reports about 3,600 known sites.",
+          "toolB": "Silverstripe.org reports over 50,000 live installations.",
+          "whyItMatters": "A larger install base often means more third-party expertise, documentation, and battle-tested modules.",
+          "benefitsWho": "Teams that want to hire from a larger existing talent pool of experienced developers."
+        },
+        {
+          "title": "Managed Cloud Hosting",
+          "toolA": "Backdrop has no official managed cloud hosting product.",
+          "toolB": "Silverstripe Cloud offers ISO/IEC 27001-certified managed hosting via Silverstripe Limited, though pricing is quote-based, not publicly listed.",
+          "whyItMatters": "A certified managed-hosting option can matter for compliance-sensitive organizations, even without published pricing.",
+          "benefitsWho": "Enterprises needing certified hosting infrastructure and willing to request a quote."
+        },
+        {
+          "title": "Module Ecosystem Size",
+          "toolA": "Backdrop has 1,300+ modules and add-ons.",
+          "toolB": "Silverstripe has 2,500+ community modules.",
+          "whyItMatters": "A larger module library reduces custom development for common features.",
+          "benefitsWho": "Teams that want to extend the CMS with pre-built modules rather than custom code."
+        },
+        {
+          "title": "No-Code vs. Developer-Led Customization",
+          "toolA": "Backdrop's features emphasize no-code content creation without programming knowledge.",
+          "toolB": "Silverstripe's cons note it requires PHP development expertise to customize beyond out-of-the-box functionality.",
+          "whyItMatters": "This affects how much a non-technical team can do without hiring developers.",
+          "benefitsWho": "Small teams without dedicated PHP developers (Backdrop) versus teams with in-house PHP capability wanting deeper customization (Silverstripe)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Licensing & Governance",
+          "rows": [
+            {
+              "feature": "Open-source license",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Backdrop: GPL v2; Silverstripe: BSD"
+            },
+            {
+              "feature": "Nonprofit/community governance",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Backdrop: PMC + Software Freedom Conservancy"
+            },
+            {
+              "feature": "Commercial backer offering paid support",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Silverstripe Limited"
+            }
+          ]
+        },
+        {
+          "group": "Hosting & Deployment",
+          "rows": [
+            {
+              "feature": "Runs well on modest/shared hosting",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Official managed cloud hosting",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Silverstripe Cloud, ISO/IEC 27001 certified, quote-based"
+            },
+            {
+              "feature": "Built-in Drupal 7 upgrade path",
+              "toolA": "available",
+              "toolB": "unavailable"
+            }
+          ]
+        },
+        {
+          "group": "Ecosystem & Notable Users",
+          "rows": [
+            {
+              "feature": "Community modules",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Backdrop: 1,300+; Silverstripe: 2,500+"
+            },
+            {
+              "feature": "Reported live installations",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Backdrop: ~3,600 known sites; Silverstripe: 50,000+ live installs"
+            },
+            {
+              "feature": "Named enterprise customers",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Lenovo, Westpac, Lord's Cricket Ground"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which has more live installations, Backdrop or Silverstripe?",
+          "answer": "Silverstripe reports over 50,000 live installations, while Backdrop reports about 3,600 known sites."
+        },
+        {
+          "question": "Are both free and open source?",
+          "answer": "Yes. Backdrop is GPL v2 (or later) licensed, and Silverstripe is BSD licensed. Both are free to self-host."
+        },
+        {
+          "question": "Does either offer official managed hosting?",
+          "answer": "Silverstripe Cloud exists as an ISO/IEC 27001-certified managed hosting product from Silverstripe Limited, though pricing requires a quote. Backdrop has no official managed cloud product."
+        },
+        {
+          "question": "Which is easier for non-developers to use?",
+          "answer": "Backdrop emphasizes no-code content creation without programming knowledge. Silverstripe's cons note it requires PHP development expertise to customize beyond default functionality."
+        },
+        {
+          "question": "How many modules does each have?",
+          "answer": "Backdrop has 1,300+ modules and add-ons; Silverstripe has 2,500+ community modules."
+        },
+        {
+          "question": "What organizations use Silverstripe?",
+          "answer": "Silverstripe cites Lenovo, Westpac, and Lord's Cricket Ground as users. Backdrop's facts don't document named enterprise customers."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "keystonejs-vs-silverstripe-cms",
+    "tool_a_id": "0ae551c4-e1e4-4011-b3e4-9ec706fc44ff",
+    "tool_a_name": "KeystoneJS",
+    "tool_b_id": "fbbf64a9-d7e7-4ac7-970d-5bf277603dba",
+    "tool_b_name": "Silverstripe CMS",
+    "content": {
+      "verdict": "KeystoneJS and Silverstripe CMS solve different problems for developers. KeystoneJS is a free, MIT-licensed Node.js/TypeScript headless CMS that auto-generates a GraphQL API and admin UI from a schema you define, aimed at developers building custom frontends who self-deploy to clouds like DigitalOcean, Heroku, Render, Vercel, AWS, Azure, or Google Cloud. Silverstripe CMS is a free, BSD-licensed traditional PHP CMS with a built-in templating engine, 2,500+ community modules, and an optional ISO/IEC 27001-certified managed Silverstripe Cloud. The choice depends on whether a team wants a decoupled, API-first stack (Keystone) or an integrated CMS with built-in page rendering (Silverstripe).",
+      "bestForToolA": "KeystoneJS suits Node.js/TypeScript developers who want a schema-driven GraphQL API and admin UI for a custom frontend, and who are comfortable self-deploying to their own cloud infrastructure.",
+      "bestForToolB": "Silverstripe CMS suits teams wanting an integrated, PHP-based CMS with a built-in templating engine, 2,500+ ready-made modules, and the option of Silverstripe Limited's certified managed Cloud hosting.",
+      "whoNeedsBoth": "A team could plausibly pair the two if it runs a decoupled application or marketing site on KeystoneJS as the content API while using Silverstripe CMS for a separate, more traditional PHP-rendered site within the same organization, though this is an unusual setup rather than a common combined workflow.",
+      "keyDifferences": [
+        {
+          "title": "Architecture Model",
+          "toolA": "KeystoneJS is a headless CMS that auto-generates a GraphQL API and admin UI from a schema, intended to power a separate custom frontend.",
+          "toolB": "Silverstripe CMS is a traditional full-stack CMS with a built-in templating engine for direct page rendering.",
+          "whyItMatters": "Headless versus traditional architecture changes how a frontend is built and who owns page rendering.",
+          "benefitsWho": "Developers building decoupled apps (Keystone) versus teams wanting an all-in-one rendered website (Silverstripe)."
+        },
+        {
+          "title": "Tech Stack",
+          "toolA": "KeystoneJS is written in TypeScript (99% of the codebase) and runs on Node.js.",
+          "toolB": "Silverstripe CMS is a PHP framework and CMS.",
+          "whyItMatters": "Determines which developers and hosting environments are compatible.",
+          "benefitsWho": "Teams standardized on JavaScript/TypeScript versus PHP."
+        },
+        {
+          "title": "Managed Hosting",
+          "toolA": "KeystoneJS has no packaged managed hosting product; it's deployable to DigitalOcean, Heroku, Render, Vercel, AWS, Azure, or Google Cloud, self-managed.",
+          "toolB": "Silverstripe Cloud is an ISO/IEC 27001-certified managed hosting product, though pricing is quote-based.",
+          "whyItMatters": "A packaged managed-hosting option removes infrastructure setup work but comes at a cost.",
+          "benefitsWho": "Teams without in-house DevOps capacity (Silverstripe Cloud) versus teams that want full control over their own cloud deployment (Keystone)."
+        },
+        {
+          "title": "Ecosystem Scale",
+          "toolA": "KeystoneJS reports over 1 million npm installs and 250+ contributors.",
+          "toolB": "Silverstripe reports 50,000+ live installations and 2,500+ community modules.",
+          "whyItMatters": "The two ecosystems measure adoption differently (package installs vs. live sites), reflecting their different use cases.",
+          "benefitsWho": "Developers evaluating community size and available third-party modules/packages."
+        },
+        {
+          "title": "Commercial Support Path",
+          "toolA": "Paid support for KeystoneJS is only available as a separate enterprise contract through Thinkmill, not a packaged pricing tier.",
+          "toolB": "Silverstripe is backed by commercial company Silverstripe Limited, which also runs the quote-based Silverstripe Cloud.",
+          "whyItMatters": "Neither publishes fixed support pricing, but the support relationship differs (project maintainer vs. dedicated commercial CMS vendor).",
+          "benefitsWho": "Organizations needing a support contract to justify the platform choice internally."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Architecture & API",
+          "rows": [
+            {
+              "feature": "Auto-generated GraphQL API from schema",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Auto-generated admin UI from schema",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Built-in templating engine for page rendering",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Field/list/operation-level access control",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Silverstripe: role-based permission controls"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Hosting",
+          "rows": [
+            {
+              "feature": "Official managed cloud hosting",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Silverstripe Cloud, quote-based"
+            },
+            {
+              "feature": "Self-hosting on major public clouds",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Keystone: DigitalOcean, Heroku, Render, Vercel, AWS, Azure, Google Cloud"
+            },
+            {
+              "feature": "Automatic database migrations",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Keystone uses Prisma"
+            }
+          ]
+        },
+        {
+          "group": "Ecosystem & Support",
+          "rows": [
+            {
+              "feature": "Community scale indicator",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: 1M+ npm installs, 250+ contributors; Silverstripe: 50,000+ live sites, 2,500+ modules"
+            },
+            {
+              "feature": "Paid enterprise support",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: separate contract via Thinkmill; Silverstripe: via Silverstripe Limited"
+            },
+            {
+              "feature": "Permissive open-source license",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: MIT; Silverstripe: BSD"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is KeystoneJS headless while Silverstripe is a traditional CMS?",
+          "answer": "Yes. KeystoneJS generates a GraphQL API and admin UI from a schema for use with a separate custom frontend (Node.js/TypeScript). Silverstripe CMS has a built-in templating engine for full-stack page rendering (PHP)."
+        },
+        {
+          "question": "Which requires more developer skill to run?",
+          "answer": "Both require developer involvement. KeystoneJS is explicitly a developer framework requiring Node.js skills, not a no-code tool. Silverstripe's cons note it requires PHP development expertise to customize beyond out-of-the-box functionality."
+        },
+        {
+          "question": "Does either offer official managed hosting?",
+          "answer": "Silverstripe Cloud exists as a quote-based, ISO/IEC 27001-certified managed hosting product. KeystoneJS has no packaged managed hosting; it's deployed manually to hosts like DigitalOcean, Heroku, Render, Vercel, AWS, Azure, or Google Cloud."
+        },
+        {
+          "question": "How does KeystoneJS handle database migrations?",
+          "answer": "Keystone handles schema migrations automatically through Prisma. This isn't documented for Silverstripe."
+        },
+        {
+          "question": "Should I use Keystone 5 or Keystone 6?",
+          "answer": "Keystone 5 is in maintenance mode; only Keystone 6, published under the @keystone-6/* npm namespace, receives active development."
+        },
+        {
+          "question": "Which has a larger ecosystem?",
+          "answer": "Silverstripe has 2,500+ community modules and 50,000+ live installations. KeystoneJS reports over 1 million npm installs and 250+ contributors — different metrics reflecting their different distribution models (installable modules vs. npm packages)."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "keystonejs-vs-tinacms",
+    "tool_a_id": "0ae551c4-e1e4-4011-b3e4-9ec706fc44ff",
+    "tool_a_name": "KeystoneJS",
+    "tool_b_id": "10cff4ac-f281-4d9e-998a-dc5742fcfd08",
+    "tool_b_name": "TinaCMS",
+    "content": {
+      "verdict": "KeystoneJS and TinaCMS are both open-source headless CMS options for developers, but they store and edit content very differently. KeystoneJS (MIT-licensed, maintained by Thinkmill) persists content in a database via Prisma migrations and auto-generates both a GraphQL API and a form-based admin UI from your schema, and it is entirely free with no pricing plans. TinaCMS (Apache-2.0, maintained by SSW since its 2024 acquisition of Forestry.io) stores content directly in Git as Markdown/MDX/JSON/YAML and layers a visual, in-context editor on top, with a freemium Tina Cloud service (free for 2 users, Team plans from $24/month) for teams wanting hosted editorial workflows. The right pick depends on whether content should live in a database or in version-controlled files, and whether visual in-context editing matters.",
+      "bestForToolA": "KeystoneJS suits developers building data-driven applications who want a database-backed GraphQL API and auto-generated admin UI, with zero licensing cost regardless of team size.",
+      "bestForToolB": "TinaCMS suits teams publishing Markdown/MDX content via static site generators like Next.js, Astro, Hugo, or Jekyll who want non-technical editors to make visual, in-context edits that commit directly to Git.",
+      "whoNeedsBoth": "There's no typical scenario for combining them on one project since both are alternative headless CMS backends for the same content layer. A larger organization might run KeystoneJS for an internal data-driven app and TinaCMS for its Git-based marketing blog, but that's operating two separate systems rather than integrating them.",
+      "keyDifferences": [
+        {
+          "title": "Content Storage Model",
+          "toolA": "KeystoneJS persists content in a database, with schema migrations handled automatically via Prisma.",
+          "toolB": "TinaCMS stores content directly in a Git repository as Markdown, MDX, JSON, or YAML, preserving full version history.",
+          "whyItMatters": "Database-backed content suits complex relational data; Git-backed content suits version-controlled static sites.",
+          "benefitsWho": "App developers needing relational data (Keystone) versus content teams wanting Git-native version history (TinaCMS)."
+        },
+        {
+          "title": "Editing Experience",
+          "toolA": "KeystoneJS auto-generates a customizable admin UI with a rich text WYSIWYG editor from your schema.",
+          "toolB": "TinaCMS offers visual, in-context editing where authors edit live pages directly, with changes synced back to Git.",
+          "whyItMatters": "In-context editing lets non-technical authors see exactly what they're publishing as they edit.",
+          "benefitsWho": "Non-technical content editors who want a WYSIWYG, on-page editing experience (TinaCMS)."
+        },
+        {
+          "title": "Pricing Model",
+          "toolA": "KeystoneJS is entirely free and open source under MIT, with no pricing plans at all.",
+          "toolB": "TinaCMS is freemium: Tina Cloud is free for 2 users, then Team is $24/month, Team Plus (with editorial workflow) is $41/month, Business is $249/month, and Enterprise is custom.",
+          "whyItMatters": "Total cost scales differently as a team grows past the free tier.",
+          "benefitsWho": "Cost-sensitive teams of any size (Keystone) versus teams wanting a hosted editorial workflow as they scale (TinaCMS)."
+        },
+        {
+          "title": "Auto-Generated API",
+          "toolA": "KeystoneJS generates a full GraphQL API with pagination, sorting, filtering, and CRUD operations from your schema.",
+          "toolB": "TinaCMS auto-generates a GraphQL API that lets any frontend query and mutate Git-backed content.",
+          "whyItMatters": "Both offer schema-driven GraphQL, but query against different underlying stores (database vs. Git files).",
+          "benefitsWho": "Frontend developers wanting a consistent GraphQL layer regardless of storage backend."
+        },
+        {
+          "title": "Maintainer & Governance",
+          "toolA": "KeystoneJS is maintained by Thinkmill, an Australian consultancy, since the project's first commit in 2013, with 250+ contributors.",
+          "toolB": "TinaCMS was originally launched by Forestry.io and has been maintained by SSW, an Australian software consultancy, since SSW acquired the project in 2024.",
+          "whyItMatters": "Project maintainership affects long-term update cadence and roadmap direction.",
+          "benefitsWho": "Teams evaluating the stability and backing of an open-source dependency before adopting it."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Content Model & Editing",
+          "rows": [
+            {
+              "feature": "Content storage backend",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: database via Prisma; TinaCMS: Git-backed Markdown/MDX/JSON/YAML"
+            },
+            {
+              "feature": "Visual, in-context editing",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Auto-generated admin UI",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Full version history via Git",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "API & Developer Experience",
+          "rows": [
+            {
+              "feature": "Auto-generated GraphQL API",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hostable backend without vendor cloud",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: fully self-hosted, MIT; TinaCMS: Apache-2.0 backend self-hostable on Express-compatible platforms"
+            },
+            {
+              "feature": "Documented framework integrations",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Next.js, Astro, Hugo, Jekyll"
+            },
+            {
+              "feature": "Field/operation-level access control",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "TinaCMS: role-based access on Cloud plans"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Support",
+          "rows": [
+            {
+              "feature": "Free tier / free to use",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: entirely free (MIT, no plans); TinaCMS: free Tina Cloud tier for 2 users"
+            },
+            {
+              "feature": "Paid editorial workflow",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "TinaCMS Team Plus, $41/month"
+            },
+            {
+              "feature": "Custom Enterprise support",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keystone: separate contract via Thinkmill; TinaCMS: Enterprise plan with SSO, GitHub Enterprise support"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How does content storage differ between KeystoneJS and TinaCMS?",
+          "answer": "KeystoneJS stores content in a database, with migrations handled automatically via Prisma. TinaCMS stores content directly in your Git repository as Markdown, MDX, JSON, or YAML, giving full version history."
+        },
+        {
+          "question": "Is KeystoneJS free while TinaCMS is not?",
+          "answer": "KeystoneJS is entirely free under the MIT license with no pricing plans. TinaCMS is freemium: Tina Cloud is free for 2 users, with paid Team plans starting at $24/month for more users and features."
+        },
+        {
+          "question": "Which offers visual, in-context editing?",
+          "answer": "TinaCMS offers visual, in-context editing where authors edit live pages with changes synced to Git. KeystoneJS instead provides an auto-generated, form-based admin UI with a rich text editor."
+        },
+        {
+          "question": "Do both generate a GraphQL API automatically?",
+          "answer": "Yes. Both KeystoneJS and TinaCMS auto-generate a GraphQL API from your schema or content structure, though they query different underlying stores (database vs. Git)."
+        },
+        {
+          "question": "Who maintains each project today?",
+          "answer": "KeystoneJS is maintained by Thinkmill, an Australian consultancy, since 2013. TinaCMS was originally built by Forestry.io and has been maintained by SSW, another Australian software consultancy, since SSW acquired the project in 2024."
+        },
+        {
+          "question": "Can either be self-hosted without paying for a cloud service?",
+          "answer": "Yes. KeystoneJS is fully self-hostable under its MIT license. TinaCMS's Apache-2.0 backend can also be self-hosted on any Express-compatible platform as an alternative to the hosted Tina Cloud service."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cockpit-cms-vs-tinacms",
+    "tool_a_id": "26315baf-61aa-4fda-b2de-4986fe3babe9",
+    "tool_a_name": "Cockpit CMS",
+    "tool_b_id": "10cff4ac-f281-4d9e-998a-dc5742fcfd08",
+    "tool_b_name": "TinaCMS",
+    "content": {
+      "verdict": "Cockpit CMS and TinaCMS are both open-source, self-hostable headless CMS options, but they differ sharply in content storage and pricing structure. Cockpit CMS is a PHP-based CMS (MIT core) storing content in a self-hosted SQLite or MongoDB database, with REST and GraphQL APIs, and a one-time €299 Pro license (plus optional €99/year renewal) that unlocks addons like the Autopilot AI assistant and the Layouts & Pages visual builder. TinaCMS is a Git-backed CMS (Apache-2.0) that stores content as Markdown/MDX/JSON/YAML in your repository and includes visual, in-context editing even on its free Tina Cloud tier, with paid Team plans ($24-$249/month) unlocking editorial workflows for larger teams. The decision comes down to whether content should live in a database or in Git, and whether a one-time license or a recurring subscription fits better.",
+      "bestForToolA": "Cockpit CMS suits developers who want content in a traditional database (SQLite or MongoDB) with REST and GraphQL access, and who prefer a one-time €299 license over an ongoing subscription.",
+      "bestForToolB": "TinaCMS suits teams publishing to static site generators who want free, built-in visual in-context editing tied to Git version history, with the option to scale into paid editorial workflows as the team grows.",
+      "whoNeedsBoth": "There's no common scenario for using both on the same project since they're competing headless CMS backends; a developer might evaluate both in parallel when choosing a CMS but would settle on one as the system of record.",
+      "keyDifferences": [
+        {
+          "title": "Content Storage Model",
+          "toolA": "Cockpit CMS stores content in a self-hosted SQLite or MongoDB database.",
+          "toolB": "TinaCMS stores content directly in a Git repository as Markdown, MDX, JSON, or YAML.",
+          "whyItMatters": "Database storage suits dynamic apps; Git storage suits static-site content that benefits from version control.",
+          "benefitsWho": "Developers building database-driven apps (Cockpit) versus teams wanting content history tracked in Git (TinaCMS)."
+        },
+        {
+          "title": "Pricing Structure",
+          "toolA": "Cockpit's Pro tier is a one-time €299 fee per project, with an optional €99/year renewal to keep receiving updates.",
+          "toolB": "TinaCMS's paid Team plans are recurring subscriptions, from $24/month ($290/year) up to $249/month for Business.",
+          "whyItMatters": "One-time versus recurring pricing changes long-term cost projections significantly.",
+          "benefitsWho": "Budget-conscious teams that prefer a one-time cost (Cockpit) versus teams comfortable with predictable monthly SaaS billing (TinaCMS)."
+        },
+        {
+          "title": "Visual Editing Access",
+          "toolA": "Cockpit's visual page builder (Layouts & Pages) is only available as part of the paid €299 Pro addon bundle.",
+          "toolB": "TinaCMS's visual, in-context editing is included even on the free 2-user Tina Cloud tier.",
+          "whyItMatters": "Free access to visual editing lowers the barrier for small teams or solo developers to try it.",
+          "benefitsWho": "Small teams or individual developers wanting visual editing without any upfront cost (TinaCMS)."
+        },
+        {
+          "title": "AI Content Assistance",
+          "toolA": "Cockpit's Autopilot addon (paid Pro tier) provides AI-assisted content and image generation, plus AI-assisted translation via DeepL or LibreTranslate.",
+          "toolB": "TinaCMS lists AI features as still in development on its Team Plus and Business plans.",
+          "whyItMatters": "Availability of AI tooling today versus in development affects near-term workflow automation.",
+          "benefitsWho": "Teams wanting AI content assistance now are better served by Cockpit's paid Autopilot addon."
+        },
+        {
+          "title": "API Type",
+          "toolA": "Cockpit offers both REST and GraphQL APIs.",
+          "toolB": "TinaCMS's documented API is GraphQL-based, auto-generated for querying and mutating Git content.",
+          "whyItMatters": "REST availability matters for integrations or legacy systems that don't support GraphQL.",
+          "benefitsWho": "Teams integrating with REST-only tooling or legacy systems (Cockpit)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Content Model & Storage",
+          "rows": [
+            {
+              "feature": "Backend content store",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit: SQLite/MongoDB; TinaCMS: Git-backed files"
+            },
+            {
+              "feature": "REST API",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "GraphQL API",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Built-in multi-language content with AI-assisted translation",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Cockpit: via DeepL or LibreTranslate"
+            }
+          ]
+        },
+        {
+          "group": "Editing & Visual Tools",
+          "rows": [
+            {
+              "feature": "Visual in-context/page editing",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Cockpit: only via paid Layouts & Pages Pro addon"
+            },
+            {
+              "feature": "AI content assistant",
+              "toolA": "limited",
+              "toolB": "unavailable",
+              "note": "Cockpit: paid Autopilot addon; TinaCMS: AI features listed as in development"
+            },
+            {
+              "feature": "Full-text search",
+              "toolA": "limited",
+              "toolB": "not-documented",
+              "note": "Cockpit: paid Detektivo (Meilisearch) addon"
+            },
+            {
+              "feature": "Content revision history",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit: revert to previous versions; TinaCMS: via Git history"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Licensing",
+          "rows": [
+            {
+              "feature": "Free open-source core",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit: MIT; TinaCMS: Apache-2.0"
+            },
+            {
+              "feature": "Paid tier billing model",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit: one-time €299 (+€99/yr renewal); TinaCMS: recurring $24–$249/month"
+            },
+            {
+              "feature": "Self-hosted without vendor account",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit: no account required; TinaCMS: self-hostable backend as Tina Cloud alternative"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do Cockpit and TinaCMS store content differently?",
+          "answer": "Cockpit stores content in a self-hosted SQLite or MongoDB database. TinaCMS stores content as Markdown, MDX, JSON, or YAML directly in your Git repository."
+        },
+        {
+          "question": "Which has cheaper long-term pricing?",
+          "answer": "Cockpit's Pro tier is a one-time €299 fee per project, with an optional €99/year renewal for continued updates. TinaCMS's paid Team plans are recurring subscriptions starting at $24/month ($290/year)."
+        },
+        {
+          "question": "Is visual page editing free on either?",
+          "answer": "TinaCMS includes visual, in-context editing even on its free 2-user Tina Cloud tier. On Cockpit, the visual page builder (Layouts & Pages) requires the paid €299 Pro addon license."
+        },
+        {
+          "question": "Do either offer AI content assistance?",
+          "answer": "Cockpit's Autopilot is a paid Pro addon providing AI content and image generation. TinaCMS lists AI features as still in development on its paid Team Plus and Business plans, so they weren't fully available at time of review."
+        },
+        {
+          "question": "Can both be fully self-hosted without a vendor cloud account?",
+          "answer": "Yes. Cockpit requires no account at all and runs on your own PHP server. TinaCMS's Apache-2.0 backend can be self-hosted on any Express-compatible platform as an alternative to Tina Cloud."
+        },
+        {
+          "question": "Which one supports REST APIs?",
+          "answer": "Cockpit supports both REST and GraphQL APIs. TinaCMS's documented API is GraphQL-based only."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cockpit-cms-vs-publii",
+    "tool_a_id": "26315baf-61aa-4fda-b2de-4986fe3babe9",
+    "tool_a_name": "Cockpit CMS",
+    "tool_b_id": "aef99ec6-cc74-4f51-80a7-2b4686dc1465",
+    "tool_b_name": "Publii",
+    "content": {
+      "verdict": "Cockpit CMS and Publii solve very different publishing problems despite both being free and open source. Cockpit CMS is a self-hosted, PHP-based headless CMS (MIT core) that exposes REST and GraphQL APIs for developers building custom frontends, with role-based permissions for multi-user teams and advanced tooling (AI assistant, full-text search, visual page builder) gated behind a one-time €299 Pro license. Publii is a GPL-3.0 desktop application (Windows, macOS, Linux) that generates static websites with no server required, bundling SEO structured data, sitemaps, and GDPR/CCPA cookie-consent tooling into its free core, but with no built-in multi-user collaboration. The right fit depends on whether you need an API-driven backend for a custom app (Cockpit) or a zero-server static site with built-in SEO/compliance tooling for a single publisher (Publii).",
+      "bestForToolA": "Cockpit CMS suits developers building custom, API-driven frontends who need multi-user role-based permissions and are willing to pay a one-time €299 Pro license for advanced tooling.",
+      "bestForToolB": "Publii suits solo bloggers or small site owners who want a free, no-server static site generator with built-in SEO and GDPR/CCPA compliance tooling, deployed to platforms like GitHub Pages or Netlify.",
+      "whoNeedsBoth": "There's no realistic scenario for combining them on one site, since Cockpit powers dynamic API-driven applications while Publii outputs static sites directly. An organization could use Cockpit as an app backend while separately maintaining an unrelated static marketing microsite in Publii, but that's two independent projects, not an integration.",
+      "keyDifferences": [
+        {
+          "title": "Server Requirement",
+          "toolA": "Cockpit CMS requires a self-hosted PHP 7.3+ server with SQLite or MongoDB and Apache with mod_rewrite.",
+          "toolB": "Publii is a desktop app that generates static site files with no server required to run the CMS itself.",
+          "whyItMatters": "Server requirements affect ongoing hosting cost, security maintenance, and technical overhead.",
+          "benefitsWho": "Publishers who want to avoid managing any backend server (Publii) versus developers who want a live API backend (Cockpit)."
+        },
+        {
+          "title": "API for Custom Frontends",
+          "toolA": "Cockpit exposes REST and GraphQL APIs compatible with Next.js, React, Vue, Svelte, PHP, and Node.js.",
+          "toolB": "Publii does not offer an API since it generates static site files directly rather than serving content dynamically.",
+          "whyItMatters": "An API is required for building a custom, app-like frontend separate from the CMS itself.",
+          "benefitsWho": "Developers building custom applications that consume content via API (Cockpit)."
+        },
+        {
+          "title": "Multi-User Collaboration",
+          "toolA": "Cockpit includes fine-grained, role-based permissions for multiple user roles.",
+          "toolB": "Publii's cons explicitly note no built-in multi-user/team collaboration.",
+          "whyItMatters": "Teams with multiple contributors need role-based access controls to manage who can edit or publish.",
+          "benefitsWho": "Teams with multiple editors or content contributors (Cockpit)."
+        },
+        {
+          "title": "Built-In SEO & Compliance Tooling",
+          "toolA": "Cockpit's SEO tools ship inside the paid Layouts & Pages Pro addon (part of the €299 license).",
+          "toolB": "Publii includes SEO structured data, Open Graph tags, auto-generated XML sitemaps, and GDPR/CCPA cookie-banner and Google Consent Mode v2 support in its free core.",
+          "whyItMatters": "Free, built-in SEO and compliance tooling reduces setup work and cost for smaller publishers.",
+          "benefitsWho": "Solo bloggers or small businesses that want compliance tooling without paying extra (Publii)."
+        },
+        {
+          "title": "Pricing to Unlock Advanced Features",
+          "toolA": "Cockpit's advanced tooling (AI assistant, search, visual builder, sync) requires the one-time €299 Pro license.",
+          "toolB": "Publii's core is entirely free under GPL-3.0; only optional premium marketplace themes and plugins cost extra.",
+          "whyItMatters": "Determines whether advanced features are truly free or gated behind a paid license.",
+          "benefitsWho": "Budget-conscious solo publishers wanting maximum functionality at zero cost (Publii)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Architecture & Deployment",
+          "rows": [
+            {
+              "feature": "Requires a self-hosted server",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Cockpit needs PHP 7.3+/Apache; Publii is a desktop app with no server"
+            },
+            {
+              "feature": "REST/GraphQL API for custom frontends",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Generates static site output",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Deploy targets (GitHub Pages, Netlify, S3, etc.)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Editing & Content Tools",
+          "rows": [
+            {
+              "feature": "Multi-user roles/permissions",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Content revisions/version history",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Visual page builder",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Cockpit: paid Layouts & Pages addon; Publii: built-in post editors with galleries, video, code highlighting"
+            },
+            {
+              "feature": "Built-in multi-language content",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "SEO, Compliance & Pricing",
+          "rows": [
+            {
+              "feature": "Built-in SEO structured data/sitemaps",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Cockpit: paid Pro addon only"
+            },
+            {
+              "feature": "GDPR/CCPA compliance tooling",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Publii: cookie banner + Google Consent Mode v2"
+            },
+            {
+              "feature": "Fully free core with no required license",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cockpit core is free; advanced addons cost €299"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Does Publii need a server to run, unlike Cockpit?",
+          "answer": "Correct. Publii is a desktop app (Windows, macOS, Linux) that generates static sites deployed to targets like GitHub Pages, Netlify, or S3, with no server needed. Cockpit requires a self-hosted PHP 7.3+ server with SQLite or MongoDB."
+        },
+        {
+          "question": "Which is better for teams rather than solo publishers?",
+          "answer": "Cockpit supports role-based permissions for multiple users. Publii's cons explicitly note it has no built-in multi-user/team collaboration."
+        },
+        {
+          "question": "Is SEO tooling free on both?",
+          "answer": "Publii includes SEO structured data, Open Graph tags, and auto-generated sitemaps in its free core. Cockpit's equivalent SEO tools ship inside the paid Layouts & Pages Pro addon (€299 one-time)."
+        },
+        {
+          "question": "Does either handle GDPR/cookie compliance out of the box?",
+          "answer": "Publii includes an advanced cookie banner and Google Consent Mode v2 support built in. This isn't documented as a Cockpit feature."
+        },
+        {
+          "question": "Which costs more to unlock full features?",
+          "answer": "Cockpit's advanced tooling (AI assistant, search, visual builder, sync) requires the €299 one-time Pro license. Publii's core is entirely free under GPL-3.0, with only optional premium marketplace themes and plugins costing extra."
+        },
+        {
+          "question": "Can Cockpit power a custom frontend the way an API-driven CMS does?",
+          "answer": "Yes. Cockpit exposes REST and GraphQL APIs for custom frontends built with Next.js, React, Vue, Svelte, PHP, or Node.js. Publii does not offer an API since it directly generates static site files instead."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "micro-blog-vs-publii",
+    "tool_a_id": "338c1b3b-50e3-45a0-b1e8-99c9e22e7a18",
+    "tool_a_name": "Micro.blog",
+    "tool_b_id": "aef99ec6-cc74-4f51-80a7-2b4686dc1465",
+    "tool_b_name": "Publii",
+    "content": {
+      "verdict": "Micro.blog and Publii both help independent publishers get a site online quickly, but one is a hosted subscription service and the other a free local tool. Micro.blog is a paid, hosted blogging and podcasting platform starting at $5/month that includes built-in cross-posting to Mastodon, Threads, and Bluesky, fediverse/IndieWeb support, and tiered plans up to Studio ($20/month) for podcast recording and video hosting. Publii is a free, GPL-3.0 desktop app (Windows, macOS, Linux) that generates static sites with built-in SEO and GDPR/CCPA compliance tooling, but requires deploying the output yourself to a host like GitHub Pages or Netlify, and has no built-in multi-user collaboration. The choice depends on whether you want hosting and social distribution bundled into a subscription (Micro.blog) or a free, self-managed static-site workflow (Publii).",
+      "bestForToolA": "Micro.blog suits bloggers and podcasters who want built-in hosting plus automatic cross-posting to Mastodon, Threads, and Bluesky, and are willing to pay $5-$20/month depending on the features needed.",
+      "bestForToolB": "Publii suits publishers who want a completely free tool with built-in SEO and GDPR/CCPA compliance features and are comfortable deploying the generated static site to their own host.",
+      "whoNeedsBoth": "There's no natural combined workflow since both are complete publishing solutions for the same core task. Someone could run a fediverse-focused microblog on Micro.blog while separately maintaining a static portfolio site built in Publii, but that's two independent sites rather than an integrated use case.",
+      "keyDifferences": [
+        {
+          "title": "Hosting Model",
+          "toolA": "Micro.blog is a hosted platform where hosting is included in the subscription price, starting at $5/month.",
+          "toolB": "Publii is a desktop app that generates a static site you must deploy yourself to a target like GitHub Pages, Netlify, or S3.",
+          "whyItMatters": "Bundled hosting removes deployment steps but adds recurring cost; self-managed deployment is free but requires more setup.",
+          "benefitsWho": "Publishers who want a turnkey hosted solution (Micro.blog) versus those comfortable managing their own deployment (Publii)."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "Micro.blog has no free plan and starts at $5/month, rising to $20/month for the Studio tier.",
+          "toolB": "Publii's core desktop app is entirely free under the GPL-3.0 license.",
+          "whyItMatters": "Ongoing subscription cost versus a one-time, free download changes the total cost of running a site over time.",
+          "benefitsWho": "Budget-conscious publishers who want zero recurring software cost (Publii)."
+        },
+        {
+          "title": "Social & Fediverse Integration",
+          "toolA": "Micro.blog includes automatic cross-posting to Mastodon, Threads, and Bluesky from its base plan, plus fediverse and IndieWeb protocol support.",
+          "toolB": "Not documented as a Publii feature.",
+          "whyItMatters": "Built-in social distribution extends a post's reach without manual cross-posting.",
+          "benefitsWho": "Writers who want their posts to automatically reach fediverse and mainstream social audiences (Micro.blog)."
+        },
+        {
+          "title": "Team Collaboration",
+          "toolA": "Micro.blog's Family plan ($15/month) lets up to 5 members write or edit posts across any blog on the account.",
+          "toolB": "Publii's cons explicitly note no built-in multi-user/team collaboration.",
+          "whyItMatters": "Multi-author support matters for family blogs, small teams, or shared publications.",
+          "benefitsWho": "Families or small teams publishing together (Micro.blog Family plan)."
+        },
+        {
+          "title": "Media & Podcast Features",
+          "toolA": "Micro.blog's Studio plan ($20/month) adds video hosting up to 20 minutes, podcast recording, multiple video resolutions, and video cross-posting to Bluesky.",
+          "toolB": "Publii's post editor supports image galleries, video, and code syntax highlighting, but no podcast-recording feature is documented.",
+          "whyItMatters": "Dedicated podcast/video hosting removes the need for a separate media hosting service.",
+          "benefitsWho": "Podcasters and video creators wanting an all-in-one publishing and hosting solution (Micro.blog Studio)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Hosting & Publishing Model",
+          "rows": [
+            {
+              "feature": "Hosting included",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Publii: you deploy the generated static files yourself"
+            },
+            {
+              "feature": "Custom domain support",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Desktop app / offline editing",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Windows, macOS, Linux"
+            },
+            {
+              "feature": "Deploy to GitHub Pages, Netlify, S3, etc.",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Social & Collaboration",
+          "rows": [
+            {
+              "feature": "Fediverse/IndieWeb support",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Cross-posting to Mastodon/Threads/Bluesky",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Multi-user team collaboration",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Micro.blog Family plan, up to 5 members, $15/month"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Media Features",
+          "rows": [
+            {
+              "feature": "Free plan/tier",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Micro.blog starts at $5/month; Publii core is fully free"
+            },
+            {
+              "feature": "Podcast/video hosting",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Micro.blog Studio, $20/month, video up to 20 minutes + podcast recording"
+            },
+            {
+              "feature": "Email newsletters",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Micro.blog Premium, $10/month"
+            },
+            {
+              "feature": "GDPR/cookie compliance tooling",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Publii: cookie banner + Google Consent Mode v2"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Micro.blog free like Publii?",
+          "answer": "No. Micro.blog has no free plan and starts at $5/month. Publii's core desktop app is entirely free under the GPL-3.0 license."
+        },
+        {
+          "question": "Does Publii include hosting?",
+          "answer": "No. Publii generates a static site you must deploy yourself to a target like GitHub Pages, Netlify, or S3. Micro.blog is a hosted platform where hosting is included in the subscription."
+        },
+        {
+          "question": "Which supports posting to Mastodon or Bluesky automatically?",
+          "answer": "Micro.blog includes automatic cross-posting to Mastodon, Threads, and Bluesky from its base $5/month plan. This isn't documented as a Publii feature."
+        },
+        {
+          "question": "Can multiple people collaborate on one blog?",
+          "answer": "Micro.blog's Family plan ($15/month) lets up to 5 members write or edit posts. Publii's cons note it has no built-in multi-user/team collaboration."
+        },
+        {
+          "question": "Does either support podcasting?",
+          "answer": "Micro.blog's Studio plan ($20/month) adds podcast recording and video hosting up to 20 minutes. Podcast-specific tooling is not documented for Publii."
+        },
+        {
+          "question": "Which has built-in GDPR/cookie consent tools?",
+          "answer": "Publii includes an advanced cookie banner and Google Consent Mode v2 support in its free core. This is not documented as a Micro.blog feature."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "blot-vs-micro-blog",
+    "tool_a_id": "53ba4185-9c98-4925-94b6-7aa6336c54d0",
+    "tool_a_name": "Blot",
+    "tool_b_id": "338c1b3b-50e3-45a0-b1e8-99c9e22e7a18",
+    "tool_b_name": "Micro.blog",
+    "content": {
+      "verdict": "Blot and Micro.blog are both paid, no-free-plan publishing tools, but they take different approaches to how content gets created. Blot turns a synced folder of files into a website for a flat $6/month per site, appealing to people who want to write in their own text editor and drag files into a folder rather than use a web interface, with all templates, custom domains, and SSL included. Micro.blog is a tiered blogging and podcasting platform starting at $5/month, with built-in cross-posting to Mastodon, Threads, and Bluesky, and add-on tiers for multiple blogs (Premium, $10/month), family collaboration (Family, $15/month), and podcast/video hosting (Studio, $20/month). The right choice depends on whether a file-based workflow (Blot) or a social-native hosted platform with room to add team members and media features (Micro.blog) fits better.",
+      "bestForToolA": "Blot suits writers who already work in a text editor and want a simple, flat-priced $6/month site with all templates and SSL included, without a web-based CMS interface.",
+      "bestForToolB": "Micro.blog suits bloggers and podcasters who want built-in social cross-posting to Mastodon, Threads, and Bluesky, plus room to grow into multiple blogs, family collaboration, or podcast hosting via its tiered plans.",
+      "whoNeedsBoth": "There's no typical combined use case since both fully host and publish a blog on their own. A writer might run a personal file-based site on Blot while separately maintaining a Micro.blog account for fediverse-native microblogging and cross-posting, but these would be two distinct, unconnected sites.",
+      "keyDifferences": [
+        {
+          "title": "Publishing Workflow",
+          "toolA": "Blot turns a synced folder of files into a website — you add, edit, or delete files with your own text editor and Blot publishes the changes.",
+          "toolB": "Micro.blog uses its own web-based posting interface plus automatic cross-posting to social platforms.",
+          "whyItMatters": "A file-based workflow suits writers who prefer local editing tools over a web CMS.",
+          "benefitsWho": "Writers already comfortable working in a text editor rather than a browser-based editor (Blot)."
+        },
+        {
+          "title": "Pricing Structure",
+          "toolA": "Blot is a single flat plan at $6/month per site, with all templates included and an annual billing discount available.",
+          "toolB": "Micro.blog is tiered: $5/month base, $10/month Premium, $15/month Family, $20/month Studio.",
+          "whyItMatters": "Flat pricing is simpler to budget; tiered pricing lets buyers pay only for the features they need.",
+          "benefitsWho": "Single-site publishers wanting predictable flat pricing (Blot) versus users who want to start cheap and add features later (Micro.blog)."
+        },
+        {
+          "title": "Multi-Blog Support",
+          "toolA": "Blot is priced and structured per individual site at $6/month each, with no documented multi-blog account feature.",
+          "toolB": "Micro.blog's Premium plan ($10/month) supports up to 5 blogs on one account.",
+          "whyItMatters": "Running several blogs is cheaper per-site on a multi-blog plan than paying separately for each site.",
+          "benefitsWho": "Publishers managing multiple blogs from one account (Micro.blog)."
+        },
+        {
+          "title": "Social & Fediverse Distribution",
+          "toolA": "Not documented as a Blot feature.",
+          "toolB": "Micro.blog includes built-in cross-posting to Mastodon, Threads, and Bluesky, plus fediverse and IndieWeb protocol support.",
+          "whyItMatters": "Automatic cross-posting extends reach without manual work on each platform.",
+          "benefitsWho": "Writers who want their posts to automatically reach fediverse and mainstream social audiences (Micro.blog)."
+        },
+        {
+          "title": "Team Collaboration",
+          "toolA": "Not documented as a Blot feature.",
+          "toolB": "Micro.blog's Family plan ($15/month) lets up to 5 members write or edit posts.",
+          "whyItMatters": "Multi-author support matters for families, small teams, or shared publications.",
+          "benefitsWho": "Families or small teams publishing together (Micro.blog)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Publishing Workflow",
+          "rows": [
+            {
+              "feature": "File-based/drag-and-drop publishing",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Custom domain support",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "SSL certificates included",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Use your own text editor to publish",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            {
+              "feature": "Free trial",
+              "toolA": "unavailable",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Entry-level price",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Blot: $6/month per site; Micro.blog: $5/month base plan"
+            },
+            {
+              "feature": "Multiple blogs on one account",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Micro.blog Premium, up to 5 blogs, $10/month"
+            },
+            {
+              "feature": "Annual billing discount",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Collaboration & Distribution",
+          "rows": [
+            {
+              "feature": "Cross-posting to Mastodon/Threads/Bluesky",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Multi-member collaboration",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Micro.blog Family, up to 5 members, $15/month"
+            },
+            {
+              "feature": "Podcast/video hosting",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Micro.blog Studio, $20/month"
+            },
+            {
+              "feature": "Email newsletters",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Micro.blog Premium, $10/month"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How does Blot's publishing model differ from Micro.blog's?",
+          "answer": "Blot turns a synced folder of files into a website — you add, edit, or delete files and Blot publishes the changes. Micro.blog uses its own web-based posting interface plus automatic cross-posting to Mastodon, Threads, and Bluesky."
+        },
+        {
+          "question": "Which is cheaper for a single site?",
+          "answer": "Blot is a flat $6/month per site with all templates included. Micro.blog's base plan is $5/month, but multi-blog, newsletter, and video features require upgrading to Premium ($10), Family ($15), or Studio ($20)."
+        },
+        {
+          "question": "Can I run multiple blogs on one account?",
+          "answer": "Micro.blog's Premium plan ($10/month) supports up to 5 blogs. Blot is priced and structured per individual site at $6/month each, so running multiple sites multiplies the cost."
+        },
+        {
+          "question": "Does either offer a free trial?",
+          "answer": "No. Neither Blot nor Micro.blog advertises a free trial or free plan."
+        },
+        {
+          "question": "Which supports team collaboration?",
+          "answer": "Micro.blog's Family plan ($15/month) lets up to 5 members write or edit posts. Blot has no documented multi-user collaboration feature."
+        },
+        {
+          "question": "Does Blot support podcasting like Micro.blog's Studio plan?",
+          "answer": "No, podcast recording and video hosting are not documented as Blot features. Micro.blog's Studio plan ($20/month) adds video hosting up to 20 minutes and podcast recording."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "bear-blog-vs-blot",
+    "tool_a_id": "3bc33713-c005-4ff3-a44a-039f94585dff",
+    "tool_a_name": "Bear Blog",
+    "tool_b_id": "53ba4185-9c98-4925-94b6-7aa6336c54d0",
+    "tool_b_name": "Blot",
+    "content": {
+      "verdict": "Bear Blog and Blot both target minimalist, low-friction blogging, but come from opposite pricing and workflow philosophies. Bear Blog is a completely free, open-source platform (source on GitHub at HermanMartinus/bearblog) built with zero JavaScript, ads, or trackers, averaging about 2.7kb per page, with custom domains and RSS/Atom feeds included. Blot is a paid, $6/month-per-site service that turns a synced folder of files into a website, letting writers use their own text editor instead of a web-based CMS, with all templates, custom domains, and SSL included at that flat price. The choice comes down to budget and workflow: a free, tracker-free hosted platform (Bear Blog) versus a paid, file-based publishing model (Blot).",
+      "bestForToolA": "Bear Blog suits privacy-conscious writers who want a completely free, ad-free, tracker-free, and JavaScript-free blogging platform with minimal setup.",
+      "bestForToolB": "Blot suits writers who prefer editing in their own text editor and dragging files into a synced folder, and are willing to pay $6/month per site for that workflow plus all templates and SSL included.",
+      "whoNeedsBoth": "There's no natural combined use case since each is a complete, standalone blogging solution. A writer with multiple projects might run a personal free blog on Bear Blog while paying for a client or professional site on Blot, but these remain separate, unconnected sites.",
+      "keyDifferences": [
+        {
+          "title": "Pricing",
+          "toolA": "Bear Blog is free to use with no advertised paid tier.",
+          "toolB": "Blot costs $6/month per site, with no free trial.",
+          "whyItMatters": "Free versus paid access changes who can realistically adopt the platform, especially for hobbyist or budget-limited writers.",
+          "benefitsWho": "Hobbyist writers and students who want zero-cost publishing (Bear Blog)."
+        },
+        {
+          "title": "Publishing Workflow",
+          "toolA": "Bear Blog is a hosted, web-based blogging platform.",
+          "toolB": "Blot turns a synced folder of files into a website, letting you publish by editing files in your own text editor.",
+          "whyItMatters": "A file-based workflow appeals to writers who prefer working outside a browser CMS; a web-based platform is more accessible to those who don't want local tooling.",
+          "benefitsWho": "Developers and technical writers who already work in text editors and version-controlled folders (Blot)."
+        },
+        {
+          "title": "Tracker-Free, No-JavaScript Design",
+          "toolA": "Bear Blog is built with zero trackers, ads, or JavaScript by design, averaging roughly 2.7kb per page.",
+          "toolB": "Not documented as a specific design goal for Blot.",
+          "whyItMatters": "A tracker-free, JS-free design supports both privacy and page-load speed.",
+          "benefitsWho": "Privacy-focused writers and readers who want minimal, fast-loading pages (Bear Blog)."
+        },
+        {
+          "title": "Open-Source Codebase",
+          "toolA": "Bear Blog's source code is publicly available on GitHub at HermanMartinus/bearblog.",
+          "toolB": "Not documented whether Blot's source code is open.",
+          "whyItMatters": "Open-source availability lets developers inspect, self-host, or contribute to the underlying code.",
+          "benefitsWho": "Developers who want to review or extend the platform's codebase (Bear Blog)."
+        },
+        {
+          "title": "Templates Included",
+          "toolA": "Bear Blog offers a selection of free themes out of the box.",
+          "toolB": "Blot includes access to all available site templates at its single flat $6/month price.",
+          "whyItMatters": "Template breadth affects design flexibility without extra cost.",
+          "benefitsWho": "Writers who want more template variety bundled into one flat price (Blot)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Cost & Licensing",
+          "rows": [
+            {
+              "feature": "Free to use",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Blot: $6/month per site, no free trial"
+            },
+            {
+              "feature": "Open-source codebase",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Bear Blog: GitHub HermanMartinus/bearblog"
+            },
+            {
+              "feature": "Custom domain support",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Publishing Workflow",
+          "rows": [
+            {
+              "feature": "File/folder-based publishing",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "RSS/Atom feeds",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "All templates included",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Bear Blog: selection of free themes; Blot: all templates at flat price"
+            },
+            {
+              "feature": "SSL certificates included",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Site Performance & Features",
+          "rows": [
+            {
+              "feature": "No JavaScript/trackers/ads by design",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Documented average page weight",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Bear Blog: ~2.7kb per page"
+            },
+            {
+              "feature": "Annual billing discount",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Bear Blog really free, unlike Blot?",
+          "answer": "Yes. Bear Blog is free to use with no advertised paid tier. Blot costs $6 per month per site with no free trial."
+        },
+        {
+          "question": "Which platform is more privacy-focused?",
+          "answer": "Bear Blog is built with zero trackers, ads, or JavaScript by design, averaging about 2.7kb per page. This level of tracker-free design is not documented for Blot."
+        },
+        {
+          "question": "How do the two platforms differ in publishing workflow?",
+          "answer": "Bear Blog is a hosted, web-based blogging platform. Blot instead turns a synced folder of files, edited in your own text editor, into a live website."
+        },
+        {
+          "question": "Is Bear Blog open source?",
+          "answer": "Yes, its source code is publicly available on GitHub at HermanMartinus/bearblog. Blot's source code openness is not documented."
+        },
+        {
+          "question": "Do both support custom domains?",
+          "answer": "Yes, both Bear Blog and Blot include custom domain support."
+        },
+        {
+          "question": "Does either offer a free trial or free tier?",
+          "answer": "Bear Blog is free to use outright with no paid tier. Blot has no free trial and requires the $6/month per site plan from the start."
+        }
+      ]
+    }
+  }
+]

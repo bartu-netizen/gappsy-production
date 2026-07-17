@@ -1,0 +1,1130 @@
+{
+  "stytch": {
+    "name": "Stytch",
+    "slug": "stytch",
+    "short_description": "Stytch is an identity platform providing authentication, authorization, and fraud prevention APIs for humans and AI agents.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/month (Pay As You Go, free up to 10,000 MAUs)",
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "SAML and OIDC single sign-on plus SCIM provisioning, with the first 5 SSO/SCIM connections included free.",
+        "title": "Enterprise SSO & SCIM"
+      },
+      {
+        "description": "Passkeys, magic links, and one-time passcodes delivered via SMS and email, with automatic provider failover for delivery reliability.",
+        "title": "Passwordless authentication"
+      },
+      {
+        "description": "Authentication for service-to-service calls and AI agents, with 1,000 M2M tokens included in the free tier.",
+        "title": "Machine-to-machine (M2M) authentication"
+      },
+      {
+        "description": "Device fingerprinting and intelligent rate limiting, described as achieving 99.99% bot detection accuracy, with 10,000 free fingerprints per month.",
+        "title": "Fraud and bot protection"
+      },
+      {
+        "description": "Organization-level policies, RBAC, and SCIM support for building B2B applications with unlimited organizations, even on the free tier.",
+        "title": "Turnkey multi-tenancy"
+      },
+      {
+        "description": "A self-service portal that lets enterprise customers manage their own SSO and SCIM connections.",
+        "title": "Embeddable Admin Portal"
+      },
+      {
+        "description": "Support for cross-application integrations between a company's own products and third-party apps.",
+        "title": "Connected Apps"
+      },
+      {
+        "description": "Prebuilt, customizable login UI components alongside headless SDKs and backend APIs for full flexibility.",
+        "title": "Web & mobile UI components"
+      }
+    ],
+    "pros": [
+      "Free tier includes 10,000 monthly active users/AI agents, unlimited organizations, 5 SSO/SCIM connections, and 1,000 M2M tokens",
+      "Pricing has no hard caps or pricing cliffs, so overages are billed for actual usage only",
+      "Explicit support for machine-to-machine and AI agent authentication, not just human end users",
+      "Broad auth method coverage including passkeys, OAuth, SSO, sessions, and RBAC in the base tier",
+      "Backed by Twilio after Stytch joined the company, adding messaging infrastructure depth"
+    ],
+    "cons": [
+      "SSO/SCIM connections beyond the free 5 cost $125 per connection, similar to competitors",
+      "Enterprise pricing, including HIPAA/BAA compliance and a 99.99% uptime SLA, is custom and not publicly listed",
+      "Brand customization requires a separate $99 one-time fee",
+      "Fraud prevention fingerprinting beyond the free 10,000 is billed per use at $0.005 each"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes. The Pay As You Go plan is free up to 10,000 monthly active users/AI agents, 5 SSO or SCIM connections, and 1,000 M2M tokens.",
+        "question": "Is Stytch free to use?"
+      },
+      {
+        "answer": "Yes, Stytch positions itself as an identity platform for both humans and AI agents, and its free tier explicitly covers AI agents alongside human monthly active users.",
+        "question": "Does Stytch support authentication for AI agents?"
+      },
+      {
+        "answer": "Stytch charges usage-based overages with no hard caps or pricing cliffs, plus $125 per additional SSO/SCIM connection beyond the 5 included free.",
+        "question": "What happens if usage exceeds the free tier?"
+      },
+      {
+        "answer": "Yes, Stytch has joined Twilio to build what the company describes as the intelligent identity layer for the internet.",
+        "question": "Is Stytch part of Twilio?"
+      },
+      {
+        "answer": "Yes, via device fingerprinting (10,000 free per month, then $0.005 each) and intelligent rate limiting for bot detection.",
+        "question": "Does Stytch offer fraud protection?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "10,000 free MAUs/AI agents",
+          "Unlimited organizations",
+          "5 free SSO/SCIM connections",
+          "1,000 free M2M tokens",
+          "OAuth, SSO, Sessions, RBAC"
+        ],
+        "plan_name": "Pay As You Go",
+        "price": "$0/month base, usage-based overages"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "99.99% uptime SLA",
+          "HIPAA/BAA compliance",
+          "Advanced fraud protection",
+          "Private support channels",
+          "Migration assistance"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "api",
+      "freemium"
+    ]
+  },
+  "keycloak": {
+    "name": "Keycloak",
+    "slug": "keycloak",
+    "short_description": "Open-source identity and access management platform supporting OpenID Connect, OAuth 2.0, and SAML.",
+    "pricing_model": "Free",
+    "starting_price": null,
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Users authenticate with Keycloak rather than with each individual application.",
+        "title": "Single sign-on"
+      },
+      {
+        "description": "Broker identities from external providers and support social login.",
+        "title": "Identity brokering and social login"
+      },
+      {
+        "description": "Connects to existing LDAP or Active Directory directories for user federation.",
+        "title": "User federation"
+      },
+      {
+        "description": "Centralized admin console for managing realms, users, and clients.",
+        "title": "Admin console"
+      },
+      {
+        "description": "Self-service console lets users manage their own account details.",
+        "title": "Account management console"
+      },
+      {
+        "description": "Authorization services go beyond simple role-based access control.",
+        "title": "Fine-grained authorization"
+      }
+    ],
+    "pros": [
+      "Completely free and open source",
+      "A Cloud Native Computing Foundation (CNCF) incubating project",
+      "Supports major identity protocols: OpenID Connect, OAuth 2.0, and SAML",
+      "Federates with existing LDAP or Active Directory directories",
+      "Provides fine-grained authorization beyond simple role-based access"
+    ],
+    "cons": [
+      "No official managed cloud/hosted offering from the project itself",
+      "Self-hosting and configuration require operational expertise",
+      "No commercial vendor support included by default as a community project"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes, Keycloak is open-source software with no licensing cost.",
+        "question": "Is Keycloak free?"
+      },
+      {
+        "answer": "OpenID Connect, OAuth 2.0, and SAML.",
+        "question": "What protocols does Keycloak support?"
+      },
+      {
+        "answer": "Yes, it supports user federation with LDAP and Active Directory.",
+        "question": "Can Keycloak connect to an existing directory?"
+      },
+      {
+        "answer": "Keycloak is a Cloud Native Computing Foundation incubation project.",
+        "question": "Who governs the Keycloak project?"
+      }
+    ],
+    "pricing_plans": [],
+    "tags": [
+      "api"
+    ]
+  },
+  "trufflehog": {
+    "name": "TruffleHog",
+    "slug": "trufflehog",
+    "short_description": "TruffleHog is a secret-scanning tool from Truffle Security Co. that finds and verifies exposed credentials across git repos, Docker images, and cloud storage.",
+    "pricing_model": "Freemium",
+    "starting_price": null,
+    "founded_year": 2021,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Scans git version history, Docker images, and comments to find exposed secrets, not just the latest commit.",
+        "title": "Deep repository scanning"
+      },
+      {
+        "description": "Programmatically verifies discovered secrets against the relevant service/API to eliminate false positives.",
+        "title": "Live credential verification"
+      },
+      {
+        "description": "Ships with detectors for 800+ secret types out of the box.",
+        "title": "800+ secret detectors"
+      },
+      {
+        "description": "Analyzes all branches in a repository, not just the primary branch.",
+        "title": "Multi-branch scanning"
+      },
+      {
+        "description": "Blocks secrets from being committed or pushed in the first place.",
+        "title": "Pre-commit and pre-receive hooks"
+      },
+      {
+        "description": "Automatically identifies the resources and permissions tied to a found API key or secret.",
+        "title": "TruffleHog Analyze"
+      },
+      {
+        "description": "Supports custom regex rules in addition to built-in detectors.",
+        "title": "Custom regex support"
+      },
+      {
+        "description": "Tracks the status of found keys and sends alert reminders with rotation guidance.",
+        "title": "Remediation tracking"
+      }
+    ],
+    "pros": [
+      "Free, open-source core with 800+ built-in secret detectors",
+      "Verifies secrets live against real services/APIs to cut down false positives",
+      "Scans across full git history, multiple branches, and Docker images, not just the latest commit",
+      "Pre-commit and pre-receive hook support to prevent leaks before they happen",
+      "Enterprise tier adds SSO, RBAC, a management dashboard, and 20+ integrations for larger teams"
+    ],
+    "cons": [
+      "Enterprise pricing is not publicly listed and requires contacting sales",
+      "Dashboard, continuous monitoring, SSO/RBAC, and most integrations are Enterprise-only, not in the open-source version",
+      "Add-ons like TruffleHog Analyze and Forager are sold separately from the core scanner"
+    ],
+    "faqs": [
+      {
+        "answer": "The open-source core is free, offering GitHub, S3, directory, GCS, and Docker scanning with 800+ detectors.",
+        "question": "Is TruffleHog free to use?"
+      },
+      {
+        "answer": "It scans GitHub, S3, local directories, GCS, and Docker images/history for exposed secrets.",
+        "question": "What does TruffleHog scan?"
+      },
+      {
+        "answer": "Yes, it uses programmatic verification against the relevant service or API to confirm a secret is live, reducing false positives.",
+        "question": "Does TruffleHog verify the secrets it finds?"
+      },
+      {
+        "answer": "Enterprise adds 20+ integrations (GitHub, Confluence, JIRA, Slack, etc.), on-premises/cloud deployment choice, continuous monitoring, a management dashboard, SSO, RBAC, and priority support.",
+        "question": "What does the Enterprise tier add?"
+      },
+      {
+        "answer": "TruffleHog is made by Truffle Security Co., founded in 2021.",
+        "question": "Who makes TruffleHog?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": null,
+        "features": [
+          "GitHub, S3, directory, GCS, and Docker scanning",
+          "800+ secret detectors",
+          "GitHub Actions, pre-commit, and pre-receive hooks",
+          "Custom regex and secrets verification",
+          "Automatic updates"
+        ],
+        "plan_name": "Open Source",
+        "price": "Free"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "All open-source capabilities",
+          "20+ integrations (GitHub, Confluence, JIRA, Slack, etc.)",
+          "On-premises and cloud deployment options",
+          "Continuous monitoring",
+          "Dashboard for secrets management",
+          "Alerting with analytics and reporting",
+          "Single sign-on (SAML 2.0 or OAuth 2.0)",
+          "Role-based access control",
+          "Deployment and onboarding support",
+          "Priority technical support"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom (contact sales)"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "freemium"
+    ]
+  },
+  "1password-secrets-automation": {
+    "name": "1Password Secrets Automation",
+    "slug": "1password-secrets-automation",
+    "short_description": "A 1Password developer feature for automating secrets access in apps and cloud infrastructure via Service Accounts or self-hosted Connect servers.",
+    "pricing_model": "Paid",
+    "starting_price": null,
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "An authentication method for the 1Password CLI that isn't tied to an individual user, letting teams automate secrets management without deploying additional infrastructure.",
+        "title": "Service Accounts"
+      },
+      {
+        "description": "A self-hosted alternative that caches data in your own infrastructure, giving more control, scalability, and reduced dependency on the 1Password API, plus REST API access not available with Service Accounts.",
+        "title": "Connect servers"
+      },
+      {
+        "description": "Both Service Accounts and Connect servers work through the 1Password CLI for scripting and automation.",
+        "title": "1Password CLI integration"
+      },
+      {
+        "description": "Pre-built integrations sync secrets into pipelines such as GitHub Actions, CircleCI, and Jenkins, with the ability to build custom integrations.",
+        "title": "CI/CD pipeline integrations"
+      },
+      {
+        "description": "Documented support for syncing secrets into Kubernetes environments.",
+        "title": "Kubernetes integration"
+      },
+      {
+        "description": "Developers can reference secrets stored in 1Password instead of hardcoding credentials in application code.",
+        "title": "Secret references"
+      },
+      {
+        "description": "Extensions help developers work with APIs and databases while detecting exposed secrets before they're committed to a repository.",
+        "title": "IDE extensions"
+      }
+    ],
+    "pros": [
+      "Included with a 1Password subscription rather than sold as a separate line item",
+      "Service Accounts require no additional infrastructure to deploy",
+      "Connect servers give teams control over caching and reduce reliance on 1Password's API availability",
+      "Pre-built CI/CD integrations for common tools like GitHub Actions, CircleCI, and Jenkins",
+      "CLI-based workflow supports automating tasks such as credential rotation"
+    ],
+    "cons": [
+      "Service Accounts use a rate-limited access model",
+      "Connect servers must be self-hosted by the customer, adding operational overhead",
+      "REST API access is only available through Connect, not Service Accounts",
+      "No dedicated public pricing page separate from general 1Password subscription plans"
+    ],
+    "faqs": [
+      {
+        "answer": "It is a set of tools for securely accessing 1Password items and vaults from a company's applications and cloud infrastructure, using either Service Accounts or Connect servers.",
+        "question": "What is 1Password Secrets Automation?"
+      },
+      {
+        "answer": "Service Accounts are a low-overhead, rate-limited authentication method for the 1Password CLI with no infrastructure to deploy, while Connect servers are self-hosted, cache data locally, and expose a REST API.",
+        "question": "What is the difference between Service Accounts and Connect servers?"
+      },
+      {
+        "answer": "According to 1Password's documentation, it is included with a 1Password subscription rather than billed separately.",
+        "question": "Does Secrets Automation cost extra?"
+      },
+      {
+        "answer": "1Password documents pre-built integrations for GitHub Actions, CircleCI, and Jenkins, along with support for building custom integrations.",
+        "question": "Which CI/CD tools integrate with Secrets Automation?"
+      }
+    ],
+    "pricing_plans": [],
+    "tags": [
+      "api"
+    ]
+  },
+  "keeweb": {
+    "name": "KeeWeb",
+    "slug": "keeweb",
+    "short_description": "Free, open-source, cross-platform password manager compatible with KeePass database files.",
+    "pricing_model": "Free",
+    "starting_price": null,
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "KeeWeb works with existing KeePass password database files.",
+        "title": "KeePass compatibility"
+      },
+      {
+        "description": "Open multiple password database files at once with unified search across all of them.",
+        "title": "Multi-file support"
+      },
+      {
+        "description": "Generate new passwords with customizable parameters.",
+        "title": "Password generator"
+      },
+      {
+        "description": "Sensitive fields are hidden by default and only revealed on demand.",
+        "title": "Protected fields"
+      },
+      {
+        "description": "Previous versions of an entry are tracked and can be restored.",
+        "title": "Entry history with rollback"
+      },
+      {
+        "description": "Advanced search supports regular expressions for finding entries.",
+        "title": "Regex search"
+      },
+      {
+        "description": "Sync database files with Dropbox, Google Drive, OneDrive, or a custom WebDAV server.",
+        "title": "Cloud storage integrations"
+      }
+    ],
+    "pros": [
+      "Completely free with no trials, demos, or limits, per the website",
+      "Open source, with source code available on GitHub",
+      "Compatible with existing KeePass password database files",
+      "Syncs with Dropbox, Google Drive, OneDrive, or custom WebDAV servers",
+      "Available as a desktop app for macOS, Windows, and Linux, plus a browser-based web version"
+    ],
+    "cons": [
+      "No dedicated official iOS or Android app mentioned on the site",
+      "No built-in team sharing or collaboration features",
+      "No official paid support option"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes, the website states the app is completely free, with no trials, demo versions, or limits.",
+        "question": "Is KeeWeb free?"
+      },
+      {
+        "answer": "Yes, KeeWeb is compatible with KeePass password database files.",
+        "question": "Is KeeWeb compatible with KeePass?"
+      },
+      {
+        "answer": "Dropbox, Google Drive, OneDrive, and custom WebDAV servers.",
+        "question": "What cloud storage services does KeeWeb support?"
+      },
+      {
+        "answer": "Desktop apps for macOS, Windows, and Linux, plus a web version that runs in modern browsers.",
+        "question": "What platforms does KeeWeb support?"
+      }
+    ],
+    "pricing_plans": [],
+    "tags": [
+      "windows",
+      "web-app",
+      "mac"
+    ]
+  },
+  "permit-io": {
+    "name": "Permit.io",
+    "slug": "permit-io",
+    "short_description": "Permit.io is a real-time authorization platform for RBAC, ABAC, and ReBAC access control across apps and AI agents, built on OPA and OPAL.",
+    "pricing_model": "Freemium",
+    "starting_price": "$5/month",
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Authenticates AI agents, gates tokens, collects consent, and governs tool access in real time.",
+        "title": "MCP Gateway"
+      },
+      {
+        "description": "Supports RBAC, ABAC, and ReBAC with policy-as-code workflows.",
+        "title": "Multi-model policy engine"
+      },
+      {
+        "description": "Delivers sub-millisecond authorization decisions, deployable in-VPC or at the edge.",
+        "title": "Distributed Policy Decision Point (PDP)"
+      },
+      {
+        "description": "Embeddable UI components for building approval and access-request workflows into applications.",
+        "title": "Elements"
+      },
+      {
+        "description": "Provides visibility across human-to-agent-to-tool-to-data authorization chains.",
+        "title": "Audit logs and decision traces"
+      },
+      {
+        "description": "AI monitoring that watches for anomalous access behavior and recommends security policy changes.",
+        "title": "Guardian Agents"
+      },
+      {
+        "description": "Uses the open-source Open Policy Agent and OPAL projects as its policy engine foundation, available managed or self-hosted.",
+        "title": "Built on OPA and OPAL"
+      }
+    ],
+    "pros": [
+      "Free Community plan with up to 1,000 monthly active users and unlimited authorization microservices",
+      "Supports RBAC, ABAC, ReBAC, and PBAC in one policy engine",
+      "Built on established open-source projects (OPA/OPAL) rather than a proprietary policy language",
+      "Offers both managed cloud and self-hosted/on-premises deployment",
+      "SOC 2 Type II certified, with HIPAA/GDPR/CCPA compliance options at the Enterprise tier"
+    ],
+    "cons": [
+      "SSO support requires an additional cost even on the paid Pro plan",
+      "Full compliance suite (HIPAA BAA, complete SOC 2 documentation) is limited to the custom Enterprise tier",
+      "Tenant and MAU limits on Community/Startup plans may require upgrading as usage grows"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes. The Community plan is free forever for up to 1,000 monthly active users, 20 tenants, and 3 environments.",
+        "question": "Is Permit.io free to use?"
+      },
+      {
+        "answer": "RBAC, ABAC, ReBAC, and PBAC, managed through a UI and API alongside infrastructure-as-code workflows.",
+        "question": "What authorization models does Permit.io support?"
+      },
+      {
+        "answer": "Yes. Because it's built on the open-source OPA and OPAL projects, Permit.io supports both managed and self-hosted deployment, including on-premises for Enterprise customers.",
+        "question": "Can Permit.io be self-hosted?"
+      },
+      {
+        "answer": "Yes. It offers an MCP Gateway for authenticating and governing AI agent tool access, plus Guardian Agents that monitor for anomalous behavior and recommend policy changes.",
+        "question": "Does Permit.io have AI-specific features?"
+      },
+      {
+        "answer": "Plans scale by monthly active users and tenant count: Community is free, Startup starts from $5/month, Pro starts from $25/month, and Enterprise uses custom pricing.",
+        "question": "How is Permit.io priced?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": null,
+        "features": [
+          "UI and API access for RBAC, ABAC, ReBAC, PBAC, and IaC",
+          "Embeddable authorization interfaces",
+          "Unlimited authorization microservices",
+          "Up to 1,000 MAU",
+          "20 tenants max",
+          "3 environments",
+          "14-day log retention"
+        ],
+        "plan_name": "Community",
+        "price": "Free"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "Up to 25,000 MAU and 100 tenants",
+          "5 environments",
+          "Full GitOps CI/CD pipeline for automated deployments",
+          "Extended audit log retention"
+        ],
+        "plan_name": "Startup",
+        "price": "From $5/month"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "Up to 50,000 MAU and 20,000 tenants",
+          "50 environments",
+          "Dedicated Slack support",
+          "SOC 2 Type II compliance certification",
+          "SSO support (additional cost)"
+        ],
+        "plan_name": "Pro",
+        "price": "From $25/month"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "Unlimited MAU and tenants",
+          "Unlimited projects and environments",
+          "Dedicated customer success representative",
+          "Full compliance suite (HIPAA BAA, GDPR, CCPA, SOC 2)",
+          "Multi-cloud and on-premises deployment",
+          "Advanced uptime SLA"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "web-app",
+      "api",
+      "ai",
+      "freemium"
+    ]
+  },
+  "zitadel": {
+    "name": "Zitadel",
+    "slug": "zitadel",
+    "short_description": "Open-source identity infrastructure platform with hosted login, MFA, and multi-tenancy, free up to 100 daily active users.",
+    "pricing_model": "Freemium",
+    "starting_price": "$100/month",
+    "founded_year": null,
+    "headquarters": "San Francisco, CA",
+    "features": [
+      {
+        "description": "Provides ready-made, hosted login pages for authentication.",
+        "title": "Hosted login pages"
+      },
+      {
+        "description": "Supports multi-factor authentication and passwordless login via passkeys.",
+        "title": "MFA and passwordless"
+      },
+      {
+        "description": "Supports social login through Google, Microsoft, and GitHub.",
+        "title": "Social logins"
+      },
+      {
+        "description": "Manage user permissions through role-based access control.",
+        "title": "Role-based access control"
+      },
+      {
+        "description": "Extend applications to new organizations for multi-tenant use cases.",
+        "title": "Multi-tenancy"
+      },
+      {
+        "description": "Modern gRPC and REST APIs support custom integrations.",
+        "title": "gRPC and REST APIs"
+      },
+      {
+        "description": "Execute custom workflows after predefined authentication events.",
+        "title": "ZITADEL Actions"
+      }
+    ],
+    "pros": [
+      "Free tier includes unlimited users and organizations, up to 100 daily active users",
+      "Open source with an active GitHub community (4,000+ stars reported)",
+      "ISO 27001 certified, SOC2 Type II certified, and OpenID certified",
+      "Data residency options across the EU, US, Switzerland, and Australia",
+      "Reports serving customers in 69 countries"
+    ],
+    "cons": [
+      "Free tier is capped at 100 daily active users",
+      "Pro plan caps out at 25,000 daily active users before requiring Enterprise",
+      "Enterprise pricing requires contacting sales"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes, ZITADEL has a free plan covering unlimited users and organizations up to 100 daily active users.",
+        "question": "Is ZITADEL free?"
+      },
+      {
+        "answer": "$100 per month, which includes up to 25,000 daily active users.",
+        "question": "How much does ZITADEL Pro cost?"
+      },
+      {
+        "answer": "ZITADEL offers data residency options in the EU, US, Switzerland, and Australia.",
+        "question": "Where can ZITADEL data be hosted?"
+      },
+      {
+        "answer": "Yes, ZITADEL is available as open source on GitHub.",
+        "question": "Is ZITADEL open source?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "Unlimited users and organizations",
+          "100 daily active users",
+          "3 identity providers",
+          "Data residency options"
+        ],
+        "plan_name": "Free",
+        "price": "$0/month"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "25,000 daily active users",
+          "Custom domain",
+          "99.5% uptime guarantee",
+          "1-hour response SLO"
+        ],
+        "plan_name": "Pro",
+        "price": "$100/month"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "Unlimited daily active users",
+          "Technical account manager",
+          "99.99% uptime guarantee",
+          "Cloud or self-hosted infrastructure"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "api",
+      "freemium"
+    ]
+  },
+  "openfga": {
+    "name": "OpenFGA",
+    "slug": "openfga",
+    "short_description": "Open-source, CNCF-incubating engine for fine-grained, relationship-based authorization inspired by Google Zanzibar.",
+    "pricing_model": "Free",
+    "starting_price": null,
+    "founded_year": 2022,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Uses an authorization modeling language, based on concepts from Google's Zanzibar paper, to define relationship-based access control between users and resources.",
+        "title": "Zanzibar-inspired ReBAC modeling"
+      },
+      {
+        "description": "Designed to answer authorization check calls in milliseconds, suitable for use in the request path of applications and APIs.",
+        "title": "Millisecond authorization checks"
+      },
+      {
+        "description": "Supports role-based, attribute-based, and relationship-based access control patterns within the same system.",
+        "title": "Multi-model support (RBAC, ABAC, ReBAC)"
+      },
+      {
+        "description": "Official SDKs are available for Node.js, Go, .NET, Python, and Java, alongside a CLI and direct HTTP API access.",
+        "title": "Multi-language SDKs"
+      },
+      {
+        "description": "Runs as a standalone OpenFGA server that teams can deploy themselves, for example by pulling the official Docker image.",
+        "title": "Self-hosted server via Docker"
+      },
+      {
+        "description": "Provides Check, Read, Expand, and ListObjects operations for querying and evaluating relationship tuples.",
+        "title": "Relationship query API"
+      },
+      {
+        "description": "Developed with a transparent RFC process and public roadmap, and maintained by contributors including engineers from Okta, Grafana Labs, and Gitpod.",
+        "title": "Community governance"
+      }
+    ],
+    "pros": [
+      "Free and fully open source, with no licensing cost",
+      "CNCF incubating project, providing vendor-neutral governance",
+      "Adopted in production by organizations such as Auth0, Okta, Docker, and Grafana",
+      "SDKs for several popular languages reduce integration effort",
+      "Flexible enough to model RBAC, ABAC, and ReBAC in one system"
+    ],
+    "cons": [
+      "Requires self-hosting and operating your own OpenFGA server; openfga.dev does not document a managed hosted offering",
+      "Zanzibar-style relationship modeling has a learning curve for teams unfamiliar with the approach",
+      "As a community open-source project, formal commercial support is not part of the core openfga.dev offering"
+    ],
+    "faqs": [
+      {
+        "answer": "OpenFGA is an open-source authorization system that lets developers implement fine-grained, relationship-based access control using an authorization modeling language and API.",
+        "question": "What is OpenFGA?"
+      },
+      {
+        "answer": "Yes. OpenFGA is free and open source, and can be self-hosted (for example via Docker) with no licensing fees.",
+        "question": "Is OpenFGA free to use?"
+      },
+      {
+        "answer": "OpenFGA is a CNCF incubating project. It was originally created by Auth0/Okta and open sourced in 2022, and is now maintained by a broader community including engineers from Grafana Labs and Gitpod.",
+        "question": "Who maintains OpenFGA?"
+      },
+      {
+        "answer": "OpenFGA supports relationship-based access control (ReBAC) inspired by Google's Zanzibar paper, as well as role-based (RBAC) and attribute-based (ABAC) access control patterns.",
+        "question": "What authorization models does OpenFGA support?"
+      },
+      {
+        "answer": "OpenFGA offers SDKs for Node.js, Go, .NET, Python, and Java, in addition to a CLI and a direct HTTP API.",
+        "question": "What SDKs does OpenFGA provide?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": null,
+        "features": [
+          "Self-hosted OpenFGA server (e.g., via Docker)",
+          "Full relationship-query API access (Check, Read, Expand, ListObjects)",
+          "SDKs for Node.js, Go, .NET, Python, and Java",
+          "Community support and public roadmap"
+        ],
+        "plan_name": "Open Source (self-hosted)",
+        "price": "Free"
+      }
+    ],
+    "tags": [
+      "api"
+    ]
+  },
+  "cerbos": {
+    "name": "Cerbos",
+    "slug": "cerbos",
+    "short_description": "Open-source and cloud authorization platform for fine-grained RBAC, ABAC, and ReBAC access control across apps, APIs, and AI agents.",
+    "pricing_model": "Freemium",
+    "starting_price": "$25/month",
+    "founded_year": 2021,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Define policies using RBAC, ABAC, ReBAC, or PBAC models in a YAML-based policy language.",
+        "title": "Multiple authorization models"
+      },
+      {
+        "description": "Govern and revoke AI agent access to tools and actions in seconds, with support for the Model Context Protocol (MCP).",
+        "title": "AI agent guardrails"
+      },
+      {
+        "description": "Centralized policy administration point for managing, testing, and deploying policies across environments.",
+        "title": "Cerbos Hub"
+      },
+      {
+        "description": "Enriches authorization decisions with context pulled from existing systems and data sources.",
+        "title": "Cerbos Synapse"
+      },
+      {
+        "description": "Policy Decision Points (PDPs) are built for high-volume authorization checks with very low latency.",
+        "title": "Sub-millisecond decision latency"
+      },
+      {
+        "description": "Captures every authorization decision along with policy lineage for compliance and traceability.",
+        "title": "Audit-ready logging"
+      },
+      {
+        "description": "Runs in Cerbos Hub (cloud), self-hosted, on-premise, or in air-gapped environments.",
+        "title": "Flexible deployment"
+      },
+      {
+        "description": "Client SDKs available for JavaScript, Python, Go, Rust, Java, .NET, PHP, and Ruby.",
+        "title": "Broad SDK support"
+      }
+    ],
+    "pros": [
+      "Free, open-source core with unlimited monthly active principals (MAPs)",
+      "Supports RBAC, ABAC, ReBAC, and PBAC in a single policy engine",
+      "Can be deployed on-premise or air-gapped for regulated, high-security environments",
+      "Broad SDK/language coverage across major backend stacks",
+      "Purpose-built AI agent authorization features, including MCP integration"
+    ],
+    "cons": [
+      "Production tier starts at $933/month, a steep jump from the $25/month Development tier",
+      "Policy build counts and audit log retention are capped on lower-tier paid plans",
+      "SSO and self-hosted Cerbos Hub require moving to custom Enterprise pricing"
+    ],
+    "faqs": [
+      {
+        "answer": "Yes. Cerbos has a free, open-source version with unlimited monthly active principals, plus a free $0/month Proof of Concept tier for evaluating Cerbos Hub.",
+        "question": "Is Cerbos free to use?"
+      },
+      {
+        "answer": "Cerbos supports RBAC, ABAC, ReBAC, and PBAC policy models, defined in a YAML-based policy language.",
+        "question": "What authorization models does Cerbos support?"
+      },
+      {
+        "answer": "Yes. In addition to its managed Cerbos Hub cloud offering, Cerbos can run self-hosted, on-premise, or in air-gapped environments.",
+        "question": "Can Cerbos be self-hosted?"
+      },
+      {
+        "answer": "Yes. Cerbos provides AI agent guardrails for governing and revoking agent tool access, including integration with the Model Context Protocol (MCP).",
+        "question": "Does Cerbos support AI agent authorization?"
+      },
+      {
+        "answer": "The Production plan starts from $933/month and includes the first 5,000 monthly active principals plus one year of unified audit logs.",
+        "question": "How much does the Production plan cost?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": null,
+        "features": [
+          "Unlimited monthly active principals",
+          "YAML-based policy definition",
+          "Audit logs",
+          "CI/CD & IDE tooling",
+          "Community support",
+          "Run anywhere: on-premise or cloud"
+        ],
+        "plan_name": "Open Source",
+        "price": "Free"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "Up to 100 monthly active principals",
+          "1 workspace, 2 developers",
+          "2 Playgrounds",
+          "2 simultaneous PDPs",
+          "Up to 5 custom tenants",
+          "1 week of unified audit logs"
+        ],
+        "plan_name": "Proof of Concept",
+        "price": "$0/month"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "First 100 MAPs included",
+          "3-month free trial",
+          "3 workspaces, 5 developers",
+          "Up to 10 simultaneous PDPs",
+          "3 months of unified audit logs",
+          "Uptime SLA",
+          "Live chat support"
+        ],
+        "plan_name": "Development",
+        "price": "From $25/month"
+      },
+      {
+        "billing_cycle": "monthly",
+        "features": [
+          "First 5,000 MAPs included",
+          "Unlimited workspaces & developers",
+          "Unlimited PDPs and tenants",
+          "1 year of unified audit logs",
+          "Uptime SLA",
+          "Live chat support"
+        ],
+        "plan_name": "Production",
+        "price": "From $933/month"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "SSO support",
+          "Self-hosted Cerbos Hub",
+          "Custom audit log retention",
+          "Custom training support",
+          "Enterprise support SLA",
+          "Phone support"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "web-app",
+      "free-trial",
+      "api",
+      "freemium"
+    ]
+  },
+  "veracode": {
+    "name": "Veracode",
+    "slug": "veracode",
+    "short_description": "Veracode is an application security platform offering SAST, DAST, SCA, container security, and AI-assisted flaw remediation for enterprises.",
+    "pricing_model": "Custom/Enterprise",
+    "starting_price": null,
+    "founded_year": null,
+    "headquarters": null,
+    "features": [
+      {
+        "description": "Finds and helps fix security flaws as code is written.",
+        "title": "SAST"
+      },
+      {
+        "description": "Finds and helps fix runtime vulnerabilities in running web applications.",
+        "title": "DAST"
+      },
+      {
+        "description": "Identifies vulnerabilities in open-source code dependencies.",
+        "title": "SCA (Software Composition Analysis)"
+      },
+      {
+        "description": "Secures container technologies before they reach production.",
+        "title": "Container Security"
+      },
+      {
+        "description": "Uses AI to automate remediation of flagged vulnerabilities and save developer time.",
+        "title": "Fix (AI remediation)"
+      },
+      {
+        "description": "Proactively secures development pipelines against risky packages.",
+        "title": "Package Firewall"
+      },
+      {
+        "description": "Provides unified visibility and remediation tracking of application risk across the organization.",
+        "title": "Risk Manager (ASPM)"
+      },
+      {
+        "description": "Offers penetration testing alongside Security Labs and eLearning modules for developer training.",
+        "title": "Penetration Testing as a Service (PTaaS)"
+      }
+    ],
+    "pros": [
+      "Combines SAST, DAST, SCA, container security, and PTaaS in one platform",
+      "AI-powered Fix feature aims to automate vulnerability remediation",
+      "Reports a low 1.1% false-positive rate",
+      "States it has scanned over 1.5M applications and 471T+ lines of code, with 148M+ flaws fixed",
+      "Used by enterprises including Sitecore, Unisys, BMW, and Garmin, per the site"
+    ],
+    "cons": [
+      "No public pricing is disclosed; must contact sales or request a demo for a quote",
+      "No free trial information is provided on the site",
+      "Specific integrations and supported languages are not enumerated on the main pages reviewed"
+    ],
+    "faqs": [
+      {
+        "answer": "Veracode does not publish pricing; interested organizations must contact sales or request a demo for a custom quote.",
+        "question": "How much does Veracode cost?"
+      },
+      {
+        "answer": "No free trial availability is stated on the Veracode website.",
+        "question": "Does Veracode offer a free trial?"
+      },
+      {
+        "answer": "Veracode offers SAST, DAST, SCA, container security, penetration testing (PTaaS), and AI-powered remediation via its Fix feature.",
+        "question": "What testing types does Veracode support?"
+      },
+      {
+        "answer": "Yes, Veracode's Fix feature uses AI to automate remediation of security flaws to save developer time.",
+        "question": "Does Veracode use AI?"
+      },
+      {
+        "answer": "Veracode states a 1.1% false-positive rate on its website.",
+        "question": "What is Veracode's reported false-positive rate?"
+      }
+    ],
+    "pricing_plans": [],
+    "tags": [
+      "ai"
+    ]
+  },
+  "ory": {
+    "name": "Ory",
+    "slug": "ory",
+    "short_description": "Open-source identity and access management platform for customer, B2B, and machine identity, founded in 2019.",
+    "pricing_model": "Freemium",
+    "starting_price": "$770/year",
+    "founded_year": 2019,
+    "headquarters": "Scottsdale, Arizona",
+    "features": [
+      {
+        "description": "Handles login and signup for customer-facing applications.",
+        "title": "Customer identity (CIAM)"
+      },
+      {
+        "description": "Enterprise SSO, SAML, and SCIM support with granular permissions for B2B use cases.",
+        "title": "B2B identity"
+      },
+      {
+        "description": "Supports identity and access management for services and automated agents, not just human users.",
+        "title": "Machine-to-machine authentication"
+      },
+      {
+        "description": "Architecture designed for stateless horizontal scaling described by the company as supporting very large deployments.",
+        "title": "Stateless horizontal scaling"
+      },
+      {
+        "description": "Provides metrics and trace-level logging for production observability.",
+        "title": "Observability"
+      },
+      {
+        "description": "Available as open-source self-hosted software, an Ory Enterprise License for private infrastructure, or the fully managed Ory Network.",
+        "title": "Multiple deployment models"
+      }
+    ],
+    "pros": [
+      "Free Developer tier includes 2 development environments and community support",
+      "Open source, with 48,000+ GitHub stars reported by the company",
+      "Multiple deployment options: self-hosted, enterprise license, or fully managed",
+      "Reports managing 3.3 billion identities across its network",
+      "Data residency and multi-region deployment available on higher tiers"
+    ],
+    "cons": [
+      "Growth plan starts at $9,350/year",
+      "B2B SSO on the Growth plan is limited to OIDC only",
+      "Enterprise and self-hosted Enterprise License pricing require contacting sales"
+    ],
+    "faqs": [
+      {
+        "answer": "Ory was founded on June 21, 2019.",
+        "question": "When was Ory founded?"
+      },
+      {
+        "answer": "Yes, Ory offers a free Developer tier with 2 development environments and community support.",
+        "question": "Is Ory free to use?"
+      },
+      {
+        "answer": "$770 per year.",
+        "question": "How much does Ory's Production plan cost?"
+      },
+      {
+        "answer": "Yes, Ory offers an open-source self-hosted option as well as an Ory Enterprise License for on-premises or private cloud deployment.",
+        "question": "Can Ory be self-hosted?"
+      }
+    ],
+    "pricing_plans": [
+      {
+        "billing_cycle": null,
+        "features": [
+          "2 development environments",
+          "24-hour analytics history",
+          "Community support"
+        ],
+        "plan_name": "Developer",
+        "price": "Free"
+      },
+      {
+        "billing_cycle": "annual",
+        "features": [
+          "1 production environment",
+          "3 staging environments",
+          "5 development environments",
+          "Permissions and M2M tokens"
+        ],
+        "plan_name": "Production",
+        "price": "$770/year"
+      },
+      {
+        "billing_cycle": "annual",
+        "features": [
+          "2 production environments",
+          "5 staging environments",
+          "20 development environments",
+          "B2B SSO (OIDC only)",
+          "Up to 3 organizations"
+        ],
+        "plan_name": "Growth",
+        "price": "$9,350/year"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "Multi-region deployments",
+          "Data residency",
+          "99.99% uptime SLA",
+          "Concierge onboarding"
+        ],
+        "plan_name": "Enterprise",
+        "price": "Custom"
+      },
+      {
+        "billing_cycle": null,
+        "features": [
+          "Self-hosted deployment with full control",
+          "Multi-region flexibility",
+          "Premium support with SLAs"
+        ],
+        "plan_name": "Ory Enterprise License",
+        "price": "Custom"
+      }
+    ],
+    "tags": [
+      "free-plan",
+      "api",
+      "freemium"
+    ]
+  }
+}

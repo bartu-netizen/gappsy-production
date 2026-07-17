@@ -1,0 +1,870 @@
+[
+  {
+    "slug": "fusionauth-vs-workos",
+    "tool_a_id": "53f62fac-4ecb-4373-8264-0094d3faebee",
+    "tool_a_name": "FusionAuth",
+    "tool_b_id": "3455877b-59ac-4ce9-8371-d5101e680c67",
+    "tool_b_name": "WorkOS",
+    "content": {
+      "verdict": "FusionAuth is a customer identity platform built around a free, self-hostable Community Edition and flexible deployment (self-hosted, cloud, on-premises, hybrid, or air-gapped), with cloud pricing starting at $162/month for the Starter plan. WorkOS is an API-first identity platform centered on AuthKit, which is free for the first 1 million monthly active users, plus per-connection enterprise SSO and Directory Sync pricing starting at $125/connection. The two suit different starting points: teams that want control over hosting and are comfortable self-managing infrastructure lean toward FusionAuth, while teams building a cloud-native app that wants a generous free ceiling and pay only when they sign enterprise customers lean toward WorkOS.",
+      "bestForToolA": "Teams that need to self-host identity for compliance, air-gapped, or on-premises requirements will find FusionAuth's free Community Edition (deployable via ZIP, DEB, RPM, Docker, or Kubernetes) fits that requirement directly, something WorkOS does not offer.",
+      "bestForToolB": "B2B SaaS teams that want a large free ceiling before paying anything (AuthKit free up to 1 million MAU) and need broad enterprise identity provider coverage (20+ IdPs including Okta, Azure AD, and Google) are well served by WorkOS.",
+      "whoNeedsBoth": "There's little practical scenario for running both on one application since they solve the same identity problem. The more realistic split is a company using WorkOS's free AuthKit for its primary cloud product while a separate internal or air-gapped tool runs a self-hosted FusionAuth Community Edition where cloud identity providers aren't viable.",
+      "keyDifferences": [
+        {
+          "title": "Self-Hosting vs. Managed-Only",
+          "toolA": "FusionAuth offers a free, fully self-hostable Community Edition deployable via ZIP, DEB, RPM, Docker, or Kubernetes, plus support for on-premises, hybrid, and air-gapped deployments.",
+          "toolB": "WorkOS is not documented as offering a self-hosted option; its architecture is API-first, delivered as a hosted cloud service with AuthKit as the primary user-facing product.",
+          "whyItMatters": "Organizations with data residency, compliance, or offline requirements need self-hosting, which only one of these platforms provides.",
+          "benefitsWho": "Regulated or infrastructure-conscious engineering teams that must keep identity data on their own servers."
+        },
+        {
+          "title": "Free Tier Ceiling",
+          "toolA": "FusionAuth's free tier is the self-hosted Community Edition with core authentication features; its cheapest managed cloud plan, Starter, costs $162/month billed annually.",
+          "toolB": "WorkOS's AuthKit is free for the first 1 million monthly active users in production, and staging environments are always free regardless of usage.",
+          "whyItMatters": "The gap between a free self-hosted tier and a free-to-1M-MAU cloud tier changes the cost calculus for early-stage teams that don't want to run their own infrastructure.",
+          "benefitsWho": "Startups scaling a cloud product that want to defer identity costs until they reach significant user volume."
+        },
+        {
+          "title": "Enterprise SSO Pricing Model",
+          "toolA": "FusionAuth's SSO and enterprise tenant management capabilities are bundled into its Enterprise cloud plan, which starts at $2,970/month billed annually.",
+          "toolB": "WorkOS bills SSO and Directory Sync per connection on a tiered scale, from $125/connection for 1-15 connections down to $50/connection for 101-200 connections, with custom pricing above 200.",
+          "whyItMatters": "A flat enterprise-tier price versus per-connection billing produces very different cost curves depending on how many enterprise customers a company signs.",
+          "benefitsWho": "B2B SaaS companies trying to forecast costs as their number of enterprise SSO customers grows."
+        },
+        {
+          "title": "Fraud and Bot Protection",
+          "toolA": "FusionAuth's documented security features focus on MFA, passkeys, and breached password detection (paid plans); a dedicated fraud/bot protection feature is not documented.",
+          "toolB": "WorkOS includes Radar, real-time protection against bots, fraud, and abuse, with the first 1,000 checks included free each month.",
+          "whyItMatters": "Built-in fraud detection reduces the need for a separate third-party risk tool during signup and login flows.",
+          "benefitsWho": "Consumer-facing or high-signup-volume apps concerned about bot and fraud abuse at registration."
+        },
+        {
+          "title": "24/7 Support Availability",
+          "toolA": "FusionAuth includes 24/7 phone and email support along with a private Slack channel only on its Enterprise plan (starting at $2,970/month).",
+          "toolB": "WorkOS offers video call support, onboarding guidance, and a 1-hour P1 response time through its $1,000/month Scale Support plan, with 24/7 SLAs reserved for custom Enterprise contracts.",
+          "whyItMatters": "The price point at which round-the-clock or guaranteed-response support becomes available differs significantly between the two platforms.",
+          "benefitsWho": "Mid-market teams evaluating how much they'll need to spend to get guaranteed support response times."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Pricing & Free Tier",
+          "rows": [
+            { "feature": "Free self-hosted edition", "toolA": "available", "toolB": "unavailable", "note": "FusionAuth Community Edition" },
+            { "feature": "Free managed cloud tier", "toolA": "unavailable", "toolB": "available", "note": "WorkOS AuthKit free up to 1M MAU" },
+            { "feature": "Cheapest paid cloud plan", "toolA": "available", "toolB": "available", "note": "FusionAuth Starter $162/mo annual vs. WorkOS $125/SSO connection" }
+          ]
+        },
+        {
+          "group": "Authentication & Identity Features",
+          "rows": [
+            { "feature": "Passwordless / magic links", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Passkeys", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Directory Sync (HR/corporate directory)", "toolA": "not-documented", "toolB": "available", "note": "Includes BambooHR sync" },
+            { "feature": "Fraud/bot protection", "toolA": "not-documented", "toolB": "available", "note": "WorkOS Radar, 1,000 free checks/mo" },
+            { "feature": "Self-serve IT admin portal", "toolA": "not-documented", "toolB": "available", "note": "WorkOS Admin Portal" }
+          ]
+        },
+        {
+          "group": "Deployment & Support",
+          "rows": [
+            { "feature": "Self-hosted / on-premises deployment", "toolA": "available", "toolB": "unavailable", "note": "" },
+            { "feature": "Air-gapped deployment", "toolA": "available", "toolB": "unavailable", "note": "" },
+            { "feature": "24/7 phone support", "toolA": "available", "toolB": "not-documented", "note": "FusionAuth Enterprise plan only" },
+            { "feature": "Audit log export/SIEM streaming", "toolA": "not-documented", "toolB": "available", "note": "Separately priced add-on" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does FusionAuth or WorkOS have a free plan?", "answer": "Both do, but differently: FusionAuth's Community Edition is free to self-host, while WorkOS's AuthKit is a free managed cloud service for up to 1 million monthly active users in production." },
+        { "question": "Can I self-host WorkOS the way I can self-host FusionAuth?", "answer": "No. WorkOS is not documented as offering a self-hosted option; FusionAuth's Community Edition can be deployed via ZIP, DEB, RPM, Docker, or Kubernetes." },
+        { "question": "How does enterprise SSO pricing compare?", "answer": "WorkOS charges per SSO connection starting at $125 (dropping to $50 at higher volumes), while FusionAuth bundles enterprise SSO capabilities into its Enterprise cloud plan starting at $2,970/month." },
+        { "question": "Which platform has built-in fraud or bot protection?", "answer": "WorkOS includes Radar, with the first 1,000 fraud/bot checks free each month. FusionAuth does not document an equivalent named feature." },
+        { "question": "Which is cheaper for an app with under 1 million users?", "answer": "WorkOS's AuthKit is free up to 1 million MAU in production, making it likely cheaper for a cloud-hosted app below that threshold, unless the team needs FusionAuth's self-hosting instead." },
+        { "question": "What support options does each offer?", "answer": "FusionAuth includes 24/7 phone and email support only on its Enterprise plan ($2,970+/month). WorkOS offers video call support and a 1-hour P1 response time via its $1,000/month Scale Support plan, with full 24/7 SLAs on custom Enterprise contracts." }
+      ]
+    }
+  },
+  {
+    "slug": "descope-vs-workos",
+    "tool_a_id": "f510c6a5-cbc9-401c-86fa-13a9b3bcc298",
+    "tool_a_name": "Descope",
+    "tool_b_id": "3455877b-59ac-4ce9-8371-d5101e680c67",
+    "tool_b_name": "WorkOS",
+    "content": {
+      "verdict": "Descope centers on a no-code visual workflow builder (Descope Flows) plus fine-grained RBAC/ReBAC/ABAC authorization and dedicated AI agent/MCP server security, with paid plans starting at $249/month for Pro. WorkOS is an API-first platform anchored by AuthKit, free for the first 1 million MAU, with enterprise SSO and Directory Sync billed per connection starting at $125. Descope is oriented toward teams that want to visually configure complex auth logic and secure AI-agent access; WorkOS is oriented toward teams that want broad enterprise IdP coverage with a very high free-usage ceiling before paying anything.",
+      "bestForToolA": "Teams building products with complex, evolving authentication logic or AI-agent/MCP integrations benefit from Descope's visual Flows builder and its RBAC/ReBAC/ABAC authorization models and dedicated MCP security features.",
+      "bestForToolB": "B2B SaaS companies that want to scale to a large free user base before paying (AuthKit free to 1M MAU) and need coverage across 20+ enterprise identity providers are better served by WorkOS.",
+      "whoNeedsBoth": "These are competing CIAM platforms rather than complementary tools, so most teams pick one for a given application. A possible exception is a company running WorkOS for its primary product's enterprise SSO while a separate team pilots Descope specifically for an AI-agent-facing product that needs Descope's MCP server security, but that means two distinct systems rather than one integrated stack.",
+      "keyDifferences": [
+        {
+          "title": "No-Code Flow Builder",
+          "toolA": "Descope Flows is a visual, drag-and-drop workflow builder for designing authentication and identity journeys without hand-coding custom auth logic.",
+          "toolB": "WorkOS offers AuthKit, a customizable prebuilt authentication UI, but a visual no-code flow/workflow builder is not documented.",
+          "whyItMatters": "Teams that need to iterate on auth logic (conditional MFA, step-up verification, custom journeys) without engineering cycles benefit from a visual builder.",
+          "benefitsWho": "Product and growth teams that want to adjust authentication flows without redeploying code."
+        },
+        {
+          "title": "Authorization Model Depth",
+          "toolA": "Descope supports role-based (RBAC), relationship-based (ReBAC), and attribute-based (ABAC) access control models.",
+          "toolB": "WorkOS documents role-based access control (RBAC) for defining permissions across users and organizations; ReBAC and ABAC are not documented.",
+          "whyItMatters": "Complex B2B products with nested resource permissions often need authorization models beyond simple roles.",
+          "benefitsWho": "Products with fine-grained resource-level permissions, such as multi-tenant platforms with shared workspaces."
+        },
+        {
+          "title": "AI Agent / MCP Server Security",
+          "toolA": "Descope has a dedicated feature for AI agent and MCP server security, covering authorization, scope-based access control, consent, token management, and Dynamic Client Registration.",
+          "toolB": "WorkOS does not document an MCP-specific security feature; its identity coverage is oriented around human user and machine SDK authentication.",
+          "whyItMatters": "As products expose functionality to AI agents, securing agent-to-service access requires purpose-built controls beyond standard user login.",
+          "benefitsWho": "Teams building AI-agent-facing products or exposing MCP servers that need scoped, consent-based access control."
+        },
+        {
+          "title": "Free Tier Ceiling",
+          "toolA": "Descope's Free Forever plan includes 7,500 MAUs, 10 tenants, and 3 SSO connections with no time limit.",
+          "toolB": "WorkOS's AuthKit is free for the first 1 million monthly active users in production, though SSO connections are billed separately starting at $125 each.",
+          "whyItMatters": "The free-tier user ceiling determines how long a growing product can avoid paying for core identity infrastructure.",
+          "benefitsWho": "Early-stage startups trying to minimize fixed identity costs while scaling users."
+        },
+        {
+          "title": "Bot/Fraud Protection Availability",
+          "toolA": "Descope's bot protection requires the Growth tier at $799/month or higher.",
+          "toolB": "WorkOS includes Radar fraud/bot protection with the first 1,000 checks free each month across all tiers.",
+          "whyItMatters": "Whether fraud protection is included from day one or gated behind a higher-priced plan affects total cost for high-signup-volume products.",
+          "benefitsWho": "Consumer-facing apps or high-volume signup flows concerned about bot abuse."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Free Tier & Pricing",
+          "rows": [
+            { "feature": "Free plan MAU ceiling", "toolA": "available", "toolB": "available", "note": "Descope 7,500 MAUs vs. WorkOS 1,000,000 MAU" },
+            { "feature": "SSO connections included free", "toolA": "available", "toolB": "unavailable", "note": "Descope includes 3 free; WorkOS bills from $125/connection" },
+            { "feature": "Fixed entry paid plan price", "toolA": "available", "toolB": "not-documented", "note": "Descope Pro $249/month; WorkOS pricing is per-connection, not flat" }
+          ]
+        },
+        {
+          "group": "Authorization & Identity Features",
+          "rows": [
+            { "feature": "No-code visual flow builder", "toolA": "available", "toolB": "not-documented", "note": "Descope Flows" },
+            { "feature": "Role-based access control (RBAC)", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Relationship-based/attribute-based access (ReBAC/ABAC)", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Adaptive, risk-based MFA", "toolA": "available", "toolB": "not-documented", "note": "" }
+          ]
+        },
+        {
+          "group": "AI Agent / MCP & Enterprise",
+          "rows": [
+            { "feature": "MCP server security", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Bot/fraud protection", "toolA": "available", "toolB": "available", "note": "Descope requires Growth tier ($799/mo); WorkOS Radar free 1,000 checks/mo" },
+            { "feature": "SCIM provisioning", "toolA": "available", "toolB": "available", "note": "Descope Growth tier; WorkOS via Directory Sync" },
+            { "feature": "Directory/HR system sync", "toolA": "not-documented", "toolB": "available", "note": "WorkOS Directory Sync, e.g., BambooHR" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Which has a bigger free tier, Descope or WorkOS?", "answer": "WorkOS, by user count: AuthKit is free up to 1 million MAU, while Descope's Free Forever plan caps at 7,500 MAUs, 10 tenants, and 3 SSO connections." },
+        { "question": "Which supports more advanced authorization models?", "answer": "Descope, which supports RBAC, ReBAC, and ABAC. WorkOS documents RBAC only." },
+        { "question": "Does either platform secure AI agents or MCP servers?", "answer": "Descope has a dedicated AI agent and MCP server security feature covering authorization, scope-based access, consent, and token management. WorkOS does not document an equivalent feature." },
+        { "question": "How does Descope's no-code builder differ from WorkOS's AuthKit?", "answer": "Descope Flows is a drag-and-drop visual builder for designing entire auth journeys. WorkOS's AuthKit is a customizable prebuilt login UI, not a visual workflow builder." },
+        { "question": "Which includes fraud/bot protection without an extra paid tier?", "answer": "WorkOS, via Radar, includes the first 1,000 fraud/bot checks free each month on all tiers. Descope's bot protection requires the $799/month Growth tier or higher." },
+        { "question": "How much does Descope's Pro plan cost?", "answer": "Descope's Pro plan starts at $249/month, billed annually, and includes 10,000 MAUs and 5 SSO connections." }
+      ]
+    }
+  },
+  {
+    "slug": "clerk-vs-descope",
+    "tool_a_id": "84902cee-488e-4583-aad3-f2fbf318cb9e",
+    "tool_a_name": "Clerk",
+    "tool_b_id": "f510c6a5-cbc9-401c-86fa-13a9b3bcc298",
+    "tool_b_name": "Descope",
+    "content": {
+      "verdict": "Clerk is a full-stack authentication and user management platform built around prebuilt drop-in UI components, native billing integration, and a generous 50,000 MAU free tier. Descope is built around a no-code visual workflow builder (Descope Flows), fine-grained RBAC/ReBAC/ABAC authorization, and dedicated AI agent/MCP server security, with a smaller 7,500 MAU free tier. Clerk suits teams wanting fast component-based integration and built-in subscription billing tied to user accounts, while Descope suits teams that need deeper authorization control or are securing AI-agent access.",
+      "bestForToolA": "Teams building on Next.js, React, or Expo that want drop-in sign-up/sign-in components and native subscription billing tied directly to user accounts fit Clerk's model well.",
+      "bestForToolB": "Teams that need visual, no-code control over authentication journeys or must support advanced authorization models (RBAC/ReBAC/ABAC) and AI-agent/MCP security are better served by Descope.",
+      "whoNeedsBoth": "Both are full CIAM platforms for the same job, so combining them for one application is unusual. A more realistic split is organizational: a consumer product team uses Clerk for fast Next.js/React integration and built-in billing, while a separate AI-agent-facing product within the same company uses Descope specifically for its MCP server security and ReBAC/ABAC models.",
+      "keyDifferences": [
+        {
+          "title": "Built-In Billing Integration",
+          "toolA": "Clerk includes native subscription management and plan-based content gating tied directly to user accounts, with a billing add-on charging 0.7% of processed billing volume.",
+          "toolB": "Descope does not document a billing or subscription management feature.",
+          "whyItMatters": "A native billing layer removes the need to wire a separate subscription system to the auth layer.",
+          "benefitsWho": "SaaS teams that want subscription gating built into the same platform that handles login."
+        },
+        {
+          "title": "No-Code Flow Builder",
+          "toolA": "Clerk relies on prebuilt, customizable drop-in UI components (sign-up, sign-in, user profile, waitlist) rather than a visual workflow builder.",
+          "toolB": "Descope Flows is a drag-and-drop visual builder for designing authentication and identity journeys without custom code.",
+          "whyItMatters": "Component-based integration is typically faster to ship initially, while a visual flow builder gives more flexibility to modify logic later without redeploying.",
+          "benefitsWho": "Teams that expect frequent changes to their auth journey benefit from Descope's builder; teams wanting the fastest initial integration benefit from Clerk's components."
+        },
+        {
+          "title": "Free Tier MAU Ceiling",
+          "toolA": "Clerk's Hobby plan is free for up to 50,000 monthly active users and 100 monthly active organizations, with no credit card required.",
+          "toolB": "Descope's Free Forever plan caps at 7,500 MAUs, 10 tenants, and 3 SSO connections.",
+          "whyItMatters": "A higher free-tier ceiling delays the point at which a growing product needs to start paying for identity infrastructure.",
+          "benefitsWho": "Early-stage startups trying to control fixed costs while scaling users."
+        },
+        {
+          "title": "Enterprise SSO Pricing",
+          "toolA": "Clerk charges $75/month per enterprise SSO connection on top of its $25/month Pro plan.",
+          "toolB": "Descope bundles SSO connections into its plan tiers: 3 free, 5 on Pro ($249/month), and 10 on Growth ($799/month), rather than per-connection add-on pricing.",
+          "whyItMatters": "Per-connection add-on pricing versus tier-bundled connections produces different costs depending on how many enterprise customers a company signs.",
+          "benefitsWho": "B2B SaaS companies forecasting costs as their enterprise customer count grows."
+        },
+        {
+          "title": "Authorization Model Depth",
+          "toolA": "Clerk's Organizations feature includes custom roles for multi-tenant B2B products, and security controls cover MFA, bot detection, and fraud detection.",
+          "toolB": "Descope supports role-based (RBAC), relationship-based (ReBAC), and attribute-based (ABAC) access control, plus dedicated AI agent and MCP server security.",
+          "whyItMatters": "Products with complex, resource-level permission needs or AI-agent access require authorization models beyond basic roles.",
+          "benefitsWho": "Platforms with nested or resource-level permissions, and teams securing AI-agent or MCP access."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Free Tier & Pricing",
+          "rows": [
+            { "feature": "Free plan MAU limit", "toolA": "available", "toolB": "available", "note": "Clerk 50,000 MAU vs. Descope 7,500 MAUs" },
+            { "feature": "Free organizations/tenants included", "toolA": "available", "toolB": "available", "note": "Clerk 100 organizations vs. Descope 10 tenants" },
+            { "feature": "Entry paid plan price", "toolA": "available", "toolB": "available", "note": "Clerk $25/month vs. Descope $249/month" }
+          ]
+        },
+        {
+          "group": "Developer Experience & UI",
+          "rows": [
+            { "feature": "Prebuilt drop-in UI components", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "No-code visual auth flow builder", "toolA": "not-documented", "toolB": "available", "note": "Descope Flows" },
+            { "feature": "Built-in billing/subscription management", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Native mobile framework SDKs", "toolA": "available", "toolB": "available", "note": "Clerk via Expo; Descope via React Native, Swift, Kotlin, Flutter" }
+          ]
+        },
+        {
+          "group": "Authorization, Security & AI",
+          "rows": [
+            { "feature": "Role-based access control", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Relationship-based/attribute-based access (ReBAC/ABAC)", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "AI agent/MCP server security", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Bot/fraud detection", "toolA": "available", "toolB": "available", "note": "Descope's requires Growth tier ($799/mo)" },
+            { "feature": "Enterprise SSO connection pricing", "toolA": "available", "toolB": "available", "note": "Clerk $75/mo/connection; Descope bundled into plan tiers" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Clerk or Descope have a bigger free plan?", "answer": "Clerk's Hobby plan is free for up to 50,000 MAU and 100 organizations, well above Descope's Free Forever plan of 7,500 MAUs and 10 tenants." },
+        { "question": "Which platform includes billing/subscription management?", "answer": "Clerk includes native billing integration for subscription management and plan-based content gating; Descope does not document a billing feature." },
+        { "question": "Which supports AI-agent or MCP server authentication?", "answer": "Descope has a dedicated AI agent and MCP server security feature; Clerk does not document an equivalent capability." },
+        { "question": "How does enterprise SSO pricing compare?", "answer": "Clerk charges $75/month per enterprise SSO connection added to its $25/month Pro plan. Descope bundles a set number of SSO connections into each plan tier instead of billing per connection." },
+        { "question": "Which has deeper authorization controls?", "answer": "Descope, with RBAC, ReBAC, and ABAC support. Clerk's Organizations feature provides custom roles but does not document ReBAC or ABAC." },
+        { "question": "What frameworks does each support?", "answer": "Clerk supports Next.js, React, React Router, TanStack React Start, Astro, and Expo. Descope supports React, Next.js, Vue.js, Angular, Python, Node.js, Java, .NET, Go, PHP, Ruby, Kotlin, Swift, React Native, and Flutter." }
+      ]
+    }
+  },
+  {
+    "slug": "clerk-vs-logto",
+    "tool_a_id": "84902cee-488e-4583-aad3-f2fbf318cb9e",
+    "tool_a_name": "Clerk",
+    "tool_b_id": "e0668898-096e-49d0-a80e-31cce8d69397",
+    "tool_b_name": "Logto",
+    "content": {
+      "verdict": "Clerk is a proprietary, cloud-hosted authentication platform with prebuilt UI components, built-in billing integration, and a free tier up to 50,000 MAU, with Pro starting at $25/month and enterprise SSO billed separately at $75/connection. Logto is an open-source, self-hostable authentication platform with a comparable 50,000 MAU free tier, a flat $24/month Pro plan that includes enterprise SSO, and a no-code Protected App option for adding auth without SDK integration. The choice largely comes down to whether a team wants Clerk's component-driven, billing-integrated developer experience or Logto's open-source flexibility and flat enterprise-SSO pricing.",
+      "bestForToolA": "Teams building consumer or B2B SaaS apps on Next.js/React that want fast drop-in UI components plus native subscription billing tied to accounts are well suited to Clerk.",
+      "bestForToolB": "Teams that want the option to self-host identity infrastructure, need enterprise SSO without per-connection add-on fees, or want to add auth in front of an existing app without SDK changes are better served by Logto.",
+      "whoNeedsBoth": "Since both handle the same core identity layer, there's no common architecture that uses them together for one application. The realistic split is organizational: a product team building on Next.js/React might choose Clerk for its component-based setup, while a platform team that wants to self-host identity for compliance reasons runs Logto's open-source edition for a separate, internally-hosted product.",
+      "keyDifferences": [
+        {
+          "title": "Open Source & Self-Hosting",
+          "toolA": "Clerk is a proprietary, cloud-hosted platform with no self-hosting option documented.",
+          "toolB": "Logto is open source, with full source available and a self-hosting option (including a dedicated Logto Private Cloud offering) instead of using the managed cloud.",
+          "whyItMatters": "Self-hosting matters for teams with data residency, compliance, or infrastructure-control requirements.",
+          "benefitsWho": "Engineering-heavy teams or regulated organizations that need to keep identity infrastructure under their own control."
+        },
+        {
+          "title": "Enterprise SSO Pricing",
+          "toolA": "Clerk charges $75/month per enterprise SSO connection added on top of its $25/month Pro plan.",
+          "toolB": "Logto includes SAML and OIDC-based enterprise SSO directly in its flat $24/month Pro plan, with no per-connection add-on fee documented.",
+          "whyItMatters": "Per-connection billing can scale costs quickly for B2B apps serving many enterprise customers, while flat-plan inclusion keeps costs predictable.",
+          "benefitsWho": "B2B SaaS companies signing multiple enterprise customers who want predictable SSO costs."
+        },
+        {
+          "title": "Free Tier Structure",
+          "toolA": "Clerk's Hobby plan is free for up to 50,000 monthly active users and 100 organizations, with the Pro plan billing $0.02/month per MRU beyond the included 50,000.",
+          "toolB": "Logto's Free plan supports up to 50,000 monthly active users with no credit card required, but its Pro plan moves to unlimited MAU for a flat $24/month with per-token overage billing ($0.08 per 100 extra tokens).",
+          "whyItMatters": "Both offer comparable free MAU ceilings, but the paid-tier cost structures diverge: usage-based overage per MRU versus a flat unlimited-MAU price with token-based overage.",
+          "benefitsWho": "Growing products trying to predict costs as their active user base scales past the free tier."
+        },
+        {
+          "title": "No-Code Auth Embedding",
+          "toolA": "Clerk requires SDK or component integration (prebuilt UI components) rather than offering a no-code proxy layer.",
+          "toolB": "Logto's Protected App feature lets teams add authentication in front of an existing app without SDK integration.",
+          "whyItMatters": "A no-code proxy option can add authentication to legacy or third-party apps that can't easily be modified to add an SDK.",
+          "benefitsWho": "Teams needing to secure an existing app quickly without a code-level integration project."
+        },
+        {
+          "title": "Built-In Billing",
+          "toolA": "Clerk includes native subscription management and plan-based content gating tied directly to user accounts.",
+          "toolB": "Logto does not document a billing or subscription management feature.",
+          "whyItMatters": "Combining billing and identity in one platform can reduce integration work for SaaS products with paid tiers.",
+          "benefitsWho": "SaaS teams that want subscription gating handled by the same platform as authentication."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Pricing & Free Tier",
+          "rows": [
+            { "feature": "Free plan MAU limit", "toolA": "available", "toolB": "available", "note": "Both offer 50,000 MAU free" },
+            { "feature": "Entry paid plan price", "toolA": "available", "toolB": "available", "note": "Clerk $25/month ($20 annual) vs. Logto $24/month" },
+            { "feature": "Enterprise SSO included in entry paid plan", "toolA": "unavailable", "toolB": "available", "note": "Clerk bills $75/mo/connection separately; Logto includes it in Pro" }
+          ]
+        },
+        {
+          "group": "Authentication & Multi-Tenancy",
+          "rows": [
+            { "feature": "B2B organizations / multi-tenancy", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Multi-factor authentication", "toolA": "available", "toolB": "available", "note": "Logto includes WebAuthn, authenticator apps, backup codes" },
+            { "feature": "Built-in billing/subscription management", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Machine-to-machine authentication", "toolA": "not-documented", "toolB": "available", "note": "" }
+          ]
+        },
+        {
+          "group": "Deployment & Extensibility",
+          "rows": [
+            { "feature": "Self-hosting option", "toolA": "unavailable", "toolB": "available", "note": "" },
+            { "feature": "No-code auth proxy (add auth without SDK)", "toolA": "unavailable", "toolB": "available", "note": "Logto Protected App" },
+            { "feature": "Framework/SDK breadth", "toolA": "available", "toolB": "available", "note": "Clerk: Next.js, React, React Router, TanStack, Astro, Expo. Logto: 20+ frameworks including Vue, Angular, Go, Swift, Python" },
+            { "feature": "Webhooks", "toolA": "not-documented", "toolB": "available", "note": "1 on Free, 10 on Pro" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Can Logto be self-hosted while Clerk cannot?", "answer": "Yes. Logto is open source and can be self-hosted, while Clerk is a proprietary cloud service with no self-hosting option documented." },
+        { "question": "Which includes enterprise SSO without extra fees?", "answer": "Logto includes SAML/OIDC enterprise SSO in its flat $24/month Pro plan. Clerk charges $75/month per enterprise connection added to its $25/month Pro plan." },
+        { "question": "Do both offer a free plan?", "answer": "Yes, both offer a free tier for up to 50,000 monthly active users with no credit card required." },
+        { "question": "Which has a no-code option for adding authentication to an existing app?", "answer": "Logto's Protected App feature adds authentication in front of an existing app without SDK integration. Clerk requires SDK or component-level integration." },
+        { "question": "Does either include built-in billing?", "answer": "Clerk includes native subscription management and plan-based content gating tied to user accounts. Logto does not document a billing feature." },
+        { "question": "How much does Logto's Pro plan cost?", "answer": "Logto's Pro plan costs $24/month and includes unlimited MAU, RBAC, organizations, MFA, and enterprise SSO." }
+      ]
+    }
+  },
+  {
+    "slug": "frontegg-vs-logto",
+    "tool_a_id": "d5eaaad6-9ac2-4633-a29e-68531875f434",
+    "tool_a_name": "Frontegg",
+    "tool_b_id": "e0668898-096e-49d0-a80e-31cce8d69397",
+    "tool_b_name": "Logto",
+    "content": {
+      "verdict": "Frontegg is a customer identity platform with a free Pay-as-you-Go tier that includes 5 enterprise SSO/SCIM connections, unlimited organizations, and usage-based pricing beyond that via a calculator whose per-unit rates aren't publicly listed. Logto is an open-source, self-hostable platform with a higher 50,000 MAU free ceiling, a flat $24/month Pro plan with published features, but no SSO included on its free tier. Frontegg suits teams that want enterprise SSO/SCIM available from day one and are comfortable with usage-based pricing, while Logto suits teams that want published flat pricing, self-hosting flexibility, and a larger free MAU ceiling.",
+      "bestForToolA": "B2B SaaS teams that need enterprise SSO and SCIM connections available immediately, even on a free plan, and want a related AI/agentic access layer (Agen.co) fit Frontegg.",
+      "bestForToolB": "Teams that want a published, predictable flat-rate paid plan, a larger free MAU ceiling, and the option to self-host are better served by Logto.",
+      "whoNeedsBoth": "Both are complete CIAM platforms competing for the same integration point, so there's no architecture where an app uses both simultaneously. A more realistic scenario is a company evaluating both during a vendor selection process and choosing Logto for one product that needs self-hosting while using Frontegg for another that needs SCIM available on the free tier.",
+      "keyDifferences": [
+        {
+          "title": "SCIM Availability",
+          "toolA": "Frontegg includes SCIM connections starting on its free Pay-as-you-Go tier, with 5 enterprise SSO/SCIM connections included.",
+          "toolB": "Logto does not document SCIM support; its documented enterprise identity feature is SAML/OIDC-based SSO on the Pro plan.",
+          "whyItMatters": "SCIM enables automated user provisioning for enterprise customers; whether it's available and at what tier affects onboarding speed for enterprise deals.",
+          "benefitsWho": "B2B SaaS vendors selling to enterprise customers who require automated directory provisioning."
+        },
+        {
+          "title": "Free Tier Composition",
+          "toolA": "Frontegg's free tier includes 7,500 MAU plus 5 enterprise SSO/SCIM connections, unlimited organizations, and a custom domain.",
+          "toolB": "Logto's free tier includes up to 50,000 MAU but no enterprise SSO connections; SSO requires the $24/month Pro plan.",
+          "whyItMatters": "The two free tiers trade off differently: more users for free versus more enterprise features for free.",
+          "benefitsWho": "Frontegg's free tier suits teams onboarding enterprise pilots early; Logto's suits teams scaling a larger self-serve user base before needing SSO."
+        },
+        {
+          "title": "Pricing Transparency",
+          "toolA": "Frontegg uses an interactive usage-based calculator based on MAU, SSO connections, and M2M tokens, with per-unit rates beyond the free tier not publicly listed.",
+          "toolB": "Logto publishes a flat $24/month Pro price with a defined feature list, including unlimited MAU, RBAC, organizations, MFA, and enterprise SSO.",
+          "whyItMatters": "Published flat pricing is easier to budget against than a calculator-based model that requires sales contact for specifics.",
+          "benefitsWho": "Budget-conscious teams that want cost predictability without a sales conversation."
+        },
+        {
+          "title": "Self-Hosting",
+          "toolA": "Frontegg is not documented as offering a self-hosting option; it is a cloud-hosted platform.",
+          "toolB": "Logto is open source and self-hostable, with a dedicated Logto Private Cloud offering for Enterprise customers.",
+          "whyItMatters": "Self-hosting matters for teams with data residency or infrastructure-control requirements.",
+          "benefitsWho": "Engineering teams that need to keep identity infrastructure on their own servers or private cloud."
+        },
+        {
+          "title": "AI/Agentic Access Features",
+          "toolA": "Frontegg offers Agen.co, a related offering that lets users interact with SaaS products through generative AI platforms.",
+          "toolB": "Logto does not document an equivalent agentic access feature; its no-code offering is Protected App, which adds auth in front of an app without SDK integration.",
+          "whyItMatters": "Products exploring AI-agent-driven interfaces may value a vendor-provided agentic access layer versus a general no-code auth proxy.",
+          "benefitsWho": "Teams building or exploring AI-agent interfaces for their SaaS product."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Free Tier & Pricing Model",
+          "rows": [
+            { "feature": "Free plan MAU", "toolA": "available", "toolB": "available", "note": "Frontegg 7,500 MAU vs. Logto 50,000 MAU" },
+            { "feature": "SCIM connections on free tier", "toolA": "available", "toolB": "unavailable", "note": "Frontegg includes 5" },
+            { "feature": "Published flat pricing beyond free tier", "toolA": "limited", "toolB": "available", "note": "Frontegg uses a usage calculator; Logto publishes $24/month Pro" }
+          ]
+        },
+        {
+          "group": "Enterprise & Multi-Tenancy",
+          "rows": [
+            { "feature": "Enterprise SSO", "toolA": "available", "toolB": "available", "note": "Frontegg on free tier; Logto on $24/month Pro" },
+            { "feature": "Multi-tenant organizations", "toolA": "available", "toolB": "available", "note": "Frontegg unlimited on free tier; Logto via Organizations on Pro" },
+            { "feature": "Advanced fraud protection", "toolA": "available", "toolB": "not-documented", "note": "Frontegg Enterprise tier only" },
+            { "feature": "99.99% uptime SLA", "toolA": "available", "toolB": "not-documented", "note": "Frontegg Enterprise tier" }
+          ]
+        },
+        {
+          "group": "Deployment & AI Features",
+          "rows": [
+            { "feature": "Self-hosting", "toolA": "unavailable", "toolB": "available", "note": "" },
+            { "feature": "Open source", "toolA": "unavailable", "toolB": "available", "note": "" },
+            { "feature": "AI/agentic access layer", "toolA": "available", "toolB": "not-documented", "note": "Frontegg Agen.co" },
+            { "feature": "No-code auth proxy", "toolA": "not-documented", "toolB": "available", "note": "Logto Protected App" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Which includes SCIM on its free tier, Frontegg or Logto?", "answer": "Frontegg includes 5 enterprise SSO/SCIM connections on its free Pay-as-you-Go tier. Logto does not document SCIM support at all." },
+        { "question": "Which has a bigger free MAU allowance?", "answer": "Logto's free tier supports up to 50,000 MAU, compared to Frontegg's 7,500 MAU on its free Pay-as-you-Go tier." },
+        { "question": "Can Frontegg be self-hosted like Logto?", "answer": "No, Frontegg is not documented as offering a self-hosting option, while Logto is open source and self-hostable." },
+        { "question": "How is Frontegg priced beyond the free tier?", "answer": "Frontegg uses an interactive usage-based calculator based on monthly active users, enterprise connections, and M2M tokens; exact per-unit rates require contacting sales." },
+        { "question": "What does Logto's Pro plan cost and include?", "answer": "Logto's Pro plan is a flat $24/month and includes unlimited MAU, RBAC, organizations, MFA, and enterprise SSO." },
+        { "question": "Which platform has an AI-agent access feature?", "answer": "Frontegg offers Agen.co, letting users interact with SaaS products through generative AI platforms. Logto does not document an equivalent feature." }
+      ]
+    }
+  },
+  {
+    "slug": "frontegg-vs-propelauth",
+    "tool_a_id": "d5eaaad6-9ac2-4633-a29e-68531875f434",
+    "tool_a_name": "Frontegg",
+    "tool_b_id": "789f97be-c510-457a-8f6f-591187e6b959",
+    "tool_b_name": "PropelAuth",
+    "content": {
+      "verdict": "Frontegg's free Pay-as-you-Go tier bundles 7,500 MAU with 5 enterprise SSO/SCIM connections and unlimited organizations, pricing beyond that via a usage-based calculator without published per-unit rates. PropelAuth's Free plan includes 10,000 MAUs with no SSO, but publishes fixed monthly prices for its Growth ($150/month, unlimited SAML/SSO, MCP authentication) and Growth Plus ($500/month, SCIM/directory sync) tiers. Frontegg suits teams that want SSO/SCIM usable immediately even on a free plan; PropelAuth suits teams that want predictable, published pricing and prebuilt UI components with a clear feature-to-price mapping.",
+      "bestForToolA": "Teams that need enterprise SSO and SCIM connections working from the free tier onward, without waiting to upgrade, fit Frontegg's Pay-as-you-Go model.",
+      "bestForToolB": "B2B SaaS teams that want published, predictable pricing and need MCP server authentication for AI-agent use cases are better served by PropelAuth's Growth plan and above.",
+      "whoNeedsBoth": "As competing B2B authentication platforms, there's no architecture where an application would run both at once. A company evaluating vendors might use Frontegg for a product that needs free-tier SCIM immediately while choosing PropelAuth for a separate product built around MCP server authentication, but these would be two distinct deployments.",
+      "keyDifferences": [
+        {
+          "title": "Free-Tier SSO/SCIM Access",
+          "toolA": "Frontegg's free Pay-as-you-Go tier includes 5 enterprise SSO/SCIM connections alongside 7,500 MAU.",
+          "toolB": "PropelAuth's Free plan includes 10,000 MAUs but no SSO; unlimited SAML/enterprise SSO only unlocks on the $150/month Growth plan.",
+          "whyItMatters": "Teams onboarding enterprise pilot customers early need SSO available before committing to a paid plan.",
+          "benefitsWho": "Early-stage B2B vendors trying to close enterprise pilot deals without upfront platform spend."
+        },
+        {
+          "title": "SCIM/Directory Sync Pricing",
+          "toolA": "SCIM connections are included starting on Frontegg's free tier (5 included).",
+          "toolB": "PropelAuth gates SCIM/directory sync behind the $500/month Growth Plus plan, plus an additional $100 per SCIM connection.",
+          "whyItMatters": "The cost of enabling automated enterprise directory provisioning differs substantially between the two.",
+          "benefitsWho": "B2B vendors selling to enterprise customers that require SCIM as a contractual requirement."
+        },
+        {
+          "title": "MCP / AI-Agent Authentication",
+          "toolA": "Frontegg's AI-related offering is Agen.co, a separate agentic access layer for interacting with SaaS products via generative AI platforms.",
+          "toolB": "PropelAuth has a dedicated MCP server authentication feature (OAuth 2.1 flows, token revocation) available on the Growth plan and above.",
+          "whyItMatters": "MCP-specific authentication is a distinct capability from a general agentic access layer, and matters for products exposing MCP servers to AI agents.",
+          "benefitsWho": "Teams building or exposing MCP servers that need scoped, revocable AI-agent authentication."
+        },
+        {
+          "title": "Free Tier MAU",
+          "toolA": "Frontegg's Pay-as-you-Go plan includes 7,500 MAU.",
+          "toolB": "PropelAuth's Free plan includes 10,000 MAUs.",
+          "whyItMatters": "A higher free MAU ceiling delays when a growing product needs to start paying.",
+          "benefitsWho": "Early-stage products trying to control fixed costs while scaling users."
+        },
+        {
+          "title": "Pricing Transparency",
+          "toolA": "Frontegg relies on an interactive usage calculator for pricing beyond the free tier, without published per-unit rates.",
+          "toolB": "PropelAuth publishes fixed monthly prices for Growth ($150) and Growth Plus ($500), with itemized overage fees: extra MAUs at $0.05/user, SCIM connections at $100 each, and audit log export at $50/connection.",
+          "whyItMatters": "Published, itemized pricing makes it easier to forecast costs without a sales conversation.",
+          "benefitsWho": "Budget-conscious teams that want to model costs before committing to a vendor."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Free Tier & Pricing",
+          "rows": [
+            { "feature": "Free plan MAU", "toolA": "available", "toolB": "available", "note": "Frontegg 7,500 MAU vs. PropelAuth 10,000 MAU" },
+            { "feature": "SSO on free tier", "toolA": "available", "toolB": "unavailable", "note": "PropelAuth SSO starts at $150/mo Growth plan" },
+            { "feature": "Published flat pricing", "toolA": "limited", "toolB": "available", "note": "PropelAuth publishes $150/mo and $500/mo tiers; Frontegg uses a calculator" }
+          ]
+        },
+        {
+          "group": "Enterprise Identity Features",
+          "rows": [
+            { "feature": "SCIM/directory sync", "toolA": "available", "toolB": "available", "note": "Frontegg on free tier; PropelAuth requires $500/mo Growth Plus + $100/connection" },
+            { "feature": "Self-service SSO setup", "toolA": "not-documented", "toolB": "available", "note": "PropelAuth self-service SAML/OIDC/SCIM" },
+            { "feature": "User impersonation", "toolA": "not-documented", "toolB": "available", "note": "PropelAuth Growth plan" },
+            { "feature": "Advanced security options", "toolA": "available", "toolB": "available", "note": "Frontegg Enterprise tier; PropelAuth Growth Plus tier" }
+          ]
+        },
+        {
+          "group": "AI/Agent & Developer Tools",
+          "rows": [
+            { "feature": "MCP server authentication", "toolA": "not-documented", "toolB": "available", "note": "PropelAuth Growth plan and above" },
+            { "feature": "AI/agentic access layer", "toolA": "available", "toolB": "not-documented", "note": "Frontegg Agen.co" },
+            { "feature": "API key authentication with rate limiting", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Framework/SDK breadth", "toolA": "not-documented", "toolB": "available", "note": "PropelAuth: React, Next.js, FastAPI, Flask, .NET, Spring Boot, Go, Remix, Axum, Laravel" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Which includes enterprise SSO on its free tier?", "answer": "Frontegg does, with 5 enterprise SSO/SCIM connections included on its free Pay-as-you-Go tier. PropelAuth's Free plan has no SSO; it requires the $150/month Growth plan." },
+        { "question": "How does SCIM pricing compare?", "answer": "Frontegg includes SCIM connections on its free tier. PropelAuth gates SCIM/directory sync behind its $500/month Growth Plus plan, plus $100 per SCIM connection." },
+        { "question": "Which supports MCP server authentication for AI agents?", "answer": "PropelAuth has a dedicated MCP server authentication feature on its Growth plan and above. Frontegg's AI offering, Agen.co, is a separate agentic access layer rather than MCP-specific authentication." },
+        { "question": "Which has more predictable pricing?", "answer": "PropelAuth publishes fixed monthly prices ($150 Growth, $500 Growth Plus) with itemized overage fees. Frontegg uses an interactive calculator without published per-unit rates." },
+        { "question": "Which has a bigger free MAU allowance?", "answer": "PropelAuth's Free plan includes 10,000 MAUs, versus Frontegg's 7,500 MAU on its free Pay-as-you-Go tier." },
+        { "question": "What frameworks does PropelAuth support?", "answer": "PropelAuth supports React, Next.js, FastAPI, Flask, .NET, Spring Boot, Remix, Axum, Go, Laravel, and others." }
+      ]
+    }
+  },
+  {
+    "slug": "casdoor-vs-propelauth",
+    "tool_a_id": "698be4be-d4e5-4e9b-8413-12a637e83e7c",
+    "tool_a_name": "Casdoor",
+    "tool_b_id": "789f97be-c510-457a-8f6f-591187e6b959",
+    "tool_b_name": "PropelAuth",
+    "content": {
+      "verdict": "Casdoor is a fully open-source, self-hostable identity platform with very broad protocol support (OAuth2, OIDC, SAML, CAS, LDAP, WebAuthn), 100+ built-in identity provider connectors, and a native MCP server for AI-agent management of the platform itself, at no license cost. PropelAuth is a managed B2B authentication SaaS with a Free plan (10,000 MAUs), prebuilt UI components, and MCP server authentication starting on its $150/month Growth plan. Casdoor suits engineering teams that want full self-hosted control and broad protocol coverage without licensing cost; PropelAuth suits teams that want a managed service with polished prebuilt components and predictable pricing.",
+      "bestForToolA": "Engineering teams that want to self-host identity infrastructure at no license cost, need broad protocol coverage (OAuth2, OIDC, SAML, CAS, LDAP), or want AI coding assistants like Claude Desktop or Cursor to manage the identity platform itself via its native MCP server fit Casdoor.",
+      "bestForToolB": "B2B SaaS teams that want a managed service with prebuilt UI components, self-service SAML/SSO setup, and MCP server authentication for their own AI-agent-facing product are better served by PropelAuth.",
+      "whoNeedsBoth": "It's plausible for an engineering-heavy organization to self-host Casdoor for internal tools and infrastructure identity, leveraging its free licensing and broad protocol support, while using PropelAuth's managed B2B service for a customer-facing product where a polished prebuilt UI and fast implementation matter more than self-hosting control.",
+      "keyDifferences": [
+        {
+          "title": "Deployment Model & Cost",
+          "toolA": "Casdoor is fully open source and free to self-host with no license cost.",
+          "toolB": "PropelAuth is a managed SaaS with a free tier (10,000 MAUs) but paid tiers starting at $150/month for Growth and $500/month for Growth Plus.",
+          "whyItMatters": "Self-hosting eliminates recurring license fees but requires operational effort; managed SaaS trades ongoing cost for reduced operational burden.",
+          "benefitsWho": "Casdoor benefits engineering teams with infrastructure capacity to self-host; PropelAuth benefits teams that prefer not to manage servers."
+        },
+        {
+          "title": "Protocol Breadth",
+          "toolA": "Casdoor documents very broad protocol support: OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, and MFA, plus 100+ built-in identity provider connectors.",
+          "toolB": "PropelAuth's documented protocols are SAML, OIDC, and SCIM.",
+          "whyItMatters": "Organizations with legacy or diverse identity systems (e.g., LDAP-based corporate directories) need broader protocol coverage.",
+          "benefitsWho": "Enterprises or platforms that must integrate with legacy identity protocols beyond SAML/OIDC."
+        },
+        {
+          "title": "Built-In SaaS Billing",
+          "toolA": "Casdoor includes built-in SaaS billing as a native feature: plans, pricing tiers, payment processing, and subscription management.",
+          "toolB": "PropelAuth does not document a billing/payments feature.",
+          "whyItMatters": "A native billing layer can reduce the need for a separate subscription management system.",
+          "benefitsWho": "Teams building a SaaS product that wants billing and identity managed by one platform."
+        },
+        {
+          "title": "AI-Agent Management Approach",
+          "toolA": "Casdoor ships a native MCP server letting AI coding assistants (Claude Desktop, Cursor, VS Code Copilot) manage the Casdoor instance itself via natural language, plus OpenClaw for LLM agent protection with OpenTelemetry audit trails.",
+          "toolB": "PropelAuth's MCP feature (Growth plan and above) provides OAuth 2.1 authentication and token revocation for MCP servers an app exposes, not for managing the identity platform itself.",
+          "whyItMatters": "These are different use cases: managing the identity platform via AI versus securing an app's own AI-agent-facing MCP endpoints.",
+          "benefitsWho": "Casdoor's approach benefits teams wanting AI-assisted administration; PropelAuth's benefits teams securing their own product's MCP servers."
+        },
+        {
+          "title": "Prebuilt UI Components",
+          "toolA": "Casdoor does not document a prebuilt UI component library; its focus is protocol and backend coverage.",
+          "toolB": "PropelAuth ships a customizable component library for rapid deployment of auth screens.",
+          "whyItMatters": "Prebuilt UI components speed up front-end integration for teams that don't want to build custom login screens.",
+          "benefitsWho": "Product teams that want to ship auth screens quickly without custom UI work."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            { "feature": "Self-hosting", "toolA": "available", "toolB": "unavailable", "note": "" },
+            { "feature": "Free managed cloud tier", "toolA": "not-documented", "toolB": "available", "note": "PropelAuth Free: 10,000 MAUs" },
+            { "feature": "Published commercial pricing", "toolA": "unavailable", "toolB": "available", "note": "PropelAuth: $150/mo Growth, $500/mo Growth Plus" }
+          ]
+        },
+        {
+          "group": "Protocol & Identity Provider Coverage",
+          "rows": [
+            { "feature": "SAML SSO", "toolA": "available", "toolB": "available", "note": "PropelAuth offers self-service setup" },
+            { "feature": "LDAP support", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "CAS protocol", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Built-in identity provider connectors", "toolA": "available", "toolB": "not-documented", "note": "Casdoor: 100+ connectors including Google, GitHub, WeChat" }
+          ]
+        },
+        {
+          "group": "AI-Agent Features & Developer Experience",
+          "rows": [
+            { "feature": "MCP server for managing the platform itself", "toolA": "available", "toolB": "unavailable", "note": "" },
+            { "feature": "MCP server authentication for an app's AI agents", "toolA": "limited", "toolB": "available", "note": "Casdoor via OAuth 2.1/DCR; PropelAuth on Growth plan+" },
+            { "feature": "Prebuilt UI component library", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Built-in SaaS billing/payments", "toolA": "available", "toolB": "not-documented", "note": "" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Casdoor free while PropelAuth is not?", "answer": "Casdoor is fully open source and free to self-host with no license cost. PropelAuth has a free tier (10,000 MAUs) but paid plans starting at $150/month for features like unlimited SSO." },
+        { "question": "Which supports more identity protocols?", "answer": "Casdoor documents broader protocol support, including OAuth2, OIDC, SAML, CAS, LDAP, and WebAuthn, plus 100+ identity provider connectors. PropelAuth documents SAML, OIDC, and SCIM." },
+        { "question": "Do both platforms support MCP for AI agents?", "answer": "Both do, but differently. Casdoor's native MCP server lets AI assistants manage the Casdoor platform itself. PropelAuth's MCP feature (Growth plan+) authenticates MCP servers that an app exposes to its own AI agents." },
+        { "question": "Which is easier to deploy without self-hosting?", "answer": "PropelAuth, as a managed SaaS with a free tier and published pricing. Casdoor requires self-hosting since no managed/commercial offering is documented." },
+        { "question": "Does Casdoor include billing features?", "answer": "Yes, Casdoor includes built-in SaaS billing covering plans, pricing tiers, payment processing, and subscription management. PropelAuth does not document a billing feature." },
+        { "question": "Who uses Casdoor in production?", "answer": "Casdoor lists notable users including Intel, VMware Harbor, Docker, Cisco, Microsoft, Alibaba, and Tencent." }
+      ]
+    }
+  },
+  {
+    "slug": "planka-vs-redmine",
+    "tool_a_id": "bfc32b77-2902-4a87-8ab8-27743eb3989b",
+    "tool_a_name": "Planka",
+    "tool_b_id": "82a64b4e-889f-499f-9da5-e2f83f5d9d43",
+    "tool_b_name": "Redmine",
+    "content": {
+      "verdict": "Planka is a Trello-style, real-time Kanban board tool with a free but feature-limited self-hosted Community edition, an optional managed cloud hosting tier starting at €13.00/month, and Pro-tier extras like calendar/map views and custom branding. Redmine is a broader, fully free and open-source project management and issue-tracking application (GPL v2, no feature gating) with built-in Gantt charts, wikis, time tracking, and native SCM integration, but no official managed hosting. Planka fits teams that want a lightweight, modern Kanban interface with an optional hosted option; Redmine fits teams that want a comprehensive, unrestricted, self-hosted project management suite tied closely to source control.",
+      "bestForToolA": "Teams that want a modern, real-time Kanban board with unlimited boards and cards, and either want the option of managed cloud hosting or are comfortable self-hosting under Planka's Fair Use license, fit Planka.",
+      "bestForToolB": "Teams needing a comprehensive, fully free, self-hosted project management suite with Gantt charts, time tracking, wikis, and native Git/SVN integration are better served by Redmine.",
+      "whoNeedsBoth": "A team could realistically run both: Planka for a lightweight, real-time Kanban board that individual squads use for day-to-day task flow, alongside Redmine as the system of record for formal issue tracking, Gantt-based scheduling, and Git/SVN-linked development history across the wider organization.",
+      "keyDifferences": [
+        {
+          "title": "Board Tool vs. Full PM Suite",
+          "toolA": "Planka is purpose-built as a Kanban board tool with unlimited boards and cards in a Trello-style interface and real-time synchronization across users.",
+          "toolB": "Redmine is a broader project management and issue-tracking application with Gantt charts, calendars, wikis, forums, and time tracking built in, not primarily a Kanban board.",
+          "whyItMatters": "Teams that just need visual task boards may find Redmine's broader feature set unnecessary overhead, while teams needing formal scheduling and documentation may find Planka too narrow.",
+          "benefitsWho": "Planka benefits teams wanting simple visual task flow; Redmine benefits teams needing formal project management and reporting."
+        },
+        {
+          "title": "Managed Hosting Availability",
+          "toolA": "Planka offers official managed cloud hosting for both Community and Pro editions, starting at €13.00/month base plus €2.60-2.90 per user/month.",
+          "toolB": "Redmine has no official managed cloud plan; the redmine.org project is self-hosted only, requiring ongoing server and technical maintenance.",
+          "whyItMatters": "Teams without infrastructure resources may prefer a managed option rather than running their own server.",
+          "benefitsWho": "Smaller teams or non-technical organizations that don't want to self-host."
+        },
+        {
+          "title": "Free-Tier Licensing Restrictions",
+          "toolA": "Planka's free Community Self-Hosted edition is capped by a Fair Use license that prohibits cross-company use and withholds calendar/map views, recurring cards, and custom branding, all reserved for the paid Pro tier.",
+          "toolB": "Redmine is fully free and open source under GPL v2 with no feature gating and no cross-company use restrictions.",
+          "whyItMatters": "License restrictions can matter for consultancies or agencies managing multiple client organizations on one instance.",
+          "benefitsWho": "Consultancies, agencies, or multi-entity organizations needing to serve multiple companies from one self-hosted instance benefit from Redmine's unrestricted license."
+        },
+        {
+          "title": "Time Tracking",
+          "toolA": "Planka's documented feature set does not include native time tracking.",
+          "toolB": "Redmine includes native time tracking, letting teams log and report time spent on issues and projects.",
+          "whyItMatters": "Time tracking is often required for billing, capacity planning, or client reporting.",
+          "benefitsWho": "Consultancies and teams that bill clients by the hour or need effort-based reporting."
+        },
+        {
+          "title": "Source Control Integration",
+          "toolA": "Planka's documented integration surface is a REST API with Swagger UI plus community Python and PHP SDKs, without native SCM integration.",
+          "toolB": "Redmine natively integrates with SVN, CVS, Git, Mercurial, and Bazaar repositories.",
+          "whyItMatters": "Native SCM integration links commits and code changes directly to issues without custom tooling.",
+          "benefitsWho": "Software development teams that want commit history tied directly to their issue tracker."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Licensing & Hosting",
+          "rows": [
+            { "feature": "Free self-hosted edition", "toolA": "available", "toolB": "available", "note": "Planka Community edition has Fair Use restrictions; Redmine is unrestricted GPL v2" },
+            { "feature": "Official managed cloud hosting", "toolA": "available", "toolB": "unavailable", "note": "Planka from €13.00/month base" },
+            { "feature": "Cross-company use on free tier", "toolA": "unavailable", "toolB": "available", "note": "Planka Community edition prohibits it" }
+          ]
+        },
+        {
+          "group": "Core Task/Project Management",
+          "rows": [
+            { "feature": "Kanban boards", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Gantt charts", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Time tracking", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Calendar views", "toolA": "limited", "toolB": "available", "note": "Planka Pro tier only" },
+            { "feature": "Custom fields", "toolA": "not-documented", "toolB": "available", "note": "" }
+          ]
+        },
+        {
+          "group": "Collaboration & Integration",
+          "rows": [
+            { "feature": "Real-time board sync", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Wikis", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "SCM integration (Git/SVN/etc.)", "toolA": "not-documented", "toolB": "available", "note": "Git, SVN, CVS, Mercurial, Bazaar" },
+            { "feature": "REST API", "toolA": "available", "toolB": "available", "note": "Planka has Swagger UI; Redmine supports XML/JSON" },
+            { "feature": "Multilingual interface", "toolA": "available", "toolB": "not-documented", "note": "Planka: 35+ languages" },
+            { "feature": "Plugin ecosystem", "toolA": "not-documented", "toolB": "available", "note": "Large Redmine community plugin ecosystem" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Planka or Redmine free?", "answer": "Both have free self-hosted options: Planka's Community Self-Hosted edition (with Fair Use license restrictions) and Redmine (fully free under GPL v2 with no restrictions)." },
+        { "question": "Does either offer managed cloud hosting?", "answer": "Planka does, starting at €13.00/month base plus per-user fees for both Community and Pro editions. Redmine has no official managed cloud plan; it's self-hosted only." },
+        { "question": "Which has native Git integration?", "answer": "Redmine has native SCM integration supporting Git, SVN, CVS, Mercurial, and Bazaar. Planka's integration surface is a documented REST API without native SCM support." },
+        { "question": "Which is better for formal project scheduling?", "answer": "Redmine, with built-in Gantt charts, calendars, and time tracking. Planka is a Kanban board tool and does not document Gantt charts or time tracking." },
+        { "question": "Can Planka's Community edition be used across multiple client companies?", "answer": "No, Planka's Community Self-Hosted edition's Fair Use license prohibits cross-company use; cross-company use requires the paid Pro tier. Redmine's GPL v2 license has no such restriction." },
+        { "question": "How is Planka deployed?", "answer": "Planka is commonly deployed via Docker, with over 8.1 million image pulls reported, and its source code is publicly available on GitHub under a fair-code licensing model." }
+      ]
+    }
+  },
+  {
+    "slug": "phorge-vs-redmine",
+    "tool_a_id": "aa4f4092-fd7c-44e6-a8d5-8c7d5fc2b085",
+    "tool_a_name": "Phorge",
+    "tool_b_id": "82a64b4e-889f-499f-9da5-e2f83f5d9d43",
+    "tool_b_name": "Redmine",
+    "content": {
+      "verdict": "Phorge is a free, open-source (Apache 2.0) developer toolkit forked from Phabricator, combining code review (Differential-style), built-in repository hosting, task tracking, and rule-based automation (Herald), self-hosted on a Unix-like LAMP/LEMP stack. Redmine is a free, open-source (GPL v2) project management and issue-tracking application with Gantt charts, wikis, time tracking, and native integration with external SCM systems, running cross-platform as a Ruby on Rails app. Phorge is oriented around code review and development workflow tightly coupled to repository hosting; Redmine is oriented around broader project management with formal scheduling and time tracking, integrating with, rather than hosting, source repositories.",
+      "bestForToolA": "Engineering teams that want code review (Differential-style), repository hosting, and rule-based automation in one self-hosted platform, and are comfortable running a Unix-like LAMP/LEMP stack, fit Phorge.",
+      "bestForToolB": "Teams needing formal project scheduling (Gantt charts, calendars), time tracking, and integration with existing external Git/SVN repositories across cross-platform servers are better served by Redmine.",
+      "whoNeedsBoth": "An engineering organization could pair them: Phorge for code review and repository hosting tied directly to commits, while Redmine handles broader cross-team project management, Gantt scheduling, and non-engineering task tracking that Phorge's toolset doesn't cover.",
+      "keyDifferences": [
+        {
+          "title": "Code Review & Repository Hosting",
+          "toolA": "Phorge includes Differential-style code review tooling and built-in repository hosting, both inherited from Phabricator.",
+          "toolB": "Redmine's documented features focus on issue tracking and integrate with external SCM repositories (Git, SVN, CVS, Mercurial, Bazaar) rather than hosting them itself.",
+          "whyItMatters": "A platform that hosts repositories and handles code review natively removes the need for a separate Git hosting service.",
+          "benefitsWho": "Engineering teams that want code review and repo hosting consolidated in one self-hosted platform."
+        },
+        {
+          "title": "Platform/OS Requirements",
+          "toolA": "Phorge requires a Unix-like OS (Linux, macOS, or BSD), with no Windows support, and runs on a self-managed LAMP/LEMP (PHP/MySQL/MariaDB) stack.",
+          "toolB": "Redmine is a cross-platform Ruby on Rails web application without a documented OS restriction.",
+          "whyItMatters": "Teams standardized on Windows server infrastructure would need to accommodate Phorge's Unix-only requirement.",
+          "benefitsWho": "Organizations already running Linux/macOS/BSD infrastructure benefit from Phorge; Windows-based shops benefit from Redmine's cross-platform support."
+        },
+        {
+          "title": "Workflow Automation",
+          "toolA": "Phorge includes Herald, a rule-based automation engine for triggering actions on project events.",
+          "toolB": "Redmine's documented feature set does not list a comparable rule-based automation engine.",
+          "whyItMatters": "Automated triggers reduce manual overhead for repetitive workflow actions like notifications or status changes.",
+          "benefitsWho": "Teams wanting to automate repetitive project-management actions without custom scripting."
+        },
+        {
+          "title": "Maturity & Scale Proof",
+          "toolA": "Phorge was founded in 2021 as a community continuation of Phabricator; the Wikimedia Foundation completed a production migration to Phorge for task tracking.",
+          "toolB": "Redmine has been actively developed since 2006, with a large community plugin ecosystem built up over nearly two decades.",
+          "whyItMatters": "Longer track record and plugin ecosystem size can indicate stability and available extensions for niche needs.",
+          "benefitsWho": "Risk-averse organizations may favor Redmine's longer history; teams wanting Phabricator's proven workflow with active maintenance may favor Phorge."
+        },
+        {
+          "title": "Time Tracking",
+          "toolA": "Phorge's documented feature list does not include time tracking.",
+          "toolB": "Redmine has native time tracking, letting teams log and report time spent on issues and projects.",
+          "whyItMatters": "Time tracking supports billing, capacity planning, and effort reporting that some teams require.",
+          "benefitsWho": "Teams that bill clients hourly or need effort-based project reporting."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Origin & Deployment",
+          "rows": [
+            { "feature": "Open-source license", "toolA": "available", "toolB": "available", "note": "Phorge: Apache 2.0; Redmine: GPL v2" },
+            { "feature": "Windows support", "toolA": "unavailable", "toolB": "available", "note": "Phorge requires Unix-like OS" },
+            { "feature": "Self-hosted only (no official managed cloud)", "toolA": "available", "toolB": "available", "note": "Both require self-hosting" },
+            { "feature": "Project founded", "toolA": "available", "toolB": "available", "note": "Phorge: 2021 (Phabricator continuation); Redmine: 2006" }
+          ]
+        },
+        {
+          "group": "Development Workflow Features",
+          "rows": [
+            { "feature": "Code review tooling", "toolA": "available", "toolB": "not-documented", "note": "Phorge Differential-style review" },
+            { "feature": "Built-in repository hosting", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "SCM integration with external repos", "toolA": "not-documented", "toolB": "available", "note": "Git, SVN, CVS, Mercurial, Bazaar" },
+            { "feature": "Rule-based automation (event triggers)", "toolA": "available", "toolB": "not-documented", "note": "Phorge Herald" }
+          ]
+        },
+        {
+          "group": "Project Management & Extensibility",
+          "rows": [
+            { "feature": "Task/bug tracking", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Wikis", "toolA": "available", "toolB": "available", "note": "" },
+            { "feature": "Time tracking", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Gantt charts/calendars", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Plugin ecosystem", "toolA": "not-documented", "toolB": "available", "note": "Large community plugin ecosystem for Redmine" },
+            { "feature": "REST API", "toolA": "not-documented", "toolB": "available", "note": "Redmine supports XML/JSON" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Are both Phorge and Redmine free?", "answer": "Yes, both are free and open source: Phorge under Apache 2.0 and Redmine under GNU GPL v2." },
+        { "question": "Which includes native code review tooling?", "answer": "Phorge includes Differential-style code review inherited from Phabricator. Redmine does not document a native code review feature." },
+        { "question": "Can Phorge run on Windows?", "answer": "No, Phorge requires a Unix-like operating system such as Linux, macOS, or BSD. Redmine is cross-platform as a Ruby on Rails application." },
+        { "question": "Which has built-in time tracking?", "answer": "Redmine has native time tracking for logging and reporting time spent on issues and projects. Phorge's documented features do not include time tracking." },
+        { "question": "How does Redmine connect to source code repositories?", "answer": "Redmine integrates with external Git, SVN, CVS, Mercurial, and Bazaar repositories. Phorge instead hosts repositories natively within the platform." },
+        { "question": "Is Phorge actively maintained?", "answer": "Yes, it's developed by a community team; the Wikimedia Foundation completed a production migration to Phorge for task tracking, and maintainers continue shipping PHP 8+ compatibility and security fixes." }
+      ]
+    }
+  },
+  {
+    "slug": "capchase-vs-pipe",
+    "tool_a_id": "53147b31-f2fc-40d8-abf5-b79accdf962a",
+    "tool_a_name": "Capchase",
+    "tool_b_id": "61d2abfe-020b-44ad-8493-bab43284c852",
+    "tool_b_name": "Pipe",
+    "content": {
+      "verdict": "Capchase is a vendor financing platform, founded in 2020 and headquartered in New York, that pays B2B tech vendors upfront while their buyers pay for software over time, with a Salesforce integration embedding buyer qualification and loan document generation directly into sales workflows. Pipe is an embedded financial operating system, founded in 2019 and headquartered in Miami, that lets software platforms themselves embed capital offers into their own product for their end customers, using sales-based repayment with no fixed monthly minimums. Both are enterprise fintech platforms with undisclosed pricing that require a sales relationship to implement, but they target different points in the software supply chain: Capchase serves vendors selling to buyers, while Pipe serves platforms embedding financing for their own customers.",
+      "bestForToolA": "B2B tech vendors that want to get paid upfront on deals while offering buyers flexible monthly, quarterly, or extended installment terms, especially those running sales through Salesforce, fit Capchase.",
+      "bestForToolB": "Software platforms such as vertical SaaS providers, payment facilitators, and marketplaces that want to embed pre-approved capital offers into their own product for their end customers, with sales-based repayment and low-code integration, fit Pipe.",
+      "whoNeedsBoth": "A vertical SaaS platform could use both in different roles: Pipe embedded in its own product to offer capital to its end customers, while the platform company itself uses Capchase as a vendor to get paid upfront on its own annual contracts sold to enterprise buyers who want to pay over time.",
+      "keyDifferences": [
+        {
+          "title": "Distribution Model",
+          "toolA": "Capchase sells vendor financing directly to B2B tech vendors and embeds into the vendor's own Salesforce sales workflow for buyer qualification.",
+          "toolB": "Pipe is built as an embeddable financial layer for software platforms (vertical SaaS, payment facilitators, marketplaces) to offer capital to their own end customers, not for the platform's own sales team.",
+          "whyItMatters": "The two occupy different roles in a software supply chain: one finances a vendor's sales, the other lets a platform finance its own customers.",
+          "benefitsWho": "Software vendors selling directly to buyers benefit from Capchase; platforms building financial products for their own customer base benefit from Pipe."
+        },
+        {
+          "title": "Repayment Structure",
+          "toolA": "Capchase offers flexible payment terms for buyers, with monthly, quarterly, or extended installment options, a structured installment model.",
+          "toolB": "Pipe's capital product uses sales-based repayment that scales with a business's transaction volume, with no fixed monthly minimums.",
+          "whyItMatters": "A fixed installment schedule versus revenue-linked repayment changes cash-flow risk for the end business being financed.",
+          "benefitsWho": "Businesses with variable revenue may prefer Pipe's sales-linked repayment; buyers wanting predictable payment schedules may prefer Capchase's installment terms."
+        },
+        {
+          "title": "Integration Surface",
+          "toolA": "Capchase documents a specific Salesforce integration that embeds buyer qualification and loan document generation directly into Salesforce.",
+          "toolB": "Pipe documents low-code embedding into a partner's own product via a small number of code snippets, aimed at platform engineering teams rather than a CRM.",
+          "whyItMatters": "The integration point determines which team (sales operations vs. product engineering) implements and owns the tool.",
+          "benefitsWho": "Sales teams using Salesforce benefit from Capchase's native integration; product/engineering teams building embedded finance features benefit from Pipe's low-code embedding."
+        },
+        {
+          "title": "Underwriting Speed & Reported Metrics",
+          "toolA": "Capchase states that about 97% of applications are decisioned within 30 seconds.",
+          "toolB": "Pipe reports a 61% average conversion rate and an 80 Net Promoter Score across partners, rather than a stated underwriting speed.",
+          "whyItMatters": "The specific metrics each company publicizes reflect what they optimize for and disclose to prospective partners.",
+          "benefitsWho": "Vendors prioritizing fast buyer decisioning may value Capchase's disclosed speed; platforms evaluating partner satisfaction may value Pipe's disclosed NPS and conversion figures."
+        },
+        {
+          "title": "Geographic & Currency Reach",
+          "toolA": "Capchase documents support for financing across 9 countries in multiple currencies.",
+          "toolB": "Pipe's documented features focus on industry-specific risk models for vertical SaaS, payment facilitators, and marketplaces, without a stated country/currency count.",
+          "whyItMatters": "International vendors need financing partners that can operate across their buyers' currencies and jurisdictions.",
+          "benefitsWho": "Vendors selling across multiple countries and currencies benefit from Capchase's documented multi-currency coverage."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Business Model & Target User",
+          "rows": [
+            { "feature": "Primary user of the platform", "toolA": "available", "toolB": "available", "note": "Capchase: B2B tech vendors and their buyers; Pipe: software platforms embedding capital for their own customers" },
+            { "feature": "Named reference customers", "toolA": "not-documented", "toolB": "available", "note": "Pipe: Uber Eats, GoCardless, Housecall Pro" },
+            { "feature": "Public pricing", "toolA": "unavailable", "toolB": "unavailable", "note": "Neither discloses pricing" }
+          ]
+        },
+        {
+          "group": "Underwriting & Repayment",
+          "rows": [
+            { "feature": "Underwriting speed disclosed", "toolA": "available", "toolB": "not-documented", "note": "Capchase: ~97% decisioned within 30 seconds" },
+            { "feature": "Repayment model", "toolA": "available", "toolB": "available", "note": "Capchase: installment terms; Pipe: sales-based repayment, no fixed minimums" },
+            { "feature": "Reported performance metrics", "toolA": "available", "toolB": "available", "note": "Capchase: 25% increase in client deal win rates; Pipe: 61% avg conversion, 80 NPS" }
+          ]
+        },
+        {
+          "group": "Integration & Company Info",
+          "rows": [
+            { "feature": "Salesforce integration", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Low-code embedding for platforms", "toolA": "not-documented", "toolB": "available", "note": "" },
+            { "feature": "Multi-currency/country coverage", "toolA": "available", "toolB": "not-documented", "note": "Capchase: 9 countries" },
+            { "feature": "Multi-party deal collaboration portal", "toolA": "available", "toolB": "not-documented", "note": "" },
+            { "feature": "Founded / headquarters", "toolA": "available", "toolB": "available", "note": "Capchase: 2020, New York, NY; Pipe: 2019, Miami, FL" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "What's the core difference between Capchase and Pipe?", "answer": "Capchase provides vendor financing directly to B2B tech vendors and their buyers, while Pipe is an embeddable financial layer that software platforms build into their own product to offer capital to their end customers." },
+        { "question": "Which is designed for platforms to embed versus vendors to use directly?", "answer": "Pipe is built for platforms (vertical SaaS, payment facilitators, marketplaces) to embed into their own product. Capchase is used directly by B2B tech vendors, integrating into their Salesforce sales workflow." },
+        { "question": "How does repayment differ between the two?", "answer": "Capchase offers structured monthly, quarterly, or extended installment terms for buyers. Pipe uses sales-based repayment that scales with a business's transaction volume, with no fixed monthly minimums." },
+        { "question": "Is pricing public for either platform?", "answer": "No, neither Capchase nor Pipe publicly discloses pricing; both require a sales/partnership engagement to implement." },
+        { "question": "Which platform discloses its underwriting speed?", "answer": "Capchase states that about 97% of applications receive a decision within 30 seconds. Pipe does not document a specific underwriting speed, instead reporting a 61% average conversion rate and an 80 Net Promoter Score." },
+        { "question": "Which platform lists named customers?", "answer": "Pipe lists partners including Uber Eats, GoCardless, and Housecall Pro. Capchase does not document named customer references in the available facts." }
+      ]
+    }
+  }
+]

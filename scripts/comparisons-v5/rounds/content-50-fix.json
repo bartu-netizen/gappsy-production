@@ -1,0 +1,111 @@
+[
+  {
+    "slug": "gitleaks-vs-owasp-zap",
+    "tool_a_id": "0db8e4b7-3129-43e3-bd36-cff6d52f51bc",
+    "tool_a_name": "Gitleaks",
+    "tool_b_id": "26fa7763-662c-4590-abb7-062fe17b309e",
+    "tool_b_name": "OWASP ZAP",
+    "content": {
+      "verdict": "Gitleaks and OWASP ZAP address different layers of application security rather than competing head-to-head. Gitleaks is a free, open-source CLI that scans git repositories, files, directories, and stdin for hardcoded secrets like API keys and passwords, while OWASP ZAP is a free, open-source web application security scanner backed by Checkmarx that tests running web apps for vulnerabilities. Both are entirely free with no paid tiers documented, but one operates on source code and commit history and the other operates against a live running application. Most security pipelines end up using both rather than choosing between them.",
+      "bestForToolA": "Gitleaks is the right pick for teams that need to catch hardcoded secrets — passwords, API keys, tokens — in git history, source files, or CI pipelines, especially via its pre-commit hook or GitHub Actions integration.",
+      "bestForToolB": "OWASP ZAP fits teams that need to scan a running web application for vulnerabilities, want an extensible add-on marketplace, and value beginner-friendly quick-start guides for getting into security testing.",
+      "whoNeedsBoth": "Gitleaks scans static code and commit history for leaked credentials while ZAP scans live running applications for vulnerabilities, so most application security programs need both: Gitleaks to stop secrets from ever being committed, and ZAP to catch runtime web vulnerabilities that source code review can't reveal.",
+      "keyDifferences": [
+        {
+          "title": "What Gets Scanned",
+          "toolA": "Gitleaks scans git repository history via `git log -p`, local directories/files, or data piped via stdin — it looks for secrets in source code and commit history.",
+          "toolB": "OWASP ZAP performs automated scanning of a running web application, acting as a proxy that tests it for security vulnerabilities.",
+          "whyItMatters": "The two tools inspect fundamentally different attack surfaces — static code and history versus a live running application — so they surface different classes of risk.",
+          "benefitsWho": "Teams preventing leaked credentials benefit from Gitleaks' code-level scanning; teams testing deployed web apps benefit from ZAP's live application scanning."
+        },
+        {
+          "title": "Detection Method",
+          "toolA": "Gitleaks uses configurable regex rules to detect secrets such as passwords, API keys, and tokens.",
+          "toolB": "ZAP performs automated web application vulnerability scanning, described in its documented features at a general level without specific detection-technique detail.",
+          "whyItMatters": "Gitleaks' regex-rule approach is precise for known secret patterns, while ZAP's automated scanner targets a broader set of application-level vulnerabilities.",
+          "benefitsWho": "Security engineers tuning detection for specific secret formats benefit from Gitleaks' configurable TOML rules; teams wanting broad out-of-the-box vulnerability coverage benefit from ZAP's automated scanning."
+        },
+        {
+          "title": "Extensibility",
+          "toolA": "Gitleaks' extensibility is documented through TOML-based configurable allowlists (global and rule-specific), a `.gitleaksignore` file, and custom report templates.",
+          "toolB": "ZAP is extensible through a marketplace of community-contributed add-ons.",
+          "whyItMatters": "Gitleaks lets teams fine-tune what gets ignored or reported, while ZAP lets teams add entirely new scanning capabilities via community add-ons.",
+          "benefitsWho": "Teams managing false positives benefit from Gitleaks' allowlist tuning; teams wanting to expand scan coverage benefit from ZAP's add-on ecosystem."
+        },
+        {
+          "title": "CI/CD and Workflow Integration",
+          "toolA": "Gitleaks integrates with CI/CD via a pre-commit hook and the companion gitleaks-action for GitHub Actions, and outputs JSON, CSV, JUnit, or SARIF reports for CI tooling.",
+          "toolB": "ZAP provides automation support for integrating security testing into workflows, per its documented features, though the facts don't specify a particular CI platform integration or report formats.",
+          "whyItMatters": "Gitleaks' documented report formats (SARIF, JUnit) are built specifically for CI pipeline consumption, while ZAP's automation support is described more generally.",
+          "benefitsWho": "DevSecOps teams building pre-commit or CI gates for secrets benefit from Gitleaks' specific integrations; teams automating broader security testing workflows benefit from ZAP's automation support."
+        },
+        {
+          "title": "Project Maturity and Governance",
+          "toolA": "Gitleaks' maintainers describe the project as 'feature complete,' with future releases limited to security patches; it has 28.2k GitHub stars.",
+          "toolB": "ZAP is recognized as a GitHub Top 1000 project, maintained by the ZAP Dev Team and backed by Checkmarx, while remaining an independent open-source project.",
+          "whyItMatters": "Gitleaks is in stable maintenance mode with limited new feature development, while ZAP has ongoing backing from Checkmarx and an active community — relevant for teams weighing long-term roadmap.",
+          "benefitsWho": "Teams wanting a stable, unchanging tool for a specific job benefit from Gitleaks' feature-complete status; teams wanting an actively evolving, backed platform benefit from ZAP's Checkmarx-supported governance."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Scanning Capabilities",
+          "rows": [
+            { "feature": "Secret/credential detection", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Git history scanning", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Web application vulnerability scanning", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Directory/file scanning", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Stdin/streamed data scanning", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Integration & Extensibility",
+          "rows": [
+            { "feature": "Pre-commit hook integration", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "GitHub Actions integration", "toolA": "available", "toolB": "not-documented", "note": "Gitleaks ships a companion gitleaks-action; ZAP's facts don't document a specific CI platform integration." },
+            { "feature": "CI/CD report formats (JSON/CSV/JUnit/SARIF)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Add-on/plugin marketplace", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "General workflow automation support", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Configurable allowlists/rules", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Access, Pricing & Support",
+          "rows": [
+            { "feature": "Free, open-source license", "toolA": "available", "toolB": "available", "note": "Gitleaks is MIT licensed; ZAP is open source and independently governed." },
+            { "feature": "Paid/commercial tier", "toolA": "unavailable", "toolB": "unavailable" },
+            { "feature": "Official commercial support/SLA", "toolA": "unavailable", "toolB": "unavailable" },
+            { "feature": "Beginner-friendly onboarding resources", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "GUI/hosted dashboard", "toolA": "unavailable", "toolB": "not-documented", "note": "Gitleaks is CLI-only with no built-in GUI or hosted dashboard." }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are Gitleaks and OWASP ZAP competitors?",
+          "answer": "No. Gitleaks is a CLI tool that scans git repositories, files, and directories for hardcoded secrets like API keys and passwords, while OWASP ZAP is a web application security scanner that tests running web apps for vulnerabilities. They address different layers of an application security pipeline rather than competing for the same job."
+        },
+        {
+          "question": "Are both tools free?",
+          "answer": "Yes. Gitleaks is open source under the MIT license with no paid tiers, and OWASP ZAP is also completely free and open source, with no official paid support tier documented on its main site."
+        },
+        {
+          "question": "Which tool integrates better with CI/CD pipelines?",
+          "answer": "Gitleaks has specific documented CI/CD integrations: a pre-commit hook, the gitleaks-action for GitHub Actions, and report output in JSON, CSV, JUnit, and SARIF formats. OWASP ZAP documents general 'automation support' for integrating security testing into workflows, but its facts don't specify particular CI platforms or report formats."
+        },
+        {
+          "question": "Is OWASP ZAP suitable for beginners?",
+          "answer": "Yes — ZAP includes quick-start guides and introductory resources aimed at users new to security testing. Gitleaks' facts don't document similar beginner-focused onboarding materials."
+        },
+        {
+          "question": "Is Gitleaks still being actively developed?",
+          "answer": "Gitleaks' maintainers describe the project as 'feature complete,' meaning future releases are limited to security patches rather than new features. OWASP ZAP, by contrast, is backed by Checkmarx and recognized as a GitHub Top 1000 project with an active community."
+        },
+        {
+          "question": "Can I extend either tool's capabilities?",
+          "answer": "OWASP ZAP is extensible through a marketplace of community-contributed add-ons. Gitleaks' extensibility is documented differently — through configurable TOML-based allowlists (global and rule-specific) and a `.gitleaksignore` file rather than an add-on system."
+        }
+      ]
+    }
+  }
+]

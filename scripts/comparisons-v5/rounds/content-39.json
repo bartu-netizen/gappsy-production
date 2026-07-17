@@ -1,0 +1,1555 @@
+[
+  {
+    "slug": "trufflehog-vs-veracode",
+    "tool_a_id": "c90a97bd-ed6e-4be5-a516-b67be914e3cd",
+    "tool_a_name": "TruffleHog",
+    "tool_b_id": "96409439-bd37-456a-bd67-52a51e831b1e",
+    "tool_b_name": "Veracode",
+    "content": {
+      "verdict": "TruffleHog is a focused, largely free secret-scanning tool built specifically to find and verify exposed credentials in git history, Docker images, and cloud storage, while Veracode is a broad, fully custom-priced enterprise application security platform combining SAST, DAST, SCA, container security, and penetration testing under one vendor relationship. They overlap on security scanning but differ enormously in scope, pricing model, and target buyer.",
+      "bestForToolA": "Developers and small teams who want a free, open-source scanner with 800+ secret detectors and live credential verification to catch leaked API keys in code and Docker images.",
+      "bestForToolB": "Enterprises that need a single vendor for SAST, DAST, SCA, container security, and PTaaS, and are willing to go through a sales process since Veracode publishes no public pricing or free trial.",
+      "whoNeedsBoth": "An enterprise running Veracode for full-spectrum SAST/DAST/SCA testing could still deploy TruffleHog's free pre-commit and pre-receive hooks specifically to block secrets from ever being committed, since Veracode's listed feature set does not call out dedicated secret-scanning or live credential verification the way TruffleHog does.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Transparency",
+          "toolA": "TruffleHog's open-source core is free, with an Enterprise tier priced by contacting sales.",
+          "toolB": "Veracode discloses no public pricing at all; every plan requires contacting sales or requesting a demo.",
+          "whyItMatters": "Teams evaluating tools on a budget need to know upfront whether they can start free or must go through a sales cycle.",
+          "benefitsWho": "Budget-conscious developers and small teams benefit from TruffleHog's free entry point."
+        },
+        {
+          "title": "Scanning Specialization",
+          "toolA": "TruffleHog specializes in secret detection with 800+ built-in detectors across git history, multiple branches, Docker images, and cloud storage.",
+          "toolB": "Veracode covers SAST, DAST, SCA, and container security broadly, but its listed features do not call out a dedicated secret-scanning capability.",
+          "whyItMatters": "A team specifically worried about leaked credentials needs a tool purpose-built for that, not just general code scanning.",
+          "benefitsWho": "Security teams focused narrowly on credential leaks benefit from TruffleHog's depth in that one area."
+        },
+        {
+          "title": "False Positive Handling",
+          "toolA": "TruffleHog programmatically verifies discovered secrets live against the relevant service or API to confirm they're active.",
+          "toolB": "Veracode reports a 1.1% false-positive rate across its scanning platform.",
+          "whyItMatters": "High false-positive rates waste developer time chasing non-issues, so verification approach affects daily workflow.",
+          "benefitsWho": "Security engineers triaging alerts benefit from lower noise in either tool's approach."
+        },
+        {
+          "title": "AI-Assisted Remediation",
+          "toolA": "TruffleHog does not document an AI-powered remediation feature; it tracks remediation status and sends rotation reminders instead.",
+          "toolB": "Veracode's Fix feature uses AI to automate remediation of flagged vulnerabilities to save developer time.",
+          "whyItMatters": "AI-assisted fixes can significantly reduce the manual effort of triaging and patching flaws at scale.",
+          "benefitsWho": "Large engineering organizations with high flaw volumes benefit most from Veracode's AI remediation."
+        },
+        {
+          "title": "Scale and Track Record",
+          "toolA": "TruffleHog is made by Truffle Security Co., founded in 2021, with an Enterprise tier adding SSO, RBAC, and 20+ integrations.",
+          "toolB": "Veracode states it has scanned over 1.5M applications and 471T+ lines of code, with 148M+ flaws fixed, and lists enterprise customers like Sitecore, Unisys, BMW, and Garmin.",
+          "whyItMatters": "Track record and scale claims matter when an enterprise is choosing a long-term security vendor.",
+          "benefitsWho": "Large, regulated enterprises evaluating vendor maturity benefit from Veracode's documented scale."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Scanning & Detection",
+          "rows": [
+            {
+              "feature": "Secret/credential scanning",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "TruffleHog: 800+ detectors"
+            },
+            {
+              "feature": "SAST (static analysis)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "DAST (dynamic analysis)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "SCA (open-source dependency scanning)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Container security scanning",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Live credential verification",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Access",
+          "rows": [
+            {
+              "feature": "Free tier / open-source core",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Veracode has no public free trial info"
+            },
+            {
+              "feature": "Pre-commit / pre-receive hooks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "On-premises or cloud deployment (Enterprise)",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Custom regex / rule support",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Enterprise & Compliance",
+          "rows": [
+            {
+              "feature": "SSO / RBAC",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "TruffleHog Enterprise only"
+            },
+            {
+              "feature": "Public pricing",
+              "toolA": "limited",
+              "toolB": "unavailable",
+              "note": "TruffleHog OSS is free; Enterprise is custom"
+            },
+            {
+              "feature": "AI-assisted remediation",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Veracode Fix feature"
+            },
+            {
+              "feature": "Penetration testing as a service",
+              "toolA": "unavailable",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is TruffleHog free to use?",
+          "answer": "Yes, the open-source core is free and includes GitHub, S3, directory, GCS, and Docker scanning with 800+ secret detectors. An Enterprise tier with SSO, RBAC, and a dashboard is priced by contacting sales."
+        },
+        {
+          "question": "Does Veracode offer a free trial?",
+          "answer": "No, no free trial information is provided on the Veracode site; pricing requires contacting sales or requesting a demo."
+        },
+        {
+          "question": "Which tool is better for finding leaked API keys in git history?",
+          "answer": "TruffleHog is purpose-built for this, scanning full git history and multiple branches with 800+ detectors and live verification against the relevant service. Veracode's documented features don't call out dedicated secret scanning."
+        },
+        {
+          "question": "Does Veracode use AI?",
+          "answer": "Yes, Veracode's Fix feature uses AI to automate remediation of flagged security flaws."
+        },
+        {
+          "question": "Can I see public pricing for either tool?",
+          "answer": "TruffleHog's open-source core is free with Enterprise pricing available on request; Veracode publishes no pricing at all and requires contacting sales."
+        },
+        {
+          "question": "Do TruffleHog and Veracode integrate with each other?",
+          "answer": "No official integration between the two is documented, but both are designed to run inside CI/CD pipelines alongside other security tooling."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "1password-secrets-automation-vs-trufflehog",
+    "tool_a_id": "ae78ea6a-31f8-4642-9dd7-797047244d47",
+    "tool_a_name": "1Password Secrets Automation",
+    "tool_b_id": "c90a97bd-ed6e-4be5-a516-b67be914e3cd",
+    "tool_b_name": "TruffleHog",
+    "content": {
+      "verdict": "1Password Secrets Automation and TruffleHog solve adjacent but different problems: 1Password Secrets Automation is about securely storing and injecting secrets into applications and CI/CD pipelines via Service Accounts or self-hosted Connect servers, while TruffleHog is about scanning code, git history, and Docker images to detect secrets that were already hardcoded or leaked. One prevents secrets from needing to be hardcoded; the other catches it when they are anyway.",
+      "bestForToolA": "Teams already on a 1Password subscription who want to inject vaulted secrets into GitHub Actions, CircleCI, Jenkins, or Kubernetes without hardcoding credentials in application code.",
+      "bestForToolB": "Teams needing a free, open-source way to scan git history, branches, and Docker images for secrets that leaked despite vaulting practices, using 800+ built-in detectors.",
+      "whoNeedsBoth": "A team using 1Password Secrets Automation to inject credentials into CI/CD pipelines would still benefit from running TruffleHog in pre-commit and pre-receive hooks, since vaulting secrets doesn't prevent a developer from accidentally hardcoding one directly into a file; TruffleHog catches that case that 1Password's injection model doesn't address.",
+      "keyDifferences": [
+        {
+          "title": "Core Function",
+          "toolA": "1Password Secrets Automation stores secrets in vaults and delivers them to apps/infrastructure via Service Accounts or self-hosted Connect servers.",
+          "toolB": "TruffleHog scans code, git history, and Docker images to detect secrets that are already exposed, using 800+ detectors.",
+          "whyItMatters": "Storage/injection and detection/scanning are complementary but distinct security practices with different failure modes.",
+          "benefitsWho": "DevOps teams building a defense-in-depth secrets strategy benefit from understanding this distinction."
+        },
+        {
+          "title": "Pricing Model",
+          "toolA": "1Password Secrets Automation is included with a 1Password subscription rather than sold as a separate line item, with no dedicated public pricing page.",
+          "toolB": "TruffleHog's open-source core is fully free, with a custom-priced Enterprise tier for dashboards, SSO, RBAC, and 20+ integrations.",
+          "whyItMatters": "Understanding what's bundled versus separately priced affects total cost of ownership when adopting either tool.",
+          "benefitsWho": "Budget planners and procurement teams benefit from clarity on what's already covered by existing subscriptions."
+        },
+        {
+          "title": "CI/CD Integration Approach",
+          "toolA": "1Password Secrets Automation has pre-built integrations for GitHub Actions, CircleCI, and Jenkins to sync secrets directly into pipelines, plus Kubernetes support.",
+          "toolB": "TruffleHog integrates via GitHub Actions and pre-commit/pre-receive hooks that block secrets from being committed or pushed in the first place.",
+          "whyItMatters": "The two tools intervene at different points in the pipeline: injection at runtime versus prevention at commit time.",
+          "benefitsWho": "Engineering teams building CI/CD security controls benefit from combining both intervention points."
+        },
+        {
+          "title": "Secret Verification",
+          "toolA": "1Password Secrets Automation does not document a feature that verifies secrets are live against the target service; its IDE extensions instead detect exposed secrets before commit.",
+          "toolB": "TruffleHog programmatically verifies discovered secrets against the relevant service or API to confirm they're active and eliminate false positives.",
+          "whyItMatters": "Live verification tells a team whether a discovered credential is an urgent, active risk or already dead.",
+          "benefitsWho": "Incident responders triaging discovered secrets benefit from TruffleHog's verification step."
+        },
+        {
+          "title": "Self-Hosting Options",
+          "toolA": "1Password's Connect servers are self-hosted by the customer for caching and control, giving REST API access not available with Service Accounts.",
+          "toolB": "TruffleHog's open-source scanner can be run anywhere by the team operating it, with an Enterprise tier offering on-premises or cloud deployment.",
+          "whyItMatters": "Self-hosting options matter for teams with strict infrastructure or data residency requirements.",
+          "benefitsWho": "Security-conscious enterprises needing infrastructure control benefit from both tools' self-hosting paths."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Secrets Handling",
+          "rows": [
+            {
+              "feature": "Secrets vaulting/storage",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Secrets injection into apps/infra",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Secret detection/scanning in code",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "1Password: IDE extensions detect exposed secrets before commit"
+            },
+            {
+              "feature": "Live credential verification",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Git history / multi-branch scanning",
+              "toolA": "unavailable",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Integrations & Deployment",
+          "rows": [
+            {
+              "feature": "GitHub Actions integration",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "CircleCI / Jenkins integration",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Kubernetes integration",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Pre-commit / pre-receive hooks",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hosted deployment option",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "1Password Connect servers; TruffleHog Enterprise on-prem"
+            }
+          ]
+        },
+        {
+          "group": "Team & Enterprise Features",
+          "rows": [
+            {
+              "feature": "REST API access",
+              "toolA": "limited",
+              "toolB": "not-documented",
+              "note": "1Password: Connect only, not Service Accounts"
+            },
+            {
+              "feature": "SSO / RBAC",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "TruffleHog Enterprise tier"
+            },
+            {
+              "feature": "Dedicated pricing page",
+              "toolA": "unavailable",
+              "toolB": "limited",
+              "note": "TruffleHog OSS free, Enterprise custom"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "What's the difference between 1Password Secrets Automation and TruffleHog?",
+          "answer": "1Password Secrets Automation stores and injects secrets into applications and CI/CD pipelines via Service Accounts or Connect servers. TruffleHog scans code, git history, and Docker images to detect secrets that were already hardcoded or leaked."
+        },
+        {
+          "question": "Does 1Password Secrets Automation scan git history for leaked secrets?",
+          "answer": "Not as a core function. It focuses on secure storage and injection of secrets, though its IDE extensions do detect exposed secrets before they're committed."
+        },
+        {
+          "question": "Can TruffleHog store and inject secrets into CI/CD pipelines?",
+          "answer": "No, TruffleHog is a scanner and detector, not a secrets vault or injection tool."
+        },
+        {
+          "question": "Do either of these tools cost extra?",
+          "answer": "1Password Secrets Automation is included with a 1Password subscription rather than billed separately. TruffleHog's open-source core is free, with Enterprise pricing available on request."
+        },
+        {
+          "question": "Which tool integrates with Kubernetes?",
+          "answer": "1Password Secrets Automation documents Kubernetes secrets syncing. TruffleHog does not document a Kubernetes-specific integration."
+        },
+        {
+          "question": "Which tool verifies that a discovered secret is actually live?",
+          "answer": "TruffleHog programmatically verifies secrets against the relevant service or API. 1Password Secrets Automation does not document this kind of live verification feature."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "1password-secrets-automation-vs-keeweb",
+    "tool_a_id": "ae78ea6a-31f8-4642-9dd7-797047244d47",
+    "tool_a_name": "1Password Secrets Automation",
+    "tool_b_id": "adba4fa4-52c9-43d9-aa36-5bf99f7c06f0",
+    "tool_b_name": "KeeWeb",
+    "content": {
+      "verdict": "These tools serve fundamentally different audiences: 1Password Secrets Automation is developer-facing infrastructure for injecting vaulted credentials into applications and CI/CD pipelines, while KeeWeb is a free, open-source personal password manager for browsing and storing individual credentials in KeePass-format files. They aren't really substitutes for each other.",
+      "bestForToolA": "Engineering and DevOps teams already paying for 1Password who need to inject secrets into GitHub Actions, CircleCI, Jenkins, or Kubernetes without hardcoding credentials.",
+      "bestForToolB": "Individuals who want a completely free, open-source password manager compatible with existing KeePass database files, with no subscription cost.",
+      "whoNeedsBoth": "It's plausible but not a natural workflow: a developer might personally use KeeWeb to manage their own KeePass vault of personal logins while their employer standardizes on 1Password Secrets Automation for pipeline credentials, but the two tools don't share data or workflows.",
+      "keyDifferences": [
+        {
+          "title": "Target User",
+          "toolA": "1Password Secrets Automation is built for engineering and DevOps teams automating secrets access across applications and cloud infrastructure.",
+          "toolB": "KeeWeb is built for individual end users managing personal password vaults compatible with KeePass files.",
+          "whyItMatters": "Choosing the right tool starts with matching it to the actual use case: infrastructure automation versus personal password storage.",
+          "benefitsWho": "This distinction saves both individuals and engineering teams from evaluating a tool that isn't built for their job."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "1Password Secrets Automation is a paid feature included with a 1Password subscription; no dedicated free tier is documented.",
+          "toolB": "KeeWeb is completely free with, per the website, no trials, demo versions, or limits.",
+          "whyItMatters": "Cost is a primary factor when the two tools aren't functionally interchangeable anyway.",
+          "benefitsWho": "Cost-sensitive individuals benefit from KeeWeb's zero-cost model; teams already paying for 1Password get automation bundled in."
+        },
+        {
+          "title": "CI/CD and Automation",
+          "toolA": "1Password Secrets Automation has pre-built integrations for GitHub Actions, CircleCI, Jenkins, and Kubernetes secrets syncing.",
+          "toolB": "KeeWeb has no CI/CD or automation features documented; it's a manual desktop and web password manager.",
+          "whyItMatters": "Only one of these tools is built to plug into automated pipelines at all.",
+          "benefitsWho": "DevOps engineers automating credential access benefit from 1Password Secrets Automation; individuals get no equivalent need from KeeWeb."
+        },
+        {
+          "title": "Team Collaboration",
+          "toolA": "1Password Secrets Automation is designed for team and organization use across shared infrastructure.",
+          "toolB": "KeeWeb has no built-in team sharing or collaboration features, per its documented cons.",
+          "whyItMatters": "Teams needing to share access to credentials need built-in collaboration, not a single-user vault.",
+          "benefitsWho": "Teams benefit from 1Password's organizational model; solo users are unaffected by KeeWeb's lack of sharing."
+        },
+        {
+          "title": "Storage and Sync Model",
+          "toolA": "Secrets live in 1Password vaults, accessed programmatically via Service Accounts or self-hosted Connect servers.",
+          "toolB": "KeeWeb syncs KeePass-compatible database files via Dropbox, Google Drive, OneDrive, or a custom WebDAV server.",
+          "whyItMatters": "File-based sync versus API-based vault access changes how each tool fits into an existing workflow.",
+          "benefitsWho": "Individuals with existing KeePass files benefit from KeeWeb's file compatibility; developers benefit from 1Password's API-driven access."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Access & Automation",
+          "rows": [
+            {
+              "feature": "CI/CD pipeline integrations",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "GitHub Actions, CircleCI, Jenkins"
+            },
+            {
+              "feature": "Kubernetes secrets sync",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "CLI-based scripting",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Password generator",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Storage & Sync",
+          "rows": [
+            {
+              "feature": "KeePass file compatibility",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Cloud storage sync (Dropbox, Google Drive, OneDrive, WebDAV)",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Vault-based secret references",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Multi-file / multi-vault support",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Team & Deployment",
+          "rows": [
+            {
+              "feature": "Team/organization sharing",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Self-hosted deployment",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "1Password Connect servers"
+            },
+            {
+              "feature": "Open-source codebase",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free to use",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "1Password SA bundled with paid subscription"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can KeeWeb automate secrets injection into CI/CD pipelines?",
+          "answer": "No, this isn't documented. KeeWeb is a manual desktop and web password manager, not a CI/CD automation tool."
+        },
+        {
+          "question": "Is 1Password Secrets Automation free?",
+          "answer": "No, it's included with a paid 1Password subscription rather than sold separately, and no dedicated free tier is documented."
+        },
+        {
+          "question": "Is KeeWeb really free with no limits?",
+          "answer": "Yes, per the KeeWeb website, the app is completely free with no trials, demo versions, or limits."
+        },
+        {
+          "question": "Does 1Password Secrets Automation support Kubernetes?",
+          "answer": "Yes, it has documented support for syncing secrets into Kubernetes environments."
+        },
+        {
+          "question": "Does KeeWeb support team or shared vaults?",
+          "answer": "This isn't documented as a feature; KeeWeb's cons note there's no built-in team sharing or collaboration."
+        },
+        {
+          "question": "Which tool is open source?",
+          "answer": "KeeWeb is open source with its code available on GitHub. 1Password Secrets Automation's underlying code is not documented as open source."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "keeweb-vs-zitadel",
+    "tool_a_id": "adba4fa4-52c9-43d9-aa36-5bf99f7c06f0",
+    "tool_a_name": "KeeWeb",
+    "tool_b_id": "69d914d3-8667-4dc1-83ca-010c75550ec9",
+    "tool_b_name": "Zitadel",
+    "content": {
+      "verdict": "KeeWeb is a personal password vault for storing and organizing individual credentials, while Zitadel is developer-facing identity infrastructure for building login, MFA, and multi-tenant authentication into applications. They don't compete for the same job: one manages your passwords, the other authenticates your users.",
+      "bestForToolA": "Individuals who want a free, open-source, KeePass-compatible password manager with no cost, no limits, and cross-platform desktop/web apps.",
+      "bestForToolB": "Engineering teams building authentication into their own product who need hosted login pages, MFA/passkeys, RBAC, and multi-tenancy, with a free tier up to 100 daily active users.",
+      "whoNeedsBoth": "A SaaS company might use Zitadel to power login and authentication for its own product while employees separately use KeeWeb to store internal or operational passwords that aren't managed through Zitadel's identity flows at all.",
+      "keyDifferences": [
+        {
+          "title": "Product Category",
+          "toolA": "KeeWeb is a password manager for storing and browsing credentials in KeePass-compatible database files.",
+          "toolB": "Zitadel is identity/access management (IAM) infrastructure for building login and authentication into applications.",
+          "whyItMatters": "Confusing a password manager with an identity platform leads to picking the wrong tool for building a login system.",
+          "benefitsWho": "Developers researching auth solutions benefit from this categorical distinction."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "KeeWeb is completely free with no trials, demos, or limits.",
+          "toolB": "Zitadel is free up to 100 daily active users, then $100/month for Pro (up to 25,000 DAU), with custom Enterprise pricing above that.",
+          "whyItMatters": "Zitadel's pricing scales with usage since it's a service that runs your application's authentication, unlike a static local tool.",
+          "benefitsWho": "Startups scaling user bases benefit from understanding Zitadel's tiered growth path."
+        },
+        {
+          "title": "Authentication Delivery",
+          "toolA": "KeeWeb does not provide authentication-as-a-service; it only stores stored KeePass entries locally or via file sync.",
+          "toolB": "Zitadel provides hosted login pages, MFA, passwordless/passkey login, and social login via Google, Microsoft, and GitHub.",
+          "whyItMatters": "Only one of these tools can actually power the login flow for another application.",
+          "benefitsWho": "Product teams building customer-facing login benefit from Zitadel; individuals just need KeeWeb for personal use."
+        },
+        {
+          "title": "Compliance Certifications",
+          "toolA": "KeeWeb does not document any formal compliance certifications.",
+          "toolB": "Zitadel is ISO 27001 certified, SOC2 Type II certified, and OpenID certified, with data residency options in the EU, US, Switzerland, and Australia.",
+          "whyItMatters": "Regulated businesses need documented compliance certifications before adopting an identity provider.",
+          "benefitsWho": "Enterprises and regulated industries benefit from Zitadel's certification profile."
+        },
+        {
+          "title": "Multi-Tenancy and APIs",
+          "toolA": "KeeWeb has no API or multi-tenant features; it offers multi-file support and cloud sync via Dropbox, Google Drive, OneDrive, or WebDAV.",
+          "toolB": "Zitadel provides multi-tenancy for extending applications to new organizations, plus gRPC and REST APIs for custom integrations.",
+          "whyItMatters": "Building a multi-customer SaaS product requires programmatic, multi-tenant identity infrastructure that a personal password manager doesn't offer.",
+          "benefitsWho": "B2B SaaS builders benefit from Zitadel's multi-tenancy and API access."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Purpose",
+          "rows": [
+            {
+              "feature": "Personal password storage",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Hosted login pages for applications",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "KeePass file compatibility",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Password generator",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Access & Security",
+          "rows": [
+            {
+              "feature": "MFA / passkeys for application login",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Social login (Google, Microsoft, GitHub)",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Role-based access control",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Protected/hidden fields",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Compliance",
+          "rows": [
+            {
+              "feature": "Multi-tenancy support",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "gRPC/REST API access",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Formal compliance certifications",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Zitadel: ISO 27001, SOC2 Type II, OpenID"
+            },
+            {
+              "feature": "Free tier / free to use",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Zitadel free up to 100 DAU"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is KeeWeb an identity provider like Zitadel?",
+          "answer": "No, KeeWeb is a personal password manager. It doesn't provide login, SSO, or authentication services for applications the way Zitadel does."
+        },
+        {
+          "question": "Does Zitadel have a free tier?",
+          "answer": "Yes, Zitadel's free plan covers unlimited users and organizations up to 100 daily active users."
+        },
+        {
+          "question": "Is KeeWeb open source?",
+          "answer": "Yes, KeeWeb is open source with its code available on GitHub."
+        },
+        {
+          "question": "Is Zitadel open source?",
+          "answer": "Yes, Zitadel is open source and reports an active GitHub community with 4,000+ stars."
+        },
+        {
+          "question": "Does KeeWeb support MFA or SSO for applications?",
+          "answer": "This isn't documented as a feature. KeeWeb stores passwords for individual use rather than issuing authentication for other applications."
+        },
+        {
+          "question": "How much does Zitadel's Pro plan cost?",
+          "answer": "$100 per month, which includes up to 25,000 daily active users."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "keycloak-vs-zitadel",
+    "tool_a_id": "a1527d75-b687-4a16-9481-6bdc6bd5b3bb",
+    "tool_a_name": "Keycloak",
+    "tool_b_id": "69d914d3-8667-4dc1-83ca-010c75550ec9",
+    "tool_b_name": "Zitadel",
+    "content": {
+      "verdict": "Both are open-source identity platforms, but Keycloak is a fully free, self-hosted-only project with no managed cloud offering, while Zitadel is a freemium company offering both self-hosting and a managed cloud/Pro tier with formal compliance certifications. The choice largely comes down to whether an organization wants to operate identity infrastructure itself for free or pay for a managed, certified service.",
+      "bestForToolA": "Organizations wanting a completely free, self-hosted IAM platform with deep LDAP/Active Directory federation, and the operational capacity to run it themselves without paid vendor support.",
+      "bestForToolB": "Teams wanting a managed or hybrid identity platform with a free tier up to 100 daily active users, hosted login pages, and formal SOC2/ISO27001/OpenID certifications, without operating the infrastructure themselves.",
+      "whoNeedsBoth": "An organization might run Keycloak internally for employee/workforce SSO tied to existing Active Directory infrastructure while adopting Zitadel for a separate customer-facing product that needs hosted login pages and a managed free tier to launch quickly.",
+      "keyDifferences": [
+        {
+          "title": "Hosting Model",
+          "toolA": "Keycloak has no official managed cloud/hosted offering from the project itself; it must be self-hosted.",
+          "toolB": "Zitadel offers a free-tier managed cloud service as well as self-hosted and custom Enterprise deployment options.",
+          "whyItMatters": "Teams without dedicated ops capacity may not be able to realistically run a self-hosted-only identity platform.",
+          "benefitsWho": "Small teams without dedicated infrastructure staff benefit from Zitadel's managed cloud option."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "Keycloak is entirely free and open source with no paid tiers.",
+          "toolB": "Zitadel is freemium: free up to 100 daily active users, then $100/month for Pro (up to 25,000 DAU), with custom Enterprise pricing above that.",
+          "whyItMatters": "Zero licensing cost versus a usage-based subscription changes the long-term cost calculus as user counts grow.",
+          "benefitsWho": "Cost-sensitive organizations with strong DevOps capacity benefit from Keycloak's zero cost; growing SaaS products benefit from Zitadel's predictable tiered pricing."
+        },
+        {
+          "title": "Directory Federation",
+          "toolA": "Keycloak explicitly supports user federation with existing LDAP or Active Directory directories.",
+          "toolB": "Zitadel's documented features don't call out LDAP/AD federation specifically.",
+          "whyItMatters": "Enterprises with existing on-premises directories need federation to avoid duplicating user data.",
+          "benefitsWho": "Enterprises with legacy Active Directory or LDAP infrastructure benefit from Keycloak's federation support."
+        },
+        {
+          "title": "Compliance Certifications",
+          "toolA": "Keycloak does not document formal compliance certifications of the kind Zitadel lists.",
+          "toolB": "Zitadel is ISO 27001 certified, SOC2 Type II certified, and OpenID certified, with data residency in the EU, US, Switzerland, and Australia.",
+          "whyItMatters": "Regulated industries often require documented third-party compliance certifications before adopting an identity vendor.",
+          "benefitsWho": "Enterprises in regulated industries benefit from Zitadel's certification profile."
+        },
+        {
+          "title": "Governance and Support",
+          "toolA": "Keycloak is a Cloud Native Computing Foundation (CNCF) incubating project with a community-driven model and no commercial vendor support included by default.",
+          "toolB": "Zitadel is a commercial open-source company headquartered in San Francisco, offering paid SLAs (99.5% uptime on Pro, 99.99% on Enterprise).",
+          "whyItMatters": "Vendor-backed SLAs provide accountability that a purely community-governed project doesn't offer by default.",
+          "benefitsWho": "Businesses requiring contractual uptime guarantees benefit from Zitadel's paid SLA tiers."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Hosting",
+          "rows": [
+            {
+              "feature": "Official managed cloud offering",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hosted deployment",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free to use",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Zitadel free up to 100 DAU"
+            }
+          ]
+        },
+        {
+          "group": "Authentication & Directory",
+          "rows": [
+            {
+              "feature": "LDAP / Active Directory federation",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Single sign-on",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Zitadel via hosted login pages"
+            },
+            {
+              "feature": "MFA / passwordless login",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Social login",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Zitadel: Google, Microsoft, GitHub"
+            },
+            {
+              "feature": "gRPC / REST APIs",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Enterprise & Compliance",
+          "rows": [
+            {
+              "feature": "ISO 27001 / SOC2 / OpenID certification",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Data residency options",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Zitadel: EU, US, Switzerland, Australia"
+            },
+            {
+              "feature": "Contractual uptime SLA",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "99.5% Pro, 99.99% Enterprise"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Keycloak completely free?",
+          "answer": "Yes, Keycloak is open-source software with no licensing cost."
+        },
+        {
+          "question": "Does Zitadel have a free tier?",
+          "answer": "Yes, Zitadel's free plan includes unlimited users and organizations up to 100 daily active users."
+        },
+        {
+          "question": "Does Keycloak offer a managed cloud version?",
+          "answer": "No, there is no official managed or hosted offering from the Keycloak project itself; it must be self-hosted."
+        },
+        {
+          "question": "Which platform supports LDAP or Active Directory federation?",
+          "answer": "Keycloak explicitly documents user federation with LDAP and Active Directory. Zitadel's feature list doesn't call out this specific capability."
+        },
+        {
+          "question": "Which platform has formal compliance certifications?",
+          "answer": "Zitadel is ISO 27001, SOC2 Type II, and OpenID certified. Keycloak doesn't document equivalent formal certifications."
+        },
+        {
+          "question": "What uptime SLA does each offer?",
+          "answer": "Zitadel offers a 99.5% uptime guarantee on Pro and 99.99% on Enterprise. Keycloak, as self-hosted open source, comes with no vendor SLA."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "keycloak-vs-ory",
+    "tool_a_id": "a1527d75-b687-4a16-9481-6bdc6bd5b3bb",
+    "tool_a_name": "Keycloak",
+    "tool_b_id": "f21e8c47-9727-46e1-8769-b1874bae4d03",
+    "tool_b_name": "Ory",
+    "content": {
+      "verdict": "Both are open-source identity platforms with self-hosting options, but Keycloak is entirely free with no paid tiers or managed offering, while Ory is a freemium company offering a free Developer tier alongside paid Production ($770/year) and Growth ($9,350/year) plans plus a fully managed Ory Network. The decision often comes down to whether an organization wants a no-cost, self-operated platform or a path to a managed, horizontally-scalable production service.",
+      "bestForToolA": "Teams wanting a fully free, self-hosted IAM platform with LDAP/Active Directory federation and no ongoing subscription cost, and the operational capacity to run it themselves.",
+      "bestForToolB": "Teams wanting a growth path from a free developer tier to a managed, horizontally-scaling production identity service starting at $770/year, with built-in B2B SSO and machine-to-machine authentication.",
+      "whoNeedsBoth": "A company might run Keycloak for internal or workforce identity tied to existing directories while trialing Ory's free Developer tier for a separate customer-facing product before deciding which platform to standardize on for that use case.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Structure",
+          "toolA": "Keycloak is entirely free and open source with no paid plans.",
+          "toolB": "Ory is freemium: a free Developer tier, then $770/year for Production, $9,350/year for Growth, and custom Enterprise pricing.",
+          "whyItMatters": "A zero-cost model versus a tiered subscription changes budgeting and long-term cost planning very differently.",
+          "benefitsWho": "Organizations with strong internal DevOps capacity benefit from Keycloak's free model; teams wanting a managed growth path benefit from Ory's tiers."
+        },
+        {
+          "title": "Deployment Options",
+          "toolA": "Keycloak is self-hosted only, with no official managed cloud offering.",
+          "toolB": "Ory offers self-hosted deployment, an Ory Enterprise License for private infrastructure, and the fully managed Ory Network.",
+          "whyItMatters": "Managed hosting removes the operational burden of running identity infrastructure in-house.",
+          "benefitsWho": "Teams without dedicated infrastructure staff benefit from Ory's managed Ory Network option."
+        },
+        {
+          "title": "Directory Federation",
+          "toolA": "Keycloak explicitly supports LDAP and Active Directory user federation.",
+          "toolB": "Ory's documented features focus on CIAM, B2B, and machine-to-machine identity without calling out LDAP/AD federation.",
+          "whyItMatters": "Enterprises with existing on-premises directories need federation support to avoid duplicating identity data.",
+          "benefitsWho": "Enterprises with legacy directory infrastructure benefit from Keycloak's federation support."
+        },
+        {
+          "title": "Machine-to-Machine Support",
+          "toolA": "Keycloak's feature list does not call out machine-to-machine authentication specifically.",
+          "toolB": "Ory explicitly documents machine-to-machine authentication for services and automated agents.",
+          "whyItMatters": "As service-to-service and AI agent authentication becomes more common, dedicated M2M support matters for modern architectures.",
+          "benefitsWho": "Teams building service-to-service or AI agent authentication benefit from Ory's explicit M2M support."
+        },
+        {
+          "title": "Governance and Scale",
+          "toolA": "Keycloak is a Cloud Native Computing Foundation (CNCF) incubating project governed by the community.",
+          "toolB": "Ory reports 48,000+ GitHub stars and managing 3.3 billion identities across its network, with a stateless horizontal-scaling architecture described as supporting very large deployments.",
+          "whyItMatters": "Scale claims and community size can be a signal of production readiness and long-term project viability.",
+          "benefitsWho": "Large-scale deployments evaluating vendor track record benefit from Ory's documented scale claims."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Hosting",
+          "rows": [
+            {
+              "feature": "Self-hosted deployment",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Fully managed cloud service",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Ory Network"
+            },
+            {
+              "feature": "Free tier",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Ory: 2 dev environments, community support"
+            }
+          ]
+        },
+        {
+          "group": "Identity & Access Features",
+          "rows": [
+            {
+              "feature": "LDAP / Active Directory federation",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Machine-to-machine authentication",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "B2B SSO / SCIM",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Fine-grained authorization",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Admin console",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Support",
+          "rows": [
+            {
+              "feature": "Paid production tier",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "$770/year Production plan"
+            },
+            {
+              "feature": "Vendor commercial support",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Community/OSS governance",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Keycloak: CNCF; Ory: 48,000+ GitHub stars"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Keycloak free?",
+          "answer": "Yes, Keycloak is fully open source with no licensing cost."
+        },
+        {
+          "question": "Does Ory have a free tier?",
+          "answer": "Yes, Ory's Developer tier is free and includes 2 development environments and community support."
+        },
+        {
+          "question": "How much does Ory's Production plan cost?",
+          "answer": "$770 per year."
+        },
+        {
+          "question": "Does Keycloak support machine-to-machine authentication?",
+          "answer": "This isn't documented among Keycloak's listed features, unlike Ory which explicitly supports machine-to-machine authentication for services and agents."
+        },
+        {
+          "question": "Which platform supports LDAP or Active Directory federation?",
+          "answer": "Keycloak explicitly documents this. Ory's documented features don't call out LDAP/AD federation."
+        },
+        {
+          "question": "Can Ory be self-hosted like Keycloak?",
+          "answer": "Yes, Ory offers an open-source self-hosted deployment option and an Ory Enterprise License, in addition to its fully managed Ory Network."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cerbos-vs-ory",
+    "tool_a_id": "62db09f8-596e-4759-92a2-df735f8464c1",
+    "tool_a_name": "Cerbos",
+    "tool_b_id": "f21e8c47-9727-46e1-8769-b1874bae4d03",
+    "tool_b_name": "Ory",
+    "content": {
+      "verdict": "Cerbos and Ory solve adjacent but distinct problems: Cerbos is a dedicated authorization/policy engine for deciding what an authenticated user or AI agent can do (RBAC/ABAC/ReBAC/PBAC), while Ory is an identity and authentication platform for handling who a user is (login, SSO, B2B/M2M identity). They're often deployed together rather than as substitutes for each other.",
+      "bestForToolA": "Teams needing fine-grained, auditable authorization decisions, including AI agent tool-access governance via MCP, separate from their identity provider, with policies deployable on-premise or air-gapped.",
+      "bestForToolB": "Teams needing customer, B2B, and machine identity (login, SSO, SCIM) with a free Developer tier and a clear path to a $770/year Production plan.",
+      "whoNeedsBoth": "A team building a B2B SaaS product could use Ory for customer login, SSO, and B2B identity management, then use Cerbos as the separate policy engine that decides what each authenticated Ory user or organization is allowed to do inside the application \u2014 pairing authentication with authorization is a common real-world architecture.",
+      "keyDifferences": [
+        {
+          "title": "Core Function",
+          "toolA": "Cerbos is an authorization/policy-decision engine supporting RBAC, ABAC, ReBAC, and PBAC via a YAML-based policy language.",
+          "toolB": "Ory is an identity and authentication platform handling customer identity (CIAM), B2B SSO/SCIM, and machine-to-machine login.",
+          "whyItMatters": "Confusing authentication and authorization leads teams to pick the wrong tool for the job, or assume one covers the other.",
+          "benefitsWho": "Architects designing an identity and access stack benefit from understanding this split clearly."
+        },
+        {
+          "title": "Pricing Entry Point",
+          "toolA": "Cerbos's open-source core is free with unlimited monthly active principals; paid Development starts at $25/month, and Production starts at $933/month.",
+          "toolB": "Ory's free Developer tier leads to Production at $770/year and Growth at $9,350/year.",
+          "whyItMatters": "The jump from free to production-grade pricing differs significantly between the two, affecting budget planning.",
+          "benefitsWho": "Budget-conscious teams comparing total cost of ownership benefit from seeing both pricing ladders side by side."
+        },
+        {
+          "title": "AI Agent Features",
+          "toolA": "Cerbos offers explicit AI agent guardrails with Model Context Protocol (MCP) integration for governing and revoking agent tool access in seconds.",
+          "toolB": "Ory documents machine-to-machine authentication for services and agents but doesn't detail MCP-specific tool-access governance.",
+          "whyItMatters": "As AI agents get more autonomy, dedicated tool-access governance becomes a distinct requirement from basic authentication.",
+          "benefitsWho": "Teams deploying AI agents that call internal tools benefit from Cerbos's MCP-specific guardrails."
+        },
+        {
+          "title": "Deployment Flexibility",
+          "toolA": "Cerbos can run in Cerbos Hub (cloud), self-hosted, on-premise, or fully air-gapped environments.",
+          "toolB": "Ory offers self-hosted deployment, an Ory Enterprise License, or the fully managed Ory Network.",
+          "whyItMatters": "Regulated or high-security environments often require air-gapped or on-premise deployment options.",
+          "benefitsWho": "Regulated industries with strict infrastructure requirements benefit from Cerbos's explicit air-gapped support."
+        },
+        {
+          "title": "Decision Latency Focus",
+          "toolA": "Cerbos's Policy Decision Points are purpose-built for sub-millisecond authorization decisions at high volume.",
+          "toolB": "Ory emphasizes stateless horizontal scaling and observability (metrics, trace-level logging) for identity operations rather than policy-decision latency specifically.",
+          "whyItMatters": "Applications making authorization checks on every request need low-latency decisions in the request path.",
+          "benefitsWho": "High-traffic applications with per-request authorization checks benefit from Cerbos's latency-focused design."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Function",
+          "rows": [
+            {
+              "feature": "Authorization / permissions engine",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Authentication / login (SSO, CIAM)",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "B2B SSO / SCIM",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "RBAC / ABAC / ReBAC / PBAC policy models",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "AI & Advanced Features",
+          "rows": [
+            {
+              "feature": "AI agent guardrails / MCP integration",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Ory documents M2M auth, not MCP specifically"
+            },
+            {
+              "feature": "Sub-millisecond decision latency",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Audit-ready decision logging",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Ory offers observability/trace-level logging"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            {
+              "feature": "Free open-source self-hosted option",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Air-gapped deployment",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Fully managed cloud service",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cerbos Hub; Ory Network"
+            },
+            {
+              "feature": "Entry-level paid tier price",
+              "toolA": "limited",
+              "toolB": "limited",
+              "note": "Cerbos Dev $25/mo; Ory Production $770/yr"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do Cerbos and Ory do the same thing?",
+          "answer": "No. Cerbos handles authorization \u2014 deciding what an authenticated user or agent can do. Ory handles authentication and identity \u2014 login, SSO, and B2B/M2M identity."
+        },
+        {
+          "question": "Can Cerbos and Ory be used together?",
+          "answer": "Yes, in principle: Ory could authenticate users while Cerbos decides what those authenticated users or agents are permitted to do. This isn't a documented official integration, but the two tools address complementary layers of the stack."
+        },
+        {
+          "question": "Which tool is free to self-host?",
+          "answer": "Both offer free self-hosted paths. Cerbos's open-source core has unlimited monthly active principals, and Ory's Developer tier is free with 2 development environments."
+        },
+        {
+          "question": "Does Ory support authorization models like RBAC or ABAC?",
+          "answer": "Ory's documented features center on identity and authentication (SSO, B2B, M2M) rather than a dedicated multi-model policy engine like Cerbos's RBAC/ABAC/ReBAC/PBAC support."
+        },
+        {
+          "question": "Which is cheaper to reach a production-grade plan?",
+          "answer": "Ory's Production plan costs $770/year. Cerbos's Production tier starts much higher, at $933/month."
+        },
+        {
+          "question": "Does Cerbos support AI agent authorization?",
+          "answer": "Yes, Cerbos offers explicit AI agent guardrails, including integration with the Model Context Protocol (MCP), to govern and revoke agent tool access."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cerbos-vs-permit-io",
+    "tool_a_id": "62db09f8-596e-4759-92a2-df735f8464c1",
+    "tool_a_name": "Cerbos",
+    "tool_b_id": "7d826762-9d50-46fb-93f2-f3db167ecdd7",
+    "tool_b_name": "Permit.io",
+    "content": {
+      "verdict": "Both Cerbos and Permit.io are dedicated authorization/policy platforms supporting RBAC, ABAC, and ReBAC with AI agent authorization features, making them direct competitors rather than complementary tools. They differ mainly in policy foundation \u2014 Cerbos's own YAML-based language versus Permit.io's build on the open-source OPA and OPAL projects \u2014 and in how their free-to-paid pricing scales.",
+      "bestForToolA": "Teams wanting a YAML-based policy engine with explicit air-gapped and on-premise deployment support, plus unlimited monthly active principals in the free open-source version.",
+      "bestForToolB": "Teams wanting a UI-driven policy platform built on the established OPA/OPAL open-source projects, with a dedicated MCP Gateway and Guardian Agents for AI monitoring, and a lower-cost paid entry point starting at $5/month.",
+      "whoNeedsBoth": "Unlikely \u2014 both are largely substitutable authorization engines solving the same problem, so most teams would pick one rather than run both in production, though an organization migrating between vendors might run them in parallel temporarily during evaluation.",
+      "keyDifferences": [
+        {
+          "title": "Policy Foundation",
+          "toolA": "Cerbos defines policies using its own YAML-based policy language across RBAC, ABAC, ReBAC, or PBAC models.",
+          "toolB": "Permit.io is built on the open-source Open Policy Agent (OPA) and OPAL projects as its policy engine foundation.",
+          "whyItMatters": "Teams already invested in OPA tooling may prefer building on that ecosystem rather than learning a new proprietary policy language.",
+          "benefitsWho": "Teams with existing OPA/OPAL experience benefit from Permit.io's foundation; teams wanting a purpose-built language may prefer Cerbos."
+        },
+        {
+          "title": "Free Tier Limits",
+          "toolA": "Cerbos's open-source core has unlimited monthly active principals, but its free cloud Proof of Concept tier caps at 100 MAPs.",
+          "toolB": "Permit.io's free Community plan covers up to 1,000 monthly active users with unlimited authorization microservices.",
+          "whyItMatters": "The size of a usable free tier affects how long a team can build and test before needing to pay.",
+          "benefitsWho": "Early-stage teams testing at moderate scale benefit from Permit.io's higher free MAU cap in its managed tier."
+        },
+        {
+          "title": "Paid Entry Pricing",
+          "toolA": "Cerbos's Development tier starts at $25/month, with a steep jump to $933/month for the Production tier.",
+          "toolB": "Permit.io's Startup tier starts at $5/month and Pro at $25/month, offering a more gradual price ramp.",
+          "whyItMatters": "A steep price jump between tiers can force a team into a large budget increase sooner than expected.",
+          "benefitsWho": "Growing startups on tight budgets benefit from Permit.io's more gradual pricing ladder."
+        },
+        {
+          "title": "AI Agent Tooling",
+          "toolA": "Cerbos offers AI agent guardrails with MCP support for governing and revoking agent tool access in seconds.",
+          "toolB": "Permit.io offers a dedicated MCP Gateway plus Guardian Agents that monitor for anomalous access behavior and recommend policy changes.",
+          "whyItMatters": "Both platforms treat AI agent authorization as a first-class concern, but Permit.io adds proactive anomaly monitoring on top.",
+          "benefitsWho": "Teams operating autonomous AI agents at scale benefit from Permit.io's added Guardian Agents monitoring layer."
+        },
+        {
+          "title": "SSO Access Cost",
+          "toolA": "Cerbos requires moving to custom Enterprise pricing to get SSO support.",
+          "toolB": "Permit.io requires an additional cost for SSO even on its paid Pro plan.",
+          "whyItMatters": "Enterprises requiring SSO for internal tooling should budget for it as an add-on cost with either vendor.",
+          "benefitsWho": "Enterprise buyers evaluating total cost of ownership benefit from knowing SSO isn't bundled into either platform's mid tier."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Policy Engine & Models",
+          "rows": [
+            {
+              "feature": "RBAC / ABAC / ReBAC support",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "PBAC support",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Policy language",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cerbos: own YAML language; Permit.io: built on OPA/OPAL"
+            },
+            {
+              "feature": "Sub-millisecond decision latency",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "AI Agent Authorization",
+          "rows": [
+            {
+              "feature": "MCP integration for AI agent tool access",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Permit.io: dedicated MCP Gateway"
+            },
+            {
+              "feature": "AI anomaly monitoring",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Permit.io: Guardian Agents"
+            },
+            {
+              "feature": "Audit logs / decision traces",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Pricing & Deployment",
+          "rows": [
+            {
+              "feature": "Free open-source / community tier",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Cerbos: unlimited MAPs OSS; Permit.io: 1,000 MAU"
+            },
+            {
+              "feature": "Entry paid plan price",
+              "toolA": "limited",
+              "toolB": "limited",
+              "note": "Cerbos $25/mo; Permit.io $5/mo"
+            },
+            {
+              "feature": "SSO included on mid-tier plan",
+              "toolA": "unavailable",
+              "toolB": "limited",
+              "note": "Both require extra cost/Enterprise for SSO"
+            },
+            {
+              "feature": "On-premise / air-gapped deployment",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are Cerbos and Permit.io built on the same technology?",
+          "answer": "No. Cerbos uses its own YAML-based policy language, while Permit.io is built on the open-source OPA and OPAL projects."
+        },
+        {
+          "question": "Which has AI agent authorization features?",
+          "answer": "Both do. Cerbos offers AI agent guardrails with MCP integration, and Permit.io offers an MCP Gateway plus Guardian Agents for anomaly monitoring."
+        },
+        {
+          "question": "Which is cheaper to start with a paid plan?",
+          "answer": "Permit.io's Startup plan starts at $5/month, compared to Cerbos's Development tier at $25/month."
+        },
+        {
+          "question": "Does either support SSO on lower-tier plans?",
+          "answer": "No. Permit.io requires an additional cost for SSO even on its Pro plan, and Cerbos requires custom Enterprise pricing for SSO."
+        },
+        {
+          "question": "Can both be self-hosted or run on-premise?",
+          "answer": "Yes. Cerbos supports self-hosted, on-premise, and air-gapped deployment, and Permit.io offers both managed cloud and self-hosted/on-premises deployment."
+        },
+        {
+          "question": "How big is the jump to Cerbos's Production tier?",
+          "answer": "Cerbos's Production plan starts at $933/month for the first 5,000 monthly active principals, a much bigger jump than its $25/month Development tier."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "openfga-vs-permit-io",
+    "tool_a_id": "801862d9-7d0d-4545-aa0d-0e249ca2ab37",
+    "tool_a_name": "OpenFGA",
+    "tool_b_id": "7d826762-9d50-46fb-93f2-f3db167ecdd7",
+    "tool_b_name": "Permit.io",
+    "content": {
+      "verdict": "OpenFGA is a free, fully open-source, self-hosted-only authorization engine focused on Zanzibar-style relationship-based access control, while Permit.io is a commercial freemium platform built on OPA/OPAL offering both managed cloud and self-hosted deployment, a UI-driven policy workflow, and dedicated AI agent features. The choice hinges on whether a team wants to operate its own authorization server for free or pay for a managed layer with more tooling.",
+      "bestForToolA": "Engineering teams comfortable self-hosting and operating their own OpenFGA server, for example via Docker, who want a free, CNCF-governed, Zanzibar-style relationship-based authorization engine with no licensing cost.",
+      "bestForToolB": "Teams that want a managed option out of the box, a UI for building RBAC/ABAC/ReBAC/PBAC policies and approval workflows, plus AI-specific features like the MCP Gateway and Guardian Agents, with a free Community plan up to 1,000 monthly active users.",
+      "whoNeedsBoth": "Unlikely as parallel production deployments since both solve the same authorization problem, but a team might prototype quickly on OpenFGA's free self-hosted server before evaluating whether Permit.io's managed layer and UI tooling justify moving to a paid plan.",
+      "keyDifferences": [
+        {
+          "title": "Hosting Model",
+          "toolA": "OpenFGA has no managed hosted offering documented on openfga.dev and must be self-hosted, for example via Docker.",
+          "toolB": "Permit.io offers both a managed cloud service and self-hosted/on-premises deployment.",
+          "whyItMatters": "Teams without ops capacity for running their own authorization server need a managed option available out of the box.",
+          "benefitsWho": "Teams without dedicated infrastructure staff benefit from Permit.io's managed cloud option."
+        },
+        {
+          "title": "Commercial Support",
+          "toolA": "OpenFGA is community-supported only; formal commercial support is not part of its core open-source offering.",
+          "toolB": "Permit.io offers paid tiers with dedicated Slack support (Pro) and a dedicated customer success representative (Enterprise).",
+          "whyItMatters": "Production systems handling authorization decisions often need a vendor support relationship for incident response.",
+          "benefitsWho": "Enterprises needing contractual support SLAs benefit from Permit.io's paid support tiers."
+        },
+        {
+          "title": "Policy Model Foundation",
+          "toolA": "OpenFGA uses its own Zanzibar-inspired authorization modeling language for relationship-based access control.",
+          "toolB": "Permit.io is built on the open-source OPA and OPAL projects and supports RBAC, ABAC, ReBAC, and PBAC through a UI and API.",
+          "whyItMatters": "The underlying policy model affects how much of a learning curve a team faces and what existing tooling it can reuse.",
+          "benefitsWho": "Teams already familiar with Google's Zanzibar paper benefit from OpenFGA's direct implementation of those concepts."
+        },
+        {
+          "title": "AI-Specific Tooling",
+          "toolA": "OpenFGA does not document AI-agent-specific features.",
+          "toolB": "Permit.io provides a dedicated MCP Gateway and Guardian Agents for AI agent authorization and anomaly monitoring.",
+          "whyItMatters": "Teams building AI agent products need explicit tool-access governance, not just general-purpose authorization checks.",
+          "benefitsWho": "Teams deploying AI agents that call internal tools benefit from Permit.io's dedicated AI features."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "OpenFGA is entirely free with no paid plans at all.",
+          "toolB": "Permit.io is freemium, with a free Community plan up to 1,000 MAU and paid Startup ($5/month) and Pro ($25/month) tiers.",
+          "whyItMatters": "A zero-cost open-source tool versus a freemium SaaS with paid tiers changes long-term budget planning.",
+          "benefitsWho": "Cost-sensitive teams with strong self-hosting capacity benefit from OpenFGA's zero-cost model."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Hosting",
+          "rows": [
+            {
+              "feature": "Managed cloud hosting",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hosted server (e.g., Docker)",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free tier / free forever",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "OpenFGA fully free; Permit.io Community up to 1,000 MAU"
+            }
+          ]
+        },
+        {
+          "group": "Policy Model & Tooling",
+          "rows": [
+            {
+              "feature": "Zanzibar-inspired ReBAC modeling",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "RBAC / ABAC / ReBAC / PBAC support",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "OpenFGA covers RBAC/ABAC/ReBAC; Permit.io adds PBAC"
+            },
+            {
+              "feature": "UI for policy management",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Multi-language SDKs",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "OpenFGA: Node.js, Go, .NET, Python, Java"
+            }
+          ]
+        },
+        {
+          "group": "AI Agent Features",
+          "rows": [
+            {
+              "feature": "MCP Gateway / AI agent access governance",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "AI anomaly monitoring",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Permit.io: Guardian Agents"
+            },
+            {
+              "feature": "Commercial vendor support",
+              "toolA": "unavailable",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenFGA completely free?",
+          "answer": "Yes, it's free and open source with no licensing cost, self-hosted via Docker or similar."
+        },
+        {
+          "question": "Does OpenFGA offer a managed cloud version?",
+          "answer": "No, openfga.dev does not document a managed hosted offering."
+        },
+        {
+          "question": "Is Permit.io free to use?",
+          "answer": "Yes, its Community plan is free forever for up to 1,000 monthly active users."
+        },
+        {
+          "question": "Which tool has dedicated AI agent authorization features?",
+          "answer": "Permit.io, via its MCP Gateway and Guardian Agents. OpenFGA doesn't document AI-agent-specific tooling."
+        },
+        {
+          "question": "What authorization models do they support?",
+          "answer": "OpenFGA supports RBAC, ABAC, and ReBAC via Zanzibar-inspired modeling. Permit.io supports RBAC, ABAC, ReBAC, and PBAC via a UI, API, and infrastructure-as-code workflows."
+        },
+        {
+          "question": "Who maintains OpenFGA?",
+          "answer": "OpenFGA is a CNCF incubating project, originally created by Auth0/Okta and now maintained by a broader community including engineers from Grafana Labs and Gitpod."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "openfga-vs-stytch",
+    "tool_a_id": "801862d9-7d0d-4545-aa0d-0e249ca2ab37",
+    "tool_a_name": "OpenFGA",
+    "tool_b_id": "2b01301f-20d2-49a2-a9d0-dfcb07a99c20",
+    "tool_b_name": "Stytch",
+    "content": {
+      "verdict": "OpenFGA is a dedicated, self-hosted authorization engine for modeling fine-grained relationship-based permissions, while Stytch is a broader identity platform combining authentication (passkeys, magic links, SSO/SCIM), basic authorization (RBAC), and fraud/bot protection as a managed API service. They overlap only on the authorization slice of Stytch's platform.",
+      "bestForToolA": "Engineering teams needing deep, Zanzibar-style relationship-based permission modeling \u2014 for example, resource- or document-level sharing rules \u2014 who are willing to self-host at no licensing cost.",
+      "bestForToolB": "Teams needing a managed platform that combines authentication (passkeys, magic links, SSO/SCIM), basic RBAC, machine-to-machine/AI agent auth, and fraud/bot protection in one API, free up to 10,000 monthly active users or AI agents.",
+      "whoNeedsBoth": "A team could use Stytch to handle authentication, SSO/SCIM, and fraud protection for its application, then layer OpenFGA on top as the dedicated policy engine for fine-grained relationship-based decisions, such as document- or resource-level sharing permissions, that go beyond Stytch's built-in RBAC.",
+      "keyDifferences": [
+        {
+          "title": "Product Scope",
+          "toolA": "OpenFGA is a single-purpose authorization/permissions engine.",
+          "toolB": "Stytch is a full identity platform spanning authentication, basic authorization (RBAC), multi-tenancy, and fraud/bot protection.",
+          "whyItMatters": "Teams need to know whether they're comparing a narrow point solution against a broader platform before evaluating either on price or features.",
+          "benefitsWho": "Architects scoping their identity/access stack benefit from understanding this scope difference upfront."
+        },
+        {
+          "title": "Pricing Model",
+          "toolA": "OpenFGA is entirely free and open source with no paid plans.",
+          "toolB": "Stytch is freemium, free up to 10,000 monthly active users/AI agents with usage-based overages and no hard pricing cliffs.",
+          "whyItMatters": "A zero-cost self-hosted tool versus a managed freemium API changes both upfront cost and ongoing operational responsibility.",
+          "benefitsWho": "Cost-sensitive teams with self-hosting capacity benefit from OpenFGA; teams wanting managed infrastructure benefit from Stytch's generous free tier."
+        },
+        {
+          "title": "Authorization Depth",
+          "toolA": "OpenFGA offers deep Zanzibar-inspired relationship-based access control with Check, Read, Expand, and ListObjects operations.",
+          "toolB": "Stytch documents RBAC in its base tier but doesn't detail ReBAC-style relationship modeling.",
+          "whyItMatters": "Complex sharing and permission models (e.g., nested groups, resource hierarchies) need relationship-based authorization, not just role checks.",
+          "benefitsWho": "Products with complex, resource-level sharing permissions benefit from OpenFGA's deeper ReBAC modeling."
+        },
+        {
+          "title": "Hosting",
+          "toolA": "OpenFGA must be self-hosted, for example via Docker, with no managed offering.",
+          "toolB": "Stytch is a managed API/platform service, not self-hosted.",
+          "whyItMatters": "Self-hosting gives full infrastructure control but requires ops capacity; a managed API removes that burden but ties a team to the vendor's infrastructure.",
+          "benefitsWho": "Teams without dedicated infrastructure staff benefit from Stytch's fully managed model."
+        },
+        {
+          "title": "Fraud and Bot Protection",
+          "toolA": "OpenFGA does not offer fraud or bot detection, as it's scoped purely to authorization decisions.",
+          "toolB": "Stytch includes device fingerprinting and intelligent rate limiting, described as achieving 99.99% bot detection accuracy, with 10,000 free fingerprints per month.",
+          "whyItMatters": "Consumer-facing applications often need fraud/bot protection as part of their identity stack, not as a separate purchase.",
+          "benefitsWho": "Consumer-facing products worried about bot abuse or account takeover benefit from Stytch's built-in fraud protection."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Authorization Depth",
+          "rows": [
+            {
+              "feature": "Zanzibar-inspired ReBAC modeling",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "RBAC support",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "OpenFGA can model RBAC within its ReBAC system"
+            },
+            {
+              "feature": "Millisecond authorization checks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Authentication & Identity",
+          "rows": [
+            {
+              "feature": "Passwordless login (passkeys, magic links, OTP)",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Enterprise SSO / SCIM",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "First 5 connections free"
+            },
+            {
+              "feature": "Machine-to-machine / AI agent authentication",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Fraud / bot protection",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "99.99% reported bot detection accuracy"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            {
+              "feature": "Self-hosted deployment",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Managed API / hosted service",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free to use",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Stytch free up to 10,000 MAUs/agents"
+            },
+            {
+              "feature": "Multi-language SDKs",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "OpenFGA: Node.js, Go, .NET, Python, Java"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do OpenFGA and Stytch compete directly?",
+          "answer": "Only partially. OpenFGA is purely an authorization/permissions engine, while Stytch bundles authentication, basic RBAC, and fraud protection into one platform."
+        },
+        {
+          "question": "Is OpenFGA free?",
+          "answer": "Yes, it's fully free and open source, and must be self-hosted."
+        },
+        {
+          "question": "Does Stytch have a free tier?",
+          "answer": "Yes, free up to 10,000 monthly active users/AI agents, 5 SSO/SCIM connections, and 1,000 M2M tokens."
+        },
+        {
+          "question": "Which tool supports AI agent authentication?",
+          "answer": "Stytch explicitly supports machine-to-machine authentication for AI agents in its free tier. OpenFGA doesn't document AI-agent-specific authentication, though its authorization checks could still govern agent permissions once authenticated."
+        },
+        {
+          "question": "Does Stytch offer relationship-based access control like OpenFGA?",
+          "answer": "This isn't documented. Stytch's features list RBAC but don't describe Zanzibar-style relationship-based access control the way OpenFGA does."
+        },
+        {
+          "question": "Can OpenFGA be used for fraud or bot protection?",
+          "answer": "No, this isn't part of OpenFGA's documented feature set. Stytch offers dedicated fraud/bot protection with device fingerprinting and rate limiting."
+        }
+      ]
+    }
+  }
+]
