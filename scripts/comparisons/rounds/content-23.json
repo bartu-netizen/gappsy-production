@@ -1,0 +1,720 @@
+[
+  {
+    "slug": "cronofy-vs-zeeg",
+    "tool_a_id": "c6e0d85c-8664-4863-9ef9-fd20448bffd6",
+    "tool_a_name": "Cronofy",
+    "tool_b_id": "3be42f56-bb10-429e-833e-4732e857fc3a",
+    "tool_b_name": "Zeeg",
+    "content": {
+      "verdict": "Cronofy and Zeeg both sit in the scheduling space, but they're built for different buyers: Cronofy is developer-facing calendar and scheduling infrastructure meant to be embedded inside other products, while Zeeg is a ready-to-use end-user scheduling app distinguished by an AI voice agent that answers calls and books meetings directly.",
+      "bestForToolA": "Teams building software that needs calendar sync or scheduling as an embedded feature, especially where an MCP server for agentic AI workflows, meeting transcription, or certified multi-region compliance (ISO 27001/27701/27018, SOC 2 Type 2) matters.",
+      "bestForToolB": "Sales or service teams that want a ready-made booking page plus an AI phone agent that qualifies inbound callers and books meetings, with transparent per-user pricing and GDPR-only EU data hosting.",
+      "whoNeedsBoth": "Companies that build products embedding calendar sync via Cronofy's API while separately running their own outward-facing appointment booking and lead qualification through Zeeg — the two solve adjacent but non-overlapping problems.",
+      "keyDifferences": [
+        {
+          "title": "Product model: API infrastructure vs. end-user app",
+          "toolA": "Calendar sync API and scheduling API meant to be embedded inside another company's software, plus pre-built UI components.",
+          "toolB": "A direct, standalone scheduling app with booking pages and an AI voice agent that answers and qualifies calls.",
+          "whyItMatters": "Determines whether you're buying a building block for your own product or a finished tool your team uses directly.",
+          "benefitsWho": "Developers embedding scheduling (Cronofy) vs. sales/ops teams booking their own meetings (Zeeg)."
+        },
+        {
+          "title": "AI capability focus",
+          "toolA": "Meeting transcription with AI-generated summaries and an MCP server for connecting calendar data to agentic AI workflows.",
+          "toolB": "An AI voice agent that answers inbound calls, has a qualifying conversation, and books the right meeting automatically.",
+          "whyItMatters": "One augments developer/agent workflows after the fact; the other automates the live call-to-booking process itself.",
+          "benefitsWho": "Product teams building AI features (Cronofy) vs. teams fielding inbound sales/support calls (Zeeg)."
+        },
+        {
+          "title": "Pricing transparency",
+          "toolA": "Self-serve pricing is not published; the pricing page uses a usage-based seat calculator.",
+          "toolB": "Publishes explicit per-user tiers from a free Starter plan up to €40/user/month, plus a custom Enterprise plan.",
+          "whyItMatters": "Buyers who need to budget precisely without a sales call will find one tool far easier to plan around.",
+          "benefitsWho": "Procurement-sensitive teams and smaller companies comparing costs upfront (favors Zeeg)."
+        },
+        {
+          "title": "Compliance and data hosting",
+          "toolA": "States ISO 27001/27701/27018 certification, SOC 2 Type 2 attestation, and data centers across the US, UK, Canada, Germany, Australia, and Singapore.",
+          "toolB": "Described as GDPR-compliant with data hosted in Europe.",
+          "whyItMatters": "Global enterprises with multi-region data residency needs have different requirements than EU-focused teams.",
+          "benefitsWho": "Multinational SaaS vendors needing broad certifications (Cronofy) vs. EU-centric teams needing GDPR-only assurance (Zeeg)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Features",
+          "rows": [
+            { "feature": "Calendar sync across multiple providers", "toolA": "available", "toolB": "available", "note": "Cronofy: Google/Microsoft/Apple/Exchange; Zeeg: Google Calendar/Outlook/Office 365/Exchange/iCloud" },
+            { "feature": "Developer scheduling API", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Booking pages / scheduling UI", "toolA": "available", "toolB": "available" },
+            { "feature": "Automatic video conferencing links", "toolA": "available", "toolB": "available", "note": "Zeeg attaches Zoom, Google Meet, Teams, or Webex links" },
+            { "feature": "Round-robin lead/meeting routing", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI Capabilities",
+          "rows": [
+            { "feature": "AI phone/voice agent", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Meeting transcription with AI summaries", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "MCP server for agentic AI workflows", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Compliance",
+          "rows": [
+            { "feature": "Free tier / sandbox", "toolA": "available", "toolB": "available", "note": "Cronofy: 20 accounts, 24hr recording; Zeeg: 2 pages, 1 calendar" },
+            { "feature": "Published self-serve pricing tiers", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Formal security certifications (ISO/SOC 2)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "GDPR compliance stated", "toolA": "available", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Cronofy or Zeeg offer a free plan?", "answer": "Both do — Cronofy offers a free sandbox connecting up to 20 accounts with 24 hours of meeting recording and no credit card required, while Zeeg's Starter plan is free forever with 2 scheduling pages and 1 calendar connection." },
+        { "question": "Which calendars does each tool support?", "answer": "Cronofy syncs with Google, Microsoft, Apple, and Exchange calendars from a single integration; Zeeg integrates with Google Calendar, Outlook, Office 365, Exchange, and iCloud." },
+        { "question": "Does either tool use AI?", "answer": "Cronofy offers an MCP server for agentic AI workflows and AI-generated meeting summaries via transcription; Zeeg's AI voice agent answers inbound calls, qualifies leads, and books meetings automatically." },
+        { "question": "How is pricing structured?", "answer": "Cronofy doesn't publish self-serve pricing and instead uses a usage-based seat calculator on its pricing page; Zeeg publishes explicit per-user tiers from free up to €40/user/month, plus a custom Enterprise plan." },
+        { "question": "What compliance certifications does each hold?", "answer": "Cronofy states ISO 27001/27701/27018 certification and SOC 2 Type 2 attestation with data centers across the US, UK, Canada, Germany, Australia, and Singapore; Zeeg is described as GDPR-compliant with data hosted in Europe." }
+      ]
+    }
+  },
+  {
+    "slug": "semgrep-vs-snyk",
+    "tool_a_id": "7b87aa12-a696-4762-9cbd-1a738f0fd2c7",
+    "tool_a_name": "Semgrep",
+    "tool_b_id": "7fb17539-57c9-48ad-9999-e9c23b8b0ab8",
+    "tool_b_name": "Snyk",
+    "content": {
+      "verdict": "Semgrep and Snyk both offer freemium SAST and open-source scanning for developers, but they draw the line differently — Semgrep is priced slightly higher per contributor and bundles secrets detection (as an add-on) with reachability-based AI triage memory, while Snyk starts at a lower documented per-developer price and extends coverage into container and infrastructure-as-code scanning that Semgrep's facts don't describe.",
+      "bestForToolA": "Teams wanting deep static analysis across 35+ languages with AI-powered triage memory that learns from past decisions and reachability analysis to cut false positives, without needing built-in container or IaC scanning.",
+      "bestForToolB": "Teams that want one platform covering code, open source dependencies, containers, and infrastructure-as-code together, with a lower documented entry price and regional data hosting options (US, EU, AU).",
+      "whoNeedsBoth": "Security teams sometimes run Semgrep for its semantic secrets detection and AI-triage-driven SAST/SCA depth on application code, while relying on Snyk's dedicated Container and IaC products for cloud infrastructure that Semgrep doesn't cover.",
+      "keyDifferences": [
+        {
+          "title": "Scanning scope",
+          "toolA": "Covers Code (SAST), Supply Chain (SCA), and semantic secrets detection.",
+          "toolB": "Covers Code (SAST), Open Source (SCA), Container images, and Infrastructure-as-Code.",
+          "whyItMatters": "Teams needing container or IaC scanning in the same platform get that natively documented in one tool but not the other.",
+          "benefitsWho": "Platform/DevOps teams securing cloud infrastructure (Snyk) vs. application-security teams focused on code and dependencies (Semgrep)."
+        },
+        {
+          "title": "Entry pricing",
+          "toolA": "Teams plan starts at $30/month per contributor.",
+          "toolB": "Team plan starts at $25/month per contributing developer.",
+          "whyItMatters": "A lower documented per-seat starting price matters for teams scaling headcount.",
+          "benefitsWho": "Budget-conscious engineering teams comparing per-seat costs."
+        },
+        {
+          "title": "Free tier limits",
+          "toolA": "Free Edition covers up to 10 contributors and 10 repositories.",
+          "toolB": "Free tier is capped at 5 projects with limited monthly test counts.",
+          "whyItMatters": "Small teams or open-source maintainers may fit comfortably under one cap but not the other.",
+          "benefitsWho": "Small teams and solo maintainers evaluating free-tier ceilings."
+        },
+        {
+          "title": "Secrets detection availability",
+          "toolA": "Semantic secrets detection is available but is a paid $15/month add-on on the Teams plan.",
+          "toolB": "No secrets detection feature is documented.",
+          "whyItMatters": "Teams that specifically need hardcoded-credential detection have a documented path in one tool only.",
+          "benefitsWho": "AppSec teams prioritizing leaked-credential prevention (Semgrep)."
+        },
+        {
+          "title": "AI-assisted triage",
+          "toolA": "AI-powered triage memory learns from past decisions to auto-suppress repeat false positives, with AI credits included per plan.",
+          "toolB": "Integrates with AI coding assistants (Claude Code, Cursor, Codex) but no native AI triage feature is documented.",
+          "whyItMatters": "Reducing manual triage workload is a documented differentiator for one platform.",
+          "benefitsWho": "Security teams drowning in alert volume (Semgrep)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Scanning Coverage",
+          "rows": [
+            { "feature": "Static application security testing (SAST)", "toolA": "available", "toolB": "available" },
+            { "feature": "Open source / dependency scanning (SCA)", "toolA": "available", "toolB": "available" },
+            { "feature": "Secrets detection", "toolA": "available", "toolB": "not-documented", "note": "Semgrep: paid add-on on Teams plan" },
+            { "feature": "Container image scanning", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Infrastructure-as-code (IaC) scanning", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI & Automation",
+          "rows": [
+            { "feature": "AI-assisted triage/remediation", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Reachability analysis to reduce false positives", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Semgrep: 10 contributors/10 repos; Snyk: 5 projects" },
+            { "feature": "Entry paid tier", "toolA": "available", "toolB": "available", "note": "Semgrep $30/mo/contributor; Snyk $25/mo/developer" },
+            { "feature": "Enterprise/custom tier", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Integrations & Ecosystem",
+          "rows": [
+            { "feature": "CI/CD and SCM integrations", "toolA": "available", "toolB": "available", "note": "Semgrep: GitHub/GitLab/Bitbucket/Azure; Snyk: IDE/CLI/SCM" },
+            { "feature": "IDE integrations", "toolA": "available", "toolB": "available" },
+            { "feature": "MCP / agentic AI tool support", "toolA": "available", "toolB": "available", "note": "Semgrep: MCP server for Cursor/Replit; Snyk: Claude Code, Cursor, Codex" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Do Semgrep and Snyk have free tiers?", "answer": "Yes — Semgrep's Free Edition covers up to 10 contributors and 10 repositories, while Snyk's Free tier is capped at 5 projects with no credit card required." },
+        { "question": "How do entry-level paid plans price out?", "answer": "Semgrep's Teams plan starts at $30/month per contributor; Snyk's Team plan starts at $25/month per contributing developer." },
+        { "question": "Does either tool scan containers or infrastructure code?", "answer": "Snyk explicitly offers Snyk Container and Snyk IaC products; Semgrep's documented features focus on code (SAST), supply chain (SCA), and secrets detection, without a stated container or IaC scanning product." },
+        { "question": "Does either tool detect secrets?", "answer": "Semgrep includes semantic secrets detection, though it's a $15/month add-on on the Teams plan; Snyk's facts don't mention a secrets detection feature." },
+        { "question": "Do these tools integrate with AI coding assistants?", "answer": "Semgrep offers an MCP server for tools like Cursor and Replit; Snyk integrates with AI coding assistants including Claude Code, Cursor, and Codex." }
+      ]
+    }
+  },
+  {
+    "slug": "orca-security-vs-wiz",
+    "tool_a_id": "de412e9f-bb56-438d-8972-125d8b06d414",
+    "tool_a_name": "Orca Security",
+    "tool_b_id": "e1b75119-d6cf-4ef2-b9ef-c4c9c840eef4",
+    "tool_b_name": "Wiz",
+    "content": {
+      "verdict": "Orca and Wiz both unify cloud security, but the documented facts point to different strengths — Orca emphasizes agentless deployment with 24-hour visibility and a stated 25+ integration list, while Wiz names a dedicated runtime protection product (Wiz Defend) and offers a free trial that Orca's published materials don't mention.",
+      "bestForToolA": "Organizations that want agentless scanning with rapid time-to-visibility and a known set of integrations (AWS, GitHub, Slack, Jira, Okta) without installing agents.",
+      "bestForToolB": "Teams that want to test the platform via a free trial first and need a named runtime protection/threat detection layer (Wiz Defend) alongside code and cloud scanning.",
+      "whoNeedsBoth": "Large multi-cloud enterprises running a CNAPP bake-off often request demos from both, since neither publishes self-serve pricing and the practical differences in runtime protection and agentless coverage only surface once both vendors provide quotes.",
+      "keyDifferences": [
+        {
+          "title": "Deployment model",
+          "toolA": "Explicitly agentless, claiming full cloud visibility within 24 hours without installing agents.",
+          "toolB": "Not documented as agentless or agent-based in the available facts.",
+          "whyItMatters": "Agent-based vs. agentless deployment affects rollout speed and operational overhead.",
+          "benefitsWho": "Teams wanting the fastest, least invasive deployment (favors Orca based on documented facts)."
+        },
+        {
+          "title": "Free trial availability",
+          "toolA": "Not documented; cons note pricing requires a sales conversation.",
+          "toolB": "Offers a free trial with demo scheduling on its website.",
+          "whyItMatters": "A documented free trial lowers the barrier to hands-on evaluation before a sales cycle.",
+          "benefitsWho": "Security teams that want to test-drive the product before engaging procurement (Wiz)."
+        },
+        {
+          "title": "Runtime protection",
+          "toolA": "Reachability analysis spans agentless, dynamic, and code layers, but no dedicated named runtime product.",
+          "toolB": "Wiz Defend is a named product specifically for runtime protection and threat detection.",
+          "whyItMatters": "A clearly named runtime module signals a distinct product investment area.",
+          "benefitsWho": "Teams prioritizing runtime threat detection as a standalone capability (Wiz)."
+        },
+        {
+          "title": "Stated integration ecosystem",
+          "toolA": "States 25+ integrations by name, including AWS, GitHub, Slack, Jira, and Okta.",
+          "toolB": "Names multi-cloud support for AWS and Azure without a stated integration count.",
+          "whyItMatters": "A documented integration count and named tools help buyers assess ecosystem fit upfront.",
+          "benefitsWho": "Teams evaluating integration breadth before a sales call (Orca)."
+        },
+        {
+          "title": "Company transparency",
+          "toolA": "Founded in 2019 with offices in London, Tel Aviv, and Portland, Oregon.",
+          "toolB": "Founding year and headquarters are not stated in the available facts.",
+          "whyItMatters": "Disclosed company details can factor into vendor due diligence.",
+          "benefitsWho": "Procurement and vendor-risk teams doing background checks (Orca)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Platform Coverage",
+          "rows": [
+            { "feature": "Cloud infrastructure security", "toolA": "available", "toolB": "available" },
+            { "feature": "Code / developer-stage scanning", "toolA": "available", "toolB": "available", "note": "Orca: shift-left CI/CD & IDE integration; Wiz: Wiz Code" },
+            { "feature": "Runtime threat detection", "toolA": "not-documented", "toolB": "available", "note": "Wiz Defend" },
+            { "feature": "Agentless deployment", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "AI & Automation",
+          "rows": [
+            { "feature": "AI-powered automated code fixes", "toolA": "available", "toolB": "available" },
+            { "feature": "AI-driven penetration testing", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI assistant for investigations/triage", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Access & Ecosystem",
+          "rows": [
+            { "feature": "Free trial", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Published self-serve pricing", "toolA": "unavailable", "toolB": "unavailable" },
+            { "feature": "Named integration ecosystem size", "toolA": "available", "toolB": "not-documented", "note": "Orca: 25+ named tools" }
+          ]
+        },
+        {
+          "group": "Company Info",
+          "rows": [
+            { "feature": "Founded year public", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Headquarters/offices public", "toolA": "available", "toolB": "not-documented" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is either platform agentless?", "answer": "Orca explicitly uses agentless scanning, claiming full cloud visibility within 24 hours without installing agents; Wiz's facts don't state whether its deployment is agent-based or agentless." },
+        { "question": "Does either offer a free trial?", "answer": "Wiz offers a free trial with demo scheduling on its website; Orca's facts don't mention a free trial, only that pricing requires a sales conversation." },
+        { "question": "What are the main product components?", "answer": "Wiz is built around three named products — Wiz Code, Wiz Cloud, and Wiz Defend — covering development, cloud infrastructure, and runtime protection; Orca's platform combines agentless scanning, reachability analysis, and a Unified Data Model across code-to-runtime layers." },
+        { "question": "How many integrations does each support?", "answer": "Orca states 25+ integrations including AWS, GitHub, Slack, Jira, and Okta; Wiz's facts specify multi-cloud support for AWS and Azure without a stated integration count." },
+        { "question": "When was each company founded?", "answer": "Orca Security was founded in 2019 with offices in London, Tel Aviv, and Portland, Oregon; Wiz's founding year and headquarters are not stated in the available facts." }
+      ]
+    }
+  },
+  {
+    "slug": "drata-vs-vanta",
+    "tool_a_id": "b0661eaf-0146-4993-862a-300b62279f7d",
+    "tool_a_name": "Drata",
+    "tool_b_id": "afc32d91-8855-4308-bcef-20828d9e78e2",
+    "tool_b_name": "Vanta",
+    "content": {
+      "verdict": "Drata and Vanta are both AI-assisted GRC platforms with quote-based pricing, but they disclose different things — Vanta publishes its founding year, headquarters, a 400+ integration count, a 16,000+ customer figure, and four named plan tiers, while Drata states a smaller customer base (8,500+) and a distinct AI feature for discovering and governing AI agents inside a company's own environment that Vanta's facts don't describe.",
+      "bestForToolA": "Teams specifically concerned with governing AI agents operating inside their own environment (Drata's agent governance and discovery feature) alongside standard SOC 2/ISO 27001 automation.",
+      "bestForToolB": "Teams that want more visible platform structure before a sales call — named tiers, a stated integration count, and disclosed founding/HQ details — plus an AI agent that drafts policies directly.",
+      "whoNeedsBoth": "Buyers running a competitive GRC RFP naturally evaluate both, since neither publishes actual prices and the meaningful differences (integration counts, AI feature framing, company scale) only surface once both vendors provide quotes.",
+      "keyDifferences": [
+        {
+          "title": "Company transparency",
+          "toolA": "Founding year and headquarters are not stated.",
+          "toolB": "Founded in 2018, headquartered in San Francisco with additional offices in New York, Sydney, Dublin, and London.",
+          "whyItMatters": "Disclosed company details can matter for vendor due diligence and long-term stability assessment.",
+          "benefitsWho": "Procurement teams performing vendor background checks (Vanta)."
+        },
+        {
+          "title": "Stated customer base",
+          "toolA": "States 8,500+ global customers with a 4.8/5.0 G2 rating.",
+          "toolB": "States 16,000+ customers across startups, mid-market, and enterprise.",
+          "whyItMatters": "Customer scale can be a proxy for market traction and platform maturity.",
+          "benefitsWho": "Buyers weighing social proof and platform adoption (Vanta, based on stated figures)."
+        },
+        {
+          "title": "Integration ecosystem",
+          "toolA": "Integration list is not detailed on the homepage.",
+          "toolB": "States 400+ tool integrations explicitly.",
+          "whyItMatters": "A documented integration count helps buyers gauge compatibility with their existing stack upfront.",
+          "benefitsWho": "IT/security teams assessing integration fit before a sales call (Vanta)."
+        },
+        {
+          "title": "Distinct AI features",
+          "toolA": "AI questionnaire assistance plus Agent governance that discovers and governs AI agents operating in enterprise environments.",
+          "toolB": "Vanta AI Agent drafts policies, completes questionnaires, and flags compliance issues.",
+          "whyItMatters": "One AI feature set focuses on governing AI agents as a security risk; the other focuses on automating GRC busywork directly.",
+          "benefitsWho": "Security teams worried about shadow AI agent risk (Drata) vs. teams wanting AI to handle policy drafting and questionnaires (Vanta)."
+        },
+        {
+          "title": "Published plan structure",
+          "toolA": "No pricing_plans are listed; the site directs to a demo or contact-sales flow.",
+          "toolB": "Publishes four named tiers — Essentials, Plus, Professional, Enterprise — each with distinct feature sets, even though prices are quote-based.",
+          "whyItMatters": "Seeing a named tier structure with feature deltas helps buyers scope requirements before talking to sales.",
+          "benefitsWho": "Buyers who want to self-serve their initial evaluation (Vanta)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Compliance Automation",
+          "rows": [
+            { "feature": "Continuous control monitoring", "toolA": "available", "toolB": "available" },
+            { "feature": "Multi-framework support", "toolA": "available", "toolB": "available", "note": "Drata: 9 named; Vanta: 9+ named, plus 15+ more" },
+            { "feature": "Trust Center (public compliance page)", "toolA": "available", "toolB": "available" },
+            { "feature": "Third-party risk management", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI Capabilities",
+          "rows": [
+            { "feature": "AI-drafted questionnaire responses", "toolA": "available", "toolB": "available" },
+            { "feature": "AI agent for policy drafting", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI governance of AI agents (discovery/policy enforcement)", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Company & Scale",
+          "rows": [
+            { "feature": "Founded year disclosed", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Headquarters disclosed", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Customer base size stated", "toolA": "available", "toolB": "available", "note": "Drata: 8,500+; Vanta: 16,000+" },
+            { "feature": "Integration count stated", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Published plan tiers", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Public starting price", "toolA": "unavailable", "toolB": "unavailable" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Do Drata and Vanta publish pricing?", "answer": "No — both require contacting sales. Vanta's four tiers (Essentials, Plus, Professional, Enterprise) are all quote-based, and Drata's site directs visitors to a demo or contact-sales flow without published plans." },
+        { "question": "How many customers does each claim?", "answer": "Drata states 8,500+ global customers with a 4.8/5.0 G2 rating; Vanta states 16,000+ customers across startups, mid-market, and enterprise." },
+        { "question": "What frameworks do they support?", "answer": "Drata supports SOC 2, ISO 27001, ISO 42001, GDPR, HIPAA, PCI DSS, DORA, FedRAMP, and CMMC; Vanta supports SOC 2, ISO 27001, HIPAA, GDPR, HITRUST, NIST AI RMF, ISO 42001, FedRAMP, CMMC, and 15+ other frameworks." },
+        { "question": "Do they offer AI features?", "answer": "Both do, differently — Drata uses AI agents to draft security questionnaire responses and to discover and govern AI agents operating in a company's environment; Vanta's AI Agent drafts policies, completes questionnaires, and flags compliance issues." },
+        { "question": "When was each company founded?", "answer": "Vanta was founded in 2018 and is headquartered in San Francisco (with additional offices in New York, Sydney, Dublin, and London); Drata's founding year and headquarters are not stated in the available facts." }
+      ]
+    }
+  },
+  {
+    "slug": "sprinto-vs-thoropass",
+    "tool_a_id": "01db3fa1-4544-4df3-b94a-c8779f0ed121",
+    "tool_a_name": "Sprinto",
+    "tool_b_id": "39e085ba-918c-440b-8ad4-af576ba5ba03",
+    "tool_b_name": "Thoropass",
+    "content": {
+      "verdict": "Sprinto and Thoropass both automate compliance work, but they bundle different things around it — Sprinto pairs its automation software with built-in lightweight MDM, 200+ integrations, and 1:1 expert guidance, while Thoropass pairs its software with an in-house licensed CPA audit firm and CREST-accredited penetration testing, so the audit itself happens under the same roof.",
+      "bestForToolA": "Teams that want an ease-of-use-rated compliance dashboard with built-in device management (MDM) and hands-on 1:1 guidance, while using a separate external auditor.",
+      "bestForToolB": "Teams that want to consolidate the formal audit itself (via Thoropass's affiliated CPA firm, Laika Compliance, LLC) and penetration testing alongside compliance software, rather than coordinating a separate audit firm.",
+      "whoNeedsBoth": "Organizations juggling multiple frameworks sometimes run Sprinto for day-to-day control monitoring while engaging Thoropass specifically for the formal audit and penetration test deliverables auditors require.",
+      "keyDifferences": [
+        {
+          "title": "Audit delivery model",
+          "toolA": "Software plus 1:1 expert guidance; no mention of an owned or affiliated CPA firm performing the audit.",
+          "toolB": "Bundles a licensed CPA audit firm (Laika Compliance, LLC) directly into the platform.",
+          "whyItMatters": "Determines whether the actual attestation audit is performed in-house or must be sourced separately.",
+          "benefitsWho": "Teams wanting a single vendor for both software and the audit itself (Thoropass)."
+        },
+        {
+          "title": "Device management",
+          "toolA": "Includes built-in lightweight Mobile Device Management (MDM).",
+          "toolB": "No MDM capability documented.",
+          "whyItMatters": "Reduces the need for a separate device management tool if MDM needs are basic.",
+          "benefitsWho": "Small IT teams wanting to consolidate tooling (Sprinto)."
+        },
+        {
+          "title": "Security testing services",
+          "toolA": "Not documented.",
+          "toolB": "Offers in-house CREST-accredited penetration testing and vulnerability scanning.",
+          "whyItMatters": "Having pentesting under the same vendor can simplify audit evidence collection.",
+          "benefitsWho": "Compliance teams needing pentest reports as part of their audit package (Thoropass)."
+        },
+        {
+          "title": "Stated integration count",
+          "toolA": "States 200+ integrations for continuous compliance risk visibility.",
+          "toolB": "No specific integration count stated.",
+          "whyItMatters": "A documented integration count signals breadth of automated evidence collection sources.",
+          "benefitsWho": "Teams with a wide existing tool stack needing broad connector coverage (Sprinto)."
+        },
+        {
+          "title": "Support model",
+          "toolA": "Includes 1:1 expert guidance and 24/7 assistance as a stated feature.",
+          "toolB": "No comparable guided-support feature documented; its differentiator is the bundled CPA firm instead.",
+          "whyItMatters": "Hands-on guided support vs. audit-firm access represent different kinds of help during certification.",
+          "benefitsWho": "First-time compliance teams wanting hand-holding through the process (Sprinto)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Compliance Automation",
+          "rows": [
+            { "feature": "Continuous control/evidence monitoring", "toolA": "available", "toolB": "available", "note": "Sprinto: 1M+ checks/month" },
+            { "feature": "Multi-framework support", "toolA": "available", "toolB": "available", "note": "Thoropass names 9 frameworks plus 30+ more" },
+            { "feature": "Policy templates", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Audit & Security Testing",
+          "rows": [
+            { "feature": "In-house/affiliated CPA audit firm", "toolA": "not-documented", "toolB": "available", "note": "Laika Compliance, LLC" },
+            { "feature": "Penetration testing", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Vulnerability scanning", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Support & Extras",
+          "rows": [
+            { "feature": "Built-in device management (MDM)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "1:1 / 24-7 expert guidance", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Stated integration count", "toolA": "available", "toolB": "not-documented", "note": "Sprinto: 200+" }
+          ]
+        },
+        {
+          "group": "Trust & Pricing",
+          "rows": [
+            { "feature": "Public pricing", "toolA": "unavailable", "toolB": "unavailable" },
+            { "feature": "Customer/trust signal", "toolA": "available", "toolB": "available", "note": "Sprinto: #1 ease-of-use on G2, 900+ customers; Thoropass: 1,000+ organizations" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "What does each platform automate?", "answer": "Sprinto automates SOC 2 and other compliance work, evaluating over 1 million compliance checks monthly; Thoropass combines a licensed CPA audit firm (Laika Compliance, LLC) with AI-assisted software covering SOC 2, ISO 27001, and 30+ other frameworks end-to-end." },
+        { "question": "Does either include device management?", "answer": "Sprinto includes a built-in lightweight Mobile Device Management (MDM) capability; Thoropass's facts don't mention an MDM feature." },
+        { "question": "Does either offer penetration testing?", "answer": "Thoropass offers CREST-accredited penetration testing with audit-ready reporting; Sprinto's facts don't describe a penetration testing feature." },
+        { "question": "How many integrations does Sprinto support?", "answer": "Sprinto supports 200+ integrations for continuous compliance risk visibility; Thoropass's facts don't state a specific integration count." },
+        { "question": "Is pricing public for either platform?", "answer": "No — neither publishes pricing. Sprinto's site doesn't list specific plans, and Thoropass pricing varies by frameworks pursued, audit scope, company size, and required services as a tailored quote." }
+      ]
+    }
+  },
+  {
+    "slug": "duo-security-vs-jumpcloud",
+    "tool_a_id": "70bf6be7-f47b-4ba4-936b-47ece1be0301",
+    "tool_a_name": "Duo Security",
+    "tool_b_id": "e87fc9fe-9139-4e2a-b348-1b4b64fe9eeb",
+    "tool_b_name": "JumpCloud",
+    "content": {
+      "verdict": "Duo Security and JumpCloud both sit in identity/access security but scope differently — Duo is a Cisco-backed MFA/SSO product with a permanent free tier for small teams and tiered pricing up to Premier, while JumpCloud is a broader cloud directory platform adding cross-platform device management and shadow AI/SaaS governance, sold a la carte with a 30-day trial instead of a free-forever plan.",
+      "bestForToolA": "Small teams (10 or fewer users) that want free, phishing-resistant MFA and SSO backed by Cisco, without needing full device management.",
+      "bestForToolB": "IT teams that need unified identity plus cross-platform device management (including password manager and shadow AI/SaaS visibility) and prefer paying only for the specific modules they use.",
+      "whoNeedsBoth": "Organizations sometimes run Duo for its Cisco-integrated MFA and identity threat detection while using JumpCloud as the underlying directory and device management layer, since the two cover adjacent but distinct pieces of IT infrastructure.",
+      "keyDifferences": [
+        {
+          "title": "Free access model",
+          "toolA": "Duo Free is permanently available at no cost for teams of 10 or fewer users.",
+          "toolB": "No permanent free plan; offers a 30-day fully-featured free trial with no credit card required instead.",
+          "whyItMatters": "A free-forever tier vs. a time-limited trial changes how small teams can adopt the tool long-term.",
+          "benefitsWho": "Very small teams needing ongoing free MFA (Duo) vs. teams wanting to fully evaluate before buying (JumpCloud)."
+        },
+        {
+          "title": "Core product scope",
+          "toolA": "MFA/SSO/identity-focused access security.",
+          "toolB": "Full cloud directory platform: identity, cross-platform device management, and shadow AI/SaaS management.",
+          "whyItMatters": "One is a focused access-security product; the other is broader IT infrastructure management.",
+          "benefitsWho": "Teams needing narrow, strong MFA (Duo) vs. teams needing a unified IT directory and device layer (JumpCloud)."
+        },
+        {
+          "title": "Pricing structure",
+          "toolA": "Three clearly tiered plans — Essentials ($3), Advantage ($6), Premier ($9) per user/month — with an explicit feature ladder.",
+          "toolB": "A la carte modular pricing (Device Management $9, SSO $11, Device Identity Management $13 per user/month) plus custom Platform tiers.",
+          "whyItMatters": "Fixed tiers are simpler to budget; a la carte pricing lets teams pay only for needed modules.",
+          "benefitsWho": "Teams wanting predictable tiers (Duo) vs. teams wanting to avoid paying for unused modules (JumpCloud)."
+        },
+        {
+          "title": "Device management depth",
+          "toolA": "Device Trust verifies device health before granting access; not described as full endpoint management.",
+          "toolB": "Manages devices across Windows, macOS, Linux, iOS, and Android as a core feature, with a built-in password manager.",
+          "whyItMatters": "Teams needing actual endpoint/device management (not just a health check) need this documented capability.",
+          "benefitsWho": "IT teams managing a fleet of company devices (JumpCloud)."
+        },
+        {
+          "title": "AI-related risk coverage",
+          "toolA": "Agentic IAM extends identity and access management controls to AI agents.",
+          "toolB": "Discovers shadow AI usage and helps govern/optimize SaaS spend related to it.",
+          "whyItMatters": "One secures AI agents as access-control subjects; the other governs unsanctioned SaaS/AI tool usage.",
+          "benefitsWho": "Security teams building AI agent access policies (Duo) vs. IT teams managing shadow SaaS/AI sprawl (JumpCloud)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Identity & Access",
+          "rows": [
+            { "feature": "Multi-factor authentication", "toolA": "available", "toolB": "available" },
+            { "feature": "Single sign-on", "toolA": "available", "toolB": "available" },
+            { "feature": "Passwordless authentication", "toolA": "available", "toolB": "available" },
+            { "feature": "Privileged access management", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Device & Endpoint Management",
+          "rows": [
+            { "feature": "Full cross-platform device management", "toolA": "not-documented", "toolB": "available", "note": "JumpCloud: Windows/macOS/Linux/iOS/Android" },
+            { "feature": "Password manager", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI & Emerging Risk",
+          "rows": [
+            { "feature": "Agentic IAM (AI agent access controls)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Shadow AI / SaaS discovery & governance", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Trial",
+          "rows": [
+            { "feature": "Permanent free tier", "toolA": "available", "toolB": "unavailable", "note": "Duo: teams of 10 or fewer" },
+            { "feature": "Free trial", "toolA": "not-documented", "toolB": "available", "note": "JumpCloud: 30-day fully featured" },
+            { "feature": "A la carte / modular pricing", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Do Duo and JumpCloud offer free access?", "answer": "Duo Free is available at no cost for teams of 10 or fewer users; JumpCloud doesn't offer a permanent free plan but provides a 30-day fully-featured free trial with no credit card required." },
+        { "question": "How is pricing structured?", "answer": "Duo offers three tiered editions — Essentials ($3/user/month), Advantage ($6/user/month), and Premier ($9/user/month); JumpCloud uses a la carte module pricing starting at $9/user/month for Device Management, with SSO and combined packages priced higher, plus custom Platform tiers." },
+        { "question": "Does either manage devices across platforms?", "answer": "JumpCloud manages devices across Windows, macOS, Linux, iOS, and Android as a core feature; Duo's Device Trust verifies device health before granting access but isn't described as full cross-platform device management." },
+        { "question": "Who owns Duo Security?", "answer": "Duo Security is owned by Cisco Systems, Inc. JumpCloud's facts don't mention a parent company." },
+        { "question": "Does either address AI-related risk?", "answer": "Duo's Agentic IAM extends identity and access management controls to AI agents; JumpCloud discovers shadow AI usage and helps govern and optimize SaaS spend related to it." }
+      ]
+    }
+  },
+  {
+    "slug": "teleport-vs-twingate",
+    "tool_a_id": "621c1563-301c-4006-9dc0-beb9d7803b61",
+    "tool_a_name": "Teleport",
+    "tool_b_id": "b790465f-8d9b-4776-8b1b-364273fb48a0",
+    "tool_b_name": "Twingate",
+    "content": {
+      "verdict": "Teleport and Twingate both replace legacy access models, but for different layers — Teleport eliminates standing credentials across servers, Kubernetes, databases, and even AI agents using hardware-rooted cryptographic identity and FedRAMP/FIPS 140-2 compliance, while Twingate is a Zero Trust Network Access product replacing VPNs with least-privilege, device-checked network access, published per-user pricing, and native apps across six platforms.",
+      "bestForToolA": "Organizations that need a single identity model spanning infrastructure resources (servers, Kubernetes, databases) and AI agents/MCP tools, with FedRAMP/FIPS 140-2 requirements.",
+      "bestForToolB": "Teams that want a VPN replacement with transparent per-user pricing, broad native client support, and infrastructure-as-code deployment via Terraform/Pulumi.",
+      "whoNeedsBoth": "Organizations often deploy Twingate for general network-level remote access to private resources while using Teleport specifically for privileged, credential-free access to servers, Kubernetes clusters, and databases that need audit trails and compliance-grade controls.",
+      "keyDifferences": [
+        {
+          "title": "Scope of identity coverage",
+          "toolA": "Unifies identity across servers, Kubernetes, databases, applications, and explicitly extends to AI agents and MCP tools.",
+          "toolB": "Focused on network-layer Zero Trust access to private resources, office networks, and cloud VPCs; no AI-agent-specific access control documented.",
+          "whyItMatters": "Teams securing AI agent access alongside infrastructure need a documented feature for that specifically.",
+          "benefitsWho": "Platform teams managing AI agent access to infrastructure (Teleport)."
+        },
+        {
+          "title": "Credential model",
+          "toolA": "Eliminates standing/shareable secrets via cryptographic, hardware-rooted identity (HSM, TPM, biometric support).",
+          "toolB": "Provides identity-based least-privilege network access; hardware-rooted credential elimination is not documented.",
+          "whyItMatters": "Hardware-rooted identity is a stronger documented guarantee against credential theft.",
+          "benefitsWho": "Security teams eliminating shared secrets across infrastructure (Teleport)."
+        },
+        {
+          "title": "Pricing transparency",
+          "toolA": "No published pricing tiers; requires submitting a form or downloading a pricing guide.",
+          "toolB": "Publishes explicit per-user pricing: Free Starter (up to 5 users), $5/user/month Teams, $10/user/month Business, custom Enterprise.",
+          "whyItMatters": "Teams needing to budget without a sales conversation benefit from published pricing.",
+          "benefitsWho": "Smaller teams and procurement-sensitive buyers (Twingate)."
+        },
+        {
+          "title": "Named compliance certifications",
+          "toolA": "Explicitly supports FedRAMP and FIPS 140-2.",
+          "toolB": "No specific compliance certifications stated in the facts.",
+          "whyItMatters": "Regulated industries or government-adjacent buyers need documented compliance support.",
+          "benefitsWho": "Government contractors and regulated enterprises (Teleport)."
+        },
+        {
+          "title": "Client platform support",
+          "toolA": "Not detailed in the available facts.",
+          "toolB": "Native apps for macOS, Windows, Linux, Chrome OS, iOS, and Android.",
+          "whyItMatters": "Broad native client coverage matters for distributed, BYOD-heavy workforces.",
+          "benefitsWho": "Organizations with diverse device fleets needing remote access (Twingate)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Access Model",
+          "rows": [
+            { "feature": "Zero standing privileges / ephemeral just-in-time access", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Hardware-rooted cryptographic identity", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Device posture checks", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI agent / MCP access control", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Platforms & Deployment",
+          "rows": [
+            { "feature": "Native client apps (desktop/mobile)", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Infrastructure-as-code deployment (Terraform/Pulumi/API)", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Coverage across servers, Kubernetes, and databases", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Compliance & Trust",
+          "rows": [
+            { "feature": "FedRAMP support", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "FIPS 140-2 support", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Open-source community presence", "toolA": "available", "toolB": "not-documented", "note": "Teleport: 20K+ GitHub stars" }
+          ]
+        },
+        {
+          "group": "Pricing & Access",
+          "rows": [
+            { "feature": "Published per-user pricing", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Free tier", "toolA": "not-documented", "toolB": "available", "note": "Twingate Starter: up to 5 users" },
+            { "feature": "Free trial", "toolA": "available", "toolB": "not-documented" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "What does each platform replace?", "answer": "Teleport replaces standing credentials with cryptographic, just-in-time access across servers, Kubernetes, databases, and applications, including AI agents; Twingate replaces traditional VPNs with identity-based, least-privilege Zero Trust access to private resources." },
+        { "question": "Is pricing public for either tool?", "answer": "Twingate publishes clear per-user pricing — $5/user/month for Teams (up to 100 users) and $10/user/month for Business (up to 500 users); Teleport does not publish pricing tiers and requires submitting a form or downloading a pricing guide." },
+        { "question": "Does either offer a free plan or trial?", "answer": "Twingate's Starter plan is free for up to 5 users; Teleport offers a free trial according to its site, though it does not have a documented free-forever tier." },
+        { "question": "What compliance standards does each support?", "answer": "Teleport supports FedRAMP and FIPS 140-2; Twingate's facts don't state specific compliance certifications." },
+        { "question": "What platforms does each support?", "answer": "Twingate has native clients for macOS, Windows, Linux, Chrome OS, iOS, and Android; Teleport's facts don't detail specific client operating system support." }
+      ]
+    }
+  },
+  {
+    "slug": "strongdm-vs-twingate",
+    "tool_a_id": "3a50e7f9-8dac-4f95-a6a8-044c2a5b961d",
+    "tool_a_name": "StrongDM",
+    "tool_b_id": "b790465f-8d9b-4776-8b1b-364273fb48a0",
+    "tool_b_name": "Twingate",
+    "content": {
+      "verdict": "StrongDM and Twingate both replace legacy access models, but at different layers — StrongDM is a Privileged Access Management platform with live session control and credential elimination across databases, Kubernetes, network devices, and servers under one all-inclusive per-user SKU (price not published), while Twingate is a Zero Trust Network Access product replacing VPNs with published per-user pricing, device posture checks, and broad native client support.",
+      "bestForToolA": "Organizations needing session-level privileged access control (live visibility, recording, credential elimination) across databases, Kubernetes, and network devices, with named compliance frameworks like FedRAMP and PCI DSS 4.0.",
+      "bestForToolB": "Teams that want straightforward, published per-user pricing for general Zero Trust network access replacing a VPN, with device posture checks and wide native client support.",
+      "whoNeedsBoth": "Teams sometimes deploy Twingate for general Zero Trust network connectivity to private resources while layering StrongDM on top for privileged, session-recorded access to sensitive databases and infrastructure requiring compliance-grade audit trails.",
+      "keyDifferences": [
+        {
+          "title": "Product category",
+          "toolA": "Privileged Access Management (PAM) for infrastructure resources (databases, Kubernetes, network devices, cloud, servers) with live session recording/control.",
+          "toolB": "Zero Trust Network Access (VPN replacement) for private resources, office networks, and cloud VPCs.",
+          "whyItMatters": "PAM and ZTNA address adjacent but distinct problems — privileged session control vs. general network connectivity.",
+          "benefitsWho": "Security teams managing privileged infrastructure access (StrongDM) vs. IT teams replacing VPNs for general remote access (Twingate)."
+        },
+        {
+          "title": "Session visibility and control",
+          "toolA": "Provides live session control with real-time visibility into user actions during active sessions.",
+          "toolB": "No session recording or live control documented.",
+          "whyItMatters": "Real-time session oversight is critical for auditing privileged actions on sensitive systems.",
+          "benefitsWho": "Compliance and security teams needing detailed audit trails of privileged sessions (StrongDM)."
+        },
+        {
+          "title": "Credential model",
+          "toolA": "Credential Elimination removes standing credentials entirely as a named feature.",
+          "toolB": "Provides least-privilege network access controls, not framed as credential elimination.",
+          "whyItMatters": "Eliminating standing credentials reduces theft and lateral-movement risk more directly than access-scoping alone.",
+          "benefitsWho": "Security teams reducing credential-based attack surface (StrongDM)."
+        },
+        {
+          "title": "Pricing model",
+          "toolA": "Single SKU, per-user pricing with all features included and no separate charges by protocol or resource — actual figure not published.",
+          "toolB": "Publishes tiered per-user prices ($5-$10/user/month) with different feature sets per tier, plus a free Starter plan.",
+          "whyItMatters": "All-inclusive single-SKU pricing simplifies procurement once a quote is obtained; published tiers let buyers self-serve budgeting immediately.",
+          "benefitsWho": "Buyers wanting pricing simplicity after a quote (StrongDM) vs. buyers wanting upfront transparency (Twingate)."
+        },
+        {
+          "title": "Named compliance frameworks",
+          "toolA": "Explicitly supports NIST 800-53, FedRAMP, HIPAA, SOC 2, PCI DSS 4.0, and ISO 27001.",
+          "toolB": "No specific compliance certifications stated in the facts.",
+          "whyItMatters": "Regulated organizations need documented framework support to shortlist vendors.",
+          "benefitsWho": "Enterprises in regulated industries (StrongDM)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Access & Session Control",
+          "rows": [
+            { "feature": "Live/real-time session visibility & control", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Standing credential elimination", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Least-privilege network access controls", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Device posture checks", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Resource Coverage",
+          "rows": [
+            { "feature": "Database access coverage", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Kubernetes access coverage", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Network device coverage", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "General private resource / VPN replacement", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Compliance & Trust",
+          "rows": [
+            { "feature": "Named compliance frameworks", "toolA": "available", "toolB": "not-documented", "note": "StrongDM: NIST 800-53, FedRAMP, HIPAA, SOC 2, PCI DSS 4.0, ISO 27001" },
+            { "feature": "Corporate ownership/acquisition disclosed", "toolA": "available", "toolB": "not-documented", "note": "StrongDM acquired by Delinea" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Published per-user price", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "All-inclusive single-SKU pricing (no add-on fees)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Free tier", "toolA": "not-documented", "toolB": "available", "note": "Twingate Starter: up to 5 users" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "How does each price its product?", "answer": "StrongDM uses a single SKU, per-user pricing model with all features included and no separate charges by protocol or resource type, though exact prices require contacting sales; Twingate publishes tiered per-user pricing from free up to $10/user/month for its Business plan, plus custom Enterprise pricing." },
+        { "question": "What resources does each cover?", "answer": "StrongDM supports Kubernetes, databases, network devices, cloud services, and servers under one access model with live session control; Twingate provides Zero Trust access to office networks, cloud VPCs, and private resources without naming specific database or Kubernetes coverage." },
+        { "question": "Does either eliminate standing credentials?", "answer": "StrongDM's Credential Elimination feature removes standing credentials to reduce theft and lateral-movement risk; Twingate's facts describe least-privilege, network-layer access controls rather than credential elimination specifically." },
+        { "question": "What compliance frameworks does StrongDM support?", "answer": "StrongDM supports NIST 800-53, FedRAMP, HIPAA, SOC 2, PCI DSS 4.0, and ISO 27001; Twingate's facts don't list specific compliance certifications." },
+        { "question": "Who owns StrongDM?", "answer": "StrongDM was recently acquired by Delinea to expand capabilities around agentic AI and context-aware authorization; Twingate's facts don't mention any ownership changes." }
+      ]
+    }
+  }
+]

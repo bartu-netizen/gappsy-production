@@ -1,0 +1,679 @@
+[
+  {
+    "slug": "pingdom-vs-uptimerobot",
+    "tool_a_id": "0f7793fe-24f6-455d-942f-7c400a00d262",
+    "tool_a_name": "Pingdom",
+    "tool_b_id": "40705dad-5bab-4f5b-a448-d25aaa9e4cbc",
+    "tool_b_name": "UptimeRobot",
+    "content": {
+      "verdict": "Pingdom leans on SolarWinds-backed synthetic monitoring with 100+ check locations, per-minute checks, and multi-step transaction testing, but its facts show no documented free plan and no published pricing. UptimeRobot publishes a full pricing ladder from a free 50-monitor plan up to an Enterprise tier with 30-second checks and SOC 2/CCPA/GDPR compliance, but its transaction-flow testing capability isn't documented. The choice comes down to whether transaction monitoring or transparent, tiered pricing matters more.",
+      "bestForToolA": "Teams that need to verify multi-step user journeys (registration, login, search, checkout) and want root-cause diagnostics like traceroute and server response codes alongside alerting through Slack, Opsgenie, or PagerDuty.",
+      "bestForToolB": "Teams that want a published, predictable pricing ladder starting with a free 50-monitor plan, plus documented SOC 2/CCPA/GDPR compliance and a 14-day money-back guarantee on paid tiers.",
+      "whoNeedsBoth": "Organizations running complex checkout or signup flows may keep Pingdom for transaction-level testing on critical paths while using UptimeRobot's free or low-cost tier to cover a larger number of simple endpoint checks cost-effectively.",
+      "keyDifferences": [
+        {
+          "title": "Free plan availability",
+          "toolA": "No free plan is documented for Pingdom in the facts reviewed.",
+          "toolB": "UptimeRobot offers a free plan with 50 monitors, 5-minute check intervals, and 1 status page, no credit card required.",
+          "whyItMatters": "A no-cost entry point removes friction for individuals and small teams evaluating the product before committing budget.",
+          "benefitsWho": "Solo developers, side projects, and teams wanting to trial monitoring before paying."
+        },
+        {
+          "title": "Check frequency by tier",
+          "toolA": "Checks run as often as every minute across the monitoring documented.",
+          "toolB": "Free tier checks every 5 minutes; paid plans check every 60 seconds; 30-second intervals are limited to the Enterprise tier.",
+          "whyItMatters": "Faster checks catch outages sooner, which matters more for revenue-critical endpoints.",
+          "benefitsWho": "Teams monitoring high-traffic or revenue-critical services that need fast outage detection."
+        },
+        {
+          "title": "Multi-step transaction monitoring",
+          "toolA": "Explicitly tests multi-step flows such as registration, login, search, and checkout.",
+          "toolB": "Not documented in the facts reviewed.",
+          "whyItMatters": "Simple uptime pings can miss failures deep in a user flow, like a broken checkout step after the homepage loads fine.",
+          "benefitsWho": "E-commerce and SaaS teams whose critical paths involve several sequential steps."
+        },
+        {
+          "title": "Check locations",
+          "toolA": "Tests from 100+ global locations.",
+          "toolB": "Offers multi-location checks to reduce false-positive downtime alerts, without a specific location count documented.",
+          "whyItMatters": "More geographic coverage helps confirm whether an outage is regional or global before alerting.",
+          "benefitsWho": "Globally distributed audiences and teams that need to rule out regional network issues."
+        },
+        {
+          "title": "Compliance certifications",
+          "toolA": "Not documented in the facts reviewed.",
+          "toolB": "Enterprise tier is documented as SOC 2/CCPA/GDPR compliant.",
+          "whyItMatters": "Formal compliance documentation is often a procurement requirement for regulated or enterprise buyers.",
+          "benefitsWho": "Enterprise and regulated-industry buyers with vendor security review requirements."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Monitoring",
+          "rows": [
+            { "feature": "Uptime monitoring", "toolA": "available", "toolB": "available" },
+            { "feature": "Multi-step transaction monitoring", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "SSL certificate monitoring", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Multi-location checks", "toolA": "available", "toolB": "available", "note": "Pingdom: 100+ locations documented; UptimeRobot: location count not specified." }
+          ]
+        },
+        {
+          "group": "Alerting & Status Pages",
+          "rows": [
+            { "feature": "Public status pages", "toolA": "available", "toolB": "available" },
+            { "feature": "Slack / PagerDuty integration", "toolA": "available", "toolB": "available" },
+            { "feature": "SMS alerts", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free plan", "toolA": "unavailable", "toolB": "available", "note": "UptimeRobot: 50 monitors, 5-minute interval." },
+            { "feature": "Published pricing tiers", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Compliance certifications", "toolA": "not-documented", "toolB": "available", "note": "SOC 2/CCPA/GDPR on Enterprise tier." }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Pingdom have a free plan?", "answer": "No free plan is mentioned in the facts reviewed for Pingdom." },
+        { "question": "Is UptimeRobot free?", "answer": "Yes, UptimeRobot's free plan includes 50 monitors with 5-minute check intervals and no credit card required." },
+        { "question": "How often does each service check my site?", "answer": "Pingdom checks as often as every minute. UptimeRobot checks every 5 minutes on the free plan, every 60 seconds on paid plans, and every 30 seconds only on the Enterprise tier." },
+        { "question": "Which one tests multi-step user flows like checkout?", "answer": "Pingdom's transaction monitoring explicitly tests flows such as registration, login, search, and checkout; this capability is not documented for UptimeRobot." },
+        { "question": "Which one has documented compliance certifications?", "answer": "UptimeRobot's Enterprise tier is documented as SOC 2/CCPA/GDPR compliant. No equivalent certification is documented for Pingdom." },
+        { "question": "Does UptimeRobot offer a money-back guarantee?", "answer": "Yes, a 14-day money-back guarantee applies to new UptimeRobot subscriptions." }
+      ]
+    }
+  },
+  {
+    "slug": "better-stack-vs-checkly",
+    "tool_a_id": "7ff22411-f622-417d-9bda-6ec2bdfd971c",
+    "tool_a_name": "Better Stack",
+    "tool_b_id": "87089195-3dd1-46cf-905d-b16e26fbbd31",
+    "tool_b_name": "Checkly",
+    "content": {
+      "verdict": "Better Stack bundles logs, metrics, tracing, uptime monitoring, and RUM into one observability platform with AI-driven root-cause analysis and post-mortem generation, but its pricing spreads across usage-based telemetry bundles and per-responder incident licenses. Checkly is narrower — synthetic, browser, and uptime monitoring defined as code via CLI, Terraform, or Pulumi — with a simpler tiered pricing ladder and startup/nonprofit discounts. The right pick depends on whether you need full-stack observability or code-native synthetic monitoring.",
+      "bestForToolA": "Teams that want logs, metrics, tracing, and uptime monitoring consolidated in one platform with AI-assisted root-cause analysis and automated post-mortems, and that are comfortable with usage-based telemetry pricing.",
+      "bestForToolB": "Engineering teams that manage monitoring as code (via CLI, Terraform, or Pulumi) and want a simpler, check-count-based pricing ladder, especially startups or nonprofits eligible for Checkly's discounts.",
+      "whoNeedsBoth": "Teams already running a separate log/metrics pipeline may adopt Checkly specifically for infrastructure-as-code synthetic and browser checks, while relying on Better Stack (or an equivalent) for the broader logs/traces/RUM observability layer.",
+      "keyDifferences": [
+        {
+          "title": "Monitoring as code",
+          "toolA": "Not documented as a distinct capability in the facts reviewed.",
+          "toolB": "Checks can be deployed via CLI, Terraform, or Pulumi using typed resources like ApiCheck and BrowserCheck.",
+          "whyItMatters": "Defining monitors in version-controlled code lets teams review, test, and deploy monitoring changes the same way they manage infrastructure.",
+          "benefitsWho": "Engineering teams already using Terraform/Pulumi for infrastructure who want monitoring to follow the same workflow."
+        },
+        {
+          "title": "Observability breadth",
+          "toolA": "Bundles logs, metrics, distributed tracing (with eBPF-based service maps), uptime monitoring, and real user monitoring with session replay in one platform.",
+          "toolB": "Focused on uptime, browser/synthetic, and heartbeat monitoring; no log management, metrics, or tracing product is documented.",
+          "whyItMatters": "A single platform covering logs, traces, and monitoring reduces the number of tools a team has to correlate during an incident.",
+          "benefitsWho": "Teams wanting one observability vendor instead of stitching together separate log, tracing, and monitoring tools."
+        },
+        {
+          "title": "AI-assisted incident response",
+          "toolA": "AI SRE feature provides AI-driven root cause analysis and automated post-mortem generation.",
+          "toolB": "AI root cause analysis feature helps trace the cause of detected issues.",
+          "whyItMatters": "Automated post-mortem generation goes a step further than root-cause tracing by producing incident documentation, saving manual write-up time.",
+          "benefitsWho": "On-call teams that want to reduce time spent on both diagnosis and post-incident documentation."
+        },
+        {
+          "title": "Pricing structure",
+          "toolA": "Scales through separate telemetry bundles (Nano $25-$105/month up to Tera $420-$1,750/month) plus per-responder incident management pricing.",
+          "toolB": "Scales through check-count tiers: Hobby (free), Starter $24/month, Team $64/month, Enterprise (custom).",
+          "whyItMatters": "A single-axis pricing ladder is easier to forecast than multiple usage-based add-ons across different products.",
+          "benefitsWho": "Budget-conscious teams and finance stakeholders who need predictable monthly costs."
+        },
+        {
+          "title": "Startup and nonprofit discounts",
+          "toolA": "Not documented in the facts reviewed.",
+          "toolB": "30% discount for startups under 2 years old and 50% for nonprofits.",
+          "whyItMatters": "Explicit discount programs materially lower cost for early-stage or mission-driven organizations.",
+          "benefitsWho": "Early-stage startups and nonprofit organizations with limited monitoring budgets."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Monitoring",
+          "rows": [
+            { "feature": "Uptime monitoring", "toolA": "available", "toolB": "available" },
+            { "feature": "Browser/synthetic monitoring", "toolA": "available", "toolB": "available", "note": "Checkly uses Playwright to simulate real user flows." },
+            { "feature": "Heartbeat monitoring", "toolA": "available", "toolB": "available" },
+            { "feature": "Log management", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Distributed tracing", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Real user monitoring / session replay", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Monitoring as Code & AI",
+          "rows": [
+            { "feature": "CLI / Terraform / Pulumi deployment", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI root cause analysis", "toolA": "available", "toolB": "available" },
+            { "feature": "Automated post-mortem generation", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free plan", "toolA": "available", "toolB": "available", "note": "Better Stack: 10 monitors, 1 status page, 100k exceptions/mo. Checkly Hobby: 10 uptime monitors, 1,000 browser checks/mo." },
+            { "feature": "Startup/nonprofit discounts", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Money-back guarantee", "toolA": "available", "toolB": "not-documented", "note": "Better Stack: 60-day guarantee." }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Better Stack have a free plan?", "answer": "Yes, a free plan is available with 10 monitors/heartbeats, 1 status page, and 100,000 exceptions per month." },
+        { "question": "Is Checkly free to start?", "answer": "Yes, the Hobby plan is free with 10 uptime monitors, 1,000 browser checks/month, and 10,000 API checks/month, no credit card required." },
+        { "question": "Can Checkly monitoring be defined as code?", "answer": "Yes, via its CLI and Terraform or Pulumi providers using typed check resources like ApiCheck and BrowserCheck." },
+        { "question": "Does Better Stack include logs and tracing, not just uptime checks?", "answer": "Yes, Better Stack's observability stack includes log management, metrics, and distributed tracing with eBPF-based service maps, in addition to uptime monitoring." },
+        { "question": "Do either offer AI-assisted incident analysis?", "answer": "Both do. Better Stack's AI SRE provides AI-driven root cause analysis plus automated post-mortem generation; Checkly's AI feature helps trace the cause of detected issues." },
+        { "question": "Are there discounts for startups or nonprofits?", "answer": "Checkly offers a 30% discount for startups under 2 years old and 50% for nonprofits. No equivalent discount is documented for Better Stack." }
+      ]
+    }
+  },
+  {
+    "slug": "instatus-vs-pulsetic",
+    "tool_a_id": "f65f0d8b-0765-4d7b-b21b-657a547c6e7f",
+    "tool_a_name": "Instatus",
+    "tool_b_id": "9bfeb77a-1467-4d17-be6d-b78ad5d914b1",
+    "tool_b_name": "Pulsetic",
+    "content": {
+      "verdict": "Instatus centers on incident collaboration and status-page communication, with a free-forever Starter plan and on-call management, but its Pro and Business plan prices are not published. Pulsetic publishes a full price ladder starting at $9/month with 15 global check locations even on entry plans and a wide set of monitor types, but doesn't document on-call role management. The better fit depends on whether transparent pricing or built-in on-call/incident collaboration matters more.",
+      "bestForToolA": "Teams that need incident collaboration tools (Slack/Microsoft Teams integration, on-call roles) and SAML SSO on the Business tier, and are comfortable requesting a quote for mid-tier pricing.",
+      "bestForToolB": "Teams that want fully published pricing at every tier, a wide range of monitor types (HTTP, SSL, ping, port, TCP, keyword, cron, API, domain expiration) in one plan, and 15 global check locations from the entry paid tier.",
+      "whoNeedsBoth": "Teams that need Instatus's on-call and incident-collaboration workflow for internal response may still add Pulsetic-style broad monitor-type coverage (domain expiration, keyword checks) if their monitoring needs extend beyond what Instatus documents.",
+      "keyDifferences": [
+        {
+          "title": "Published pricing",
+          "toolA": "Pro and Business plan prices are not published (listed as null); only Starter ($0) and Enterprise (custom) prices are given.",
+          "toolB": "Every tier has a published price: Free $0, Solo $9/month, Team $19/month, Organization $49/month.",
+          "whyItMatters": "Published pricing lets teams budget and compare costs without a sales conversation.",
+          "benefitsWho": "Self-serve buyers and small teams that want to evaluate cost upfront."
+        },
+        {
+          "title": "Monitor type breadth",
+          "toolA": "Documented as general 'service monitoring' without a specific list of monitor types.",
+          "toolB": "Explicitly supports HTTP/HTTPS, SSL, ping, port, TCP, keyword, cron job, API, and domain expiration monitoring.",
+          "whyItMatters": "A documented range of monitor types signals coverage for varied infrastructure (not just web endpoints).",
+          "benefitsWho": "Teams monitoring diverse infrastructure like domains, ports, and scheduled jobs, not just websites."
+        },
+        {
+          "title": "Global check locations",
+          "toolA": "Not documented in the facts reviewed.",
+          "toolB": "15 global data centers, with location count scaling by plan (3 regions on Free up to 15 on Team/Organization).",
+          "whyItMatters": "More check locations help confirm whether downtime is a regional network issue or a genuine outage.",
+          "benefitsWho": "Teams serving a geographically distributed audience."
+        },
+        {
+          "title": "On-call and incident collaboration",
+          "toolA": "Includes on-call member roles from the Starter plan upward, plus incident collaboration tools integrated with Slack and Microsoft Teams.",
+          "toolB": "Not documented in the facts reviewed.",
+          "whyItMatters": "Built-in on-call roles streamline incident response without needing a separate on-call tool.",
+          "benefitsWho": "Teams that run a formal on-call rotation for incident response."
+        },
+        {
+          "title": "SSO support",
+          "toolA": "SAML SSO is included on the Business plan; multiple SSO connections are available on Enterprise.",
+          "toolB": "Not documented in the facts reviewed.",
+          "whyItMatters": "SSO is often a hard requirement for enterprise IT security policy compliance.",
+          "benefitsWho": "Enterprise buyers with centralized identity management requirements."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Monitoring",
+          "rows": [
+            { "feature": "Service/uptime monitoring", "toolA": "available", "toolB": "available" },
+            { "feature": "Documented monitor type list", "toolA": "not-documented", "toolB": "available", "note": "Pulsetic: HTTP, SSL, ping, port, TCP, keyword, cron, API, domain expiration." },
+            { "feature": "Global check locations", "toolA": "not-documented", "toolB": "available", "note": "Up to 15 data centers." },
+            { "feature": "Real user monitoring", "toolA": "not-documented", "toolB": "available", "note": "RUM page views included in plans." }
+          ]
+        },
+        {
+          "group": "Status Pages & Alerts",
+          "rows": [
+            { "feature": "Public status pages", "toolA": "available", "toolB": "available" },
+            { "feature": "Password-protected status pages", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "SMS / call alerts", "toolA": "available", "toolB": "available", "note": "Instatus: Pro plan and above. Pulsetic: Solo tier and above." },
+            { "feature": "On-call member roles", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Access",
+          "rows": [
+            { "feature": "Free forever plan", "toolA": "available", "toolB": "available" },
+            { "feature": "Published pricing for all tiers", "toolA": "unavailable", "toolB": "available", "note": "Instatus Pro/Business prices not published." },
+            { "feature": "SAML SSO", "toolA": "available", "toolB": "not-documented", "note": "Instatus: Business plan." },
+            { "feature": "White-labeled status pages", "toolA": "not-documented", "toolB": "available", "note": "Pulsetic: Organization plan." }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Instatus free?", "answer": "Yes, the Starter plan is free forever with 15 monitors and a public status page." },
+        { "question": "Is Pulsetic free?", "answer": "Yes, the Free plan includes 10 monitors/heartbeats/domains with unlimited email alerts." },
+        { "question": "Which one publishes pricing for all its plans?", "answer": "Pulsetic publishes a price for every tier (Free, Solo $9/month, Team $19/month, Organization $49/month). Instatus publishes prices only for Starter (free) and lists Pro and Business as custom/unpublished." },
+        { "question": "How many check locations does each offer?", "answer": "Pulsetic checks from up to 15 global data centers depending on plan. Instatus does not document a specific number of check locations." },
+        { "question": "Does Instatus support SSO?", "answer": "Yes, SAML SSO is included on the Business plan, and multiple SSO connections are available on Enterprise." },
+        { "question": "Can I use a custom domain for my status page?", "answer": "For Instatus, custom domains are available starting on the Pro plan. Pulsetic's facts do not document custom domain support specifically." }
+      ]
+    }
+  },
+  {
+    "slug": "papertrail-vs-sematext",
+    "tool_a_id": "c326978a-2a64-44b7-a572-f9fb892fc271",
+    "tool_a_name": "Papertrail",
+    "tool_b_id": "f2373499-d34a-47fe-8420-a3176c8cceb3",
+    "tool_b_name": "Sematext",
+    "content": {
+      "verdict": "Papertrail, backed by SolarWinds, is a focused log aggregation tool with a single volume-tiered pricing ladder and a permanent (if limited) free tier. Sematext is a broader observability platform spanning logs, infrastructure, tracing, RUM, and synthetic monitoring, priced pay-as-you-go per product with a 14-day trial instead of a permanent free tier. The tradeoff is simplicity and predictability versus breadth and per-product flexibility.",
+      "bestForToolA": "Teams that just need centralized log aggregation and live search with a simple, transparent volume-based price ladder, and want a permanent (if limited) free tier.",
+      "bestForToolB": "Teams that want logs, infrastructure/Kubernetes monitoring, distributed tracing, RUM, and synthetic/uptime checks under one vendor with pay-as-you-go, no-contract pricing, even if that means configuring several separate product plans.",
+      "whoNeedsBoth": "Teams that already rely on Papertrail for simple log search may add Sematext's infrastructure or Kubernetes monitoring products specifically if they need container-level visibility that Papertrail's facts don't document.",
+      "keyDifferences": [
+        {
+          "title": "Product scope",
+          "toolA": "Focused solely on real-time log aggregation, search, and alert integrations.",
+          "toolB": "Bundles log monitoring, infrastructure/container/Kubernetes monitoring, distributed tracing, real user & synthetic monitoring, and uptime/API/SSL checks.",
+          "whyItMatters": "A broader platform can replace multiple point tools, but requires evaluating and pricing several products instead of one.",
+          "benefitsWho": "Teams wanting one vendor for logs plus infrastructure and tracing versus teams that only need log search."
+        },
+        {
+          "title": "Free tier vs. free trial",
+          "toolA": "Includes a permanent free tier covering 50MB/month of logs with 48-hour retention.",
+          "toolB": "No permanent free tier; instead offers a 14-day free trial across all products with no credit card required.",
+          "whyItMatters": "A permanent free tier suits ongoing low-volume use, while a trial suits full evaluation before a paid commitment.",
+          "benefitsWho": "Hobbyists and small projects (Papertrail's permanent free tier) versus teams doing a time-boxed proof-of-concept (Sematext's trial)."
+        },
+        {
+          "title": "Pricing structure",
+          "toolA": "Single volume-tiered ladder: Free, Small $7/month (1GB), Medium $40/month (10GB), Large $230/month (100GB), Enterprise custom.",
+          "toolB": "Each product is priced and billed separately: Logs Basic $5/month, Infrastructure Basic $2.80/month per host, Service Monitoring Basic $8.64/month per agent, Tracing Basic $19/month, User Experience Startup $9/month, Synthetic pay-as-you-go per monitor.",
+          "whyItMatters": "A single price ladder is simpler to forecast; per-product pricing offers more granular control but requires configuring multiple line items to estimate total cost.",
+          "benefitsWho": "Finance/budget owners wanting one predictable line item versus technical buyers who want to pay only for the specific products they use."
+        },
+        {
+          "title": "Data retention",
+          "toolA": "Free tier retention is limited to 48 hours; paid tier retention scales with plan (not itemized beyond volume tiers).",
+          "toolB": "Basic-tier retention varies by product: 7-day for logs, 1-day for infrastructure/service monitoring/tracing, 30-day for synthetic monitoring.",
+          "whyItMatters": "Retention length determines how far back a team can search logs or traces when investigating an incident.",
+          "benefitsWho": "Teams needing to search recent history quickly after an incident is reported days later."
+        },
+        {
+          "title": "Infrastructure/Kubernetes monitoring",
+          "toolA": "Not documented in the facts reviewed; Papertrail's features are log-aggregation only.",
+          "toolB": "Explicit server, container, Kubernetes, and process-level infrastructure monitoring.",
+          "whyItMatters": "Container and Kubernetes visibility is essential for teams running containerized workloads, not just log search.",
+          "benefitsWho": "DevOps/platform teams running Kubernetes or containerized infrastructure."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Logging",
+          "rows": [
+            { "feature": "Real-time log aggregation", "toolA": "available", "toolB": "available" },
+            { "feature": "Live search and filtering", "toolA": "available", "toolB": "available" },
+            { "feature": "Alert integrations (Slack, PagerDuty)", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Observability Beyond Logs",
+          "rows": [
+            { "feature": "Infrastructure/container/Kubernetes monitoring", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Distributed tracing", "toolA": "unavailable", "toolB": "available", "note": "OpenTelemetry-supported." },
+            { "feature": "Real user & synthetic monitoring", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Uptime/API/SSL monitoring", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Status pages & incident management", "toolA": "unavailable", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Access",
+          "rows": [
+            { "feature": "Permanent free tier", "toolA": "available", "toolB": "unavailable", "note": "Sematext offers a 14-day trial instead." },
+            { "feature": "Pay-as-you-go, no contract pricing", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Unlimited users on plans", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is there a free Papertrail plan?", "answer": "Yes, a free tier covering 50MB/month of logs with 48-hour retention." },
+        { "question": "Does Sematext offer a free trial?", "answer": "Yes, a 14-day free trial is available across all its products with no credit card required, though there is no permanent free tier." },
+        { "question": "What's the cheapest paid Papertrail plan?", "answer": "Plans start around $7/month for 1GB of monthly log volume." },
+        { "question": "How is Sematext priced?", "answer": "Pay-as-you-go, based on data volume, with logs, infrastructure, tracing, RUM, and synthetic monitoring billed as separate products with no contracts." },
+        { "question": "Who owns Papertrail?", "answer": "Papertrail is owned and operated by SolarWinds." },
+        { "question": "Does Sematext support Kubernetes?", "answer": "Yes, its infrastructure and container monitoring includes Kubernetes support; this is not documented for Papertrail." }
+      ]
+    }
+  },
+  {
+    "slug": "activepieces-vs-pipedream",
+    "tool_a_id": "f0485685-77e9-44e2-bfce-dffbe3d4b29f",
+    "tool_a_name": "activepieces",
+    "tool_b_id": "9e7e7d01-4172-4d85-90b4-cb0af1a7c91d",
+    "tool_b_name": "Pipedream",
+    "content": {
+      "verdict": "Activepieces publishes a clear per-flow price ($5/month per active flow) and documents both self-hosted and cloud deployment, but its integration catalog isn't quantified beyond an example (Gmail). Pipedream documents a very large integration catalog (3,000+ apps, 10,000+ tools) and an AI Agent Builder, and is now backed by Workday following its November 2025 acquisition, but its current pricing plans could not be verified from the facts reviewed. Deployment control versus integration breadth is the core tradeoff.",
+      "bestForToolA": "Teams that want automation self-hosted for data control or cost predictability, with transparent per-active-flow pricing rather than a per-seat fee.",
+      "bestForToolB": "Teams that need access to a very large third-party integration catalog (3,000+ apps) or want to build and deploy AI agents quickly, and can tolerate custom-priced or unpublished pricing.",
+      "whoNeedsBoth": "Organizations that need self-hosted automation for sensitive internal workflows may run Activepieces there while also using Pipedream for less common third-party SaaS integrations not covered by their self-hosted setup.",
+      "keyDifferences": [
+        {
+          "title": "Pricing transparency",
+          "toolA": "Publishes pricing: Standard plan at $5 per active flow/month, Ultimate at custom annual-contract pricing.",
+          "toolB": "Current pricing plans and tiers could not be verified from the official pricing page during research; no pricing_plans are documented.",
+          "whyItMatters": "Published, usage-based pricing lets teams estimate cost before committing, while unverified pricing requires direct sales contact.",
+          "benefitsWho": "Budget-conscious teams and self-serve buyers who want to estimate cost without a sales call."
+        },
+        {
+          "title": "Deployment model",
+          "toolA": "Explicitly supports both self-hosted and cloud-hosted deployment.",
+          "toolB": "Not documented as offering a self-hosted option in the facts reviewed.",
+          "whyItMatters": "Self-hosting matters for teams with data residency, compliance, or cost-control requirements that a cloud-only product can't satisfy.",
+          "benefitsWho": "Regulated industries and teams that must keep automation data on their own infrastructure."
+        },
+        {
+          "title": "Integration catalog size",
+          "toolA": "Documents a 'pieces' integration library with an example integration (Gmail), but no total count.",
+          "toolB": "Documents 3,000+ integrated apps and 10,000+ pre-built tools.",
+          "whyItMatters": "A larger, quantified integration catalog reduces the chance a team will need to build custom connectors for common SaaS tools.",
+          "benefitsWho": "Teams automating across many different third-party SaaS apps."
+        },
+        {
+          "title": "AI agent building",
+          "toolA": "Not documented as a distinct feature in the facts reviewed.",
+          "toolB": "Includes an AI Agent Builder for creating and deploying AI agents by prompting, editing, and deploying in seconds.",
+          "whyItMatters": "A dedicated AI agent builder lowers the effort to stand up agentic automations compared to assembling one from generic workflow steps.",
+          "benefitsWho": "Teams building AI-agent-driven automations rather than traditional trigger-action workflows."
+        },
+        {
+          "title": "Ownership and backing",
+          "toolA": "No ownership or acquisition status is documented in the facts reviewed.",
+          "toolB": "Acquired by Workday in November 2025, now operating under Workday, per the facts, which adds enterprise backing but also introduces roadmap uncertainty for standalone use cases.",
+          "whyItMatters": "Corporate ownership can affect long-term roadmap priorities and enterprise trust/support resources.",
+          "benefitsWho": "Enterprise buyers evaluating vendor stability, and independent-tool users concerned about roadmap changes post-acquisition."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Access",
+          "rows": [
+            { "feature": "Self-hosted deployment", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Cloud-hosted deployment", "toolA": "available", "toolB": "available" },
+            { "feature": "Code-level custom steps (Node.js/Python)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Integrations & AI",
+          "rows": [
+            { "feature": "Quantified integration catalog", "toolA": "not-documented", "toolB": "available", "note": "Pipedream: 3,000+ apps, 10,000+ tools." },
+            { "feature": "AI Agent Builder", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Enterprise governance controls", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Trust",
+          "rows": [
+            { "feature": "Published pricing plans", "toolA": "available", "toolB": "unavailable", "note": "Pipedream pricing could not be verified." },
+            { "feature": "Usage-based pricing", "toolA": "available", "toolB": "not-documented", "note": "Activepieces: $5/active flow/month." },
+            { "feature": "Compliance certifications (SOC 2, HIPAA, GDPR)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Can Activepieces be self-hosted?", "answer": "Yes, Activepieces supports both self-hosted and cloud deployment." },
+        { "question": "How is Activepieces priced?", "answer": "Usage-based, at $5 per active flow/month on the Standard plan, with a custom annual-contract Ultimate plan for larger needs." },
+        { "question": "How many integrations does Pipedream support?", "answer": "3,000+ integrated apps and 10,000+ pre-built tools." },
+        { "question": "Is Pipedream still an independent company?", "answer": "No, it was acquired by Workday in November 2025 and now operates under Workday." },
+        { "question": "Where is Pipedream based?", "answer": "San Francisco, California, United States." },
+        { "question": "Is Pipedream's current pricing published?", "answer": "No, current pricing plans and tiers could not be verified from the official pricing page during this research." }
+      ]
+    }
+  },
+  {
+    "slug": "kestra-vs-prefect",
+    "tool_a_id": "4ba1dde9-3a3c-4472-af05-215a5ccd715d",
+    "tool_a_name": "kestra",
+    "tool_b_id": "2d51e95d-ce2a-4513-a287-44c9039f1a17",
+    "tool_b_name": "Prefect",
+    "content": {
+      "verdict": "Kestra takes a declarative, YAML-based approach to workflow orchestration, avoiding the need for a full programming SDK, but the facts available document very little beyond that core positioning — no pricing plans, community metrics, or deployment details are available. Prefect is Python-native, turning existing functions into orchestrated workflows via a @flow decorator, with a documented free Hobby tier, a large open-source following (40,000+ GitHub stars), and multiple deployment targets. The decision largely comes down to YAML-first versus Python-first workflow definition, and the fact that Prefect's documentation is simply more complete.",
+      "bestForToolA": "Teams that prefer defining workflows declaratively in YAML rather than writing orchestration code, and that don't need a documented pricing plan before adopting.",
+      "bestForToolB": "Python teams that want to add orchestration to existing functions with a decorator, deploy across Prefect Cloud, their own VPC, Kubernetes, ECS, or serverless, and want a large, active open-source community.",
+      "whoNeedsBoth": "Data platform teams standardizing on Python pipelines with Prefect may still use a YAML-based tool like Kestra for simpler, config-driven scheduled or event-driven jobs that don't warrant custom Python code.",
+      "keyDifferences": [
+        {
+          "title": "Workflow definition language",
+          "toolA": "Workflows are defined declaratively in YAML rather than a full programming SDK.",
+          "toolB": "Uses a @flow decorator to turn existing Python functions into orchestrated workflows, without requiring a new DSL.",
+          "whyItMatters": "YAML-based configuration lowers the barrier for non-programmers to define workflows, while a Python decorator keeps everything in familiar application code.",
+          "benefitsWho": "Ops-oriented teams that prefer configuration (Kestra) versus Python engineering teams that want orchestration embedded in their codebase (Prefect)."
+        },
+        {
+          "title": "Documented pricing",
+          "toolA": "No pricing plans are documented in the facts reviewed.",
+          "toolB": "Documents a free Hobby tier on Prefect Cloud (2 users, 1 workspace, 5 deployments, 500 serverless credits/month); pricing for Starter, Team, and Pro Cloud tiers is not published.",
+          "whyItMatters": "Even partial documented pricing (a free tier with specific limits) gives buyers a starting point to evaluate cost, which is entirely absent for Kestra in these facts.",
+          "benefitsWho": "Teams trying to scope budget before an initial evaluation."
+        },
+        {
+          "title": "Open-source community signal",
+          "toolA": "No community or GitHub metrics are documented in the facts reviewed.",
+          "toolB": "The open-source core (Apache 2.0 licensed) has 40,000+ GitHub stars.",
+          "whyItMatters": "Community size can indicate the availability of community support, plugins, and long-term project health.",
+          "benefitsWho": "Teams evaluating open-source project maturity and community support availability."
+        },
+        {
+          "title": "Deployment targets",
+          "toolA": "No specific deployment targets are documented beyond the built-in monitoring UI.",
+          "toolB": "Explicitly deployable on Prefect Cloud, a team's own VPC, Kubernetes, ECS, or serverless.",
+          "whyItMatters": "Documented deployment flexibility signals how easily the tool fits into an existing infrastructure stack.",
+          "benefitsWho": "Platform teams that need orchestration to run within a specific existing infrastructure environment."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Workflow Model",
+          "rows": [
+            { "feature": "Declarative YAML workflow definitions", "toolA": "available", "toolB": "unavailable", "note": "Prefect uses a Python decorator, not YAML." },
+            { "feature": "Python-native decorator API", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Event-driven and scheduled triggers", "toolA": "available", "toolB": "available", "note": "Prefect additionally documents automatic backfills and SLA monitoring." },
+            { "feature": "Built-in workflow monitoring UI", "toolA": "available", "toolB": "available", "note": "Prefect's is described as an observability dashboard." }
+          ]
+        },
+        {
+          "group": "Pricing & Community",
+          "rows": [
+            { "feature": "Documented free tier", "toolA": "not-documented", "toolB": "available", "note": "Prefect Hobby: 2 users, 1 workspace, 5 deployments." },
+            { "feature": "Published paid-tier pricing", "toolA": "not-documented", "toolB": "not-documented", "note": "Prefect explicitly states Starter/Team/Pro pricing isn't published." },
+            { "feature": "Open-source core", "toolA": "not-documented", "toolB": "available", "note": "Apache 2.0, 40,000+ GitHub stars." }
+          ]
+        },
+        {
+          "group": "Deployment",
+          "rows": [
+            { "feature": "Documented multi-target deployment (VPC/K8s/ECS/serverless)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Are Kestra workflows defined in code?", "answer": "No, Kestra workflows are defined declaratively in YAML rather than a full programming SDK." },
+        { "question": "Does Prefect require learning a new workflow language?", "answer": "No, Prefect adds orchestration to existing Python functions via a @flow decorator rather than a new DSL." },
+        { "question": "Is Prefect free to use?", "answer": "The core Prefect framework is open source, and Prefect Cloud has a free Hobby tier with 2 users, 1 workspace, 5 deployments, and 500 serverless credits per month." },
+        { "question": "Does Kestra publish its pricing plans?", "answer": "No pricing plans are documented in the facts reviewed for Kestra." },
+        { "question": "How large is Prefect's open-source community?", "answer": "The Prefect framework has 40,000+ GitHub stars and is licensed under Apache 2.0." },
+        { "question": "Has Prefect made any notable acquisitions?", "answer": "Per Prefect's own site, Prefect acquired Dagster Labs in July 2026." }
+      ]
+    }
+  },
+  {
+    "slug": "temporal-vs-trigger-dev",
+    "tool_a_id": "2efa5f1f-29da-4d6c-a300-8437c5445f15",
+    "tool_a_name": "Temporal",
+    "tool_b_id": "caa46b4a-ddf7-473a-8793-845e45dd40b3",
+    "tool_b_name": "Trigger.dev",
+    "content": {
+      "verdict": "Temporal is a general-purpose durable execution platform with 7-language SDK support, open-source self-hosting, and production use cited at Uber, DoorDash, and Cloudflare, but its managed cloud starts at $100/month. Trigger.dev is a TypeScript-first platform purpose-built for background jobs and AI agent tasks (with human-in-the-loop approval and realtime LLM streaming), offering a free tier and a $10/month Hobby plan, but without a documented self-hosted option or the same multi-language breadth. Language ecosystem and workload type — not one tool simply being 'better' — should drive the choice.",
+      "bestForToolA": "Teams needing durable workflow execution across multiple languages (Python, Go, TypeScript, Ruby, C#, Java, PHP), or that want the option to self-host an open-source, MIT-licensed platform instead of paying for managed cloud.",
+      "bestForToolB": "TypeScript/JavaScript teams building AI agent workflows with tool-calling, human-in-the-loop approval, and realtime response streaming, who want to start on a free tier or a $10/month plan before scaling usage-based compute.",
+      "whoNeedsBoth": "Organizations with polyglot backend services may run Temporal for core durable business workflows while using Trigger.dev specifically for TypeScript-based AI agent tasks that need realtime streaming to a frontend.",
+      "keyDifferences": [
+        {
+          "title": "Language support",
+          "toolA": "Provides SDKs for Python, Go, TypeScript, Ruby, C#, Java, and PHP.",
+          "toolB": "Built for TypeScript/JavaScript, with Python support available only via a build extension.",
+          "whyItMatters": "Broader native language support matters for organizations with polyglot services; a TypeScript-first tool is a natural fit for JS/TS-centric teams.",
+          "benefitsWho": "Polyglot engineering organizations (Temporal) versus TypeScript/JavaScript-focused teams (Trigger.dev)."
+        },
+        {
+          "title": "Entry pricing",
+          "toolA": "Managed Temporal Cloud starts at $100/month (Essentials plan, including 1M actions and 1GB active storage).",
+          "toolB": "Has a Free plan ($0/month with $5/month in credits) and a Hobby plan at $10/month, both with usage-based compute charged per second of execution.",
+          "whyItMatters": "A much lower (or free) entry price lowers the barrier for smaller teams or side projects to start using the platform.",
+          "benefitsWho": "Individual developers and small teams evaluating background job infrastructure on a limited budget."
+        },
+        {
+          "title": "AI agent-specific tooling",
+          "toolA": "No AI-agent-specific feature is documented; the platform focuses on general durable workflow and activity execution.",
+          "toolB": "Explicitly supports building tool-calling AI agents with human-in-the-loop approval steps, plus realtime streaming of LLM responses and task status to frontends.",
+          "whyItMatters": "Purpose-built AI agent features (approval steps, realtime streaming) reduce the custom code needed to build agent-driven products.",
+          "benefitsWho": "Teams building user-facing AI agent products that need approval workflows and live status updates."
+        },
+        {
+          "title": "Self-hosting",
+          "toolA": "Open source (MIT-licensed) with a self-hosted option available for free with community support, in addition to managed cloud.",
+          "toolB": "No self-hosted option is documented in the facts reviewed.",
+          "whyItMatters": "Self-hosting avoids per-action cloud billing and gives full infrastructure control, at the cost of operating the system yourself.",
+          "benefitsWho": "Teams with the operational capacity to run their own infrastructure and a preference for avoiding vendor lock-in."
+        },
+        {
+          "title": "Production-scale validation",
+          "toolA": "Cited as used in production by large engineering organizations including Uber, DoorDash, and Cloudflare.",
+          "toolB": "Cited as working across many frameworks (Next.js, Remix, Bun, SvelteKit, Astro, and more) rather than naming large-scale production users.",
+          "whyItMatters": "Named large-scale production users can serve as a proof point for reliability at high volume.",
+          "benefitsWho": "Enterprise buyers looking for evidence of at-scale production reliability."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Workflow Execution",
+          "rows": [
+            { "feature": "Automatic retries", "toolA": "available", "toolB": "available" },
+            { "feature": "Durable, long-running execution", "toolA": "available", "toolB": "available", "note": "Trigger.dev: durable cron scheduling without timeout limits." },
+            { "feature": "Replay and recovery of workflow state", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Human-in-the-loop AI agent approval steps", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Languages & Extensibility",
+          "rows": [
+            { "feature": "Multi-language SDKs", "toolA": "available", "toolB": "limited", "note": "Temporal: 7 languages. Trigger.dev: TypeScript/JavaScript native, Python via extension." },
+            { "feature": "Build/framework extensions (Python, Puppeteer, FFmpeg, etc.)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            { "feature": "Self-hosted option", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Free managed tier", "toolA": "unavailable", "toolB": "available", "note": "Trigger.dev Free plan: $5/month credits, 20 concurrent runs." },
+            { "feature": "Entry managed cloud price", "toolA": "available", "toolB": "available", "note": "Temporal: $100/month. Trigger.dev: $0-$10/month." }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Temporal open source?", "answer": "Yes, Temporal is MIT-licensed and open source, and can be self-hosted for free with community support." },
+        { "question": "What is Temporal Cloud's starting price?", "answer": "The Essentials plan starts at $100/month, including 1M actions and 1GB of active storage." },
+        { "question": "Does Trigger.dev have a free plan?", "answer": "Yes, the Free plan includes $5/month in credits, 20 concurrent runs, and unlimited tasks." },
+        { "question": "How is Trigger.dev priced?", "answer": "Plans start at $10/month (Hobby) and $50/month (Pro), plus usage-based compute charged per second of execution." },
+        { "question": "Can Trigger.dev build AI agents?", "answer": "Yes, it supports tool-calling AI agents with human-in-the-loop approval and realtime streaming of responses." },
+        { "question": "What programming languages does each platform support?", "answer": "Temporal provides SDKs for Python, Go, TypeScript, Ruby, C#, Java, and PHP. Trigger.dev is built for TypeScript/JavaScript, with Python available via a build extension." }
+      ]
+    }
+  },
+  {
+    "slug": "postmark-vs-resend",
+    "tool_a_id": "3180928a-7b88-4db5-a439-ca674656c46e",
+    "tool_a_name": "Postmark",
+    "tool_b_id": "d64e1be3-9d5e-44d1-8dab-25f1fd7f0d4c",
+    "tool_b_name": "Resend",
+    "content": {
+      "verdict": "Postmark, founded in 2010 and now owned by ActiveCampaign, is a transactional-only email service with message streams that separate transactional from broadcast traffic and retention up to 365 days on paid tiers. Resend is a developer-focused email API with broader SDK coverage across 9 languages, a built-in MCP server for AI-client integration, and separate marketing-email pricing tracks, backed by SOC 2 Type II and GDPR compliance on all plans. The choice depends on whether long-established transactional focus or modern developer/AI tooling matters more.",
+      "bestForToolA": "Teams that want a service dedicated specifically to transactional email deliverability, with message streams keeping transactional and broadcast traffic separated, and that need up to 365-day data retention on a paid tier.",
+      "bestForToolB": "Developer teams that want broad SDK language coverage (9 languages including Go, Rust, .NET, Laravel), React Email component-based templates, an MCP server for AI client integration, and SOC 2 Type II/GDPR compliance included on every plan.",
+      "whoNeedsBoth": "Teams sending both transactional emails and separate marketing campaigns from contact lists may use Resend's marketing track for campaigns while keeping Postmark's stream-separated transactional service for reliable order/receipt/notification email.",
+      "keyDifferences": [
+        {
+          "title": "Company history and ownership",
+          "toolA": "Founded in 2010, now owned by ActiveCampaign.",
+          "toolB": "No founding year or parent company is documented in the facts reviewed.",
+          "whyItMatters": "A longer, documented operating history and an established parent company can signal stability for teams prioritizing vendor longevity.",
+          "benefitsWho": "Risk-averse buyers who weigh vendor track record in procurement decisions."
+        },
+        {
+          "title": "Transactional vs. marketing email",
+          "toolA": "Cons note it is primarily transactional-only, not a marketing campaign builder.",
+          "toolB": "Offers separate Marketing (contact-based) pricing tracks — Free (1,000 contacts/month) and Pro ($40/month for 5,000 contacts) — alongside its Transactional tiers.",
+          "whyItMatters": "Teams needing both transactional and marketing/broadcast sending from one vendor avoid managing two separate providers.",
+          "benefitsWho": "Teams that send both order confirmations and marketing newsletters and want one vendor for both."
+        },
+        {
+          "title": "AI client / MCP integration",
+          "toolA": "Not documented in the facts reviewed.",
+          "toolB": "Provides an MCP server for integrating email sending into AI clients like Cursor and Claude, plus a monthly AI credit allotment on every plan.",
+          "whyItMatters": "Native MCP support lets AI coding assistants send email directly as part of an agentic workflow without custom integration work.",
+          "benefitsWho": "Developer teams building AI-agent-driven products or using AI coding assistants."
+        },
+        {
+          "title": "Free tier shape",
+          "toolA": "Free plan never expires, but is limited to 100 emails/month.",
+          "toolB": "Free plan offers 3,000 emails/month but is capped at 100 emails/day and 1 domain.",
+          "whyItMatters": "A higher monthly cap with a daily limit suits bursty sending patterns differently than a lower flat monthly cap.",
+          "benefitsWho": "Low-volume, steady senders (Postmark) versus teams with occasional higher-volume days within a capped total (Resend)."
+        },
+        {
+          "title": "Data retention and compliance",
+          "toolA": "Retention can extend up to 365 days on the Pro tier.",
+          "toolB": "Documents 30-day retention on its free tier and SOC 2 Type II plus GDPR compliance across all plans; longer retention tiers are not itemized in the facts reviewed.",
+          "whyItMatters": "Longer retention supports deeper historical analytics, while documented compliance certifications matter for procurement and security review.",
+          "benefitsWho": "Teams needing long-term delivery analytics (Postmark) versus teams needing documented compliance for security review (Resend)."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Sending",
+          "rows": [
+            { "feature": "Email API", "toolA": "available", "toolB": "available" },
+            { "feature": "SMTP relay", "toolA": "available", "toolB": "available" },
+            { "feature": "Inbound email processing", "toolA": "available", "toolB": "available", "note": "Postmark: available starting on paid plans." },
+            { "feature": "Reusable email templates", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "React Email / component-based templates", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Batch sending with open/link tracking", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Developer Tools & AI",
+          "rows": [
+            { "feature": "CLI tool", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "MCP server for AI client integration", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Official SDK language count", "toolA": "available", "toolB": "available", "note": "Postmark: 6 languages (Node.js, Python, Ruby on Rails, Ruby, PHP, C#). Resend: 9 languages (adds Go, Java, Laravel, Rust, .NET)." }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free plan", "toolA": "available", "toolB": "available", "note": "Postmark: 100 emails/month, never expires. Resend: 3,000 emails/month, capped at 100/day." },
+            { "feature": "Separate marketing-email pricing track", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Retention up to 365 days", "toolA": "available", "toolB": "not-documented", "note": "Postmark: Pro tier." },
+            { "feature": "SOC 2 Type II / GDPR compliance documented", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is there a free Postmark plan?", "answer": "Yes, Postmark's free plan never expires and includes 100 emails/month." },
+        { "question": "Is there a free Resend plan?", "answer": "Yes, Resend's free plan includes 3,000 emails/month (up to 100/day), 1 domain, and 5 AI credits/month." },
+        { "question": "Who owns Postmark?", "answer": "Postmark is owned by ActiveCampaign; it was founded in 2010." },
+        { "question": "Can AI agents use Resend to send email?", "answer": "Yes, Resend provides an MCP server for integration with AI clients such as Cursor and Claude, and plans include a monthly allotment of AI credits." },
+        { "question": "Does either support building emails as React components?", "answer": "Resend supports React Email for building emails as components; this is not documented for Postmark." },
+        { "question": "How long can delivery data be retained?", "answer": "Postmark's Pro tier allows retention up to 365 days. Resend documents 30-day retention on its free tier, with longer retention not itemized in the facts reviewed." }
+      ]
+    }
+  }
+]
