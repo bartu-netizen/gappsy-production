@@ -10,7 +10,10 @@ import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
 import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
 import appsmithVsRetoolContent from './appsmith-vs-retool';
 import asanaVsClickupContent from './asana-vs-clickup';
+import asanaVsLinearContent from './asana-vs-linear';
 import asanaVsMondayContent from './asana-vs-monday';
+import asanaVsTrelloContent from './asana-vs-trello';
+import ashbyVsGreenhouseContent from './ashby-vs-greenhouse';
 import automatischVsZapierContent from './automatisch-vs-zapier';
 import awsVsGoogleCloudContent from './aws-vs-google-cloud';
 import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
@@ -22,6 +25,7 @@ import bigcommerceVsShopifyContent from './bigcommerce-vs-shopify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
 import blackboardLearnVsCanvasLmsContent from './blackboard-learn-vs-canvas-lms';
 import boltNewVsV0Content from './bolt-new-vs-v0';
+import breezyHrVsJazzhrContent from './breezy-hr-vs-jazzhr';
 import brexVsRampContent from './brex-vs-ramp';
 import bubbleVsSoftrContent from './bubble-vs-softr';
 import canvaVsFigmaContent from './canva-vs-figma';
@@ -36,6 +40,7 @@ import chatgptVsPerplexityContent from './chatgpt-vs-perplexity';
 import claudeVsGoogleGeminiContent from './claude-vs-google-gemini';
 import clearscopeVsSurferSeoContent from './clearscope-vs-surfer-seo';
 import clickfunnelsVsUnbounceContent from './clickfunnels-vs-unbounce';
+import clickupVsMondayContent from './clickup-vs-monday';
 import clioVsMycaseContent from './clio-vs-mycase';
 import clioVsPracticepantherContent from './clio-vs-practicepanther';
 import clioVsSmokeballContent from './clio-vs-smokeball';
@@ -63,6 +68,8 @@ import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
 import googleFormsVsJotformContent from './google-forms-vs-jotform';
 import googleWorkspaceVsMicrosoft365Content from './google-workspace-vs-microsoft-365';
+import greenhouseVsLeverContent from './greenhouse-vs-lever';
+import greenhouseVsWorkableContent from './greenhouse-vs-workable';
 import gumroadVsSellfyContent from './gumroad-vs-sellfy';
 import harvestVsTogglTrackContent from './harvest-vs-toggl-track';
 import herokuVsRenderContent from './heroku-vs-render';
@@ -86,6 +93,7 @@ import lovableVsReplitContent from './lovable-vs-replit';
 import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sense';
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
+import mondayVsTrelloContent from './monday-vs-trello';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
 import netlifyVsVercelContent from './netlify-vs-vercel';
 import notionVsOnenoteContent from './notion-vs-onenote';
@@ -124,7 +132,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
   'appsmith-vs-retool': appsmithVsRetoolContent,
   'asana-vs-clickup': asanaVsClickupContent,
+  'asana-vs-linear': asanaVsLinearContent,
   'asana-vs-monday': asanaVsMondayContent,
+  'asana-vs-trello': asanaVsTrelloContent,
+  'ashby-vs-greenhouse': ashbyVsGreenhouseContent,
   'automatisch-vs-zapier': automatischVsZapierContent,
   'aws-vs-google-cloud': awsVsGoogleCloudContent,
   'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
@@ -136,6 +147,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
   'blackboard-learn-vs-canvas-lms': blackboardLearnVsCanvasLmsContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
+  'breezy-hr-vs-jazzhr': breezyHrVsJazzhrContent,
   'brex-vs-ramp': brexVsRampContent,
   'bubble-vs-softr': bubbleVsSoftrContent,
   'canva-vs-figma': canvaVsFigmaContent,
@@ -150,6 +162,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'claude-vs-google-gemini': claudeVsGoogleGeminiContent,
   'clearscope-vs-surfer-seo': clearscopeVsSurferSeoContent,
   'clickfunnels-vs-unbounce': clickfunnelsVsUnbounceContent,
+  'clickup-vs-monday': clickupVsMondayContent,
   'clio-vs-mycase': clioVsMycaseContent,
   'clio-vs-practicepanther': clioVsPracticepantherContent,
   'clio-vs-smokeball': clioVsSmokeballContent,
@@ -177,6 +190,8 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
   'google-forms-vs-jotform': googleFormsVsJotformContent,
   'google-workspace-vs-microsoft-365': googleWorkspaceVsMicrosoft365Content,
+  'greenhouse-vs-lever': greenhouseVsLeverContent,
+  'greenhouse-vs-workable': greenhouseVsWorkableContent,
   'gumroad-vs-sellfy': gumroadVsSellfyContent,
   'harvest-vs-toggl-track': harvestVsTogglTrackContent,
   'heroku-vs-render': herokuVsRenderContent,
@@ -200,6 +215,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'microsoft-power-bi-vs-qlik-sense': microsoftPowerBiVsQlikSenseContent,
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
+  'monday-vs-trello': mondayVsTrelloContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
   'netlify-vs-vercel': netlifyVsVercelContent,
   'notion-vs-onenote': notionVsOnenoteContent,
