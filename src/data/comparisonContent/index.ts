@@ -21,6 +21,7 @@ import asanaVsLinearContent from './asana-vs-linear';
 import asanaVsMondayContent from './asana-vs-monday';
 import asanaVsTrelloContent from './asana-vs-trello';
 import ashbyVsGreenhouseContent from './ashby-vs-greenhouse';
+import athenaoneVsEclinicalworksContent from './athenaone-vs-eclinicalworks';
 import auth0VsOktaContent from './auth0-vs-okta';
 import autodeskConstructionCloudVsProcoreContent from './autodesk-construction-cloud-vs-procore';
 import automatischVsZapierContent from './automatisch-vs-zapier';
@@ -77,6 +78,7 @@ import deputyVsWhenIWorkContent from './deputy-vs-when-i-work';
 import descriptVsVeedContent from './descript-vs-veed';
 import docusignVsDropboxSignContent from './docusign-vs-dropbox-sign';
 import docusignVsSignnowContent from './docusign-vs-signnow';
+import drchronoVsSimplepracticeContent from './drchrono-vs-simplepractice';
 import dropboxVsGoogleDriveContent from './dropbox-vs-google-drive';
 import evernoteVsNotionContent from './evernote-vs-notion';
 import expressvpnVsNordvpnContent from './expressvpn-vs-nordvpn';
@@ -134,6 +136,10 @@ import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
 import qualtricsVsQuestionproContent from './qualtrics-vs-questionpro';
+import quickbooksOnlineVsSageAccountingContent from './quickbooks-online-vs-sage-accounting';
+import quickbooksOnlineVsWaveContent from './quickbooks-online-vs-wave';
+import quickbooksOnlineVsXeroContent from './quickbooks-online-vs-xero';
+import quickbooksOnlineVsZohoBooksContent from './quickbooks-online-vs-zoho-books';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
 import railwayVsRenderContent from './railway-vs-render';
 import revolutBusinessVsWiseBusinessContent from './revolut-business-vs-wise-business';
@@ -143,6 +149,7 @@ import salesforceServiceCloudVsServicenowContent from './salesforce-service-clou
 import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
 import semrushVsUbersuggestContent from './semrush-vs-ubersuggest';
 import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
+import simplepracticeVsTebraContent from './simplepractice-vs-tebra';
 import skillshareVsUdemyContent from './skillshare-vs-udemy';
 import socialbeeVsSocialpilotContent from './socialbee-vs-socialpilot';
 import spotonVsToastContent from './spoton-vs-toast';
@@ -155,6 +162,7 @@ import teachableVsThinkificContent from './teachable-vs-thinkific';
 import toastVsTouchbistroContent from './toast-vs-touchbistro';
 import ukgProVsWorkdayContent from './ukg-pro-vs-workday';
 import usertestingVsUserzoomContent from './usertesting-vs-userzoom';
+import weeblyVsWordpressContent from './weebly-vs-wordpress';
 import wherebyVsZoomContent from './whereby-vs-zoom';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
@@ -183,6 +191,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'asana-vs-monday': asanaVsMondayContent,
   'asana-vs-trello': asanaVsTrelloContent,
   'ashby-vs-greenhouse': ashbyVsGreenhouseContent,
+  'athenaone-vs-eclinicalworks': athenaoneVsEclinicalworksContent,
   'auth0-vs-okta': auth0VsOktaContent,
   'autodesk-construction-cloud-vs-procore': autodeskConstructionCloudVsProcoreContent,
   'automatisch-vs-zapier': automatischVsZapierContent,
@@ -239,6 +248,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'descript-vs-veed': descriptVsVeedContent,
   'docusign-vs-dropbox-sign': docusignVsDropboxSignContent,
   'docusign-vs-signnow': docusignVsSignnowContent,
+  'drchrono-vs-simplepractice': drchronoVsSimplepracticeContent,
   'dropbox-vs-google-drive': dropboxVsGoogleDriveContent,
   'evernote-vs-notion': evernoteVsNotionContent,
   'expressvpn-vs-nordvpn': expressvpnVsNordvpnContent,
@@ -296,6 +306,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
   'qualtrics-vs-questionpro': qualtricsVsQuestionproContent,
+  'quickbooks-online-vs-sage-accounting': quickbooksOnlineVsSageAccountingContent,
+  'quickbooks-online-vs-wave': quickbooksOnlineVsWaveContent,
+  'quickbooks-online-vs-xero': quickbooksOnlineVsXeroContent,
+  'quickbooks-online-vs-zoho-books': quickbooksOnlineVsZohoBooksContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
   'railway-vs-render': railwayVsRenderContent,
   'revolut-business-vs-wise-business': revolutBusinessVsWiseBusinessContent,
@@ -305,6 +319,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
   'semrush-vs-ubersuggest': semrushVsUbersuggestContent,
   'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
+  'simplepractice-vs-tebra': simplepracticeVsTebraContent,
   'skillshare-vs-udemy': skillshareVsUdemyContent,
   'socialbee-vs-socialpilot': socialbeeVsSocialpilotContent,
   'spoton-vs-toast': spotonVsToastContent,
@@ -317,6 +332,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'toast-vs-touchbistro': toastVsTouchbistroContent,
   'ukg-pro-vs-workday': ukgProVsWorkdayContent,
   'usertesting-vs-userzoom': usertestingVsUserzoomContent,
+  'weebly-vs-wordpress': weeblyVsWordpressContent,
   'whereby-vs-zoom': wherebyVsZoomContent,
 };
 
