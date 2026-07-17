@@ -79,12 +79,24 @@ async function fetchPublishedToolSlugs() {
       return [];
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tools').select('slug').eq('status', 'published');
-    if (error) {
-      console.warn(`⚠️  Failed to fetch tool slugs for sitemap: ${error.message}`);
-      return [];
+    // PostgREST caps a single response at 1000 rows — paginate so the tool
+    // count can grow past that without silently dropping URLs from the sitemap.
+    const PAGE_SIZE = 1000;
+    const slugs = [];
+    for (let page = 0; ; page++) {
+      const { data, error } = await supabase
+        .from('tools')
+        .select('slug')
+        .eq('status', 'published')
+        .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+      if (error) {
+        console.warn(`⚠️  Failed to fetch tool slugs for sitemap: ${error.message}`);
+        return slugs;
+      }
+      slugs.push(...(data || []).map((t) => t.slug));
+      if (!data || data.length < PAGE_SIZE) break;
     }
-    return (data || []).map((t) => t.slug);
+    return slugs;
   } catch (err) {
     console.warn(`⚠️  Error fetching tool slugs for sitemap: ${err.message}`);
     return [];

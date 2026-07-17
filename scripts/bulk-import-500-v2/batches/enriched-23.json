@@ -1,0 +1,510 @@
+[
+  {
+    "tool_id": "1c0b6aed-6aed-4600-980d-b05aa2cf0ccb",
+    "slug": "northflank",
+    "name": "Northflank",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Northflank is a deployment platform for running containers, databases, and AI/GPU workloads across AWS, GCP, Azure, and other clouds from one dashboard.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free Sandbox tier; paid compute plans from $2.70/month",
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": "London, United Kingdom",
+      "languages": [],
+      "seo_meta_description": "Northflank lets teams deploy containers, databases and AI/GPU workloads across any cloud from one platform, with a free tier and pay-as-you-go pricing.",
+      "features": [
+        { "title": "Multi-cloud deployments", "description": "Deploy services, jobs, and databases across AWS, GCP, Azure, Oracle Cloud, CoreWeave, or Civo, including bring-your-own-cloud setups." },
+        { "title": "GPU workloads and inference", "description": "Run GPU-backed workloads and model inference, including open-source models like Llama4 and Deepseek." },
+        { "title": "CI/CD and GitOps", "description": "Built-in CI/CD pipelines and GitOps workflows for automating builds and deployments." },
+        { "title": "Kubernetes automation", "description": "Automates Kubernetes cluster management across cloud environments without requiring manual cluster ops." },
+        { "title": "Secrets management and multi-tenancy", "description": "Centralized secrets handling and multi-tenant project isolation for teams." },
+        { "title": "Preview environments and sandboxes", "description": "Spin up preview environments and sandboxes for testing changes before production." }
+      ],
+      "pros": [
+        "Supports multiple cloud providers and bring-your-own-cloud deployments",
+        "Pay-as-you-go pricing with a free Sandbox tier to start",
+        "Built-in support for GPU and AI inference workloads",
+        "SOC 2 Type 2 and HIPAA certified"
+      ],
+      "cons": [
+        "Compute pricing is broken into many named plan tiers, which can be confusing to compare",
+        "Enterprise-level SLAs and support require custom/quote-based pricing",
+        "No fixed-price low-end plan beyond the limited free Sandbox tier"
+      ],
+      "faqs": [
+        { "question": "Does Northflank have a free plan?", "answer": "Yes, the Sandbox tier is free and includes 2 services, 1 database, and 2 cron jobs." },
+        { "question": "What clouds does Northflank support?", "answer": "Northflank supports AWS, GCP, Azure, Oracle Cloud, CoreWeave, and Civo, plus bring-your-own-cloud deployments." },
+        { "question": "Can I run GPU workloads on Northflank?", "answer": "Yes, Northflank offers GPU options including NVIDIA L4, A100, and H100 instances billed hourly." },
+        { "question": "When was Northflank founded?", "answer": "Northflank was founded in 2019 and is headquartered in London, United Kingdom." }
+      ],
+      "use_cases": [
+        { "title": "Internal developer platforms", "description": "Teams use Northflank to build a self-service deployment layer across multiple clouds.", "audience": "Platform engineering teams" },
+        { "title": "AI/ML inference hosting", "description": "Deploy and serve open-source AI models with GPU-backed compute.", "audience": "AI and ML teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Sandbox", "price": "Free", "billing_cycle": null, "features": ["2 services", "1 database", "2 cron jobs"] },
+        { "plan_name": "Pay-as-you-go", "price": "From $2.70/month (nf-compute-10)", "billing_cycle": "monthly", "features": ["Consumption-based compute", "No seat pricing", "Scales to 20 dedicated vCPUs"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["SLAs", "24/7 support"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Northflank?", "level": 2, "paragraphs": [
+          "Northflank is a deployment platform that lets teams run containers, databases, jobs, and AI/GPU workloads across AWS, GCP, Azure, Oracle Cloud, and other providers, or bring their own cloud account.",
+          "It combines CI/CD pipelines, GitOps, and Kubernetes automation so teams can deploy without managing cluster operations directly."
+        ]},
+        { "id": "who-its-for", "heading": "Who Northflank is for", "level": 2, "paragraphs": [
+          "Northflank is aimed at platform engineering teams building internal developer platforms and at AI/ML teams that need GPU-backed inference or training infrastructure across multiple clouds."
+        ]}
+      ],
+      "tags": ["api", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "46c7eebc-d6a3-4c06-b0fb-74483d16333d",
+    "slug": "qovery",
+    "name": "Qovery",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Qovery unifies CI/CD, Kubernetes, Terraform and secrets management behind one API so engineers and AI agents can safely provision cloud infrastructure.",
+      "pricing_model": "Paid",
+      "starting_price": "$899/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Qovery unifies CI/CD, Kubernetes and Terraform behind one API, letting engineering teams and AI agents deploy infrastructure with built-in governance.",
+      "features": [
+        { "title": "Unified infrastructure API", "description": "A single API layer over CI/CD, Kubernetes, Terraform, secrets management, and monitoring." },
+        { "title": "Environment as a primitive", "description": "Environments are treated as first-class objects that can be created, cloned, and torn down programmatically." },
+        { "title": "RBAC and governance for AI agents", "description": "Role-based access control and governance policies apply to both human users and AI agents operating infrastructure." },
+        { "title": "Audit trails and rollback", "description": "Full action attribution with audit logs and built-in rollback of infrastructure changes." },
+        { "title": "200+ integrations", "description": "Integrates with cloud providers (AWS EKS, GCP GKE, Azure AKS, Scaleway), CI tools, Terraform, Vault, Datadog, and Prometheus." },
+        { "title": "MCP Server and AI Skills", "description": "Native Model Context Protocol server so AI coding agents like Claude, Cursor, Codex, and Gemini CLI can operate infrastructure." }
+      ],
+      "pros": [
+        "Works across AWS, GCP, Azure, Scaleway, and on-premise Kubernetes",
+        "Built-in audit trails and rollback for infrastructure changes",
+        "Native integration for AI coding agents via an MCP server",
+        "SOC 2 Type II, HIPAA, and GDPR compliant, aimed at regulated industries"
+      ],
+      "cons": [
+        "No public free tier; entry Team plan starts at $899/month",
+        "Enterprise pricing is custom/quote-only",
+        "Founding year and headquarters are not disclosed on the site"
+      ],
+      "faqs": [
+        { "question": "How much does Qovery cost?", "answer": "The Team plan starts at $899/month, Business starts at $1,999/month, and Enterprise is custom-priced." },
+        { "question": "Does Qovery support AI agents?", "answer": "Yes, Qovery includes an MCP Server and AI Skills so AI coding agents can provision and manage infrastructure under the same RBAC controls as humans." },
+        { "question": "What clouds does Qovery support?", "answer": "Qovery supports AWS EKS, GCP GKE, Azure AKS, Scaleway, and on-premise Kubernetes." },
+        { "question": "Is Qovery suitable for regulated industries?", "answer": "Yes, Qovery is SOC 2 Type II, HIPAA, GDPR, and DORA compliant and is marketed to financial services, healthcare, and insurtech companies." }
+      ],
+      "use_cases": [
+        { "title": "Regulated infrastructure operations", "description": "Teams in finance, healthcare, and insurance use Qovery's governance and audit trails to control infrastructure changes.", "audience": "Platform engineers in regulated industries" },
+        { "title": "AI-agent-driven infrastructure", "description": "Organizations let AI coding agents provision and scale environments through Qovery's unified API under RBAC policy.", "audience": "Engineering leaders adopting AI agents" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Team", "price": "From $899/month", "billing_cycle": "monthly", "features": ["10 users + 10 AI agent seats", "2 managed clusters", "Up to 100 environments", "5,000 deployment minutes", "Business hours support"] },
+        { "plan_name": "Business", "price": "From $1,999/month", "billing_cycle": "monthly", "features": ["20 users + 20 AI agent seats with SSO", "3 managed clusters", "Up to 250 environments", "10,000 deployment minutes", "99.9% SLA"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": "annual", "features": ["On-premise or self-hosted options", "Unlimited users and AI agent seats", "24/7 support with dedicated CSM"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Qovery?", "level": 2, "paragraphs": [
+          "Qovery is an infrastructure orchestration platform that puts CI/CD, Kubernetes, Terraform, secrets management, and monitoring behind a single API.",
+          "It is designed so both human engineers and AI coding agents can provision, scale, and roll back infrastructure changes under the same role-based access controls and audit trails."
+        ]},
+        { "id": "who-its-for", "heading": "Who Qovery is for", "level": 2, "paragraphs": [
+          "Qovery targets platform engineers, CTOs, and engineering leaders, particularly in regulated industries like financial services, healthcare, and insurtech, who need governed infrastructure operations."
+        ]}
+      ],
+      "tags": ["ai", "api"]
+    }
+  },
+  {
+    "tool_id": "196d4b7c-1987-4513-97d0-d974741e4db3",
+    "slug": "platform-sh",
+    "name": "Platform.sh",
+    "status": "skip",
+    "skip_reason": "The official website (platform.sh) now issues a 301 redirect to upsun.com, and the destination site explicitly labels itself '[Formerly Platform.sh]', confirming a completed rebrand. Platform.sh no longer exists as a distinct product name, so it cannot be enriched accurately under its original name.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "4f36c751-0719-4122-8fe0-e1bd976404d2",
+    "slug": "cloudways",
+    "name": "Cloudways",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Cloudways is managed cloud hosting for WordPress, WooCommerce, Laravel, and Magento apps on AWS, Google Cloud, DigitalOcean, Vultr, or Linode.",
+      "pricing_model": "Free Trial",
+      "starting_price": "$11/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Cloudways offers managed cloud hosting on AWS, Google Cloud, DigitalOcean, Vultr, or Linode, with AI-assisted monitoring and a free 3-day trial.",
+      "features": [
+        { "title": "Lightning Stack", "description": "An NGINX/PHP-FPM based stack Cloudways says delivers up to 65% faster load times." },
+        { "title": "Cloudways Copilot", "description": "AI-powered server monitoring and troubleshooting assistant included with hosting plans." },
+        { "title": "Multi-cloud choice", "description": "Deploy on DigitalOcean, Vultr, Linode, AWS, or Google Cloud from one control panel." },
+        { "title": "Built-in security", "description": "Imunify360 firewall, malware scanning, and free SSL certificates on all plans." },
+        { "title": "Autoscaling and load balancing", "description": "Available on Cloudways Autonomous plans for handling traffic spikes automatically." },
+        { "title": "Free migration", "description": "Free managed site migration and 24/7 support included." }
+      ],
+      "pros": [
+        "Choice of five underlying cloud providers from one dashboard",
+        "AI-assisted server monitoring (Copilot) included on Flexible plans",
+        "Free migrations and 24/7 support",
+        "Pay-as-you-go pricing with no long-term contract required"
+      ],
+      "cons": [
+        "Free trial is limited to 3 days",
+        "Autonomous plans add usage-based overage charges for disk, bandwidth, and autoscaling",
+        "Enterprise-tier pricing requires contacting sales"
+      ],
+      "faqs": [
+        { "question": "Does Cloudways offer a free trial?", "answer": "Yes, Cloudways offers a 3-day free trial with no credit card required." },
+        { "question": "What cloud providers does Cloudways support?", "answer": "DigitalOcean, Vultr, Linode, AWS, and Google Cloud." },
+        { "question": "How much does Cloudways cost?", "answer": "Flexible plans start at $11/month; Autonomous plans start at $99/month (Growth) with higher tiers up to $399/month and custom Enterprise pricing." },
+        { "question": "What is Cloudways Copilot?", "answer": "It is an AI-powered feature for monitoring and troubleshooting server issues, included with hosting plans." }
+      ],
+      "use_cases": [
+        { "title": "Agency hosting management", "description": "Agencies use Cloudways to manage multiple client sites across different cloud providers from one panel.", "audience": "Web agencies" },
+        { "title": "Scaling eCommerce stores", "description": "Autonomous plans provide autoscaling and CDN for stores with variable traffic.", "audience": "eCommerce businesses" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Flexible Micro", "price": "$11/month", "billing_cycle": "monthly", "features": ["2GB RAM", "1 vCPU", "50GB storage", "2TB bandwidth", "4 AI Copilot credits"] },
+        { "plan_name": "Flexible Medium", "price": "$88/month", "billing_cycle": "monthly", "features": ["8GB RAM", "4 vCPU", "160GB storage", "5TB bandwidth"] },
+        { "plan_name": "Autonomous Growth", "price": "$99/month", "billing_cycle": "monthly", "features": ["1 WordPress app", "20GB disk", "Unmetered visits", "150GB bandwidth", "Autoscaling"] },
+        { "plan_name": "Autonomous Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Tailored resource allocation", "Expert consultation"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Cloudways?", "level": 2, "paragraphs": [
+          "Cloudways is a managed cloud hosting platform that lets users run WordPress, WooCommerce, Laravel, and Magento applications on top of AWS, Google Cloud, DigitalOcean, Vultr, or Linode without managing server infrastructure directly.",
+          "It bundles security (Imunify360), free SSL, free migrations, and an AI-assisted monitoring tool called Cloudways Copilot into its plans."
+        ]},
+        { "id": "who-its-for", "heading": "Who Cloudways is for", "level": 2, "paragraphs": [
+          "Cloudways is built for agencies, developers, and eCommerce businesses that want managed cloud infrastructure with a choice of underlying cloud provider, rather than being locked into one vendor's stack."
+        ]}
+      ],
+      "tags": ["ai", "free-trial", "api"]
+    }
+  },
+  {
+    "tool_id": "a0672926-1230-4fae-8c77-9a1304584c44",
+    "slug": "kinsta",
+    "name": "Kinsta",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Kinsta is managed WordPress, application, and database hosting built on Google Cloud, with isolated containers and a MyKinsta dashboard.",
+      "pricing_model": "Paid",
+      "starting_price": "$35/month",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Kinsta provides managed WordPress hosting on Google Cloud with isolated containers, free CDN, daily backups, and 24/7 support, from $35/month.",
+      "features": [
+        { "title": "Isolated container architecture", "description": "Each site runs in its own isolated container rather than sharing resources with other customers." },
+        { "title": "29 global data centers with CDN", "description": "Sites are served through Kinsta's CDN across dozens of data center locations." },
+        { "title": "Automatic daily backups", "description": "Daily backups are included and retained automatically." },
+        { "title": "One-click staging environments", "description": "Create staging copies of a site with one click for testing changes." },
+        { "title": "MyKinsta dashboard", "description": "A unified dashboard for managing sites, backups, staging, and monitoring." },
+        { "title": "Cloudflare DDoS protection", "description": "Built-in DDoS protection and site monitoring checked every 3 minutes." }
+      ],
+      "pros": [
+        "Infrastructure built on Google Cloud with isolated containers per site",
+        "Free malware removal, migrations, and CDN bundled into every plan",
+        "One-click staging environments included",
+        "24/7 support and proactive uptime monitoring"
+      ],
+      "cons": [
+        "No permanent free hosting plan",
+        "Entry-level Single site plan at $35/month is pricier than budget shared hosting",
+        "Plans are capped by bandwidth or visit limits, with overage possible on high-traffic sites"
+      ],
+      "faqs": [
+        { "question": "What does Kinsta cost?", "answer": "Plans start at $35/month for a single site (or $30/month billed annually), scaling up to agency plans for dozens of sites." },
+        { "question": "Is Kinsta only for WordPress?", "answer": "Kinsta's core plans are WordPress hosting, though it also offers separate application, database, and static site hosting." },
+        { "question": "When was Kinsta founded?", "answer": "Kinsta was founded in 2013." },
+        { "question": "Does Kinsta include backups?", "answer": "Yes, automatic daily backups are included on all plans." }
+      ],
+      "use_cases": [
+        { "title": "Agency multi-site hosting", "description": "Agencies use WP or Agency plans to host and manage many WordPress client sites from one dashboard.", "audience": "Web agencies" },
+        { "title": "High-traffic WooCommerce sites", "description": "Higher-tier Single plans provide the bandwidth and CDN capacity for busy stores.", "audience": "eCommerce and publishing sites" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Single 20GB", "price": "$35/month", "billing_cycle": "monthly", "features": ["1 install", "20GB bandwidth", "10GB storage", "125GB CDN"] },
+        { "plan_name": "Single 20GB (annual)", "price": "$30/month", "billing_cycle": "annual", "features": ["1 install", "20GB bandwidth", "10GB storage", "125GB CDN"] },
+        { "plan_name": "WP 2", "price": "$70/month", "billing_cycle": "monthly", "features": ["2 installs", "40GB bandwidth", "20GB storage", "250GB CDN"] },
+        { "plan_name": "Agency 20", "price": "$340/month", "billing_cycle": "monthly", "features": ["20 installs", "250GB bandwidth or 500k visits", "50GB storage"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Kinsta?", "level": 2, "paragraphs": [
+          "Kinsta is a managed hosting provider, founded in 2013, that runs WordPress sites (and separately, applications, databases, and static sites) on Google Cloud infrastructure using isolated containers per site.",
+          "It bundles a CDN across 29 data centers, automatic daily backups, one-click staging, and Cloudflare-based DDoS protection into its plans, managed through the MyKinsta dashboard."
+        ]},
+        { "id": "who-its-for", "heading": "Who Kinsta is for", "level": 2, "paragraphs": [
+          "Kinsta is aimed at agencies, businesses, and high-traffic WordPress and WooCommerce sites that need managed infrastructure, staging workflows, and 24/7 support rather than budget shared hosting."
+        ]}
+      ],
+      "tags": ["api"]
+    }
+  },
+  {
+    "tool_id": "0ed951ec-77f0-4b46-b0d3-dc10cc9de347",
+    "slug": "wp-engine",
+    "name": "WP Engine",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "WP Engine is managed WordPress hosting with eCommerce tools, headless WordPress support, and an AI-powered Smart Search add-on.",
+      "pricing_model": "Paid",
+      "starting_price": "€27/month",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "WP Engine offers managed WordPress hosting with eCommerce tools, headless support, and AI-powered Smart Search, with plans from €27/month.",
+      "features": [
+        { "title": "Managed WordPress hosting", "description": "Hosting with EverCache, global CDN, daily backups, and 1-click staging environments." },
+        { "title": "Smart Plugin Manager", "description": "Automated plugin and theme updates, available from the Professional plan up." },
+        { "title": "Smart Search AI", "description": "An AI-powered search add-on backed by a managed vector database." },
+        { "title": "Headless WordPress", "description": "Supports headless/API-driven WordPress architectures." },
+        { "title": "Global Edge Security", "description": "Layer 3+4 DDoS protection and a managed web application firewall (optional on Growth plan and above)." },
+        { "title": "eCommerce solution", "description": "Tools for checkout optimization and store operations built on WordPress/WooCommerce." }
+      ],
+      "pros": [
+        "Layer 3+4 DDoS protection and managed WAF available",
+        "Automated plugin/theme updates on Professional tier and above",
+        "AI-powered Smart Search add-on with managed vector database",
+        "Scales to enterprise with a 99.99% uptime SLA on Core plans"
+      ],
+      "cons": [
+        "No free trial or free plan mentioned on the site",
+        "Automated plugin/theme updates are not included on the entry-level Startup plan",
+        "Core and Enterprise tiers require contacting sales for pricing"
+      ],
+      "faqs": [
+        { "question": "How much does WP Engine cost?", "answer": "Plans start at €27/month (Startup, billed annually), rising to €259/month (Scale), with Core and Enterprise tiers priced by contacting sales." },
+        { "question": "Does WP Engine support headless WordPress?", "answer": "Yes, WP Engine offers headless WordPress hosting capabilities." },
+        { "question": "What is Smart Search AI?", "answer": "It's an AI-powered site search feature backed by a managed vector database." },
+        { "question": "When was WP Engine founded?", "answer": "WP Engine was founded in 2013." }
+      ],
+      "use_cases": [
+        { "title": "Agency multi-site hosting", "description": "Growth and Scale plans support 10-30 sites for agencies managing client portfolios.", "audience": "Web agencies" },
+        { "title": "Enterprise publishing", "description": "Newsroom Platform and headless WordPress support editorial workflows for large publishers.", "audience": "Media and enterprise publishers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Startup", "price": "€27/month", "billing_cycle": "annual", "features": ["1 site", "25,000 monthly visits", "10GB storage", "75GB bandwidth"] },
+        { "plan_name": "Professional", "price": "€50/month", "billing_cycle": "annual", "features": ["3 sites", "75,000 monthly visits", "automated plugin/theme updates"] },
+        { "plan_name": "Growth", "price": "€105/month", "billing_cycle": "annual", "features": ["10 sites", "100,000 monthly visits", "optional advanced DDoS/WAF"] },
+        { "plan_name": "Scale", "price": "€259/month", "billing_cycle": "annual", "features": ["30 sites", "400,000 monthly visits", "50GB storage"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is WP Engine?", "level": 2, "paragraphs": [
+          "WP Engine, founded in 2013, is a managed WordPress hosting platform that combines hosting with specialized tools for eCommerce, editorial publishing, and headless WordPress.",
+          "It offers an AI-powered Smart Search add-on backed by a managed vector database, alongside standard managed-hosting features like EverCache, global CDN, and staging environments."
+        ]},
+        { "id": "who-its-for", "heading": "Who WP Engine is for", "level": 2, "paragraphs": [
+          "WP Engine targets agencies, enterprises, and publishers that need managed WordPress hosting with advanced security, automated maintenance, and options like headless architecture or AI search."
+        ]}
+      ],
+      "tags": ["ai", "api"]
+    }
+  },
+  {
+    "tool_id": "8dd02588-9e72-460d-8c15-9f28eeaf959d",
+    "slug": "pantheon",
+    "name": "Pantheon",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Pantheon is a WebOps platform for building, hosting, and managing WordPress, Drupal, and Next.js sites with a Dev/Test/Live workflow.",
+      "pricing_model": "Freemium",
+      "starting_price": "$55/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Pantheon is a WebOps platform for WordPress, Drupal, and Next.js with free sandbox development and paid site plans starting at $55/month.",
+      "features": [
+        { "title": "Dev/Test/Live workflow", "description": "Pre-configured environments for development, testing, and production on every site." },
+        { "title": "Global CDN and WAF", "description": "Built-in content delivery network and web application firewall on all site plans." },
+        { "title": "Autopilot updates", "description": "Automated core and plugin updates with security patching." },
+        { "title": "Site portfolio management", "description": "Tools to manage large portfolios of sites (1,000+) from one workspace." },
+        { "title": "Multidev environments", "description": "Multiple parallel development environments available on the Gold workspace plan." },
+        { "title": "Command-line interface", "description": "A CLI for developer workflows and automation." }
+      ],
+      "pros": [
+        "Free Silver workspace with 2 sandbox sites for development",
+        "Standardized Dev/Test/Live workflow across WordPress, Drupal, and Next.js",
+        "99.9% SLO (99.95% SLA on Elite) uptime commitment",
+        "Annual billing includes roughly 40% more traffic capacity at the same price"
+      ],
+      "cons": [
+        "Sites must move to a paid site plan to go live; sandbox tier is development-only",
+        "Platinum, Diamond, and Elite tiers require contacting sales for pricing",
+        "Traffic-based pricing can lead to overage costs without purchasing Overage Protection"
+      ],
+      "faqs": [
+        { "question": "Is Pantheon free?", "answer": "Development is free with 2 sandbox sites per account, but launching a live site requires a paid site plan starting at $55/month." },
+        { "question": "What CMS platforms does Pantheon support?", "answer": "WordPress, Drupal, and Next.js." },
+        { "question": "What is Pantheon's uptime guarantee?", "answer": "99.9% SLO on standard plans, with a 99.95% SLA on the Elite plan." },
+        { "question": "What is the cheapest paid site plan?", "answer": "The Basic plan starts at $55/month for 25,000 monthly visits." }
+      ],
+      "use_cases": [
+        { "title": "Agency site portfolios", "description": "Agencies manage large numbers of WordPress or Drupal client sites through Pantheon's workspace tools.", "audience": "Web agencies" },
+        { "title": "Enterprise WebOps standardization", "description": "Enterprises use the Dev/Test/Live workflow to standardize release processes across teams.", "audience": "Enterprise IT and marketing teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Silver (workspace)", "price": "Free", "billing_cycle": null, "features": ["2 sandbox sites", "Git-based CI/CD", "CLI", "basic chat support"] },
+        { "plan_name": "Basic (site plan)", "price": "$55/month", "billing_cycle": "monthly", "features": ["25,000 monthly visits", "1 app container", "5 custom domains"] },
+        { "plan_name": "Performance Small", "price": "$200/month", "billing_cycle": "monthly", "features": ["25,000 monthly visits", "1 app container", "10 custom domains"] },
+        { "plan_name": "Elite (site plan)", "price": "Custom", "billing_cycle": null, "features": ["Unlimited visits", "4+ app containers", "270 custom domains"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Pantheon?", "level": 2, "paragraphs": [
+          "Pantheon is a WebOps platform for building, hosting, and operating WordPress, Drupal, and Next.js websites, with a standardized Dev/Test/Live environment workflow built into every site.",
+          "Development is free on 2 sandbox sites per account; going live requires a paid site plan, with pricing based on monthly visits and traffic."
+        ]},
+        { "id": "who-its-for", "heading": "Who Pantheon is for", "level": 2, "paragraphs": [
+          "Pantheon is built for agencies, enterprises, and institutions managing many WordPress or Drupal sites, or teams that want a standardized release workflow across development, marketing, and IT."
+        ]}
+      ],
+      "tags": ["api", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "8ed72c61-cf6e-4bb5-818c-15ca4c39cc8b",
+    "slug": "a2-hosting",
+    "name": "A2 Hosting",
+    "status": "skip",
+    "skip_reason": "The official website (a2hosting.com, including /shared-hosting) now issues a 301 redirect to hosting.com, an unrelated-looking hosting brand with no mention of A2 Hosting anywhere on its homepage. This indicates the A2 Hosting brand has been discontinued or absorbed and no longer exists as a distinct, verifiable product to enrich.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "c25e7433-44ad-439d-a4df-0347e6f2e9c2",
+    "slug": "hostinger",
+    "name": "Hostinger",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Hostinger is a web hosting and website-building platform offering shared, cloud, and VPS hosting plus an AI website builder called Horizons.",
+      "pricing_model": "Paid",
+      "starting_price": "$2.99/month (promotional; renews at $10.99/month)",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Hostinger provides shared, cloud, and VPS web hosting with an AI website builder (Horizons) and AI email marketing, plans from $2.99/month.",
+      "features": [
+        { "title": "Hostinger Horizons", "description": "An AI website builder that generates a site from a text description, aimed at users with no technical skills." },
+        { "title": "Drag-and-drop website builder", "description": "A template-based site builder for non-technical users." },
+        { "title": "Managed WordPress hosting", "description": "WordPress hosting with managed maintenance." },
+        { "title": "Cloud and VPS hosting", "description": "Higher-tier hosting options for scaling beyond shared plans." },
+        { "title": "AI-powered email marketing (Reach)", "description": "An AI-assisted tool for building and sending email marketing campaigns." },
+        { "title": "Domain registration", "description": "Domain registration and transfer services, with a free domain included for the first year on hosting plans." }
+      ],
+      "pros": [
+        "Low promotional entry pricing across shared hosting tiers",
+        "AI website builder (Horizons) included as part of the product lineup",
+        "30-day money-back guarantee on hosting plans",
+        "Wide range of hosting types from shared to cloud and VPS"
+      ],
+      "cons": [
+        "Advertised low prices are promotional first-term rates that increase substantially on renewal",
+        "The lowest advertised price requires a long (48-month) prepaid billing term",
+        "Free domain and free email are only complimentary for the first year"
+      ],
+      "faqs": [
+        { "question": "How much does Hostinger cost?", "answer": "Promotional pricing starts around $2.99/month for the Premium plan on a 48-month term, renewing at $10.99/month." },
+        { "question": "What is Hostinger Horizons?", "answer": "It's an AI website builder that creates a site from a text description and offers a free trial with no credit card required." },
+        { "question": "When was Hostinger founded?", "answer": "Hostinger was founded in 2004." },
+        { "question": "Does Hostinger include a free domain?", "answer": "Yes, hosting plans include a free domain for the first year." }
+      ],
+      "use_cases": [
+        { "title": "First website for solo founders", "description": "Low-cost shared hosting plans with a drag-and-drop builder suit users launching their first site.", "audience": "Solo founders and creators" },
+        { "title": "AI-assisted site creation", "description": "Hostinger Horizons lets non-technical users generate a working website from a description.", "audience": "Non-technical small business owners" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Premium", "price": "$2.99/month (promo, renews $10.99/month)", "billing_cycle": "monthly", "features": ["3 websites", "Free domain for 1 year", "20GB SSD storage", "Weekly backups"] },
+        { "plan_name": "Unlimited", "price": "$3.79/month (promo, renews $16.99/month)", "billing_cycle": "monthly", "features": ["Unlimited websites", "50GB NVMe storage", "Daily backups"] },
+        { "plan_name": "Cloud Startup", "price": "$7.99/month (promo, renews $25.99/month)", "billing_cycle": "monthly", "features": ["Unlimited websites", "100GB NVMe storage", "Daily + on-demand backups"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Hostinger?", "level": 2, "paragraphs": [
+          "Hostinger, founded in 2004, is a web hosting company offering shared, cloud, and VPS hosting alongside a drag-and-drop website builder and an AI website builder called Hostinger Horizons.",
+          "Plans bundle a free domain for the first year, weekly or daily backups depending on tier, and AI-assisted tools including email marketing."
+        ]},
+        { "id": "who-its-for", "heading": "Who Hostinger is for", "level": 2, "paragraphs": [
+          "Hostinger targets solo founders, creators, and small businesses that want low-cost hosting plus AI-assisted tools for building a website without coding."
+        ]}
+      ],
+      "tags": ["ai", "templates", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "fca0329e-c98c-4d5a-847a-38aca9d3e0c4",
+    "slug": "siteground",
+    "name": "SiteGround",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SiteGround offers WordPress, cloud, and reseller hosting along with an AI-assisted website builder and Coderick, an AI app-building assistant.",
+      "pricing_model": "Paid",
+      "starting_price": "€2.99/month (promotional; renews at €15.99/month)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "SiteGround offers WordPress, cloud, and reseller hosting with an AI website builder and Coderick AI assistant, plans from €2.99/month promotional.",
+      "features": [
+        { "title": "AI-assisted Website Builder", "description": "A website builder with AI-generated images and text." },
+        { "title": "Coderick AI", "description": "An AI tool for building apps and websites via chat, with Stripe payment integration." },
+        { "title": "AI Studio", "description": "Access to multiple AI models (including Gemini, Claude, and ChatGPT) through a bundled tool." },
+        { "title": "Daily and on-demand backups", "description": "Automatic daily backups, with on-demand backups on GrowBig and above." },
+        { "title": "Free CDN and SSL", "description": "Included on all hosting plans." },
+        { "title": "Staging environment", "description": "Available from the GrowBig plan up, with Git-based staging on GoGeek." }
+      ],
+      "pros": [
+        "High customer rating (4.9/5 on Trustpilot, per the site)",
+        "Free daily backups included, with on-demand backups on higher tiers",
+        "AI website builder and AI Studio bundled into hosting plans",
+        "Unlimited websites on GrowBig and GoGeek tiers"
+      ],
+      "cons": [
+        "Advertised prices are promotional first-term rates that increase substantially on renewal",
+        "StartUp plan is limited to 1 website",
+        "Git-based staging is only available on the top GoGeek tier"
+      ],
+      "faqs": [
+        { "question": "How much does SiteGround cost?", "answer": "Promotional pricing starts at €2.99/month for StartUp, rising to €8.49/month for GoGeek, all billed as 12-month prepaid terms." },
+        { "question": "Does SiteGround include AI tools?", "answer": "Yes, SiteGround includes an AI-assisted Website Builder, Coderick AI for building apps via chat, and AI Studio for access to multiple AI models." },
+        { "question": "Can I host multiple websites on SiteGround?", "answer": "The StartUp plan supports 1 website; GrowBig and GoGeek support unlimited websites." },
+        { "question": "Does SiteGround offer a money-back guarantee?", "answer": "Yes, a 30-day money-back guarantee is offered on hosting plans." }
+      ],
+      "use_cases": [
+        { "title": "First WordPress site", "description": "The StartUp plan and AI Website Builder suit users launching a single WordPress site.", "audience": "Freelancers and small businesses" },
+        { "title": "Agency white-label hosting", "description": "The GoGeek plan includes white-label access and Git-based staging for agencies.", "audience": "Web agencies" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "StartUp", "price": "€2.99/month (promo, renews €15.99/month)", "billing_cycle": "annual", "features": ["1 website", "Unlimited traffic", "10GB storage"] },
+        { "plan_name": "GrowBig", "price": "€5.49/month (promo, renews €27.99/month)", "billing_cycle": "annual", "features": ["Unlimited websites", "50GB storage", "On-demand backups", "Staging environment"] },
+        { "plan_name": "GoGeek", "price": "€8.49/month (promo, renews €39.99/month)", "billing_cycle": "annual", "features": ["Unlimited websites", "100GB storage", "Git-based staging", "White-label access", "Priority support"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is SiteGround?", "level": 2, "paragraphs": [
+          "SiteGround is a web hosting provider offering WordPress, cloud, and reseller hosting tiers, alongside an AI-assisted website builder, an AI chat-based app builder called Coderick, and multi-model AI access through AI Studio.",
+          "Plans are billed on 12-month prepaid promotional pricing that renews at higher standard rates."
+        ]},
+        { "id": "who-its-for", "heading": "Who SiteGround is for", "level": 2, "paragraphs": [
+          "SiteGround is aimed at freelancers, small businesses, and web agencies who want WordPress-optimized hosting with bundled AI tools for building sites and apps."
+        ]}
+      ],
+      "tags": ["ai", "templates"]
+    }
+  }
+]

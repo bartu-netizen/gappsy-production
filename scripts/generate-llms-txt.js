@@ -32,16 +32,25 @@ function initSupabase() {
 
 async function fetchTools(supabase) {
   if (!supabase) return [];
-  const { data, error } = await supabase
-    .from('tools')
-    .select('slug, name, llm_readable_summary, short_description')
-    .eq('status', 'published')
-    .order('name', { ascending: true });
-  if (error) {
-    console.warn(`⚠️  Failed to fetch tools for llms.txt: ${error.message}`);
-    return [];
+  // PostgREST caps a single response at 1000 rows — paginate so the tool
+  // count can grow past that without silently dropping tools from llms.txt.
+  const PAGE_SIZE = 1000;
+  const tools = [];
+  for (let page = 0; ; page++) {
+    const { data, error } = await supabase
+      .from('tools')
+      .select('slug, name, llm_readable_summary, short_description')
+      .eq('status', 'published')
+      .order('name', { ascending: true })
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+    if (error) {
+      console.warn(`⚠️  Failed to fetch tools for llms.txt: ${error.message}`);
+      return tools;
+    }
+    tools.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) break;
   }
-  return data || [];
+  return tools;
 }
 
 async function fetchCategories(supabase) {

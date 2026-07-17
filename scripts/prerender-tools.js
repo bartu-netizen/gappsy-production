@@ -79,17 +79,28 @@ export async function fetchInChunks(ids, queryFactory) {
   return { data: results.flatMap((r) => r.data || []), error: null };
 }
 
+// PostgREST caps a single response at 1000 rows by default — paginate with
+// .range() so the tools table can grow past that without silently dropping
+// tools from the prerendered build (bit us once: 1020 published tools with
+// no pagination here quietly produced only the first 1000 pages).
 async function fetchAllPublishedTools(supabase) {
-  const { data: tools, error } = await supabase
-    .from('tools')
-    .select(
-      'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages'
-    )
-    .eq('status', 'published')
-    .order('name', { ascending: true });
+  const PAGE_SIZE = 1000;
+  const tools = [];
+  for (let page = 0; ; page++) {
+    const { data, error } = await supabase
+      .from('tools')
+      .select(
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages'
+      )
+      .eq('status', 'published')
+      .order('name', { ascending: true })
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
-  if (error) throw new Error(`Failed to fetch published tools: ${error.message}`);
-  return tools || [];
+    if (error) throw new Error(`Failed to fetch published tools: ${error.message}`);
+    tools.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) break;
+  }
+  return tools;
 }
 
 // A fixed set of bulk queries regardless of tool count — the scaling answer

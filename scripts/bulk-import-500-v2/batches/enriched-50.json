@@ -1,0 +1,333 @@
+[
+  {
+    "tool_id": "b899dd8e-5a92-4424-9a3d-1964775af19a",
+    "slug": "doppler",
+    "name": "Doppler",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Centralized secrets management platform for storing, syncing, and rotating API keys and credentials across infrastructure, CI/CD, and AI agents.",
+      "pricing_model": "Freemium",
+      "starting_price": "$8/user/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Doppler is a secrets management platform for securely storing, syncing, and rotating API keys and credentials across your infrastructure.",
+      "features": [
+        {
+          "title": "Centralized secrets storage",
+          "description": "Stores API keys, database credentials, and cloud access tokens in one place instead of scattering them across config files and scripts."
+        },
+        {
+          "title": "Dynamic secrets",
+          "description": "Auto-rotating credentials that self-destruct after deployment, reducing the window a leaked secret stays valid."
+        },
+        {
+          "title": "Native integrations",
+          "description": "Syncs secrets directly into Vercel, Heroku, AWS Secrets Manager, GitHub Actions, Kubernetes, and CI/CD pipelines."
+        },
+        {
+          "title": "Audit logging",
+          "description": "Logs all secret access for SOC 2 and ISO 27001 compliance requirements."
+        },
+        {
+          "title": "AI agent access via MCP",
+          "description": "Provides an MCP server and OIDC-scoped service accounts so AI agents can request secrets without custom scripts."
+        },
+        {
+          "title": "Change requests and secret rotation",
+          "description": "Team plan adds approval workflows for secret changes plus automatic rotation."
+        },
+        {
+          "title": "SAML SSO and role-based access",
+          "description": "Team plan includes SAML SSO and RBAC for controlling who can view or edit secrets."
+        }
+      ],
+      "pros": [
+        "Free tier available for teams of up to 3 users",
+        "SOC 2 and ISO 27001 compliant, with full access logging",
+        "Native integrations with major cloud, CI/CD, and deployment platforms",
+        "Built-in MCP support for scoping secret access to AI agents"
+      ],
+      "cons": [
+        "Per-user pricing ($8-$21/user/month) can grow costly for larger teams",
+        "Enterprise-only features like Enterprise Key Management and custom SLAs require quote-only pricing",
+        "Add-ons such as custom roles, user groups, and integration syncs cost extra per seat"
+      ],
+      "faqs": [
+        {
+          "question": "Does Doppler have a free plan?",
+          "answer": "Yes, the Developer plan is free for up to 3 users, with additional users billed at $8/month each."
+        },
+        {
+          "question": "Does Doppler support AI agents?",
+          "answer": "Yes, Doppler provides an MCP server and OIDC-scoped service accounts so AI agents can request secrets without embedding credentials in code."
+        },
+        {
+          "question": "What compliance certifications does Doppler have?",
+          "answer": "Doppler is SOC 2 and ISO 27001 compliant, with complete audit logging of secret access."
+        },
+        {
+          "question": "Is there a free trial for paid plans?",
+          "answer": "The Team plan ($21/user/month) includes a 14-day free trial."
+        },
+        {
+          "question": "Can Doppler be self-hosted?",
+          "answer": "The Enterprise plan supports on-premise or cloud deployment options."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Centralizing secrets across environments",
+          "description": "Replace scattered .env files and config secrets with a single synced source across dev, staging, and production.",
+          "audience": "Engineering teams"
+        },
+        {
+          "title": "Securing AI agent credential access",
+          "description": "Scope and audit the credentials individual AI agents can access using OIDC-based service accounts and MCP.",
+          "audience": "Enterprises deploying AI agents"
+        },
+        {
+          "title": "Automating secret injection in CI/CD",
+          "description": "Sync secrets automatically into GitHub Actions, Kubernetes, and other pipeline tools to avoid hardcoding credentials.",
+          "audience": "DevOps teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Developer",
+          "price": "Free for 3 users, then $8/user/month",
+          "billing_cycle": "monthly",
+          "features": [
+            "3-day activity log retention",
+            "50 service tokens",
+            "10 projects maximum",
+            "4 environments",
+            "5 config syncs",
+            "Up to 25 users",
+            "Doppler CLI",
+            "API and webhooks access"
+          ]
+        },
+        {
+          "plan_name": "Team",
+          "price": "$21/user/month",
+          "billing_cycle": "monthly",
+          "features": [
+            "90-day activity log retention",
+            "500 service tokens",
+            "250 projects maximum",
+            "15 environments",
+            "100 config syncs",
+            "Up to 500 users",
+            "SAML SSO and role-based access controls",
+            "Change requests and automatic secret rotation",
+            "Priority support",
+            "14-day free trial"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom",
+          "billing_cycle": null,
+          "features": [
+            "Custom activity log retention",
+            "Unlimited config syncs",
+            "Custom user limits",
+            "On-premise or cloud deployment",
+            "Enterprise Key Management (EKM)",
+            "Dynamic secrets and log forwarding",
+            "99.95% SLO",
+            "Dedicated account manager",
+            "Enterprise SCIM support"
+          ]
+        }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Doppler?",
+          "level": 2,
+          "paragraphs": [
+            "Doppler is a secrets management platform that centralizes API keys, database credentials, and cloud access tokens so teams stop copying them across config files and scripts.",
+            "It syncs secrets into tools like Vercel, Heroku, AWS Secrets Manager, GitHub Actions, and Kubernetes, and adds audit logging, dynamic (auto-rotating) secrets, and MCP-based access scoping for AI agents."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Doppler is for",
+          "level": 2,
+          "paragraphs": [
+            "Doppler suits engineering teams that need a single source of truth for secrets across development, staging, and production, as well as organizations running AI agents that need scoped, auditable credential access rather than hardcoded keys."
+          ]
+        }
+      ],
+      "tags": ["api", "web-app", "freemium", "free-trial", "ai"]
+    }
+  },
+  {
+    "tool_id": "870d8f7e-4a30-42b3-8999-2b52c10af200",
+    "slug": "infisical",
+    "name": "Infisical",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source platform for managing application secrets, PKI certificates, and privileged access across cloud and AI infrastructure.",
+      "pricing_model": "Freemium",
+      "starting_price": "$18/identity/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Infisical is an open-source secrets management, certificate (PKI), and privileged access platform for developers and AI agents.",
+      "features": [
+        {
+          "title": "Secrets management",
+          "description": "Centralized storage, rotation, and auditing of application credentials with RBAC, approval workflows, and dynamic secret issuance."
+        },
+        {
+          "title": "Certificate management (PKI)",
+          "description": "Automates private certificate authority operations including issuance, renewal, revocation, and discovery."
+        },
+        {
+          "title": "Privileged access management (PAM)",
+          "description": "Grants short-lived, identity-based access sessions with session recording and AI-generated summaries."
+        },
+        {
+          "title": "Agent Vault",
+          "description": "Gives AI agents access to credentials they need without exposing the underlying secret values directly to the agent."
+        },
+        {
+          "title": "Dynamic secrets",
+          "description": "Issues short-lived, on-demand credentials scoped to individual requests instead of long-lived static secrets."
+        },
+        {
+          "title": "Broad integrations",
+          "description": "Connects with AWS, Kubernetes, Docker, GitHub, GitLab, Terraform, Ansible, Jenkins, Vercel, Heroku, Azure, GCP, and Datadog."
+        }
+      ],
+      "pros": [
+        "Free-forever plan covering up to 5 identities and 3 projects",
+        "Open source with a self-hosting option in addition to cloud",
+        "Combines secrets management, PKI, and privileged access management in one platform",
+        "Wide range of native integrations across cloud and CI/CD tooling"
+      ],
+      "cons": [
+        "Pro plan is priced per identity ($18/month), which scales with team/agent count",
+        "Advanced capabilities like dynamic secrets, AI security advisor, SCIM, and LDAP require the custom-priced Enterprise plan",
+        "Free tier is capped at 5 identities, 3 projects, 3 environments, and 10 integrations"
+      ],
+      "faqs": [
+        {
+          "question": "Does Infisical have a free plan?",
+          "answer": "Yes, the Free plan is free forever and includes up to 5 identities, 3 projects, and 3 environments."
+        },
+        {
+          "question": "Is Infisical open source?",
+          "answer": "Yes, Infisical is an open-source project that also offers self-hosting."
+        },
+        {
+          "question": "Does Infisical support certificate management?",
+          "answer": "Yes, it includes PKI features for automated certificate authority issuance, renewal, and revocation."
+        },
+        {
+          "question": "Does Infisical support AI agent credential access?",
+          "answer": "Yes, through Agent Vault, which lets AI agents use credentials without exposing the secret values directly."
+        },
+        {
+          "question": "How is the Pro plan priced?",
+          "answer": "The Pro plan costs $18 per identity per month and adds features like secret rotation, SAML SSO, and 90-day audit log retention."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Centralizing application secrets",
+          "description": "Store, rotate, and audit credentials across environments with RBAC and approval workflows.",
+          "audience": "Development teams"
+        },
+        {
+          "title": "Managing internal certificates",
+          "description": "Automate private CA issuance, renewal, and revocation instead of handling certificates manually.",
+          "audience": "Security and platform teams"
+        },
+        {
+          "title": "Securing AI agent access to credentials",
+          "description": "Use Agent Vault to let AI agents access the secrets they need without exposing raw credential values.",
+          "audience": "Organizations deploying AI agents"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0/month",
+          "billing_cycle": "monthly",
+          "features": [
+            "Dashboard, API, CLI, and SDKs",
+            "Kubernetes Operator and Infisical Agent",
+            "Webhooks and 2FA",
+            "Self-hosting or cloud",
+            "All integrations (up to 10)",
+            "Secret referencing, scanning, and sharing",
+            "Up to 5 identities, 3 projects, 3 environments",
+            "Community Slack support"
+          ]
+        },
+        {
+          "plan_name": "Pro",
+          "price": "$18/identity/month",
+          "billing_cycle": "monthly",
+          "features": [
+            "All Free features",
+            "Secret versioning and point-in-time recovery",
+            "Role-based access controls",
+            "Secret rotation",
+            "Up to 3 honey tokens",
+            "Temporary access provisioning",
+            "SAML SSO and IP allowlisting",
+            "90-day audit log retention",
+            "Higher rate limits and priority support",
+            "12 environments, 50 integrations"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom",
+          "billing_cycle": null,
+          "features": [
+            "All Pro features",
+            "Dedicated infrastructure",
+            "Unlimited honey tokens",
+            "Enterprise SCIM and LDAP authentication",
+            "Dynamic secrets and AI security advisor",
+            "Approval workflows and access requests",
+            "Gateways and sub-organizations",
+            "KMIP and KMS/HSM support",
+            "Audit log streaming and custom retention",
+            "99.99% SLA and dedicated support engineer"
+          ]
+        }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Infisical?",
+          "level": 2,
+          "paragraphs": [
+            "Infisical is an open-source platform that combines secrets management, certificate (PKI) management, and privileged access management so teams don't need separate tools for each.",
+            "It supports self-hosting or cloud deployment, integrates with tools like AWS, Kubernetes, GitHub, and Terraform, and includes an Agent Vault feature for giving AI agents scoped access to credentials without exposing the raw secret values."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Infisical is for",
+          "level": 2,
+          "paragraphs": [
+            "Infisical fits development and security teams that want centralized control over secrets and certificates, particularly those that prefer an open-source, self-hostable option or need to secure credential access for AI agents alongside human users."
+          ]
+        }
+      ],
+      "tags": ["api", "web-app", "freemium", "free-plan", "ai"]
+    }
+  }
+]

@@ -1,0 +1,502 @@
+[
+  {
+    "tool_id": "47cf9d80-a2bb-43ef-9377-ea126fc69e75",
+    "slug": "fauna",
+    "name": "Fauna",
+    "status": "skip",
+    "skip_reason": "Fauna's hosted database service was discontinued: the company stopped accepting new customers and wound down the product, with existing accounts deleted by May 30, 2025 (confirmed via Fauna's own blog post 'The Future of Fauna' and independent coverage from InfoQ and The Register). The official site fauna.com is now unreachable (connection refused), consistent with the shutdown.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "5979f62c-c68a-4875-ab66-878b6d196231",
+    "slug": "timescale",
+    "name": "Timescale",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "PostgreSQL platform built on the open-source TimescaleDB extension for time-series, analytical, and hybrid vector/full-text workloads.",
+      "pricing_model": "Freemium",
+      "starting_price": "$30/month (Tiger Cloud Performance plan)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "TimescaleDB: open-source PostgreSQL extension for time-series data, now offered via Tiger Data's Tiger Cloud with usage-based pricing.",
+      "features": [
+        { "title": "Automatic partitioning", "description": "Time- and key-based partitioning of data is handled automatically by the database." },
+        { "title": "Row-columnar hybrid storage", "description": "Combines row and columnar storage with compression to reduce storage footprint." },
+        { "title": "Tiered storage", "description": "Keeps hot data on SSD and moves cold data to lower-cost object storage." },
+        { "title": "Lakehouse integration", "description": "Ingests from Kafka/S3 and replicates into Iceberg for lakehouse architectures." },
+        { "title": "200+ time-series SQL functions", "description": "Extends standard PostgreSQL SQL with functions purpose-built for time-series analysis." },
+        { "title": "Hybrid search", "description": "Combines keyword, vector, filter, and ranking-based search in the same platform." }
+      ],
+      "pros": [
+        "Full PostgreSQL compatibility via SQL, standard drivers, and the Postgres ecosystem",
+        "Open-source TimescaleDB extension remains free and self-hostable",
+        "Automatic compression and tiered (hot/cold) storage reduce storage costs",
+        "Combines time-series, analytical, and vector/full-text search in one platform"
+      ],
+      "cons": [
+        "The company and cloud product recently rebranded from Timescale to Tiger Data / Tiger Cloud, which can cause naming confusion",
+        "Tiger Cloud billing is hourly/consumption-based, making costs harder to predict for variable workloads",
+        "Enterprise-tier pricing is quote-only and not published"
+      ],
+      "faqs": [
+        { "question": "Is Timescale still available?", "answer": "Yes. The open-source TimescaleDB PostgreSQL extension is still available; the company and its managed cloud service now operate under the Tiger Data / Tiger Cloud brand." },
+        { "question": "Is TimescaleDB open source?", "answer": "Yes, the TimescaleDB extension is available as an open-source offering that can be self-hosted." },
+        { "question": "What does Tiger Cloud pricing look like?", "answer": "Tiger Cloud uses hourly consumption-based billing, with published Performance and Scale plans starting at $30/month and $36/month respectively, plus a custom-priced Enterprise tier." },
+        { "question": "What cloud providers does it support?", "answer": "Tiger Cloud is described as cloud-agnostic and works with major cloud providers within the PostgreSQL ecosystem." }
+      ],
+      "use_cases": [
+        { "title": "Industrial and IoT time-series data", "description": "Stores and analyzes high-volume sensor and machine data with automatic partitioning and compression.", "audience": "IoT and industrial engineering teams" },
+        { "title": "Hybrid vector and time-series search", "description": "Combines keyword, vector, and time-series querying in a single PostgreSQL-based platform.", "audience": "AI application developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Performance", "price": "$30/month", "billing_cycle": "monthly", "features": ["4 database services", "Up to 8 CPU / 32GB memory per service", "Up to 16TB storage", "Single-node HA replicas", "3-day point-in-time recovery"] },
+        { "plan_name": "Scale", "price": "$36/month", "billing_cycle": "monthly", "features": ["Unlimited database services", "Up to 32 CPU / 128GB memory per service", "Up to 64TB storage", "Multi-node HA replicas", "14-day point-in-time recovery", "24/5 support"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Up to 64 CPU / 256GB memory per service", "Cross-region backups", "HIPAA compliance", "SAML SSO", "24/7 support with 1-hour critical response"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Timescale?", "level": 2, "paragraphs": [
+          "Timescale is the open-source TimescaleDB extension for PostgreSQL, purpose-built for time-series, analytical, and hybrid search workloads.",
+          "The company behind it rebranded to Tiger Data in 2025, and its managed cloud offering is now called Tiger Cloud, though the underlying TimescaleDB extension keeps its original name."
+        ]},
+        { "id": "who-its-for", "heading": "Who Timescale is for", "level": 2, "paragraphs": [
+          "Teams already using PostgreSQL who need better performance for time-series, sensor, or event data without leaving the Postgres ecosystem."
+        ]}
+      ],
+      "tags": ["freemium", "ai", "api"]
+    }
+  },
+  {
+    "tool_id": "c8ef1e9c-3e2d-43bd-b790-a687f3d10cd5",
+    "slug": "influxdb-cloud",
+    "name": "InfluxDB Cloud",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "InfluxDB Cloud is a managed time-series database for ingesting, storing, and analyzing high-velocity operational and sensor data in real time.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "San Francisco, California, US",
+      "languages": [],
+      "seo_meta_description": "InfluxDB Cloud: managed time-series database for real-time ingestion, storage, and analytics of high-velocity operational data.",
+      "features": [
+        { "title": "High-speed ingest", "description": "Processes millions of data points per second with predictable costs." },
+        { "title": "Real-time analytics", "description": "Transforms and analyzes unlimited data series simultaneously." },
+        { "title": "Edge-to-cloud continuity", "description": "Captures data at the source and analyzes it anywhere without redesigning pipelines." },
+        { "title": "Compression and downsampling", "description": "Uses Parquet-based file storage with high compression ratios." },
+        { "title": "Lakehouse integration", "description": "Automatically evicts cold data to external data lakes and warehouses." },
+        { "title": "Telegraf data collection", "description": "400+ Telegraf plugins are available for collecting data from external sources." }
+      ],
+      "pros": [
+        "Multiple deployment options: open-source Core, self-managed Enterprise, and fully managed Cloud (Serverless/Dedicated)",
+        "High-throughput ingestion designed for millions of points per second",
+        "Large ecosystem via Telegraf (400+ plugins) and client libraries for Python, JavaScript, Go, C#, and Java",
+        "Free, self-hostable open-source Core edition"
+      ],
+      "cons": [
+        "Cloud Serverless pricing is usage-based across multiple metered dimensions (data in, queries, storage, data out), which can complicate cost forecasting",
+        "Enterprise and Cloud Dedicated pricing is custom/quote-only",
+        "Supported UI languages are not documented on the site"
+      ],
+      "faqs": [
+        { "question": "Is there a free version of InfluxDB?", "answer": "Yes, InfluxDB 3 Core is open source and free to self-host." },
+        { "question": "Does InfluxDB offer a free trial?", "answer": "InfluxDB 3 Enterprise offers a 30-day free trial with no credit card required, and Cloud Serverless offers $250 in free credit." },
+        { "question": "What deployment options are available?", "answer": "InfluxDB 3 Core (open source), InfluxDB 3 Enterprise (self-managed), Cloud Serverless, Cloud Dedicated, and Amazon Timestream for InfluxDB (AWS-managed)." },
+        { "question": "What languages have official client libraries?", "answer": "Python, JavaScript, Go, C#, and Java are listed as supported client libraries." }
+      ],
+      "use_cases": [
+        { "title": "IoT and sensor monitoring", "description": "Captures and analyzes high-velocity sensor and machine data from edge to cloud.", "audience": "IoT and industrial engineering teams" },
+        { "title": "Real-time observability", "description": "Stores and queries operational metrics for monitoring and alerting.", "audience": "DevOps and SRE teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "InfluxDB 3 Core (OSS)", "price": "Free", "billing_cycle": null, "features": ["Open source", "Self-managed", "Community support only"] },
+        { "plan_name": "Cloud Serverless", "price": "Usage-based ($0.0025/MB written, $0.012/100 queries, $0.002/GB-hour storage, $0.09/GB data out)", "billing_cycle": null, "features": ["Multi-tenant", "No minimum commitment", "$250 free credit for upgrades"] },
+        { "plan_name": "Cloud Dedicated", "price": "Custom", "billing_cycle": null, "features": ["Single-tenant infrastructure", "Unlimited scale", "High availability", "Optional SAML/SSO"] },
+        { "plan_name": "InfluxDB 3 Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Self-managed", "30-day free trial", "High availability", "Read replicas", "SAML/SSO"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is InfluxDB Cloud?", "level": 2, "paragraphs": [
+          "InfluxDB Cloud is InfluxData's managed time-series database, designed for high-speed ingestion and real-time analysis of operational and sensor data.",
+          "It's offered alongside self-managed InfluxDB 3 Enterprise and a free open-source InfluxDB 3 Core edition, with Telegraf providing 400+ plugins for data collection."
+        ]},
+        { "id": "who-its-for", "heading": "Who InfluxDB Cloud is for", "level": 2, "paragraphs": [
+          "Teams that need a managed, high-throughput database for IoT, monitoring, or other continuous, high-resolution data streams without managing their own infrastructure."
+        ]}
+      ],
+      "tags": ["freemium", "free-trial", "api"]
+    }
+  },
+  {
+    "tool_id": "8a1651b2-fc5c-4661-9e06-7316b78cb420",
+    "slug": "questdb",
+    "name": "QuestDB",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "QuestDB is an open-source, high-throughput time-series database built for sub-10ms queries and millions of rows per second of ingestion.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": "London, UK and New York, US",
+      "languages": [],
+      "seo_meta_description": "QuestDB: open-source time-series database with sub-10ms queries, high-throughput ingestion, and an optional paid Enterprise tier.",
+      "features": [
+        { "title": "Ultra-low latency queries", "description": "Delivers sub-10ms query response times." },
+        { "title": "High ingestion throughput", "description": "Handles more than 16 million rows per second." },
+        { "title": "Time-series SQL primitives", "description": "Adds SAMPLE BY, ASOF JOIN, and similar SQL extensions for time-series and financial analytics." },
+        { "title": "Multi-tier storage", "description": "Moves data from hot ingestion through real-time columnar storage to a cold Parquet lake." },
+        { "title": "Open file formats", "description": "Native support for Parquet and Iceberg avoids vendor lock-in." },
+        { "title": "Enterprise high availability", "description": "Optional replication and multi-AZ resilience with a 99.9% uptime SLA." }
+      ],
+      "pros": [
+        "Apache 2.0-licensed open-source core is free to self-host",
+        "Very high ingestion throughput (16M+ rows/second) and low query latency",
+        "Native PostgreSQL wire protocol (PGWire) compatibility for existing tooling",
+        "Native Parquet and Iceberg support avoids proprietary storage lock-in"
+      ],
+      "cons": [
+        "Enterprise features (HA, replication, 24/7 support) require contacting sales for pricing",
+        "Marketing and documentation emphasize capital markets/finance use cases, so evaluation may require extra work for other domains",
+        "No published self-serve pricing tier between free open source and quote-based Enterprise"
+      ],
+      "faqs": [
+        { "question": "Is QuestDB free?", "answer": "Yes, the Apache 2.0-licensed open-source version is free to download and self-host." },
+        { "question": "Does QuestDB have a managed cloud option?", "answer": "The site references demo access via demo.questdb.io; commercial Enterprise pricing requires contacting sales." },
+        { "question": "What protocols does QuestDB support?", "answer": "It supports the PostgreSQL wire protocol (PGWire) alongside its own ingestion interfaces." },
+        { "question": "What integrations are available?", "answer": "Grafana, Kafka, Pandas, Python, Spark, Polars, Telegraf, Superset, and Flink are listed as integrations." }
+      ],
+      "use_cases": [
+        { "title": "Capital markets tick data analytics", "description": "Uses SQL extensions like ASOF JOIN and SAMPLE BY for financial time-series analysis.", "audience": "Quant and trading teams" },
+        { "title": "Industrial telemetry analytics", "description": "Ingests and queries high-volume sensor and telemetry data at low latency.", "audience": "Aerospace and energy engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Apache 2.0 licensed", "Self-hosted", "Full feature set"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["24/7 support", "99.9% uptime SLA", "High availability and replication"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is QuestDB?", "level": 2, "paragraphs": [
+          "QuestDB is an open-source time-series database designed for high-performance, low-latency ingestion and querying.",
+          "It adds SQL extensions such as SAMPLE BY and ASOF JOIN for time-series and financial analytics, and stores data using open formats like Parquet and Iceberg."
+        ]},
+        { "id": "who-its-for", "heading": "Who QuestDB is for", "level": 2, "paragraphs": [
+          "Teams in capital markets, aerospace, and energy that need to ingest and query very high-volume time-series data with minimal latency."
+        ]}
+      ],
+      "tags": ["freemium", "ai", "api"]
+    }
+  },
+  {
+    "tool_id": "78eada95-da81-4cfa-9a33-f04a9d8c15e0",
+    "slug": "yugabytedb",
+    "name": "YugabyteDB",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "YugabyteDB is a distributed, PostgreSQL-compatible SQL database for cloud-native apps, available open source or as managed YugabyteDB Aeon.",
+      "pricing_model": "Freemium",
+      "starting_price": "$125/vCPU/month (Aeon Standard plan)",
+      "founded_year": 2016,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "YugabyteDB: distributed, PostgreSQL-compatible SQL database for cloud-native apps, open source or managed via YugabyteDB Aeon.",
+      "features": [
+        { "title": "PostgreSQL compatibility", "description": "Supports stored procedures, triggers, and extensions from the PostgreSQL ecosystem." },
+        { "title": "Automatic sharding and scaling", "description": "Distributes and scales data horizontally without application downtime." },
+        { "title": "Multi-region high availability", "description": "Built-in resilience with multi-region disaster recovery." },
+        { "title": "Vector indexing", "description": "Advanced vector indexing for RAG and GenAI applications." },
+        { "title": "Enterprise security", "description": "End-to-end encryption, connection management, and observability tooling." },
+        { "title": "Multi-model support", "description": "Handles relational, document, and graph-style workloads." }
+      ],
+      "pros": [
+        "Full PostgreSQL compatibility eases migration for existing Postgres applications",
+        "Free, downloadable open-source version",
+        "Free-tier managed YugabyteDB Aeon account available for getting started",
+        "Multi-region high availability and disaster recovery built in"
+      ],
+      "cons": [
+        "Aeon add-ons like Enterprise Security and Business Continuity/DR cost extra ($25/vCPU/month each)",
+        "Enterprise tier pricing is custom/quote-only",
+        "Additional charges apply for disk storage, backup storage, data transfer, and provisioned IOPS beyond compute pricing"
+      ],
+      "faqs": [
+        { "question": "Is YugabyteDB open source?", "answer": "Yes, the open-source version is free to download and self-host." },
+        { "question": "Is there a managed cloud version?", "answer": "Yes, YugabyteDB Aeon is the managed cloud service, with a free tier account available to start." },
+        { "question": "How much does YugabyteDB Aeon cost?", "answer": "The Standard plan starts at $125/vCPU/month and Professional at $167/vCPU/month; Enterprise pricing is custom." },
+        { "question": "What clouds does it run on?", "answer": "AWS, Google Cloud, and Microsoft Azure, plus Kubernetes and hybrid/edge environments." }
+      ],
+      "use_cases": [
+        { "title": "Globally distributed transactional apps", "description": "Runs PostgreSQL-compatible workloads across regions with automatic sharding and HA.", "audience": "Platform and backend engineering teams" },
+        { "title": "AI/RAG applications", "description": "Uses built-in vector indexing to support retrieval-augmented generation over relational data.", "audience": "AI/ML engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Standard", "price": "$125/vCPU/month", "billing_cycle": "monthly", "features": ["Core database features", "PostgreSQL and Cassandra APIs", "Basic security/networking", "24/7 support"] },
+        { "plan_name": "Professional", "price": "$167/vCPU/month", "billing_cycle": "monthly", "features": ["All Standard features", "Global deployment topologies", "Enhanced observability with Performance Advisor", "Optional Enterprise Security / Business Continuity add-ons at $25/vCPU/month each"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["All Professional features", "Enterprise security", "Business continuity/DR built in", "Enterprise integrations"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is YugabyteDB?", "level": 2, "paragraphs": [
+          "YugabyteDB is a distributed SQL database that is compatible with PostgreSQL, built by former Facebook engineers starting in February 2016.",
+          "It's available as free open-source software or as YugabyteDB Aeon, a managed database-as-a-service with a free tier to get started."
+        ]},
+        { "id": "who-its-for", "heading": "Who YugabyteDB is for", "level": 2, "paragraphs": [
+          "Teams building cloud-native, globally distributed applications who want PostgreSQL compatibility along with horizontal scaling and multi-region resilience."
+        ]}
+      ],
+      "tags": ["freemium", "free-plan", "ai", "api"]
+    }
+  },
+  {
+    "tool_id": "992455d6-9786-48b9-a8ac-bca905448c06",
+    "slug": "tidb-cloud",
+    "name": "TiDB Cloud",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "TiDB Cloud is PingCAP's managed distributed SQL database unifying transactional, analytical, and native vector search workloads.",
+      "pricing_model": "Freemium",
+      "starting_price": "$0/month (Starter plan free monthly allowance)",
+      "founded_year": 2015,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "TiDB Cloud: managed distributed SQL database from PingCAP combining OLTP, OLAP, and native vector search in one engine.",
+      "features": [
+        { "title": "Native vector search", "description": "Built-in vector indexing and retrieval for RAG applications." },
+        { "title": "Unified HTAP engine", "description": "Combines transactional, analytical, and vector query capabilities in one system." },
+        { "title": "Elastic autoscaling", "description": "Scales compute up or down to zero based on demand." },
+        { "title": "Distributed ACID transactions", "description": "Maintains consistent state across distributed nodes." },
+        { "title": "Workload isolation", "description": "Dedicated throughput (Request Unit) quotas prevent resource contention." },
+        { "title": "MySQL-compatible SQL", "description": "Uses standard SQL syntax with integrations for LangChain, LlamaIndex, and MCP." }
+      ],
+      "pros": [
+        "Starter plan includes a genuine free monthly allowance (25GiB row storage, 25GiB column storage, 250M Request Units)",
+        "Scale-to-zero reduces costs for intermittent workloads",
+        "Combines transactional, analytical, and vector search in a single database",
+        "Available on AWS, Google Cloud, and Azure"
+      ],
+      "cons": [
+        "Essential and Premium tiers are labeled '(Preview)' and may still change",
+        "Premium tier starts at $1,800/month",
+        "Dedicated tier requires a $1,376/month minimum commitment"
+      ],
+      "faqs": [
+        { "question": "Is TiDB Cloud free to start?", "answer": "Yes, the Starter plan includes a free monthly allowance of storage and Request Units before pay-as-you-go charges apply." },
+        { "question": "Does TiDB Cloud support vector search?", "answer": "Yes, it has native vector search and RAG capabilities integrated into the same engine as its SQL workloads." },
+        { "question": "What cloud providers are supported?", "answer": "TiDB Cloud Dedicated is available on AWS, Google Cloud, and Azure." },
+        { "question": "Is TiDB open source?", "answer": "TiDB is an open-source distributed SQL database; TiDB Cloud is PingCAP's managed offering of it, alongside a self-managed option." }
+      ],
+      "use_cases": [
+        { "title": "HTAP workloads", "description": "Runs transactional and analytical queries against the same data without separate ETL pipelines.", "audience": "Data platform teams" },
+        { "title": "RAG and AI applications", "description": "Combines native vector search with relational data for retrieval-augmented generation.", "audience": "AI application developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Starter", "price": "$0/month + pay-as-you-go", "billing_cycle": "monthly", "features": ["25GiB row storage + 25GiB column storage free", "250M Request Units free per month", "$0.20/GiB additional storage", "$0.10 per 1M additional RUs", "Scale-to-zero"] },
+        { "plan_name": "Essential (Preview)", "price": "~$20/day (typical small production)", "billing_cycle": null, "features": ["Autoscaling up to 100K Request Units", "Point-in-time backup with up to 30-day retention", "Encryption in transit and at rest"] },
+        { "plan_name": "Premium (Preview)", "price": "From $1,800/month", "billing_cycle": "monthly", "features": ["Unlimited autoscaling compute", "Enterprise security (CMEK, PrivateLink, VPC Peering)", "99.99% availability with multi-zone protection"] },
+        { "plan_name": "Dedicated", "price": "From $0.22/hour ($1,376/month minimum)", "billing_cycle": null, "features": ["4-32 vCPU node options", "PCI-DSS and SOC 2 Type II compliant", "Available on AWS, Google Cloud, and Azure"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is TiDB Cloud?", "level": 2, "paragraphs": [
+          "TiDB Cloud is PingCAP's managed version of TiDB, an open-source distributed SQL database founded in 2015 that unifies transactional, analytical, and vector search workloads.",
+          "It offers a free Starter tier with a real monthly allowance, plus usage-based Essential, Premium, and Dedicated tiers for production workloads."
+        ]},
+        { "id": "who-its-for", "heading": "Who TiDB Cloud is for", "level": 2, "paragraphs": [
+          "Teams that need a single database for mixed transactional and analytical (HTAP) workloads, or that want native vector search alongside relational data for AI/RAG apps."
+        ]}
+      ],
+      "tags": ["freemium", "free-plan", "ai", "api"]
+    }
+  },
+  {
+    "tool_id": "ed38eac2-96a6-4a42-b699-28e0cef88f69",
+    "slug": "dgraph",
+    "name": "Dgraph",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Dgraph is an open-source, horizontally distributed graph database with a native GraphQL API for real-time, terabyte-scale workloads.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Dgraph: open-source distributed graph database with native GraphQL support for real-time, terabyte-scale applications.",
+      "features": [
+        { "title": "Native GraphQL API", "description": "Supports schema-driven application development directly via GraphQL, alongside property-graph queries." },
+        { "title": "Horizontal distribution", "description": "Data is sharded and distributed with automatic rebalancing across the cluster." },
+        { "title": "ACID transactions", "description": "Provides ACID transactions with linearizable reads for consistent replication." },
+        { "title": "Full-text search and regex", "description": "Built-in full-text search and regular expression matching on stored data." },
+        { "title": "Geo search", "description": "Native geographic search capability." },
+        { "title": "Multiple protocols", "description": "Responds via gRPC, HTTP, JSON, and Protocol Buffers." }
+      ],
+      "pros": [
+        "Fully open source under the Apache 2.0 license",
+        "Actively maintained with regular releases (v25.x as of 2026)",
+        "Native GraphQL support removes the need for a separate API layer over the graph data",
+        "Designed for horizontal scaling to terabyte-scale, real-time workloads"
+      ],
+      "cons": [
+        "The original dgraph.io marketing site now redirects to documentation, with no visible pricing or company page",
+        "Project ownership has changed hands multiple times (Dgraph Labs to Hypermode to Istari Digital), and a managed Dgraph Cloud offering could not be verified as currently active",
+        "No published company founding year, headquarters, or commercial pricing"
+      ],
+      "faqs": [
+        { "question": "Is Dgraph still maintained?", "answer": "Yes, the open-source project shows active development with regular releases (v25.x as of 2026)." },
+        { "question": "Is Dgraph free to use?", "answer": "Yes, Dgraph is released under the Apache 2.0 open-source license and can be self-hosted." },
+        { "question": "Does Dgraph support GraphQL?", "answer": "Yes, it offers a native GraphQL API in addition to direct property-graph database access." },
+        { "question": "Who owns Dgraph now?", "answer": "Dgraph originated at Dgraph Labs, which was acquired by Hypermode, later acquired by Istari Digital; the open-source project continues to be maintained under this lineage." }
+      ],
+      "use_cases": [
+        { "title": "Knowledge graphs and connected data", "description": "Stores and queries highly connected data at terabyte scale with low latency.", "audience": "Backend engineering teams" },
+        { "title": "GraphQL-first applications", "description": "Uses Dgraph's native GraphQL API as the primary interface for application data.", "audience": "Application developers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Dgraph?", "level": 2, "paragraphs": [
+          "Dgraph is an open-source, horizontally distributed graph database with a native GraphQL API, designed for real-time queries over terabyte-scale, highly connected data.",
+          "The project has changed corporate ownership several times (Dgraph Labs, then Hypermode, then Istari Digital) but remains actively maintained as open-source software."
+        ]},
+        { "id": "who-its-for", "heading": "Who Dgraph is for", "level": 2, "paragraphs": [
+          "Engineering teams building graph-native or GraphQL-first applications who need horizontal scalability and are comfortable self-hosting an open-source database."
+        ]}
+      ],
+      "tags": ["api"]
+    }
+  },
+  {
+    "tool_id": "6c12f04e-e703-497a-b9ff-e4bd73be6bd0",
+    "slug": "surrealdb",
+    "name": "SurrealDB",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SurrealDB is a multi-model database unifying documents, graphs, vectors, time-series, and relational data with ACID transactions.",
+      "pricing_model": "Freemium",
+      "starting_price": "$0.021/hour (after free Start plan instance)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "London, United Kingdom",
+      "languages": [],
+      "seo_meta_description": "SurrealDB: multi-model database combining documents, graphs, vectors, and relational data in one ACID-compliant engine.",
+      "features": [
+        { "title": "Multi-model support", "description": "Combines vector, graph, document, time-series, and relational capabilities in a single engine." },
+        { "title": "SurrealQL", "description": "A unified query language supporting graph traversal, vector search, and transactions." },
+        { "title": "Built-in authentication", "description": "Row-level security and access control managed within the database." },
+        { "title": "Live queries", "description": "Real-time subscriptions for reactive applications." },
+        { "title": "Spectron agent memory", "description": "A built-in agent memory system with entity extraction and knowledge graphs." },
+        { "title": "SurrealDS distributed storage", "description": "Distributed storage engine with quorum consensus and compute-storage separation." }
+      ],
+      "pros": [
+        "Single engine covers document, graph, vector, and relational models, reducing the need for multiple specialized databases",
+        "Always-free Start plan includes one instance and 1GB of storage forever",
+        "Built-in authentication and row-level access control reduce reliance on external auth systems",
+        "Strong AI/agent-memory feature set including hybrid RAG and knowledge graph construction"
+      ],
+      "cons": [
+        "Some advertised features (database branching/forking, object-storage-backed backups) are marked 'coming soon'",
+        "Enterprise plan pricing is custom/quote-only",
+        "Specific self-hosted OS/platform support is not detailed on the marketing pages"
+      ],
+      "faqs": [
+        { "question": "Does SurrealDB have a free tier?", "answer": "Yes, the Start plan includes one free instance and 1GB of free storage forever, plus a no-signup-required sandbox." },
+        { "question": "What data models does SurrealDB support?", "answer": "It unifies document, graph, vector, time-series, and relational data models in one engine with ACID transactions." },
+        { "question": "Does SurrealDB support AI/RAG use cases?", "answer": "Yes, it includes vector similarity search, hybrid RAG, graph-based re-ranking, and an agent memory system called Spectron." },
+        { "question": "Is there an Enterprise plan?", "answer": "Yes, it offers self-hosted deployment, audit logging, SSO, and SLA-backed uptime, with custom pricing." }
+      ],
+      "use_cases": [
+        { "title": "AI agent memory and RAG", "description": "Uses hybrid search and knowledge graph construction to power agent memory and retrieval-augmented generation.", "audience": "AI application developers" },
+        { "title": "Multi-model application backends", "description": "Combines graph, document, and vector data in a single database instead of stitching together multiple systems.", "audience": "Full-stack engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Start", "price": "$0/hr (1 free instance), then from $0.021/hr", "billing_cycle": null, "features": ["1GB storage free forever", "Vertical scaling to terabytes", "Automatic burst scaling", "Daily automated backups", "Cloud RBAC and ABAC"] },
+        { "plan_name": "Scale", "price": "$0.192/node/hr", "billing_cycle": null, "features": ["Highly available, fault-tolerant", "Multiple availability-zone deployment", "Horizontal scaling to petabytes", "Multi-region disaster recovery"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Self-hosted deployments", "Audit logging and compliance", "SSO and advanced access controls", "SLA-backed uptime guarantees", "FIPS-compliant cryptography"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is SurrealDB?", "level": 2, "paragraphs": [
+          "SurrealDB is a multi-model database, registered as SurrealDB Ltd. in England and Wales, that combines documents, graphs, vectors, time-series, and relational data in one ACID-transactional engine.",
+          "It offers SurrealQL as a unified query language and includes built-in authentication, live queries, and an agent-memory feature set aimed at AI applications."
+        ]},
+        { "id": "who-its-for", "heading": "Who SurrealDB is for", "level": 2, "paragraphs": [
+          "Teams that want to avoid running separate document, graph, and vector databases, and AI teams building agent memory or hybrid RAG systems."
+        ]}
+      ],
+      "tags": ["freemium", "free-plan", "ai", "api"]
+    }
+  },
+  {
+    "tool_id": "a92dbe70-936c-4a03-aa4c-6b401ecbc127",
+    "slug": "edgedb",
+    "name": "EdgeDB",
+    "status": "skip",
+    "skip_reason": "EdgeDB has rebranded: the official site (edgedb.com) now redirects to geldata.com, and the company (Gel Data Inc., formerly EdgeDB Inc.) markets the product as 'Gel'. The product no longer operates under the name EdgeDB, so it doesn't match the input name/slug for this record.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "7d00f455-f1c1-4f08-8b80-9aa4fcbc5ec0",
+    "slug": "meilisearch",
+    "name": "Meilisearch",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Meilisearch is an open-source search engine offering fast full-text, semantic, hybrid, and multimodal search, with a managed Cloud option.",
+      "pricing_model": "Freemium",
+      "starting_price": "$20/month (Cloud pay-as-you-go)",
+      "founded_year": 2018,
+      "company_size": null,
+      "headquarters": "Paris, France",
+      "languages": [],
+      "seo_meta_description": "Meilisearch: open-source search engine with full-text, semantic, and hybrid search, plus a managed Meilisearch Cloud option.",
+      "features": [
+        { "title": "Full-text search", "description": "Includes geosearch and faceting alongside standard full-text search." },
+        { "title": "Semantic and hybrid search", "description": "Combines full-text and semantic (vector-based) search approaches." },
+        { "title": "Multimodal search", "description": "Search across images, video, and audio content." },
+        { "title": "Vector storage for RAG", "description": "Stores vectors and automated embeddings for retrieval-augmented generation applications." },
+        { "title": "Federated search", "description": "Searches across multiple data sources from a single query." },
+        { "title": "Search analytics", "description": "Provides analytics and filtering tools for search behavior." }
+      ],
+      "pros": [
+        "Fully open source and self-hostable for free, with 58.6k+ GitHub stars",
+        "Search-as-you-type responses in under 50 milliseconds",
+        "Cloud offers a 14-day free trial with no credit card required",
+        "SDKs for 15+ programming languages plus React, Vue, and Angular integrations"
+      ],
+      "cons": [
+        "Enterprise pricing is custom/quote-only",
+        "Cloud costs scale with document volume, size, and search frequency, requiring the built-in cost estimator to predict pricing",
+        "Advanced features like merchandising and personalization are Enterprise-only"
+      ],
+      "faqs": [
+        { "question": "Is Meilisearch open source?", "answer": "Yes, Meilisearch is open source and available on GitHub, with over 58,000 stars." },
+        { "question": "Does Meilisearch offer a free trial?", "answer": "Yes, Meilisearch Cloud offers a 14-day free trial with no credit card required." },
+        { "question": "What languages have SDK support?", "answer": "15+ languages including JavaScript, Python, Java, Go, Rust, and Swift, plus framework integrations for React, Vue, and Angular." },
+        { "question": "Does Meilisearch support AI/vector search?", "answer": "Yes, it supports semantic and hybrid search, automated embeddings, and vector storage for RAG applications." }
+      ],
+      "use_cases": [
+        { "title": "E-commerce product search", "description": "Provides fast, typo-tolerant full-text search with faceting for product catalogs.", "audience": "E-commerce teams" },
+        { "title": "AI-powered RAG retrieval", "description": "Uses vector storage and hybrid search to retrieve context for AI applications.", "audience": "AI application developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Cloud (Pay-As-You-Go)", "price": "From $20/month", "billing_cycle": "monthly", "features": ["14-day free trial, no credit card required", "Fully managed infrastructure", "Automatic scaling", "Email support"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Dedicated infrastructure", "Up to 99.999% uptime SLA", "Dedicated Slack support channel", "SSO SAML and SOC 2 compliance", "Advanced analytics, merchandising, and personalization"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Meilisearch?", "level": 2, "paragraphs": [
+          "Meilisearch, founded in 2018 and headquartered in Paris, France, is an open-source search engine that positions itself as a unified search and AI retrieval platform.",
+          "It supports full-text, semantic, hybrid, and multimodal search, and is available self-hosted for free or through the managed Meilisearch Cloud."
+        ]},
+        { "id": "who-its-for", "heading": "Who Meilisearch is for", "level": 2, "paragraphs": [
+          "Development teams that need fast, typo-tolerant search for websites or apps, and AI teams that need vector storage and hybrid retrieval for RAG use cases."
+        ]}
+      ],
+      "tags": ["freemium", "free-trial", "ai", "api"]
+    }
+  }
+]
