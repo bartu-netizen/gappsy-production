@@ -1,8 +1,11 @@
 import type { ToolComparisonContent } from './types';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
+import airbyteVsFivetranContent from './airbyte-vs-fivetran';
 import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
 import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
+import awsVsGoogleCloudContent from './aws-vs-google-cloud';
+import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
 import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
 import backblazeVsIdriveContent from './backblaze-vs-idrive';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
@@ -25,15 +28,19 @@ import cursorVsWindsurfContent from './cursor-vs-windsurf';
 import dallEVsMidjourneyContent from './dall-e-vs-midjourney';
 import dallEVsStableDiffusionContent from './dall-e-vs-stable-diffusion';
 import descriptVsVeedContent from './descript-vs-veed';
+import firebaseVsSupabaseContent from './firebase-vs-supabase';
 import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
 import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
+import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
+import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
 import hubspotCrmVsPipedriveContent from './hubspot-crm-vs-pipedrive';
 import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
+import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
 import klingAiVsRunwayContent from './kling-ai-vs-runway';
 import livechatVsTidioContent from './livechat-vs-tidio';
 import lookerVsTableauContent from './looker-vs-tableau';
@@ -42,6 +49,7 @@ import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sen
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
+import netlifyVsVercelContent from './netlify-vs-vercel';
 import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
@@ -58,9 +66,12 @@ import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 // /compare/:slug using DB-sourced facts only — this is purely additive.
 const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
+  'airbyte-vs-fivetran': airbyteVsFivetranContent,
   'aircall-vs-openphone': aircallVsOpenphoneContent,
   'amazon-redshift-vs-snowflake': amazonRedshiftVsSnowflakeContent,
   'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
+  'aws-vs-google-cloud': awsVsGoogleCloudContent,
+  'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
   'backblaze-vs-carbonite': backblazeVsCarboniteContent,
   'backblaze-vs-idrive': backblazeVsIdriveContent,
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
@@ -83,15 +94,19 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'dall-e-vs-midjourney': dallEVsMidjourneyContent,
   'dall-e-vs-stable-diffusion': dallEVsStableDiffusionContent,
   'descript-vs-veed': descriptVsVeedContent,
+  'firebase-vs-supabase': firebaseVsSupabaseContent,
   'gainsight-vs-totango': gainsightVsTotangoContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
   'google-analytics-vs-plausible': googleAnalyticsVsPlausibleContent,
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
+  'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
+  'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
   'hubspot-crm-vs-pipedrive': hubspotCrmVsPipedriveContent,
   'hubspot-crm-vs-salesforce': hubspotCrmVsSalesforceContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
+  'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
   'kling-ai-vs-runway': klingAiVsRunwayContent,
   'livechat-vs-tidio': livechatVsTidioContent,
   'looker-vs-tableau': lookerVsTableauContent,
@@ -100,6 +115,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
+  'netlify-vs-vercel': netlifyVsVercelContent,
   'pika-vs-runway': pikaVsRunwayContent,
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
