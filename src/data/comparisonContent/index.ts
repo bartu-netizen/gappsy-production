@@ -14,6 +14,7 @@ import asanaVsLinearContent from './asana-vs-linear';
 import asanaVsMondayContent from './asana-vs-monday';
 import asanaVsTrelloContent from './asana-vs-trello';
 import ashbyVsGreenhouseContent from './ashby-vs-greenhouse';
+import autodeskConstructionCloudVsProcoreContent from './autodesk-construction-cloud-vs-procore';
 import automatischVsZapierContent from './automatisch-vs-zapier';
 import awsVsGoogleCloudContent from './aws-vs-google-cloud';
 import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
@@ -28,6 +29,7 @@ import boltNewVsV0Content from './bolt-new-vs-v0';
 import breezyHrVsJazzhrContent from './breezy-hr-vs-jazzhr';
 import brexVsRampContent from './brex-vs-ramp';
 import bubbleVsSoftrContent from './bubble-vs-softr';
+import buildertrendVsCoconstructContent from './buildertrend-vs-coconstruct';
 import canvaVsFigmaContent from './canva-vs-figma';
 import canvaVsMicrosoftDesignerContent from './canva-vs-microsoft-designer';
 import canvaVsPhotoshopContent from './canva-vs-photoshop';
@@ -44,6 +46,8 @@ import clickupVsMondayContent from './clickup-vs-monday';
 import clioVsMycaseContent from './clio-vs-mycase';
 import clioVsPracticepantherContent from './clio-vs-practicepanther';
 import clioVsSmokeballContent from './clio-vs-smokeball';
+import cloverVsLightspeedRetailContent from './clover-vs-lightspeed-retail';
+import cloverVsSquareContent from './clover-vs-square';
 import codaVsNotionContent from './coda-vs-notion';
 import constantContactVsMailchimpContent from './constant-contact-vs-mailchimp';
 import copyAiVsJasperContent from './copy-ai-vs-jasper';
@@ -76,6 +80,8 @@ import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
+import housecallProVsJobberContent from './housecall-pro-vs-jobber';
+import housecallProVsServicetitanContent from './housecall-pro-vs-servicetitan';
 import hubspotCrmVsPipedriveContent from './hubspot-crm-vs-pipedrive';
 import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
 import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
@@ -110,11 +116,13 @@ import salesforceServiceCloudVsServicenowContent from './salesforce-service-clou
 import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
 import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
 import skillshareVsUdemyContent from './skillshare-vs-udemy';
+import spotonVsToastContent from './spoton-vs-toast';
 import squareVsStripeContent from './square-vs-stripe';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
 import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 import tallyVsTypeformContent from './tally-vs-typeform';
 import teachableVsThinkificContent from './teachable-vs-thinkific';
+import toastVsTouchbistroContent from './toast-vs-touchbistro';
 import ukgProVsWorkdayContent from './ukg-pro-vs-workday';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
@@ -136,6 +144,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'asana-vs-monday': asanaVsMondayContent,
   'asana-vs-trello': asanaVsTrelloContent,
   'ashby-vs-greenhouse': ashbyVsGreenhouseContent,
+  'autodesk-construction-cloud-vs-procore': autodeskConstructionCloudVsProcoreContent,
   'automatisch-vs-zapier': automatischVsZapierContent,
   'aws-vs-google-cloud': awsVsGoogleCloudContent,
   'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
@@ -150,6 +159,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'breezy-hr-vs-jazzhr': breezyHrVsJazzhrContent,
   'brex-vs-ramp': brexVsRampContent,
   'bubble-vs-softr': bubbleVsSoftrContent,
+  'buildertrend-vs-coconstruct': buildertrendVsCoconstructContent,
   'canva-vs-figma': canvaVsFigmaContent,
   'canva-vs-microsoft-designer': canvaVsMicrosoftDesignerContent,
   'canva-vs-photoshop': canvaVsPhotoshopContent,
@@ -166,6 +176,8 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'clio-vs-mycase': clioVsMycaseContent,
   'clio-vs-practicepanther': clioVsPracticepantherContent,
   'clio-vs-smokeball': clioVsSmokeballContent,
+  'clover-vs-lightspeed-retail': cloverVsLightspeedRetailContent,
+  'clover-vs-square': cloverVsSquareContent,
   'coda-vs-notion': codaVsNotionContent,
   'constant-contact-vs-mailchimp': constantContactVsMailchimpContent,
   'copy-ai-vs-jasper': copyAiVsJasperContent,
@@ -198,6 +210,8 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
+  'housecall-pro-vs-jobber': housecallProVsJobberContent,
+  'housecall-pro-vs-servicetitan': housecallProVsServicetitanContent,
   'hubspot-crm-vs-pipedrive': hubspotCrmVsPipedriveContent,
   'hubspot-crm-vs-salesforce': hubspotCrmVsSalesforceContent,
   'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
@@ -232,11 +246,13 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
   'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
   'skillshare-vs-udemy': skillshareVsUdemyContent,
+  'spoton-vs-toast': spotonVsToastContent,
   'square-vs-stripe': squareVsStripeContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
   'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
   'tally-vs-typeform': tallyVsTypeformContent,
   'teachable-vs-thinkific': teachableVsThinkificContent,
+  'toast-vs-touchbistro': toastVsTouchbistroContent,
   'ukg-pro-vs-workday': ukgProVsWorkdayContent,
 };
 
