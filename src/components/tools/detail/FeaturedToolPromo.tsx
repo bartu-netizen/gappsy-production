@@ -20,32 +20,37 @@ export interface FeaturedTool {
 // get featured=true too and start rotating through here automatically, no
 // code change needed.
 //
-// Returns a shuffled POOL (up to `count`, excluding the tool whose own page
-// this is), not a single tool — the page distributes pool[0], pool[1], ...
+// Returns a shuffled POOL (up to `count`, excluding the tool(s) whose own
+// page this is — a single slug on a tool page, both slugs on a /compare/
+// page), not a single tool — the page distributes pool[0], pool[1], ...
 // across multiple placements (sidebar top/bottom, a few spots inline in the
 // article) so a page never shows the *same* competitor twice. When
 // inventory is thin (today: 1-2 tools total), later slots simply come back
 // `undefined` and those placements render nothing — no repeats, no
 // placeholder clutter, same convention as ToolCardRow.
-export function useFeaturedToolPool(excludeSlug: string, count: number): FeaturedTool[] | undefined {
+export function useFeaturedToolPool(excludeSlug: string | string[], count: number): FeaturedTool[] | undefined {
   const [pool, setPool] = useState<FeaturedTool[] | undefined>(undefined);
+  const excludeSlugs = Array.isArray(excludeSlug) ? excludeSlug : [excludeSlug];
+  const excludeKey = excludeSlugs.join(',');
 
   useEffect(() => {
     let cancelled = false;
-    supabase
+    let query = supabase
       .from('tools')
       .select('slug, name, logo, short_description, pricing_model, starting_price')
       .eq('featured', true)
-      .eq('status', 'published')
-      .neq('slug', excludeSlug)
-      .limit(20)
-      .then(({ data }) => {
-        if (cancelled) return;
-        const shuffled = [...(data || [])].sort(() => Math.random() - 0.5);
-        setPool(shuffled.slice(0, count));
-      });
+      .eq('status', 'published');
+    for (const slug of excludeSlugs) {
+      if (slug) query = query.neq('slug', slug);
+    }
+    query.limit(20).then(({ data }) => {
+      if (cancelled) return;
+      const shuffled = [...(data || [])].sort(() => Math.random() - 0.5);
+      setPool(shuffled.slice(0, count));
+    });
     return () => { cancelled = true; };
-  }, [excludeSlug, count]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [excludeKey, count]);
 
   return pool;
 }

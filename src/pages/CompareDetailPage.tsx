@@ -24,6 +24,9 @@ import { supabase } from '../lib/supabase';
 import { getToolContent } from '../data/toolContent';
 import { getComparisonContent } from '../data/comparisonContent';
 import { useRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparisons';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
+import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
+import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 
 interface ToolRow {
   id: string;
@@ -161,6 +164,20 @@ export default function CompareDetailPage() {
   const [redirectTo, setRedirectTo] = useState<string | null>(null);
 
   const recentSlugs = useRecentlyViewedComparisons(comparisonSlug || '');
+
+  // Same featured-ad mechanism as ToolDetailPage: a pool of up to 6,
+  // excluding BOTH tools being compared (neither is "this page's own tool"
+  // here), distributed across 1 prominent sidebar slot + 2 quieter ones and
+  // up to 2 inline mid-article cards. Thin inventory just means later slots
+  // come back empty and render nothing — see FeaturedToolPromo.tsx.
+  const featuredExcludeSlugs = comparison ? [comparison.tool_a.slug, comparison.tool_b.slug] : [];
+  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 6);
+  const featuredPromo = featuredPool?.[0];
+  const featuredPromoSecondary = featuredPool?.[1];
+  const featuredPromoTertiary = featuredPool?.[2];
+  const inlineFeaturedPromoA = featuredPool?.[3];
+  const inlineFeaturedPromoB = featuredPool?.[4];
+  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary || featuredPromoTertiary);
 
   useEffect(() => {
     if (!comparisonSlug) return;
@@ -401,18 +418,38 @@ export default function CompareDetailPage() {
           </div>
 
           <div className="min-w-0 space-y-14">
-            {comparisonContent && (
-              <section id="verdict" className="scroll-mt-24">
-                <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{comparisonContent.verdict}</p>
-              </section>
-            )}
+            {/* Zone A pairs the verdict/facts/differences narrative with the
+                featured-ad sidebar; Zone B (below) drops the sidebar column
+                entirely once its content naturally ends — same convention as
+                ToolDetailPage's Zone A/B split. The sidebar itself only
+                exists to carry ad slots (unlike ToolFactsSidebar, which
+                always has real facts to show), so it's only rendered at all
+                when there's actually a promo to fill it with. */}
+            <div className={hasSidebarPromos ? 'flex flex-col lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start' : ''}>
+              <div className="space-y-14 min-w-0">
+                {comparisonContent && (
+                  <section id="verdict" className="scroll-mt-24">
+                    <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{comparisonContent.verdict}</p>
+                  </section>
+                )}
 
-            <CompareFactsTable toolA={factsA} toolB={factsB} content={comparisonContent} />
+                <CompareFactsTable toolA={factsA} toolB={factsB} content={comparisonContent} />
 
-            {comparisonContent && (
-              <CompareKeyDifferences toolAName={aRow.name} toolBName={bRow.name} differences={comparisonContent.keyDifferences} />
-            )}
+                {comparisonContent && (
+                  <CompareKeyDifferences toolAName={aRow.name} toolBName={bRow.name} differences={comparisonContent.keyDifferences} />
+                )}
+              </div>
 
+              {hasSidebarPromos && (
+                <div className="space-y-4 lg:sticky lg:top-24">
+                  {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
+                  {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
+                  {featuredPromoTertiary && <FeaturedToolSidebarCompact tool={featuredPromoTertiary} />}
+                </div>
+              )}
+            </div>
+
+            {/* Zone B — full width, no sidebar column */}
             {comparisonContent && <CompareFeatureMatrix toolAName={aRow.name} toolBName={bRow.name} groups={comparisonContent.featureMatrix} />}
 
             <ComparePricing toolA={factsA} toolB={factsB} plansA={extrasA.pricingPlans} plansB={extrasB.pricingPlans} />
@@ -421,6 +458,8 @@ export default function CompareDetailPage() {
               toolA={{ name: aRow.name, pros: contentA?.pros || [], cons: contentA?.cons || [] }}
               toolB={{ name: bRow.name, pros: contentB?.pros || [], cons: contentB?.cons || [] }}
             />
+
+            {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
 
             <CompareUseCases
               toolA={{ name: aRow.name, useCases: contentA?.useCases || [] }}
@@ -434,6 +473,8 @@ export default function CompareDetailPage() {
               toolA={{ name: aRow.name, slug: aRow.slug, screenshots: extrasA.screenshots, websiteUrl: factsA.websiteUrl }}
               toolB={{ name: bRow.name, slug: bRow.slug, screenshots: extrasB.screenshots, websiteUrl: factsB.websiteUrl }}
             />
+
+            {inlineFeaturedPromoB && <FeaturedToolInlineCard tool={inlineFeaturedPromoB} />}
 
             <CompareAlternatives
               toolA={{ name: aRow.name, alternatives: contentA?.alternatives || [] }}
@@ -508,6 +549,12 @@ export default function CompareDetailPage() {
       </main>
 
       <FooterWrapper />
+
+      <StickyMobileToolBar featuredPromo={featuredPromo} />
+
+      <StickyDesktopToolBar
+        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
+      />
     </div>
   );
 }
