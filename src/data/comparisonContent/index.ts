@@ -81,12 +81,15 @@ import dropboxVsGoogleDriveContent from './dropbox-vs-google-drive';
 import evernoteVsNotionContent from './evernote-vs-notion';
 import expressvpnVsNordvpnContent from './expressvpn-vs-nordvpn';
 import firebaseVsSupabaseContent from './firebase-vs-supabase';
+import framerVsWebflowContent from './framer-vs-webflow';
 import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
 import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
 import googleFormsVsJotformContent from './google-forms-vs-jotform';
 import googleWorkspaceVsMicrosoft365Content from './google-workspace-vs-microsoft-365';
+import gotoMeetingVsRingcentralVideoContent from './goto-meeting-vs-ringcentral-video';
+import gotoMeetingVsZoomContent from './goto-meeting-vs-zoom';
 import greenhouseVsLeverContent from './greenhouse-vs-lever';
 import greenhouseVsWorkableContent from './greenhouse-vs-workable';
 import gumroadVsSellfyContent from './gumroad-vs-sellfy';
@@ -115,6 +118,7 @@ import klingAiVsRunwayContent from './kling-ai-vs-runway';
 import livechatVsTidioContent from './livechat-vs-tidio';
 import lookerVsTableauContent from './looker-vs-tableau';
 import lovableVsReplitContent from './lovable-vs-replit';
+import mazeVsUsertestingContent from './maze-vs-usertesting';
 import mcafeeVsNorton360Content from './mcafee-vs-norton-360';
 import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sense';
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
@@ -129,6 +133,7 @@ import paypalVsStripeContent from './paypal-vs-stripe';
 import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
 import plausibleVsUmamiContent from './plausible-vs-umami';
+import qualtricsVsQuestionproContent from './qualtrics-vs-questionpro';
 import quillbotVsWordtuneContent from './quillbot-vs-wordtune';
 import railwayVsRenderContent from './railway-vs-render';
 import revolutBusinessVsWiseBusinessContent from './revolut-business-vs-wise-business';
@@ -142,12 +147,15 @@ import skillshareVsUdemyContent from './skillshare-vs-udemy';
 import socialbeeVsSocialpilotContent from './socialbee-vs-socialpilot';
 import spotonVsToastContent from './spoton-vs-toast';
 import squareVsStripeContent from './square-vs-stripe';
+import squarespaceVsWixContent from './squarespace-vs-wix';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
 import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
 import tallyVsTypeformContent from './tally-vs-typeform';
 import teachableVsThinkificContent from './teachable-vs-thinkific';
 import toastVsTouchbistroContent from './toast-vs-touchbistro';
 import ukgProVsWorkdayContent from './ukg-pro-vs-workday';
+import usertestingVsUserzoomContent from './usertesting-vs-userzoom';
+import wherebyVsZoomContent from './whereby-vs-zoom';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
@@ -235,12 +243,15 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'evernote-vs-notion': evernoteVsNotionContent,
   'expressvpn-vs-nordvpn': expressvpnVsNordvpnContent,
   'firebase-vs-supabase': firebaseVsSupabaseContent,
+  'framer-vs-webflow': framerVsWebflowContent,
   'gainsight-vs-totango': gainsightVsTotangoContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
   'google-analytics-vs-plausible': googleAnalyticsVsPlausibleContent,
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
   'google-forms-vs-jotform': googleFormsVsJotformContent,
   'google-workspace-vs-microsoft-365': googleWorkspaceVsMicrosoft365Content,
+  'goto-meeting-vs-ringcentral-video': gotoMeetingVsRingcentralVideoContent,
+  'goto-meeting-vs-zoom': gotoMeetingVsZoomContent,
   'greenhouse-vs-lever': greenhouseVsLeverContent,
   'greenhouse-vs-workable': greenhouseVsWorkableContent,
   'gumroad-vs-sellfy': gumroadVsSellfyContent,
@@ -269,6 +280,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'livechat-vs-tidio': livechatVsTidioContent,
   'looker-vs-tableau': lookerVsTableauContent,
   'lovable-vs-replit': lovableVsReplitContent,
+  'maze-vs-usertesting': mazeVsUsertestingContent,
   'mcafee-vs-norton-360': mcafeeVsNorton360Content,
   'microsoft-power-bi-vs-qlik-sense': microsoftPowerBiVsQlikSenseContent,
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
@@ -283,6 +295,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'pika-vs-runway': pikaVsRunwayContent,
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
   'plausible-vs-umami': plausibleVsUmamiContent,
+  'qualtrics-vs-questionpro': qualtricsVsQuestionproContent,
   'quillbot-vs-wordtune': quillbotVsWordtuneContent,
   'railway-vs-render': railwayVsRenderContent,
   'revolut-business-vs-wise-business': revolutBusinessVsWiseBusinessContent,
@@ -296,12 +309,15 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'socialbee-vs-socialpilot': socialbeeVsSocialpilotContent,
   'spoton-vs-toast': spotonVsToastContent,
   'square-vs-stripe': squareVsStripeContent,
+  'squarespace-vs-wix': squarespaceVsWixContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
   'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
   'tally-vs-typeform': tallyVsTypeformContent,
   'teachable-vs-thinkific': teachableVsThinkificContent,
   'toast-vs-touchbistro': toastVsTouchbistroContent,
   'ukg-pro-vs-workday': ukgProVsWorkdayContent,
+  'usertesting-vs-userzoom': usertestingVsUserzoomContent,
+  'whereby-vs-zoom': wherebyVsZoomContent,
 };
 
 export function getComparisonContent(slug: string): ToolComparisonContent | undefined {
