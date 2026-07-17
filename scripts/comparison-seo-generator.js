@@ -14,7 +14,12 @@ const META_DESCRIPTION_MAX = 160;
 function truncate(text, max) {
   const trimmed = text.trim();
   if (trimmed.length <= max) return trimmed;
-  return `${trimmed.slice(0, max - 1).trimEnd()}…`;
+  const cut = trimmed.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  // Only snap back to the last word boundary if it doesn't waste much of
+  // the budget; otherwise a hard cut is still better than a tiny snippet.
+  const clean = lastSpace > max - 20 ? cut.slice(0, lastSpace) : cut;
+  return `${clean.trimEnd()}…`;
 }
 
 export function generateComparisonSEOData({ toolA, toolB, comparisonContent }) {
@@ -28,7 +33,9 @@ export function generateComparisonSEOData({ toolA, toolB, comparisonContent }) {
   return { title, description, canonical, ogImage, slug };
 }
 
-export function generateComparisonJSONLD({ toolA, toolB, comparisonContent, seoData }) {
+const GAPPSY_ORG = { '@type': 'Organization', name: 'Gappsy', url: DOMAIN };
+
+export function generateComparisonJSONLD({ toolA, toolB, comparisonContent, seoData, createdAt, updatedAt }) {
   const canonical = seoData.canonical;
   const graph = [];
 
@@ -41,6 +48,22 @@ export function generateComparisonJSONLD({ toolA, toolB, comparisonContent, seoD
       { '@type': 'ListItem', position: 3, name: `${toolA.name} vs ${toolB.name}`, item: canonical },
     ],
   });
+
+  if (comparisonContent) {
+    graph.push({
+      '@type': 'TechArticle',
+      '@id': `${canonical}#article`,
+      headline: `${toolA.name} vs ${toolB.name}: Pricing, Features & Verdict Compared`,
+      description: seoData.description,
+      mainEntityOfPage: canonical,
+      url: canonical,
+      ...(createdAt ? { datePublished: createdAt } : {}),
+      ...(updatedAt || createdAt ? { dateModified: updatedAt || createdAt } : {}),
+      author: GAPPSY_ORG,
+      publisher: GAPPSY_ORG,
+      ...(isSafeHttpUrl(seoData.ogImage) ? { image: seoData.ogImage } : {}),
+    });
+  }
 
   if (comparisonContent?.faqs?.length) {
     graph.push({
@@ -79,6 +102,7 @@ export function generateComparisonStaticBodyHTML({
   contentB,
   comparisonContent,
   seoData,
+  relatedComparisons = [],
 }) {
   const bestForHTML = comparisonContent
     ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
@@ -212,6 +236,18 @@ export function generateComparisonStaticBodyHTML({
       <div>${comparisonContent.faqs.map((faq) => `<details style="margin-bottom:0.75rem;border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem 1rem;"><summary style="font-weight:600;cursor:pointer;">${escapeHtml(faq.question)}</summary><p style="margin-top:0.5rem;color:#374151;line-height:1.6;">${escapeHtml(faq.answer)}</p></details>`).join('\n        ')}</div>`
     : '';
 
+  const relatedComparisonsHTML = relatedComparisons.length
+    ? `<h2 id="related-comparisons" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Related Comparisons</h2>
+      <ul style="list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        ${relatedComparisons
+          .map(
+            (c) =>
+              `<li style="border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem;"><a href="/compare/${escapeHtml(c.slug)}/" style="color:#4F46E5;font-weight:500;">${escapeHtml(c.tool_a.name)} vs ${escapeHtml(c.tool_b.name)}</a></li>`
+          )
+          .join('')}
+      </ul>`
+    : '';
+
   return `
     <!-- PRERENDER_OK: Static HTML for crawlers -->
     <div style="max-width:960px;margin:0 auto;padding:20px;font-family:system-ui,-apple-system,sans-serif;">
@@ -231,6 +267,7 @@ export function generateComparisonStaticBodyHTML({
       ${useCasesHTML}
       ${alternativesHTML}
       ${faqHTML}
+      ${relatedComparisonsHTML}
       <p style="margin-top:2rem;"><a href="/tools/${escapeHtml(toolA.slug)}/" style="color:#4F46E5;">Read the full ${escapeHtml(toolA.name)} review</a> · <a href="/tools/${escapeHtml(toolB.slug)}/" style="color:#4F46E5;">Read the full ${escapeHtml(toolB.name)} review</a></p>
       <noscript>
         <p style="background:#FEF3C7;border:1px solid #F59E0B;padding:1rem;border-radius:0.5rem;margin-top:2rem;">

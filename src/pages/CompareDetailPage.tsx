@@ -42,6 +42,8 @@ interface ToolRow {
 interface ComparisonRow {
   id: string;
   slug: string;
+  created_at: string | null;
+  updated_at: string | null;
   tool_a: ToolRow;
   tool_b: ToolRow;
 }
@@ -55,6 +57,15 @@ interface ToolExtras {
 }
 
 const EMPTY_EXTRAS: ToolExtras = { primaryCategory: null, tagSlugs: new Set(), integrationCount: 0, pricingPlans: [], screenshots: [] };
+
+function truncateDescription(text: string, max = 160): string {
+  const trimmed = text.trim();
+  if (trimmed.length <= max) return trimmed;
+  const cut = trimmed.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  const clean = lastSpace > max - 20 ? cut.slice(0, lastSpace) : cut;
+  return `${clean.trimEnd()}…`;
+}
 
 function isSafeHttpUrl(value: string | null | undefined): value is string {
   if (!value) return false;
@@ -77,7 +88,7 @@ function reverseSlug(slug: string): string | null {
 }
 
 const COMPARISON_SELECT =
-  'id, slug, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified)';
+  'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified)';
 
 async function fetchToolExtras(toolId: string): Promise<ToolExtras> {
   const [catResult, tagResult, integrationsResult, pricingResult, screenshotsResult] = await Promise.all([
@@ -144,6 +155,7 @@ export default function CompareDetailPage() {
   const [extrasA, setExtrasA] = useState<ToolExtras>(EMPTY_EXTRAS);
   const [extrasB, setExtrasB] = useState<ToolExtras>(EMPTY_EXTRAS);
   const [related, setRelated] = useState<{ slug: string; tool_a: ToolRow; tool_b: ToolRow }[]>([]);
+  const [sameToolComparisons, setSameToolComparisons] = useState<{ slug: string; tool_a: ToolRow; tool_b: ToolRow }[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [redirectTo, setRedirectTo] = useState<string | null>(null);
@@ -197,6 +209,32 @@ export default function CompareDetailPage() {
         setLoading(false);
       });
   }, [comparisonSlug]);
+
+  // Real, always-populated "related comparisons": other published comparisons
+  // sharing either tool with the one currently open. Unlike `related`
+  // (below), this doesn't depend on localStorage/browsing history, so it is
+  // non-empty for first-time visitors and (via the mirrored static-prerender
+  // logic in scripts/comparison-seo-generator.js) for crawlers as well.
+  useEffect(() => {
+    if (!comparison) {
+      setSameToolComparisons([]);
+      return;
+    }
+    const aId = comparison.tool_a.id;
+    const bId = comparison.tool_b.id;
+    supabase
+      .from('tool_comparisons')
+      .select(COMPARISON_SELECT)
+      .or(`tool_a_id.eq.${aId},tool_b_id.eq.${aId},tool_a_id.eq.${bId},tool_b_id.eq.${bId}`)
+      .eq('status', 'published')
+      .neq('slug', comparison.slug)
+      .order('slug', { ascending: true })
+      .limit(8)
+      .then(({ data }) => {
+        const rows = (data || []) as unknown as { slug: string; tool_a: ToolRow; tool_b: ToolRow }[];
+        setSameToolComparisons(rows.filter((r) => r.tool_a && r.tool_b));
+      });
+  }, [comparison]);
 
   useEffect(() => {
     if (recentSlugs.length === 0) {
@@ -269,9 +307,30 @@ export default function CompareDetailPage() {
   const comparisonContent = getComparisonContent(comparison.slug);
 
   const title = `${aRow.name} vs ${bRow.name}: Pricing, Features & Verdict Compared | Gappsy`;
-  const description =
-    comparisonContent?.verdict.slice(0, 155).trim() ||
-    `Compare ${aRow.name} and ${bRow.name} on pricing, features, platforms, and ratings.`;
+  const description = comparisonContent?.verdict
+    ? truncateDescription(comparisonContent.verdict)
+    : `Compare ${aRow.name} and ${bRow.name} on pricing, features, platforms, and ratings.`;
+
+  const canonicalUrl = `https://www.gappsy.com/compare/${comparison.slug}/`;
+  const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://www.gappsy.com' };
+
+  const articleJsonLd = comparisonContent
+    ? [
+        {
+          '@type': 'TechArticle',
+          '@id': `${canonicalUrl}#article`,
+          headline: `${aRow.name} vs ${bRow.name}: Pricing, Features & Verdict Compared`,
+          description,
+          mainEntityOfPage: canonicalUrl,
+          url: canonicalUrl,
+          ...(comparison.created_at ? { datePublished: comparison.created_at } : {}),
+          dateModified: comparison.updated_at || comparison.created_at || undefined,
+          author: gappsyOrg,
+          publisher: gappsyOrg,
+          ...(factsA.logo || factsB.logo ? { image: factsA.logo || factsB.logo } : {}),
+        },
+      ]
+    : [];
 
   const faqJsonLd =
     comparisonContent && comparisonContent.faqs.length > 0
@@ -299,6 +358,7 @@ export default function CompareDetailPage() {
     ...(extrasA.screenshots.length || extrasB.screenshots.length ? [{ id: 'screenshots', label: 'Screenshots' }] : []),
     ...((contentA?.alternatives.length || contentB?.alternatives.length) ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(comparisonContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
+    ...(sameToolComparisons.length > 0 ? [{ id: 'related-comparisons', label: 'Related Comparisons' }] : []),
   ];
 
   function handleSwitchA(next: ToolOption) {
@@ -316,7 +376,7 @@ export default function CompareDetailPage() {
         path={`/compare/${comparison.slug}`}
         ogImage={factsA.logo || factsB.logo || '/og/default-og-image.svg'}
         breadcrumbs={[{ name: 'Compare', path: '/compare' }, { name: `${aRow.name} vs ${bRow.name}`, path: `/compare/${comparison.slug}` }]}
-        jsonLd={faqJsonLd}
+        jsonLd={[...articleJsonLd, ...faqJsonLd]}
       />
 
       <SoftwareHeader variant="premium" />
@@ -421,6 +481,17 @@ export default function CompareDetailPage() {
                 )}
               </div>
             </section>
+
+            {sameToolComparisons.length > 0 && (
+              <section id="related-comparisons">
+                <h2 className="text-xl font-bold text-[#0B1221] mb-4">Related Comparisons</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {sameToolComparisons.map((c) => (
+                    <ComparisonCard key={c.slug} slug={c.slug} toolA={c.tool_a} toolB={c.tool_b} />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {related.length > 0 && (
               <section>

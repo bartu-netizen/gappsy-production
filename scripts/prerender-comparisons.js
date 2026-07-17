@@ -59,7 +59,7 @@ async function fetchPublishedComparisons(supabase) {
   const { data, error } = await supabase
     .from('tool_comparisons')
     .select(
-      'id, slug, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status)'
+      'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status)'
     )
     .eq('status', 'published')
     .order('slug', { ascending: true });
@@ -163,6 +163,27 @@ export async function prerenderComparisons(options = {}) {
   }
 
   const toolIds = [...new Set(comparisons.flatMap((c) => [c.tool_a.id, c.tool_b.id]))];
+
+  // Index comparisons by the tool IDs they involve, so each page can list
+  // sibling comparisons that share either tool (mirrors the live
+  // CompareDetailPage.tsx "Related Comparisons" section, but crawlable).
+  const comparisonsByToolId = new Map();
+  for (const c of comparisons) {
+    for (const toolId of [c.tool_a.id, c.tool_b.id]) {
+      const list = comparisonsByToolId.get(toolId) || [];
+      list.push(c);
+      comparisonsByToolId.set(toolId, list);
+    }
+  }
+  function findRelatedComparisons(comparison) {
+    const siblings = new Map();
+    for (const toolId of [comparison.tool_a.id, comparison.tool_b.id]) {
+      for (const other of comparisonsByToolId.get(toolId) || []) {
+        if (other.slug !== comparison.slug) siblings.set(other.slug, other);
+      }
+    }
+    return [...siblings.values()].sort((a, b) => a.slug.localeCompare(b.slug)).slice(0, 8);
+  }
   const [tagsByToolId, categoriesByToolId, pricingPlansByToolId] = await Promise.all([
     fetchTagsByToolId(supabase, toolIds),
     fetchCategoriesByToolId(supabase, toolIds),
@@ -189,7 +210,14 @@ export async function prerenderComparisons(options = {}) {
 
       const comparisonContent = getComparisonContent(comparison.slug);
       const seoData = generateComparisonSEOData({ toolA, toolB, comparisonContent });
-      const jsonLd = generateComparisonJSONLD({ toolA, toolB, comparisonContent, seoData });
+      const jsonLd = generateComparisonJSONLD({
+        toolA,
+        toolB,
+        comparisonContent,
+        seoData,
+        createdAt: comparison.created_at,
+        updatedAt: comparison.updated_at,
+      });
       const factsA = buildFacts(toolA, tagsByToolId.get(toolA.id) || new Set());
       const factsB = buildFacts(toolB, tagsByToolId.get(toolB.id) || new Set());
       const staticBodyHTML = generateComparisonStaticBodyHTML({
@@ -205,6 +233,7 @@ export async function prerenderComparisons(options = {}) {
         contentB: getToolContent(toolB.slug),
         comparisonContent,
         seoData,
+        relatedComparisons: findRelatedComparisons(comparison),
       });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
 

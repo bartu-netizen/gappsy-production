@@ -202,7 +202,9 @@ async function generateSitemap() {
     const url = `/compare/${slug}/`;
     assertAllowed(url);
     paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.6', 'weekly'));
+    // High-intent, long-form editorial content — matches tool-page priority (0.7),
+    // above the /compare/ hub itself and generic category pages (both 0.6).
+    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
   console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
 

@@ -26,7 +26,12 @@ export function parsePriceNumber(price) {
 function truncate(text, max) {
   const trimmed = text.trim();
   if (trimmed.length <= max) return trimmed;
-  return `${trimmed.slice(0, max - 1).trimEnd()}…`;
+  const cut = trimmed.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  // Only snap back to the last word boundary if it doesn't waste much of
+  // the budget; otherwise a hard cut is still better than a tiny snippet.
+  const clean = lastSpace > max - 20 ? cut.slice(0, lastSpace) : cut;
+  return `${clean.trimEnd()}…`;
 }
 
 // Real data only — returns null (not a fabricated sentence) when the tool
@@ -291,7 +296,10 @@ export function injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML) {
 
   const rootDivRegex = /(<div id="root"><\/div>)/;
   if (rootDivRegex.test(html)) {
-    html = html.replace(rootDivRegex, `<div id="root">${staticBodyHTML}</div>`);
+    // Use a replacer function, not a string: a string replacement interprets
+    // $1/$2/... as backreferences, which silently corrupts any staticBodyHTML
+    // content containing a literal "$1"-style sequence (e.g. "$10.99" pricing).
+    html = html.replace(rootDivRegex, () => `<div id="root">${staticBodyHTML}</div>`);
   }
 
   return html;
