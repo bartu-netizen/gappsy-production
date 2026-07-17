@@ -8,6 +8,7 @@ import acuitySchedulingVsCalendlyContent from './acuity-scheduling-vs-calendly';
 import adaloVsBubbleContent from './adalo-vs-bubble';
 import adobeExpressVsCanvaContent from './adobe-express-vs-canva';
 import adpWorkforceNowVsPaychexFlexContent from './adp-workforce-now-vs-paychex-flex';
+import agorapulseVsHootsuiteContent from './agorapulse-vs-hootsuite';
 import ahrefsVsMozProContent from './ahrefs-vs-moz-pro';
 import ahrefsVsSemrushContent from './ahrefs-vs-semrush';
 import airbyteVsFivetranContent from './airbyte-vs-fivetran';
@@ -37,6 +38,9 @@ import boltNewVsV0Content from './bolt-new-vs-v0';
 import breezyHrVsJazzhrContent from './breezy-hr-vs-jazzhr';
 import brexVsRampContent from './brex-vs-ramp';
 import bubbleVsSoftrContent from './bubble-vs-softr';
+import bufferVsHootsuiteContent from './buffer-vs-hootsuite';
+import bufferVsLaterContent from './buffer-vs-later';
+import bufferVsSproutSocialContent from './buffer-vs-sprout-social';
 import buildertrendVsCoconstructContent from './buildertrend-vs-coconstruct';
 import canvaVsFigmaContent from './canva-vs-figma';
 import canvaVsMicrosoftDesignerContent from './canva-vs-microsoft-designer';
@@ -90,6 +94,7 @@ import harvestVsTogglTrackContent from './harvest-vs-toggl-track';
 import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import homebaseVsWhenIWorkContent from './homebase-vs-when-i-work';
+import hootsuiteVsSproutSocialContent from './hootsuite-vs-sprout-social';
 import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
 import hotjarVsMicrosoftClarityContent from './hotjar-vs-microsoft-clarity';
 import housecallProVsJobberContent from './housecall-pro-vs-jobber';
@@ -115,6 +120,7 @@ import microsoftPowerBiVsQlikSenseContent from './microsoft-power-bi-vs-qlik-sen
 import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import mondayVsTrelloContent from './monday-vs-trello';
+import mozProVsSemrushContent from './moz-pro-vs-semrush';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
 import netlifyVsVercelContent from './netlify-vs-vercel';
 import nordvpnVsSurfsharkContent from './nordvpn-vs-surfshark';
@@ -130,8 +136,10 @@ import ringcentralVsVonageContent from './ringcentral-vs-vonage';
 import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
 import salesforceServiceCloudVsServicenowContent from './salesforce-service-cloud-vs-servicenow';
 import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
+import semrushVsUbersuggestContent from './semrush-vs-ubersuggest';
 import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
 import skillshareVsUdemyContent from './skillshare-vs-udemy';
+import socialbeeVsSocialpilotContent from './socialbee-vs-socialpilot';
 import spotonVsToastContent from './spoton-vs-toast';
 import squareVsStripeContent from './square-vs-stripe';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
@@ -154,6 +162,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'adalo-vs-bubble': adaloVsBubbleContent,
   'adobe-express-vs-canva': adobeExpressVsCanvaContent,
   'adp-workforce-now-vs-paychex-flex': adpWorkforceNowVsPaychexFlexContent,
+  'agorapulse-vs-hootsuite': agorapulseVsHootsuiteContent,
   'ahrefs-vs-moz-pro': ahrefsVsMozProContent,
   'ahrefs-vs-semrush': ahrefsVsSemrushContent,
   'airbyte-vs-fivetran': airbyteVsFivetranContent,
@@ -183,6 +192,9 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'breezy-hr-vs-jazzhr': breezyHrVsJazzhrContent,
   'brex-vs-ramp': brexVsRampContent,
   'bubble-vs-softr': bubbleVsSoftrContent,
+  'buffer-vs-hootsuite': bufferVsHootsuiteContent,
+  'buffer-vs-later': bufferVsLaterContent,
+  'buffer-vs-sprout-social': bufferVsSproutSocialContent,
   'buildertrend-vs-coconstruct': buildertrendVsCoconstructContent,
   'canva-vs-figma': canvaVsFigmaContent,
   'canva-vs-microsoft-designer': canvaVsMicrosoftDesignerContent,
@@ -236,6 +248,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'homebase-vs-when-i-work': homebaseVsWhenIWorkContent,
+  'hootsuite-vs-sprout-social': hootsuiteVsSproutSocialContent,
   'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
   'hotjar-vs-microsoft-clarity': hotjarVsMicrosoftClarityContent,
   'housecall-pro-vs-jobber': housecallProVsJobberContent,
@@ -261,6 +274,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'microsoft-power-bi-vs-tableau': microsoftPowerBiVsTableauContent,
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'monday-vs-trello': mondayVsTrelloContent,
+  'moz-pro-vs-semrush': mozProVsSemrushContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
   'netlify-vs-vercel': netlifyVsVercelContent,
   'nordvpn-vs-surfshark': nordvpnVsSurfsharkContent,
@@ -276,8 +290,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
   'salesforce-service-cloud-vs-servicenow': salesforceServiceCloudVsServicenowContent,
   'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
+  'semrush-vs-ubersuggest': semrushVsUbersuggestContent,
   'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
   'skillshare-vs-udemy': skillshareVsUdemyContent,
+  'socialbee-vs-socialpilot': socialbeeVsSocialpilotContent,
   'spoton-vs-toast': spotonVsToastContent,
   'square-vs-stripe': squareVsStripeContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
