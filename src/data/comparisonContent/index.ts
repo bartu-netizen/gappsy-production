@@ -11,6 +11,7 @@ import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
 import backblazeVsCarboniteContent from './backblaze-vs-carbonite';
 import backblazeVsIdriveContent from './backblaze-vs-idrive';
 import betterProposalsVsProposifyContent from './better-proposals-vs-proposify';
+import bigcommerceVsShopifyContent from './bigcommerce-vs-shopify';
 import bigqueryVsSnowflakeContent from './bigquery-vs-snowflake';
 import boltNewVsV0Content from './bolt-new-vs-v0';
 import canvaVsFigmaContent from './canva-vs-figma';
@@ -39,6 +40,7 @@ import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
 import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
+import gumroadVsSellfyContent from './gumroad-vs-sellfy';
 import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
@@ -48,6 +50,10 @@ import hubspotCrmVsSalesforceContent from './hubspot-crm-vs-salesforce';
 import ilovepdfVsSmallpdfContent from './ilovepdf-vs-smallpdf';
 import instapageVsUnbounceContent from './instapage-vs-unbounce';
 import jetbrainsIntellijIdeaVsVisualStudioCodeContent from './jetbrains-intellij-idea-vs-visual-studio-code';
+import kajabiVsTeachableContent from './kajabi-vs-teachable';
+import kitVsMailchimpContent from './kit-vs-mailchimp';
+import klaviyoVsMailchimpContent from './klaviyo-vs-mailchimp';
+import klaviyoVsOmnisendContent from './klaviyo-vs-omnisend';
 import klingAiVsRunwayContent from './kling-ai-vs-runway';
 import livechatVsTidioContent from './livechat-vs-tidio';
 import lookerVsTableauContent from './looker-vs-tableau';
@@ -66,8 +72,10 @@ import ringcentralVsVonageContent from './ringcentral-vs-vonage';
 import ringcentralVsZoomPhoneContent from './ringcentral-vs-zoom-phone';
 import salesforceServiceCloudVsServicenowContent from './salesforce-service-cloud-vs-servicenow';
 import salesforceVsZohoCrmContent from './salesforce-vs-zoho-crm';
+import shopifyVsWoocommerceContent from './shopify-vs-woocommerce';
 import squarespaceVsWordpressComContent from './squarespace-vs-wordpress-com';
 import surveymonkeyVsTypeformContent from './surveymonkey-vs-typeform';
+import teachableVsThinkificContent from './teachable-vs-thinkific';
 
 // Registry of per-comparison editorial content, keyed by canonical slug.
 // A published tool_comparisons row with no entry here still renders on
@@ -85,6 +93,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'backblaze-vs-carbonite': backblazeVsCarboniteContent,
   'backblaze-vs-idrive': backblazeVsIdriveContent,
   'better-proposals-vs-proposify': betterProposalsVsProposifyContent,
+  'bigcommerce-vs-shopify': bigcommerceVsShopifyContent,
   'bigquery-vs-snowflake': bigqueryVsSnowflakeContent,
   'bolt-new-vs-v0': boltNewVsV0Content,
   'canva-vs-figma': canvaVsFigmaContent,
@@ -113,6 +122,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
   'google-analytics-vs-plausible': googleAnalyticsVsPlausibleContent,
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
+  'gumroad-vs-sellfy': gumroadVsSellfyContent,
   'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
@@ -122,6 +132,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'ilovepdf-vs-smallpdf': ilovepdfVsSmallpdfContent,
   'instapage-vs-unbounce': instapageVsUnbounceContent,
   'jetbrains-intellij-idea-vs-visual-studio-code': jetbrainsIntellijIdeaVsVisualStudioCodeContent,
+  'kajabi-vs-teachable': kajabiVsTeachableContent,
+  'kit-vs-mailchimp': kitVsMailchimpContent,
+  'klaviyo-vs-mailchimp': klaviyoVsMailchimpContent,
+  'klaviyo-vs-omnisend': klaviyoVsOmnisendContent,
   'kling-ai-vs-runway': klingAiVsRunwayContent,
   'livechat-vs-tidio': livechatVsTidioContent,
   'looker-vs-tableau': lookerVsTableauContent,
@@ -140,8 +154,10 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'ringcentral-vs-zoom-phone': ringcentralVsZoomPhoneContent,
   'salesforce-service-cloud-vs-servicenow': salesforceServiceCloudVsServicenowContent,
   'salesforce-vs-zoho-crm': salesforceVsZohoCrmContent,
+  'shopify-vs-woocommerce': shopifyVsWoocommerceContent,
   'squarespace-vs-wordpress-com': squarespaceVsWordpressComContent,
   'surveymonkey-vs-typeform': surveymonkeyVsTypeformContent,
+  'teachable-vs-thinkific': teachableVsThinkificContent,
 };
 
 export function getComparisonContent(slug: string): ToolComparisonContent | undefined {
