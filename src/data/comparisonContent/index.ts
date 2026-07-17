@@ -9,6 +9,8 @@ import aircallVsOpenphoneContent from './aircall-vs-openphone';
 import amazonRedshiftVsSnowflakeContent from './amazon-redshift-vs-snowflake';
 import amazonS3VsGoogleCloudStorageContent from './amazon-s3-vs-google-cloud-storage';
 import appsmithVsRetoolContent from './appsmith-vs-retool';
+import asanaVsClickupContent from './asana-vs-clickup';
+import asanaVsMondayContent from './asana-vs-monday';
 import automatischVsZapierContent from './automatisch-vs-zapier';
 import awsVsGoogleCloudContent from './aws-vs-google-cloud';
 import awsVsMicrosoftAzureContent from './aws-vs-microsoft-azure';
@@ -37,6 +39,7 @@ import clickfunnelsVsUnbounceContent from './clickfunnels-vs-unbounce';
 import clioVsMycaseContent from './clio-vs-mycase';
 import clioVsPracticepantherContent from './clio-vs-practicepanther';
 import clioVsSmokeballContent from './clio-vs-smokeball';
+import codaVsNotionContent from './coda-vs-notion';
 import constantContactVsMailchimpContent from './constant-contact-vs-mailchimp';
 import copyAiVsJasperContent from './copy-ai-vs-jasper';
 import copyAiVsWritesonicContent from './copy-ai-vs-writesonic';
@@ -51,13 +54,17 @@ import deelVsRemoteContent from './deel-vs-remote';
 import descriptVsVeedContent from './descript-vs-veed';
 import docusignVsDropboxSignContent from './docusign-vs-dropbox-sign';
 import docusignVsSignnowContent from './docusign-vs-signnow';
+import dropboxVsGoogleDriveContent from './dropbox-vs-google-drive';
+import evernoteVsNotionContent from './evernote-vs-notion';
 import firebaseVsSupabaseContent from './firebase-vs-supabase';
 import gainsightVsTotangoContent from './gainsight-vs-totango';
 import githubCopilotVsWindsurfContent from './github-copilot-vs-windsurf';
 import googleAnalyticsVsPlausibleContent from './google-analytics-vs-plausible';
 import googleAnalyticsVsPosthogContent from './google-analytics-vs-posthog';
 import googleFormsVsJotformContent from './google-forms-vs-jotform';
+import googleWorkspaceVsMicrosoft365Content from './google-workspace-vs-microsoft-365';
 import gumroadVsSellfyContent from './gumroad-vs-sellfy';
+import harvestVsTogglTrackContent from './harvest-vs-toggl-track';
 import herokuVsRenderContent from './heroku-vs-render';
 import heygenVsSynthesiaContent from './heygen-vs-synthesia';
 import hoppscotchVsPostmanContent from './hoppscotch-vs-postman';
@@ -81,6 +88,7 @@ import microsoftPowerBiVsTableauContent from './microsoft-power-bi-vs-tableau';
 import midjourneyVsStableDiffusionContent from './midjourney-vs-stable-diffusion';
 import mysqlVsPostgresqlContent from './mysql-vs-postgresql';
 import netlifyVsVercelContent from './netlify-vs-vercel';
+import notionVsOnenoteContent from './notion-vs-onenote';
 import paypalVsStripeContent from './paypal-vs-stripe';
 import pikaVsRunwayContent from './pika-vs-runway';
 import pipedriveVsZohoCrmContent from './pipedrive-vs-zoho-crm';
@@ -115,6 +123,8 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'amazon-redshift-vs-snowflake': amazonRedshiftVsSnowflakeContent,
   'amazon-s3-vs-google-cloud-storage': amazonS3VsGoogleCloudStorageContent,
   'appsmith-vs-retool': appsmithVsRetoolContent,
+  'asana-vs-clickup': asanaVsClickupContent,
+  'asana-vs-monday': asanaVsMondayContent,
   'automatisch-vs-zapier': automatischVsZapierContent,
   'aws-vs-google-cloud': awsVsGoogleCloudContent,
   'aws-vs-microsoft-azure': awsVsMicrosoftAzureContent,
@@ -143,6 +153,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'clio-vs-mycase': clioVsMycaseContent,
   'clio-vs-practicepanther': clioVsPracticepantherContent,
   'clio-vs-smokeball': clioVsSmokeballContent,
+  'coda-vs-notion': codaVsNotionContent,
   'constant-contact-vs-mailchimp': constantContactVsMailchimpContent,
   'copy-ai-vs-jasper': copyAiVsJasperContent,
   'copy-ai-vs-writesonic': copyAiVsWritesonicContent,
@@ -157,13 +168,17 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'descript-vs-veed': descriptVsVeedContent,
   'docusign-vs-dropbox-sign': docusignVsDropboxSignContent,
   'docusign-vs-signnow': docusignVsSignnowContent,
+  'dropbox-vs-google-drive': dropboxVsGoogleDriveContent,
+  'evernote-vs-notion': evernoteVsNotionContent,
   'firebase-vs-supabase': firebaseVsSupabaseContent,
   'gainsight-vs-totango': gainsightVsTotangoContent,
   'github-copilot-vs-windsurf': githubCopilotVsWindsurfContent,
   'google-analytics-vs-plausible': googleAnalyticsVsPlausibleContent,
   'google-analytics-vs-posthog': googleAnalyticsVsPosthogContent,
   'google-forms-vs-jotform': googleFormsVsJotformContent,
+  'google-workspace-vs-microsoft-365': googleWorkspaceVsMicrosoft365Content,
   'gumroad-vs-sellfy': gumroadVsSellfyContent,
+  'harvest-vs-toggl-track': harvestVsTogglTrackContent,
   'heroku-vs-render': herokuVsRenderContent,
   'heygen-vs-synthesia': heygenVsSynthesiaContent,
   'hoppscotch-vs-postman': hoppscotchVsPostmanContent,
@@ -187,6 +202,7 @@ const COMPARISON_CONTENT: Record<string, ToolComparisonContent> = {
   'midjourney-vs-stable-diffusion': midjourneyVsStableDiffusionContent,
   'mysql-vs-postgresql': mysqlVsPostgresqlContent,
   'netlify-vs-vercel': netlifyVsVercelContent,
+  'notion-vs-onenote': notionVsOnenoteContent,
   'paypal-vs-stripe': paypalVsStripeContent,
   'pika-vs-runway': pikaVsRunwayContent,
   'pipedrive-vs-zoho-crm': pipedriveVsZohoCrmContent,
