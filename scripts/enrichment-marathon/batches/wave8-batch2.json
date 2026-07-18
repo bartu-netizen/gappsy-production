@@ -1,0 +1,701 @@
+[
+  {
+    "tool_id": "7736f4e7-14df-4b55-a27c-530d35d06fd1",
+    "slug": "docusaurus",
+    "name": "Docusaurus",
+    "enrichment": {
+      "short_description": "An open-source static site generator built by Meta for creating fast, versioned documentation and content sites using Markdown, MDX, and React.",
+      "pricing_model": "Free / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2017,
+      "company_size": null,
+      "headquarters": "Menlo Park, California, US (Meta Open Source)",
+      "languages": ["English"],
+      "seo_title": "Docusaurus Review 2026: Features, Pricing & Alternatives",
+      "seo_meta_description": "Docusaurus is Meta's free, open-source static site generator for documentation. See how it works, its features, pricing (free), and top alternatives.",
+      "llm_readable_summary": "Docusaurus is a free, open-source static site generator purpose-built for creating documentation websites, product guides, and content-heavy marketing sites. It was created inside Facebook (now Meta) in 2017 to solve an internal problem: the company had dozens of open-source projects, each maintaining its own ad-hoc documentation site, typically copy-pasted from a Jekyll template and difficult to keep consistent. Docusaurus standardized that process into a single reusable tool, and it was released publicly in December 2017 as Docusaurus v1, quickly adopted by high-profile projects such as Prettier, Babel, React Native, and KaTeX. In 2022, the Meta Open Source team shipped a ground-up rewrite, Docusaurus 2.0, built on React with support for MDX (Markdown mixed with JSX components), a plugin and theme architecture, and a much more customizable design system. The project has continued to evolve since, with Docusaurus 3.x adding TypeScript-first tooling and, more recently, an AI-powered search assistant layered on top of the existing Algolia DocSearch integration.\n\nTechnically, Docusaurus is a Node.js-based static site generator: authors write content in Markdown or MDX files organized into folders, and Docusaurus compiles that content into a fully static React application at build time, which can then be hosted on any static hosting provider (Netlify, Vercel, GitHub Pages, Cloudflare Pages, or a company's own CDN). Because the output is static HTML, sites load quickly and are inherently SEO-friendly, while the underlying React runtime still allows for client-side interactivity, dark mode, and rich custom components inside documentation pages. Core built-in features include a docs system with sidebar navigation and versioning (so a project can publish docs for v1, v2, and v3 of its software simultaneously), a blog engine, internationalization (i18n) tooling that integrates with Git-based or Crowdin-based translation workflows, accessibility support, and a progressive web app (PWA) plugin. Everything is extensible: teams can write custom plugins and swap themes, and a large ecosystem of community plugins covers things like sitemap generation, Google Analytics, live code blocks, and OpenAPI documentation rendering.\n\nDocusaurus itself has no pricing because it is fully open-source software released under the MIT license and maintained by Meta alongside community contributors on GitHub. There is no paid tier, no usage caps, and no vendor lock-in: anyone can clone the project, run it locally, and deploy the generated static files anywhere at no cost beyond hosting. The only costs a team is likely to incur are indirect: engineering time to build and maintain the site, and the price of whatever static hosting provider they choose (many of which offer generous free tiers for open-source and small projects). This makes Docusaurus attractive to organizations that want full control over their documentation without recurring software licensing fees.\n\nThe primary audience for Docusaurus is engineering and developer-relations teams that need to publish technical documentation, API references, or knowledge bases and want a tool that plays natively with Git-based workflows, pull-request review, and version control. It is especially popular among open-source projects, developer tool companies, and SaaS products with public-facing developer documentation, since the entire site can live in the same repository as the codebase it documents. Because content is just Markdown files, non-technical writers can also contribute without learning React, while frontend engineers can extend the site with custom components when needed.\n\nDocusaurus competes with a range of documentation and static-site tooling. On the pure documentation side, alternatives include GitBook, ReadMe, MkDocs (and its popular Material theme), Sphinx, VitePress, and Nextra. On the broader static-site-generator side, it overlaps with Next.js, Astro, Hugo, and Jekyll, though those tools are more general-purpose while Docusaurus is opinionated specifically toward docs and versioned content. Docusaurus's key differentiators are its tight focus on documentation-specific features (out-of-the-box versioning, docs sidebars, and search), its backing by Meta's engineering organization, and its React/MDX foundation, which lets teams embed live, interactive components directly inside otherwise static documentation pages, something Markdown-only generators cannot do as naturally.\n\nNotable facts about the project include that it is maintained under the facebook/docusaurus GitHub repository with tens of thousands of stars and is used by major companies and open-source projects worldwide, including React itself, Jest, Redux, and countless developer-tool startups for their public docs. Because it requires no backend server or database, the output is pure static HTML, CSS, and JavaScript, Docusaurus sites are cheap to host, resilient to traffic spikes, and easy to put behind a CDN, which is one of the main reasons it remains a default choice for technical documentation in 2026.\n\nGetting started with Docusaurus typically takes only a few minutes: the official create-docusaurus command line tool scaffolds a working site with a sample docs folder, blog, and homepage, which teams then customize by editing configuration in a single docusaurus.config.js or .ts file that controls navigation, theming, plugins, and metadata. Content authors work almost entirely in Markdown, adding React components only when they need something interactive, such as embedded code sandboxes, tabbed code examples across multiple programming languages, or custom callout boxes, all of which are common patterns in developer-facing documentation. The project's swizzling mechanism lets teams eject and override individual theme components without forking the entire framework, striking a balance between out-of-the-box consistency and deep customization when a brand needs a distinctive look. Search is typically handled through Algolia's free DocSearch program for qualifying open-source and documentation sites, though Docusaurus also supports self-hosted, offline-capable local search plugins for teams that cannot or do not want to rely on a third-party search index, and the newer AI-assisted search layer adds natural-language question answering on top of that index for sites that opt in.\n\nDocusaurus's release cadence and versioning strategy mirror its own headline feature: the maintainers publish changelogs and migration guides for every major version, and the project itself uses its own document versioning system to keep documentation for older Docusaurus releases available even as new major versions ship. This dogfooding has made the Docusaurus documentation site itself a frequently cited reference example for how to structure large, versioned technical documentation. The plugin architecture also underpins several first-party extensions maintained directly by the Docusaurus team, including plugins for Google Analytics, Google Tag Manager, sitemaps, PWA support, and ideal-image optimization, alongside a much larger constellation of community plugins for things like Mermaid diagrams, OpenAPI specification rendering, and changelog generation from GitHub releases, all discoverable through the project's community plugin directory.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Docusaurus is a free, open-source static site generator created by Meta specifically for building documentation websites, product guides, and blogs. It turns Markdown and MDX content into a fast, versioned, searchable React-powered site.",
+            "Originally built in 2017 to standardize documentation across Facebook's many open-source projects, Docusaurus was rewritten from the ground up in 2022 (version 2.0) and has continued to add capabilities like TypeScript support and AI-assisted search in subsequent releases."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Docusaurus ships with document versioning, sidebar-based navigation, MDX support for embedding interactive React components in Markdown, built-in internationalization, dark mode, a blog engine, and a plugin/theme architecture for extending the platform.",
+            "Because the generated output is static HTML, sites built with Docusaurus load quickly, are easy to cache on a CDN, and are naturally friendly to search engine crawlers without extra SEO configuration."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Docusaurus is completely free and open-source under the MIT license, with no paid tiers, feature gates, or usage limits from the project itself.",
+            "The only ongoing cost is static hosting, and providers such as Netlify, Vercel, GitHub Pages, and Cloudflare Pages all offer free plans that comfortably cover most documentation sites, including open-source and small commercial projects."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Document versioning", "description": "Maintain and publish multiple versions of documentation side by side so users on older software releases still see accurate docs."},
+        {"title": "MDX support", "description": "Write Markdown content that can embed live, interactive React components directly inside documentation pages."},
+        {"title": "Built-in internationalization", "description": "Translate docs into multiple languages using Git-based workflows or integrations like Crowdin, with locale-aware routing out of the box."},
+        {"title": "Plugin and theme architecture", "description": "Extend or customize nearly any part of the site through a documented plugin API and swappable themes."},
+        {"title": "Integrated blog engine", "description": "Publish a changelog or company blog alongside documentation using the same content pipeline."},
+        {"title": "Algolia DocSearch and AI search", "description": "Add fast full-text search to a documentation site, including an AI-powered search assistant introduced in recent versions."},
+        {"title": "Static site output", "description": "Compiles to plain HTML, CSS, and JavaScript with no server or database required, making hosting simple and inexpensive."},
+        {"title": "Accessibility and SEO defaults", "description": "Ships with sensible accessibility and SEO defaults, including sitemaps, meta tags, and semantic markup."}
+      ],
+      "pros": [
+        "Completely free and open-source with no licensing costs or usage caps.",
+        "Purpose-built for documentation, including versioning and sidebar navigation out of the box.",
+        "Backed by Meta's engineering organization and a large, active open-source community.",
+        "MDX support allows interactive, component-driven documentation rather than plain static text."
+      ],
+      "cons": [
+        "Requires comfort with Node.js tooling, Git, and (for customization) React and JavaScript.",
+        "No built-in CMS or non-technical editing interface; content is managed as files in a repository.",
+        "Best suited to documentation-style content rather than general marketing or e-commerce sites.",
+        "Self-managed hosting and deployment mean teams are responsible for their own build pipeline and uptime."
+      ],
+      "faqs": [
+        {"question": "Is Docusaurus free to use?", "answer": "Yes. Docusaurus is fully open-source under the MIT license with no paid tiers; the only cost is whatever static hosting provider you choose to deploy the generated site on."},
+        {"question": "Who created Docusaurus?", "answer": "Docusaurus was created by Facebook (now Meta) in 2017 to standardize documentation across its open-source projects, and it is maintained by Meta's Open Source team alongside community contributors."},
+        {"question": "Do I need to know React to use Docusaurus?", "answer": "No. Most content is written in Markdown or MDX, so non-technical writers can contribute without React knowledge, though React skills help when customizing themes or building interactive components."},
+        {"question": "Can Docusaurus host versioned documentation?", "answer": "Yes, versioning is a built-in feature, allowing a project to publish and switch between docs for multiple software releases simultaneously."},
+        {"question": "What is the difference between Docusaurus 1 and 2?", "answer": "Docusaurus 2.0, released in 2022, was a full rewrite on React with MDX support, a plugin system, and a more flexible theming architecture compared to the original 2017 version."},
+        {"question": "What are the main alternatives to Docusaurus?", "answer": "Common alternatives include MkDocs (with the Material theme), GitBook, ReadMe, VitePress, Nextra, and Sphinx, depending on whether a team prioritizes Markdown simplicity, hosted convenience, or React-based customization."}
+      ],
+      "use_cases": [
+        {"title": "Open-source project documentation", "description": "Maintain versioned, searchable docs alongside the codebase in the same Git repository, with pull-request-based review for content changes.", "audience": "Open-source maintainers and contributors"},
+        {"title": "Developer tool and API documentation", "description": "Publish public-facing developer guides and API references with custom interactive components embedded via MDX.", "audience": "Developer relations and platform engineering teams"},
+        {"title": "Internal engineering knowledge bases", "description": "Host internal technical documentation that is easy to keep current because it lives in version control next to the code it describes.", "audience": "Internal engineering and platform teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code access", "Unlimited sites and pages", "Self-hosted, no vendor lock-in", "Community support via GitHub and Discord"]}
+      ],
+      "tags": ["open-source", "self-hosted", "web-app", "templates", "free-plan"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "fed2af81-3cbf-403c-8135-b548f382e7ac",
+    "slug": "docuseal",
+    "name": "Docuseal",
+    "enrichment": {
+      "short_description": "An open-source electronic signature and document-completion platform offering both a hosted cloud service and a self-hosted on-premises option.",
+      "pricing_model": "Freemium / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2023,
+      "company_size": "1-10 employees",
+      "headquarters": "Chicago, Illinois, US",
+      "languages": ["English"],
+      "seo_title": "DocuSeal Review 2026: Features, Pricing & Alternatives",
+      "seo_meta_description": "DocuSeal is an open-source e-signature platform with a free self-hosted option and $20/user/month Pro plan. Compare features, pricing, and alternatives.",
+      "llm_readable_summary": "DocuSeal is an open-source electronic signature and document-completion platform positioned as a self-hostable alternative to commercial e-signature tools like DocuSign and PandaDoc. The project was created in 2023 by developer Alex Turin, who launched it publicly on Hacker News as a reaction to frustration with the cost and complexity of established e-signature vendors. DocuSeal is bootstrapped rather than venture-backed, and the small company behind it is headquartered in Chicago, Illinois, operating with a lean team while the open-source project itself has attracted a large community of contributors and self-hosters on GitHub.\n\nAt its core, DocuSeal lets users upload a PDF or document, place fields on it (signature, initials, text, date, checkbox, and other field types), and send it to one or more signers for completion, tracking each signer's status in real time. Documents can be created from scratch with the built-in template builder, generated from an uploaded PDF with auto-detected fields, or created via HTML-to-PDF templating for advanced use cases. Once signed, DocuSeal generates a tamper-evident, audit-logged PDF with an embedded signing certificate. Because the platform is released under the AGPLv3 open-source license, its entire codebase, the Ruby on Rails backend and the signing UI, is publicly auditable and can be self-hosted using Docker on a company's own infrastructure, giving organizations full control over where signed documents and personal data are stored, which is particularly valuable for privacy- or compliance-sensitive teams that cannot use third-party cloud services.\n\nDocuSeal's pricing follows a freemium model with parallel cloud and self-hosted tracks. The Basic cloud plan is free and includes legally binding e-signatures, indefinite document retention, multiple signers, ten field types, and a limited number of signature requests per month, with email support. The Pro cloud plan costs $20 per user per month (or a discounted annual rate) and unlocks unlimited signature requests, company branding, custom sending email addresses, automated reminders, payment collection during signing, Zapier and webhook integrations, user roles and teams, bulk sending from a spreadsheet, SSO/SAML authentication, SMS identity verification, and full API and embedding access. On the self-hosted side, the Community edition is entirely free and open-source with the same core signing functionality, while a self-hosted Pro license, also $20 per user per month, adds white-labeling, full data control, and the same advanced features as cloud Pro, deployed on the customer's own servers. Additional usage-based fees apply for advanced signature types: EU Qualified Electronic Signatures (QES) cost roughly $2 to $4 per signature, ID card verification is about $2 per verification, knowledge-based authentication is around $2 per request, and API-driven document completions are billed at $0.20 each, with an optional $100 per month embedded form builder add-on.\n\nThe target users for DocuSeal span two overlapping groups: cost-conscious startups and small businesses that want e-signature functionality without DocuSign-level per-user pricing, and engineering-led organizations that specifically want a self-hosted, open-source solution for data sovereignty, compliance, or customization reasons. Its API-first design and developer-friendly webhook and Zapier integrations also make it attractive to SaaS companies that want to embed document signing directly into their own product rather than redirecting users to a third-party portal.\n\nDocuSeal's main competitors are the incumbent commercial e-signature platforms: DocuSign, Adobe Sign, PandaDoc, HelloSign (Dropbox Sign), and SignNow, as well as other emerging open-source alternatives such as Documenso. DocuSeal differentiates itself primarily on price and control: its per-user Pro pricing undercuts DocuSign's comparable tiers, and its open-source, self-hostable architecture is something none of the major commercial incumbents offer. The trade-off is that DocuSeal, as a much younger and smaller company, has a less mature enterprise sales, compliance-certification, and support apparatus than a public company like DocuSign.\n\nNotable facts: DocuSeal is one of the fastest-growing open-source projects in the e-signature category, has been widely covered in the self-hosted and open-source software community, and offers a fully functional free tier for both its cloud and self-hosted deployments, a rarity in the e-signature market, where most established vendors gate even basic use behind paid plans.\n\nUnder the hood, DocuSeal is built primarily on Ruby on Rails with a lightweight JavaScript front end for the field-placement and signing interfaces, and the entire application is packaged as a Docker image, which is the recommended way to self-host it, either as a single container backed by SQLite for small deployments or connected to PostgreSQL for larger, production-grade installations. The self-hosted install process is designed to be approachable for teams with basic DevOps familiarity: a single `docker run` command with a persistent volume is enough to get a working instance online, and configuration such as custom SMTP servers, storage backends (local disk or S3-compatible object storage), and environment-based secrets follows conventional twelve-factor app patterns. This has made DocuSeal a popular addition to self-hosted app catalogs and home-server platforms alongside other privacy-respecting, Docker-native tools, and it is commonly recommended in discussions comparing open-source SaaS alternatives for teams standardizing on self-managed infrastructure.\n\nOn the product side, DocuSeal's roadmap has moved beyond pure signing into adjacent document workflows: form-style submissions that don't require a traditional signature, conditional field logic that shows or hides fields based on earlier answers, and native payment collection through Stripe during the signing flow, letting a business collect both a signature and payment in a single step, for example when finalizing a service agreement or a rental contract. The company has also continued to build out its compliance story, adding support for the EU's eIDAS-recognized Advanced and Qualified Electronic Signature levels specifically to compete for European contracts that require signature assurance beyond a simple 'click to sign,' a segment where many lower-cost e-signature tools historically fell short compared to DocuSign and Adobe Sign.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "DocuSeal is an open-source electronic signature platform that lets teams create fillable document templates, collect legally binding signatures from multiple parties, and track completion status, either through DocuSeal's hosted cloud service or a fully self-hosted deployment.",
+            "Founded in 2023 and headquartered in Chicago, DocuSeal has grown quickly as a lower-cost, self-hostable alternative to established e-signature vendors, backed by an active open-source community on GitHub."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "DocuSeal supports a full document-signing workflow: template creation from uploaded PDFs, ten-plus field types, multi-party signing order, automated reminders, and tamper-evident signed PDFs with audit trails.",
+            "Advanced capabilities include API access, webhook and Zapier integrations, bulk sending, SSO/SAML, SMS-based identity verification, and support for EU-recognized Advanced and Qualified Electronic Signatures."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "DocuSeal offers a free Basic cloud plan and a free open-source Community self-hosted edition, both covering core signing functionality with limited monthly requests on the cloud side.",
+            "The Pro tier, available on both cloud and self-hosted deployments, costs $20 per user per month and adds branding, automation, integrations, and advanced authentication, with usage-based add-on fees for QES, ID verification, and API completions."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Multi-party e-signatures", "description": "Send documents to multiple signers in a defined order and track each signer's completion status in real time."},
+        {"title": "Template builder", "description": "Create reusable document templates with drag-and-drop fields, or auto-detect fields from an uploaded PDF."},
+        {"title": "Self-hosted deployment", "description": "Run the entire open-source platform on your own infrastructure via Docker for full data control and compliance."},
+        {"title": "API and webhooks", "description": "Programmatically create, send, and track documents, and receive real-time status updates via webhooks."},
+        {"title": "Advanced signature types", "description": "Support for EU Advanced Electronic Signatures (AES) and Qualified Electronic Signatures (QES) for regulated use cases."},
+        {"title": "SSO/SAML and SMS verification", "description": "Enterprise authentication options including single sign-on and SMS-based signer identity verification."},
+        {"title": "Bulk send", "description": "Send the same document template to many recipients at once from an uploaded spreadsheet."},
+        {"title": "White-labeling", "description": "Remove DocuSeal branding and apply company logos and custom email domains on Pro plans."}
+      ],
+      "pros": [
+        "Free, fully functional open-source self-hosted edition with no per-signature fees for core use.",
+        "Pro pricing at $20/user/month undercuts most established commercial e-signature vendors.",
+        "Full data control and compliance flexibility for organizations that self-host.",
+        "Developer-friendly with a documented API, webhooks, and Zapier support."
+      ],
+      "cons": [
+        "As a small, newer company, enterprise support and compliance certifications are less mature than large incumbents.",
+        "Self-hosting requires technical setup and ongoing server maintenance.",
+        "Advanced signature types (QES) and API completions carry additional per-use fees beyond the subscription.",
+        "Free cloud plan is capped at a limited number of monthly signature requests."
+      ],
+      "faqs": [
+        {"question": "Is DocuSeal really free?", "answer": "Yes, DocuSeal offers both a free cloud Basic plan with limited monthly requests and a fully free, open-source self-hosted Community edition with no per-signature charges."},
+        {"question": "How much does DocuSeal Pro cost?", "answer": "DocuSeal Pro costs $20 per user per month on both the cloud and self-hosted tracks, with an annual billing discount available."},
+        {"question": "Can DocuSeal be self-hosted?", "answer": "Yes, DocuSeal is released under the AGPLv3 open-source license and can be deployed on your own servers using Docker for complete control over data storage."},
+        {"question": "Are DocuSeal signatures legally binding?", "answer": "Yes, DocuSeal supports legally binding electronic signatures, including EU-recognized Advanced and Qualified Electronic Signatures on paid tiers."},
+        {"question": "Who founded DocuSeal?", "answer": "DocuSeal was founded in 2023 by developer Alex Turin as a bootstrapped, open-source alternative to established e-signature platforms."},
+        {"question": "What is the difference between DocuSeal and DocuSign?", "answer": "DocuSeal is open-source and can be self-hosted at no licensing cost, with lower per-user pricing on its Pro tier, while DocuSign is a larger public company with more extensive enterprise features, integrations, and compliance certifications."}
+      ],
+      "use_cases": [
+        {"title": "Embedded signing in a SaaS product", "description": "Use DocuSeal's API and embedding features to add native document-signing directly inside another application's workflow.", "audience": "Software developers and product teams"},
+        {"title": "Compliance-sensitive document signing", "description": "Self-host DocuSeal to keep signed contracts and personal data entirely within an organization's own infrastructure.", "audience": "Legal, healthcare, and regulated-industry teams"},
+        {"title": "Cost-effective contract signing for small business", "description": "Replace expensive per-seat e-signature subscriptions with DocuSeal's free or lower-cost cloud plans for routine contracts and forms.", "audience": "Startups and small businesses"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Basic (Cloud)", "price": "Free", "billing_cycle": "N/A", "features": ["Legally binding e-signatures", "Indefinite document retention", "Multiple signers", "10 field types", "Limited signature requests per month", "Email support"]},
+        {"plan_name": "Pro (Cloud)", "price": "$20/user/month", "billing_cycle": "monthly (annual discount available)", "features": ["Unlimited signature requests", "Company branding", "Automated reminders", "Payment collection", "Zapier and webhook integrations", "SSO/SAML", "API and embedding access"]},
+        {"plan_name": "Community (Self-Hosted)", "price": "Free", "billing_cycle": "N/A", "features": ["Full open-source codebase", "Legally binding e-signatures", "Multiple signers", "Own SMTP for email", "Community support via GitHub"]},
+        {"plan_name": "Pro (Self-Hosted)", "price": "$20/user/month", "billing_cycle": "monthly", "features": ["White-labeling", "Full data control", "Automation and integrations", "SSO/SAML", "API access", "Account manager support"]}
+      ],
+      "tags": ["open-source", "self-hosted", "freemium", "free-plan", "api", "web-app"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "21b62640-e209-4a01-b000-4e8484a033b6",
+    "slug": "docusign",
+    "name": "DocuSign",
+    "enrichment": {
+      "short_description": "A publicly traded e-signature and agreement management platform that lets businesses prepare, sign, and manage contracts and other documents electronically.",
+      "pricing_model": "Subscription",
+      "starting_price": "$10/month (Personal plan, billed annually)",
+      "founded_year": 2003,
+      "company_size": "8,000+ employees",
+      "headquarters": "San Francisco, California, US",
+      "languages": ["English", "Spanish", "French", "German", "Portuguese", "Japanese", "Chinese", "Korean", "Italian", "Dutch"],
+      "seo_title": "DocuSign Review 2026: Pricing Plans & Key Features",
+      "seo_meta_description": "DocuSign pricing ranges from $10/month for Personal to $40+/user/month for Business Pro. See features, plans, pros, cons, and top alternatives for 2026.",
+      "llm_readable_summary": "DocuSign is a publicly traded electronic signature and agreement management platform used by businesses of all sizes to prepare, send, sign, and track legally binding documents online. The company was founded in 2003 in Seattle, Washington by Court Lorenzini, Tom Gonser, and Eric Ranft, with Gonser's earlier company NetUpdate providing the original inspiration for building a secure way to sign documents remotely. DocuSign relocated its global headquarters to San Francisco, California as it scaled, while retaining a significant engineering presence in Seattle. The company raised roughly $520 million in venture funding across 17 rounds before going public on the Nasdaq under the ticker DOCU on April 27, 2018. As of 2026, DocuSign employs more than 8,000 people worldwide and serves well over a million customers, ranging from individual freelancers to Fortune 500 enterprises, making it the best-known and most widely adopted name in the e-signature category.\n\nTechnically, DocuSign works by letting a user upload a document (PDF, Word file, or similar), place signature fields, initials, dates, and other data fields onto it, and send it to one or more recipients in a defined signing order. Recipients receive an email or SMS link, authenticate their identity through options like email verification, SMS, ID checks, or knowledge-based authentication, and complete their fields in a browser or the DocuSign mobile app. Once every party has signed, DocuSign generates a tamper-evident PDF with an embedded audit trail and certificate of completion that documents each signer's identity, timestamp, and IP address, which is what gives DocuSign signatures their legal standing under laws like the U.S. ESIGN Act and the EU's eIDAS regulation. Beyond core e-signature, DocuSign has expanded into a broader Intelligent Agreement Management (IAM) platform that includes contract lifecycle management (CLM), AI-powered contract analysis, identity verification, and deep integrations with Salesforce, Microsoft 365, Google Workspace, SAP, and Workday through a documented API and app marketplace.\n\nDocuSign's pricing is structured around four main tiers, primarily sold per user per month with a discount for annual billing. The Personal plan costs about $10 per month billed annually (or $15 billed monthly) for a single user and up to 5 envelopes per month, aimed at individuals and very small use cases. The Standard plan costs roughly $25 per user per month billed annually (or $45 monthly) and supports up to 100 envelopes per user per year, adding features like custom branding, reusable templates, and basic reporting for small teams. Business Pro costs about $40 per user per month billed annually (or $65 monthly), also capped at 100 envelopes per user per year, and layers on bulk sending, payment collection during signing, advanced fields, and additional signer authentication options. Above that sits an Enterprise/Advanced Solutions tier, priced through custom sales quotes, which unlocks identity verification, conditional routing, deeper API access, and native Salesforce and Workday integrations for large organizations with complex compliance and volume requirements. Buyers should also budget for optional add-on fees; SMS delivery, ID verification checks, and premium support packages are billed separately from the base subscription, and exceeding the annual envelope caps on Standard or Business Pro can trigger overage charges or force an upgrade.\n\nDocuSign's target users span the full range of business sizes: solo professionals and freelancers who need occasional signatures use the Personal plan, small and mid-sized businesses adopt Standard or Business Pro for regular contract and HR paperwork, and large enterprises in finance, real estate, healthcare, and legal services use the Enterprise tier for high-volume, compliance-heavy agreement workflows, often layering DocuSign CLM on top for full contract lifecycle management.\n\nCompetitors include Adobe Acrobat Sign, PandaDoc, Dropbox Sign (formerly HelloSign), SignNow, and a growing wave of lower-cost or open-source alternatives such as DocuSeal. DocuSign differentiates itself through brand recognition, breadth of enterprise integrations, regulatory and compliance depth (it supports the widest range of international e-signature standards among mainstream providers), and its expansion beyond signing into full agreement lifecycle management, though this comes at a materially higher price point than most competitors, particularly newer open-source entrants.\n\nNotable facts: DocuSign processes billions of envelopes (documents sent for signature) annually and is used by a majority of Fortune 500 companies in some capacity; it maintains SOC 2, ISO 27001, and other major compliance certifications; and its 2018 IPO made it one of the highest-profile enterprise software debuts of that year, with the stock later becoming a bellwether for remote-work and digital-transformation trends during and after the COVID-19 pandemic.\n\nDocuSign's underlying technology centers on its eSignature API and a broader developer platform that lets independent software vendors and enterprises embed signing directly inside their own applications rather than routing users to DocuSign's own web portal. The company publishes SDKs for major languages, supports webhook-based (Connect) notifications for real-time status updates, and offers a sandbox/developer account for building and testing integrations before going live, which is a major reason DocuSign is so frequently the default e-signature integration inside CRMs, ERPs, and vertical SaaS products across real estate, financial services, and healthcare. Security and compliance are a significant part of DocuSign's value proposition at the enterprise tier: the platform maintains certifications including SOC 2 Type II, ISO 27001, and HIPAA-eligible configurations for healthcare customers, along with country-specific compliance modules for regions with stricter digital-signature laws, such as parts of the EU and Latin America, which smaller competitors often cannot match without significant additional engineering investment.\n\nDocuSign has also pursued acquisitions and product expansion to defend its position as the category matures and cheaper alternatives proliferate. Notable moves include the 2020 acquisition of Seal Software to strengthen contract analytics and the acquisition of Liveoak Technologies to bolster remote online notarization capabilities, both of which now feed into the company's Intelligent Agreement Management vision, positioning DocuSign less as a single-purpose e-signature tool and more as an end-to-end platform for the entire lifecycle of a business agreement, from drafting and negotiation through signature, storage, and ongoing obligation tracking. This broader ambition is also DocuSign's primary response to margin pressure from lower-cost entrants: rather than competing purely on price, the company leans on integration depth, compliance breadth, and adjacent contract-management functionality that a pure e-signature tool would not offer.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "DocuSign is the market-leading electronic signature and agreement management platform, allowing individuals and organizations to send, sign, and track legally binding documents entirely online.",
+            "Founded in 2003 and headquartered in San Francisco, DocuSign went public on the Nasdaq in 2018 and has since expanded from pure e-signature into a broader Intelligent Agreement Management platform covering the full contract lifecycle."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Core capabilities include multi-party signing workflows, identity verification, reusable templates, tamper-evident audit trails, and a mobile app for signing on the go.",
+            "Higher tiers add bulk sending, payment collection, contract lifecycle management, AI-assisted contract review, and deep integrations with Salesforce, Microsoft 365, and other enterprise systems."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "DocuSign is priced per user per month across four tiers: Personal (around $10/month), Standard (around $25/user/month), Business Pro (around $40/user/month), and a custom-quoted Enterprise tier, all cheaper when billed annually.",
+            "Standard and Business Pro annual plans include a cap of 100 envelopes per user per year, and buyers should account for potential add-on fees like SMS delivery and ID verification when budgeting."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Multi-party e-signature workflows", "description": "Route documents to multiple signers in a defined order with real-time status tracking for each recipient."},
+        {"title": "Identity verification options", "description": "Authenticate signers via email, SMS, government ID checks, or knowledge-based authentication for higher-assurance signing."},
+        {"title": "Reusable templates", "description": "Save frequently used documents as templates with pre-placed fields to speed up repeated sending."},
+        {"title": "Audit trail and certificate of completion", "description": "Every signed document includes a tamper-evident audit trail documenting signer identity, timestamps, and IP addresses."},
+        {"title": "Contract lifecycle management (CLM)", "description": "Manage agreements beyond signing, including negotiation, storage, and AI-assisted contract analysis on higher tiers."},
+        {"title": "Enterprise integrations", "description": "Native integrations with Salesforce, Microsoft 365, Google Workspace, SAP, and Workday, plus a public API."},
+        {"title": "Mobile signing app", "description": "Sign and send documents from iOS and Android devices."},
+        {"title": "Bulk send and payment collection", "description": "Send the same document to many recipients at once and collect payments during the signing process on Business Pro and above."}
+      ],
+      "pros": [
+        "Widely recognized and trusted brand with the broadest range of enterprise integrations in the category.",
+        "Supports the widest range of international e-signature and compliance standards among mainstream vendors.",
+        "Scales from single-user Personal plans up to large enterprise agreement lifecycle management.",
+        "Mature mobile apps and identity verification options for higher-assurance signing needs."
+      ],
+      "cons": [
+        "Meaningfully more expensive than newer competitors, especially open-source alternatives.",
+        "Standard and Business Pro plans cap included envelopes at 100 per user per year, with overage or upgrade required beyond that.",
+        "Add-on fees for SMS delivery, ID verification, and premium support can push real costs above the advertised price.",
+        "Enterprise pricing is not published and requires a custom sales quote."
+      ],
+      "faqs": [
+        {"question": "How much does DocuSign cost?", "answer": "DocuSign starts at about $10/month for the Personal plan (billed annually), with Standard around $25/user/month, Business Pro around $40/user/month, and custom Enterprise pricing for large organizations."},
+        {"question": "Who founded DocuSign and when?", "answer": "DocuSign was founded in 2003 in Seattle by Court Lorenzini, Tom Gonser, and Eric Ranft, and later moved its headquarters to San Francisco."},
+        {"question": "Is DocuSign a public company?", "answer": "Yes, DocuSign went public on the Nasdaq under the ticker DOCU on April 27, 2018, after raising about $520 million in venture funding."},
+        {"question": "Does DocuSign have envelope limits?", "answer": "Yes, the Standard and Business Pro annual plans cap included envelopes at 100 per user per year; exceeding that can trigger overage fees or require a plan upgrade."},
+        {"question": "What is the difference between DocuSign eSignature and DocuSign CLM?", "answer": "eSignature covers sending and signing individual documents, while DocuSign's Contract Lifecycle Management (CLM) product manages the broader agreement process, including negotiation, storage, and AI-assisted analysis, typically as an add-on for larger organizations."},
+        {"question": "What are the best DocuSign alternatives?", "answer": "Common alternatives include Adobe Acrobat Sign, PandaDoc, Dropbox Sign, SignNow, and open-source options like DocuSeal, which typically undercut DocuSign on price."}
+      ],
+      "use_cases": [
+        {"title": "Sales contract signing", "description": "Send sales agreements and order forms for signature directly from a CRM like Salesforce, tracking completion status in real time.", "audience": "Sales teams and account managers"},
+        {"title": "HR onboarding paperwork", "description": "Collect signatures on offer letters, NDAs, and onboarding forms from new employees remotely.", "audience": "HR and people operations teams"},
+        {"title": "Real estate and legal document execution", "description": "Route multi-party contracts such as leases, purchase agreements, and legal filings through a defined, auditable signing order.", "audience": "Real estate agents, brokers, and legal professionals"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Personal", "price": "$10/month (annual) / $15/month (monthly)", "billing_cycle": "monthly or annual", "features": ["1 user", "Up to 5 envelopes per month", "Basic e-signature workflow", "Mobile app access"]},
+        {"plan_name": "Standard", "price": "$25/user/month (annual) / $45/user/month (monthly)", "billing_cycle": "monthly or annual", "features": ["Up to 100 envelopes per user/year", "Custom branding", "Reusable templates", "Basic reporting"]},
+        {"plan_name": "Business Pro", "price": "$40/user/month (annual) / $65/user/month (monthly)", "billing_cycle": "monthly or annual", "features": ["Up to 100 envelopes per user/year", "Bulk send", "Payment collection", "Advanced fields", "Additional authentication options"]},
+        {"plan_name": "Enterprise / Advanced Solutions", "price": "Custom pricing", "billing_cycle": "annual contract", "features": ["Identity verification", "Conditional routing", "Advanced API access", "Salesforce and Workday integrations"]}
+      ],
+      "tags": ["freemium", "free-trial", "api", "web-app", "ios", "android", "templates"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "6cf17823-4f66-4f20-8ec7-a8927a750f25",
+    "slug": "dokku",
+    "name": "Dokku",
+    "enrichment": {
+      "short_description": "A free, open-source, Docker-powered Platform-as-a-Service that lets developers deploy applications to their own server with a single git push.",
+      "pricing_model": "Free / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "Dokku Review 2026: Self-Hosted Heroku Alternative",
+      "seo_meta_description": "Dokku is a free, open-source PaaS that turns any server into a Heroku-style deployment target via git push. See how it works, features, and alternatives.",
+      "llm_readable_summary": "Dokku is a free, open-source Platform-as-a-Service (PaaS) that recreates the core developer experience of Heroku on infrastructure a team fully owns and controls. It was created by developer Jeff Lindsay in 2013, originally as a small shell script, described at the time as roughly 100 lines of Bash, that stitched together Docker containers with Heroku's open-source buildpacks to replicate git-push deployment on a single server. The project's minimalist origins are reflected in its tagline as 'the smallest PaaS implementation you've ever seen,' and it has since grown into a mature, plugin-based platform maintained by a community of contributors on GitHub, with no single company or corporate parent behind it; it remains a community-governed open-source project distributed under the MIT license.\n\nTechnically, Dokku is installed on a Linux server (commonly a small VPS from a provider like DigitalOcean, Hetzner, or AWS EC2), and once configured with at least one deploy key, developers interact with it almost exactly like Heroku: running git push dokku main transfers the application code to the server, where Dokku detects the language and framework, builds it into a Docker image, using Heroku-compatible buildpacks via a component called Herokuish, or newer builders like Cloud Native Buildpacks, Nixpacks, and Railpack, or a raw Dockerfile if the app already has one, and then runs it in an isolated container. Dokku handles the operational plumbing that would otherwise require manual configuration: an nginx-based reverse proxy and routing layer, automatic Let's Encrypt SSL certificate provisioning, environment variable injection, custom domain mapping, process scaling, and zero-downtime deployments that only swap traffic to a new container once its health checks pass. The platform's architecture follows the Unix philosophy of small, composable pieces: essentially every capability, from SSL termination to database provisioning, is implemented as a discrete plugin, and the community has built hundreds of additional plugins covering PostgreSQL, MySQL, Redis, MongoDB, Elasticsearch, scheduled jobs, and more.\n\nBecause Dokku is fully open-source, there is no license fee, subscription, or usage-based charge from the project itself, pricing is effectively free forever. The only real cost is the underlying server infrastructure a team chooses to run it on, which can be as inexpensive as a few dollars a month for a small VPS capable of hosting several low-traffic applications, scaling up in cost only as the underlying hardware needs grow. This stands in sharp contrast to Heroku and other managed PaaS providers, which charge per dyno, per add-on, and per resource consumed; teams that outgrow Heroku's pricing, or that want to avoid recurring platform fees altogether, frequently migrate to Dokku specifically to eliminate that ongoing cost while keeping a similar developer workflow.\n\nDokku's target users are developers, small teams, indie hackers, and cost-conscious startups who want Heroku-style simplicity, deploy by pushing to Git, with automatic builds, routing, and SSL, without paying a managed platform's markup, and who are comfortable taking on the responsibility of managing their own server (patching, backups, monitoring, and scaling) in exchange for that cost savings and control. It's commonly used for side projects, internal tools, small-to-medium production web applications, and as a lightweight internal PaaS inside companies that want a self-hosted deployment target for multiple small services without building a full Kubernetes setup.\n\nDokku's competitors span both managed and self-hosted platforms. In the managed PaaS space it competes indirectly with Heroku, Render, Railway, and Fly.io, services Dokku is frequently deployed specifically to replace, since it offers a similar workflow without the recurring per-app fees. Among self-hosted alternatives, it competes with CapRover, Coolify, Kubernetes-based internal platforms, and Docker Swarm-based setups. Dokku differentiates itself through its extreme simplicity and small footprint (it can comfortably run on a single, modest VPS, unlike Kubernetes-based alternatives that typically require more infrastructure and operational overhead) and its close fidelity to the original Heroku git-push workflow, which makes migration from Heroku particularly frictionless.\n\nNotable facts: Dokku has tens of thousands of stars on GitHub and remains one of the most widely referenced self-hosted Heroku alternatives cited across DevOps and indie-developer communities; despite its single-server-friendly design, later versions have expanded support for scaling across multiple hosts and integrating with more modern container builders beyond classic Heroku buildpacks, keeping it relevant as build tooling in the broader container ecosystem has evolved since 2013.\n\nA typical Dokku installation begins with a one-line install script that provisions Docker, nginx, and Dokku's own command set on a fresh Linux host, after which an administrator adds SSH public keys for each developer who should be able to deploy. From there, creating a new application is as simple as running `dokku apps:create myapp` on the server and adding a corresponding Git remote locally; environment-specific configuration such as database connection strings or API keys is set via `dokku config:set`, and custom domains are attached with `dokku domains:add`, after which Dokku's Let's Encrypt plugin can provision a free SSL certificate with a single command. For teams running multiple related services, such as a web app, a background worker, and a scheduled task, Dokku supports Procfile-style process types, similar to Heroku, letting a single app definition scale different process types independently, for example running three web containers and one worker container from the same codebase.\n\nBecause Dokku is dependency-light and MIT-licensed, it has also become a common teaching and reference example in DevOps courses and blog tutorials that explain PaaS and container concepts from first principles, precisely because its codebase is small enough to read end to end, unlike the much larger and more complex codebases of Kubernetes or Cloud Foundry. This educational role, combined with its practical use in production for smaller workloads, has helped Dokku maintain a steady, loyal user base even as the broader deployment-platform market has shifted toward more heavyweight orchestration systems for large-scale enterprise use, or toward fully managed newer entrants like Railway and Fly.io for teams that want zero server management at all.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Dokku is a free, open-source Platform-as-a-Service that lets developers deploy applications to their own server using the same git-push workflow popularized by Heroku.",
+            "Created in 2013 by Jeff Lindsay, Dokku has grown from a small shell script into a mature, plugin-based platform maintained by an open-source community, with no corporate owner or licensing fee."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Dokku automatically builds applications using Heroku buildpacks, Cloud Native Buildpacks, Nixpacks, or raw Dockerfiles, then runs them in Docker containers with an nginx reverse proxy, automatic SSL via Let's Encrypt, and zero-downtime deployments.",
+            "A plugin architecture covers everything from database provisioning (PostgreSQL, MySQL, Redis, MongoDB) to scheduled jobs, letting teams extend a single-server deployment into a fairly complete self-hosted application platform."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Dokku itself is entirely free and open-source under the MIT license, with no subscription, per-app, or per-dyno charges.",
+            "The only cost is the server infrastructure it runs on, which can be a single low-cost VPS, making Dokku significantly cheaper over time than managed PaaS platforms like Heroku for teams willing to manage their own server."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Git push deployment", "description": "Deploy applications with a single git push dokku main command, mirroring the classic Heroku workflow."},
+        {"title": "Automatic buildpack detection", "description": "Detects the application language and framework and builds it automatically using Heroku buildpacks, Cloud Native Buildpacks, Nixpacks, Railpack, or a Dockerfile."},
+        {"title": "Zero-downtime deployments", "description": "Routes traffic to a new container only after its health checks pass, avoiding service interruption during deploys."},
+        {"title": "Automatic SSL via Let's Encrypt", "description": "Provisions and renews free SSL certificates automatically for custom domains."},
+        {"title": "Plugin ecosystem", "description": "Hundreds of community plugins add databases, scheduled jobs, monitoring, and other capabilities to a base installation."},
+        {"title": "Built-in reverse proxy", "description": "Uses nginx to route traffic, manage domains, and handle load balancing for deployed applications."},
+        {"title": "Environment variable and config management", "description": "Manage per-app environment variables and configuration through simple CLI commands."},
+        {"title": "Single-server efficiency", "description": "Runs comfortably on a single low-cost VPS, avoiding the operational overhead of a full Kubernetes cluster."}
+      ],
+      "pros": [
+        "Completely free and open-source with no recurring licensing or platform fees.",
+        "Near-identical developer experience to Heroku, making migration away from Heroku straightforward.",
+        "Lightweight enough to run on a single inexpensive VPS, unlike heavier orchestration platforms.",
+        "Large plugin ecosystem covering databases, SSL, and other common infrastructure needs."
+      ],
+      "cons": [
+        "Requires the team to manage, patch, back up, and monitor their own server.",
+        "Primarily designed around single-host deployments, with more limited multi-host scaling than Kubernetes.",
+        "No official managed hosting or enterprise support contract from a vendor.",
+        "Documentation and plugin quality can vary since many plugins are community-maintained."
+      ],
+      "faqs": [
+        {"question": "Is Dokku free?", "answer": "Yes, Dokku is completely free and open-source under the MIT license; the only cost is the server it runs on."},
+        {"question": "Who created Dokku?", "answer": "Dokku was created by developer Jeff Lindsay in 2013 and is now maintained by an open-source community on GitHub."},
+        {"question": "How does Dokku deployment work?", "answer": "Developers push code to Dokku via Git, and Dokku automatically detects the app type, builds a Docker image using a buildpack or Dockerfile, and runs it in a container behind an nginx reverse proxy."},
+        {"question": "Is Dokku a replacement for Heroku?", "answer": "Dokku is commonly used as a self-hosted replacement for Heroku, replicating its git-push workflow without the recurring per-dyno fees, though it requires the team to manage its own server."},
+        {"question": "Can Dokku run multiple applications on one server?", "answer": "Yes, a single Dokku installation can host and route traffic to many applications on one server, making it efficient for small-to-medium workloads."},
+        {"question": "What are alternatives to Dokku?", "answer": "Alternatives include managed platforms like Heroku, Render, Railway, and Fly.io, as well as other self-hosted options like CapRover and Coolify."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted app deployment for side projects", "description": "Deploy personal or small commercial projects to a single low-cost VPS with Heroku-style simplicity.", "audience": "Indie developers and hobbyists"},
+        {"title": "Heroku cost migration", "description": "Move existing Heroku applications to self-managed infrastructure to eliminate recurring per-dyno platform fees.", "audience": "Startups and cost-conscious engineering teams"},
+        {"title": "Internal tooling platform", "description": "Provide an internal, self-hosted deployment target for multiple small internal tools and services without standing up Kubernetes.", "audience": "Small engineering teams and internal platform teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code access", "Unlimited apps per server", "Community plugin ecosystem", "Community support via GitHub"]}
+      ],
+      "tags": ["open-source", "self-hosted", "free-plan"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "bac55456-ac21-473d-a96f-b37ba84bb107",
+    "slug": "dokuwiki",
+    "name": "DokuWiki",
+    "enrichment": {
+      "short_description": "A free, open-source wiki engine that requires no database, storing all content as plain text files, popular for documentation and small team knowledge bases.",
+      "pricing_model": "Free / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German", "French", "Spanish", "Italian", "Chinese", "Japanese", "Russian", "Portuguese", "Dutch"],
+      "seo_title": "DokuWiki Review 2026: Features, Setup & Alternatives",
+      "seo_meta_description": "DokuWiki is a free, open-source, database-free wiki engine. Explore its features, plugin ecosystem, access control, and how it compares to other wikis.",
+      "llm_readable_summary": "DokuWiki is a free and open-source wiki engine created by German developer Andreas Gohr, who began building it in June 2004 to document his own work as a system administrator, with the first official public release published on Freshmeat (later Freecode) the following month. What distinguishes DokuWiki from most wiki software, including MediaWiki, is its complete lack of a database dependency: every page is stored as a plain text file on disk, using a lightweight custom markup syntax similar to MediaWiki's, which makes the software trivially easy to install (essentially just unpack the files onto any web server running PHP), back up (since backups are just file copies), and version-control. The project gained significant early traction after being packaged into the Debian and Gentoo Linux distributions in 2005, and a major architectural overhaul in early 2005, contributed by developer Harry Fuecks, rewrote the parser and rendering engine using PHP4's then-new object-oriented features, introducing a caching layer that made DokuWiki viable for much larger sites. Development moved to Git and GitHub in 2010, and since 2011 each release has been named after a Discworld character, a naming convention DokuWiki keeps to this day.\n\nTechnically, DokuWiki runs on any standard LAMP-style stack minus the database: it needs only a web server and PHP, with content, page history, and metadata all stored as files in a structured directory tree, organized into namespaces that behave like folders. Every edit is automatically versioned, so any two revisions of a page can be diffed and reverted, giving DokuWiki full page history without a database backend. Access control is handled through a built-in user and group manager combined with a page- and namespace-level access control list (ACL), giving administrators more granular permission control than many database-backed wikis; authentication can also be delegated to external systems including LDAP and Active Directory. The software fully supports Unicode (UTF-8), properly renders right-to-left languages such as Hebrew and Arabic, and ships with translations into roughly 70 languages, making it genuinely international out of the box. Its capabilities are extended through a generic plugin interface, with roughly a thousand community-built plugins available covering things like tables, diagrams, calendars, and custom syntax, plus a separate template system for changing the visual theme independently of plugins.\n\nDokuWiki carries no licensing cost whatsoever: it is released under the GPL open-source license and is entirely free to download, install, and use, with no paid tier, feature gate, or usage cap from the project itself. Because it requires no database server, hosting costs are typically minimal, DokuWiki is explicitly designed to run on cheap, low-resource shared web hosting, which was one of Andreas Gohr's original design goals. Organizations that want a managed or supported deployment can turn to third-party hosting providers or independent consultants in the DokuWiki ecosystem, but there is no official paid DokuWiki product or company offering premium tiers.\n\nDokuWiki's target users are small-to-medium teams, IT departments, and technical documentation authors who want a lightweight, easy-to-back-up wiki without the operational overhead of running and maintaining a separate database server. It is especially popular for internal IT documentation, software manuals, and small organizational knowledge bases where simplicity of installation and long-term maintainability matter more than the extensive extension ecosystem of a larger platform like MediaWiki.\n\nCompetitors in the self-hosted wiki space include MediaWiki (which powers Wikipedia and requires a MySQL/MariaDB database), TikiWiki, XWiki, and BookStack, as well as modern hosted knowledge-base tools like Confluence and Notion, which target a broader collaboration use case rather than a pure wiki model. DokuWiki differentiates itself primarily through its database-free architecture, ease of installation and backup, fine-grained ACL-based permissions, and long track record of stability, the project has been continuously maintained for more than two decades without requiring a database migration or major rearchitecture.\n\nNotable facts: DokuWiki remains one of the most widely deployed self-hosted wikis in the open-source ecosystem, is bundled as an available application in numerous web hosting control panels and app marketplaces, and its file-based storage model has made it a recurring reference point in discussions of simple, low-maintenance content management systems for technical teams.\n\nDokuWiki's markup syntax is deliberately close to plain-text conventions familiar from early wiki software: double asterisks or slashes for bold and italic text, simple bracket syntax for internal and external links, and a straightforward table syntax, all designed to be readable even before rendering, so that page source files remain human-comprehensible when viewed directly on disk or in a diff tool. Because pages are just files, DokuWiki integrates naturally with external version control systems for teams that want an additional layer of change tracking beyond DokuWiki's own built-in revision history, and entire wikis can be cloned, branched, or migrated between servers with simple file-copy operations rather than a database export and import process, which is often error-prone with larger MediaWiki installations. The software also includes a media manager for uploading and organizing images and file attachments, a built-in full-text search indexer that works without any external search service, and a syntax-highlighting code block feature commonly used for embedding configuration examples or scripts directly in documentation pages.\n\nThe DokuWiki community has remained notably stable over its two-decade history, with Andreas Gohr continuing to lead the project and a small, dedicated group of long-term contributors maintaining the core, the official plugin repository, and the template gallery. Governance and funding are informal by open-source standards: rather than a foundation or company, the project has historically been supported through voluntary donations and, more recently, direct sponsorship via platforms like Patreon, reflecting its identity as a genuinely community-run tool rather than a commercially backed open-core product. This lightweight governance model has arguably contributed to DokuWiki's longevity, since there is no venture-backed pressure to monetize or sunset the free version, a fate that has affected some other once-popular open-source wiki engines over the same period.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "DokuWiki is a free, open-source wiki engine notable for storing all content as plain text files rather than in a database, making it exceptionally simple to install, back up, and maintain.",
+            "Created by Andreas Gohr in 2004 for his own sysadmin documentation needs, DokuWiki has been continuously developed for over two decades and remains a popular choice for lightweight, self-hosted knowledge bases."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "DokuWiki requires only a web server and PHP, with automatic page versioning, namespace-based organization, and fine-grained access control lists at the page and namespace level.",
+            "A generic plugin interface supports roughly a thousand community plugins, and built-in internationalization covers around 70 languages, including proper right-to-left text rendering."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "DokuWiki is completely free and open-source under the GPL license, with no paid tiers or usage limits from the project itself.",
+            "Because it requires no database server, it can run on inexpensive shared hosting, keeping total hosting costs low compared to database-dependent wiki platforms."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "No database required", "description": "Stores all pages and metadata as plain text files, simplifying installation, backup, and version control."},
+        {"title": "Automatic page versioning", "description": "Every edit is saved as a revision, allowing users to compare and revert to any prior version of a page."},
+        {"title": "Fine-grained access control", "description": "Page- and namespace-level ACLs combined with a built-in user/group manager control who can read or edit content."},
+        {"title": "External authentication support", "description": "Integrates with LDAP, Active Directory, and other external authentication backends."},
+        {"title": "Large plugin ecosystem", "description": "Roughly 1,000 community-built plugins extend syntax, functionality, and integrations."},
+        {"title": "Multilingual support", "description": "Ships with translations for around 70 languages, including full right-to-left language rendering."},
+        {"title": "Lightweight hosting requirements", "description": "Runs on any web server with PHP, making it suitable for low-cost or shared hosting environments."},
+        {"title": "Template system", "description": "Change the visual appearance of a wiki independently of its content and plugins."}
+      ],
+      "pros": [
+        "Completely free and open-source with no licensing costs.",
+        "No database dependency makes installation, backup, and migration simple.",
+        "Fine-grained, namespace-based access control beyond what many database-backed wikis offer.",
+        "Long track record of stability with over two decades of continuous development."
+      ],
+      "cons": [
+        "File-based storage can become slower to search at very large page counts compared to database-backed wikis.",
+        "User interface and editing experience feel dated compared to modern collaborative tools like Notion or Confluence.",
+        "No official managed hosting or commercial support from the core project.",
+        "Plugin quality varies since most are community-maintained rather than officially vetted."
+      ],
+      "faqs": [
+        {"question": "Is DokuWiki free?", "answer": "Yes, DokuWiki is entirely free and open-source under the GPL license, with no paid tiers or usage restrictions."},
+        {"question": "Does DokuWiki need a database?", "answer": "No, DokuWiki stores all pages and metadata as plain text files on disk, which is one of its main differentiators from database-backed wikis like MediaWiki."},
+        {"question": "Who created DokuWiki?", "answer": "DokuWiki was created by German developer Andreas Gohr, who began work on it in June 2004 to document his own system administration tasks."},
+        {"question": "Can DokuWiki control who edits specific pages?", "answer": "Yes, DokuWiki includes a built-in access control list system that can restrict read or write permissions at the individual page or namespace level."},
+        {"question": "What languages does DokuWiki support?", "answer": "DokuWiki has been translated into roughly 70 languages and includes full support for right-to-left languages such as Hebrew and Arabic."},
+        {"question": "How is DokuWiki different from MediaWiki?", "answer": "DokuWiki uses file-based storage and requires no database, while MediaWiki (which powers Wikipedia) requires a MySQL or MariaDB database and offers a larger extension ecosystem geared toward very large-scale wikis."}
+      ],
+      "use_cases": [
+        {"title": "Internal IT documentation", "description": "Document infrastructure, procedures, and runbooks in a lightweight wiki that is easy to back up alongside server configuration.", "audience": "System administrators and IT teams"},
+        {"title": "Small team knowledge base", "description": "Give a small organization a searchable, versioned internal knowledge base without standing up a database server.", "audience": "Small businesses and nonprofit organizations"},
+        {"title": "Software project documentation", "description": "Host user manuals and technical documentation for a software project with fine-grained edit permissions.", "audience": "Open-source and software development teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code access", "Unlimited pages and namespaces", "Access control lists", "Community plugin and template ecosystem"]}
+      ],
+      "tags": ["open-source", "self-hosted", "free-plan", "templates"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "da85131f-6520-4e7e-b70d-0a49a665a0fa",
+    "slug": "dolibarr",
+    "name": "Dolibarr",
+    "enrichment": {
+      "short_description": "A free, open-source ERP and CRM web application that lets businesses manage invoicing, orders, inventory, HR, and more through modular, activatable features.",
+      "pricing_model": "Free / Open Source (with optional paid hosting)",
+      "starting_price": "Free",
+      "founded_year": 2002,
+      "company_size": null,
+      "headquarters": "Olivet, France (Dolibarr Association)",
+      "languages": ["English", "French", "Spanish", "German", "Italian", "Portuguese", "Dutch", "and 20+ other languages"],
+      "seo_title": "Dolibarr Review 2026: Open-Source ERP/CRM Features",
+      "seo_meta_description": "Dolibarr is a free, open-source ERP and CRM for invoicing, orders, inventory, and HR. See its modular features, hosting options, and pricing for 2026.",
+      "llm_readable_summary": "Dolibarr is a free, open-source enterprise resource planning (ERP) and customer relationship management (CRM) web application aimed at small and medium-sized businesses, freelancers, foundations, and nonprofits. The project was started in April 2002 by French developer Rodolphe Quiedeville, with the first public version released in September 2003. The software's name is a tribute to Dolores Ibarruri, the Spanish Republican political figure known by the nickname 'La Pasionaria,' reflecting the project's grassroots, community-driven origins. As the project matured, the Dolibarr Association was formally created in April 2009 and is based in Olivet, France, to govern and promote the software independently of any single company, and the broader Dolibarr Foundation later formed to support the ecosystem of contributors, integrators, and hosting partners. The software is written in PHP and distributed under the GPL open-source license, and the project reports having been downloaded more than five million times, with active deployments across more than 60 countries.\n\nTechnically, Dolibarr is architected as a modular web application: rather than installing a monolithic ERP suite, administrators enable only the specific modules a business needs, each of which can be turned on or off independently through the admin panel. Available modules cover an unusually broad range of business functions for a single open-source platform, including customer and supplier invoicing, commercial proposals and quotes, order management, product and service catalogs, inventory and warehouse stock tracking, point-of-sale (POS), a CRM pipeline for contacts and opportunities, project and task management, HR and leave management, a built-in accounting module, email campaign (emailing) tools, and even a lightweight CMS for building a public-facing website tied to the same data. Because it's a standard PHP and MySQL/MariaDB web application, Dolibarr can be installed on virtually any commodity LAMP-stack hosting, run locally within an organization, deployed on a private server, or accessed as software-as-a-service through a managed hosting provider, giving businesses full flexibility over where their data lives.\n\nDolibarr's core software carries no license fee: the full ERP/CRM application and all of its standard modules are free to download, install, and use indefinitely, with no seat limits or feature paywalls in the open-source edition. The costs businesses actually incur come from three optional areas: hosting infrastructure if self-installed, premium third-party modules and add-ons built by the wider Dolibarr marketplace ecosystem, and professional services such as paid setup, customization, or support from certified partners. For organizations that don't want to self-host, DoliCloud, the official managed SaaS hosting service tied to the project, offers hosted Dolibarr instances starting at roughly 9 to 9.60 euros per month (with a Premium tier around 30 euros/month plus roughly 12 euros per user/month for additional users), including automatic updates, backups, and support, along with a free trial period for evaluation. This dual model, fully free self-hosting alongside affordably priced official managed hosting, is characteristic of open-source business software and lets Dolibarr serve budget-constrained users and those who prefer a hands-off managed option.\n\nDolibarr's target users are small and medium businesses, freelancers, associations, and foundations that need integrated invoicing, order management, and CRM functionality but cannot justify the cost of large commercial ERP suites like SAP, NetSuite, or Odoo's paid tiers. Its modular, pay-only-for-what-you-host-or-need model makes it particularly attractive to organizations in cost-sensitive markets or with lean IT budgets, including many businesses across French-speaking Europe and Africa, where the project has especially strong community adoption given its French origins.\n\nCompetitors include Odoo (a larger, more feature-rich open-source ERP with a similar freemium/paid-hosting model), ERPNext, Tryton, and, at the higher end, commercial ERP suites like SAP Business One, Microsoft Dynamics 365, and NetSuite. Compared to Odoo, Dolibarr is generally considered lighter-weight and simpler to set up and administer, at the cost of a somewhat smaller module ecosystem and less polish in areas like manufacturing or advanced supply-chain management, trade-offs that make Dolibarr a common recommendation for very small businesses and Odoo a more common choice as complexity grows.\n\nNotable facts: Dolibarr's entire codebase is publicly hosted and developed on GitHub, its module marketplace includes contributions from a large volunteer developer community, and the project has remained continuously maintained for over two decades since its 2002 founding, with regular version releases adding new modules and modernizing its interface.\n\nDolibarr's module marketplace, DoliStore, is a distinguishing feature of its ecosystem: third-party developers and integrators publish both free and paid add-on modules covering everything from advanced manufacturing (MRP) and multi-currency accounting to industry-specific point-of-sale extensions and connectors for external services like payment gateways, shipping carriers, and e-commerce platforms such as WooCommerce and PrestaShop. This marketplace model lets Dolibarr stay lean by default while still offering a path to specialized functionality for businesses with more advanced requirements, and it has become a modest revenue stream for the independent developers and agencies who build and sell these extensions, forming a small but active commercial ecosystem around an otherwise free core product. Dolibarr's REST API, available on both self-hosted and DoliCloud instances, also lets businesses integrate the ERP with external tools, custom scripts, or business intelligence dashboards without needing to modify the core codebase.\n\nAdoption of Dolibarr skews heavily toward Europe, and particularly toward French-speaking markets, reflecting the software's origins, though English-language documentation, an active international community forum, and translations into more than 20 languages have broadened its use well beyond France into other parts of Europe, Africa, and Latin America. The Dolibarr Association organizes an annual contributors' meetup and coordinates the project's roadmap through community proposals, a governance style similar to many mid-sized open-source projects that sit between a fully corporate-backed product and a purely volunteer-run one. For businesses evaluating Dolibarr against paid ERP options, the most common deciding factors are total cost of ownership over multiple years, the availability of local (often French-speaking) implementation partners, and whether the business's complexity genuinely requires the deeper feature set of a heavier ERP like Odoo, SAP Business One, or NetSuite.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Dolibarr is a free, open-source ERP and CRM web application that lets small and medium businesses manage invoicing, orders, inventory, HR, and other core operations through independently activatable modules.",
+            "Started in 2002 by Rodolphe Quiedeville and now governed by the France-based Dolibarr Association, the project has been downloaded more than five million times and is used in over 60 countries."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Dolibarr's modular design covers invoicing, quotes, order and stock management, point-of-sale, CRM, project management, HR, accounting, and even a built-in CMS, letting businesses enable only what they need.",
+            "As a standard PHP and MySQL/MariaDB application, Dolibarr can be self-hosted on any LAMP-compatible server or accessed through the official DoliCloud SaaS hosting service."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Dolibarr's core software is completely free and open-source under the GPL license, with no seat limits or feature paywalls.",
+            "Optional costs come from self-hosting infrastructure, premium marketplace modules, professional services, or the official DoliCloud managed hosting, which starts at roughly 9 euros per month."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Modular activation", "description": "Enable only the specific business modules a company needs, from invoicing to HR, without installing unused functionality."},
+        {"title": "Invoicing and quotes", "description": "Create customer and supplier invoices, commercial proposals, and recurring billing."},
+        {"title": "Order and inventory management", "description": "Track product and service catalogs, stock levels across warehouses, and purchase and sales orders."},
+        {"title": "Built-in CRM", "description": "Manage contacts, leads, and sales opportunities within the same system as invoicing and orders."},
+        {"title": "Point of sale (POS)", "description": "Run in-person retail sales through a built-in point-of-sale module."},
+        {"title": "HR and project management", "description": "Track employee leave, expenses, and project tasks alongside core financial data."},
+        {"title": "Accounting module", "description": "Manage bookkeeping and financial reporting natively within the platform."},
+        {"title": "Flexible hosting", "description": "Self-host on any PHP/MySQL server or use the official DoliCloud managed SaaS hosting."}
+      ],
+      "pros": [
+        "Completely free, open-source core with no seat limits or feature paywalls.",
+        "Highly modular, so businesses only enable and configure what they actually need.",
+        "Broad functional coverage (invoicing, CRM, inventory, HR, accounting) in a single lightweight platform.",
+        "Affordable official managed hosting option (DoliCloud) for teams that don't want to self-host."
+      ],
+      "cons": [
+        "Smaller module and integration ecosystem than larger open-source ERPs like Odoo.",
+        "Interface and UX are more utilitarian than modern commercial SaaS competitors.",
+        "Advanced manufacturing and complex supply-chain features are less developed than dedicated ERP suites.",
+        "Self-hosting requires ongoing server maintenance, backups, and update management."
+      ],
+      "faqs": [
+        {"question": "Is Dolibarr free to use?", "answer": "Yes, Dolibarr's core ERP/CRM software is free and open-source under the GPL license, with optional costs only for hosting, premium modules, or professional support."},
+        {"question": "Who created Dolibarr?", "answer": "Dolibarr was created by French developer Rodolphe Quiedeville, who started the project in April 2002, with the first release in September 2003."},
+        {"question": "Can Dolibarr be self-hosted?", "answer": "Yes, Dolibarr is a standard PHP and MySQL/MariaDB web application that can be installed on any compatible server, or accessed through the official DoliCloud managed hosting service."},
+        {"question": "What modules does Dolibarr include?", "answer": "Dolibarr offers modules for invoicing, quotes, order management, inventory, point-of-sale, CRM, project management, HR, accounting, and a lightweight CMS, all independently activatable."},
+        {"question": "How much does DoliCloud hosting cost?", "answer": "DoliCloud, the official managed hosting service, starts at roughly 9 euros per month, with a Premium tier around 30 euros per month plus a per-user fee for additional users."},
+        {"question": "How does Dolibarr compare to Odoo?", "answer": "Dolibarr is generally lighter-weight and simpler to set up than Odoo, while Odoo offers a larger module ecosystem and more advanced manufacturing and supply-chain features at greater complexity and cost."}
+      ],
+      "use_cases": [
+        {"title": "Small business invoicing and order management", "description": "Manage quotes, invoices, and customer orders in one system without paying for a commercial ERP license.", "audience": "Small businesses and freelancers"},
+        {"title": "Nonprofit and association management", "description": "Track members, donations, projects, and finances using Dolibarr's flexible modular structure.", "audience": "Nonprofits and foundations"},
+        {"title": "Integrated retail and inventory operations", "description": "Combine point-of-sale, inventory tracking, and accounting for a small retail business.", "audience": "Retail and small commerce operators"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source (Self-Hosted)", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code access", "All standard modules", "Unlimited users", "Community support"]},
+        {"plan_name": "DoliCloud Basic", "price": "~9 EUR/month", "billing_cycle": "monthly", "features": ["Managed hosting", "Automatic updates and backups", "Standard support"]},
+        {"plan_name": "DoliCloud Premium", "price": "~30 EUR/month + ~12 EUR/user/month", "billing_cycle": "monthly", "features": ["Managed hosting", "Priority support", "Additional user seats", "Automatic updates and backups"]}
+      ],
+      "tags": ["open-source", "self-hosted", "free-plan", "web-app"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "03502625-329e-43e5-b9a4-c57308f6f0a3",
+    "slug": "domain-locker",
+    "name": "Domain Locker",
+    "enrichment": {
+      "short_description": "An open-source domain portfolio management app that tracks expiry dates, DNS records, valuations, and changes across all of a user's domain names in one place.",
+      "pricing_model": "Freemium / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2025,
+      "company_size": null,
+      "headquarters": "London, United Kingdom",
+      "languages": ["English"],
+      "seo_title": "Domain Locker Review 2026: Features & Pricing",
+      "seo_meta_description": "Domain Locker tracks domain expiry, DNS, and valuations in one dashboard. Free, Hobby ($5/mo), Pro ($20/mo), or self-hosted for free. See full details.",
+      "llm_readable_summary": "Domain Locker is an open-source domain portfolio management application that gives individuals and businesses a single dashboard to track, monitor, and manage every domain name they own. It was created by Alicia Sykes (known online as Lissy93), a London-based developer known for building a range of free and open-source software projects, and is released under the MIT license on GitHub. As a relatively young project, Domain Locker has quickly built a following in the self-hosted and privacy-focused software communities, where it is frequently listed alongside other Lissy93 projects as an example of well-documented, community-supported open-source tooling.\n\nFunctionally, Domain Locker addresses a problem familiar to anyone who owns more than a handful of domains: keeping track of registrars, expiry dates, DNS configuration, and renewal costs scattered across multiple accounts. The app centralizes that information into one interface, pulling in domain details automatically and letting users tag and categorize domains, track purchase price and renewal cost against current estimated valuation, and view profit/loss trends over time. Its monitoring engine watches for expiration dates and DNS or WHOIS changes, sending configurable alerts through email, webhook, push notification, or messaging integrations such as Telegram and Signal. Beyond monitoring, Domain Locker includes AI-assisted domain name idea generation, smart domain availability search, free domain valuation estimates, and enterprise-style web analysis and auditing tools. Data can be accessed programmatically through a REST API, or consumed via Prometheus metrics, iCal calendar feeds, RSS, and embeddable widgets, making it straightforward to plug domain data into existing monitoring or reporting stacks. Authentication supports single sign-on through GitHub and Google as well as two-factor authentication for account security.\n\nDomain Locker follows a freemium pricing model with both a hosted cloud service and a self-hosted option. The cloud Free plan costs $0 per month and covers up to 5 domains with basic domain information and expiry email alerts. The Hobby plan costs $5 per month (billed annually) and raises the limit to 20 domains, adding detailed domain information, change notifications, domain change history, and statistics. The Pro plan costs $20 per month (billed annually) and supports up to 100 domains with more detailed statistics and advanced alerting and monitoring. For users who prefer full control over their data, Domain Locker's self-hosted edition is entirely free and open-source, deployable via Docker, and includes all the functionality of the Pro cloud tier, with the caveat that self-hosters must provision their own infrastructure and that certain cloud-dependent features like email and push notifications are unavailable without additional configuration. The project also offers a Supporter track for GitHub Sponsors, who receive free access to the Hobby plan on Domain Locker and other projects by the same developer in exchange for a recommended $10 per month sponsorship.\n\nDomain Locker's target users are domain investors and portfolio holders who manage many domains across multiple registrars, web developers and agencies tracking client domains, and privacy-conscious or budget-conscious users who prefer the free self-hosted route over paying an ongoing subscription. Its open API and integrations (Prometheus, webhooks, iCal) also appeal to technically sophisticated users who want to fold domain monitoring into an existing DevOps or observability stack rather than checking a separate dashboard manually.\n\nCompetitors in the domain portfolio and monitoring space include DNSControl, domain management features built into registrars like Namecheap and GoDaddy, enterprise brand-protection platforms like CSC and MarkMonitor, and more general uptime/DNS monitoring tools that can be adapted to track expiry. Domain Locker differentiates itself by being purpose-built specifically for domain portfolio tracking rather than registration or DNS hosting itself, by offering a genuinely free and full-featured self-hosted option (something enterprise competitors like CSC do not offer), and by its developer-friendly integrations and low starting price compared to enterprise brand-protection suites that are typically priced for large organizations rather than individual domain investors.\n\nNotable facts: Domain Locker is registrar-agnostic, meaning it tracks domains regardless of where they were purchased, and its self-hosted Docker image is published publicly, making it straightforward to deploy on home server platforms and app stores aimed at the self-hosting community, such as Umbrel.\n\nTechnically, Domain Locker is built as a modern web application, with a public GitHub repository showing an Angular-based front end paired with a PostgreSQL-backed API layer, packaged for deployment through Docker Compose so that the web app, database, and any supporting services can be brought up together with a single command. The self-hosted setup script handles initial configuration such as database migrations and environment variable setup, and the project documentation includes specific deployment guides for popular platforms beyond raw Docker, including one-click style deployment on Railway, which lowers the barrier for less technical self-hosters who still want to avoid a recurring subscription. The developer has also made a point of keeping the codebase transparent and auditable, publishing architecture notes and security practices publicly, which matters to the privacy-conscious segment of Domain Locker's user base who specifically choose self-hosted tools to avoid handing domain ownership data to a third party.\n\nBecause domain names function as valuable digital assets, sometimes appreciating significantly in resale value, Domain Locker's valuation and profit/loss tracking features address a genuine gap left by registrars, which typically only show renewal pricing rather than any estimate of a domain's market value or a portfolio-wide view of gains and losses. This has made the tool particularly relevant to the domain investing and 'domaining' community, a niche but active market where portfolio holders often own dozens or hundreds of domains purchased for eventual resale, and where losing track of a single expiring high-value domain can be costly. Combined with its free self-hosted tier, Domain Locker occupies a specific niche between manual spreadsheet tracking, which most domain owners start with, and expensive enterprise brand-protection platforms designed for large corporations protecting trademarks rather than individual investors managing a portfolio.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Domain Locker is an open-source, registrar-agnostic domain portfolio management app that centralizes expiry tracking, DNS monitoring, valuations, and change alerts for every domain a user owns.",
+            "Built by London-based developer Alicia Sykes (Lissy93) and released under the MIT license, it offers both a hosted cloud service and a free, Docker-deployable self-hosted edition."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The app tracks purchase price, renewal cost, and estimated valuation, sends configurable alerts for expirations and DNS/WHOIS changes via email, webhook, push, Telegram, or Signal, and includes AI-assisted domain name ideas and availability search.",
+            "Data is accessible via a REST API, Prometheus metrics, iCal feeds, RSS, and embeddable widgets, with SSO via GitHub or Google and two-factor authentication for account security."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Domain Locker's cloud plans range from a Free tier (5 domains) to Hobby at $5/month (20 domains) and Pro at $20/month (100 domains), all billed annually.",
+            "A fully free, open-source self-hosted edition offers all Pro-tier features for users willing to run and maintain their own Docker deployment."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Centralized domain dashboard", "description": "Track every domain across all registrars in a single interface regardless of where each was purchased."},
+        {"title": "Expiry and change alerts", "description": "Receive configurable notifications for upcoming expirations and DNS or WHOIS changes via email, webhook, push, Telegram, or Signal."},
+        {"title": "Valuation and cost tracking", "description": "Monitor purchase price, renewal cost, and estimated current valuation to track portfolio profit and loss."},
+        {"title": "AI domain name ideas", "description": "Generate new domain name suggestions and check availability using built-in AI-assisted tools."},
+        {"title": "API and integrations", "description": "Access domain data via a REST API, Prometheus metrics, iCal calendar feeds, RSS, and embeddable widgets."},
+        {"title": "Self-hosted deployment", "description": "Run the entire open-source platform on your own infrastructure via Docker with full data control."},
+        {"title": "SSO and 2FA", "description": "Sign in via GitHub or Google single sign-on, with two-factor authentication for added account security."},
+        {"title": "Web analysis and auditing", "description": "Run enterprise-style analysis and audits on tracked domains for deeper technical insight."}
+      ],
+      "pros": [
+        "Registrar-agnostic, tracking domains purchased anywhere in one unified dashboard.",
+        "Fully free, open-source self-hosted edition includes all Pro-tier features.",
+        "Developer-friendly with API, Prometheus, and webhook integrations for existing monitoring stacks.",
+        "Low starting price for the cloud tiers compared to enterprise domain/brand-protection platforms."
+      ],
+      "cons": [
+        "Self-hosted deployment requires Docker knowledge and ongoing server maintenance.",
+        "Self-hosted edition lacks built-in email and push notifications without extra configuration.",
+        "As a young project, its long-term company backing and support infrastructure are less established than larger competitors.",
+        "Cloud plan domain limits (5/20/100) may require upgrades for larger domain portfolios."
+      ],
+      "faqs": [
+        {"question": "Is Domain Locker free?", "answer": "Yes, Domain Locker offers a free cloud plan for up to 5 domains, and its self-hosted edition is entirely free and open-source with all Pro-tier features."},
+        {"question": "Who created Domain Locker?", "answer": "Domain Locker was created by London-based developer Alicia Sykes (Lissy93), who has built a range of free and open-source software projects."},
+        {"question": "Can Domain Locker be self-hosted?", "answer": "Yes, Domain Locker can be self-hosted using Docker and Docker Compose, giving users full control over their data and infrastructure."},
+        {"question": "How much do Domain Locker's paid plans cost?", "answer": "The Hobby plan costs $5/month (billed annually) for up to 20 domains, and the Pro plan costs $20/month (billed annually) for up to 100 domains."},
+        {"question": "Does Domain Locker work with any domain registrar?", "answer": "Yes, Domain Locker is registrar-agnostic and can track domains regardless of where they were originally purchased."},
+        {"question": "What notification channels does Domain Locker support?", "answer": "Domain Locker can send alerts via email, webhook, push notification, Telegram, and Signal, in addition to in-app notifications."}
+      ],
+      "use_cases": [
+        {"title": "Domain investor portfolio tracking", "description": "Monitor renewal costs, valuations, and profit/loss across a large portfolio of domains held for investment.", "audience": "Domain investors and portfolio holders"},
+        {"title": "Agency client domain management", "description": "Track expiry dates and DNS changes for many client domains from a single centralized dashboard.", "audience": "Web development and digital agencies"},
+        {"title": "Self-hosted privacy-focused monitoring", "description": "Deploy Domain Locker on personal infrastructure to monitor domains without relying on a third-party cloud service.", "audience": "Privacy-conscious self-hosters"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0/month", "billing_cycle": "monthly", "features": ["Up to 5 domains", "Basic domain info", "Expiry email alerts"]},
+        {"plan_name": "Hobby", "price": "$5/month", "billing_cycle": "billed annually", "features": ["Up to 20 domains", "Detailed domain info", "Change notifications", "Domain change history", "Statistics and alerts"]},
+        {"plan_name": "Pro", "price": "$20/month", "billing_cycle": "billed annually", "features": ["Up to 100 domains", "Advanced statistics", "Advanced alerts", "Domain monitoring"]},
+        {"plan_name": "Self-Hosted", "price": "Free", "billing_cycle": "N/A", "features": ["All Pro features", "Full source code access", "Docker deployment", "Self-managed infrastructure"]}
+      ],
+      "tags": ["open-source", "self-hosted", "freemium", "free-plan", "api", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "854f8d2c-af4c-48f6-b7f6-07a0687b0ff0",
+    "slug": "domjudge",
+    "name": "DOMJudge",
+    "enrichment": {
+      "short_description": "A free, open-source programming contest judging system used to automatically compile, run, and score submissions in competitive programming contests like the ICPC.",
+      "pricing_model": "Free / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": "Utrecht, Netherlands",
+      "languages": ["English"],
+      "seo_title": "DOMJudge Review 2026: Open-Source Contest Judge System",
+      "seo_meta_description": "DOMJudge is a free, open-source automated judging system for programming contests like the ICPC. See how it works, key features, and alternatives.",
+      "llm_readable_summary": "DOMJudge is a free, open-source automated judging system built specifically to run competitive programming contests, most notably regional and world finals events of the ACM International Collegiate Programming Contest (ICPC). The project traces its first commit to May 2004 and originated with the computer science student association at Utrecht University in the Netherlands, growing out of the practical need to automate the judging of programming contests the association organized. Over the following two decades, DOMJudge evolved from a university-community tool into the de facto standard judging platform used across a large share of ICPC regional contests worldwide, maintained today by a small, distributed team of core developers, including contributors such as Jaap Eldering, Nicky Gerritsen, Keith Johnson, Thijs Kinkhorst, and others, working as an open-source community project rather than under any single company or institution, though it remains closely associated with Dutch university computing culture and is hosted and developed publicly on GitHub under the DOMjudge organization.\n\nTechnically, DOMJudge implements the classic competitive-programming judging workflow: contestants submit source code solutions to a problem through either a command-line submit client or a web interface, and the system automatically compiles that code, executes it against a set of test cases prepared by the contest jury, and compares the program's output against expected results to determine whether the submission is accepted, produces a wrong answer, times out, or fails for another defined reason. The architecture is explicitly modular on the language side, so contest organizers can plug in support for additional programming languages or compilers as needed, and it supports distributed judging, where multiple judge machines process submissions in parallel to keep judging queues short during high-traffic contest windows, an important property for large-scale events with hundreds of simultaneous submissions. The platform provides three distinct web interfaces tailored to different contest roles: one for teams to submit solutions and view their own results, one for the jury to manage problems, review submissions, and answer clarification requests from teams, and one for the public to view a live, ranked scoreboard. Under the hood, DOMJudge runs on a standard Linux/PHP stack, requiring a web server with PHP 7.4 or newer and a MySQL or MariaDB database, along with a command-line submission client and whatever language compilers the contest organizers choose to support.\n\nBecause DOMJudge is licensed under the GNU General Public License (GPL-2.0) and developed as open-source, free software, there is no cost to download, install, or run it, no licensing fee, seat count, or usage-based charge exists for the software itself. The only expenses an organization incurs are the infrastructure needed to run it (a Linux server, judge machines for compiling and executing untrusted contestant code in isolation, and network setup for a contest venue) and, if desired, the organizer's own time or paid consulting to configure it for a specific event, since DOMJudge does not offer an official managed hosting or SaaS product.\n\nDOMJudge's target users are almost exclusively academic and competitive-programming organizations: university computer science departments running internal or regional programming contests, ICPC regional contest organizing committees, and university courses that use programming judges as part of coursework or practice sessions. It has been used in numerous named ICPC regional contests over the years, including the Northwestern Europe Regional Contest (NWERC, since 2007), the Southwestern Europe Regional Contest (SWERC, since 2008), and various regionals across the Americas and the South Pacific, reflecting its long-standing role as trusted judging infrastructure within the international competitive programming community.\n\nDOMJudge's main competitors in the automated-judging space include PC^2 (Programming Contest Control System, an older ICPC-affiliated judge), Kattis (a commercial/hosted judging and problem-archive platform widely used for online judging and increasingly for contests), Codeforces' internal judging infrastructure, and CMS (Contest Management System), which is popular in olympiad-style informatics competitions such as the IOI. DOMJudge differentiates itself through its specific focus on and long track record with ICPC-style team contests, its fully open-source and self-hosted nature (unlike Kattis, which is primarily a hosted commercial product), and the depth of tooling built specifically around the jury/clarification/scoreboard workflow that ICPC-style events require.\n\nNotable facts: DOMJudge has an estimated multi-decade cumulative development effort behind it according to standard software-effort estimation models, has been continuously maintained since 2004 without ever becoming a commercial product, and remains one of the most widely cited open-source tools in academic papers and technical writeups about building and running competitive programming contest infrastructure.\n\nRunning a contest with DOMJudge typically involves a dedicated server or small cluster split into roles: a central server hosting the database and web interfaces, and one or more judgehost machines that pull queued submissions, compile them in a sandboxed environment, and execute them against test data under strict time and memory limits to prevent malicious or runaway code from affecting the wider system. This judgehost isolation, historically implemented through Linux control groups and restricted user accounts and increasingly supplemented with container-based sandboxing in newer releases, is central to DOMJudge's security model, since contest organizers must safely execute arbitrary, untrusted code submitted by hundreds of competing teams during a live event. The system also supports interactive problems, where a judge program communicates back and forth with the contestant's submission during execution rather than simply comparing static output, a feature required by more advanced contest problem types beyond simple input/output comparison.\n\nDOMJudge's contest data model follows the Contest Control System (CCS) specification developed collaboratively within the ICPC community, an open standard that defines how contest events, submissions, judgements, and scoreboards should be represented so that different judging systems, scoreboard displays, and analysis tools can interoperate. Because DOMJudge is one of the reference implementations of this standard, contests run on it can export data in a format consumable by third-party scoreboard resolvers, broadcast overlays used for livestreaming finals, and post-contest analysis tools, which is part of why it remains the preferred choice for high-visibility events where results need to feed into external presentation systems during a live broadcast, such as the ICPC World Finals ceremony.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "DOMJudge is a free, open-source automated judging system for running programming contests, most notably regional events of the ACM ICPC, handling submission compilation, execution, output comparison, and scoring.",
+            "First committed in May 2004 and originating from the computer science student association at Utrecht University, DOMJudge has grown into the de facto standard judge used across many ICPC regionals worldwide."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The system automatically compiles and runs contestant submissions against jury-defined test cases, supports distributed judging across multiple machines, and offers separate web interfaces for teams, jury members, and public scoreboards.",
+            "Its modular design lets contest organizers add support for additional programming languages and compilers, and it handles clarification-request communication between teams and the jury during a live contest."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "DOMJudge is entirely free and open-source under the GPL-2.0 license, with no licensing fees or usage charges from the project.",
+            "Organizations only need to budget for their own server and judge-machine infrastructure, since DOMJudge does not offer an official paid hosting or SaaS product."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Automated submission judging", "description": "Compiles and runs contestant code against jury-defined test cases and automatically determines the verdict (accepted, wrong answer, time limit exceeded, etc.)."},
+        {"title": "Distributed judging", "description": "Scales judging across multiple machines running in parallel to keep queues short during high-submission-volume contests."},
+        {"title": "Team, jury, and public interfaces", "description": "Separate web interfaces let teams submit and view results, juries manage problems and clarifications, and the public follow a live scoreboard."},
+        {"title": "Modular language support", "description": "Add support for additional programming languages or compilers through the system's pluggable language architecture."},
+        {"title": "Clarification request system", "description": "Handles structured communication between contestant teams and the jury during a live contest."},
+        {"title": "Command-line and web submission", "description": "Contestants can submit solutions through either a command-line client or a web-based interface."},
+        {"title": "Live ranked scoreboard", "description": "Displays a real-time, publicly viewable scoreboard ranking teams by problems solved and penalty time."},
+        {"title": "Self-hosted deployment", "description": "Runs on a standard Linux, PHP, and MySQL/MariaDB stack under an organization's own infrastructure."}
+      ],
+      "pros": [
+        "Completely free and open-source with no licensing costs.",
+        "Long, proven track record as trusted judging infrastructure across many ICPC regional contests.",
+        "Distributed judging architecture scales to handle high-volume submission traffic during live contests.",
+        "Modular language support makes it adaptable to a wide range of contest formats and requirements."
+      ],
+      "cons": [
+        "No official managed hosting or SaaS option; organizers must set up and maintain their own servers.",
+        "Interface and workflow are purpose-built for competitive programming contests rather than general-purpose use.",
+        "Requires technical setup, including judge machine configuration for isolated code execution.",
+        "Smaller maintainer community compared to broader open-source projects, though highly specialized and stable."
+      ],
+      "faqs": [
+        {"question": "Is DOMJudge free to use?", "answer": "Yes, DOMJudge is fully open-source under the GPL-2.0 license and free to download, install, and run with no licensing fees."},
+        {"question": "Who created DOMJudge?", "answer": "DOMJudge originated in 2004 with the computer science student association at Utrecht University in the Netherlands and has since been maintained by an international open-source community."},
+        {"question": "What contests use DOMJudge?", "answer": "DOMJudge is used in numerous ICPC regional contests, including NWERC and SWERC, as well as university courses and other competitive programming events worldwide."},
+        {"question": "What does DOMJudge require to run?", "answer": "DOMJudge requires a Linux server with PHP 7.4 or newer, a MySQL or MariaDB database, and compilers for whichever programming languages the contest will support."},
+        {"question": "Does DOMJudge support multiple programming languages?", "answer": "Yes, its modular architecture lets contest organizers plug in support for additional languages and compilers as needed."},
+        {"question": "What are alternatives to DOMJudge?", "answer": "Alternatives include PC^2, Kattis, Codeforces' judging infrastructure, and CMS (Contest Management System), which is more commonly used for olympiad-style informatics competitions."}
+      ],
+      "use_cases": [
+        {"title": "ICPC regional contest judging", "description": "Run the full submission, judging, and live scoreboard workflow for a regional or university-level ICPC-style programming contest.", "audience": "University programming contest organizers"},
+        {"title": "University coursework and practice contests", "description": "Use DOMJudge as courseware to give students automated feedback on programming exercises and practice contests.", "audience": "Computer science instructors and students"},
+        {"title": "Internal company coding competitions", "description": "Set up a self-hosted judging system for internal hackathons or coding challenges within an organization.", "audience": "Engineering teams and coding bootcamps"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code access", "Unlimited contests and submissions", "Distributed judging support", "Community support via GitHub"]}
+      ],
+      "tags": ["open-source", "self-hosted", "free-plan"],
+      "publish": true
+    }
+  }
+]
