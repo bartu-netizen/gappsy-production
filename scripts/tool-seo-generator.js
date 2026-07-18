@@ -36,8 +36,13 @@ function truncate(text, max) {
 
 // Real data only — returns null (not a fabricated sentence) when the tool
 // has neither a short nor a long description. Callers must treat null as a
-// validation failure, never as "print nothing."
+// validation failure, never as "print nothing." seo_meta_description is a
+// hand-tunable editorial override (set via the admin tool editor or the
+// enrichment pipeline) and takes priority when present.
 export function generateToolDescription(tool) {
+  const override = tool.seo_meta_description && tool.seo_meta_description.trim();
+  if (override) return truncate(override, META_DESCRIPTION_MAX);
+
   const short = tool.short_description && tool.short_description.trim();
   if (short) return truncate(short, META_DESCRIPTION_MAX);
 
@@ -51,7 +56,8 @@ export function generateToolDescription(tool) {
 }
 
 export function generateToolSEOData(tool) {
-  const title = `${tool.name} Review, Pricing, Features & Alternatives | Gappsy`;
+  const overrideTitle = tool.seo_title && tool.seo_title.trim();
+  const title = overrideTitle || `${tool.name} Review, Pricing, Features & Alternatives | Gappsy`;
   const description = generateToolDescription(tool);
   const canonical = `${DOMAIN}/tools/${tool.slug}/`;
   const ogImage = isSafeHttpUrl(tool.logo) ? tool.logo : `${DOMAIN}/og/default-og-image.svg`;

@@ -90,7 +90,7 @@ async function fetchAllPublishedTools(supabase) {
     const { data, error } = await supabase
       .from('tools')
       .select(
-        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages'
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
       )
       .eq('status', 'published')
       .order('name', { ascending: true })

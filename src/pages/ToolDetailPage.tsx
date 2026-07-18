@@ -58,6 +58,8 @@ interface ToolDetail {
   headquarters: string | null;
   languages: string[];
   status: string;
+  seo_title: string | null;
+  seo_meta_description: string | null;
 }
 
 const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
@@ -116,8 +118,16 @@ function isSafeHttpUrl(value: string | null | undefined): value is string {
 // so the prerendered and hydrated meta descriptions agree. Never a generic
 // templated sentence; returns null when the tool genuinely has neither field
 // (the build-time prerender treats that as a validation failure, not a page
-// that should ship with fabricated copy).
-function generateMetaDescription(shortDescription: string | null, longDescription: string | null): string | null {
+// that should ship with fabricated copy). seoMetaDescription is a
+// hand-tunable editorial override (admin tool editor / enrichment pipeline)
+// and takes priority when present — same precedence as the build script.
+function generateMetaDescription(
+  seoMetaDescription: string | null,
+  shortDescription: string | null,
+  longDescription: string | null
+): string | null {
+  const override = seoMetaDescription?.trim();
+  if (override) return override.length > 160 ? `${override.slice(0, 159).trimEnd()}…` : override;
   const short = shortDescription?.trim();
   if (short) return short.length > 160 ? `${short.slice(0, 159).trimEnd()}…` : short;
   const long = longDescription?.trim().split(/\n+/)[0];
@@ -197,7 +207,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           starting_price: t.starting_price, youtube_url: t.youtube_url, rating: t.rating, review_count: t.review_count,
           verified: t.verified, featured: t.featured, updated_at: t.updated_at,
           founded_year: t.founded_year, company_size: t.company_size, headquarters: t.headquarters, languages: t.languages || [],
-          status: t.status,
+          status: t.status, seo_title: t.seo_title ?? null, seo_meta_description: t.seo_meta_description ?? null,
         });
         const primary = t.categories.find((c) => c.primary_category) || t.categories[0] || null;
         setCategories(t.categories);
@@ -235,7 +245,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     supabase
       .from('tools')
       .select(
-        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages'
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
       )
       .eq('slug', toolSlug)
       .eq('status', 'published')
@@ -440,7 +450,8 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const platforms = PLATFORM_TAGS.filter((p) => tagSlugs.has(p.slug));
   const platformsLabel = platforms.length > 0 ? platforms.map((p) => p.label).join(', ') : null;
   const updatedLabel = formatLastUpdated(tool.updated_at);
-  const metaDescription = generateMetaDescription(tool.short_description, tool.long_description) || tool.name;
+  const metaDescription = generateMetaDescription(tool.seo_meta_description, tool.short_description, tool.long_description) || tool.name;
+  const pageTitle = tool.seo_title?.trim() || `${tool.name} Review, Pricing, Features & Alternatives | Gappsy`;
   const standoutFeature = mergedFeatures[0]
     ? { title: mergedFeatures[0].title, description: mergedFeatures[0].description }
     : null;
@@ -507,7 +518,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   return (
     <div className="bg-[#f7f8fa] min-h-screen">
       <EntitySEOTags
-        title={`${tool.name} Review, Pricing, Features & Alternatives | Gappsy`}
+        title={pageTitle}
         description={metaDescription}
         path={`/tools/${tool.slug}`}
         ogImage={safeLogo || '/og/default-og-image.svg'}
