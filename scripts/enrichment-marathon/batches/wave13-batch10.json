@@ -1,0 +1,578 @@
+[
+{"tool_id": "d35f0bfc-a880-4f59-aa8f-867b297a21c1", "slug": "kanboard", "name": "Kanboard", "enrichment": {
+"short_description": "Free, open-source, self-hosted Kanban board for visualizing and automating task workflows with minimal setup.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": 2014,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Kanboard Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kanboard is a free, self-hosted, open-source Kanban board for developers and small teams. See features, pricing, pros, cons, and alternatives for 2026.",
+"llm_readable_summary": "Kanboard is a free and open-source, self-hosted Kanban project management application built in PHP that lets individuals and small teams visualize and automate their workflow on a simple drag-and-drop board. The project was created by French developer Frederic Guillot and first released in 2014; it is distributed under the permissive MIT License and hosted publicly on GitHub, where more than 330 contributors have submitted code over the project's lifetime. Kanboard has no founding company, no venture funding, and no corporate headquarters in the traditional sense; it is a community-maintained open-source tool that anyone can download, install on their own server, and run at zero cost, which is why its pricing model is Open Source rather than a commercial SaaS tier. Architecturally, Kanboard runs on a standard PHP/Apache or PHP/Nginx stack, uses SQLite as its default embedded database for zero-configuration installs, and also supports MySQL and PostgreSQL for larger multi-user deployments. Official Docker images make self-hosting straightforward on a VPS, NAS, or home server, and third-party hosts such as Elestio and Stellar Hosted sell managed Kanboard hosting starting around 14 dollars per month for teams that do not want to run their own infrastructure. The core feature set is deliberately minimal: a single kanban board per project with configurable columns, work-in-progress (WIP) limits that visually flag overloaded columns, drag-and-drop task movement, subtasks, file attachments, Markdown-formatted comments and descriptions, task duplication and cross-project moves, recurring tasks, time tracking, and a query-language search and filter bar that can filter by assignee, category, due date, color, or status. Automation is handled through built-in automatic actions that trigger on events, such as moving a task, changing its color, or reassigning a user, without needing external workflow tools, and the app ships with public and private project boards, Gantt and calendar views, and CSV/iCal export. Authentication supports local accounts, LDAP/Active Directory, and OAuth2 providers including Google, GitHub, and GitLab, and the interface is translated into more than 30 languages. A REST/JSON-RPC API and a plugin architecture, with community plugins adding things like Slack notifications, webhooks, custom themes, and two-factor authentication, extend the base install without forking the core codebase. Because there is no paid tier, no usage limits, and no vendor lock-in, Kanboard's target audience is developers, sysadmins, and small technical teams who already self-host other infrastructure and want a lightweight, no-frills Kanban tool rather than a heavyweight project-management suite; it is frequently recommended in self-hosted and homelab communities alongside tools like Wekan, Focalboard, and Taiga. As of the mid-2020s the project entered what its maintainer describes as maintenance mode: new major features have slowed while community-contributed bug fixes and minor releases (the stable line reached 1.2.42 in November 2024) continue to ship regularly, meaning Kanboard is stable and production-ready but not aggressively evolving compared to venture-backed rivals. Its closest competitors are commercial SaaS Kanban tools such as Trello, Asana, and monday.com, plus other self-hosted alternatives like Wekan (also MIT-licensed, Node.js/MongoDB-based), Focalboard, and OpenProject. Kanboard differentiates itself from all of them by staying deliberately feature-light, running on cheap PHP hosting most developers already know how to operate, and never gating features behind a paywall since there is no company selling upgrades. For teams that value data ownership, low hosting cost, and simplicity over collaboration extras like real-time multi-cursor editing or built-in video calls, Kanboard remains one of the most durable and widely deployed open-source Kanban tools available.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kanboard is a lightweight, self-hosted Kanban board built for developers and small teams who want to visualize work without adopting a heavyweight project-management suite. First released in 2014 by French developer Frederic Guillot, it runs on PHP with SQLite as its zero-configuration default database, and can be scaled to MySQL or PostgreSQL for multi-user teams.",
+"Unlike commercial SaaS project trackers, Kanboard has no company behind it selling upgrades or storage tiers. It is released under the MIT License, developed in the open on GitHub with contributions from more than 330 community members, and can be installed on any server you control, giving teams full ownership of their task data.",
+"The project has settled into a stable maintenance rhythm: core functionality is mature and rarely changes, while community pull requests keep the software patched and current. This makes Kanboard a dependable, low-maintenance choice for teams that prioritize stability and self-hosting over a constantly expanding feature list."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Kanboard centers on a single, clean drag-and-drop board per project, with configurable columns and enforceable work-in-progress limits that visually flag when a column is overloaded. Tasks support subtasks, file attachments, Markdown-formatted descriptions and comments, categories, colors, due dates, recurring schedules, and basic time tracking.",
+"A built-in query-language search bar lets users filter tasks by assignee, category, due date, color, or status without needing a separate reporting tool, and Gantt and calendar views give a timeline perspective on the same data. Automatic actions let admins define rules that fire on events, such as moving a card to a new column or reassigning it, removing the need for repetitive manual updates.",
+"For integration, Kanboard exposes a REST/JSON-RPC API, supports LDAP/Active Directory and OAuth2 login (Google, GitHub, GitLab), and ships in more than 30 languages. A community plugin ecosystem extends the base app with Slack notifications, webhooks, two-factor authentication, and custom CSS themes."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Kanboard itself is entirely free and open source; there is no official paid tier, license fee, or usage cap. Anyone can clone the GitHub repository or pull the official Docker image and run it indefinitely at no cost beyond their own server hosting.",
+"For teams that do not want to manage their own infrastructure, third-party managed-hosting providers such as Elestio and Stellar Hosted offer Kanboard-as-a-service, typically starting around 14 dollars per month, which covers server maintenance, backups, and SSL, while the software license itself remains free."
+]}
+],
+"features": [
+{"title": "Drag-and-drop Kanban board", "description": "Configurable columns with visual work-in-progress limits that highlight overloaded stages."},
+{"title": "Task automation", "description": "Automatic actions trigger on events like column moves to reassign, recolor, or update tasks without manual work."},
+{"title": "Search and filter query language", "description": "Filter tasks instantly by assignee, category, due date, color, or status using a simple query syntax."},
+{"title": "Subtasks, attachments and Markdown", "description": "Break tasks into subtasks, attach files, and write rich descriptions and comments in Markdown."},
+{"title": "LDAP, Active Directory and OAuth2 login", "description": "Enterprise-ready authentication against Google, GitHub, GitLab, or an internal directory server."},
+{"title": "REST/JSON-RPC API", "description": "Programmatic access for integrations, bots, and custom automation outside the built-in rule engine."},
+{"title": "Plugin ecosystem", "description": "Community-built plugins add Slack alerts, webhooks, two-factor auth, and custom themes."},
+{"title": "Multi-language interface", "description": "Fully translated UI covering more than 30 languages for global teams."}
+],
+"pros": [
+"Completely free and open source with no feature paywalls",
+"Lightweight PHP/SQLite stack is cheap and easy to self-host on modest hardware",
+"Simple, distraction-free interface with a low learning curve",
+"Full data ownership since nothing is stored on a vendor's servers",
+"Extensible via a public API and community plugin ecosystem"
+],
+"cons": [
+"No official cloud-hosted version from the maintainer, so self-hosting is required for zero cost",
+"Development pace has slowed as the project sits in maintenance mode",
+"Lacks built-in real-time collaboration features like chat or video calls",
+"Mobile experience is a responsive web view rather than dedicated native apps",
+"Requires basic server administration knowledge to install, secure, and back up"
+],
+"faqs": [
+{"question": "Is Kanboard really free?", "answer": "Yes. Kanboard is fully open source under the MIT License with no paid tiers, seat limits, or feature gating; you only pay for whatever server you choose to host it on."},
+{"question": "Who created Kanboard?", "answer": "Kanboard was created by French developer Frederic Guillot and first released in 2014. It is now maintained collaboratively by more than 330 open-source contributors on GitHub."},
+{"question": "Does Kanboard offer a hosted cloud version?", "answer": "The core project does not sell official cloud hosting, but third-party providers such as Elestio and Stellar Hosted offer managed Kanboard hosting for teams that prefer not to self-host."},
+{"question": "What database does Kanboard use?", "answer": "It uses SQLite by default for simple, zero-configuration installs, and also supports MySQL and PostgreSQL for larger, multi-user deployments."},
+{"question": "Can Kanboard integrate with other tools?", "answer": "Yes. It provides a REST/JSON-RPC API, webhook support via plugins, and OAuth2/LDAP authentication, making it straightforward to connect to Slack, Git platforms, and custom scripts."},
+{"question": "How does Kanboard compare to Trello?", "answer": "Kanboard offers similar drag-and-drop Kanban functionality but is self-hosted, free, and aimed at technical users, whereas Trello is a hosted commercial SaaS product with a broader consumer feature set and paid power-ups."}
+],
+"use_cases": [
+{"title": "Solo developer task tracking", "description": "A developer self-hosts Kanboard on a home server or VPS to track personal coding projects without paying for a SaaS subscription.", "audience": "Independent developers and freelancers"},
+{"title": "Small technical team workflow", "description": "A small engineering or IT team runs Kanboard behind their VPN to manage sprints and support tickets with LDAP-based single sign-on.", "audience": "Small software and IT teams"},
+{"title": "Privacy-conscious project management", "description": "Organizations with strict data residency or compliance requirements self-host Kanboard to keep all task data on infrastructure they control.", "audience": "Privacy-focused organizations and agencies"}
+],
+"pricing_plans": [
+{"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code under MIT License", "Unlimited users and projects", "SQLite, MySQL or PostgreSQL support", "Docker deployment", "Community plugin ecosystem"]},
+{"plan_name": "Managed Hosting (third-party)", "price": "From approximately $14/month", "billing_cycle": "monthly", "features": ["Provider-managed server and backups", "SSL and uptime monitoring", "One-click installs", "Same free Kanboard software underneath"]}
+],
+"tags": ["open-source", "self-hosted", "web-app", "api", "free-plan"],
+"publish": true
+}},
+{"tool_id": "9de5de2c-21ac-48ff-89e4-3f7bf4c1ceb6", "slug": "kandji", "name": "Kandji", "enrichment": {
+"short_description": "Apple-first device management (MDM) and security platform, now rebranding to Iru as it expands to Windows and Android.",
+"pricing_model": "Enterprise",
+"starting_price": "Custom pricing",
+"founded_year": 2018,
+"company_size": "201-500 employees",
+"headquarters": "San Diego, California, USA",
+"languages": ["English"],
+"seo_title": "Kandji Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kandji is an Apple device management and security platform built for IT teams. See features, pricing, the Iru rebrand, pros, cons, and alternatives for 2026.",
+"llm_readable_summary": "Kandji is an Apple-first device management (MDM) and endpoint security platform built for IT and security teams that manage fleets of Mac, iPhone, and iPad devices at work. The company was founded in 2018 in San Diego, California, by Adam Pettit, Wesley Pettit, and Mark Daughters, and launched its commercial product in 2019 with a mission to make Apple deployment, configuration, and compliance dramatically simpler than legacy cross-platform MDM tools that treated Apple devices as an afterthought. Kandji raised a $3.375 million seed round led by First Round Capital, a $21 million Series A in 2020, a $60 million Series B in 2021, a $100 million Series C led by Tiger Global later in 2021, and a further $100 million Series D led by General Catalyst in July 2024, bringing total funding to more than 288 million dollars at a valuation of roughly 850 million dollars. In February 2025 the company opened a second headquarters in Coral Gables, Florida, alongside its original San Diego base. In late 2025 and through 2026, Kandji began rebranding as Iru, expanding beyond pure Apple MDM into a unified identity, endpoint management, endpoint detection and response (EDR), vulnerability management, and compliance automation platform that also covers Windows and Android devices; existing Kandji customers are being transitioned to the Iru platform, and product surfaces such as Kandji Self Service are being renamed to Iru Self Service, though functionality is carried over unchanged. Technically, Kandji operates as a cloud-based SaaS console that communicates with Apple's Device Enrollment Program (Automated Device Enrollment) and MDM protocol to provision devices out of the box with zero-touch deployment. Core features include Blueprints for templated device configuration profiles, a Self Service app catalog that lets end users install approved software without IT tickets, Liftoff for guided onboarding experiences, Prism for real-time fleet visibility and app/OS inventory, pre-built compliance templates mapped to frameworks like SOC 2, HIPAA, ISO 27001, and CIS benchmarks, and a native EDR product for macOS threat detection and response. It also offers Passport for passwordless identity and single sign-on, and vulnerability management for continuous CVE monitoring across the fleet. Pricing is not published; Kandji (Iru) sells through an annual, sales-assisted contract model, and third-party estimates place per-device costs in the range of roughly 3 to 15 dollars per device per month depending on the mix of MDM, EDR, and compliance modules purchased, with many resellers citing a practical minimum deployment size of around 25 devices. As of 2025-2026 the company reports roughly 201 to 500 employees and estimated annual recurring revenue in the tens of millions of dollars, reflecting rapid growth in the enterprise Apple management space. Kandji's target audience is IT administrators and security teams at mid-market and enterprise organizations, particularly Apple-heavy shops in tech, healthcare, and finance, that need automated compliance evidence and fast device provisioning at scale. Its primary named competitors are Jamf (the long-standing leader in Apple enterprise management), Addigy, Mosyle, Microsoft Intune (for mixed-fleet environments), and Fleet; Kandji differentiates itself with a more modern, DevOps-friendly UI, faster time-to-value for smaller IT teams, built-in compliance automation that reduces the need for separate GRC tooling, and, following the Iru rebrand, an expanded scope that no longer positions the product as Apple-only but as a broader unified endpoint and identity security platform.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kandji is a cloud-based device management and security platform originally built exclusively for Apple hardware. Founded in 2018 in San Diego by Adam Pettit, Wesley Pettit, and Mark Daughters, it grew into one of the most well-funded companies in the enterprise Apple management space, raising over 288 million dollars across five funding rounds including a 2024 Series D led by General Catalyst.",
+"Starting in late 2025, the company began transitioning its brand to Iru, reflecting an expanded mission that goes beyond Apple-only MDM to cover Windows and Android device management alongside identity, endpoint detection and response, vulnerability management, and compliance automation. Existing Kandji customers and product names are being migrated to Iru branding, though the underlying platform functionality carries over unchanged.",
+"The platform is aimed squarely at IT and security teams that need to enroll, configure, secure, and prove compliance for corporate device fleets without heavy manual scripting, positioning it against legacy MDM vendors that were not built with Apple's zero-touch deployment model in mind."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Kandji's core MDM features include zero-touch enrollment via Apple's Automated Device Enrollment, Blueprints for reusable configuration templates, a Self Service catalog that lets employees install pre-approved apps without IT intervention, and Liftoff for branded onboarding flows on new devices.",
+"On the security side, Kandji offers native EDR for macOS threat detection, continuous vulnerability management with CVE monitoring, and Prism for real-time visibility into installed apps, OS versions, and configuration drift across the fleet. Compliance templates are pre-mapped to frameworks such as SOC 2, HIPAA, ISO 27001, and CIS benchmarks, generating audit-ready evidence automatically.",
+"Under the Iru rebrand, the platform is expanding to include Workforce Identity for passwordless single sign-on, plus Windows and Android endpoint management, positioning it as a single console for identity, device management, and security rather than an Apple-only point solution."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Kandji (now transitioning to Iru) does not publish standard pricing on its website; prospective customers must request a custom quote based on device count, product modules selected (MDM, EDR, vulnerability management, compliance), and contract length. Contracts are typically annual, billed yearly, and non-cancellable mid-term.",
+"Third-party estimates and reseller quotes suggest per-device pricing in the range of roughly 3 to 15 dollars per device per month depending on bundle, with some deployments requiring a practical minimum of around 25 devices. Organizations evaluating the platform should expect a sales-led buying process rather than self-serve checkout."
+]}
+],
+"features": [
+{"title": "Zero-touch Apple deployment", "description": "Devices auto-enroll and configure via Apple Automated Device Enrollment the moment they are unboxed."},
+{"title": "Blueprints", "description": "Reusable configuration templates that apply consistent settings, apps, and policies across groups of devices."},
+{"title": "Self Service app catalog", "description": "Employees install IT-approved software on demand, cutting down help desk tickets."},
+{"title": "Native EDR", "description": "Built-in endpoint detection and response for macOS threat monitoring without a separate security agent."},
+{"title": "Compliance templates", "description": "Pre-built controls mapped to SOC 2, HIPAA, ISO 27001, and CIS benchmarks with automated evidence collection."},
+{"title": "Prism fleet visibility", "description": "Real-time inventory of installed apps, OS versions, and configuration drift across the whole device fleet."},
+{"title": "Vulnerability management", "description": "Continuous CVE scanning and prioritized remediation guidance across managed endpoints."},
+{"title": "Cross-platform expansion (Iru)", "description": "Windows and Android device management and workforce identity, added as part of the Iru platform rebrand."}
+],
+"pros": [
+"Purpose-built for Apple deployment with best-in-class zero-touch onboarding",
+"Combines MDM, EDR, and compliance automation in a single console",
+"Modern, fast, DevOps-friendly admin interface compared to legacy MDM tools",
+"Strong compliance template library speeds up SOC 2 and HIPAA audits",
+"Backed by significant funding and a fast-growing feature roadmap"
+],
+"cons": [
+"Pricing is not public and requires a sales conversation for every quote",
+"Ongoing rebrand to Iru may cause naming and documentation confusion for existing customers",
+"Historically Apple-only, so mixed-fleet organizations needed a second tool until the Iru expansion",
+"Annual, non-cancellable contracts reduce flexibility for smaller teams",
+"Per-device costs can add up quickly for organizations with large or mixed hardware fleets"
+],
+"faqs": [
+{"question": "Is Kandji the same product as Iru?", "answer": "Yes. Kandji rebranded to Iru starting in late 2025, with the change rolling out across admin, enrollment, and endpoint surfaces through 2026. The underlying platform functionality is unchanged; only branding, some product names, and the scope of supported platforms have expanded."},
+{"question": "Does Kandji only support Apple devices?", "answer": "Kandji was originally Apple-only (Mac, iPhone, iPad), but as part of the Iru rebrand the platform has opened up to Windows and Android device management as well."},
+{"question": "How much does Kandji cost?", "answer": "Pricing is not published. It is sold via custom, sales-assisted annual contracts, with third-party estimates suggesting roughly 3 to 15 dollars per device per month depending on the modules purchased."},
+{"question": "Who founded Kandji?", "answer": "Kandji was founded in 2018 by Adam Pettit, Wesley Pettit, and Mark Daughters in San Diego, California."},
+{"question": "What is Kandji's main competitor?", "answer": "Jamf is Kandji's most direct competitor in Apple enterprise management, with Mosyle, Addigy, and Microsoft Intune also frequently compared for mixed-fleet or budget-sensitive deployments."},
+{"question": "Does Kandji offer endpoint security, not just device management?", "answer": "Yes. Kandji includes native EDR for macOS threat detection, continuous vulnerability management, and compliance automation alongside its core MDM functionality."}
+],
+"use_cases": [
+{"title": "Apple fleet zero-touch deployment", "description": "IT teams ship new Macs and iPhones directly to remote employees, who unbox them and have them auto-enroll with company apps and policies pre-configured.", "audience": "IT administrators at Apple-heavy companies"},
+{"title": "SOC 2 and HIPAA compliance evidence", "description": "Security teams use pre-built compliance templates and Prism reporting to generate continuous audit-ready evidence for frameworks like SOC 2 and HIPAA.", "audience": "Security and compliance teams"},
+{"title": "Consolidating MDM and EDR", "description": "Organizations replace a separate Apple MDM tool and a separate endpoint security agent with Kandji's combined device management and EDR platform.", "audience": "Mid-market and enterprise IT/security leaders"}
+],
+"pricing_plans": [
+{"plan_name": "Device Management (MDM)", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Zero-touch Apple enrollment", "Blueprints and Self Service", "Liftoff onboarding", "Prism fleet visibility"]},
+{"plan_name": "Endpoint Security add-on", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Native EDR for macOS", "Vulnerability management", "Threat detection and response"]},
+{"plan_name": "Compliance and Identity (Iru)", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Compliance automation templates", "Workforce identity and SSO", "Windows and Android management"]}
+],
+"tags": ["api", "ios", "android", "mac", "windows", "ai"],
+"publish": true
+}},
+{"tool_id": "298368f7-68f8-4264-b78c-a684a417a0b3", "slug": "kapowarr", "name": "Kapowarr", "enrichment": {
+"short_description": "Free, open-source, self-hosted comic book library manager that automates finding, downloading and organizing issues.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": null,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Kapowarr Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kapowarr is a free, self-hosted comic book manager in the *arr suite. See features, setup, pros, cons, FAQs, and top alternatives for 2026.",
+"llm_readable_summary": "Kapowarr is a free and open-source, self-hosted application for building and managing a comic book library, positioned as part of the well-known *arr family of media automation tools alongside Sonarr (TV), Radarr (movies), and Lidarr (music). It is created and actively maintained by a developer using the GitHub handle Casvt, with the source code published at github.com/Casvt/Kapowarr under the GPL-3.0 license, written primarily in Python with a JavaScript, HTML, and CSS front end, and distributed as an official Docker image for easy deployment on home servers, NAS devices, and self-hosted media stacks. There is no company behind Kapowarr and no commercial edition; the project is funded informally through community support channels such as Ko-fi, and development discussion happens on a public Discord server and subreddit rather than through a formal corporate roadmap. Functionally, Kapowarr automates the tedious parts of maintaining a digital comic collection: it matches volumes and issues against metadata sources (most notably ComicVine) to correctly identify series, publishers, and issue numbers, then performs automatic or manual searches for available downloads across configured indexers, sends matched releases to a download client, and finally renames, converts, and moves the resulting files into a clean, consistently organized folder structure. It supports a broad range of comic formats and collection types, including single issues, trade paperbacks (TPBs), one-shots, and hardcovers, and it integrates with popular comic-reading and library server software such as Komga and Kavita, letting users pair Kapowarr's acquisition automation with a separate reading front end. Configuration areas include media management (naming and folder conventions), download client integration (for tools that support common download protocols used across the *arr ecosystem), metadata handling, and general application settings, all managed through a web-based dashboard that mirrors the familiar Sonarr/Radarr-style UI many self-hosters already know. Kapowarr also exposes a REST API for scripting and integration with other home-lab tools, and it can be deployed either via Docker (the recommended and most common method) or through a manual Python installation for users who prefer running it directly on bare metal. Because it fits cleanly into existing self-hosted media ecosystems, its primary audience is homelab enthusiasts, digital comic collectors, and self-hosting communities who already run Sonarr, Radarr, or Prowlarr-style stacks and want the same level of download automation applied to their comic collections. Managed self-hosting providers such as ElfHosted also offer Kapowarr as a pre-configured hosted instance for users who want the software without running their own server, typically bundled alongside Komga or Kavita for reading. Kapowarr's closest alternatives are Mylar3, another open-source *arr-style comic manager with a longer history, and general-purpose media managers repurposed for comics; Kapowarr differentiates itself with a more modern codebase, active development, a cleaner web UI, and tighter integration with contemporary comic readers like Komga and Kavita, making it a popular pick for people rebuilding or modernizing an older Mylar-based comic automation setup in 2025 and 2026.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kapowarr is a self-hosted, open-source application that automates the collection, organization, and file management of digital comic books. It follows the same design philosophy as the well-known *arr media automation tools, such as Sonarr and Radarr, applying the same search-download-rename-organize workflow to comic volumes and issues instead of TV shows or movies.",
+"The project is maintained by a developer under the GitHub handle Casvt and is released under the GPL-3.0 open-source license with no company or commercial tier behind it. It runs as a Docker container or manual Python install, making it a natural addition to existing home-lab and self-hosted media server stacks.",
+"Kapowarr matches comics against metadata providers like ComicVine to correctly identify series, issue numbers, and publishers before searching indexers and download clients for available files, then renames and moves the results into an organized library folder structure ready for reading apps like Komga or Kavita."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Core functionality includes automatic and manual issue searching, metadata matching via ComicVine, and support for single issues, trade paperbacks, one-shots, and hardcovers. Once a match is found, Kapowarr automates the full pipeline from download client handoff to renaming, format conversion, and moving files into a consistent folder structure.",
+"The web-based dashboard mirrors the familiar Sonarr/Radarr layout, covering media management settings, download client configuration, metadata preferences, and general application options, all accessible without needing to touch configuration files directly.",
+"Kapowarr integrates with popular self-hosted comic readers such as Komga and Kavita, and exposes a REST API for scripting and third-party integration, letting advanced users tie it into broader home automation and media-management workflows."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Kapowarr is completely free and open source, with no paid tier, license key, or feature restrictions of any kind. The full source code is available on GitHub, and the project accepts voluntary donations through Ko-fi to support ongoing development.",
+"Users who prefer not to self-host can use a managed provider such as ElfHosted, which sells pre-configured Kapowarr instances (often bundled with Komga or Kavita) for a monthly hosting fee, though the underlying Kapowarr software itself remains free regardless of how it is deployed."
+]}
+],
+"features": [
+{"title": "Automatic and manual issue searching", "description": "Finds available comic issue downloads across configured indexers, either automatically on a schedule or on demand."},
+{"title": "ComicVine metadata matching", "description": "Identifies series, publishers, and issue numbers accurately using ComicVine as a metadata source."},
+{"title": "Multi-format library support", "description": "Handles single issues, trade paperbacks, one-shots, and hardcovers within one organized library."},
+{"title": "Automated file renaming and organization", "description": "Renames, converts, and moves downloaded files into a clean, consistent folder structure automatically."},
+{"title": "Komga and Kavita integration", "description": "Works alongside popular self-hosted comic reader servers so acquisition and reading stay decoupled but connected."},
+{"title": "Docker-first deployment", "description": "Ships as an official Docker image for quick setup on NAS devices, home servers, or homelab stacks."},
+{"title": "Download client integration", "description": "Connects to standard download clients used throughout the *arr ecosystem to automate the fetch step."},
+{"title": "REST API", "description": "Provides programmatic access for scripting, automation, and integration with other self-hosted tools."}
+],
+"pros": [
+"Completely free and open source with an active GPL-3.0 codebase",
+"Familiar Sonarr/Radarr-style interface for anyone already running an *arr stack",
+"Automates the full pipeline from search to organized, renamed library files",
+"Integrates cleanly with modern comic readers like Komga and Kavita",
+"Actively maintained with regular releases and a responsive Discord community"
+],
+"cons": [
+"Requires self-hosting knowledge, Docker, and comfort with the *arr ecosystem",
+"No official managed cloud version directly from the developer",
+"Relies on ComicVine and third-party indexers, which can vary in coverage and reliability",
+"Smaller community and fewer guides compared to more established *arr tools",
+"No dedicated mobile app; management happens through the web dashboard"
+],
+"faqs": [
+{"question": "Is Kapowarr free to use?", "answer": "Yes. Kapowarr is fully open source under the GPL-3.0 license with no paid tiers or feature restrictions; the developer accepts optional donations via Ko-fi."},
+{"question": "What is the *arr suite Kapowarr belongs to?", "answer": "The *arr suite refers to a family of self-hosted media automation tools like Sonarr (TV), Radarr (movies), and Lidarr (music). Kapowarr applies the same search-download-organize workflow to comic books."},
+{"question": "Does Kapowarr work with Komga or Kavita?", "answer": "Yes. Kapowarr focuses on acquiring and organizing comics, and it is commonly paired with reader servers such as Komga or Kavita for browsing and reading the resulting library."},
+{"question": "How do I install Kapowarr?", "answer": "The recommended method is Docker, using the official image published on the project's GitHub repository. A manual Python installation is also supported for users who prefer running it directly on a host machine."},
+{"question": "Where does Kapowarr get comic metadata?", "answer": "Kapowarr primarily uses ComicVine to match and identify volumes, issues, and publishers for accurate library organization."},
+{"question": "Is there a hosted version of Kapowarr if I do not want to self-host?", "answer": "Kapowarr itself is self-hosted only, but third-party managed hosting providers such as ElfHosted sell pre-configured Kapowarr instances, often bundled with a comic reader like Komga or Kavita."}
+],
+"use_cases": [
+{"title": "Automating a home comic library", "description": "A collector connects Kapowarr to their indexers and download client so new issues of tracked series are found, downloaded, and organized automatically.", "audience": "Home comic collectors and homelab users"},
+{"title": "Modernizing an existing Mylar setup", "description": "A self-hoster migrates from an older comic automation tool to Kapowarr for a more modern interface and active development.", "audience": "Existing self-hosted *arr stack operators"},
+{"title": "Pairing acquisition with a reading server", "description": "A user runs Kapowarr alongside Komga or Kavita so downloading and renaming comics feeds directly into a browsable reading library.", "audience": "Self-hosted media server administrators"}
+],
+"pricing_plans": [
+{"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full GPL-3.0 source code", "Unlimited library size", "Docker and manual install options", "REST API access", "Community Discord support"]},
+{"plan_name": "Managed Hosting (ElfHosted, third-party)", "price": "Custom pricing", "billing_cycle": "monthly", "features": ["Pre-configured hosted instance", "Optional Komga or Kavita bundle", "Provider-managed uptime and updates"]}
+],
+"tags": ["open-source", "self-hosted", "web-app", "api", "free-plan"],
+"publish": true
+}},
+{"tool_id": "27a0d263-d000-4bfb-ac14-1b67221d0428", "slug": "kapwing", "name": "Kapwing", "enrichment": {
+"short_description": "Browser-based video editor with AI subtitles, dubbing, and voice cloning for social media content creators and teams.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2017,
+"company_size": "11-50 employees",
+"headquarters": "San Francisco, California, USA",
+"languages": ["English"],
+"seo_title": "Kapwing Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kapwing is a browser-based video editor with AI subtitles, dubbing and voice cloning. See pricing, features, pros, cons and alternatives for 2026.",
+"llm_readable_summary": "Kapwing is a browser-based video, image, and audio editing platform built for content creators, marketing teams, and social media managers who need to produce short-form video without installing desktop software like Adobe Premiere or Final Cut. The company was founded in San Francisco in 2017 by Julia Enthoven and Eric Lu, both former Google product managers, who set out to build a simpler, more collaborative alternative to traditional professional editing tools, optimized specifically for the vertical, fast-turnaround content formats used on YouTube, Instagram, TikTok, and other social platforms. Kapwing raised an 11 million dollar Series A in 2018 led by CRV, with participation from Jane VC, Village Global, Shasta Ventures, and others, bringing its total disclosed funding to roughly 12.7 million dollars; unlike many VC-backed tools, Kapwing has grown primarily on efficient, product-led acquisition rather than continued large funding rounds, and by 2024 was reported to be generating over 10 million dollars in annual revenue while serving more than 100,000 customers, with a team of roughly 11 to 50 employees. Technically, Kapwing runs entirely in the browser as a web application, with editing, rendering, and increasingly AI processing happening on Kapwing's cloud infrastructure rather than the user's local machine, which allows for real-time multi-person collaborative editing similar to a Google Docs experience for video. The product bundles a full non-linear video editor (trim, cut, layer, transitions, text overlays) with a growing suite of AI-powered tools: automatic subtitle and caption generation with translation, AI text-to-speech and custom voice cloning, automated dubbing into multiple languages, an AI meme maker, background removal, and a smart-cut feature that trims silence automatically. It also includes templates for common social formats, a Brand Kit for consistent fonts and colors, a screen recorder, and collaborative workspaces so teams can co-edit projects in real time. Pricing follows a freemium model: the Free plan allows unlimited exports with a watermark, videos up to one minute at 720p, and 10 monthly AI credits; the Pro plan costs 16 dollars per month billed annually (24 dollars billed monthly) and removes watermarks, unlocks 4K export, 6GB uploads, up to two-hour projects, Brand Kit, and 100GB of storage with 1,000 monthly credits; the Business plan costs 50 dollars per month billed annually (64 dollars monthly) and adds custom voice cloning, lip sync, 500GB storage, and 4,000 monthly credits; and an Enterprise tier offers custom pricing with SAML SSO, a dedicated account manager, custom cloud storage, and onboarding support. Kapwing's target audience spans individual creators and YouTubers, social media marketing teams at brands and agencies, educators making instructional video, and internal comms teams producing training content, all of whom value speed and browser accessibility over the deeper manual control of professional NLEs. Its most frequently cited competitors and alternatives include CapCut (ByteDance's free mobile-first editor), Canva's video tools, Veed.io, Descript, and traditional desktop editors like Adobe Premiere Rush and iMovie; Kapwing differentiates itself with a strong focus on real-time team collaboration, a deep and constantly expanding library of AI generation and editing features built directly into the timeline, and a pricing structure aimed at professional and small-team users rather than purely consumer or purely enterprise use cases.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kapwing is a browser-based video and content creation platform founded in San Francisco in 2017 by Julia Enthoven and Eric Lu, both former Google product managers. It was built as a simpler, faster, and more collaborative alternative to desktop editors like Adobe Premiere and Final Cut, aimed at creators producing short-form content for YouTube, Instagram, and TikTok.",
+"The company raised an 11 million dollar Series A led by CRV in 2018 and has since grown to serve more than 100,000 customers and over 10 million dollars in annual revenue as of 2024, with a lean team of roughly 11 to 50 employees. All editing happens in the browser on Kapwing's cloud infrastructure, enabling real-time collaborative editing across multiple users on the same project.",
+"Over time Kapwing has layered a substantial AI feature set onto its core video editor, including automatic subtitling, text-to-speech, voice cloning, and automated dubbing, positioning it as much as an AI content-generation tool as a traditional cut-and-trim editor."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"At its core, Kapwing offers a full browser-based non-linear video editor with trimming, layering, transitions, text overlays, and templates optimized for social formats. A Smart Cut feature automatically removes silence and dead air, and a built-in screen recorder captures footage directly in the browser.",
+"The AI toolset includes automatic subtitle generation with multi-language translation, AI text-to-speech, custom voice cloning, and automated video dubbing, alongside an AI meme generator and background removal. These AI features consume a monthly credit allowance that scales with the pricing tier.",
+"For teams, Kapwing provides a collaborative workspace where multiple editors can work on the same project simultaneously, plus a Brand Kit for consistent fonts, colors, and logos across content, and higher tiers add SAML SSO and dedicated account management for larger organizations."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Kapwing uses a freemium, credit-based pricing model. The Free plan supports unlimited watermarked exports at up to 720p for videos under one minute with 10 monthly AI credits, while the Pro plan (16 dollars per month billed annually, or 24 dollars billed monthly) removes the watermark, enables 4K export and 6GB uploads, and includes 1,000 monthly credits plus 100GB of storage.",
+"The Business plan (50 dollars per month billed annually, or 64 dollars billed monthly) adds custom voice cloning, lip sync, 500GB of storage, and 4,000 monthly credits, while Enterprise pricing is custom and includes SAML SSO, dedicated support, and custom cloud storage limits for larger teams."
+]}
+],
+"features": [
+{"title": "Browser-based collaborative editor", "description": "Multiple users can edit the same video project in real time entirely from a web browser."},
+{"title": "AI subtitles and translation", "description": "Automatically generates and translates captions across dozens of languages."},
+{"title": "AI voice cloning and text-to-speech", "description": "Creates custom synthetic voices and converts text scripts directly into narration."},
+{"title": "Automated dubbing", "description": "Translates and dubs videos into multiple languages using AI-generated voiceovers."},
+{"title": "Smart Cut", "description": "Automatically detects and trims silence or dead air from raw footage."},
+{"title": "Brand Kit", "description": "Stores brand fonts, colors, and logos for consistent output across a team's content."},
+{"title": "Templates for social formats", "description": "Pre-built layouts optimized for YouTube, Instagram Stories, TikTok, and memes."},
+{"title": "Built-in screen recorder", "description": "Captures screen footage directly in the browser without third-party recording software."}
+],
+"pros": [
+"No software installation required; runs fully in the browser",
+"Real-time multi-user collaboration similar to Google Docs for video",
+"Deep, constantly expanding AI toolset for subtitles, dubbing, and voice cloning",
+"Generous free plan for quick, low-stakes edits",
+"Templates and Brand Kit speed up repetitive social content production"
+],
+"cons": [
+"Free plan exports carry a visible watermark",
+"AI features are metered by monthly credits that can run out on heavier workloads",
+"Browser-based rendering can be slower than local desktop editing for complex projects",
+"Higher tiers (Business, Enterprise) get expensive for small teams needing advanced AI features",
+"Less granular manual control than professional desktop NLEs like Premiere Pro"
+],
+"faqs": [
+{"question": "Is Kapwing free to use?", "answer": "Yes, Kapwing has a free plan with unlimited exports, though free exports include a watermark and are capped at one minute in length and 720p resolution."},
+{"question": "Who founded Kapwing?", "answer": "Kapwing was founded in 2017 by Julia Enthoven and Eric Lu, both former Google product managers, in San Francisco, California."},
+{"question": "Does Kapwing use AI credits?", "answer": "Yes, AI-powered features like subtitle generation, text-to-speech, voice cloning, and dubbing consume monthly credits that vary by plan, from 10 credits on the Free plan up to 4,000 on Business."},
+{"question": "Can teams collaborate on the same video in Kapwing?", "answer": "Yes, Kapwing supports real-time collaborative editing where multiple users can work on the same project simultaneously in the browser."},
+{"question": "What is Kapwing's closest competitor?", "answer": "CapCut, Veed.io, Descript, and Canva's video tools are the most commonly cited alternatives, with Kapwing differentiated by its collaborative browser workflow and deep AI feature set."},
+{"question": "Does Kapwing support 4K export?", "answer": "4K export is available starting on the Pro plan; the Free plan is limited to 720p resolution."}
+],
+"use_cases": [
+{"title": "Social media content production", "description": "Marketing teams use Kapwing's templates and AI subtitle tools to quickly produce short-form videos for TikTok, Instagram, and YouTube.", "audience": "Social media managers and marketing teams"},
+{"title": "Multi-language content localization", "description": "Creators use AI dubbing and translation to repurpose a single video into multiple language versions without hiring voice actors.", "audience": "International content creators and localization teams"},
+{"title": "Collaborative team video editing", "description": "Distributed teams co-edit training or promotional videos in real time from the browser without exchanging large project files.", "audience": "Remote and distributed content teams"}
+],
+"pricing_plans": [
+{"plan_name": "Free", "price": "$0", "billing_cycle": "N/A", "features": ["Unlimited exports with watermark", "Videos up to 1 minute at 720p", "10 AI credits per month"]},
+{"plan_name": "Pro", "price": "$16/month (billed annually) or $24/month (monthly)", "billing_cycle": "monthly or annual", "features": ["No watermark", "4K export and 6GB uploads", "Projects up to 2 hours", "Brand Kit and 100GB storage", "1,000 AI credits per month"]},
+{"plan_name": "Business", "price": "$50/month (billed annually) or $64/month (monthly)", "billing_cycle": "monthly or annual", "features": ["Everything in Pro", "Custom voice cloning and lip sync", "500GB storage", "4,000 AI credits per month"]},
+{"plan_name": "Enterprise", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Custom billing and credit limits", "Dedicated account manager", "SAML SSO", "Custom cloud storage", "Onboarding and training"]}
+],
+"tags": ["ai", "freemium", "free-plan", "templates", "web-app", "api"],
+"publish": true
+}},
+{"tool_id": "fab34bce-400c-45a0-b3be-67931923345e", "slug": "karakeep", "name": "Karakeep", "enrichment": {
+"short_description": "Open-source, self-hostable bookmark manager with AI auto-tagging, full-text search, and highlights, formerly Hoarder.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2023,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Karakeep Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Karakeep (formerly Hoarder) is an open-source bookmark manager with AI tagging and full-text search. See pricing, features, pros, cons for 2026.",
+"llm_readable_summary": "Karakeep is an open-source, self-hostable bookmark and knowledge-management application that lets users save links, notes, images, and PDFs into a single searchable library, with AI used to automatically tag and organize everything that gets saved. The project was created by developer Mohamed Bassem and originally launched in January 2023 under the name Hoarder; it was rebranded to Karakeep in 2025 to move away from the negative connotations of the word hoarder and to better reflect the product's broader scope beyond simple link-saving. The project is maintained by Localhost Labs Ltd and released under the AGPL-3.0 open-source license, with the codebase publicly available on GitHub where it has accumulated more than 26,000 stars and contributions from over 150 developers, making it one of the more popular self-hosted bookmarking tools in the homelab and open-source community. Architecturally, Karakeep is Docker-deployable for self-hosting, giving users complete control over their data, and it also offers an official managed cloud service (cloud.karakeep.app) currently in public beta for people who do not want to run their own server. On the AI side, automatic tagging can be powered either by a cloud AI provider such as OpenAI, or by locally hosted open-weight models via Ollama for users who want to keep all AI processing on their own hardware for privacy. Core features include full-text search across every saved bookmark, note, and highlight; automatic metadata fetching (titles, descriptions, and preview images) when a link is saved; a rule engine for custom automation, such as auto-tagging or auto-archiving based on conditions; RSS feed auto-import so new articles from subscribed feeds are captured automatically; collaborative shared lists for team or family use; highlight capture for saving specific passages of text from articles; bulk actions for managing many bookmarks at once; a REST API and webhook support for integrations; and a command-line interface for power users. Client support spans a web app, native iOS and Android mobile apps, and browser extensions for Chrome, Firefox, and Safari, with dark mode available across all surfaces. Pricing follows a freemium structure for the hosted cloud offering: a Free tier allows a small number of bookmarks (around 10) with 20MB of storage as a trial; the Pro tier costs 4 dollars per month or 40 dollars per year and unlocks unlimited bookmarks, AI tagging, full-text search, and 50GB of storage; and a Corporate tier offers custom per-seat pricing with single sign-on and priority support. Crucially, the self-hosted version remains completely free forever with full feature parity, since Karakeep's business model monetizes convenience (managed hosting) rather than gating features behind a paywall for people willing to run their own server. The tool's primary audience is privacy-conscious power users, researchers, and self-hosting enthusiasts who have outgrown browser bookmark bars or commercial read-it-later apps and want AI-assisted organization without surrendering their data to a third party. Its most commonly cited competitors and alternatives include Pocket (discontinued by Mozilla in 2025), Raindrop.io, Linkwarden, and Omnivore (also discontinued), with Karakeep differentiating itself through its combination of true self-hosting, AGPL open-source licensing, and AI-powered auto-tagging that works with either cloud or fully local models.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Karakeep is an open-source, self-hostable app for saving and organizing bookmarks, notes, images, and PDFs, with AI automatically tagging everything for faster retrieval. Created by developer Mohamed Bassem, it launched in January 2023 as Hoarder before rebranding to Karakeep in 2025, and is now maintained by Localhost Labs Ltd under the AGPL-3.0 license.",
+"The project has become one of the most popular self-hosted bookmarking tools, with more than 26,000 GitHub stars and over 150 contributors. It can be deployed via Docker for full self-hosting, or accessed through an official managed cloud service currently in public beta for users who prefer not to run their own infrastructure.",
+"A defining feature is flexible AI tagging: users can route auto-tagging through a cloud provider like OpenAI, or run it entirely locally via Ollama for privacy-focused, offline-capable operation. This makes Karakeep appealing both to casual users who want convenience and to privacy-conscious self-hosters who want zero third-party data exposure."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Karakeep saves links, notes, images, and PDFs into one searchable library, with automatic metadata fetching for titles, descriptions, and preview images, and full-text search across everything saved. AI-based auto-tagging categorizes content automatically, while a rule engine lets users define custom automation, such as tagging or archiving items based on specific conditions.",
+"Additional organization tools include highlight capture for saving specific passages from articles, collaborative shared lists, RSS feed auto-import for continuous content collection, and bulk actions for managing large numbers of bookmarks at once.",
+"Client coverage is broad: native iOS and Android apps, browser extensions for Chrome, Firefox, and Safari, a web app, a command-line interface, and a REST API with webhook support for integrating Karakeep into other tools and automation pipelines."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"The self-hosted version of Karakeep is completely free forever with full feature parity to the paid cloud tiers, since anyone willing to run their own Docker instance gets the entire feature set at no cost. This is the primary draw for the open-source, self-hosting audience.",
+"For users who prefer a managed experience, Karakeep Cloud offers a limited Free tier (around 10 bookmarks, 20MB storage) as a trial, a Pro tier at 4 dollars per month or 40 dollars per year with unlimited bookmarks, AI tagging, full-text search, and 50GB storage, and a Corporate tier with custom per-seat pricing, SSO, and priority support."
+]}
+],
+"features": [
+{"title": "AI-powered auto-tagging", "description": "Automatically tags saved content using cloud AI providers or fully local models via Ollama."},
+{"title": "Full-text search", "description": "Search across every saved bookmark, note, image, and highlight to instantly find past content."},
+{"title": "Rule engine automation", "description": "Custom rules trigger actions like tagging or archiving based on conditions you define."},
+{"title": "RSS feed auto-import", "description": "Automatically pulls in new articles from subscribed RSS feeds without manual saving."},
+{"title": "Highlights capture", "description": "Save and organize specific text passages highlighted from articles and pages."},
+{"title": "Cross-platform clients", "description": "Native iOS and Android apps plus Chrome, Firefox, and Safari browser extensions."},
+{"title": "Collaborative shared lists", "description": "Share curated bookmark lists with teams, family, or collaborators."},
+{"title": "REST API and webhooks", "description": "Integrate Karakeep with other tools and automation workflows programmatically."}
+],
+"pros": [
+"Self-hosted version is completely free forever with full feature parity",
+"AI tagging can run entirely locally via Ollama for full data privacy",
+"Broad platform support including native mobile apps and browser extensions",
+"Active open-source community with frequent updates and over 26,000 GitHub stars",
+"Handles more than just links: notes, images, PDFs, and highlights in one place"
+],
+"cons": [
+"Cloud free tier is very limited (around 10 bookmarks and 20MB storage)",
+"Self-hosting requires Docker and basic server administration knowledge",
+"Cloud service is still in public beta, so reliability guarantees are limited",
+"AI tagging quality depends on which model or provider is configured",
+"Smaller ecosystem and fewer third-party integrations than long-established read-it-later apps"
+],
+"faqs": [
+{"question": "Is Karakeep the same as Hoarder?", "answer": "Yes. Karakeep was originally launched as Hoarder in January 2023 and rebranded to Karakeep in 2025. The underlying project and features carried over under the new name."},
+{"question": "Is Karakeep free?", "answer": "The self-hosted version is free forever with full features. The managed cloud version offers a limited free tier plus a Pro plan at 4 dollars per month or 40 dollars per year."},
+{"question": "Can Karakeep's AI tagging run without sending data to the cloud?", "answer": "Yes. Karakeep supports local AI models via Ollama, so users who self-host can keep all AI tagging processing entirely on their own hardware."},
+{"question": "Who created Karakeep?", "answer": "Karakeep was created by developer Mohamed Bassem and is now maintained by Localhost Labs Ltd as an open-source AGPL-3.0 project."},
+{"question": "Does Karakeep have mobile apps?", "answer": "Yes, Karakeep offers native iOS and Android apps as well as browser extensions for Chrome, Firefox, and Safari."},
+{"question": "What can I save in Karakeep besides links?", "answer": "Karakeep supports bookmarking links, taking notes, storing images and PDFs, and capturing highlighted text passages from saved articles."}
+],
+"use_cases": [
+{"title": "Self-hosted research knowledge base", "description": "A researcher self-hosts Karakeep on a home server to save articles, PDFs, and highlights with full-text search, keeping all data under their own control.", "audience": "Researchers and privacy-conscious power users"},
+{"title": "Replacing a discontinued read-it-later app", "description": "A former Pocket or Omnivore user migrates to Karakeep's managed cloud service for a similar save-and-read experience with AI tagging.", "audience": "Former Pocket and Omnivore users"},
+{"title": "Team knowledge sharing", "description": "A small team uses Karakeep's collaborative shared lists to curate and distribute research links and reference material.", "audience": "Small teams and knowledge workers"}
+],
+"pricing_plans": [
+{"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full feature parity with paid cloud tiers", "Docker deployment", "Local AI tagging via Ollama", "Unlimited bookmarks, notes, and storage limited only by your server"]},
+{"plan_name": "Cloud Free", "price": "$0", "billing_cycle": "N/A", "features": ["Around 10 bookmarks", "20MB storage", "Trial access to Karakeep Cloud"]},
+{"plan_name": "Cloud Pro", "price": "$4/month or $40/year", "billing_cycle": "monthly or annual", "features": ["Unlimited bookmarks", "AI auto-tagging", "Full-text search", "50GB storage"]},
+{"plan_name": "Corporate", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Custom per-seat pricing", "Single sign-on (SSO)", "Priority support"]}
+],
+"tags": ["ai", "open-source", "self-hosted", "freemium", "free-plan", "ios", "android", "api", "web-app"],
+"publish": true
+}},
+{"tool_id": "5ca6b722-6cdd-44cd-92f0-a9b94dd0cb9d", "slug": "karaoke-eternal", "name": "Karaoke Eternal", "enrichment": {
+"short_description": "Free, open-source, self-hosted karaoke party system with browser-based song queueing and a fullscreen player.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": null,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Karaoke Eternal Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Karaoke Eternal is a free, self-hosted karaoke party system with browser song queueing. See features, setup, pros, cons and alternatives for 2026.",
+"llm_readable_summary": "Karaoke Eternal is a free and open-source, self-hosted karaoke party system that lets guests find and queue songs from their own phone's browser while a separate fullscreen player handles audio and video output for the room. The project is developed by a maintainer using the GitHub handle bhj and was previously named Karaoke Forever before being renamed Karaoke Eternal; it has no company, funding, or commercial edition behind it, and is supported purely through voluntary GitHub Sponsors contributions rather than a subscription business model. The software is architected around three cooperating components: a Server that runs on nearly any hardware, including a Raspberry Pi, a NAS device, or a Windows, Mac, or Linux desktop, and serves both the web application and the user's local media library; an App, which is a fast, modern mobile-optimized web interface designed specifically for the noisy, low-light conditions of an actual karaoke party, allowing guests to join a room via QR code, create a temporary guest account, and browse or search the song library on their own device; and a Player, meant to run fullscreen on the system connected to the room's speakers and screen, which handles audio and video playback plus WebGL-powered music-synced visualizations, including automatic lyrics background removal for a cleaner on-screen display. On the media side, Karaoke Eternal supports MP3+G files (the long-standing standard karaoke format pairing an MP3 audio track with a CDG graphics/lyrics file, including zipped variants) as well as standard MP4 video files, and it can host multiple simultaneous rooms, each with its own independent song queue and optional password protection, which makes it suitable for larger venues or events running more than one karaoke session at once. Because no microphones are wired into the software itself, the Player only handles music and on-screen lyrics output, leaving microphone amplification to the room's existing PA or speaker setup. Installation is available either as an official Docker image or as an npm package, both offered in multi-platform, multi-architecture builds requiring a 64-bit system, which keeps deployment straightforward for hobbyists already comfortable with self-hosted software. The project explicitly markets itself as having no ads and no telemetry, reinforcing its positioning within the privacy-respecting, self-hosted software community. Its target audience is hobbyists, bar and venue owners, and families or friend groups who want to run recurring karaoke nights without paying for commercial karaoke hosting services, jukebox subscriptions, or proprietary karaoke machines that lock users into specific song formats or licensing arrangements. Karaoke Eternal is frequently listed in self-hosted software directories such as Awesome-Selfhosted alongside other home entertainment server tools like Jellyfin and Navidrome, and its closest points of comparison are commercial karaoke party apps and standalone karaoke machines, as well as other lesser-known open-source karaoke queueing tools; Karaoke Eternal differentiates itself by requiring no dedicated hardware, working entirely through guests' own phone browsers with no app install, supporting multiple concurrent rooms out of the box, and remaining completely free with an actively maintained, ad-free, telemetry-free codebase.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Karaoke Eternal is a free, open-source, self-hosted system for running karaoke parties, letting guests browse and queue songs from their own phone's browser while a dedicated fullscreen player handles audio, video, and on-screen lyrics for the room. It was previously named Karaoke Forever before being renamed, and is maintained by a developer using the GitHub handle bhj with no company or funding behind the project.",
+"The system is built from three parts: a Server that hosts the web app and media library and can run on almost anything from a Raspberry Pi to a full desktop; a mobile-optimized App that guests use to join a room via QR code and queue songs without installing anything; and a Player that runs fullscreen on the system connected to the room's speakers and display.",
+"With no ads, no telemetry, and no subscription fees, Karaoke Eternal is aimed squarely at the self-hosted, privacy-respecting home server community, and is commonly found in the same circles as tools like Jellyfin for media streaming."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Karaoke Eternal supports the classic MP3+G karaoke format (audio paired with CDG lyric graphics, including zipped files) as well as standard MP4 video karaoke tracks, and renders WebGL-powered visualizations with automatic lyrics background removal for a polished on-screen presentation.",
+"Guests join sessions by scanning a QR code and creating a temporary guest account directly in their phone's browser, with no app installation required, and the system supports multiple simultaneous rooms, each with an independent queue and optional password protection, making it viable for venues running more than one karaoke session at a time.",
+"Because the software handles only music and video playback rather than microphones, it integrates with whatever PA or speaker system a venue or home already has. Deployment is available via an official Docker image or an npm package, both offered as multi-platform, multi-architecture 64-bit builds."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Karaoke Eternal is completely free and open source with no paid tier, license fee, or feature restrictions. There is no commercial edition, and the only cost involved is whatever hardware you choose to run the server on, whether that is a spare Raspberry Pi, a NAS, or an existing desktop computer.",
+"The project sustains itself entirely through voluntary GitHub Sponsors contributions rather than subscription revenue, meaning every feature, including multi-room support and visualizations, is available to all users regardless of whether they choose to donate."
+]}
+],
+"features": [
+{"title": "Browser-based song queueing", "description": "Guests search and queue songs from their own phone's browser without installing any app."},
+{"title": "QR code room joining", "description": "New guests scan a QR code to join a karaoke room and create a temporary guest account instantly."},
+{"title": "MP3+G and MP4 support", "description": "Plays classic MP3+G karaoke tracks as well as standard MP4 video karaoke files."},
+{"title": "WebGL visualizations", "description": "Music-synced visualizations with automatic lyrics background removal for a clean on-screen display."},
+{"title": "Multiple simultaneous rooms", "description": "Hosts can run more than one independent, optionally password-protected karaoke queue at once."},
+{"title": "Cross-platform server", "description": "Runs on a Raspberry Pi, NAS, or Windows, Mac, or Linux desktop via Docker or npm."},
+{"title": "Fullscreen player mode", "description": "Dedicated player output designed to run fullscreen connected to a room's speakers and screen."},
+{"title": "No ads or telemetry", "description": "The software collects no usage data and displays no advertising to hosts or guests."}
+],
+"pros": [
+"Completely free and open source with no paid tiers",
+"No app installation needed for guests; works entirely in the phone browser",
+"Supports multiple simultaneous karaoke rooms out of the box",
+"Runs on inexpensive hardware like a Raspberry Pi",
+"No ads or telemetry, respecting host and guest privacy"
+],
+"cons": [
+"Requires self-hosting and basic server setup knowledge",
+"No official managed cloud or hosted version",
+"Depends on the host supplying their own MP3+G or MP4 karaoke media library",
+"No built-in microphone handling; relies on the venue's existing PA system",
+"Smaller community and less frequent updates than mainstream commercial karaoke apps"
+],
+"faqs": [
+{"question": "Is Karaoke Eternal free?", "answer": "Yes, Karaoke Eternal is completely free and open source with no paid tiers. The project is supported through optional GitHub Sponsors donations."},
+{"question": "Do guests need to install an app to use Karaoke Eternal?", "answer": "No. Guests scan a QR code and use the mobile web app directly in their phone's browser to browse and queue songs; no app installation is required."},
+{"question": "What audio and video formats does Karaoke Eternal support?", "answer": "It supports the classic MP3+G format (MP3 audio with CDG lyric graphics, including zipped files) as well as standard MP4 video karaoke tracks."},
+{"question": "What hardware can run the Karaoke Eternal server?", "answer": "The server runs on nearly anything, including a Raspberry Pi, a NAS device, or a Windows, Mac, or Linux desktop, via Docker or an npm package."},
+{"question": "Does Karaoke Eternal handle microphones?", "answer": "No. The Player only outputs music, lyrics, and visualizations; microphone amplification is handled by the venue's own PA or speaker system."},
+{"question": "Can I run more than one karaoke room at the same time?", "answer": "Yes, Karaoke Eternal supports multiple simultaneous rooms, each with an independent queue and optional password protection."}
+],
+"use_cases": [
+{"title": "Home karaoke parties", "description": "A host runs the server on a Raspberry Pi connected to the living room TV so guests can queue songs from their phones during a party.", "audience": "Home users and party hosts"},
+{"title": "Bar or venue karaoke nights", "description": "A venue owner deploys Karaoke Eternal with multiple simultaneous rooms to run separate karaoke queues for different areas of the venue.", "audience": "Bar and venue owners"},
+{"title": "Recurring community karaoke events", "description": "A community group self-hosts Karaoke Eternal for regular karaoke nights without paying for commercial jukebox subscriptions.", "audience": "Community organizers and hobbyist groups"}
+],
+"pricing_plans": [
+{"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code", "Unlimited rooms and guests", "MP3+G and MP4 support", "Docker and npm deployment", "No ads or telemetry"]}
+],
+"tags": ["open-source", "self-hosted", "free-plan", "web-app"],
+"publish": true
+}},
+{"tool_id": "cca6ce71-65f3-480e-80b7-a4723f4b0866", "slug": "kasm-workspaces", "name": "Kasm Workspaces", "enrichment": {
+"short_description": "Container-streaming platform delivering browser isolation, virtual desktops and app streaming to any web browser.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2017,
+"company_size": "11-50 employees",
+"headquarters": "McLean, Virginia, USA",
+"languages": ["English"],
+"seo_title": "Kasm Workspaces Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kasm Workspaces streams browsers, desktops and apps to any web browser via containers. See pricing, features, pros, cons and alternatives for 2026.",
+"llm_readable_summary": "Kasm Workspaces is a container-streaming platform that delivers browser isolation, virtual desktops, and application streaming directly to a standard web browser, without requiring end users to install any client software. The company, Kasm Technologies, was founded in 2017 in McLean, Virginia, by CEO Justin Travis and co-founder Matt McClaskey, growing out of Travis's background in network security work for US federal and Department of Defense programs; that origin is reflected in Kasm's continued strength in high-security government and enterprise use cases. Kasm Technologies remains a privately held, founder-led company (no major disclosed venture funding rounds akin to typical Silicon Valley SaaS startups), reporting a team of roughly 25 to 50 employees across North America, Europe, and Asia, and revenue in the low single-digit millions of dollars as of recent third-party estimates. Technically, Kasm is built on open-source, web-native container streaming technology: each user session runs inside an isolated Docker container on the Kasm server infrastructure, and the resulting desktop, browser, or application is streamed to the end user's device as pixel/video data over a web-based protocol (KasmVNC, the company's own open-source VNC implementation), meaning nothing runs locally except a standard browser tab. This architecture underpins several distinct use cases: Remote Browser Isolation (RBI), which opens untrusted or risky websites inside disposable, sandboxed containers to protect the endpoint from malware and browser-based attacks; Desktop as a Service (DaaS), which streams full Linux or Windows virtual desktops on demand; secure remote access to internal web applications without a traditional VPN; and DevOps/CI use cases, where ephemeral containerized development or testing environments can be spun up and torn down automatically. Kasm ships a large library of pre-built \"Workspace\" container images (browsers like Chrome and Firefox, Linux desktop environments, developer tools, and more) through a workspace marketplace, and includes session recording, casting (read-only session sharing for support or monitoring), auto-scaling to add server capacity under load, and integrations for SAML/SSO, LDAP, and Active Directory authentication. Pricing follows a freemium, per-user-per-month model: the Community Edition is completely free for individuals, home-server users, non-profits, and evaluation, capped at 5 concurrent sessions with community support via a public issue tracker; paid commercial editions start as low as 5 dollars per user per month for personal or small use cases and around 10 dollars per user per month for team and enterprise self-hosted or private/hybrid cloud deployments, scaling up with additional support, SSO, and higher session limits at enterprise tiers negotiated directly with sales. Kasm's target audience spans federal and defense agencies needing air-gapped or FedRAMP-adjacent secure browsing, managed security service providers offering browser isolation to clients, enterprises replacing VPN-based remote access, and developers who want disposable, containerized dev environments. Its most commonly cited competitors and alternatives include Citrix Virtual Apps and Desktops, VMware Horizon, Amazon WorkSpaces, and dedicated browser-isolation vendors like Menlo Security and Cloudflare Browser Isolation; Kasm differentiates itself by being self-hostable end-to-end with an open-source core, giving organizations full control over where session data lives, which is particularly valuable for government, defense, and highly regulated customers who cannot rely on a fully managed third-party cloud service for sensitive browsing or desktop workloads.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kasm Workspaces is a container-streaming platform that delivers browsers, virtual desktops, and applications directly into a standard web browser using isolated Docker containers, with no client software installation required. Kasm Technologies was founded in 2017 in McLean, Virginia, by CEO Justin Travis and co-founder Matt McClaskey, with roots in secure collaboration work for US federal and Department of Defense programs.",
+"The platform is built on Kasm's own open-source container streaming technology, including KasmVNC, its web-native VNC implementation, which streams each session as video/pixel data to the browser rather than requiring a locally installed remote-desktop client. This design makes Kasm particularly suited to security-sensitive environments where controlling exactly where data and compute live is critical.",
+"Kasm Technologies remains a privately held, founder-led company with an estimated 25 to 50 employees, and it continues to serve both a large open-source Community Edition user base and a growing roster of enterprise, government, and managed security provider customers on its paid tiers."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Kasm's core capability is Remote Browser Isolation, which opens websites inside disposable, sandboxed containers so malware or malicious scripts never reach the end user's actual device, alongside Desktop as a Service for streaming full Linux or Windows desktops on demand. It also supports secure remote access to internal web applications as a VPN alternative.",
+"A large marketplace of pre-built Workspace images covers browsers like Chrome and Firefox, full Linux desktop environments, and developer tooling, letting admins spin up standardized environments in seconds. DevOps and CI teams use the same container technology to create ephemeral, disposable test and build environments.",
+"Administrative features include session recording and casting for support or compliance monitoring, auto-scaling to handle load spikes, and enterprise authentication via SAML, SSO, LDAP, and Active Directory, making it deployable inside existing enterprise identity infrastructure."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"The Community Edition of Kasm Workspaces is completely free for individuals, home-server users, non-profits, and evaluation purposes, though it is capped at 5 concurrent sessions and supported only through a public community issue tracker rather than dedicated support channels.",
+"Commercial editions follow a per-user-per-month model, starting as low as 5 dollars per user per month for personal use and around 10 dollars per user per month for team, enterprise, self-hosted, or private/hybrid cloud deployments, with higher session limits, SSO, and dedicated support available at custom enterprise pricing negotiated directly with Kasm's sales team."
+]}
+],
+"features": [
+{"title": "Remote Browser Isolation", "description": "Opens untrusted websites inside disposable, sandboxed containers to protect endpoints from malware."},
+{"title": "Desktop as a Service (DaaS)", "description": "Streams full Linux or Windows virtual desktops to any web browser on demand."},
+{"title": "Workspace image marketplace", "description": "Pre-built container images for browsers, Linux desktops, and developer tools ready to deploy instantly."},
+{"title": "Session recording and casting", "description": "Records sessions for compliance and allows read-only casting for support or monitoring."},
+{"title": "SAML, SSO, LDAP and Active Directory", "description": "Integrates with existing enterprise identity providers for centralized authentication."},
+{"title": "Auto-scaling infrastructure", "description": "Automatically adds server capacity to handle spikes in concurrent session demand."},
+{"title": "Secure remote access", "description": "Provides access to internal web applications as an alternative to traditional VPNs."},
+{"title": "Ephemeral DevOps environments", "description": "Spins up and tears down disposable, containerized development and CI environments on demand."}
+],
+"pros": [
+"Free Community Edition with no time limit for individuals and non-profits",
+"Fully self-hostable with an open-source core, giving complete data control",
+"Strong fit for federal, defense, and other high-security use cases",
+"No client software needed; works from any modern web browser",
+"Flexible deployment across self-hosted, private cloud, or hybrid environments"
+],
+"cons": [
+"Community Edition is capped at 5 concurrent sessions",
+"Enterprise pricing requires a direct sales conversation for larger deployments",
+"Requires container/Docker infrastructure knowledge to self-host effectively",
+"Smaller company size than large DaaS competitors like Citrix or VMware",
+"Browser-streamed sessions can be more resource-intensive on the server than local desktop apps"
+],
+"faqs": [
+{"question": "Is Kasm Workspaces free?", "answer": "The Community Edition is free for individuals, home-server users, non-profits, and evaluation, limited to 5 concurrent sessions. Paid commercial editions start around 5 to 10 dollars per user per month."},
+{"question": "Who founded Kasm Technologies?", "answer": "Kasm Technologies was founded in 2017 in McLean, Virginia, by CEO Justin Travis and co-founder Matt McClaskey, with roots in secure federal and defense collaboration technology."},
+{"question": "What is Remote Browser Isolation?", "answer": "It is a security technique where websites are opened inside disposable, sandboxed containers on Kasm's servers rather than the user's device, so malware or malicious scripts never reach the actual endpoint."},
+{"question": "Can Kasm Workspaces replace a VPN?", "answer": "Yes, Kasm can provide secure remote access to internal web applications without requiring a traditional VPN client, streaming access through the browser instead."},
+{"question": "Does Kasm Workspaces support Windows desktops?", "answer": "Yes, in addition to Linux desktop streaming, Kasm supports streaming Windows virtual desktops as part of its Desktop as a Service capability."},
+{"question": "How does Kasm Workspaces compare to Citrix or VMware Horizon?", "answer": "Kasm offers similar desktop and app streaming capability but is built on an open-source, self-hostable container architecture, giving organizations, especially government and security-focused ones, more control over where session data lives compared to Citrix or VMware's more traditional licensing models."}
+],
+"use_cases": [
+{"title": "Secure browser isolation for sensitive research", "description": "Security teams route employees' access to untrusted or high-risk websites through disposable Kasm containers to prevent malware from reaching corporate endpoints.", "audience": "Security and IT teams at regulated organizations"},
+{"title": "On-demand developer environments", "description": "Engineering teams spin up ephemeral, containerized Linux desktops or dev tools for CI pipelines and disposable testing without provisioning physical machines.", "audience": "DevOps and engineering teams"},
+{"title": "VPN-free remote access", "description": "Organizations give remote or contract workers secure browser-based access to internal web applications without distributing VPN clients.", "audience": "IT administrators managing remote and contractor access"}
+],
+"pricing_plans": [
+{"plan_name": "Community Edition", "price": "Free", "billing_cycle": "N/A", "features": ["Up to 5 concurrent sessions", "Individual, home-server and non-profit use", "Community support via public issue tracker", "Open-source core technology"]},
+{"plan_name": "Personal", "price": "From $5/user/month", "billing_cycle": "monthly", "features": ["Personal or small-scale use", "Self-hosted or private cloud deployment"]},
+{"plan_name": "Team/Enterprise", "price": "From $10/user/month", "billing_cycle": "monthly", "features": ["Self-hosted, private or hybrid cloud", "SAML, SSO, LDAP and Active Directory", "Session recording and casting", "Auto-scaling infrastructure"]},
+{"plan_name": "Enterprise (custom)", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Custom session limits", "Dedicated support", "Government/FedRAMP-adjacent deployment options"]}
+],
+"tags": ["self-hosted", "open-source", "api", "web-app", "freemium", "free-trial", "free-plan"],
+"publish": true
+}},
+{"tool_id": "5019ca62-2bfd-4c78-a7e8-0c678cbbaa68", "slug": "kaspr", "name": "Kaspr", "enrichment": {
+"short_description": "LinkedIn prospecting tool that finds verified B2B emails and phone numbers directly from LinkedIn profiles.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2018,
+"company_size": "11-50 employees",
+"headquarters": "Paris, France",
+"languages": ["English", "French"],
+"seo_title": "Kaspr Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Kaspr is a LinkedIn prospecting tool for finding verified B2B emails and phone numbers. See pricing, features, pros, cons and alternatives for 2026.",
+"llm_readable_summary": "Kaspr is a B2B contact data and lead enrichment tool centered on a Chrome extension that finds verified email addresses and direct phone numbers for people directly from their LinkedIn profiles, LinkedIn Sales Navigator, and LinkedIn Recruiter searches. The company was founded in Paris, France, in 2018 by CEO Allan Benguigui and CTO Omar Ghorbel, who set out to fill a gap in the European sales-intelligence market for prospecting data with strong GDPR compliance and accurate coverage of contacts outside the US. In April 2022, Kaspr was acquired by Cognism, a UK-headquartered sales intelligence and B2B contact data company, for an undisclosed sum, and now operates as part of the Cognism Group while retaining its own product, brand, and Paris office; the acquisition gave Kaspr access to Cognism's broader data infrastructure and compliance operations while Cognism gained a strong self-serve, PLG-style entry point aimed at individual reps and small sales teams. Technically, Kaspr works primarily as a browser extension that overlays directly on LinkedIn and Sales Navigator pages, revealing enriched contact details (personal email, verified professional email, and mobile or direct-dial phone numbers) for the profile currently being viewed, with data pulled from Kaspr's own database plus network and partner sources; it also offers CRM integrations with Salesforce, HubSpot, and Pipedrive, a Zapier connector for broader automation, bulk list-building and enrichment for prospecting at scale, and a REST API for developers who want to enrich contacts programmatically outside the browser workflow. Kaspr emphasizes GDPR and CCPA compliance throughout its data-sourcing and storage processes, which is a key differentiator for European sales teams wary of contact databases with unclear data-privacy provenance. Pricing follows a freemium, credit-based model: the Free plan includes 15 B2B email credits, 5 phone credits, and 5 direct email credits per month with basic lead management and Chrome extension access; the Starter plan costs roughly 49 dollars per month (or a discounted annual rate around 45 euros per month) and includes unlimited B2B email credits, up to 1,200 phone credits per year, Sales Navigator integration, and Zapier connectivity; the Business plan, marked as Kaspr's best-value tier, costs roughly 79 to 99 dollars per month and adds unlimited phone credits, up to 2,400 direct email credits per year, LinkedIn Recruiter Lite integration, custom member permissions, and full API access; and an Enterprise tier offers custom pricing with unlimited credits, intent data, advanced Salesforce enrichment, and single sign-on for larger sales organizations, typically sold through Cognism's enterprise contracts at price points north of 1,500 dollars per seat per year. Kaspr's target audience is SDRs, account executives, and recruiters at small and mid-sized companies who prospect primarily through LinkedIn and need fast, in-context contact enrichment without switching to a separate sales-intelligence platform, as well as larger sales organizations that adopt Kaspr as an entry point before graduating to full Cognism contracts. Its most frequently cited competitors and alternatives include Apollo.io, Lusha, ZoomInfo, Cognism itself (its parent company, sold as a separate premium product), and Seamless.AI; Kaspr differentiates itself with a lightweight, LinkedIn-native workflow, a genuinely usable free tier, strong European/GDPR data compliance, and pricing that undercuts most enterprise sales-intelligence platforms while still offering an upgrade path into Cognism's larger data and intent-data ecosystem.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Kaspr is a B2B contact enrichment and LinkedIn prospecting tool built around a Chrome extension that reveals verified email addresses and phone numbers directly on LinkedIn, Sales Navigator, and Recruiter profiles. It was founded in Paris in 2018 by CEO Allan Benguigui and CTO Omar Ghorbel to serve European sales teams with GDPR-compliant contact data.",
+"In April 2022, Kaspr was acquired by Cognism, a UK-based sales intelligence company, and now operates as part of the Cognism Group while keeping its own brand, product, and Paris headquarters. The acquisition combined Kaspr's self-serve, LinkedIn-native workflow with Cognism's larger contact database and compliance infrastructure.",
+"Kaspr's core value proposition is speed: rather than requiring reps to leave LinkedIn and search a separate database, contact details surface directly in-context as an overlay while browsing profiles, which has made it popular with individual SDRs and small sales teams looking for a lightweight prospecting workflow."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"The Chrome extension enriches LinkedIn, Sales Navigator, and Recruiter profiles in real time with personal email, verified professional email, and direct-dial or mobile phone numbers, pulled from Kaspr's own database and partner data sources. Bulk list-building tools let users enrich larger prospect lists at scale rather than one profile at a time.",
+"Native CRM integrations connect Kaspr to Salesforce, HubSpot, and Pipedrive, while a Zapier connector extends automation to hundreds of other tools, and a REST API is available for developers who want to enrich contacts programmatically outside the browser.",
+"Kaspr emphasizes GDPR and CCPA-compliant data sourcing and storage throughout its pipeline, and higher tiers add intent data, custom member permissions, LinkedIn Recruiter Lite integration, and advanced Salesforce enrichment for larger sales organizations."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Kaspr's Free plan includes 15 B2B email credits, 5 phone credits, and 5 direct email credits per month with basic Chrome extension access. The Starter plan runs roughly 49 dollars per month with unlimited B2B email credits, up to 1,200 phone credits per year, and Sales Navigator integration, while annual billing brings the effective rate down.",
+"The Business plan, priced roughly between 79 and 99 dollars per month, adds unlimited phone credits, LinkedIn Recruiter Lite integration, and full API access, and is marketed as Kaspr's best-value tier. An Enterprise tier offers custom pricing with unlimited credits, intent data, and SSO for larger teams, typically sold through Cognism's enterprise sales process."
+]}
+],
+"features": [
+{"title": "LinkedIn Chrome extension enrichment", "description": "Reveals verified emails and phone numbers directly on LinkedIn, Sales Navigator, and Recruiter profiles."},
+{"title": "Verified direct-dial phone numbers", "description": "Surfaces mobile and direct-dial numbers alongside email addresses for faster outbound calling."},
+{"title": "CRM integrations", "description": "Native connections to Salesforce, HubSpot, and Pipedrive for pushing enriched contacts directly into pipelines."},
+{"title": "Zapier connectivity", "description": "Automates contact enrichment workflows across hundreds of other tools via Zapier."},
+{"title": "Bulk list building", "description": "Enriches larger prospect lists at scale rather than one LinkedIn profile at a time."},
+{"title": "REST API access", "description": "Lets developers enrich contact data programmatically outside the browser extension."},
+{"title": "GDPR and CCPA compliant data sourcing", "description": "Data collection and storage practices are built around European and California privacy regulations."},
+{"title": "Intent data (Enterprise)", "description": "Enterprise customers gain access to buyer intent signals layered on top of contact enrichment."}
+],
+"pros": [
+"Genuinely usable free plan with real monthly credits",
+"Fast, in-context enrichment directly on LinkedIn profiles",
+"Strong GDPR compliance and European contact data coverage",
+"Pricing undercuts most full-scale sales-intelligence platforms",
+"Backed by Cognism's larger data infrastructure since its 2022 acquisition"
+],
+"cons": [
+"Phone number and direct-dial coverage can vary significantly outside Europe",
+"Credit-based pricing can feel restrictive for high-volume prospectors on lower tiers",
+"Full API access and unlimited phone credits are locked behind the Business tier",
+"Some advanced features overlap with parent company Cognism, creating potential upsell pressure",
+"Primarily optimized for LinkedIn workflows, less useful for prospecting outside LinkedIn"
+],
+"faqs": [
+{"question": "Is Kaspr free to use?", "answer": "Yes, Kaspr has a free plan with 15 B2B email credits, 5 phone credits, and 5 direct email credits per month, along with basic Chrome extension access."},
+{"question": "Who owns Kaspr?", "answer": "Kaspr was founded independently in Paris in 2018 by Allan Benguigui and Omar Ghorbel, and was acquired by UK-based sales intelligence company Cognism in April 2022."},
+{"question": "How does Kaspr find phone numbers and emails?", "answer": "Kaspr's Chrome extension overlays LinkedIn, Sales Navigator, and Recruiter profiles and pulls verified contact data from its own database and partner data sources."},
+{"question": "Does Kaspr integrate with my CRM?", "answer": "Yes, Kaspr has native integrations with Salesforce, HubSpot, and Pipedrive, plus a Zapier connector and a REST API for custom integrations."},
+{"question": "Is Kaspr GDPR compliant?", "answer": "Yes, Kaspr emphasizes GDPR and CCPA-compliant data sourcing and storage throughout its pipeline, which is a key differentiator for European sales teams."},
+{"question": "What is the difference between Kaspr and Cognism?", "answer": "Kaspr is a lightweight, self-serve LinkedIn prospecting tool owned by Cognism, while Cognism is the larger parent sales-intelligence platform sold separately at higher, enterprise-level price points with more extensive data and intent features."}
+],
+"use_cases": [
+{"title": "LinkedIn-based outbound prospecting", "description": "SDRs use the Kaspr Chrome extension to pull verified emails and phone numbers while browsing LinkedIn and Sales Navigator, feeding leads straight into outreach sequences.", "audience": "Sales development reps (SDRs)"},
+{"title": "Recruiter candidate sourcing", "description": "Recruiters use Kaspr with LinkedIn Recruiter to find direct contact details for passive candidates without leaving LinkedIn.", "audience": "Recruiters and talent acquisition teams"},
+{"title": "GDPR-sensitive European sales prospecting", "description": "European sales teams use Kaspr for its GDPR-compliant data sourcing when building outbound lists that must meet strict regional privacy requirements.", "audience": "European B2B sales teams"}
+],
+"pricing_plans": [
+{"plan_name": "Free", "price": "$0/month", "billing_cycle": "monthly", "features": ["15 B2B email credits/month", "5 phone credits/month", "5 direct email credits/month", "Chrome extension access"]},
+{"plan_name": "Starter", "price": "Around $49/month", "billing_cycle": "monthly or annual", "features": ["Unlimited B2B email credits", "Up to 1,200 phone credits/year", "Sales Navigator integration", "Zapier connectivity"]},
+{"plan_name": "Business", "price": "Around $79 to $99/month", "billing_cycle": "monthly or annual", "features": ["Unlimited phone credits", "Up to 2,400 direct email credits/year", "LinkedIn Recruiter Lite integration", "Full API access"]},
+{"plan_name": "Enterprise", "price": "Custom pricing", "billing_cycle": "annual", "features": ["Unlimited credits", "Intent data", "Advanced Salesforce enrichment", "Single sign-on (SSO)"]}
+],
+"tags": ["api", "freemium", "free-plan", "web-app"],
+"publish": true
+}}
+]
