@@ -1,0 +1,542 @@
+[
+  {
+    "tool_id": "6e652351-8445-42ef-91dd-ddbf6f9320b4",
+    "slug": "bitwarden",
+    "name": "Bitwarden",
+    "enrichment": {
+      "short_description": "Open-source password manager and secrets manager with end-to-end encrypted vaults, passkey login, and self-hosting options for individuals, families, and businesses.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2015,
+      "company_size": "200+ employees",
+      "headquarters": "Santa Barbara, California, United States",
+      "languages": ["English", "Spanish", "French", "German", "Portuguese", "Dutch", "Italian", "Japanese", "Russian", "Chinese"],
+      "seo_title": "Bitwarden Review 2026: Pricing, Features & Security",
+      "seo_meta_description": "Bitwarden is an open-source password manager with a free forever plan and paid tiers from $1.65/mo. See pricing, features, self-hosting, and security details.",
+      "llm_readable_summary": "Bitwarden is an open-source password management platform founded in 2015 and headquartered in Santa Barbara, California. It stores passwords, passkeys, TOTP codes, and secure notes in an end-to-end encrypted vault that syncs across browser extensions, mobile apps (iOS and Android), desktop apps (Windows, macOS, Linux), and a web vault. Because its client and server code is published on GitHub under open-source licenses, Bitwarden has undergone repeated independent third-party security audits, and users can choose to self-host the entire backend instead of using Bitwarden's cloud infrastructure. The product serves over 15 million users and more than 80,000 businesses across roughly 180 countries, according to company figures, with the interface localized into 50-plus languages. Bitwarden's plan structure has five tiers. The Free plan is permanent and includes unlimited passwords synced across unlimited devices, a built-in password generator, and secure sharing with one other person. Premium costs $1.65 per month ($19.80 billed annually) and adds an integrated TOTP authenticator, encrypted file attachments, emergency access delegation, vault health reports that flag weak or reused passwords, and priority customer support. Families costs $3.99 per month ($47.88 billed annually) for up to six users and layers on unlimited secure sharing, unlimited collections, and shared encrypted storage. On the business side, Teams costs $4 per user per month and adds directory synchronization, SCIM user provisioning, and event log auditing, while Enterprise costs $6 per user per month and adds SSO integration, granular role-based access controls, self-hosting flexibility, and account recovery administration; Enterprise plans also include a complimentary Families subscription for every employee. All paid tiers bill annually. Bitwarden's core security model uses AES-256 bit encryption and PBKDF2 or Argon2 key derivation to protect the vault, with the master password never transmitted to Bitwarden's servers in plaintext (zero-knowledge architecture). It supports two-step login through TOTP authenticator apps, email codes, and FIDO2 WebAuthn passkeys and security keys such as YubiKey; free accounts can register up to five WebAuthn credentials and paid accounts up to ten. Beyond individual password storage, Bitwarden also offers a secrets manager product for storing and rotating API keys, database credentials, and other machine secrets used by development teams, plus a standalone Bitwarden Authenticator app for generating TOTP codes independent of the password vault. It competes primarily with 1Password, Dashlane, and NordPass, and it is frequently recommended by security researchers and technology publications as a budget-friendly, audited, cross-platform password manager, particularly because of the strength of its free tier relative to competitors and the availability of a fully self-hosted deployment for organizations with strict data residency or compliance requirements.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Bitwarden is an open-source password manager founded in 2015 and based in Santa Barbara, California. It encrypts and stores passwords, passkeys, two-factor authentication codes, and secure notes in a vault that syncs across browser extensions, mobile apps, desktop apps, and a web interface.",
+          "Because the source code for both its clients and server is public, Bitwarden has been repeatedly audited by independent security firms, and it offers a self-hosting option for organizations that want to run the backend on their own infrastructure rather than Bitwarden's cloud."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Bitwarden's vault uses end-to-end encryption with a zero-knowledge architecture, meaning the master password and unencrypted data never leave the user's device unencrypted. It supports passkey login and storage, an integrated TOTP authenticator for two-step login codes, encrypted file attachments, and a password generator with configurable complexity rules.",
+          "For teams and enterprises, Bitwarden adds secure item sharing through organizations and collections, directory synchronization with tools like Azure AD and Okta, SCIM provisioning, SSO login, event log auditing, and an Access Intelligence feature that surfaces weak, reused, or exposed credentials across an organization."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Bitwarden's Free plan has no time limit and covers unlimited passwords on unlimited devices. Premium is $1.65 per month billed annually and adds file attachments, an integrated authenticator, and emergency access. Families is $3.99 per month billed annually for up to six people.",
+          "Business pricing starts with Teams at $4 per user per month, adding directory sync and audit logs, and Enterprise at $6 per user per month, adding SSO, self-hosting flexibility, and account recovery. All paid plans bill annually."
+        ]}
+      ],
+      "features": [
+        { "title": "End-to-end encrypted vault", "description": "Passwords, passkeys, and notes are encrypted client-side with AES-256 before syncing, using a zero-knowledge architecture." },
+        { "title": "Passkey support", "description": "Users can generate, store, and log in with FIDO2 passkeys, plus use security keys or biometrics for two-step login." },
+        { "title": "Cross-platform apps", "description": "Native apps and browser extensions cover Windows, macOS, Linux, iOS, Android, and all major browsers, plus a CLI." },
+        { "title": "Self-hosting", "description": "The full Bitwarden server stack can be self-hosted via Docker for organizations that need to control their own infrastructure." },
+        { "title": "Secure sharing and organizations", "description": "Business plans let admins group logins into shared collections with role-based permissions across teams." },
+        { "title": "Directory sync and SCIM", "description": "Enterprise and Teams plans sync users from Azure AD, Okta, and other identity providers and automate provisioning." },
+        { "title": "Vault health reports", "description": "Premium and business plans include reports that flag weak, reused, or exposed passwords across the vault." },
+        { "title": "Secrets manager", "description": "A separate product for storing and rotating API keys and other machine credentials used by developer teams." }
+      ],
+      "pros": [
+        "Free plan is unusually generous, with unlimited passwords and devices at no cost",
+        "Open-source code base has undergone multiple independent third-party security audits",
+        "Self-hosting option available for organizations with strict compliance or data-residency needs",
+        "Broad platform coverage across desktop, mobile, and every major browser"
+      ],
+      "cons": [
+        "Interface is more utilitarian than some paid competitors like 1Password",
+        "Some advanced features (emergency access, file attachments) require a paid plan",
+        "Business features such as SSO and account recovery are gated to the Enterprise tier",
+        "Community self-hosting setup requires comfort with Docker and server administration"
+      ],
+      "faqs": [
+        { "question": "Is Bitwarden really free?", "answer": "Yes. The Free plan has no time limit and includes unlimited passwords across unlimited devices, though some features like file attachments and emergency access require Premium." },
+        { "question": "Is Bitwarden open source?", "answer": "Yes. Bitwarden publishes the source code for its clients and server, which allows independent security audits and supports self-hosted deployments." },
+        { "question": "Can Bitwarden be self-hosted?", "answer": "Yes, Bitwarden offers a self-hosting option that lets organizations run the full server stack on their own infrastructure, available with a paid license for organizational use." },
+        { "question": "Does Bitwarden support passkeys?", "answer": "Yes. Bitwarden can generate, store, and use passkeys for logging into supported websites, and can also use security keys and passkeys for two-step login into the Bitwarden account itself." },
+        { "question": "How much does Bitwarden cost for a team?", "answer": "Business pricing starts at $4 per user per month for the Teams plan and $6 per user per month for Enterprise, both billed annually." }
+      ],
+      "use_cases": [
+        { "title": "Individual password security", "description": "A single user replaces browser-saved passwords and weak reused credentials with an encrypted vault and generated passwords.", "audience": "Individuals and freelancers" },
+        { "title": "Family credential sharing", "description": "A household shares logins for streaming, banking, and shared accounts securely across up to six family members.", "audience": "Families" },
+        { "title": "Company-wide credential management", "description": "IT and security teams centralize employee credential storage with SSO, directory sync, and audit logging for compliance.", "audience": "Businesses and IT teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "Forever free", "features": ["Unlimited passwords", "Unlimited devices", "Secure sharing with 1 person", "Password generator"] },
+        { "plan_name": "Premium", "price": "$1.65/month", "billing_cycle": "Billed annually ($19.80/year)", "features": ["Integrated authenticator", "File attachments", "Emergency access", "Vault health reports"] },
+        { "plan_name": "Families", "price": "$3.99/month", "billing_cycle": "Billed annually ($47.88/year)", "features": ["Up to 6 users", "All Premium features per member", "Unlimited sharing and collections"] },
+        { "plan_name": "Teams", "price": "$4/user/month", "billing_cycle": "Billed annually", "features": ["Secure credential sharing", "Event log auditing", "Directory sync", "SCIM provisioning"] },
+        { "plan_name": "Enterprise", "price": "$6/user/month", "billing_cycle": "Billed annually", "features": ["All Teams features", "SSO integration", "Granular access control", "Account recovery", "Free Families plan for all users"] }
+      ],
+      "tags": ["freemium", "free-plan", "self-hosted", "open-source", "api", "web-app", "ios", "android", "mac", "windows"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "ef81f2cc-5d19-4029-abc4-98bb85afba1c",
+    "slug": "bizzabo",
+    "name": "Bizzabo",
+    "enrichment": {
+      "short_description": "Enterprise event management platform for B2B conferences, combining registration, event websites, mobile apps, and onsite tools like Klik SmartBadges.",
+      "pricing_model": "Subscription",
+      "starting_price": "$17,999/year",
+      "founded_year": 2011,
+      "company_size": "300+ employees",
+      "headquarters": "New York, United States and Tel Aviv, Israel",
+      "languages": ["English"],
+      "seo_title": "Bizzabo Review 2026: Pricing, Features & Alternatives",
+      "seo_meta_description": "Bizzabo is an enterprise event management platform starting at $17,999/year. See pricing, Klik SmartBadge features, and who it's built for.",
+      "llm_readable_summary": "Bizzabo is an event management platform founded in 2011 by Boaz Katz, Alon Alroy, and Eran Ben-Shushan, with dual headquarters in New York City and Tel Aviv, Israel, and additional offices in Kyiv and London. The company employs more than 300 people and launched its full event management platform in 2015. Bizzabo's flagship product, the Event Experience OS, is a unified system covering event website building, attendee registration and ticketing, contact and CRM management, email marketing campaigns, agenda and speaker management, mobile event apps, sponsor and exhibitor management, live streaming and onsite check-in tools, and post-event reporting and analytics. The platform is built specifically for B2B conferences, corporate summits, and large-scale hybrid or in-person events rather than small meetups or consumer ticketing. Bizzabo's pricing is enterprise-oriented and not aimed at very small organizers: the Event Experience OS starts at $17,999 per year, structured around a three-user minimum and roughly $499 per user per month when billed annually. Bizzabo does not publish a free tier, though prospective customers can request a demo and evaluate the platform before committing. A separate hardware and software product line, Klik SmartBadge, is priced separately with custom single-event or multi-event quotes; Klik combines a wearable event badge with click-to-connect networking technology, automated lead capture for sponsors and exhibitors, passive attendee tracking via beacons and sensors, and live engagement heatmaps for organizers, and is positioned for large-scale conferences with 500 or more attendees. Additional premium add-ons available on top of the core platform include virtual event production, advanced onsite technology, custom-branded mobile apps, API access, SSO, and expanded martech integrations, along with optional professional services such as Bizzabo Studios production support delivered at variable, quote-based pricing. Bizzabo's native iOS and Android mobile apps let attendees browse the agenda, check in to sessions, download session content, and network with other attendees and exhibitors. The platform integrates with common martech and CRM tools used by marketing and events teams, and it is typically evaluated by mid-market and enterprise event marketing organizations running recurring B2B conferences, trade shows, and hybrid events rather than by individual or small-business event hosts, given both its pricing floor and the breadth of its feature set. Bizzabo competes in the same category as Cvent, Hopin/RingCentral Events, and Splash, differentiating primarily through its combination of an end-to-end event operating system with proprietary onsite hardware in Klik SmartBadge.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Bizzabo was founded in 2011 by Boaz Katz, Alon Alroy, and Eran Ben-Shushan and is headquartered jointly in New York City and Tel Aviv, with additional offices in Kyiv and London. The company launched its full event management platform in 2015 and now employs more than 300 people.",
+          "The platform, marketed as the Event Experience OS, is designed for B2B conferences and corporate events, combining registration, event websites, mobile apps, and onsite engagement tools such as Klik SmartBadges into a single system rather than requiring organizers to stitch together separate point solutions."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Core capabilities include a drag-and-drop event website builder, attendee registration and ticketing workflows, email marketing campaigns, agenda and speaker management, contact and CRM tools, and native mobile apps for iOS and Android that let attendees check in and network.",
+          "Onsite and hybrid events can use Klik SmartBadges, wearable badges that enable click-to-connect networking, automated sponsor lead capture, and live movement and engagement analytics through venue beacons, in addition to standard livestreaming and virtual session tools."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "The Event Experience OS starts at $17,999 per year, based on a three-user minimum and billed annually, positioning Bizzabo toward mid-market and enterprise events teams rather than individual organizers. Klik SmartBadge hardware and software are quoted separately for single or multi-event use.",
+          "Additional add-ons such as virtual event production, custom-branded apps, API access, and SSO are available at extra cost, and Bizzabo offers professional services like onsite production support through Bizzabo Studios at variable, quote-based pricing."
+        ]}
+      ],
+      "features": [
+        { "title": "Event Experience OS", "description": "A unified platform covering event websites, registration, ticketing, email marketing, and reporting in one system." },
+        { "title": "Klik SmartBadges", "description": "Wearable event badges enabling click-to-connect networking, automated lead capture, and live attendee movement analytics." },
+        { "title": "Mobile event apps", "description": "Native iOS and Android apps let attendees view agendas, check in to sessions, and network with other attendees." },
+        { "title": "Sponsor and exhibitor management", "description": "Tools for managing sponsor packages, booth assignments, and measurable lead capture and engagement ROI." },
+        { "title": "Hybrid and virtual event support", "description": "Live streaming, virtual session hosting, and networking features for hybrid or fully virtual events." },
+        { "title": "Reporting and analytics", "description": "Post-event reporting on registration, engagement, and sponsor performance, plus live analytics during onsite events." }
+      ],
+      "pros": [
+        "End-to-end platform reduces the need for multiple separate event tools",
+        "Klik SmartBadge hardware differentiates Bizzabo for large in-person conferences",
+        "Native mobile apps for both iOS and Android support attendee engagement",
+        "Backed by an established company with 300+ employees and a track record since 2011"
+      ],
+      "cons": [
+        "Pricing starts near $18,000 per year, out of reach for small event organizers",
+        "No public free plan; pricing requires contacting sales",
+        "Klik SmartBadge is best suited to large events of 500+ attendees, less relevant for smaller ones",
+        "Full pricing for add-ons and professional services is not publicly listed"
+      ],
+      "faqs": [
+        { "question": "How much does Bizzabo cost?", "answer": "The core Event Experience OS starts at $17,999 per year, billed annually with a three-user minimum. Klik SmartBadge and add-ons like virtual production or API access are priced separately by quote." },
+        { "question": "Does Bizzabo offer a free trial?", "answer": "Bizzabo does not publish self-serve free trial pricing; prospective customers typically request a demo before purchasing." },
+        { "question": "What is Klik SmartBadge?", "answer": "Klik is Bizzabo's wearable event badge product that enables click-to-connect networking, automated sponsor lead capture, and live attendee analytics, priced separately from the core platform." },
+        { "question": "Who founded Bizzabo?", "answer": "Bizzabo was founded in 2011 by Boaz Katz, Alon Alroy, and Eran Ben-Shushan." },
+        { "question": "Does Bizzabo have a mobile app?", "answer": "Yes, Bizzabo provides native iOS and Android event apps for attendees to view agendas, check in, and network." }
+      ],
+      "use_cases": [
+        { "title": "Enterprise B2B conferences", "description": "Corporate marketing and events teams run large annual flagship conferences with integrated registration, agenda, and sponsor management.", "audience": "Enterprise event marketing teams" },
+        { "title": "Hybrid conference production", "description": "Organizers combine in-person attendance with livestreamed virtual sessions on a single registration and content platform.", "audience": "Hybrid event producers" },
+        { "title": "Sponsor-driven trade shows", "description": "Event organizers use Klik SmartBadges to give sponsors measurable lead capture and booth engagement data.", "audience": "Trade show and exhibition organizers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Event Experience OS", "price": "From $17,999/year", "billing_cycle": "Annual, 3-user minimum", "features": ["Unlimited events and registrations", "Event website builder", "Email campaigns", "Mobile app", "Reporting and analytics", "24/7 support"] },
+        { "plan_name": "Klik SmartBadge", "price": "Custom quote", "billing_cycle": "Single or multi-event", "features": ["Wearable smart badges", "Click-to-connect networking", "Lead capture and gamification", "Live attendee analytics"] }
+      ],
+      "tags": ["web-app", "api", "templates", "ios", "android"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "5f612c37-64e2-4aeb-a2a0-9b6d63df09b4",
+    "slug": "blackboard-learn",
+    "name": "Blackboard Learn",
+    "enrichment": {
+      "short_description": "Enterprise learning management system for higher education and K-12, offering the Ultra course experience, accessibility tools, and AI-assisted course design.",
+      "pricing_model": "Subscription",
+      "starting_price": null,
+      "founded_year": 1997,
+      "company_size": "1,000+ employees (Anthology)",
+      "headquarters": "Boca Raton, Florida, United States",
+      "languages": ["English", "Spanish", "French", "German", "Portuguese", "Chinese", "Arabic"],
+      "seo_title": "Blackboard Learn Review 2026: Features, Pricing & Ultra",
+      "seo_meta_description": "Blackboard Learn is Anthology's enterprise LMS for higher education and K-12. See Ultra course view features, pricing structure, and pros and cons.",
+      "llm_readable_summary": "Blackboard Learn is a learning management system originally launched by Blackboard Inc. in 1997 and now developed by Anthology, Inc., formed when Blackboard merged with Anthology in late 2021. Anthology is headquartered in Boca Raton, Florida, and operates offices across North America and internationally, with over 1,000 employees. Blackboard Learn is used primarily by colleges, universities, and K-12 school systems to deliver online and blended courses, manage gradebooks and assignments, host discussion boards, and track student progress. The product's modern interface, called the Ultra Course View, replaced the older Original Course View with a mobile-first, more accessible design; Ultra adds features such as Progress Tracking, Discussion Analytics, streamlined navigation, and a redesigned gradebook. Blackboard also integrates Ally, an accessibility tool that scans course content for accessibility issues and automatically generates alternative formats such as audio, ePub, and translated versions for students with different needs. More recently, Anthology introduced an Ultra AI Design Assistant intended to help instructors draft course structures, learning objectives, and content more quickly. Blackboard Learn does not publish fixed, self-serve pricing; instead, Anthology sells the platform through sales-led, negotiated institutional contracts, with cost varying based on enrollment size, deployment model (cloud-hosted SaaS versus self-hosted), and the bundle of Anthology products purchased alongside Learn. Publicly available reference points vary: some third-party pricing trackers cite entry-level annual contracts in the range of several thousand dollars, while public-sector procurement frameworks in the UK have cited per-user annual pricing in double-digit pound amounts structured around fixed user bands rather than per-seat metering. Because of this, institutions evaluating Blackboard Learn should expect to request a custom quote rather than relying on published list pricing. Blackboard Learn provides native mobile apps for iOS and Android that let students access course materials, submit assignments, view grades, and receive push notifications for deadlines and announcements. The platform supports integrations with common higher-ed systems such as student information systems (SIS) through LTI (Learning Tools Interoperability) standards, allowing it to connect with third-party publisher content, proctoring tools, and video platforms. Blackboard Learn competes with other major higher-education and enterprise LMS platforms including Canvas (Instructure), Moodle, D2L Brightspace, and Schoology, and it remains one of the longest-established players in the category given its 1997 founding, though its user experience and market positioning have shifted substantially since the Anthology merger consolidated it with Anthology's other education technology products such as student information and CRM systems.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Blackboard Learn is a learning management system that originated with Blackboard Inc. in 1997 and is now developed by Anthology, Inc., formed from Blackboard's 2021 merger with Anthology. Anthology is headquartered in Boca Raton, Florida, with over 1,000 employees across North America and international offices.",
+          "The platform is used mainly by higher-education institutions and K-12 school systems to host online and blended courses, manage grading and assignments, and track student progress and engagement over the course of a term."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "The Ultra Course View is Blackboard's modern, mobile-first interface, offering streamlined navigation, Progress Tracking, and Discussion Analytics compared with the legacy Original Course View. The Ally accessibility tool scans course materials and automatically generates alternative formats such as audio and ePub for students with different accessibility needs.",
+          "Anthology has also introduced an Ultra AI Design Assistant aimed at helping instructors build course structures and content more efficiently, alongside standard LMS capabilities like gradebooks, discussion boards, assignment submission, and LTI-based integrations with third-party publisher and proctoring tools."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Blackboard Learn does not list fixed public pricing. Anthology sells the platform through negotiated institutional contracts, with cost driven by enrollment size, deployment model, and which additional Anthology products are bundled in.",
+          "Institutions typically need to request a quote directly from Anthology's sales team; publicly cited reference figures vary widely by region and procurement framework, so they should not be treated as a reliable list price."
+        ]}
+      ],
+      "features": [
+        { "title": "Ultra Course View", "description": "A modern, mobile-first course interface with streamlined navigation, progress tracking, and discussion analytics." },
+        { "title": "Ally accessibility tools", "description": "Automatically scans course content for accessibility issues and generates alternative formats like audio and ePub." },
+        { "title": "Ultra AI Design Assistant", "description": "AI-assisted course design tool that helps instructors draft course structure and content." },
+        { "title": "Gradebook and assignments", "description": "Centralized grading, rubrics, and assignment submission and feedback workflows for instructors and students." },
+        { "title": "Discussion boards and messaging", "description": "Threaded discussion tools and in-course messaging to support communication between students and instructors." },
+        { "title": "LTI integrations", "description": "Connects with third-party publisher content, proctoring services, and video platforms via LTI standards." },
+        { "title": "Mobile apps", "description": "Native iOS and Android apps let students view grades, submit work, and get deadline notifications." }
+      ],
+      "pros": [
+        "Long track record and wide adoption across higher education since 1997",
+        "Ultra Course View significantly modernized the interface and mobile experience",
+        "Strong built-in accessibility tooling via Ally",
+        "Broad LTI-based integration ecosystem with publisher and proctoring tools"
+      ],
+      "cons": [
+        "No public pricing; requires a sales-led quote for every institution",
+        "Legacy Original Course View can still create a fragmented experience during Ultra migration",
+        "Enterprise deployment and administration can require significant IT involvement",
+        "Primarily built for institutions, not well suited to individual educators or small training providers"
+      ],
+      "faqs": [
+        { "question": "How much does Blackboard Learn cost?", "answer": "Blackboard Learn does not publish fixed pricing. Anthology negotiates contracts per institution based on enrollment size and deployment model, so pricing requires a custom quote." },
+        { "question": "Is Blackboard Learn the same as Anthology?", "answer": "Anthology is the company that develops Blackboard Learn, formed when Blackboard Inc. merged with Anthology in late 2021. Blackboard Learn remains one of Anthology's core products." },
+        { "question": "What is the Ultra Course View?", "answer": "Ultra is Blackboard's modern, mobile-first course interface that replaced the older Original Course View, adding features like progress tracking and discussion analytics." },
+        { "question": "Does Blackboard Learn have a mobile app?", "answer": "Yes, native Blackboard apps are available for iOS and Android, letting students view grades, submit assignments, and receive notifications." },
+        { "question": "Does Blackboard Learn support accessibility features?", "answer": "Yes, through its integrated Ally tool, which scans course content and automatically generates alternative formats for students with accessibility needs." }
+      ],
+      "use_cases": [
+        { "title": "Higher education online courses", "description": "Colleges and universities deliver blended and fully online courses with gradebooks, discussions, and assignment submission.", "audience": "Universities and colleges" },
+        { "title": "K-12 blended learning", "description": "School districts use Blackboard Learn to support blended classroom instruction and remote learning days.", "audience": "K-12 school districts" },
+        { "title": "Accessible course delivery", "description": "Institutions with accessibility compliance requirements use Ally to generate alternative content formats automatically.", "audience": "Accessibility and disability services offices" }
+      ],
+      "pricing_plans": [],
+      "tags": ["web-app", "api", "ios", "android", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "68da8924-7233-4187-b3c7-8e5486ea5ee0",
+    "slug": "blocky",
+    "name": "blocky",
+    "enrichment": {
+      "short_description": "Free, open-source DNS proxy and ad-blocker written in Go for self-hosted, network-wide blocking of ads, trackers, and malware domains.",
+      "pricing_model": "Free",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "blocky Review: Self-Hosted DNS Ad Blocker Features",
+      "seo_meta_description": "blocky is a free, open-source DNS proxy for network-wide ad and tracker blocking. See features, self-hosting setup, and how it compares to alternatives.",
+      "llm_readable_summary": "blocky is a free and open-source DNS proxy and ad-blocker built in the Go programming language, distributed via its GitHub repository at 0xERR0R/blocky under an open-source license. It runs as a self-hosted service on a local network, typically on a home server, Raspberry Pi, or NAS device, and functions by intercepting DNS queries from every device on the network and filtering out requests to known ad, tracker, and malware domains before they resolve. Unlike commercial ad-blocking services, blocky is built and maintained by volunteer contributors in their spare time and explicitly states it collects no telemetry and shares no data with any third party. Because it operates at the DNS layer rather than as a browser extension, blocky blocks ads and trackers across every application and device on the network simultaneously, including smart TVs, mobile apps, and IoT devices that browser-based ad blockers cannot reach. Core filtering capabilities include domain-based blocklists, deep CNAME inspection (blocking based on the CNAME a domain resolves to, which catches cloaked or disguised tracking domains), and IP-based blocking against configurable IP address lists. blocky supports modern encrypted DNS protocols including DNS-over-HTTPS (DoH), DNS-over-TLS (DoT), and DNS-over-QUIC (DoQ), letting administrators both consume and serve DNS queries over encrypted channels rather than legacy unencrypted DNS. It also supports DNSSEC validation and eDNS extensions for compatibility with modern DNS infrastructure. For monitoring, blocky can log DNS queries per client and per day, either to local CSV files or to a relational database such as MySQL, MariaDB, PostgreSQL, or TimescaleDB, and it exposes metrics in a format compatible with Prometheus for integration into existing monitoring and alerting stacks such as Grafana dashboards. As a self-hosted, configuration-file-driven tool, blocky is typically deployed via Docker or as a standalone binary and configured through a YAML configuration file rather than a graphical setup wizard, which makes it best suited to users who are comfortable with basic server administration, Docker, and editing configuration files, rather than non-technical consumers looking for a plug-and-play appliance. It is frequently compared to and sometimes used alongside similar self-hosted DNS ad-blocking tools such as Pi-hole and AdGuard Home; blocky differentiates itself primarily through its lightweight Go-based implementation, deep CNAME inspection, native support for encrypted DNS protocols, and flexible database-backed query logging options. Because it has no company behind it, no pricing tiers, and no customer support organization, all support is provided informally through its GitHub issue tracker and community contributions, and users are fully responsible for their own deployment, updates, and maintenance.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "blocky is a free, open-source DNS proxy and ad-blocker written in Go, maintained on GitHub as a volunteer project with no company or commercial backing. It runs as a self-hosted service on a local network and blocks ads, trackers, and malware domains at the DNS level for every connected device.",
+          "Because it intercepts DNS requests directly rather than filtering inside a browser, blocky blocks unwanted content across an entire network at once, including apps, smart TVs, and IoT devices that browser extensions cannot reach."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "blocky supports domain-based blocklists, deep CNAME inspection to catch cloaked tracking domains, and IP-based blocking. It supports encrypted DNS protocols including DNS-over-HTTPS, DNS-over-TLS, and DNS-over-QUIC, as well as DNSSEC validation.",
+          "Query logging can be written to CSV files or to a database such as MySQL, PostgreSQL, MariaDB, or TimescaleDB, and blocky exposes Prometheus-compatible metrics for integration with monitoring dashboards like Grafana."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "blocky is free and open source with no paid tiers, subscriptions, or commercial support plans. It is typically deployed via Docker or as a standalone binary and configured through a YAML file, so the only cost is the hardware or hosting used to run it."
+        ]}
+      ],
+      "features": [
+        { "title": "Network-wide DNS filtering", "description": "Blocks ads, trackers, and malware domains for every device on the network via DNS interception." },
+        { "title": "Deep CNAME inspection", "description": "Blocks domains based on their CNAME resolution chain, catching cloaked tracking domains that plain blocklists miss." },
+        { "title": "Encrypted DNS protocol support", "description": "Supports DNS-over-HTTPS, DNS-over-TLS, and DNS-over-QUIC for both upstream and downstream queries." },
+        { "title": "Database-backed query logging", "description": "Logs DNS queries per client to CSV or to MySQL, PostgreSQL, MariaDB, or TimescaleDB." },
+        { "title": "Prometheus metrics", "description": "Exposes metrics for integration with Prometheus and Grafana monitoring stacks." },
+        { "title": "No telemetry", "description": "Collects no usage data and shares nothing with third parties by design." }
+      ],
+      "pros": [
+        "Completely free and open source with no account or subscription required",
+        "Lightweight Go implementation with low resource usage, suitable for a Raspberry Pi",
+        "Supports modern encrypted DNS protocols and DNSSEC",
+        "No telemetry or data collection"
+      ],
+      "cons": [
+        "Requires self-hosting and configuration file editing rather than a plug-and-play setup",
+        "No official customer support beyond community GitHub issues",
+        "No graphical onboarding wizard for non-technical users",
+        "Depends entirely on the user for updates, maintenance, and uptime"
+      ],
+      "faqs": [
+        { "question": "Is blocky free to use?", "answer": "Yes, blocky is completely free and open source with no paid tiers or subscriptions." },
+        { "question": "Do I need to self-host blocky?", "answer": "Yes, blocky is a self-hosted DNS proxy that you run on your own server, Raspberry Pi, or NAS; there is no managed cloud version." },
+        { "question": "How is blocky different from Pi-hole?", "answer": "Both are self-hosted DNS ad blockers, but blocky is written in Go and adds features like deep CNAME inspection and native support for encrypted DNS protocols such as DoH, DoT, and DoQ." },
+        { "question": "Does blocky collect any data?", "answer": "No, blocky states it collects no telemetry and shares no data with any third party." }
+      ],
+      "use_cases": [
+        { "title": "Home network ad blocking", "description": "A household runs blocky on a Raspberry Pi or home server to block ads and trackers for every device on the network.", "audience": "Home lab and privacy-focused users" },
+        { "title": "Self-hosted infrastructure monitoring", "description": "A self-hoster integrates blocky's Prometheus metrics and database query logs into an existing Grafana monitoring stack.", "audience": "Self-hosting and homelab administrators" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "53ba4185-9c98-4925-94b6-7aa6336c54d0",
+    "slug": "blot",
+    "name": "Blot",
+    "enrichment": {
+      "short_description": "Blogging platform with no interface that turns a Dropbox or GitHub folder into a website, letting you publish by simply adding files.",
+      "pricing_model": "Subscription",
+      "starting_price": "$6/month",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "Blot Review 2026: Pricing, Features & How It Works",
+      "seo_meta_description": "Blot turns a Dropbox or GitHub folder into a website for $6/month. See how the no-interface blogging platform works, its features, and open-source option.",
+      "llm_readable_summary": "Blot is a blogging platform built by developer David Merfield, who wrote its first code in the summer of 2013 and made it publicly available in 2014. Blot's defining characteristic is that it has no traditional content management interface: instead of logging into a dashboard to write posts, users connect a folder in Dropbox, Google Drive, or a GitHub repository, and any file dropped into that folder, whether a Word document, Markdown file, plain text file, or image, is automatically converted into a published page or blog post on a live website. Deleting or editing the file in the folder updates or removes the corresponding page. The entire site structure, including nested pages and categories, can be managed just by organizing folders and subfolders within the connected cloud storage folder, without touching any web-based editor. This design is explicitly framed by its creator as an attempt to revive the simplicity of early personal publishing on services like GeoCities and Myspace, while still producing a modern, themeable, fast-loading website. Blot supports Markdown formatting, custom domains, and a library of templates/themes that can be customized with HTML and CSS for users who want more control over design. Blot's hosted service costs $6 per month per site, which covers hosting, access to all available templates, custom domain support, SSL certificates, and customer support; pricing pages do not advertise a free trial, so new users generally sign up for the paid plan directly. In addition to the hosted service, Blot is an open-source project, with its full source code published on GitHub at davidmerfield/Blot, allowing technically capable users to self-host their own instance of the platform rather than paying for Blot's hosted infrastructure. This dual model, a small indie-run paid hosted service backed by an open-source codebase, means Blot has no formal company structure, headquarters, or employee count in the way a typical SaaS company does; it is maintained largely as a solo or small-team project rather than a venture-backed startup. Blot's target audience is writers, indie hackers, and technically comfortable individuals who want to publish a blog or personal website without learning a CMS dashboard, and who are already comfortable working with files in Dropbox, Google Drive, or Git. It is not designed for team-based content workflows, e-commerce, or complex site architectures, and it lacks the plugin ecosystems of larger platforms like WordPress; its value proposition is minimalism and a frictionless, file-based publishing workflow rather than breadth of features.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Blot is a blogging platform created by developer David Merfield, who began working on it in 2013 and released it publicly in 2014. It is best known for having no traditional content management interface: users connect a folder in Dropbox, Google Drive, or GitHub, and any file added to that folder becomes a page on a live website automatically.",
+          "The project is explicitly framed as an attempt to bring back the simplicity of early web publishing, letting anyone start a website with something as simple as a Word document while still producing a fast, themeable, modern site."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Blot supports Markdown, plain text, and rich document formats as source files, automatically converting them into formatted web pages. Site structure, including nested pages and categories, is managed entirely through folder organization in the connected cloud storage account rather than a web dashboard.",
+          "The platform offers a library of customizable templates, custom domain support, and SSL certificates on its hosted plan. Because Blot is also open source, technically capable users can self-host their own instance instead of using Blot's paid hosting."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Blot's hosted service costs $6 per month per site, which includes hosting, access to all templates, custom domain support, and SSL certificates. There is no published free trial; users sign up directly for the paid plan or choose to self-host the open-source code instead."
+        ]}
+      ],
+      "features": [
+        { "title": "Folder-to-website publishing", "description": "Files added to a connected Dropbox, Google Drive, or GitHub folder are automatically published as web pages." },
+        { "title": "No dashboard required", "description": "There is no separate CMS login; editing and organizing files in the synced folder is the entire publishing workflow." },
+        { "title": "Markdown and document support", "description": "Supports Markdown, plain text, and common document formats as source files for posts and pages." },
+        { "title": "Custom themes", "description": "A library of templates can be applied and customized with HTML and CSS for design control." },
+        { "title": "Custom domains and SSL", "description": "Hosted plan includes custom domain support and SSL certificates out of the box." },
+        { "title": "Open-source self-hosting", "description": "Full source code is published on GitHub, allowing self-hosted deployments instead of Blot's paid hosting." }
+      ],
+      "pros": [
+        "Extremely low-friction publishing workflow with no CMS interface to learn",
+        "Works with tools writers already use, like Dropbox, Google Drive, and GitHub",
+        "Open-source codebase available for self-hosting",
+        "Affordable flat pricing at $6/month per site"
+      ],
+      "cons": [
+        "No free tier or trial period advertised",
+        "Not designed for team collaboration or multi-author workflows",
+        "Lacks the plugin and app ecosystem of larger platforms like WordPress",
+        "Requires comfort with file-based, folder-driven organization rather than a visual editor"
+      ],
+      "faqs": [
+        { "question": "How much does Blot cost?", "answer": "Blot's hosted plan costs $6 per month per site, covering hosting, templates, custom domain support, and SSL certificates." },
+        { "question": "How does Blot's folder-to-website system work?", "answer": "You connect a folder in Dropbox, Google Drive, or GitHub to Blot, and any file you add, edit, or delete in that folder is automatically published, updated, or removed on your live website." },
+        { "question": "Is Blot open source?", "answer": "Yes, Blot's source code is published on GitHub, and technically capable users can self-host their own instance instead of paying for Blot's hosted service." },
+        { "question": "Who created Blot?", "answer": "Blot was created by developer David Merfield, who began building it in 2013 and released it publicly in 2014." }
+      ],
+      "use_cases": [
+        { "title": "Minimalist personal blogging", "description": "A writer publishes posts by saving Markdown or Word files into a synced Dropbox folder, with no CMS login required.", "audience": "Individual writers and bloggers" },
+        { "title": "Developer-managed sites via Git", "description": "A developer manages a personal site or documentation blog by pushing files to a connected GitHub repository.", "audience": "Developers and indie hackers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Hosted", "price": "$6/month", "billing_cycle": "Per site, monthly (annual option available)", "features": ["Hosting", "All templates", "Custom domain support", "SSL certificate", "Customer support"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "templates"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "e9b75f81-ed9a-4a4b-93e5-70d03b1fd25e",
+    "slug": "blubrry",
+    "name": "Blubrry",
+    "enrichment": {
+      "short_description": "Podcast hosting platform with IAB-certified analytics, WordPress integration, and unlimited-downloads plans, founded by podcasting pioneer Todd Cochrane.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2005,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "Blubrry Review 2026: Podcast Hosting Pricing & Features",
+      "seo_meta_description": "Blubrry is a podcast hosting platform with plans from $15/month plus free IAB-certified statistics. See features, pricing tiers, and WordPress integration.",
+      "llm_readable_summary": "Blubrry Podcasting was founded in 2005 by podcast pioneer Todd Cochrane, making it one of the earliest podcast hosting companies still operating today, having marked over 20 years in the industry. Cochrane served as CEO until his death in September 2025, after building the company around open RSS-based podcast distribution since the medium's early days. Blubrry's core product is podcast media hosting: creators upload audio files which Blubrry distributes to podcast directories and apps including Apple Podcasts and Spotify, generating the RSS feed that podcast platforms use to syndicate episodes. Hosting plans are tiered by monthly upload storage rather than by download volume. The Standard plan costs $15 per month and includes 125 MB of monthly uploads, roughly two hours of audio. The Advanced plan, Blubrry's most popular tier, costs $25 per month and includes 400 MB of monthly uploads, roughly seven hours of audio, along with deeper audience analytics and episode performance tools. The Professional plan costs $100 per month and offers unlimited uploads, support for managing multiple shows and users, advanced monetization tools, and dynamic ad insertion, aimed at podcast networks and commercial publishers. All hosting plans include unlimited listens regardless of upload tier, distribution to major podcast platforms, a free companion WordPress website, a custom embeddable player, AI-assisted podcasting tools, and free migration assistance for podcasters moving from another host. Separately from hosting, Blubrry offers standalone podcast statistics plans for creators who host elsewhere but want Blubrry's analytics: a Free Statistics tier tracks basic downloads, audience location, and listener trends; a Standard Statistics tier at $5 per month adds full audience and device breakdowns and the ability to compare the three most recent episodes; and Advanced Statistics, bundled with the Advanced hosting plan, adds full five-episode comparison, listener retention curves, partial-play data, and estimated subscriber counts. All of Blubrry's statistics are IAB (Interactive Advertising Bureau) certified, a standard many podcast networks and advertisers require for verified download and audience reporting used in ad sales. Blubrry is also known in the WordPress ecosystem for its PowerPress plugin, which integrates podcast publishing and hosting directly into a WordPress site. The company's positioning emphasizes being run by people with deep roots in podcasting rather than a broader media conglomerate, and it markets itself toward independent podcasters, small networks, and WordPress-based publishers who want IAB-certified analytics without committing to the highest-priced enterprise podcast hosting platforms.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Blubrry Podcasting was founded in 2005 by podcast pioneer Todd Cochrane, one of the earliest companies in podcast hosting, with more than 20 years in the industry. Cochrane led the company as CEO until his death in September 2025.",
+          "Blubrry hosts podcast audio files, generates the RSS feed used by podcast apps, and distributes episodes to platforms including Apple Podcasts and Spotify, alongside standalone analytics products for creators hosted elsewhere."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Hosting plans are tiered by monthly upload storage rather than downloads, and all tiers include unlimited listens, distribution to major podcast directories, a free WordPress companion site, and a custom embeddable player.",
+          "Blubrry's statistics are IAB certified, a standard used for verified audience reporting in ad sales, and the company is also known for its PowerPress WordPress plugin that integrates podcast publishing directly into a WordPress site."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Podcast hosting starts at $15 per month for the Standard plan (125 MB monthly uploads), $25 per month for the Advanced plan (400 MB monthly uploads), and $100 per month for the Professional plan with unlimited uploads and multi-show management.",
+          "Standalone statistics plans range from a free tier with basic download and location data to a $5 per month Standard Statistics tier, with Advanced Statistics included as part of the Advanced hosting plan."
+        ]}
+      ],
+      "features": [
+        { "title": "Podcast media hosting", "description": "Hosts podcast audio files and generates the RSS feed used to distribute episodes to podcast apps." },
+        { "title": "IAB-certified analytics", "description": "Download and audience statistics certified to Interactive Advertising Bureau standards, used for ad sales reporting." },
+        { "title": "WordPress integration", "description": "All hosting plans include a free WordPress companion site, and the PowerPress plugin integrates hosting into existing WordPress sites." },
+        { "title": "Custom embed player", "description": "A customizable audio player can be embedded on any website to play hosted episodes." },
+        { "title": "Multi-show and network management", "description": "The Professional plan supports managing multiple shows and user accounts under one account." },
+        { "title": "Dynamic ad insertion", "description": "Professional plan supports advanced monetization tools including dynamic ad insertion for commercial podcasts." }
+      ],
+      "pros": [
+        "One of the longest-running podcast hosts, operating since 2005",
+        "IAB-certified analytics are useful for creators selling ads based on verified downloads",
+        "Free WordPress companion site and PowerPress plugin integration included",
+        "Free statistics tier available even for shows hosted elsewhere"
+      ],
+      "cons": [
+        "Storage-based upload limits on lower tiers can constrain frequent or long-form publishers",
+        "Professional plan at $100/month is a large jump from the Advanced tier",
+        "Headquarters and company size are not publicly disclosed",
+        "Less brand recognition today compared to newer hosts like Spotify for Podcasters or Buzzsprout"
+      ],
+      "faqs": [
+        { "question": "How much does Blubrry cost?", "answer": "Podcast hosting starts at $15/month for the Standard plan (125 MB uploads), $25/month for Advanced (400 MB uploads), and $100/month for unlimited Professional hosting." },
+        { "question": "Does Blubrry offer free statistics?", "answer": "Yes, Blubrry offers a Free Statistics tier that tracks basic downloads, audience location, and listener trends even if your podcast is hosted elsewhere." },
+        { "question": "Is Blubrry's analytics IAB certified?", "answer": "Yes, all Blubrry statistics plans are IAB certified, a standard commonly required for verified ad sales reporting." },
+        { "question": "Does Blubrry integrate with WordPress?", "answer": "Yes, all hosting plans include a free companion WordPress site, and Blubrry's PowerPress plugin adds podcast publishing directly to an existing WordPress site." },
+        { "question": "Who founded Blubrry?", "answer": "Blubrry was founded in 2005 by podcast pioneer Todd Cochrane, who led the company as CEO until his death in September 2025." }
+      ],
+      "use_cases": [
+        { "title": "Independent podcast hosting", "description": "A solo podcaster hosts episodes, distributes to Apple Podcasts and Spotify, and tracks IAB-certified downloads.", "audience": "Independent podcasters" },
+        { "title": "WordPress-based podcast publishing", "description": "A blogger adds a podcast to an existing WordPress site using the PowerPress plugin and Blubrry hosting.", "audience": "WordPress site owners" },
+        { "title": "Commercial podcast networks", "description": "A network manages multiple shows, unlimited uploads, and dynamic ad insertion under the Professional plan.", "audience": "Podcast networks and commercial publishers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Standard Hosting", "price": "$15/month", "billing_cycle": "Monthly", "features": ["125 MB monthly uploads", "Unlimited listens", "Distribution to major platforms", "Free WordPress site"] },
+        { "plan_name": "Advanced Hosting", "price": "$25/month", "billing_cycle": "Monthly", "features": ["400 MB monthly uploads", "Deeper audience analytics", "Episode performance tools", "Advanced Statistics included"] },
+        { "plan_name": "Professional Hosting", "price": "$100/month", "billing_cycle": "Monthly", "features": ["Unlimited uploads", "Multiple shows and users", "Advanced monetization", "Dynamic ad insertion"] },
+        { "plan_name": "Free Statistics", "price": "Free", "billing_cycle": "N/A", "features": ["Basic download tracking", "Audience location", "Listener trends"] },
+        { "plan_name": "Standard Statistics", "price": "$5/month", "billing_cycle": "Monthly", "features": ["Full audience and device data", "3-episode comparison", "Media kit creation"] }
+      ],
+      "tags": ["freemium", "free-plan", "web-app", "api"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "2dacf89b-e2ef-4c5b-abc5-d221801f171b",
+    "slug": "bludit",
+    "name": "Bludit",
+    "enrichment": {
+      "short_description": "Free, open-source flat-file CMS that stores content as JSON files instead of a database, built for fast, simple blogs and small websites.",
+      "pricing_model": "Free",
+      "starting_price": "Free",
+      "founded_year": 2015,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "Spanish"],
+      "seo_title": "Bludit Review 2026: Flat-File CMS Features & Setup",
+      "seo_meta_description": "Bludit is a free, open-source flat-file CMS storing content as JSON with no database required. See features, plugins, themes, and who it's built for.",
+      "llm_readable_summary": "Bludit is a free, open-source content management system that has been in active development since 2015, distributed under the MIT license and maintained on GitHub at bludit/bludit. Its defining architectural feature is that it is a flat-file CMS: rather than requiring a MySQL or other relational database, Bludit stores all pages, posts, categories, tags, and settings as JSON files directly on the file system. This makes installation and deployment simpler than database-driven platforms like WordPress, since the only server requirement is PHP (version 7 or higher) along with standard PHP extensions such as mbstring for UTF-8 support, GD for image processing, DOM for markup manipulation, and JSON for content parsing; there is no database server to configure, back up, or maintain. Bludit supports both a Markdown editor and a WYSIWYG (rich text) editor for writing content, and it accepts raw HTML within posts and pages as well. The current stable release line is version 3.x, distributed as a web-based installer or via Docker for containerized deployment. Like WordPress, Bludit can be extended through an ecosystem of community-built plugins and themes distributed through an official plugins directory (plugins.bludit.com) and companion theme repositories, covering functionality such as contact forms, RSS feeds, image galleries, and SEO tools; the core software also ships with built-in SEO tools and is described by its maintainers as privacy-first, tracking no visitor data by default and positioned as GDPR-compliant out of the box. Because it is entirely self-hosted and open source, Bludit has no company, pricing plans, or commercial support organization behind it; users install it on their own web hosting or server and rely on community documentation and forums for support. One limitation frequently noted by users is that Bludit's admin interface does not have robust built-in multi-language switching for the interface itself, meaning fully multilingual sites typically require third-party community plugins, such as a Multilingual and Multi Blogs plugin, or separate parallel installations per language, rather than a native language-switching feature. Bludit is best suited for small to medium websites, portfolios, documentation sites, and personal or small-business blogs where an administrator wants a fast, low-maintenance CMS without the operational overhead of a database, rather than for large multi-author publications or e-commerce sites, which are better served by more feature-complete platforms like WordPress. It is commonly grouped with other flat-file CMS options such as Grav and Kirby as an alternative to database-backed systems for developers and site owners who prioritize simplicity, speed, and minimal server requirements.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Bludit is a free, open-source flat-file CMS that has been in active development since 2015 and is released under the MIT license. Instead of using a database, it stores all content, pages, and settings as JSON files directly on the server's file system.",
+          "This architecture means the only server requirement is PHP with a handful of standard extensions, making Bludit faster to install and simpler to maintain than database-driven platforms, since there is no database server to configure or back up."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Bludit supports both a Markdown editor and a WYSIWYG rich text editor, plus raw HTML in content. It includes built-in SEO tools and is designed to be privacy-first, tracking no visitor data by default.",
+          "Like larger CMS platforms, Bludit can be extended with community plugins and themes distributed through an official plugins directory, covering contact forms, galleries, RSS feeds, and SEO utilities, and it can be deployed via a web installer or Docker."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Bludit is completely free and open source under the MIT license, with no paid tiers, subscriptions, or commercial support plans. Costs are limited to whatever web hosting or server the user chooses to run it on."
+        ]}
+      ],
+      "features": [
+        { "title": "Flat-file, database-free storage", "description": "Content, pages, and settings are stored as JSON files instead of requiring a database server." },
+        { "title": "Markdown and WYSIWYG editing", "description": "Supports both a Markdown editor and a rich text WYSIWYG editor for writing content." },
+        { "title": "Plugin and theme ecosystem", "description": "Extendable through community plugins and themes distributed via an official plugins directory." },
+        { "title": "Built-in SEO tools", "description": "Includes SEO features out of the box to help improve search engine ranking without additional plugins." },
+        { "title": "Privacy-first, no tracking", "description": "Does not track visitors by default and is positioned as GDPR compliant." },
+        { "title": "Docker and web installer support", "description": "Can be deployed through a standard web-based installer or containerized via Docker." }
+      ],
+      "pros": [
+        "No database required, simplifying installation, backups, and hosting requirements",
+        "Free and open source under the permissive MIT license",
+        "Lightweight and fast, suitable for standard shared hosting",
+        "Built-in SEO tools and privacy-first, no default visitor tracking"
+      ],
+      "cons": [
+        "No built-in multi-language admin interface without third-party plugins",
+        "Smaller plugin and theme ecosystem compared to WordPress",
+        "Flat-file storage can be less efficient than a database at larger content scale",
+        "No official company or commercial support; relies on community forums"
+      ],
+      "faqs": [
+        { "question": "Is Bludit free to use?", "answer": "Yes, Bludit is completely free and open source under the MIT license, with no paid tiers or subscriptions." },
+        { "question": "Does Bludit require a database?", "answer": "No, Bludit is a flat-file CMS that stores all content as JSON files on the file system, so no database server is needed." },
+        { "question": "Can Bludit be extended with plugins and themes?", "answer": "Yes, Bludit has an official plugins and themes directory maintained by the community, covering functionality like contact forms, galleries, and SEO tools." },
+        { "question": "What are the server requirements for Bludit?", "answer": "Bludit requires PHP 7 or higher along with the mbstring, GD, DOM, and JSON PHP extensions; no database is required." },
+        { "question": "Is Bludit good for multilingual websites?", "answer": "Bludit's core admin interface lacks native multi-language switching, so multilingual sites typically rely on community plugins or separate installations per language." }
+      ],
+      "use_cases": [
+        { "title": "Simple personal or small-business blogs", "description": "A site owner runs a low-maintenance blog on standard shared hosting without needing to manage a database.", "audience": "Individuals and small businesses" },
+        { "title": "Portfolio and documentation sites", "description": "A developer or designer builds a fast-loading portfolio or documentation site using Bludit's flat-file simplicity.", "audience": "Developers and freelancers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "templates"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "c1947c7c-e691-4991-bc52-01c2627b4ff1",
+    "slug": "bluecart",
+    "name": "BlueCart",
+    "enrichment": {
+      "short_description": "B2B ecommerce and order management platform connecting food and beverage wholesale distributors with restaurants, cafes, and foodservice buyers.",
+      "pricing_model": "Subscription",
+      "starting_price": null,
+      "founded_year": 2014,
+      "company_size": "51-200 employees",
+      "headquarters": "Sunnyvale, California, United States",
+      "languages": ["English"],
+      "seo_title": "BlueCart Review 2026: B2B Wholesale Ordering Platform",
+      "seo_meta_description": "BlueCart is a B2B ecommerce platform for food and beverage distributors, combining ordering, inventory, invoicing, and buyer CRM. See features and pricing.",
+      "llm_readable_summary": "BlueCart is a B2B ecommerce and wholesale business management platform founded in 2014 by Jag Bansal and Konstantin Zvereff, headquartered in Sunnyvale, California. The company has raised approximately $31 million in funding from investors including BlueRun Ventures, Greycroft, and Focus Ventures, and employs roughly 51 to 200 people. BlueCart's platform is purpose-built for wholesale food and beverage distribution, connecting suppliers such as coffee, meat, seafood, dairy, bakery, and produce distributors with the restaurants, cafes, hotels, and other foodservice businesses that buy from them. Rather than being a generic ecommerce tool, BlueCart consolidates the specific workflows distributors need into a single system: a digital storefront where buyers can browse and order, order management and fulfillment dashboards for receiving and tracking orders, inventory management, invoicing and payment collection, and a buyer CRM for managing customer relationships and reorder patterns. A distinguishing feature is BlueCart's Endless Aisle Marketplace, which gives vendors on the platform access to a network the company describes as more than 48,000 transacting restaurants and foodservice businesses, effectively functioning as a discovery and demand-generation channel in addition to order processing software. The platform also includes a Pricing Insights tool that benchmarks a distributor's product pricing against market data, categorizing items as Great Value, Good Value, or Fair Value to help vendors stay competitive without manually researching competitor pricing. Distributors can configure customizable delivery zones by state and city, run promotional campaigns such as free delivery for first-time or repeat customers, and choose from flexible fulfillment options including local delivery, nationwide shipping, or third-party logistics partners. BlueCart does not publish self-serve pricing on its website; prospective customers are directed to book a demo with the sales team, indicating pricing is quote-based and likely varies with distributor size, order volume, and which modules (ordering, inventory, invoicing, marketplace access) are included. The company has grown in part through acquisitions of adjacent food and beverage technology products, including BinWise (bar and beverage inventory management) and Revolution Ordering, expanding BlueCart's footprint across different segments of the hospitality and foodservice supply chain. BlueCart's core competitors include other food distribution and ordering platforms and vertical-specific tools used by distributors before adopting a unified B2B commerce system; its primary value proposition is replacing manual phone, fax, and email order-taking with a digital storefront and back-office system tailored specifically to the food and beverage wholesale trade.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "BlueCart was founded in 2014 by Jag Bansal and Konstantin Zvereff and is headquartered in Sunnyvale, California. The company has raised roughly $31 million in funding and employs an estimated 51 to 200 people.",
+          "BlueCart is a B2B ecommerce and business management platform built specifically for food and beverage wholesale distribution, connecting distributors with the restaurants, cafes, and foodservice businesses that order from them."
+        ]},
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "The platform combines a digital storefront, order management dashboard, inventory tracking, invoicing, and buyer CRM in one system. Its Endless Aisle Marketplace connects vendors with a network the company describes as more than 48,000 transacting restaurants and foodservice buyers.",
+          "A Pricing Insights tool benchmarks product pricing against market data, and distributors can configure delivery zones by state and city, run promotions like free delivery for new customers, and choose between local delivery, nationwide shipping, or third-party logistics."
+        ]},
+        { "id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "BlueCart does not publish self-serve pricing. Prospective distributor customers are directed to book a demo with BlueCart's sales team, and pricing is understood to be quote-based, likely varying with order volume and which modules are included."
+        ]}
+      ],
+      "features": [
+        { "title": "Digital storefront", "description": "Gives distributors an online ordering interface for restaurant and foodservice buyers to browse and place orders." },
+        { "title": "Order management dashboard", "description": "Streamlines receiving, confirming, fulfilling, and tracking buyer orders in one system." },
+        { "title": "Pricing Insights", "description": "Benchmarks a distributor's product pricing against market data and flags items as Great, Good, or Fair Value." },
+        { "title": "Endless Aisle Marketplace", "description": "Connects vendors to a network described as 48,000-plus transacting restaurants and foodservice businesses." },
+        { "title": "Inventory and invoicing", "description": "Tracks stock levels and manages invoicing and payment collection alongside order processing." },
+        { "title": "Buyer CRM", "description": "Manages customer relationships, order history, and reorder patterns for foodservice buyers." },
+        { "title": "Flexible delivery zones and fulfillment", "description": "Configurable delivery areas by state and city, supporting local delivery, nationwide shipping, or third-party logistics." }
+      ],
+      "pros": [
+        "Purpose-built specifically for food and beverage wholesale distribution rather than generic ecommerce",
+        "Marketplace access can generate new restaurant demand beyond a distributor's existing customer base",
+        "Combines storefront, inventory, invoicing, and CRM in one platform",
+        "Backed by $31M in funding with an established track record since 2014"
+      ],
+      "cons": [
+        "No public pricing; requires booking a demo to get a quote",
+        "Built specifically for food and beverage distribution, limiting fit for other wholesale categories",
+        "Smaller company size may mean less extensive support resources than larger enterprise platforms",
+        "Feature depth for non-food wholesale verticals is not clearly documented"
+      ],
+      "faqs": [
+        { "question": "How much does BlueCart cost?", "answer": "BlueCart does not publish pricing publicly; prospective customers need to book a demo with the sales team to get a quote." },
+        { "question": "Who is BlueCart for?", "answer": "BlueCart is built for food and beverage wholesale distributors, including coffee, meat, seafood, dairy, bakery, and produce suppliers, and the restaurants and foodservice businesses that buy from them." },
+        { "question": "When was BlueCart founded?", "answer": "BlueCart was founded in 2014 by Jag Bansal and Konstantin Zvereff and is headquartered in Sunnyvale, California." },
+        { "question": "What is BlueCart's Endless Aisle Marketplace?", "answer": "It's a network that gives BlueCart vendors access to a described base of more than 48,000 transacting restaurants and foodservice businesses for order discovery." },
+        { "question": "Does BlueCart handle inventory and invoicing?", "answer": "Yes, BlueCart combines a digital storefront with order management, inventory tracking, invoicing, and a buyer CRM in one platform." }
+      ],
+      "use_cases": [
+        { "title": "Food and beverage distributor digitization", "description": "A wholesale distributor replaces phone and fax order-taking with a digital storefront and order management dashboard.", "audience": "Food and beverage distributors" },
+        { "title": "Restaurant and foodservice buying", "description": "A restaurant or cafe orders supplies from multiple distributors through BlueCart's marketplace and buyer tools.", "audience": "Restaurants, cafes, and hotels" },
+        { "title": "Competitive pricing management", "description": "A distributor uses Pricing Insights to benchmark and adjust product pricing against market data.", "audience": "Wholesale sales and pricing teams" }
+      ],
+      "pricing_plans": [],
+      "tags": ["web-app", "api"],
+      "publish": true
+    }
+  }
+]
