@@ -1,0 +1,653 @@
+[
+  {
+    "tool_id": "0575e08f-1ac0-4b93-bd8d-6102a19fd89c",
+    "slug": "pterodactyl",
+    "name": "Pterodactyl",
+    "enrichment": {
+      "short_description": "Free, open-source game server management panel that runs servers in isolated Docker containers.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2015,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Pterodactyl is a free, open-source game server management panel built with PHP, React, and Go. Administrators use it to create, configure, and monitor game servers through a web interface, while the actual server processes run in isolated Docker containers on one or more nodes.",
+            "The system has two main pieces: the Panel, a web-based admin and user interface, and Wings, a lightweight daemon that runs on each host machine and manages the Docker containers. Game-specific setup logic is packaged into community-maintained \"eggs,\" which define how a given game or application is installed and started."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Pterodactyl is used by hobbyists managing a handful of servers for friends, gaming communities running multiple titles, and commercial game server hosting companies that need to provision and isolate large numbers of customer servers without per-server licensing costs."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Docker-based isolation", "description": "Each game server runs in its own Docker container, limiting resource usage and reducing the impact of a compromised or misbehaving server." },
+        { "title": "Wings daemon", "description": "A dedicated daemon runs on each node, communicating with the central Panel to start, stop, and monitor containers." },
+        { "title": "Egg configuration system", "description": "Reusable, community-maintained templates (\"eggs\") define how specific games and server software are installed and run." },
+        { "title": "Multi-node management", "description": "A single Panel installation can manage servers spread across many physical or virtual machines." },
+        { "title": "Role-based access", "description": "Admins can grant subusers scoped permissions on individual servers without full admin access." },
+        { "title": "REST API", "description": "A full API allows automated server provisioning, often used by hosting companies to connect Pterodactyl to their own storefronts." }
+      ],
+      "pros": [
+        "Free and open source under the MIT license, with no licensing fees",
+        "Strong isolation between servers via Docker containers",
+        "Large community maintaining eggs for many popular games",
+        "Scales from a single personal server to commercial hosting operations",
+        "Actively developed and widely used in production"
+      ],
+      "cons": [
+        "Requires Linux server administration and Docker knowledge to install and maintain",
+        "No official managed/hosted version — you must run it yourself",
+        "Initial setup of the Panel, Wings, and SSL has a learning curve for beginners"
+      ],
+      "faqs": [
+        { "question": "Is Pterodactyl free?", "answer": "Yes. It's MIT licensed and the source code is publicly available on GitHub, with no cost to run." },
+        { "question": "What games does it support?", "answer": "Any game or server software can be wrapped in a Docker-based \"egg.\" The community maintains eggs for many popular titles like Minecraft, Rust, and Ark." },
+        { "question": "Does Pterodactyl require Docker?", "answer": "Yes, the Wings daemon requires Docker to isolate and run each server." },
+        { "question": "Can it be used for a commercial hosting business?", "answer": "Yes, many game server hosting companies run Pterodactyl in production to manage customer servers." }
+      ],
+      "use_cases": [
+        { "title": "Home lab game servers", "description": "Run and manage a handful of game servers for friends or a small community.", "audience": "Hobbyists" },
+        { "title": "Community and clan networks", "description": "Operate multiple game servers for an active gaming community from one panel.", "audience": "Community admins" },
+        { "title": "Commercial game hosting", "description": "Provision and isolate large numbers of customer game servers across many nodes.", "audience": "Game server hosting companies" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api"],
+      "seo_meta_description": "Pterodactyl is a free, open-source game server management panel that uses Docker containers to isolate and control servers."
+    }
+  },
+  {
+    "tool_id": "daea352e-0ee8-41c6-a46e-47f6922604f2",
+    "slug": "pufferpanel",
+    "name": "PufferPanel",
+    "enrichment": {
+      "short_description": "Free, open-source game server management panel designed for simple installation and broad server-type support.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "PufferPanel is a free, open-source game server management panel built to be simple to install and easy to use. Unlike some alternatives, it doesn't require Docker — servers can run natively or in containers, giving admins flexibility on lower-powered hardware.",
+            "The panel supports a range of game and server types, including multiple Minecraft variants (Vanilla, Forge, NeoForge, Sponge, PocketMine), Source Dedicated Servers, and BungeeCord, with support defined through community-maintained templates."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "PufferPanel targets individuals and small networks who want a straightforward, free way to manage game servers without the overhead of a more complex Docker-first setup."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Simple installer", "description": "PufferPanel can be installed as a single binary with the daemon and panel, without requiring Docker." },
+        { "title": "Multi-game support", "description": "Supports Minecraft variants, Source Dedicated Servers, BungeeCord, PocketMine, and more via templates." },
+        { "title": "Node clustering", "description": "Manage multiple physical or virtual machines from a single panel instance." },
+        { "title": "Server templates", "description": "Community-maintained templates define how each supported server type is installed and run." },
+        { "title": "REST API", "description": "An API is available for automating server management tasks." },
+        { "title": "Scoped permissions", "description": "Role-based access lets admins grant limited, per-server permissions to other users." }
+      ],
+      "pros": [
+        "Free and open source under the Apache License 2.0",
+        "Simpler installation than some Docker-first alternatives",
+        "Works without Docker, useful on lower-resource hardware",
+        "Supported by voluntary GitHub Sponsors contributions"
+      ],
+      "cons": [
+        "Smaller template/plugin ecosystem than some competing panels",
+        "Documentation is thinner in places than more established alternatives",
+        "Still requires basic server administration knowledge to run reliably"
+      ],
+      "faqs": [
+        { "question": "Is PufferPanel free?", "answer": "Yes, it's fully open source under the Apache License 2.0." },
+        { "question": "Does PufferPanel require Docker?", "answer": "No, Docker is optional — PufferPanel can also run servers natively." },
+        { "question": "What games can I host?", "answer": "Minecraft variants, Source Dedicated Servers, BungeeCord, PocketMine and other server types supported via templates." },
+        { "question": "How is PufferPanel funded?", "answer": "Through voluntary donations via GitHub Sponsors from the community." }
+      ],
+      "use_cases": [
+        { "title": "Personal or small Minecraft networks", "description": "Run and manage a small set of Minecraft or other game servers.", "audience": "Hobbyist server admins" },
+        { "title": "Lightweight hosting without Docker", "description": "Manage game servers on modest hardware where Docker overhead is undesirable.", "audience": "Self-hosters with limited resources" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api"],
+      "seo_meta_description": "PufferPanel is a free, open-source game server management panel supporting Minecraft, Source servers and more, with Docker optional."
+    }
+  },
+  {
+    "tool_id": "27cd08d4-3907-484c-bde4-d06e726c6674",
+    "slug": "romm",
+    "name": "RomM",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source manager for organizing, enriching, and browsing your retro game ROM collection.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "RomM (\"Rom Manager\") is a self-hosted, open-source application for organizing digital game collections. It scans a library of ROM files, enriches them with cover art and metadata from providers like IGDB, ScreenScraper, and RetroAchievements, and presents everything through a responsive web interface.",
+            "It also includes in-browser gameplay for supported systems via EmulatorJS, and can sync games, save states, and emulator settings across devices. RomM is licensed under AGPL-3.0 and is distributed via Docker as well as pre-built options for platforms like Unraid, TrueNAS, Synology, CasaOS, Cloudron, and Umbrel."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "RomM is built for retro gaming enthusiasts and home-lab users who want a centralized, self-hosted way to manage and browse large, multi-platform ROM collections that they already own."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Automatic library scanning", "description": "Scans folders of ROM files and organizes them by platform." },
+        { "title": "Metadata enrichment", "description": "Pulls cover art, descriptions, and game details from IGDB, ScreenScraper, and RetroAchievements." },
+        { "title": "In-browser play", "description": "Launch supported titles directly in the browser using the built-in EmulatorJS integration." },
+        { "title": "Multi-device sync", "description": "Keeps games, save states, and emulator settings synchronized across devices." },
+        { "title": "Custom tagging", "description": "Organize the collection with custom tags on top of platform and genre metadata." },
+        { "title": "Broad platform support", "description": "Recognizes 400+ gaming systems and platforms." },
+        { "title": "Flexible self-hosted deployment", "description": "Available via Docker, Unraid, TrueNAS, Synology, CasaOS, Cloudron, Portainer, and Umbrel." }
+      ],
+      "pros": [
+        "Actively developed with frequent releases",
+        "Wide platform and metadata provider support",
+        "In-browser emulation removes the need for separate emulator setup for many systems",
+        "AGPL-3.0 open source with full control over your data"
+      ],
+      "cons": [
+        "Relies on third-party metadata providers (IGDB, ScreenScraper) which may require API keys or accounts",
+        "Users are responsible for sourcing their own ROM files legally",
+        "Newer project, so breaking changes between versions are possible"
+      ],
+      "faqs": [
+        { "question": "Is RomM free?", "answer": "Yes, it's free and open source under the AGPL-3.0 license." },
+        { "question": "Does RomM include ROMs?", "answer": "No, it only organizes and enriches ROM files you already have; you must supply your own files." },
+        { "question": "Can I play games directly in RomM?", "answer": "Yes, supported systems can be played in-browser using the built-in EmulatorJS integration." },
+        { "question": "What metadata sources does RomM use?", "answer": "IGDB, ScreenScraper, and RetroAchievements." }
+      ],
+      "use_cases": [
+        { "title": "Home retro-gaming library", "description": "Organize and browse a large, multi-platform ROM collection with rich metadata.", "audience": "Retro game collectors" },
+        { "title": "Home-lab / NAS integration", "description": "Run alongside other self-hosted apps on Unraid, TrueNAS, or Synology.", "audience": "Home-lab and NAS users" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api"],
+      "seo_meta_description": "RomM is a free, self-hosted, open-source ROM manager that scans, enriches with metadata, and lets you play your game collection."
+    }
+  },
+  {
+    "tool_id": "ad1df877-1fe0-4d53-a6f8-8ba97ca5b88b",
+    "slug": "sourcebans",
+    "name": "SourceBans++",
+    "enrichment": {
+      "short_description": "Self-hosted ban and admin management system for Source-engine game servers like Counter-Strike, TF2, and Garry's Mod.",
+      "pricing_model": "Free (source-available)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SourceBans++ is a self-hosted ban and admin management system for Source-engine game servers, made up of a web administration panel and a set of SourceMod plugins. Admins manage bans, mutes, server access, and admin permissions from the web panel, and the SourceMod plugins enforce those decisions in-game and report actions back to the panel.",
+            "The web panel is distributed under the Elastic License 2.0 (source-available, free for self-hosted community use, but restricted for offering it as a hosted service to others), while the SourceMod plugins are licensed under GPLv3. A separate commercial product, RookHelm, offers a managed hosted alternative."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "SourceBans++ is built for community administrators running Source-engine game servers, such as Counter-Strike, Team Fortress 2, and Garry's Mod, who need centralized, self-hosted moderation tools."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Web admin panel", "description": "Centralized dashboard for managing bans, mutes, admin accounts, and server groups." },
+        { "title": "SourceMod plugin bridge", "description": "In-game SourceMod plugins enforce panel-issued bans and mutes and report actions back to the panel." },
+        { "title": "Multi-server management", "description": "One panel installation can oversee bans and admins across many game servers." },
+        { "title": "Ban and appeal workflow", "description": "Tracks ban duration, categories, and reporting for moderation actions." },
+        { "title": "Broad Source-engine support", "description": "Works with SourceMod-compatible titles including Team Fortress 2, Counter-Strike, and Garry's Mod." }
+      ],
+      "pros": [
+        "Free for self-hosted community and clan use",
+        "Long-standing, mature project in the Source-engine server admin space",
+        "Tight SourceMod integration for real-time in-game enforcement",
+        "Documented install and update guides"
+      ],
+      "cons": [
+        "The web panel uses the source-available Elastic License 2.0, not a fully open-source license — offering it as a hosted service to third parties requires a commercial license",
+        "Requires a SourceMod-enabled game server plus separate web hosting and a database",
+        "Setup requires familiarity with SourceMod plugin administration"
+      ],
+      "faqs": [
+        { "question": "Is SourceBans++ free?", "answer": "Yes, self-hosting it for your own community or network is free and the project states this will stay free." },
+        { "question": "Is SourceBans++ fully open source?", "answer": "The SourceMod plugins are GPLv3, but the web panel uses the Elastic License 2.0, a source-available license that restricts offering it as a hosted service to third parties." },
+        { "question": "What games does it work with?", "answer": "SourceMod-compatible Source-engine games such as Counter-Strike, Team Fortress 2, and Garry's Mod." },
+        { "question": "Is there a hosted alternative?", "answer": "Yes, a separate commercial product called RookHelm offers a managed, hosted version." }
+      ],
+      "use_cases": [
+        { "title": "Community game server networks", "description": "Moderate CS, TF2, or Garry's Mod servers with a centralized ban and admin system.", "audience": "Clan and community admins" },
+        { "title": "Multi-server admin teams", "description": "Manage bans and admin permissions across several Source-engine servers from one panel.", "audience": "Networks running multiple servers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "web-app"],
+      "seo_meta_description": "SourceBans++ is a free, self-hosted ban and admin management system for Source-engine game servers like CS, TF2, and Garry's Mod."
+    }
+  },
+  {
+    "tool_id": "082de0e2-a5b9-4328-a2b9-bb364605a75a",
+    "slug": "sunshine",
+    "name": "Sunshine",
+    "enrichment": {
+      "short_description": "Free, open-source, self-hosted game streaming server that pairs with Moonlight clients to stream your PC's games.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2020,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Sunshine, developed by LizardByte, is a free, open-source, self-hosted game streaming server. It runs on your own PC and streams games to remote devices running the Moonlight client, functioning as a self-hosted alternative to services like NVIDIA GameStream.",
+            "It supports hardware-accelerated encoding on AMD, Intel, and Nvidia GPUs (with a software fallback), emulates Xbox, PlayStation, or Nintendo Switch controllers on the host, and includes a web-based UI for pairing clients and adjusting stream settings."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Sunshine is aimed at gamers who want to stream games from their own PC to another device, such as a laptop, phone, or smart TV, without relying on a commercial cloud gaming service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Hardware-accelerated encoding", "description": "Supports AMD, Intel, and Nvidia GPU encoders, with a software encoding fallback." },
+        { "title": "Low-latency streaming", "description": "Optimized for real-time game streaming performance." },
+        { "title": "Controller emulation", "description": "Emulates Xbox, PlayStation, or Nintendo Switch controllers on the host so streamed games see native gamepad input." },
+        { "title": "Web-based configuration", "description": "Browser-based UI for setup and client pairing." },
+        { "title": "Cross-platform host support", "description": "Runs on Windows, Linux, and macOS, including via Docker." },
+        { "title": "Broad Moonlight client compatibility", "description": "Works with Moonlight clients across Android, iOS, Xbox, Nintendo Switch, PS Vita, and smart TVs." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Runs on Windows, Linux, and macOS as a host, unlike GPU-vendor-locked alternatives",
+        "Hardware encoding support helps keep latency low",
+        "Actively developed by the LizardByte team"
+      ],
+      "cons": [
+        "Best performance typically requires a GPU with good hardware encoding support",
+        "Initial setup, including pairing and network/firewall configuration, requires some technical comfort",
+        "Feature completeness and encoder support varies by OS and GPU vendor"
+      ],
+      "faqs": [
+        { "question": "Is Sunshine free?", "answer": "Yes, it's free and open source, supported by voluntary donations." },
+        { "question": "What is Moonlight?", "answer": "Moonlight is the client app that connects to a Sunshine host to stream games; Sunshine is the server/host side." },
+        { "question": "Does Sunshine require an Nvidia GPU?", "answer": "No. Sunshine supports AMD, Intel, and Nvidia hardware encoders as well as a software encoding fallback." },
+        { "question": "What platforms can host Sunshine?", "answer": "Windows, Linux (including Docker), and macOS." }
+      ],
+      "use_cases": [
+        { "title": "Personal cloud gaming", "description": "Stream games from a home PC to a laptop, phone, or smart TV.", "audience": "PC gamers" },
+        { "title": "Handheld and couch streaming", "description": "Pair Sunshine with Moonlight on devices like handhelds or smart TVs for couch gaming.", "audience": "Gamers wanting remote play setups" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac"],
+      "seo_meta_description": "Sunshine is a free, open-source, self-hosted game streaming server for Moonlight with GPU-accelerated low-latency streaming."
+    }
+  },
+  {
+    "tool_id": "cd31d369-2e60-4849-9a2b-8481c41a9d08",
+    "slug": "genea-app",
+    "name": "Genea.app",
+    "enrichment": {
+      "short_description": "Free, open-source, local-first family tree builder with GEDCOM import/export and optional Git-based sync.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Genea.app is a free, open-source, browser-based family tree tool. Rather than storing data on a vendor's server, all processing happens locally in the browser, and users can optionally sync their tree across devices using Git, via GitHub, GitLab, or a self-hosted Git server.",
+            "It supports GEDCOM import and export, making it possible to bring in existing trees exported from services like MyHeritage or Ancestry, and to move data out again if needed."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Genea.app suits privacy-conscious hobbyist genealogists who want a free, local-first alternative to paid genealogy platforms, and anyone looking to migrate an existing GEDCOM export into a lightweight, open-source tool."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Local-first data", "description": "Family tree processing and storage happen in the browser rather than on a vendor server." },
+        { "title": "GEDCOM import/export", "description": "Import trees exported from services like MyHeritage or Ancestry, and export in GEDCOM format." },
+        { "title": "Git-based sync", "description": "Sync a tree across devices via GitHub, GitLab, or a self-hosted Git server." },
+        { "title": "Sample trees", "description": "Preloaded example trees, such as royal lineages and US Presidents, for exploring the interface." },
+        { "title": "Share and download", "description": "Export or share trees built in the app." }
+      ],
+      "pros": [
+        "Completely free with no account or paywall",
+        "Open source and auditable on GitHub",
+        "Privacy-friendly, local-first architecture",
+        "Flexible sync options, including self-hosted Git"
+      ],
+      "cons": [
+        "Relies on the user to manage their own Git-based sync/backup, which is less turnkey than a hosted database",
+        "Smaller feature set than long-established genealogy platforms like webtrees or Gramps",
+        "Less built-in multi-user collaboration than server-based genealogy tools"
+      ],
+      "faqs": [
+        { "question": "Is Genea.app free?", "answer": "Yes, it's completely free and open source." },
+        { "question": "Where is my data stored?", "answer": "Processing and storage happen locally in your browser; you can optionally sync via Git, using GitHub, GitLab, or a self-hosted server." },
+        { "question": "Can I import my existing family tree?", "answer": "Yes, GEDCOM files exported from services like MyHeritage and Ancestry can be imported." },
+        { "question": "Do I need to create an account?", "answer": "No traditional server-side account is required, since data is stored locally or in your own Git repository." }
+      ],
+      "use_cases": [
+        { "title": "Privacy-conscious genealogy", "description": "Keep family tree data off third-party servers while still being able to sync across devices.", "audience": "Privacy-focused hobbyists" },
+        { "title": "Migrating from a paid service", "description": "Import a GEDCOM export from Ancestry or MyHeritage into a free, open tool.", "audience": "Users switching from paid genealogy platforms" }
+      ],
+      "pricing_plans": [],
+      "tags": ["open-source", "web-app"],
+      "seo_meta_description": "Genea.app is a free, open-source, local-first family tree builder with GEDCOM import/export and optional Git-based sync."
+    }
+  },
+  {
+    "tool_id": "9a671332-0a6d-44a2-a483-911ca563acab",
+    "slug": "genealogy",
+    "name": "Genealogy",
+    "enrichment": {
+      "short_description": "Free, open-source, self-hosted app for recording family members and collaborating on a shared family tree.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Genealogy is a free, open-source web application for recording family members and documenting the relationships between them. It's licensed under the MIT license and free to use for non-commercial purposes, with source code available on GitHub for self-hosting.",
+            "The app supports role-based access, with owner, manager, editor, member, and developer roles, so multiple people can collaborate on researching and maintaining the same family tree with different levels of access."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It's built for families and small groups who want a lightweight, self-hosted way to collaboratively record and maintain a family tree with controlled access for different contributors."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Family member records", "description": "Add individuals and document the relationships between them." },
+        { "title": "Role-based access", "description": "Owner, manager, editor, member, and developer roles control who can view or edit a tree." },
+        { "title": "Team collaboration", "description": "Multiple people can contribute to the same family tree under defined permissions." },
+        { "title": "Demo trees", "description": "Includes example datasets, such as the British Royals and Kennedy families, to explore functionality." },
+        { "title": "Self-hosted deployment", "description": "Source code is available on GitHub for deploying on your own server." }
+      ],
+      "pros": [
+        "Free to use for non-commercial purposes under the MIT license",
+        "Role-based permissions support collaborative research",
+        "Simple, focused feature set for recording family relationships",
+        "Self-hosted, giving full control over the data"
+      ],
+      "cons": [
+        "Smaller community and less documentation than established projects like webtrees or Gramps",
+        "The project's own license notes free use is for non-commercial purposes, so commercial use should be reviewed",
+        "Fewer advanced genealogy features, such as DNA tools or detailed reports, than mature alternatives"
+      ],
+      "faqs": [
+        { "question": "Is this Genealogy app free?", "answer": "Yes, it's open source under the MIT license and free to use for non-commercial purposes." },
+        { "question": "Can multiple people work on the same family tree?", "answer": "Yes, via role-based access control (owner, manager, editor, member)." },
+        { "question": "Do I need to self-host it?", "answer": "The source code is available on GitHub for self-hosting on your own server." }
+      ],
+      "use_cases": [
+        { "title": "Small family research groups", "description": "Collaboratively document relatives with different levels of access per contributor.", "audience": "Families researching together" },
+        { "title": "Personal genealogy hobby projects", "description": "Run a lightweight, self-hosted family tree tool for personal use.", "audience": "Individual hobbyists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Genealogy is a free, open-source, self-hosted family tree app with role-based collaboration for recording family relationships."
+    }
+  },
+  {
+    "tool_id": "eed15499-677d-4aec-b709-b24744a436e5",
+    "slug": "geneweb",
+    "name": "GeneWeb",
+    "enrichment": {
+      "short_description": "Free, open-source genealogy software that generates a browsable family-history website from a genealogical database.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1998,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "French"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "GeneWeb is a free, open-source genealogy application created in 1998 by Daniel de Rauglaudre, a researcher at Inria (the French national research institute for computer science). It's written in OCaml and generates dynamic, browsable family-history web pages from a genealogical database, supporting both its native GW format and GEDCOM import/export.",
+            "GeneWeb has been proven at large scale: Roglo, one of the largest collaborative genealogical databases in the world and built on GeneWeb, contains more than 8.5 million individuals maintained by hundreds of contributors."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "GeneWeb suits both casual hobbyists publishing a personal family tree online and serious researchers or communities maintaining very large, collaborative genealogical databases."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Dynamic web-based database", "description": "Generates browsable family-history pages directly from a genealogical database." },
+        { "title": "Relationship and consanguinity calculators", "description": "Computes family relationships and degree of kinship between individuals." },
+        { "title": "GEDCOM and GW import/export", "description": "Interoperates with other genealogy software via GEDCOM, alongside its native GW format." },
+        { "title": "Event and source tracking", "description": "Records dates, witnesses, notes, and sources for each event." },
+        { "title": "Customizable templates", "description": "Page appearance can be customized via templates and CSS." },
+        { "title": "Access control", "description": "Password-protected accounts with varying permission levels." },
+        { "title": "Proven at scale", "description": "Powers large collaborative databases, including the multi-million-person Roglo project." }
+      ],
+      "pros": [
+        "Mature, long-running project maintained since 1998",
+        "Proven to scale to multi-million-person collaborative databases",
+        "Cross-platform: runs on Unix, Linux, Windows, and macOS",
+        "Free and open source under the GNU General Public License"
+      ],
+      "cons": [
+        "OCaml codebase and older interface conventions can feel less modern than newer web-genealogy tools",
+        "Documentation and community are smaller and more fragmented than webtrees",
+        "Setup is more technical than simple web installers"
+      ],
+      "faqs": [
+        { "question": "Is GeneWeb free?", "answer": "Yes, it's free and open source under the GNU General Public License." },
+        { "question": "What platforms does GeneWeb run on?", "answer": "Unix, Linux, Windows, and macOS." },
+        { "question": "Can GeneWeb import GEDCOM files?", "answer": "Yes, it supports import and export in both its native GW format and GEDCOM." },
+        { "question": "How large a database can GeneWeb handle?", "answer": "Very large. The Roglo database, built on GeneWeb, contains more than 8.5 million individuals." }
+      ],
+      "use_cases": [
+        { "title": "Large collaborative genealogy databases", "description": "Build or contribute to large, shared genealogical databases.", "audience": "Genealogy researchers and communities" },
+        { "title": "Personal genealogy publishing", "description": "Publish a browsable family-history website from your own research.", "audience": "Genealogy hobbyists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "windows", "mac"],
+      "seo_meta_description": "GeneWeb is a free, open-source genealogy program that generates a browsable family-history website from a genealogical database."
+    }
+  },
+  {
+    "tool_id": "b34c93e2-f29b-45a6-8b23-284d2b2cdca9",
+    "slug": "gramps-web",
+    "name": "Gramps Web",
+    "enrichment": {
+      "short_description": "Free, open-source, self-hosted web genealogy system that works standalone or alongside Gramps Desktop.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Gramps Web is a free, open-source, self-hosted online genealogy system from the Gramps Project, built for collaboratively building a family tree. It can run standalone or as a companion to the established Gramps Desktop application, sharing the same underlying genealogical data model.",
+            "It includes family tree, timeline, and map views, media management with photo tagging, DNA matching and a chromosome browser, research reports, and revision history. Deployment guides cover Docker, DigitalOcean, and TrueNAS, with PostgreSQL for the database and S3-compatible storage for media."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Gramps Web is aimed at families researching together online and self-hosting enthusiasts who want a feature-rich, self-managed genealogy system rather than a commercial hosted service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Collaborative editing", "description": "Multiple users can research and edit a shared family tree online." },
+        { "title": "Timeline and map views", "description": "Visualize relationships, chronology, and geographic data for the family tree." },
+        { "title": "Media management", "description": "Upload, organize, and tag photos and documents linked to people and events." },
+        { "title": "DNA tools", "description": "Includes a chromosome browser and DNA match tracking." },
+        { "title": "AI assistant", "description": "Built-in AI assistant to help with research tasks." },
+        { "title": "Revision history", "description": "Tracks changes made to the tree over time." },
+        { "title": "Flexible self-hosting", "description": "Deployable via Docker or DigitalOcean, with PostgreSQL and S3-compatible media storage support." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Can run standalone or as a companion to the established Gramps Desktop application",
+        "Strong self-hosting documentation and deployment options",
+        "Feature-rich, including DNA tools, maps, and timelines"
+      ],
+      "cons": [
+        "Full deployment with Docker, PostgreSQL, and optional S3 storage requires server administration experience",
+        "AI assistant and some features may need additional configuration",
+        "Less mainstream awareness than webtrees"
+      ],
+      "faqs": [
+        { "question": "Is Gramps Web free?", "answer": "Yes, it's free and open source." },
+        { "question": "Do I need Gramps Desktop to use Gramps Web?", "answer": "No, it can run standalone, or as a companion to Gramps Desktop for users who also want the offline desktop app." },
+        { "question": "Can multiple family members collaborate on one tree?", "answer": "Yes, it's designed for collaboratively building a family tree together." },
+        { "question": "What database does Gramps Web use?", "answer": "Deployment guides cover PostgreSQL for the database and S3-compatible storage for media." }
+      ],
+      "use_cases": [
+        { "title": "Family collaboration on a shared tree", "description": "Research and edit a family tree together with relatives online.", "audience": "Extended families" },
+        { "title": "Self-hosted genealogy system", "description": "Run a full-featured genealogy system alongside other self-hosted home services.", "audience": "Home-lab self-hosters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "ai", "api"],
+      "seo_meta_description": "Gramps Web is a free, open-source, self-hosted online genealogy system for collaboratively building a family tree with Gramps Desktop."
+    }
+  },
+  {
+    "tool_id": "61b1b0a8-fc36-4a65-86e4-2a1059a7c262",
+    "slug": "webtrees",
+    "name": "webtrees",
+    "enrichment": {
+      "short_description": "Free, open-source, self-hosted online genealogy application for collaborative family history research.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2010,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "webtrees is a free, open-source, web-based genealogy application created in 2010 as a fork of PhpGedView. It runs on standard PHP/MySQL web hosting and lets multiple family members collaboratively research, edit, and browse a shared family tree online.",
+            "It works with standard GEDCOM files for import and export, so trees can be brought in from or exported to most other desktop and online genealogy tools, and it can be extended with downloadable modules, themes, and geographic data add-ons."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "webtrees suits extended families wanting a private or shared genealogy website, as well as genealogical societies and hobbyist researchers publishing their research online, all without paying for software licenses."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "GEDCOM compatibility", "description": "Imports and exports standard GEDCOM files used by most desktop and online genealogy tools." },
+        { "title": "Collaborative editing", "description": "Multiple family members can research and edit the same tree with permission controls." },
+        { "title": "Modules and themes", "description": "Extensible via downloadable modules, themes, and geographic data add-ons." },
+        { "title": "Self-hosted or third-party hosting", "description": "Runs on any PHP/MySQL web server, with a directory of webtrees-experienced hosting providers available." },
+        { "title": "Active translations", "description": "Actively maintained community translations into many languages." },
+        { "title": "Charts and reports", "description": "Generates family tree charts, reports, and statistics from the database." }
+      ],
+      "pros": [
+        "Completely free, with no license cost",
+        "Runs on standard, widely available PHP/MySQL hosting",
+        "Long track record since 2010 as a fork of PhpGedView",
+        "Large community and extensive module ecosystem"
+      ],
+      "cons": [
+        "Requires a PHP/MySQL web hosting environment, whether shared or self-managed",
+        "Interface feels dated compared to some newer genealogy web apps",
+        "Advanced customization via themes and modules requires some technical familiarity"
+      ],
+      "faqs": [
+        { "question": "Is webtrees free?", "answer": "Yes, webtrees is completely free and open source." },
+        { "question": "What do I need to run webtrees?", "answer": "A web server with PHP and a MySQL-compatible database; it can be self-hosted or run on standard shared hosting." },
+        { "question": "Can I import my existing family tree?", "answer": "Yes, webtrees works with standard GEDCOM files exported from most other genealogy applications." },
+        { "question": "Who maintains webtrees?", "answer": "It's a community-maintained open-source project with source code available on GitHub." }
+      ],
+      "use_cases": [
+        { "title": "Family collaboration on a shared tree", "description": "Give extended family members a private or shared genealogy website to research together.", "audience": "Extended families" },
+        { "title": "Genealogical society or research websites", "description": "Publish genealogical research online for a society or research group.", "audience": "Genealogical societies and researchers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "webtrees is a free, open-source, self-hosted online genealogy application for collaborative family history research on PHP/MySQL."
+    }
+  }
+]

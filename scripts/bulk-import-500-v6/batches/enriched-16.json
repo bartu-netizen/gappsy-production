@@ -1,0 +1,585 @@
+[
+  {
+    "tool_id": "46b963c1-7eca-4b94-ade9-a168bc61594e",
+    "slug": "openfire",
+    "name": "Openfire",
+    "enrichment": {
+      "short_description": "Open-source, self-hosted XMPP/Jabber server with a web-based admin console, REST API plugin, and clustering support.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2002,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Openfire is a real-time collaboration server that implements the XMPP (Extensible Messaging and Presence Protocol) standard, released under the Apache License 2.0. The project began in 2002 as Jive Messenger, was renamed Wildfire in 2005, and became Openfire in 2007 after Jive Software handed it to the community; it is now maintained by the Ignite Realtime Foundation.",
+            "Administrators install Openfire on their own Windows, Linux, Unix, or Mac OS X servers and manage it through a browser-based admin console. It supports MySQL, PostgreSQL, MariaDB, Firebird, and CockroachCB as backing databases, and its functionality can be extended through an official plugin catalog, including a REST API plugin for programmatic administration."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Openfire suits IT teams and developers who need an internal, self-hosted messaging and presence server — for example, organizations that want group chat, one-to-one messaging, and multi-user chat rooms without routing traffic through a third-party service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "XMPP-standard messaging", "description": "Implements the open XMPP protocol for instant messaging, presence, and multi-user chat rooms." },
+        { "title": "Web-based admin console", "description": "Configure users, groups, chat rooms, and server settings through a browser interface, without editing config files directly." },
+        { "title": "REST API plugin", "description": "An official plugin exposes a RESTful API (JSON or XML) for managing users, groups, rosters, and chat rooms from external applications." },
+        { "title": "Plugin ecosystem", "description": "Extend the server with community and Ignite Realtime plugins covering monitoring, clustering, gateways, and more." },
+        { "title": "Multi-database support", "description": "Works with MySQL, PostgreSQL, MariaDB, Firebird, and CockroachDB as the storage backend." },
+        { "title": "Security hardening", "description": "Includes SASL channel binding, TLS/certificate management, and other protocol-level security options." }
+      ],
+      "pros": [
+        "Mature project with roots going back over two decades",
+        "Free and fully self-hosted — no per-user licensing cost",
+        "Web admin console makes day-to-day management accessible without CLI work",
+        "Extensible via an official plugin catalog and REST API"
+      ],
+      "cons": [
+        "Requires the operator to handle their own hosting, updates, and TLS certificates",
+        "XMPP client apps (for end users) must be installed separately from the server",
+        "Community-maintained, so support depends on forums rather than a paid SLA by default"
+      ],
+      "faqs": [
+        { "question": "Is Openfire free to use?", "answer": "Yes. Openfire is licensed under the Apache License 2.0 and is free to download, run, and modify." },
+        { "question": "What operating systems does Openfire run on?", "answer": "Openfire runs on Windows, Linux, Unix, and Mac OS X." },
+        { "question": "Does Openfire have an API?", "answer": "Yes. Ignite Realtime publishes an official REST API plugin that lets other systems manage users, groups, and chat rooms over HTTP." },
+        { "question": "What chat clients work with Openfire?", "answer": "Any standards-compliant XMPP client can connect to Openfire, including Converse.js for web-based chat." }
+      ],
+      "use_cases": [
+        { "title": "Internal team messaging", "description": "Run a private, self-hosted instant messaging service for an organization instead of relying on a third-party chat provider.", "audience": "IT and DevOps teams" },
+        { "title": "Custom messaging integrations", "description": "Use the REST API plugin to provision users and manage chat rooms programmatically from internal tools.", "audience": "Developers building internal apps" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api", "windows", "mac"],
+      "seo_meta_description": "Openfire is a free, open-source, self-hosted XMPP server with a web admin console, REST API plugin, and plugin ecosystem."
+    }
+  },
+  {
+    "tool_id": "cd57f5a1-59c8-4b23-bc86-a81e777d5f57",
+    "slug": "prosody-im",
+    "name": "Prosody IM",
+    "enrichment": {
+      "short_description": "Lightweight, open-source XMPP server designed for easy setup, low resource use, and Lua-based module extensibility.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2008,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Prosody is a modern XMPP communication server started by Matthew Wild in August 2008, with its first public release in December 2008. It is released under the MIT License and written in Lua, which keeps its codebase compact and makes it straightforward to write custom modules.",
+            "Prosody is designed to be simple to install and configure while still supporting server-to-server federation with other XMPP-compatible services. It powers, or forms part of the backend for, several well-known projects, including Jitsi Meet and Snikket."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Prosody fits sysadmins and developers who want a lean, self-hosted XMPP server for personal, family, or organizational messaging, or as a federation-capable backend component for another product."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Standard XMPP server", "description": "Implements core XMPP messaging, presence, and multi-user chat over the open Jabber/XMPP protocol." },
+        { "title": "Server-to-server federation", "description": "Connects with other Prosody installations and any XMPP-compatible service for cross-server messaging." },
+        { "title": "Module system", "description": "A modular architecture written in Lua lets developers add or customize functionality and prototype new XEP extensions." },
+        { "title": "Low resource footprint", "description": "Designed to run efficiently on modest hardware, making it viable for small self-hosted deployments." }
+      ],
+      "pros": [
+        "Simple to install and configure compared to some other XMPP server implementations",
+        "MIT-licensed and completely free to self-host",
+        "Powers production services like Jitsi Meet and Snikket, showing real-world scale",
+        "Modular Lua codebase is approachable for writing custom extensions"
+      ],
+      "cons": [
+        "Windows support is deprecated; it's best run on Linux/BSD systems",
+        "Requires comfort with server administration and config files",
+        "No official hosted/managed version — self-hosting is the only option"
+      ],
+      "faqs": [
+        { "question": "Is Prosody free?", "answer": "Yes, Prosody is open-source software under the MIT License with no licensing cost." },
+        { "question": "What platforms does Prosody support?", "answer": "Prosody runs on Linux, macOS, FreeBSD, OpenBSD, and NetBSD. Windows support is deprecated." },
+        { "question": "Can Prosody talk to other XMPP servers?", "answer": "Yes, it supports server-to-server federation, allowing users on different Prosody or XMPP servers to message each other." }
+      ],
+      "use_cases": [
+        { "title": "Personal or family messaging server", "description": "Run a small, private XMPP server for a household or group of friends who want an alternative to centralized chat apps.", "audience": "Privacy-conscious individuals and small groups" },
+        { "title": "Backend for other products", "description": "Use Prosody as the underlying messaging server for a larger product, as Jitsi Meet and Snikket do.", "audience": "Developers building messaging or video products" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "mac"],
+      "seo_meta_description": "Prosody IM is a free, open-source, self-hosted XMPP server known for easy setup, low resource use, and modular Lua extensibility."
+    }
+  },
+  {
+    "tool_id": "e600f81d-f148-4525-b8ff-0baa4cd86eab",
+    "slug": "snikket",
+    "name": "Snikket",
+    "enrichment": {
+      "short_description": "Self-hosted, privacy-focused group messaging built on XMPP, with dedicated iOS and Android apps and no ads or tracking.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free (self-hosted)",
+      "founded_year": 2020,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Snikket is an open-source messaging platform first previewed in early 2020 as a self-hosted alternative to centralized apps like WhatsApp or Telegram. It bundles existing open-source XMPP components — the Prosody server, an Android client based on Conversations, and an iOS client based on Siskin IM — into a package that's easy for a non-expert to run.",
+            "Rather than a single company controlling all accounts, Snikket is designed as a federated network: anyone can run their own server (or use a Snikket-hosted instance) while still being able to message people on other Snikket or XMPP servers. In March 2024 the project launched Snikket Hosting, an optional paid managed-hosting service for people who don't want to run their own server."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Snikket targets families, friend groups, clubs, and small organizations that want private group messaging and calling without their data being monetized, whether they self-host or pay for managed hosting."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Group messaging and calling", "description": "Supports one-to-one and group chats plus audio/video calling within the mobile apps." },
+        { "title": "\"Circles\" for organizing contacts", "description": "Lets admins group members into circles so people can find and message each other without sharing phone numbers or address books." },
+        { "title": "Native iOS and Android apps", "description": "Dedicated open-source apps for both major mobile platforms, derived from established XMPP clients (Siskin IM and Conversations)." },
+        { "title": "Self-hosted or managed server", "description": "Run your own Snikket server for full control, or subscribe to Snikket Hosting for a managed instance." },
+        { "title": "No ads or data sale", "description": "The project states it does not show ads or sell user data on self-hosted or hosted instances." }
+      ],
+      "pros": [
+        "Purpose-built for non-technical users compared to raw XMPP server setup",
+        "Native mobile apps for both iOS and Android",
+        "Federated design avoids lock-in to a single company's servers",
+        "Self-hosting remains free and fully open source"
+      ],
+      "cons": [
+        "iOS app is currently English-only, unlike the more widely translated Android app",
+        "Managed hosting has no free tier — only a 14-day trial",
+        "Smaller ecosystem and userbase than mainstream chat apps"
+      ],
+      "faqs": [
+        { "question": "Is Snikket free?", "answer": "The Snikket server and apps are free, open-source software you can self-host. Snikket Hosting, an optional managed hosting service, is a paid product starting around $6/month depending on region, with a 14-day trial." },
+        { "question": "What apps does Snikket offer?", "answer": "Snikket provides open-source iOS and Android apps, available through the App Store, Google Play, and F-Droid." },
+        { "question": "Can Snikket users message people on other servers?", "answer": "Yes, because Snikket is built on XMPP, users can message people on other Snikket instances or compatible XMPP servers." }
+      ],
+      "use_cases": [
+        { "title": "Family or friend group chat", "description": "Set up a private messaging space for a household or friend group without going through a big tech company.", "audience": "Families and friend groups" },
+        { "title": "Small organization communication", "description": "Give a club or small organization its own private messaging network with circles for different topics or teams.", "audience": "Clubs and small organizations" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-hosted", "price": "Free", "billing_cycle": "N/A", "features": ["Full server and app source available", "Run on your own hardware or VPS", "No user limit set by Snikket"] },
+        { "plan_name": "Snikket Hosting", "price": "From around $6/month (varies by region)", "billing_cycle": "Monthly or annual", "features": ["Managed instance for up to 10 active users", "14-day trial", "No server maintenance required"] }
+      ],
+      "tags": ["self-hosted", "open-source", "ios", "android", "free-trial"],
+      "seo_meta_description": "Snikket is a free, open-source, self-hosted XMPP messaging platform with native iOS and Android apps and no ads or tracking."
+    }
+  },
+  {
+    "tool_id": "93755188-c1ee-4269-9581-f911c716c21f",
+    "slug": "tigase",
+    "name": "Tigase",
+    "enrichment": {
+      "short_description": "Modular, Java-based XMPP/Jabber server built to scale from small deployments to millions of concurrent users.",
+      "pricing_model": "Free (open source), commercial license available",
+      "starting_price": "Free (AGPLv3)",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": "San Francisco, California, US",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Tigase XMPP Server is a Java-based, open-source XMPP/Jabber server started by Artur Hefczyc in October 2004. It's released under the AGPL-3.0 license, with Tigase, Inc. also offering a commercial license for organizations that can't use AGPL terms.",
+            "The project emphasizes performance and low footprint: its core binary is under 3MB, it can run with as little as 10MB of RAM for basic setups, and the vendor reports deployments handling large volumes of traffic with near-linear scalability across clustered nodes. Being JVM-based, it can be deployed on-premises or on any cloud provider that supports Java."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Tigase suits engineering teams building large-scale or high-uptime messaging infrastructure — from self-hosted community servers up to enterprise deployments needing clustering and detailed runtime metrics."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Modular Java architecture", "description": "A component-based design lets operators enable only the modules they need." },
+        { "title": "Clustering and load balancing", "description": "Supports distributed deployments with near-linear scalability and automatic cluster reconfiguration." },
+        { "title": "Administration tooling", "description": "Includes command-line tools, a web UI, and runtime performance metrics for monitoring the server." },
+        { "title": "Small footprint", "description": "Core binary under 3MB and capable of running with minimal RAM for lightweight deployments." },
+        { "title": "Dual licensing", "description": "Free under AGPL-3.0, with a commercial license option from Tigase, Inc. for closed-source use." }
+      ],
+      "pros": [
+        "Designed and tested for very large-scale deployments",
+        "Low resource requirements for smaller instances",
+        "Commercial support available through Tigase, Inc. for organizations that need it",
+        "Long track record dating back to 2004"
+      ],
+      "cons": [
+        "AGPL-3.0 licensing requires attention to compliance for SaaS/hosted use cases",
+        "Java-based stack may be heavier to operate than lighter alternatives for small hobby deployments",
+        "Commercial pricing is not published and requires contacting Tigase, Inc."
+      ],
+      "faqs": [
+        { "question": "Is Tigase free?", "answer": "The core Tigase XMPP Server is free and open source under AGPL-3.0. Tigase, Inc. also sells a commercial license for cases where AGPL terms aren't suitable." },
+        { "question": "What platforms does Tigase run on?", "answer": "As a Java application, it runs anywhere a JVM is supported, including on-premises servers and major cloud providers." },
+        { "question": "Does Tigase support clustering?", "answer": "Yes, it's built for distributed deployments with load balancing and near-linear scalability." }
+      ],
+      "use_cases": [
+        { "title": "Large-scale messaging infrastructure", "description": "Run a self-hosted XMPP backend intended to serve very large numbers of concurrent users.", "audience": "Enterprises and infrastructure teams" },
+        { "title": "Embedded messaging in a product", "description": "License Tigase commercially to embed XMPP messaging in a closed-source product.", "audience": "Companies building messaging-enabled apps" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Tigase is an open-source, Java-based XMPP server built for large-scale, self-hosted messaging deployments, with AGPL and commercial licensing."
+    }
+  },
+  {
+    "tool_id": "6b2670c3-5248-4140-a4b2-ade8ee34ed2b",
+    "slug": "converse-js",
+    "name": "Converse.js",
+    "enrichment": {
+      "short_description": "Open-source, browser-based XMPP chat client that can run as a full-page app, embedded widget, or overlay on any site.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2012,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Converse.js is a client-side XMPP chat application written in JavaScript, created by JC Brand starting in 2012 and released under the Mozilla Public License 2.0 (MPLv2). Because it runs entirely in the browser, it can connect to any standards-compliant XMPP server, including Openfire, Prosody, and ejabberd, without vendor lock-in.",
+            "It supports direct messages, group chats (multi-user chatrooms), OMEMO end-to-end encryption, HTTP file upload, message archiving, and translations into more than 30 languages. Converse can be deployed as a full-page web app, embedded as a widget in an existing site, or overlaid as a chat popup, and it has been integrated into projects such as PeerTube, WordPress, and Roundcube."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Converse.js is aimed at developers who need to add real-time chat to a website or product and want a self-hosted, open-source client rather than a proprietary embedded widget."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multiple deployment modes", "description": "Use it as a standalone full-page app, an embeddable widget, or an overlay chat window on an existing site." },
+        { "title": "OMEMO end-to-end encryption", "description": "Supports OMEMO for encrypted one-to-one and group conversations." },
+        { "title": "Multi-user chatrooms", "description": "Supports XMPP MUC group chats alongside direct messaging." },
+        { "title": "Broad server compatibility", "description": "Works with any XMPP server, including Openfire, Prosody, and ejabberd." },
+        { "title": "Wide translation coverage", "description": "Localized into more than 30 languages by the community." },
+        { "title": "File sharing", "description": "Supports HTTP file upload for sharing images and documents in chat." }
+      ],
+      "pros": [
+        "No server-side component required — runs entirely client-side against any XMPP server",
+        "Flexible embedding options (widget, overlay, or full app)",
+        "MPLv2 license avoids vendor lock-in",
+        "Already integrated into several other open-source projects"
+      ],
+      "cons": [
+        "Requires a separate XMPP server (e.g. Prosody or Openfire) to actually send messages",
+        "End users need some XMPP account/server setup, which is less turnkey than closed SaaS chat widgets",
+        "Official commercial support is provided by a separate consultancy (Opkode), not the core project"
+      ],
+      "faqs": [
+        { "question": "Is Converse.js free?", "answer": "Yes, it's open-source software under the Mozilla Public License 2.0." },
+        { "question": "Does Converse.js need its own server?", "answer": "No, it's a client only — it connects to any existing XMPP server such as Prosody, Openfire, or ejabberd." },
+        { "question": "Can I embed Converse.js in my website?", "answer": "Yes, it supports being embedded as a widget or chat overlay, in addition to running as a standalone app." }
+      ],
+      "use_cases": [
+        { "title": "Add chat to a website", "description": "Embed Converse.js as a widget or overlay to give visitors real-time chat backed by an XMPP server.", "audience": "Web developers" },
+        { "title": "Self-hosted team or community chat UI", "description": "Pair Converse.js with a self-hosted XMPP server like Prosody or Openfire for a fully self-hosted messaging stack.", "audience": "Organizations avoiding third-party chat SaaS" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Converse.js is a free, open-source, browser-based XMPP chat client that works with any XMPP server and embeds into any website."
+    }
+  },
+  {
+    "tool_id": "e38ebadd-d243-4db5-95a7-1bc30798d6e1",
+    "slug": "libervia",
+    "name": "Libervia",
+    "skip": true,
+    "skip_reason": "Libervia is the current name of the Salut à Toi project (the project was renamed from Salut à Toi to Libervia as of version 0.8; the nonprofit association behind it still uses the name Salut à Toi). It is the same software already covered by the 'salut-a-toi' entry in this batch, and the listed website (https://repos.goffi.org/libervia-web) returns a 404, with the live, first-party site being salut-a-toi.org instead."
+  },
+  {
+    "tool_id": "0da45043-d5e4-43e0-b1d2-e47565c3ce95",
+    "slug": "salut-a-toi",
+    "name": "Salut à Toi",
+    "enrichment": {
+      "short_description": "Decentralized, XMPP-based communication and collaboration suite (now renamed Libervia) with web, desktop, mobile, and CLI clients.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "French"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Salut à Toi is a decentralized communication and collaboration project built on the XMPP protocol, maintained by a French nonprofit (association loi 1901) led by developer Goffi. As of version 0.8, the software itself was renamed Libervia — the association behind the project keeps the name Salut à Toi, but the project and its interfaces are now branded Libervia.",
+            "Most of the codebase is released under AGPL v3+. It goes beyond instant messaging to cover blogging (via Pubsub nodes), calendar events, photo albums, decentralized task lists and grocery lists, and file sharing, with interfaces for the web (Libervia Web), desktop, an experimental Android app, a CLI, and a terminal UI. It also offers an ActivityPub gateway to bridge XMPP conversations with the fediverse."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It suits users and developers who want a federated, self-hostable alternative to mainstream messaging and social platforms, and who need more than chat — such as shared calendars, blogs, or task lists — built on an open protocol they can run themselves."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "End-to-end encrypted messaging", "description": "Supports OMEMO and OpenPGP encryption for one-to-one and group conversations." },
+        { "title": "Multi-user chat and calls", "description": "Group chat (MUC) plus one-on-one and multi-participant audio/video calls using peer-to-peer or SFU routing." },
+        { "title": "Pubsub-based blogging and calendars", "description": "Publish blog posts and calendar events with RSVP over XMPP Pubsub nodes." },
+        { "title": "Decentralized lists", "description": "Shared task lists, tickets, and grocery lists that sync across a user's devices and contacts." },
+        { "title": "ActivityPub gateway", "description": "Bridges XMPP conversations and content with fediverse platforms that speak ActivityPub." },
+        { "title": "Multiple client interfaces", "description": "Available as a web app (Libervia Web), desktop client, experimental Android app, CLI, and terminal UI." }
+      ],
+      "pros": [
+        "Goes well beyond chat into blogging, calendars, and file/task sharing on a single decentralized protocol",
+        "Multiple client types (web, desktop, CLI, TUI) for different workflows",
+        "AGPL-licensed and self-hostable",
+        "Built-in bridge to the ActivityPub fediverse"
+      ],
+      "cons": [
+        "Android support is still experimental and there's no stable iOS app",
+        "Smaller community and documentation base than mainstream XMPP clients",
+        "Project rename (Salut à Toi to Libervia) can make it harder to find current resources"
+      ],
+      "faqs": [
+        { "question": "Is Salut à Toi the same as Libervia?", "answer": "Yes. As of version 0.8, the project itself was renamed Libervia; the nonprofit association behind it retains the name Salut à Toi." },
+        { "question": "Is it free to use?", "answer": "Yes, nearly all of the codebase is released under AGPL v3+ and is free to self-host." },
+        { "question": "Does it only do chat?", "answer": "No, it also supports Pubsub-based blogging, calendars, photo albums, task/grocery lists, and file sharing on top of XMPP." }
+      ],
+      "use_cases": [
+        { "title": "Federated personal communication", "description": "Use it as a decentralized alternative to mainstream chat and social apps, hosted on your own or a trusted XMPP server.", "audience": "Privacy-conscious individuals" },
+        { "title": "Lightweight collaboration", "description": "Coordinate shared calendars, task lists, and blogs with a group over XMPP instead of separate SaaS tools.", "audience": "Small groups and communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "android"],
+      "seo_meta_description": "Salut à Toi (now Libervia) is a free, open-source, decentralized XMPP suite for messaging, blogging, calendars, and file sharing."
+    }
+  },
+  {
+    "tool_id": "dfb290e4-e468-49f6-8a3d-bb8dbcae59cf",
+    "slug": "acp-admin",
+    "name": "ACP Admin",
+    "enrichment": {
+      "short_description": "Open-source management platform for Community Supported Agriculture groups, covering members, deliveries, and billing.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (self-hosted)",
+      "founded_year": 2014,
+      "company_size": "Solo/independent maintainer",
+      "headquarters": "Switzerland",
+      "languages": ["English", "French", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "ACP Admin — also published under the name CSA Admin, since \"ACP\" (Agriculture Contractuelle de Proximité) is the French-language term for Community Supported Agriculture (CSA) — is a web application originally built by developer Thibaud Guillaume-Gentil to manage Rage de Vert, a CSA group in Neuchâtel, Switzerland. It has been used by organizations since 2014 and now serves more than 30 organizations across Switzerland, Germany, and the Netherlands, managing over 140,000 basket deliveries a year.",
+            "The source is released under the O'Saasy License, which permits free self-hosting for any purpose but reserves the right to resell the software as a competing hosted service to the original author. The maintainer also offers a managed hosting option with GDPR/nLPD-compliant infrastructure, backups, and updates included."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It's built for CSA/ACP organizers — associations, cooperatives, or small businesses running subscription-based produce delivery — who need to manage members, waitlists, delivery schedules, invoicing, and a supplementary online shop in one system."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Member and waitlist management", "description": "Handles member registration, subscription management, and GDPR-compliant waitlists." },
+        { "title": "Delivery scheduling", "description": "Supports flexible delivery frequencies and basket content tracking." },
+        { "title": "Automated invoicing", "description": "Generates invoices with QR codes and tracks payments, including EBICS integration for Swiss bank reconciliation." },
+        { "title": "Annual renewal workflows", "description": "Simplifies the yearly process of renewing member subscriptions." },
+        { "title": "Online shop add-on", "description": "Sells supplementary products alongside regular baskets, with inventory tracking." },
+        { "title": "Member communication tools", "description": "Customizable email and newsletter tools for keeping members informed." }
+      ],
+      "pros": [
+        "Purpose-built for CSA/ACP operations rather than generic e-commerce",
+        "Free to self-host under the O'Saasy License",
+        "Managed hosting option removes the need to run infrastructure yourself",
+        "Proven at scale with 140,000+ baskets managed annually across multiple organizations"
+      ],
+      "cons": [
+        "Managed hosting pricing is usage-based (percentage of invoiced amount), which can be harder to budget than a flat fee",
+        "The O'Saasy License restricts reselling it as a competing hosted service",
+        "Maintained largely by a single developer rather than a company or large team"
+      ],
+      "faqs": [
+        { "question": "Is ACP Admin free?", "answer": "Self-hosting the software is free under the O'Saasy License. The maintainer's managed hosting service charges 1% of the amount invoiced through the platform per year, capped at 2,400 CHF/EUR, with no setup fees." },
+        { "question": "What is the difference between ACP Admin and CSA Admin?", "answer": "They are the same software; \"ACP\" is the French term used in French-speaking regions, while \"CSA\" is the English term for Community Supported Agriculture." },
+        { "question": "Can I self-host ACP Admin?", "answer": "Yes, the O'Saasy License explicitly permits free self-hosting; the maintainer's managed hosting is an optional paid alternative." }
+      ],
+      "use_cases": [
+        { "title": "Running a CSA/ACP subscription program", "description": "Manage member subscriptions, delivery schedules, and basket invoicing for a produce cooperative.", "audience": "CSA/ACP organizers and cooperatives" },
+        { "title": "Multi-organization farm networks", "description": "Coordinate several affiliated CSA groups on shared or self-hosted infrastructure.", "audience": "Regional food networks" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-hosted", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code available on GitHub", "No usage cap", "Requires own hosting and maintenance"] },
+        { "plan_name": "Managed hosting", "price": "1% of amount invoiced per year, capped at 2,400 CHF/EUR", "billing_cycle": "Annual", "features": ["GDPR/nLPD-compliant hosting", "Security updates and backups included", "No setup fees"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "freemium"],
+      "seo_meta_description": "ACP Admin (CSA Admin) is open-source software for managing Community Supported Agriculture groups: members, deliveries, and invoicing."
+    }
+  },
+  {
+    "tool_id": "640f5401-b849-4bad-b457-90e05c828c55",
+    "slug": "foodcoopshop",
+    "name": "FoodCoopShop",
+    "enrichment": {
+      "short_description": "Open-source ordering and billing platform for food cooperatives, organic shops, and farm stores.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2014,
+      "company_size": "Solo/independent maintainer",
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FoodCoopShop is an open-source web application, started by developer Mario Rothauer in 2014, for managing regional food orders from direct marketers. It's built on CakePHP and MySQL and is free to download and self-host, with Docker support for local development.",
+            "The software gives producers a dedicated login to manage their own product listings while giving cooperative members a shared ordering interface with support for different delivery schedules and an automated credit/balance billing system. According to the project's own site, over 50 initiatives are currently using it."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It's aimed at food cooperatives, organic stores (Bioläden), and farm shops (Hofläden) — mainly in German-speaking regions — that need collective ordering and producer coordination without building custom software."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Collective ordering", "description": "Members place orders from a shared catalog sourced from multiple producers." },
+        { "title": "Producer login area", "description": "Gives producers direct access to manage their own products and availability." },
+        { "title": "Flexible delivery schedules", "description": "Supports different delivery/pickup schedules per cooperative." },
+        { "title": "Credit/balance billing", "description": "Automates member billing through a running credit and balance system rather than per-order invoicing." },
+        { "title": "Docker-based dev environment", "description": "Ships with Docker tooling to simplify setting up a local development or self-hosted instance." }
+      ],
+      "pros": [
+        "Free, open-source, and self-hostable under CakePHP/MySQL",
+        "Purpose-built for the specific workflow of food co-ops with multiple producers",
+        "Producer-facing login reduces manual coordination work",
+        "Active maintenance with at least one release per year"
+      ],
+      "cons": [
+        "Primarily documented and used in German-speaking markets, though English is supported",
+        "Self-hosting requires PHP/MySQL server administration skills",
+        "Maintained mainly by its original developer rather than a large team"
+      ],
+      "faqs": [
+        { "question": "Is FoodCoopShop free?", "answer": "Yes, it's free and open source. Paid support and hosting services are available separately from the creator." },
+        { "question": "What is FoodCoopShop built with?", "answer": "It's built on CakePHP and MySQL, with Docker support for setting up a development environment." },
+        { "question": "Who is FoodCoopShop for?", "answer": "Food cooperatives, organic shops (Bioläden), and farm stores (Hofläden) that need collective ordering and producer coordination." }
+      ],
+      "use_cases": [
+        { "title": "Cooperative food ordering", "description": "Run a shared online ordering system for a food cooperative sourcing from multiple local producers.", "audience": "Food cooperative organizers" },
+        { "title": "Farm/organic shop management", "description": "Give a farm shop or organic store an online ordering and billing system tailored to direct-marketing sales.", "audience": "Farm shops and organic retailers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "FoodCoopShop is free, open-source software for food cooperatives and farm shops to manage collective ordering and producer billing."
+    }
+  },
+  {
+    "tool_id": "1807f881-55e3-4c8e-81e1-3548278fad9e",
+    "slug": "foodsoft",
+    "name": "Foodsoft",
+    "enrichment": {
+      "short_description": "Open-source web app for running a non-profit food cooperative: product catalog, ordering, accounting, and job scheduling.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Foodsoft is an open-source, web-based application for running a non-profit food cooperative — a group of members who buy directly from suppliers of their own choosing, effectively operating a collective do-it-yourself supermarket. It's maintained on GitHub under the foodcoops organization and has a long history within the German and European food-coop community.",
+            "The software covers the core operational needs of a coop: maintaining a shared product catalog, taking member orders online, tracking accounting/balances, and scheduling the volunteer jobs members take on to keep the coop running. It can be self-hosted, and the project also lists third-party \"Foodsoft Hosting\" options for coops that don't want to run their own server."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Foodsoft is built for member-run, non-profit food cooperatives that need to coordinate ordering, accounting, and volunteer job scheduling across a group of members rather than a traditional retail storefront."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Shared product catalog", "description": "Maintains a coop-wide catalog of products sourced from chosen suppliers." },
+        { "title": "Online member ordering", "description": "Members place and track their own orders through the web app." },
+        { "title": "Coop accounting", "description": "Tracks member balances and coop-level accounting tied to orders." },
+        { "title": "Volunteer job scheduling", "description": "Coordinates the shifts and tasks members take on as part of running the coop." },
+        { "title": "Self-hosted or hosted deployment", "description": "Can be run on your own infrastructure or through third-party Foodsoft Hosting providers." }
+      ],
+      "pros": [
+        "Free and open source, purpose-built for non-profit food coop operations",
+        "Covers ordering, accounting, and job scheduling in one system rather than several tools",
+        "Long-running project with an established community of food coops using it",
+        "Hosting options exist for coops that don't want to self-host"
+      ],
+      "cons": [
+        "Documentation and community are strongest in German-speaking regions",
+        "Self-hosting requires Ruby on Rails server administration knowledge",
+        "Volunteer-maintained pace of development can vary over time"
+      ],
+      "faqs": [
+        { "question": "Is Foodsoft free?", "answer": "Yes, Foodsoft is open-source software and free to self-host. Some third-party providers also offer paid Foodsoft Hosting for coops that don't want to manage a server." },
+        { "question": "What does Foodsoft manage?", "answer": "It manages a coop's product catalog, member ordering, accounting, and volunteer job scheduling." },
+        { "question": "Who maintains Foodsoft?", "answer": "It's maintained as a community open-source project on GitHub under the foodcoops organization." }
+      ],
+      "use_cases": [
+        { "title": "Running a member-owned food coop", "description": "Coordinate product ordering, accounting, and volunteer scheduling for a non-profit, member-run food cooperative.", "audience": "Food cooperative members and organizers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Foodsoft is free, open-source software for running a non-profit food cooperative: catalog, ordering, accounting, and job scheduling."
+    }
+  }
+]

@@ -1,0 +1,701 @@
+[
+  {
+    "tool_id": "48148d92-39dd-4402-8645-08c7801fdbd5",
+    "slug": "nominatim",
+    "name": "Nominatim",
+    "enrichment": {
+      "short_description": "Open-source geocoding engine that turns OpenStreetMap data into address search and reverse geocoding, self-hosted or via a public API.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Nominatim is an open-source geocoding tool that uses OpenStreetMap data to find locations by name or address, and to reverse-geocode coordinates into the nearest address. It supports free-form queries as well as structured queries with specific fields like street, city, and country.",
+            "The software can be self-hosted at any scale, from a small laptop install covering a single region to a full planet-wide dataset, and it can incorporate near-real-time OpenStreetMap edits through minutely data updates. A public demo instance is also available for occasional, light use under the OpenStreetMap Foundation's Nominatim usage policy."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Nominatim suits developers and organizations that need address search or reverse geocoding inside their own applications without depending on a commercial geocoding API, particularly teams with privacy, cost, or data-sovereignty requirements that make self-hosting attractive."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Forward geocoding", "description": "Free-form or structured address and place-name search against OpenStreetMap data." },
+        { "title": "Reverse geocoding", "description": "Look up the nearest address or OSM object for a given set of coordinates." },
+        { "title": "Live OSM data", "description": "Can apply OpenStreetMap's minutely diffs so search results stay current." },
+        { "title": "Flexible scale", "description": "Runs on anything from a single laptop with a regional extract to a full planet import." },
+        { "title": "Public demo API", "description": "A hosted instance is available for occasional, low-volume use under OSMF's usage policy." },
+        { "title": "Multi-language place names", "description": "Returns localized place names where OSM data provides them." }
+      ],
+      "pros": [
+        "Free and fully open source",
+        "No usage caps when self-hosted on your own infrastructure",
+        "Near-real-time OpenStreetMap data updates",
+        "Scales from a single machine to a planet-wide dataset",
+        "Backed by the large OpenStreetMap community"
+      ],
+      "cons": [
+        "A full planet import requires significant server memory and disk space",
+        "The public demo API has strict rate limits and is not meant for production traffic",
+        "No official commercial support or SLA",
+        "Tuning search ranking and imports has a learning curve"
+      ],
+      "faqs": [
+        { "question": "Is Nominatim free?", "answer": "Yes. It's fully open source, and you can self-host it or use the public demo API for occasional use under its usage policy." },
+        { "question": "What data does it use?", "answer": "Nominatim geocodes exclusively from OpenStreetMap data." },
+        { "question": "Can I use the public API for production traffic?", "answer": "Only for light, infrequent use per the OSM Foundation's usage policy. Heavier production usage requires self-hosting your own instance." },
+        { "question": "Does Nominatim do routing?", "answer": "No, it only handles geocoding and reverse geocoding. Pair it with a routing engine like OSRM or OpenRouteService for directions." },
+        { "question": "What hardware does self-hosting require?", "answer": "A full planet install needs substantial RAM and disk space, while smaller regional extracts can run on much more modest hardware." }
+      ],
+      "use_cases": [
+        { "title": "Address search boxes", "description": "Add address and place autocomplete search to a map-based application.", "audience": "Web and app developers" },
+        { "title": "Reverse geocoding for logistics", "description": "Convert GPS coordinates from delivery or fleet data into readable addresses.", "audience": "Logistics and delivery platforms" },
+        { "title": "Privacy-conscious geocoding", "description": "Self-host geocoding to avoid sending address queries to third-party commercial APIs.", "audience": "Government agencies and privacy-focused enterprises" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Nominatim is an open-source geocoding engine that searches and reverse-geocodes OpenStreetMap data, free to self-host or use via its public API."
+    }
+  },
+  {
+    "tool_id": "86baafbf-f9bc-4449-a7f2-056ec61dfb90",
+    "slug": "open-source-routing-machine-osrm",
+    "name": "Open Source Routing Machine (OSRM)",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source C++ routing engine that computes fast driving, cycling, and walking directions from OpenStreetMap data.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OSRM is a modern C++ routing engine built for finding shortest paths across road networks. It's designed for speed, handling continental-sized road networks within milliseconds using contraction-hierarchy-based preprocessing.",
+            "It supports car, bicycle, and walking profiles that can be customized through Lua scripting, imports data directly from OpenStreetMap extracts, and exposes an HTTP API for routing, table (matrix), map matching, trip, and nearest-point queries. It's distributed under a permissive 2-clause BSD license and is commonly self-hosted via Docker."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OSRM is aimed at developers building mapping, logistics, or fleet applications who need fast, self-hosted routing without relying on a commercial directions API."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "High-performance routing", "description": "Computes routes across continental-scale networks in milliseconds using preprocessing algorithms." },
+        { "title": "Multiple transport profiles", "description": "Car, bicycle, and foot routing, customizable through Lua profile scripts." },
+        { "title": "OSM-based data import", "description": "Builds routing graphs directly from OpenStreetMap extracts." },
+        { "title": "HTTP API", "description": "JSON endpoints for routing, distance/time matrices, map matching, trip optimization, and nearest-point lookup." },
+        { "title": "Public demo", "description": "A live demo is available at map.project-osrm.org for quick testing." },
+        { "title": "Docker-friendly deployment", "description": "Commonly self-hosted with prebuilt Docker images." }
+      ],
+      "pros": [
+        "Extremely fast route computation at scale",
+        "Free under a permissive 2-clause BSD license",
+        "Actively maintained with a strong open-source community",
+        "Flexible transport profiles via Lua scripting",
+        "Well-documented HTTP API"
+      ],
+      "cons": [
+        "Self-hosting large regions or the full planet requires significant RAM and preprocessing time",
+        "No built-in map UI — developers must build their own frontend",
+        "No official commercial support or SLA",
+        "Turn-by-turn instruction quality is more basic than some commercial routing engines"
+      ],
+      "faqs": [
+        { "question": "Is OSRM free?", "answer": "Yes, it's open source under a 2-clause BSD license." },
+        { "question": "What data source does it use?", "answer": "OpenStreetMap extracts." },
+        { "question": "Does OSRM support public transit routing?", "answer": "No, OSRM focuses on road-network routing for car, bike, and foot. For multimodal transit routing, use a tool like OpenTripPlanner." },
+        { "question": "Can I try it without installing anything?", "answer": "Yes, via the public demo at map.project-osrm.org." },
+        { "question": "What routing algorithms does it support?", "answer": "Contraction Hierarchies (CH) and Multi-Level Dijkstra (MLD), both preprocessing-based approaches for fast queries." }
+      ],
+      "use_cases": [
+        { "title": "In-app turn-by-turn directions", "description": "Embed driving, cycling, or walking directions in a custom map application.", "audience": "Developers" },
+        { "title": "Fleet route optimization", "description": "Use the matrix and trip APIs to plan efficient multi-stop routes.", "audience": "Logistics and delivery companies" },
+        { "title": "Offline or air-gapped routing", "description": "Self-host routing for environments where a third-party directions API isn't an option.", "audience": "Enterprises and government agencies" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "OSRM is a free, open-source C++ routing engine that calculates fast car, bike, and foot directions from OpenStreetMap data, self-hosted via Docker."
+    }
+  },
+  {
+    "tool_id": "bc74d5c2-961f-4a99-a34b-c92eee310096",
+    "slug": "openrouteservice",
+    "name": "OpenRouteService",
+    "enrichment": {
+      "short_description": "Open-source routing and geospatial analysis platform built on OpenStreetMap data, self-hostable or used via HeiGIT's hosted API.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Heidelberg, Germany",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenRouteService is a geospatial routing and analysis platform built on OpenStreetMap data. It offers directions for cars, bicycles, pedestrians, and wheelchair users, along with isochrone (reachability) generation, many-to-many time/distance matrices, point-of-interest discovery, elevation data, and vehicle-routing optimization for fleets.",
+            "All server code is open source and available on GitHub for self-hosting, while a hosted API with a free tier and paid plans is operated by HeiGIT gGmbH (Heidelberg Institute for Geoinformation Technology), affiliated with Heidelberg University. Official SDKs are available for Python, R, JavaScript, and QGIS."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It fits developers who need more than basic routing — isochrones, matrices, or elevation data — as well as humanitarian and academic teams that benefit from HeiGIT's mission-driven focus on open geospatial tools."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-mode directions", "description": "Routing for car, bicycle, walking, and wheelchair-accessible profiles." },
+        { "title": "Isochrones", "description": "Generate reachability areas showing where you can travel within a given time or distance." },
+        { "title": "Matrix service", "description": "Compute many-to-many travel times and distances in a single request." },
+        { "title": "POI and geocoding endpoints", "description": "Look up points of interest and place names alongside routing." },
+        { "title": "Elevation data", "description": "Retrieve elevation profiles along a route." },
+        { "title": "Vehicle routing optimization", "description": "Solve multi-stop fleet routing problems." },
+        { "title": "Official SDKs", "description": "Client libraries for Python, R, JavaScript, and a QGIS plugin." },
+        { "title": "Self-hostable backend", "description": "The full routing engine is open source and can be deployed on your own infrastructure." }
+      ],
+      "pros": [
+        "Free tier available for small and moderate usage",
+        "Fully open-source backend that can be self-hosted",
+        "Backed by an academic institute with a humanitarian focus",
+        "Covers more than basic routing — isochrones, matrix, elevation, and optimization",
+        "Multiple official SDKs and a QGIS plugin"
+      ],
+      "cons": [
+        "The free hosted-API tier has daily request limits (for example, 500 isochrone requests per day)",
+        "Self-hosting global-scale data requires significant infrastructure",
+        "Paid plans are needed for high-volume production use of the hosted API",
+        "Documentation is spread across several sub-projects"
+      ],
+      "faqs": [
+        { "question": "Is OpenRouteService free?", "answer": "The backend is open source and free to self-host. The hosted API offers a free tier with daily request limits, plus paid plans for higher volume." },
+        { "question": "Who operates the hosted service?", "answer": "HeiGIT gGmbH, affiliated with Heidelberg University in Germany." },
+        { "question": "What data does it use?", "answer": "OpenStreetMap." },
+        { "question": "Can I self-host instead of using the hosted API?", "answer": "Yes, all server code is open source on GitHub for self-deployment." },
+        { "question": "Does it support wheelchair-accessible routing?", "answer": "Yes, a wheelchair routing profile is included alongside car, bike, and pedestrian profiles." }
+      ],
+      "use_cases": [
+        { "title": "Custom mapping apps", "description": "Add routing, isochrones, or matrix calculations to a mapping application.", "audience": "Developers" },
+        { "title": "Disaster-response analysis", "description": "Use reachability and routing analysis for humanitarian planning.", "audience": "NGOs and humanitarian organizations" },
+        { "title": "Fleet route optimization", "description": "Plan efficient multi-stop delivery routes using the matrix and optimization services.", "audience": "Logistics teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "Free", "billing_cycle": null, "features": ["Access to the hosted API", "Daily request limits (e.g., 500 isochrone requests/day)"] },
+        { "plan_name": "Paid API plans", "price": "Contact HeiGIT for pricing", "billing_cycle": null, "features": ["Higher request limits for production workloads"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "OpenRouteService offers open-source routing, isochrones, and matrix APIs built on OpenStreetMap data, self-hostable or via HeiGIT's free/paid hosted API."
+    }
+  },
+  {
+    "tool_id": "57200a8f-f3cf-4f52-8aed-098c07fbd667",
+    "slug": "openstreetmap",
+    "name": "OpenStreetMap",
+    "enrichment": {
+      "short_description": "Free, collaboratively-built map of the world with open data that anyone can use, edit, or build tools on top of.",
+      "pricing_model": "Free (open data)",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenStreetMap is a collaboratively-built mapping platform that provides map data for thousands of websites, mobile apps, and hardware devices. Volunteer contributors worldwide document roads, trails, cafes, railway stations, and countless other features using aerial imagery, GPS traces, and field verification.",
+            "The data is open and free to use under the Open Database License (ODbL), which requires attribution and share-alike terms for derivative databases. The project is operated on behalf of its community by the OpenStreetMap Foundation, and it underpins a large ecosystem of open-source geo tools, including geocoders, routers, and tile servers."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OpenStreetMap suits developers, researchers, and organizations that want free, downloadable map data without vendor lock-in, as well as anyone who wants to contribute local mapping knowledge to a shared public resource."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Free editable world map", "description": "Anyone can register and contribute edits to the map." },
+        { "title": "Open license data", "description": "Data is available under the ODbL, free to reuse with attribution." },
+        { "title": "Editing tools", "description": "Web-based (iD) and desktop (JOSM) editors for contributing map data." },
+        { "title": "Global coverage", "description": "Roads, buildings, points of interest, and trails maintained by a worldwide volunteer community." },
+        { "title": "API access", "description": "Programmatic access for querying and editing map data." },
+        { "title": "Ecosystem foundation", "description": "Powers third-party open-source tools like Nominatim, OSRM, OpenRouteService, and tile servers." }
+      ],
+      "pros": [
+        "Completely free and open data",
+        "Global community of active volunteer contributors",
+        "No vendor lock-in — data can be downloaded and self-hosted",
+        "Powers a large open-source geospatial tool ecosystem",
+        "Frequently updated, with minutely change feeds available"
+      ],
+      "cons": [
+        "Data completeness and accuracy vary by region",
+        "Building a full application requires separate tools for geocoding, routing, and tile rendering",
+        "Editing conventions have a learning curve for new contributors",
+        "No official SLA — governed by a volunteer community and the OpenStreetMap Foundation"
+      ],
+      "faqs": [
+        { "question": "Is OpenStreetMap free to use?", "answer": "Yes, the data is free under the Open Database License (ODbL), which requires attribution." },
+        { "question": "Who maintains OpenStreetMap?", "answer": "A global community of volunteer mappers, with the project operated on their behalf by the OpenStreetMap Foundation." },
+        { "question": "Can I download the map data?", "answer": "Yes, full-planet and regional data extracts are publicly downloadable." },
+        { "question": "Does OSM provide routing or geocoding itself?", "answer": "No, OSM provides the underlying map data. Separate open-source tools like OSRM, OpenRouteService, and Nominatim provide routing and geocoding on top of it." },
+        { "question": "Can businesses use OSM data commercially?", "answer": "Yes, under the ODbL's attribution and share-alike terms." }
+      ],
+      "use_cases": [
+        { "title": "Base map data for apps", "description": "Use free, open map data as the foundation for a custom mapping application.", "audience": "Developers" },
+        { "title": "Humanitarian mapping", "description": "Contribute and use community-mapped data for disaster response and relief efforts.", "audience": "NGOs and humanitarian mapping volunteers" },
+        { "title": "Self-hosted geo stacks", "description": "Avoid proprietary map vendors by building an internal stack on OSM data.", "audience": "Enterprises and government agencies" }
+      ],
+      "pricing_plans": [],
+      "tags": ["open-source", "web-app", "api"],
+      "seo_meta_description": "OpenStreetMap is a free, editable world map built by volunteers, offering open data under the ODbL license for any app or self-hosted geo stack."
+    }
+  },
+  {
+    "tool_id": "5f8129e3-98ab-4d78-94b2-3a35a0efb279",
+    "slug": "opentripplanner",
+    "name": "OpenTripPlanner",
+    "enrichment": {
+      "short_description": "Open-source multimodal trip-planning server that combines transit, walking, cycling, and driving directions from OSM and GTFS data.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2009,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenTripPlanner (OTP) is a collection of open-source software for multimodal trip planning and transportation analysis. It finds itineraries that combine transit, pedestrian, bicycle, and car segments through networks built from OpenStreetMap and GTFS transit data.",
+            "Since launching in 2009, OTP has attracted a thriving community of users and developers, with support from public agencies, startups, and transportation consultancies. It's typically self-hosted as a server, exposed through a web API, with JavaScript client libraries available for building web and mobile trip-planning interfaces."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OTP is built for public transit agencies, transportation researchers, and developers who need to offer or analyze multimodal journey planning without relying on a proprietary trip-planning service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multimodal itinerary planning", "description": "Combines transit, walking, biking, and driving legs into a single trip." },
+        { "title": "GTFS and OSM ingestion", "description": "Builds its routing graph from standard transit (GTFS) and OpenStreetMap data." },
+        { "title": "Web API", "description": "Exposes trip-planning queries over a documented API." },
+        { "title": "JavaScript client libraries", "description": "Reference clients for integrating trip planning into web and mobile apps." },
+        { "title": "Used by transit agencies", "description": "Powers regional and national journey-planning services around the world." },
+        { "title": "Active open-source development", "description": "Regularly released and maintained by a community of contributors." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Proven at scale by public transit agencies worldwide",
+        "Combines multiple transport modes in a single planner",
+        "Backed by an active, long-running developer community",
+        "Flexible self-hosted deployment"
+      ],
+      "cons": [
+        "Requires preparing and maintaining GTFS and OSM data inputs",
+        "Self-hosting needs familiarity with Java server infrastructure",
+        "No official hosted SaaS offering from the project itself",
+        "A production-ready frontend UI must be built separately or adapted from community clients"
+      ],
+      "faqs": [
+        { "question": "Is OpenTripPlanner free?", "answer": "Yes, it's fully open source." },
+        { "question": "What data does it need?", "answer": "GTFS transit feeds and OpenStreetMap extracts for the area you want to cover." },
+        { "question": "Who uses OTP?", "answer": "Public transit agencies, transportation consultancies, researchers, and app developers worldwide." },
+        { "question": "Does it include a map UI?", "answer": "OTP provides an API and reference clients; most deployments build or customize a frontend on top of it." },
+        { "question": "When did the project launch?", "answer": "OpenTripPlanner launched in 2009." }
+      ],
+      "use_cases": [
+        { "title": "Regional transit trip planners", "description": "Power a public-facing journey planner for a transit agency's network.", "audience": "Public transit agencies" },
+        { "title": "Multimodal directions in apps", "description": "Add combined transit, walking, and cycling directions to a travel app.", "audience": "Developers" },
+        { "title": "Transportation network analysis", "description": "Analyze accessibility and travel times across a transit network.", "audience": "Researchers and transportation planners" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "OpenTripPlanner is a free, open-source multimodal trip planner combining transit, walking, cycling, and driving using GTFS and OpenStreetMap data."
+    }
+  },
+  {
+    "tool_id": "60df7045-6dba-4088-8dad-1316174aa0df",
+    "slug": "tileserver-gl",
+    "name": "TileServer GL",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source vector and raster map tile server for serving custom map styles from MBTiles and other tile sources.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "TileServer GL is a self-hosted tile server for serving rendered map tiles, vector tile styles, static map images, and WMTS endpoints. It's maintained under the MapTiler organization and is commonly deployed via Docker or npm.",
+            "It supports both vector-tile-only setups (via the lighter tileserver-gl-light variant) and full server-side raster rendering, making it a common choice for teams that want to host their own map styles instead of relying on a third-party map tile provider."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "It's aimed at developers and GIS teams who want to self-host custom map styles or serve pre-generated tiles for a web app, internal tool, or embedded device."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Vector and raster tile serving", "description": "Serves MapLibre/Mapbox GL vector styles as well as server-rendered raster tiles." },
+        { "title": "Static image generation", "description": "Render map snapshots server-side for a given location and style." },
+        { "title": "WMTS support", "description": "Exposes tiles via WMTS for compatibility with standard GIS clients." },
+        { "title": "Docker deployment", "description": "Official Docker images make self-hosting straightforward." },
+        { "title": "Lightweight variant", "description": "tileserver-gl-light serves vector tiles only, without raster rendering, for a smaller footprint." },
+        { "title": "Style and data source configuration", "description": "Manage map styles and tile data sources through configuration files." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Simple Docker-based self-hosting",
+        "Supports both vector and raster tile workflows",
+        "Lightweight variant available for vector-only setups",
+        "Compatible with standard formats like MBTiles"
+      ],
+      "cons": [
+        "Requires pre-generated tile data (e.g., via tippecanoe or similar tools)",
+        "Documentation is fairly technical and developer-focused",
+        "No hosted SaaS offering from the project itself",
+        "Custom styling requires familiarity with the MapLibre/Mapbox GL style spec"
+      ],
+      "faqs": [
+        { "question": "Is TileServer GL free?", "answer": "Yes, it's open-source software." },
+        { "question": "What tile formats does it support?", "answer": "MBTiles-based vector and raster tiles, along with WMTS endpoints." },
+        { "question": "Who maintains it?", "answer": "It's maintained under the MapTiler organization on GitHub." },
+        { "question": "Can I run it in Docker?", "answer": "Yes, an official Docker image is provided." },
+        { "question": "What's the difference between TileServer GL and the Light variant?", "answer": "The Light variant serves vector tiles only, without server-side raster rendering, for a smaller resource footprint." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted custom map styles", "description": "Serve your own branded map style instead of using a third-party tile provider.", "audience": "Developers" },
+        { "title": "Offline or private map serving", "description": "Host map tiles internally for tools that can't rely on external services.", "audience": "Enterprises and GIS teams" },
+        { "title": "Embedded map tile serving", "description": "Serve pre-rendered tiles to embedded or IoT devices.", "audience": "IoT and embedded developers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "TileServer GL is a free, open-source self-hosted server for serving vector and raster map tiles from MBTiles, deployable via Docker."
+    }
+  },
+  {
+    "tool_id": "74308889-bf28-4f84-8e8e-f6ebecc1b93a",
+    "slug": "traccar",
+    "name": "Traccar",
+    "enrichment": {
+      "short_description": "Open-source, self-hosted GPS tracking platform for monitoring vehicles and devices in real time across hundreds of tracker protocols.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2009,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Traccar is a modern GPS tracking system for real-time location monitoring of vehicles, personal devices, and other tracked assets. It supports a very wide range of GPS tracker hardware through a large library of communication protocols.",
+            "The core server is free and open source, with installers and source code available for self-hosting on Windows, Linux, and other platforms. Traccar also offers an optional hosted cloud account for users who don't want to manage their own server infrastructure."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Traccar fits small fleet operators, logistics teams, and individuals who want real-time tracking, geofencing, and reporting for vehicles or devices, whether self-hosted for full control or via a hosted account for convenience."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Real-time GPS tracking", "description": "Live map view of all connected tracking devices." },
+        { "title": "Broad protocol support", "description": "Compatible with a very wide range of GPS tracker hardware and brands." },
+        { "title": "Geofencing and alerts", "description": "Push and email notifications for events like geofence breaches, harsh driving, or maintenance reminders." },
+        { "title": "Reporting", "description": "Location history, trip analysis, route replay, and summary reports." },
+        { "title": "Web admin interface", "description": "Browser-based dashboard for managing devices, users, and geofences." },
+        { "title": "Mobile client apps", "description": "Official Traccar Client apps let a phone act as a GPS tracker." }
+      ],
+      "pros": [
+        "Free and open source to self-host",
+        "Extremely broad device and protocol compatibility",
+        "Real-time tracking with geofencing and alerting",
+        "Long-running, actively maintained project (since 2009)",
+        "Optional hosted cloud account for those who don't want to self-host"
+      ],
+      "cons": [
+        "Full support and some conveniences are tied to the hosted cloud plans",
+        "Self-hosting requires ongoing server maintenance",
+        "Interface is functional but less polished than some commercial fleet platforms",
+        "Configuring specific device protocols can require technical know-how"
+      ],
+      "faqs": [
+        { "question": "Is Traccar free?", "answer": "The core server software is free and open source to self-host. A hosted cloud account is also offered as an alternative to self-hosting." },
+        { "question": "What devices does it support?", "answer": "Traccar supports a very wide range of GPS tracker hardware through its large library of communication protocols." },
+        { "question": "Can I self-host Traccar?", "answer": "Yes, it runs on Windows, Linux, and other platforms, with installers and source code on the official site." },
+        { "question": "Does Traccar have mobile apps?", "answer": "Yes, official Traccar Client apps are available for using a phone as a tracker." },
+        { "question": "How long has Traccar existed?", "answer": "Since 2009." }
+      ],
+      "use_cases": [
+        { "title": "Fleet management", "description": "Track and manage a fleet of vehicles in real time with geofencing and reports.", "audience": "Small fleet operators" },
+        { "title": "Personal or family tracking", "description": "Monitor personal devices or vehicles for safety and location history.", "audience": "Individuals" },
+        { "title": "Asset tracking", "description": "Track equipment or shipments across a logistics operation.", "audience": "Logistics and supply chain teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-hosted", "price": "Free", "billing_cycle": null, "features": ["Full server source code", "Self-managed infrastructure with no device caps"] },
+        { "plan_name": "Cloud account", "price": "Contact for pricing", "billing_cycle": null, "features": ["Hosted Traccar instance", "No server maintenance required"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "web-app", "android", "ios"],
+      "seo_meta_description": "Traccar is a free, open-source GPS tracking platform for real-time vehicle and device monitoring, self-hosted or via an optional hosted cloud account."
+    }
+  },
+  {
+    "tool_id": "cd1da66a-312f-432a-8e37-1dc816cc5520",
+    "slug": "trip",
+    "name": "TRIP",
+    "enrichment": {
+      "short_description": "Minimalist self-hosted map tracker and trip planner for visualizing points of interest and organizing multi-day trip itineraries.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "TRIP is a self-hosted application that combines a minimalist point-of-interest (POI) map tracker with a trip planner, letting you visualize places you care about and organize the details of an upcoming trip.",
+            "The project emphasizes privacy, with no telemetry, tracking, or ads, and is deployed through Docker using a provided docker-compose configuration. It's completely open source, with documentation maintained by its developer, itskovacs."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "TRIP suits travelers and self-hosting enthusiasts who want a lightweight, privacy-respecting alternative to commercial trip-planning apps for tracking places and planning itineraries with travel companions."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "POI map tracking", "description": "Pin and organize points of interest on an interactive map." },
+        { "title": "Trip planning", "description": "Build multi-day itineraries with trip details." },
+        { "title": "Collaboration and sharing", "description": "Share trips and plans with travel companions." },
+        { "title": "No telemetry", "description": "Privacy-focused design with no tracking or ads." },
+        { "title": "Docker deployment", "description": "Simple self-hosted setup via docker-compose." }
+      ],
+      "pros": [
+        "Free and fully open source",
+        "Privacy-first with no telemetry or tracking",
+        "Simple Docker-based self-hosting",
+        "Combines POI tracking and trip planning in one tool",
+        "Lightweight, minimalist interface"
+      ],
+      "cons": [
+        "Smaller community compared to established mapping platforms",
+        "Focused on POI tracking and itinerary planning rather than routing or navigation",
+        "Self-hosting requires basic Docker familiarity",
+        "Fewer integrations than large commercial travel-planning apps"
+      ],
+      "faqs": [
+        { "question": "Is TRIP free?", "answer": "Yes, it's completely open source and free to self-host." },
+        { "question": "Does TRIP collect any data?", "answer": "No, the project states it has no telemetry, tracking, or ads." },
+        { "question": "How do I deploy TRIP?", "answer": "Via Docker, using the provided docker-compose configuration." },
+        { "question": "Can I share trips with others?", "answer": "Yes, TRIP supports collaborating and sharing trip plans with travel companions." },
+        { "question": "Does TRIP provide turn-by-turn navigation?", "answer": "No, it focuses on POI tracking and itinerary planning rather than routing or navigation." }
+      ],
+      "use_cases": [
+        { "title": "Multi-day trip planning", "description": "Plan and organize a trip itinerary with friends or family.", "audience": "Travelers" },
+        { "title": "Personal POI tracking", "description": "Keep a personal map of favorite or planned-to-visit places.", "audience": "Individuals" },
+        { "title": "Privacy-conscious travel planning", "description": "Use a self-hosted alternative to commercial trip-planning apps.", "audience": "Privacy-focused users" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "TRIP is a free, open-source, self-hosted app for mapping points of interest and planning multi-day trip itineraries, with no telemetry."
+    }
+  },
+  {
+    "tool_id": "0608cdcb-8ede-4cee-a620-9cc6d15af341",
+    "slug": "downtify",
+    "name": "Downtify",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source Docker tool that downloads Spotify playlists and tracks as tagged audio files.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Downtify is a self-hosted music downloader that takes a Spotify link and produces a tagged audio file, without requiring API keys or a Spotify account. It reads the metadata Spotify exposes on its public embed pages, finds the closest matching audio on YouTube Music, and hands the file to yt-dlp and ffmpeg for download, with tags written by mutagen.",
+            "The whole pipeline runs in a single Docker container. Features include a Playlist Monitor that automatically downloads new songs added to watched playlists, support for MP3, FLAC, M4A, OGG, and OPUS formats, embedded plain and time-synced lyrics from lrclib, a built-in web player, and M3U export compatible with self-hosted media servers like Jellyfin, Navidrome, and Plex. The project's own documentation states it does not support unauthorized downloading of copyrighted material and takes no responsibility for user actions."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Downtify is aimed at self-hosted media enthusiasts who already run tools like Jellyfin, Navidrome, or Plex and want a way to populate a personal library from Spotify playlists."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Spotify link input", "description": "Paste a track, album, or playlist link without needing API keys or a Spotify account." },
+        { "title": "YouTube Music matching", "description": "Finds the closest matching audio via yt-dlp based on Spotify's public metadata." },
+        { "title": "Metadata tagging", "description": "Writes proper tags and album art using mutagen." },
+        { "title": "Multiple audio formats", "description": "Supports MP3, FLAC, M4A, OGG, and OPUS at a chosen bitrate." },
+        { "title": "Synced lyrics", "description": "Fetches and embeds plain and time-synced lyrics from lrclib." },
+        { "title": "Playlist Monitor", "description": "Automatically downloads new songs added to watched Spotify playlists." },
+        { "title": "Web player and M3U export", "description": "Built-in playback plus M3U playlist export for Jellyfin, Navidrome, and Plex." }
+      ],
+      "pros": [
+        "Free and open source",
+        "No Spotify API keys or account required",
+        "Supports multiple audio formats and embedded synced lyrics",
+        "Playlist Monitor automates downloads of new tracks",
+        "Exports playlists compatible with popular self-hosted media servers"
+      ],
+      "cons": [
+        "The legal status of downloading copyrighted music this way is ambiguous and use is at the user's own risk",
+        "Audio quality depends on the closest match found on YouTube Music rather than the original source file",
+        "Small independent project without formal support",
+        "Requires Docker for deployment"
+      ],
+      "faqs": [
+        { "question": "Is Downtify legal to use?", "answer": "The project's own documentation states it does not support unauthorized downloading of copyrighted material and takes no responsibility for user actions — check your local laws and Spotify's terms before using it." },
+        { "question": "Do I need a Spotify account or API key?", "answer": "No, Downtify reads public metadata from Spotify's embed pages without requiring credentials." },
+        { "question": "What audio formats are supported?", "answer": "MP3, FLAC, M4A, OGG, and OPUS." },
+        { "question": "Can it monitor playlists for new songs automatically?", "answer": "Yes, via the Playlist Monitor feature." },
+        { "question": "Does it work with Jellyfin, Navidrome, or Plex?", "answer": "Yes, it can export M3U playlists that those media servers pick up automatically." }
+      ],
+      "use_cases": [
+        { "title": "Personal offline music library", "description": "Build a local, tagged music library from Spotify playlists.", "audience": "Individuals" },
+        { "title": "Feeding a self-hosted media server", "description": "Populate Jellyfin, Navidrome, or Plex with tagged audio files.", "audience": "Self-hosted media enthusiasts" },
+        { "title": "Archiving playlists with lyrics", "description": "Keep a personal archive of playlists including synced lyrics.", "audience": "Music collectors" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Downtify is a free, open-source, self-hosted Docker tool for downloading Spotify playlists as tagged MP3/FLAC/OGG files with synced lyrics."
+    }
+  },
+  {
+    "tool_id": "95c108e4-15cb-4703-b18c-02fcb91adb45",
+    "slug": "lidarr",
+    "name": "Lidarr",
+    "enrichment": {
+      "short_description": "Open-source, self-hosted music collection manager that automates monitoring, downloading, and organizing albums via Usenet and BitTorrent.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Lidarr is a music collection manager for Usenet and BitTorrent users. It monitors RSS feeds for new album releases from artists you follow, then interfaces with the download clients and indexers you configure to retrieve, organize, and rename music files, including automatically upgrading existing library files when higher-quality versions become available.",
+            "It's part of the wider *arr family of automation tools (alongside Sonarr and Radarr) and is open source, running on Windows, Linux, macOS, Docker, BSD, and Synology NAS devices with a web-based management interface."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Lidarr suits home server and NAS users who already use Usenet or torrent indexers and download clients and want to automate music library growth, tagging, and organization rather than managing it manually."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Automated release monitoring", "description": "Watches RSS feeds for new releases from followed artists." },
+        { "title": "Indexer and download client integration", "description": "Works with configured Usenet and BitTorrent indexers and download clients." },
+        { "title": "Automatic import and renaming", "description": "Organizes and renames files according to a configurable naming scheme." },
+        { "title": "Quality profiles and upgrades", "description": "Automatically upgrades library files to better quality when available." },
+        { "title": "Calendar view", "description": "Tracks upcoming album releases." },
+        { "title": "Import lists", "description": "Syncs followed artists from services like Last.fm." },
+        { "title": "Cross-platform support", "description": "Runs on Windows, Linux, macOS, Docker, BSD, and Synology NAS." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Automates music library growth, tagging, and organization",
+        "Broad platform support, including Docker and NAS",
+        "Integrates with the wider *arr ecosystem (Sonarr, Radarr, Prowlarr)",
+        "Actively developed with a large community"
+      ],
+      "cons": [
+        "Requires separately configured indexers and download clients to be useful",
+        "Initial setup and configuration has a learning curve",
+        "No official mobile app",
+        "Legal considerations depend entirely on the indexers and content sources you use"
+      ],
+      "faqs": [
+        { "question": "Is Lidarr free?", "answer": "Yes, it's free and open source." },
+        { "question": "Does Lidarr download music itself?", "answer": "No, it automates the process by interfacing with separate download clients and indexers that you configure." },
+        { "question": "What platforms does Lidarr run on?", "answer": "Windows, Linux, macOS, Docker, BSD, and Synology NAS." },
+        { "question": "Does Lidarr work with Usenet and torrents?", "answer": "Yes, both are supported through configurable indexers and download clients." },
+        { "question": "Can Lidarr upgrade existing files automatically?", "answer": "Yes, using customizable quality profiles." }
+      ],
+      "use_cases": [
+        { "title": "Automated music library", "description": "Automate growing and organizing a personal music library alongside Usenet or torrent clients.", "audience": "Self-hosted media enthusiasts" },
+        { "title": "Library organization", "description": "Tag and organize an existing large music collection.", "audience": "Music collectors" },
+        { "title": "Full *arr automation stack", "description": "Pair with Sonarr, Radarr, and Prowlarr for a complete home media automation setup.", "audience": "Home server and NAS users" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api", "windows", "mac", "web-app"],
+      "seo_meta_description": "Lidarr is a free, open-source, self-hosted music collection manager that automates monitoring, downloading, and organizing albums via Usenet/BitTorrent."
+    }
+  }
+]

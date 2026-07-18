@@ -1,0 +1,669 @@
+[
+  {
+    "tool_id": "c79fd2a4-de89-4e02-bf96-2e51b3747f3b",
+    "slug": "lila",
+    "name": "Lila",
+    "enrichment": {
+      "short_description": "Lila is the open-source Scala/TypeScript codebase that powers Lichess, the free, ad-free online chess server.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2010,
+      "company_size": "Independent non-profit open-source project",
+      "headquarters": "France (registered non-profit association)",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Lila (short for \"li[chess in Sca]la\") is the open-source software that runs Lichess.org, one of the world's largest online chess platforms. The project was started in 2010 by French programmer Thibault Duplessis and is maintained as a registered non-profit association in France, funded by donations rather than ads or subscriptions.",
+            "The codebase is built primarily in Scala on the backend with TypeScript and Sass on the frontend, alongside Rust and Python microservices and a Flutter mobile client. Because the entire stack is public on GitHub under the lichess-org organization, developers can inspect, modify, and in principle self-host their own instance, though running the full production-grade infrastructure (search, analysis workers, websockets) is a nontrivial engineering effort."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Lila is relevant to two audiences: chess players who use Lichess directly for free games, puzzles, and tournaments, and developers who want to build chess bots, tools, or study integrations against Lichess's public API, or who are curious about running or contributing to large-scale open-source infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Stockfish analysis", "description": "In-browser (WebAssembly) and server-side game analysis using the Stockfish engine, free for every player." },
+        { "title": "Puzzles", "description": "A large, continuously generated tactics puzzle database, including puzzle rush and streak modes." },
+        { "title": "Tournaments", "description": "Automated arena and Swiss-format tournaments running continuously, open to any player." },
+        { "title": "Study and broadcast tools", "description": "Shared analysis boards and live broadcasting of over-the-board chess events." },
+        { "title": "Public API", "description": "A documented REST/Board/Bot API for building bots, exporting games, and integrating with third-party tools." },
+        { "title": "Fully open source", "description": "The entire stack, from backend to mobile app, is published on GitHub and open to community contribution." }
+      ],
+      "pros": [
+        "Completely free with no ads or premium paywall",
+        "Full source code is public, auditable, and self-hostable",
+        "Deep Stockfish integration for analysis",
+        "Well-documented public API for bots and integrations",
+        "Large, active player and developer community"
+      ],
+      "cons": [
+        "Self-hosting the complete production stack (search, analysis workers, websockets) requires significant DevOps effort",
+        "Not designed as a general-purpose product outside of chess",
+        "Documentation and codebase target experienced developers rather than casual self-hosters"
+      ],
+      "faqs": [
+        { "question": "Is Lichess/Lila free to use?", "answer": "Yes. Lichess is entirely free, ad-free, and funded by donations; there is no premium tier." },
+        { "question": "Can I self-host Lila?", "answer": "Yes, the source code is public on GitHub under the lichess-org organization, but replicating the full production infrastructure is complex." },
+        { "question": "What license is the code under?", "answer": "Lichess's software and design are open source, primarily under the AGPL, with some components under other free licenses." },
+        { "question": "Does Lichess have an API?", "answer": "Yes, a public API supports reading game data and building bots and boards that play on the platform." }
+      ],
+      "use_cases": [
+        { "title": "Playing chess online", "description": "Free, ad-free games, puzzles, and tournaments against players worldwide.", "audience": "Chess players of any skill level" },
+        { "title": "Building a chess bot", "description": "Using the Bot/Board API to develop and run automated players or study tools.", "audience": "Developers and chess engine hobbyists" },
+        { "title": "Running a private instance", "description": "Deploying the open-source Lila codebase for an organization or research purpose.", "audience": "Technical teams and open-source contributors" }
+      ],
+      "pricing_plans": [],
+      "tags": ["web-app", "api", "self-hosted", "open-source"],
+      "seo_meta_description": "Lila is the open-source Scala/TypeScript codebase behind Lichess, the free, ad-free, self-hostable online chess platform."
+    }
+  },
+  {
+    "tool_id": "77a26385-9077-48ad-bcca-92dcc22cef2e",
+    "slug": "luanti",
+    "name": "Luanti",
+    "enrichment": {
+      "short_description": "Luanti (formerly Minetest) is a free, open-source voxel game engine for building and playing moddable sandbox worlds.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2010,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Luanti, formerly known as Minetest, is an open-source voxel game creation platform originally released in 2010 by Perttu Ahola. It was renamed to Luanti in October 2024 to better reflect its role as a general-purpose engine rather than a single fixed game. The engine code is MIT-licensed and community content is typically CC BY-SA.",
+            "Rather than shipping one polished game, Luanti provides a Lua scripting API that lets developers build entire games, mods, or texture packs without writing low-level rendering or networking code. Thousands of community-made mods and games are distributed through ContentDB, and the engine supports massive worlds and both single-player and multiplayer modes."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Luanti suits players who enjoy Minecraft-style voxel sandboxes and want a free, open alternative, as well as hobbyist and indie developers who want to build a custom voxel game or mod using Lua without building an engine from scratch."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Lua scripting API", "description": "Build full games, mods, or mechanics in Lua without handling rendering or networking directly." },
+        { "title": "ContentDB", "description": "A community repository with thousands of open-source mods, games, and texture packs." },
+        { "title": "Massive worlds", "description": "Maps can span tens of thousands of blocks in each direction, with deep vertical range." },
+        { "title": "Multiplayer", "description": "Solo play, local co-op, or online servers supporting many simultaneous players." },
+        { "title": "Cross-platform client", "description": "Runs on Windows, macOS, Linux, BSD, and Android." },
+        { "title": "Open licensing", "description": "Engine code is MIT-licensed; official content is CC BY-SA, keeping the whole project freely redistributable." }
+      ],
+      "pros": [
+        "Completely free and open source",
+        "Huge modding ecosystem through ContentDB",
+        "Runs well on low-end hardware",
+        "Long project history and active development since 2010",
+        "Self-hostable multiplayer servers"
+      ],
+      "cons": [
+        "The default game is minimal; most compelling content comes from third-party mods and games",
+        "Visuals are simpler than commercial voxel games",
+        "Building a custom game requires comfort with the Lua API"
+      ],
+      "faqs": [
+        { "question": "Is Luanti the same project as Minetest?", "answer": "Yes, Minetest was renamed to Luanti in October 2024; it's the same codebase and community." },
+        { "question": "Is Luanti free?", "answer": "Yes, it is entirely free and open source." },
+        { "question": "Can I make my own game with it?", "answer": "Yes, the Lua API is designed to let you build complete games without writing engine code." },
+        { "question": "Does it run on mobile?", "answer": "Yes, an Android client is available." }
+      ],
+      "use_cases": [
+        { "title": "Voxel sandbox play", "description": "Explore and build in Minecraft-style worlds using existing community games.", "audience": "Casual players seeking a free voxel sandbox" },
+        { "title": "Custom game development", "description": "Build and publish a custom voxel game or mod using the Lua API.", "audience": "Hobbyist and indie game developers" },
+        { "title": "Self-hosted community server", "description": "Run a private multiplayer server for friends, a school, or a community.", "audience": "Server admins and communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "android", "self-hosted", "open-source"],
+      "seo_meta_description": "Luanti (formerly Minetest) is a free, open-source, moddable voxel game engine for Windows, macOS, Linux, and Android."
+    }
+  },
+  {
+    "tool_id": "9a0efe36-6967-41a8-8703-57fdd1450a58",
+    "slug": "mindustry",
+    "name": "Mindustry",
+    "enrichment": {
+      "short_description": "Mindustry is a free, open-source sandbox tower-defense game combining factory automation with real-time combat.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2017,
+      "company_size": "Independent developer / open-source community",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Mindustry was created in 2017 by developer Anuken for a game jam and has since grown into a full open-source tower-defense and factory-automation game. Players build production chains that mine, process, and transport resources while defending their base from waves of enemies, with the source code publicly maintained on GitHub.",
+            "The game blends the logistics depth of automation games with real-time combat, adding a programmable logic system that lets players script factory behavior. It supports both single-player campaign/sandbox play and multiplayer servers for cooperative or competitive matches."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Mindustry appeals to players who enjoy factory-automation games (in the spirit of Factorio) alongside tower-defense combat, and to communities who want to run their own free multiplayer servers or build custom content through its modding support."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Tower-defense combat", "description": "Defend bases from escalating waves of enemies using turrets and defensive structures." },
+        { "title": "Factory automation", "description": "Design production chains with conveyors, drills, and processors to supply your defenses." },
+        { "title": "Logic system", "description": "A built-in programming system for automating and controlling factory behavior." },
+        { "title": "Multiplayer servers", "description": "Cooperative and competitive multiplayer, including self-hosted dedicated servers." },
+        { "title": "Campaign and sandbox modes", "description": "Story-driven campaign play plus a free-build sandbox mode." },
+        { "title": "Mod support", "description": "Community mods can add new content, maps, and mechanics." }
+      ],
+      "pros": [
+        "Free and open source on GitHub",
+        "Deep automation mechanics combined with combat",
+        "Cross-platform across desktop and mobile",
+        "Active modding community",
+        "Self-hostable multiplayer servers"
+      ],
+      "cons": [
+        "The automation/logic systems have a steep learning curve",
+        "Simple 2D pixel-art visuals may not appeal to players wanting high-fidelity graphics",
+        "No official browser-playable build of the current game (only an older \"Classic\" version)"
+      ],
+      "faqs": [
+        { "question": "Is Mindustry free?", "answer": "Yes, it's completely free, with optional pay-what-you-want support on itch.io." },
+        { "question": "Is Mindustry open source?", "answer": "Yes, the source is public on GitHub under Anuken/Mindustry." },
+        { "question": "Can I host my own server?", "answer": "Yes, dedicated multiplayer servers are supported." },
+        { "question": "What platforms does it support?", "answer": "Windows, macOS, Linux, Android, and iOS." }
+      ],
+      "use_cases": [
+        { "title": "Solo automation and defense", "description": "Build production chains and defend against enemy waves offline.", "audience": "Single-player fans of automation/tower-defense games" },
+        { "title": "Co-op multiplayer", "description": "Build and defend a base together with friends on shared servers.", "audience": "Groups of friends playing cooperatively" },
+        { "title": "Community server hosting", "description": "Run a public or private self-hosted Mindustry server.", "audience": "Server admins and gaming communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "android", "ios", "self-hosted", "open-source"],
+      "seo_meta_description": "Mindustry is a free, open-source sandbox tower-defense game blending factory automation with real-time combat, for desktop and mobile."
+    }
+  },
+  {
+    "tool_id": "cb496915-ab02-4433-8bfc-70ec1fc91a9c",
+    "slug": "mta-sa",
+    "name": "MTA:SA",
+    "enrichment": {
+      "short_description": "Multi Theft Auto: San Andreas (MTA:SA) is a free, open-source multiplayer modification that turns GTA: San Andreas into an online game.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2003,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Multi Theft Auto began in 2003 as an experimental multiplayer patch for the original Grand Theft Auto III and evolved over two decades into MTA:SA, a full open-source multiplayer engine for Grand Theft Auto: San Andreas. The mod's client and dedicated-server code are maintained openly on GitHub by the Multi Theft Auto community.",
+            "MTA:SA adds a client-server networking layer, a Lua scripting system, and an in-game map editor on top of the base game, enabling community-run servers for roleplay, racing, deathmatch, and other custom game modes. It requires a legally owned copy of GTA: San Andreas to run, since the mod does not include the base game itself."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "MTA:SA is aimed at GTA: San Andreas players who want to play online with friends or on community servers, and at server administrators/scripters who want to build custom multiplayer game modes using Lua and the map editor."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Lua scripting", "description": "Build custom game modes, scripts, and server logic in Lua." },
+        { "title": "In-game map editor", "description": "Create and modify maps directly within the game." },
+        { "title": "Multiple game modes", "description": "Community servers offer roleplay, racing, deathmatch, stealth, and more." },
+        { "title": "Dedicated servers", "description": "Self-hostable client-server architecture for running persistent communities." },
+        { "title": "Player synchronization", "description": "Networking tuned for smooth, low-latency multiplayer sync." },
+        { "title": "Race mode", "description": "Built-in racing mode with hundreds of community-made tracks." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Mature project with a development history going back over two decades",
+        "Deep Lua scripting for custom game modes",
+        "Large ecosystem of community-run servers",
+        "Self-hostable dedicated servers"
+      ],
+      "cons": [
+        "Requires a separately, legally owned copy of GTA: San Andreas",
+        "Windows-focused client experience",
+        "Server administration and scripting have a learning curve for newcomers"
+      ],
+      "faqs": [
+        { "question": "Is MTA:SA free?", "answer": "The modification itself is free; you must separately own a legitimate copy of GTA: San Andreas." },
+        { "question": "Is MTA:SA open source?", "answer": "Yes, the client and server code are open source and available on GitHub." },
+        { "question": "Can I run my own server?", "answer": "Yes, dedicated servers are a core part of how MTA:SA communities operate." },
+        { "question": "What can I build with it?", "answer": "Custom multiplayer game modes and maps using its Lua scripting system and map editor." }
+      ],
+      "use_cases": [
+        { "title": "Online GTA San Andreas play", "description": "Play GTA: San Andreas online with friends or public communities.", "audience": "GTA: San Andreas players" },
+        { "title": "Running a roleplay or racing server", "description": "Operate a self-hosted community server with custom rules and content.", "audience": "Server administrators" },
+        { "title": "Custom game mode development", "description": "Script new multiplayer game modes with Lua and the built-in map editor.", "audience": "Modders and scripters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "self-hosted", "open-source"],
+      "seo_meta_description": "Multi Theft Auto: San Andreas (MTA:SA) is a free, open-source multiplayer mod that adds online play to GTA: San Andreas with Lua scripting."
+    }
+  },
+  {
+    "tool_id": "ae510c8a-18ad-492c-8df9-432190e35f9d",
+    "slug": "openttd",
+    "name": "OpenTTD",
+    "enrichment": {
+      "short_description": "OpenTTD is a free, open-source simulation game that recreates and extends Transport Tycoon Deluxe with modern features.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenTTD grew out of a reverse-engineering effort of the original Transport Tycoon Deluxe and was first released as its own open-source project on March 6, 2004. It has been in continuous, active development ever since under the GNU GPL v2 license, with regular stable releases alongside testing and nightly builds.",
+            "Players design and operate road, rail, sea, and air transport networks to move passengers and cargo for profit. The game supports extensive customization through the NewGRF system for custom graphics and vehicles, AI and game scripts, and both public and self-hosted multiplayer servers."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OpenTTD is for fans of transport/tycoon simulation games who want a free, deeply moddable, and actively maintained alternative to the original commercial title, whether playing solo, competitively online, or on a self-hosted community server."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Transport network building", "description": "Construct and manage road, rail, sea, and air routes for passengers and cargo." },
+        { "title": "Multiplayer", "description": "Join public community servers or self-host your own multiplayer game." },
+        { "title": "NewGRF customization", "description": "Install custom graphics, vehicles, and content packs built by the community." },
+        { "title": "AI and game scripts", "description": "Add scripted AI opponents or custom game rules." },
+        { "title": "Scenario editor", "description": "Design custom maps and scenarios from scratch." },
+        { "title": "Ongoing active development", "description": "Regular stable releases plus testing and nightly builds since 2004." }
+      ],
+      "pros": [
+        "Completely free and open source (GPL v2)",
+        "Long track record with active development since 2004",
+        "Deep customization via NewGRF and AI/game scripts",
+        "Runs on modest hardware",
+        "Self-hostable multiplayer servers"
+      ],
+      "cons": [
+        "Base graphics look dated without installing custom NewGRF sets",
+        "Interface and mechanics have a learning curve for newcomers to tycoon games",
+        "Full authentic recreation benefits from original Transport Tycoon Deluxe assets, though free open graphics packs are available as an alternative"
+      ],
+      "faqs": [
+        { "question": "Is OpenTTD free?", "answer": "Yes, it is entirely free and open source under the GNU GPL v2." },
+        { "question": "Do I need the original Transport Tycoon Deluxe to play?", "answer": "No, free open graphics packs are available so the game can be played without the original commercial data files." },
+        { "question": "Can I host a multiplayer server?", "answer": "Yes, and OpenTTD also maintains a list of public community servers to join." },
+        { "question": "How long has OpenTTD been in development?", "answer": "It was first released in 2004 and has been actively developed continuously since." }
+      ],
+      "use_cases": [
+        { "title": "Solo tycoon play", "description": "Build and optimize transport networks for profit at your own pace.", "audience": "Fans of transport/economic simulation games" },
+        { "title": "Competitive multiplayer", "description": "Compete or cooperate with others on public or private servers.", "audience": "Multiplayer strategy/simulation players" },
+        { "title": "Self-hosted community server", "description": "Run a persistent server with custom rules and NewGRF content packs.", "audience": "Server admins and OpenTTD communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "self-hosted", "open-source"],
+      "seo_meta_description": "OpenTTD is a free, open-source transport simulation game inspired by Transport Tycoon Deluxe, with multiplayer and deep modding support."
+    }
+  },
+  {
+    "tool_id": "59de2787-72b5-4f39-9d09-b260b1994aa6",
+    "slug": "red-eclipse-2",
+    "name": "Red Eclipse 2",
+    "enrichment": {
+      "short_description": "Red Eclipse 2 is a free, open-source first-person arena shooter built around parkour movement and fast multiplayer combat.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2011,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Red Eclipse is a free and open-source first-person arena shooter built on a custom version of the Cube 2 engine, with its first stable release in March 2011. The project later moved to a rewritten engine for its 2.0 \"Jupiter Edition\" release, distributed on Steam and the official site as Red Eclipse 2.",
+            "The game emphasizes agility over pure gunplay, layering parkour-style wall-running and impulse boosts on top of arena deathmatch and objective modes. It ships with real-time in-game map editing, extensive mutators for tweaking game rules, and cross-platform support for Windows, Linux, BSD, and macOS."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Red Eclipse 2 suits players looking for a fast, movement-focused arena shooter outside the mainstream commercial catalog, as well as mappers and modders who want to build and share custom content using the built-in real-time editor."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Parkour movement", "description": "Wall-running, dashing, and impulse boosts layered on top of arena combat." },
+        { "title": "Real-time map editing", "description": "Edit levels collaboratively while playing, using tools inherited from the Cube 2 engine lineage." },
+        { "title": "Mutators", "description": "Configurable game variables and mutators to customize match rules." },
+        { "title": "Cross-platform support", "description": "Runs on Windows, GNU/Linux, BSD, and macOS." },
+        { "title": "Multiplayer arenas", "description": "Fast-paced multiplayer matches designed around movement and balance." },
+        { "title": "Open-source engine", "description": "Built on Cube Engine 2 with SDL and OpenGL, fully open source." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Distinct, movement-focused gameplay compared to typical arena shooters",
+        "Real-time collaborative map editing",
+        "Cross-platform support",
+        "Community-run servers available"
+      ],
+      "cons": [
+        "Smaller player base than mainstream commercial shooters",
+        "Visuals are dated relative to modern AAA titles",
+        "Limited official documentation for setting up custom self-hosted servers"
+      ],
+      "faqs": [
+        { "question": "Is Red Eclipse 2 free?", "answer": "Yes, it is completely free to download and play." },
+        { "question": "Is it open source?", "answer": "Yes, Red Eclipse is free and open-source software." },
+        { "question": "What engine does it use?", "answer": "A custom, rewritten build of the Cube 2 engine used for the 2.0 \"Jupiter Edition.\"" },
+        { "question": "Can I run my own server?", "answer": "Yes, community server hosting is supported, and a server list is available on the official site." }
+      ],
+      "use_cases": [
+        { "title": "Fast arena multiplayer", "description": "Jump into parkour-driven deathmatch and objective modes.", "audience": "Fans of fast-paced arena shooters" },
+        { "title": "Custom map creation", "description": "Build and edit levels in real time using the in-game editor.", "audience": "Mappers and modders" },
+        { "title": "Community server hosting", "description": "Run a self-hosted public or private Red Eclipse 2 server.", "audience": "Server administrators" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "self-hosted", "open-source"],
+      "seo_meta_description": "Red Eclipse 2 is a free, open-source first-person arena shooter with parkour movement, built on the Cube 2 engine."
+    }
+  },
+  {
+    "tool_id": "d02a6964-f2f8-4c33-b305-57eb379fdf40",
+    "slug": "suroi",
+    "name": "Suroi",
+    "enrichment": {
+      "short_description": "Suroi is a free, open-source 2D battle royale game that runs entirely in the browser, inspired by surviv.io.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2023,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Suroi is an open-source 2D battle royale game created in 2023 by developer HasangerGames, directly inspired by surviv.io. It runs entirely in the browser via WebGL, so there is no client to install, and both the client and server code are published on GitHub, allowing anyone to self-host an instance.",
+            "The project is actively developed and explicitly labeled a work in progress, with a growing weapon and item roster, regular seasonal events, and frequent community-driven updates published on a recurring \"Suroi Sundays\" cadence."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Suroi is aimed at players who want quick, install-free battle royale sessions in a browser, and at developers interested in contributing to or self-hosting an open-source multiplayer web game."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Browser-based play", "description": "Runs directly in a web browser via WebGL, with no download or installation required." },
+        { "title": "Seasonal events", "description": "Rotating limited-time modes and seasonal content such as Halloween and Winter events." },
+        { "title": "Growing weapon roster", "description": "Regularly expanded weapons, items, and mechanics." },
+        { "title": "Open-source client and server", "description": "Full source available on GitHub, enabling self-hosting and community contributions." },
+        { "title": "Customizable settings", "description": "Adjustable gameplay, graphics, and interface options." },
+        { "title": "Active update cadence", "description": "Frequent community-driven updates released on a regular schedule." }
+      ],
+      "pros": [
+        "Completely free, no install, playable instantly in a browser",
+        "Fully open source and self-hostable",
+        "Frequent content updates from an active development community",
+        "Lightweight compared to 3D battle royale games"
+      ],
+      "cons": [
+        "Still labeled a work in progress with ongoing balance and content changes",
+        "Smaller map/mode variety than established commercial battle royale games",
+        "Browser performance depends on the player's device and network"
+      ],
+      "faqs": [
+        { "question": "Is Suroi free?", "answer": "Yes, it is entirely free to play." },
+        { "question": "Is Suroi open source?", "answer": "Yes, the code is public on GitHub and can be self-hosted." },
+        { "question": "Do I need to install anything?", "answer": "No, Suroi runs directly in a web browser using WebGL." },
+        { "question": "Is Suroi a finished game?", "answer": "No, it is actively developed and officially described as a work in progress." }
+      ],
+      "use_cases": [
+        { "title": "Quick browser battle royale", "description": "Play instantly without downloading a client.", "audience": "Casual players wanting a fast battle royale session" },
+        { "title": "Self-hosting an instance", "description": "Run a private or public Suroi server from the open-source repository.", "audience": "Developers and server administrators" },
+        { "title": "Open-source contribution", "description": "Contribute code, content, or bug fixes to an actively developed web game.", "audience": "Web/game developers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["web-app", "self-hosted", "open-source"],
+      "seo_meta_description": "Suroi is a free, open-source, browser-based 2D battle royale game inspired by surviv.io, playable instantly with no install."
+    }
+  },
+  {
+    "tool_id": "bd0b0ec4-080c-44f8-8cca-2ceddee81151",
+    "slug": "veloren",
+    "name": "Veloren",
+    "enrichment": {
+      "short_description": "Veloren is a free, open-source multiplayer voxel RPG written in Rust, inspired by Cube World and Minecraft.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2018,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Veloren is a community-developed, open-source action-adventure voxel RPG written in Rust, with development starting in mid-2018. It is licensed under GPL-3.0, which the project describes as intended to keep the game free and open source permanently, and it is built entirely on original, community-created graphics, music, and other assets.",
+            "The game features procedurally generated open fantasy worlds spanning mountains, deserts, and jungles, dynamic combat with varied weapons, crafting, dungeon bosses, and creature taming. Multiplayer is core to the project, and players can host their own servers, including over LAN."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Veloren is for players who want a free, open-source alternative to voxel action-RPGs like Cube World, and for communities or individuals who want to self-host their own multiplayer world."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Procedural world generation", "description": "Explore open fantasy landscapes including mountains, deserts, and jungles, plus caves for mining." },
+        { "title": "Dynamic combat", "description": "Varied weapons and playstyles with real-time action combat." },
+        { "title": "Crafting and dungeons", "description": "Craft gear and take on dungeon bosses and monster encounters." },
+        { "title": "Creature taming", "description": "Tame creatures to serve as companions or mounts." },
+        { "title": "Self-hosted multiplayer", "description": "Host your own server, including over LAN, for cooperative play." },
+        { "title": "Built in Rust", "description": "Performance-focused engine written in Rust by an active contributor community." }
+      ],
+      "pros": [
+        "Completely free and open source (GPL-3.0)",
+        "Self-hostable multiplayer, including LAN play",
+        "Actively developed by a sizable contributor community",
+        "Uses only original, community-made assets"
+      ],
+      "cons": [
+        "Content and world variety are smaller than established commercial RPGs",
+        "Requires a reasonably capable PC for smooth performance",
+        "Ongoing active development means gameplay systems can change between releases"
+      ],
+      "faqs": [
+        { "question": "Is Veloren free?", "answer": "Yes, it is completely free to play." },
+        { "question": "Is Veloren open source?", "answer": "Yes, it is licensed under GPL-3.0." },
+        { "question": "Can I host my own server?", "answer": "Yes, including hosting over LAN for local multiplayer." },
+        { "question": "What is Veloren written in?", "answer": "Rust." }
+      ],
+      "use_cases": [
+        { "title": "Solo or co-op exploration", "description": "Explore procedurally generated worlds, fight monsters, and craft gear.", "audience": "Fans of voxel action-RPGs" },
+        { "title": "Self-hosted multiplayer world", "description": "Run a private server, including over LAN, for friends or a community.", "audience": "Players wanting a persistent shared world" },
+        { "title": "Open-source contribution", "description": "Contribute code, art, or design to an actively developed Rust game.", "audience": "Rust developers and open-source contributors" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "self-hosted", "open-source"],
+      "seo_meta_description": "Veloren is a free, open-source multiplayer voxel RPG written in Rust, with self-hostable servers and procedurally generated worlds."
+    }
+  },
+  {
+    "tool_id": "9b3e2e73-ff9d-46eb-852d-a3b455445f8b",
+    "slug": "zero-k",
+    "name": "Zero-K",
+    "enrichment": {
+      "short_description": "Zero-K is a free, open-source real-time strategy game built on the Spring engine, with physics-based unit combat.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Zero-K is a free, open-source real-time strategy game that runs on the open-source Spring (Recoil) engine. It began as a Total Annihilation-style mod before all proprietary content was replaced, evolving into a fully independent game distributed under the GNU GPL v2-or-later license, with an official standalone Steam release in 2018.",
+            "The game is built around physics-based combat, where projectiles, unit movement, and terrain manipulation (such as digging canals or terraforming) are core strategic tools. Matches range from 1v1 duels up to large 16v16 team battles, and the game explicitly avoids in-game currency or pay-to-win mechanics."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Zero-K appeals to RTS fans who want a free, deeply strategic game with no monetization, particularly players who enjoy large-scale battles, physics-driven mechanics, and terrain manipulation as part of their strategy."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "100+ unit types", "description": "A large roster of units, each with distinct abilities and roles." },
+        { "title": "Physics-based combat", "description": "Projectiles and unit movement follow physics simulation rather than simple hit-chance rolls." },
+        { "title": "Terrain manipulation", "description": "Dig canals, terraform, and reshape the battlefield as part of strategy." },
+        { "title": "Large-scale matches", "description": "Supports games from 1v1 up to 16v16." },
+        { "title": "PlanetWars", "description": "A persistent, competitive online campaign layered on top of regular matches." },
+        { "title": "Spring/Recoil engine", "description": "Built on the open-source Spring engine, with source available on GitHub." }
+      ],
+      "pros": [
+        "Completely free, with no in-game currency or pay-to-win mechanics",
+        "Fully open source (GPL v2 or later)",
+        "Deep physics-driven strategy mechanics",
+        "Active multiplayer community and ranked ladder",
+        "Supports large-scale multiplayer battles"
+      ],
+      "cons": [
+        "Steep learning curve typical of complex RTS games",
+        "Smaller player base than mainstream commercial RTS titles",
+        "Visuals are dated compared to modern commercial RTS games"
+      ],
+      "faqs": [
+        { "question": "Is Zero-K free?", "answer": "Yes, it is completely free with no in-game currency or pay-to-win elements." },
+        { "question": "Is Zero-K open source?", "answer": "Yes, it is licensed under GPL v2 or later, with source on GitHub." },
+        { "question": "What engine does Zero-K run on?", "answer": "The open-source Spring (Recoil) engine." },
+        { "question": "Can I play offline against AI?", "answer": "Yes, campaign and AI skirmish modes are available alongside multiplayer." }
+      ],
+      "use_cases": [
+        { "title": "Competitive RTS multiplayer", "description": "Play ranked 1v1 or team matches against other players.", "audience": "Competitive RTS players" },
+        { "title": "Large-scale battles", "description": "Join or organize matches up to 16v16.", "audience": "Players who enjoy large-scale strategy battles" },
+        { "title": "Solo campaign and AI play", "description": "Play offline against AI or through the game's campaign.", "audience": "Single-player strategy fans" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "self-hosted", "open-source"],
+      "seo_meta_description": "Zero-K is a free, open-source real-time strategy game on the Spring engine, featuring physics-based combat and terrain manipulation."
+    }
+  },
+  {
+    "tool_id": "a437baba-e6f7-4c0f-84b6-b7edc8faba1e",
+    "slug": "auto-mcs",
+    "name": "auto-mcs",
+    "enrichment": {
+      "short_description": "auto-mcs is a free, open-source cross-platform tool for creating, updating, and managing Minecraft servers.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": "Independent open-source project",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "auto-mcs is an open-source, cross-platform application for creating and managing Minecraft servers, maintained on GitHub under the GPL-3.0 license. It aims to remove the friction of manual server setup, letting users create a Paper, Purpur, Fabric, Quilt, Forge, NeoForge, Spigot, CraftBukkit, or vanilla server in under a minute.",
+            "Beyond initial setup, auto-mcs bundles administration tools including automatic updates, backups, access control, a plugin/mod manager integrated with Modrinth, and its own scripting language called amscript for extending server behavior. It also integrates playit.gg so friends can connect without manual port forwarding, and offers remote management through a feature called Telepath."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "auto-mcs is built for players and small communities who want to run their own Minecraft server for friends without deep networking or server-administration knowledge, as well as more advanced users who want scripting and remote-management capabilities."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "One-click server creation", "description": "Create Paper, Purpur, Fabric, Quilt, Forge, NeoForge, Spigot, CraftBukkit, or vanilla servers in under a minute." },
+        { "title": "playit.gg integration", "description": "Expose your server to friends without manually configuring port forwarding." },
+        { "title": "Telepath remote management", "description": "Manage a running server remotely from another device." },
+        { "title": "Plugin/mod manager", "description": "Install and update plugins and mods with built-in Modrinth integration." },
+        { "title": "Backups and access control", "description": "Automated backups plus operator and ban management tools." },
+        { "title": "amscript", "description": "A custom scripting language for automating and extending server behavior." }
+      ],
+      "pros": [
+        "Free and open source (GPL-3.0)",
+        "Avoids manual port forwarding via built-in playit.gg integration",
+        "Supports most major Minecraft server platforms and modloaders",
+        "Custom scripting (amscript) for automation beyond default admin tools"
+      ],
+      "cons": [
+        "Focused specifically on Minecraft, not a general-purpose server-hosting tool",
+        "Smaller community and documentation footprint than established panels like MCSManager",
+        "Advanced features such as remote management and scripting require additional setup"
+      ],
+      "faqs": [
+        { "question": "Is auto-mcs free?", "answer": "Yes, it is a free, open-source project." },
+        { "question": "What Minecraft server types does it support?", "answer": "Paper, Purpur, Fabric, Quilt, Forge, NeoForge, Spigot, CraftBukkit, and vanilla." },
+        { "question": "Do I need to configure port forwarding?", "answer": "No, playit.gg integration lets friends connect without manual port forwarding." },
+        { "question": "Can I manage a server remotely?", "answer": "Yes, via the built-in Telepath feature." }
+      ],
+      "use_cases": [
+        { "title": "Quick server setup for friends", "description": "Spin up a Minecraft server to play with friends with minimal technical setup.", "audience": "Casual Minecraft players without server-admin experience" },
+        { "title": "Server administration", "description": "Manage mods, plugins, backups, and access control for an existing server.", "audience": "Minecraft server administrators" },
+        { "title": "Automation with amscript", "description": "Script custom server behavior and automation routines.", "audience": "Technical users wanting deeper server customization" }
+      ],
+      "pricing_plans": [],
+      "tags": ["windows", "mac", "self-hosted", "open-source"],
+      "seo_meta_description": "auto-mcs is a free, open-source cross-platform tool for creating and managing Minecraft servers without manual port forwarding."
+    }
+  }
+]

@@ -1,0 +1,655 @@
+[
+  {
+    "tool_id": "08450324-4200-4667-af14-f12d8180794b",
+    "slug": "pi-hole",
+    "name": "Pi-hole",
+    "enrichment": {
+      "short_description": "A self-hosted DNS sinkhole that blocks ads and trackers network-wide without needing browser extensions.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Pi-hole is a network-wide ad and tracker blocker that works as a DNS sinkhole. Instead of relying on per-browser extensions, it is installed once on a home network (commonly on a Raspberry Pi, but also via Docker or a Linux package) and blocks ad and tracking domains for every device that uses it as their DNS resolver.",
+            "Because blocking happens at the DNS level before a connection is even made, Pi-hole reduces bandwidth usage and speeds up page loads on every device on the network, including smart TVs, phones, and IoT devices that can't run ad-blocking extensions."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Pi-hole suits home-lab enthusiasts and privacy-conscious households who want one place to block ads and trackers for every device on their network, plus small offices that want basic DNS-level filtering without deploying an endpoint agent on every machine."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "DNS sinkhole ad blocking", "description": "Blocks known ad and tracking domains at the DNS resolution stage before any data is downloaded." },
+        { "title": "Web-based admin dashboard", "description": "A browser UI shows real-time query logs, top blocked domains, and per-client statistics, plus an API for building custom extensions." },
+        { "title": "Custom allow/deny lists", "description": "Supports whitelisting, blacklisting, and regex-based filtering rules for fine-grained control over what gets blocked." },
+        { "title": "Built-in DHCP server", "description": "Can optionally act as the network's DHCP server so every client automatically uses Pi-hole for DNS." },
+        { "title": "Long-term query history", "description": "Stores DNS query logs in a local database for historical analysis of network activity." },
+        { "title": "Configurable privacy levels", "description": "Four privacy modes let admins control how much query and client detail is logged and displayed." }
+      ],
+      "pros": [
+        "Blocks ads and trackers for every device on the network, not just browsers",
+        "Completely free and open source with no paid tier",
+        "Lightweight enough to run on a Raspberry Pi",
+        "Detailed dashboard and query logging for network visibility"
+      ],
+      "cons": [
+        "Requires basic networking knowledge to configure DNS/DHCP correctly",
+        "Does not block ads embedded within the same domain as the content (e.g., some YouTube/Twitch ads)",
+        "A single Pi-hole instance is a single point of failure for DNS unless a secondary is configured"
+      ],
+      "faqs": [
+        { "question": "Is Pi-hole free?", "answer": "Yes. Pi-hole is completely free and open source; the project accepts optional donations but charges nothing to use." },
+        { "question": "Do I need a Raspberry Pi to run Pi-hole?", "answer": "No. Despite the name, Pi-hole can run on any Linux system or in a Docker container, not just a Raspberry Pi." },
+        { "question": "Does Pi-hole replace a VPN or antivirus?", "answer": "No. Pi-hole only blocks DNS requests to known ad/tracking domains; it does not encrypt traffic or scan for malware." }
+      ],
+      "use_cases": [
+        { "title": "Home network ad blocking", "description": "Block ads and trackers across every device on a household network from one central point.", "audience": "Home users and self-hosting enthusiasts" },
+        { "title": "Network-wide DNS visibility", "description": "Monitor which domains devices on the network are querying for troubleshooting or parental oversight.", "audience": "Home-lab admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Pi-hole is a free, open-source DNS sinkhole that blocks ads and trackers network-wide for every device, self-hosted on Linux or Docker."
+    }
+  },
+  {
+    "tool_id": "324e805f-15ca-4f08-af33-49fee415253c",
+    "slug": "technitium-dns-server",
+    "name": "Technitium DNS Server",
+    "enrichment": {
+      "short_description": "An open-source, self-hosted authoritative and recursive DNS server with encrypted DNS and built-in ad blocking.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Technitium DNS Server is an open-source DNS server that can act as an authoritative server, a recursive resolver, or a forwarder, and includes network-wide ad and malware blocking built in. It supports encrypted DNS protocols including DNS-over-TLS, DNS-over-HTTPS, and DNS-over-QUIC, along with DNSSEC validation and protection against DNS rebinding attacks.",
+            "The project is written in .NET and is licensed under the GNU GPLv3. Installation is designed to take about a minute with minimal configuration required, and the server includes a web-based admin console, a full HTTP API, and an optional DHCP server."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Technitium fits self-hosters, small businesses, and network administrators who want a single DNS server that combines authoritative zone hosting, recursive resolution, encrypted DNS, and ad blocking, rather than stitching together separate tools."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Authoritative and recursive DNS", "description": "Can serve as both an authoritative name server for your own zones and a full recursive resolver, or operate as a forwarder." },
+        { "title": "Encrypted DNS protocols", "description": "Supports DNS-over-TLS, DNS-over-HTTPS, and DNS-over-QUIC for encrypted, private DNS resolution." },
+        { "title": "Ad and malware blocking", "description": "Configurable block list URLs with automatic daily updates, plus REGEX-based custom blocking rules." },
+        { "title": "DNSSEC validation", "description": "Validates DNSSEC signatures and protects against DNS rebinding attacks." },
+        { "title": "Built-in DHCP server", "description": "Optional integrated DHCP server with clustering support for managing an entire home or office network." },
+        { "title": "Full HTTP API", "description": "A complete API enables automation and third-party integrations, alongside multi-user role-based access and API tokens." },
+        { "title": "High-performance async architecture", "description": "Built on an async I/O design the project reports handling over 100,000 requests per second, with caching, serve-stale, and prefetching." }
+      ],
+      "pros": [
+        "Combines authoritative, recursive, and ad-blocking DNS in a single server",
+        "Encrypted DNS (DoT, DoH, DoQ) supported out of the box",
+        "Cross-platform: Windows, Linux, macOS, Raspberry Pi, and Docker",
+        "Free, open source, and actively maintained"
+      ],
+      "cons": [
+        "More complex to configure than a purely ad-blocking-focused tool given its broader DNS server feature set",
+        "Documentation assumes some familiarity with DNS concepts",
+        "Self-hosted, so uptime and updates are the operator's responsibility"
+      ],
+      "faqs": [
+        { "question": "Is Technitium DNS Server free?", "answer": "Yes, it's free and open source under the GNU GPLv3 license; the project accepts optional donations via Patreon." },
+        { "question": "What platforms does it run on?", "answer": "Windows (7 SP1+), Linux, macOS, Raspberry Pi, and Docker, using a cross-platform .NET runtime." },
+        { "question": "Can it block ads like Pi-hole?", "answer": "Yes, it supports configurable block lists with automatic updates and regex-based blocking, in addition to its full DNS server functionality." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted encrypted DNS resolver", "description": "Run a private recursive resolver that supports DoH/DoT/DoQ for encrypted client queries.", "audience": "Privacy-focused self-hosters" },
+        { "title": "Authoritative DNS hosting", "description": "Host DNS zones for owned domains directly on infrastructure the operator controls.", "audience": "Network administrators" },
+        { "title": "Network ad blocking with DHCP", "description": "Combine DNS-level ad blocking with DHCP management for a full home/office network stack.", "audience": "Home-lab and small office admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api", "windows", "mac"],
+      "seo_meta_description": "Technitium DNS Server is a free, open-source, self-hosted DNS server with encrypted DNS, DNSSEC, ad blocking, and a full HTTP API."
+    }
+  },
+  {
+    "tool_id": "9411a7fd-0397-45f4-8f2b-8c0aa0a790d9",
+    "slug": "bentopdf",
+    "name": "BentoPDF",
+    "enrichment": {
+      "short_description": "A free, open-source, privacy-first PDF toolkit that processes files entirely in the browser with no uploads.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "BentoPDF is an open-source PDF toolkit that runs client-side in the browser using WebAssembly, so files never leave the user's device. It offers over 40 tools across organization, editing, format conversion, and security categories, and can be used directly on its hosted site, run locally, or self-hosted via Docker.",
+            "The project is licensed under Apache 2.0 and is available on GitHub. Because processing happens entirely in-browser, there are no file uploads, no accounts, no file-size limits enforced server-side, and nothing is logged or stored remotely."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "BentoPDF suits individuals and organizations who need common PDF tasks — merging, splitting, compressing, converting, redacting, or signing — done quickly without uploading potentially sensitive documents to a third-party server."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Client-side processing", "description": "All PDF operations run locally in the browser via WebAssembly; files are never uploaded to a server." },
+        { "title": "40+ PDF tools", "description": "Covers organization (merge, split, reorder, extract, rotate), editing (page numbers, watermarks, headers/footers, form fill, flatten), and security (compress, encrypt, decrypt, sign, redact, metadata)." },
+        { "title": "Format conversion", "description": "Converts images, Markdown, and text files into PDFs, and exports PDF pages as images or greyscale files." },
+        { "title": "Built-in OCR", "description": "Includes OCR support for extracting text from scanned PDF pages." },
+        { "title": "Self-hostable via Docker", "description": "Ships an official Docker image and docker-compose setup for organizations that want to run their own instance." }
+      ],
+      "pros": [
+        "No file uploads — everything processes locally in the browser",
+        "Free with no watermarks, sign-ups, or file limits",
+        "Wide range of tools (40+) covering most common PDF tasks",
+        "Open source (Apache 2.0) and self-hostable"
+      ],
+      "cons": [
+        "Browser-based WebAssembly processing can be slower on very large PDF files than a native desktop app",
+        "As a newer project, community size and third-party plugin ecosystem are limited compared to established PDF suites"
+      ],
+      "faqs": [
+        { "question": "Does BentoPDF upload my files anywhere?", "answer": "No. All processing happens locally in the browser using WebAssembly; files never leave the device." },
+        { "question": "Is BentoPDF free?", "answer": "Yes, all tools are free to use with no sign-up, file limits, or watermarks, and the source code is open under Apache 2.0." },
+        { "question": "Can I self-host BentoPDF?", "answer": "Yes, official Docker images and a docker-compose file are provided for self-hosting." }
+      ],
+      "use_cases": [
+        { "title": "Private PDF editing", "description": "Merge, split, compress, or edit PDFs without sending sensitive documents to a third-party server.", "audience": "Privacy-conscious individuals and businesses" },
+        { "title": "Self-hosted PDF toolkit for teams", "description": "Deploy an internal PDF tools instance via Docker so an organization controls the infrastructure entirely.", "audience": "IT teams and self-hosters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "free-plan"],
+      "seo_meta_description": "BentoPDF is a free, open-source PDF toolkit with 40+ tools that processes files entirely in the browser — no uploads, no sign-up, self-hostable."
+    }
+  },
+  {
+    "tool_id": "cc56b3f3-f4c5-4009-b322-e2f5719481b6",
+    "slug": "gotenberg",
+    "name": "Gotenberg",
+    "enrichment": {
+      "short_description": "A free, open-source Docker API for converting HTML, Office documents, and Markdown into PDFs, and merging or manipulating PDFs.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Gotenberg is a Docker-based, self-hosted API that converts documents into PDFs so developers don't have to install and manage Chromium, LibreOffice, and PDF libraries themselves. It exposes a RESTful HTTP API with endpoints for converting URLs, HTML templates, and Markdown into PDFs using an embedded Chromium engine, and for converting Word, Excel, PowerPoint, and 100+ other formats using an embedded LibreOffice.",
+            "Beyond conversion, Gotenberg can merge, split, and encrypt PDFs, apply watermarks, extract page ranges, produce PDF/A-compliant output, and fetch source files from or upload results to S3, MinIO, or Google Cloud Storage. It's released under the MIT license, runs as a single container (`docker run -p 3000:3000 gotenberg/gotenberg:8`), and supports amd64, arm64, armhf, i386, and ppc64le architectures."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Gotenberg is aimed at developers who need reliable server-side PDF generation — invoices, reports, rendered web pages, converted Office documents — inside an application stack, without bundling browser or Office-conversion dependencies into their own services."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Chromium-based HTML/URL to PDF", "description": "Converts URLs, HTML templates, and Markdown files to PDF with full JavaScript execution and web font rendering." },
+        { "title": "LibreOffice document conversion", "description": "Converts Word, Excel, PowerPoint, and 100+ other office formats to PDF using an embedded LibreOffice engine." },
+        { "title": "PDF manipulation", "description": "Merges, splits, encrypts, and inspects PDFs, extracts page ranges, and applies watermarks." },
+        { "title": "PDF/A compliance", "description": "Can produce PDF/A-compliant archival PDFs for long-term document retention requirements." },
+        { "title": "Cloud storage integration", "description": "Fetches source files from and uploads results to S3, MinIO, or Google Cloud Storage directly from the API." },
+        { "title": "Single-container Docker deployment", "description": "Ships as one Docker image supporting amd64, arm64, armhf, i386, and ppc64le, with no separate dependency installation." }
+      ],
+      "pros": [
+        "Free and open source (MIT license) with a large, active user base",
+        "Single Docker container replaces managing Chromium and LibreOffice conversion dependencies directly",
+        "Broad format support: HTML, Markdown, and 100+ Office formats",
+        "Built-in cloud storage integration for source and output files"
+      ],
+      "cons": [
+        "Requires running and maintaining a Docker container/service rather than a library import",
+        "No official hosted/managed version — self-hosting and scaling are the operator's responsibility",
+        "Conversion quality for complex Office documents depends on the bundled LibreOffice engine's fidelity"
+      ],
+      "faqs": [
+        { "question": "Is Gotenberg free to use?", "answer": "Yes, Gotenberg is free and open source under the MIT license." },
+        { "question": "How do I run Gotenberg?", "answer": "Via Docker: `docker run --rm -p 3000:3000 gotenberg/gotenberg:8` starts the API on port 3000." },
+        { "question": "What can Gotenberg convert to PDF?", "answer": "URLs and HTML pages, Markdown files, and Word/Excel/PowerPoint and 100+ other document formats via LibreOffice." },
+        { "question": "Does Gotenberg offer a hosted API?", "answer": "No, Gotenberg is distributed as a self-hosted Docker image; there is no official managed cloud service." }
+      ],
+      "use_cases": [
+        { "title": "Server-side invoice/report generation", "description": "Render HTML templates into PDFs for invoices, reports, or receipts inside an application backend.", "audience": "Backend developers" },
+        { "title": "Office-to-PDF conversion pipelines", "description": "Convert uploaded Word, Excel, or PowerPoint files to PDF automatically as part of a document workflow.", "audience": "SaaS and internal tooling teams" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Gotenberg is a free, open-source Docker API that converts HTML, Office documents, and Markdown to PDF, plus merges and manipulates PDFs."
+    }
+  },
+  {
+    "tool_id": "ff47afbc-51e2-479e-9cbb-45a5ec96314e",
+    "slug": "i-librarian",
+    "name": "I, Librarian",
+    "enrichment": {
+      "short_description": "A PDF and reference management platform for research teams, available as a free open-source edition or a paid hosted/self-hosted subscription.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Dallas, TX, United States",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "I, Librarian is a browser-based PDF organizer and reference management platform built for research teams. It centralizes PDF collections in a single searchable database instead of scattered folders, with full-text and Boolean search, bulk tagging, and integrated searches across Crossref, Scopus, NASA, PubMed, IEEE, and patent repositories.",
+            "The product is developed by Scilico, LLC and is offered in three ways: a free, community open-source edition available on GitHub for self-hosting; paid online subscription plans (Lite and Pro) billed per user plus storage; and a paid self-hosted Pro license for organizations that need full data sovereignty behind their own firewall. The Pro tier adds AI-powered paper summaries, document Q&A, and AI-assisted literature search on top of the Lite feature set."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "I, Librarian is built for academic research groups, labs, and biotech/engineering teams that manage large PDF/paper collections and need centralized search, OCR, and citation database integration, with the option to self-host for institutional compliance."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Centralized PDF library", "description": "Consolidates a team's research PDFs into one searchable database, eliminating duplicate files and fragmented folders." },
+        { "title": "Integrated database search", "description": "Searches Crossref, Scopus, NASA, PubMed, IEEE, and patent repositories directly from within the app." },
+        { "title": "Full-text and Boolean search", "description": "Faceted, Boolean search across the entire document collection for systematic literature reviews." },
+        { "title": "OCR for scanned PDFs", "description": "Built-in OCR support covering over 90 languages, with a free monthly page allowance on paid plans." },
+        { "title": "AI paper summaries and Q&A (Pro)", "description": "Pro plans add AI-generated summaries, document chat/Q&A, and AI-assisted literature search queries." },
+        { "title": "Self-hosted / on-premises option", "description": "A Pro self-hosted license lets institutions run the platform entirely behind their own firewall for data sovereignty." }
+      ],
+      "pros": [
+        "Free open-source community edition available for self-hosting",
+        "Deep integration with major academic and patent databases",
+        "OCR support across 90+ languages",
+        "On-premises deployment option for institutions with compliance requirements"
+      ],
+      "cons": [
+        "AI features (summaries, chat) are limited to paid Pro plans",
+        "Per-user plus per-GB pricing can add up for larger research teams",
+        "Full commercial feature set requires either a paid subscription or a purchased Pro license"
+      ],
+      "faqs": [
+        { "question": "Is I, Librarian free?", "answer": "There is a free, open-source community edition on GitHub for self-hosting. The hosted Lite/Pro plans and the Pro self-hosted license are paid." },
+        { "question": "What's the difference between Lite and Pro?", "answer": "Pro adds AI-powered paper summaries, document chat, AI-assisted literature search, and offline export on top of the core PDF/reference management features in Lite." },
+        { "question": "Can I self-host I, Librarian for data sovereignty?", "answer": "Yes, a Pro self-hosted license is available for on-premises deployment behind an institution's firewall, in addition to the free open-source edition." }
+      ],
+      "use_cases": [
+        { "title": "Academic research paper management", "description": "Centralize and search a lab's PDF paper collection with integrated database lookups for systematic reviews.", "audience": "University research groups" },
+        { "title": "Compliant on-premises document research", "description": "Run the platform behind an institutional firewall to meet data sovereignty requirements.", "audience": "Biotech and regulated research teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted", "Core PDF/reference management"] },
+        { "plan_name": "Lite (Online)", "price": "From $1.50/user/month + $0.50/GB storage", "billing_cycle": "monthly", "features": ["Centrally managed PDF collection", "In-browser viewer", "Full-text search", "Integrated database search", "OCR", "Email support"] },
+        { "plan_name": "Pro (Online)", "price": "From $2.50/user/month + $0.50/GB storage", "billing_cycle": "monthly", "features": ["Everything in Lite", "AI paper summaries and chat", "AI-assisted literature search", "Offline export", "Activity tracking"] },
+        { "plan_name": "Pro Self-Hosted", "price": "$36/year per user or $126 per user (perpetual)", "billing_cycle": "yearly or one-time", "features": ["Full data sovereignty", "Unlimited libraries", "Container-based deployment", "Optional support add-ons"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "freemium", "ai"],
+      "seo_meta_description": "I, Librarian is a PDF and reference management platform for research teams, with a free open-source edition and paid hosted or on-premises plans."
+    }
+  },
+  {
+    "tool_id": "993944af-a2d6-42bb-a3a0-2b1c8a4c460d",
+    "slug": "papra",
+    "name": "Papra",
+    "enrichment": {
+      "short_description": "An open-source, self-hostable document archiving platform with tagging, full-text search, and email-based document intake.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Papra is an open-source document management and archiving platform for organizing, tagging, and searching files such as PDFs, invoices, spreadsheets, and code files. It supports automated tagging rules, dedicated per-user email addresses that auto-import attachments as documents, and organization structures for teams.",
+            "The project is licensed under AGPL-3.0 and can be self-hosted via Docker at no cost with no limits on documents, tags, or organizations. Papra also offers a hosted cloud version with a free tier and paid Plus/Pro tiers priced by storage and team size, with data hosted in Europe. It provides an API, webhooks, a CLI, and an SDK for developers, and is built by independent developer Corentin Thomasset."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Papra suits individuals and small teams who want to stop losing invoices, receipts, and documents across email and folders, and prefer either self-hosting on their own infrastructure or a lightweight EU-hosted cloud alternative to larger document-management suites."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Unified document storage", "description": "Consolidates PDFs, invoices, spreadsheets, code files, and more into one searchable archive." },
+        { "title": "Tagging and automated rules", "description": "Tag documents manually or set up automated tagging rules to classify incoming files." },
+        { "title": "Email ingestion", "description": "Generates dedicated email addresses per organization so attachments are automatically imported as documents." },
+        { "title": "Full-text search", "description": "Search across the entire document archive to find files without manual folder browsing." },
+        { "title": "Developer API, webhooks, CLI, and SDK", "description": "Provides programmatic access for integrating document intake and retrieval into other systems." },
+        { "title": "Self-hostable via Docker", "description": "Fully open source (AGPL-3.0) with unlimited self-hosted usage — no document, tag, or organization caps." }
+      ],
+      "pros": [
+        "Free, unlimited self-hosted usage under an open-source AGPL-3.0 license",
+        "Email-to-document ingestion simplifies capturing invoices and receipts",
+        "Includes API, webhooks, CLI, and SDK for automation",
+        "EU-hosted cloud option for teams that don't want to self-host"
+      ],
+      "cons": [
+        "Cloud free tier has limited storage (512MB) and team size (3 members)",
+        "Newer project with a smaller community than established DMS tools",
+        "Built and maintained largely by a single independent developer"
+      ],
+      "faqs": [
+        { "question": "Is Papra free?", "answer": "Yes, self-hosting is completely free and unlimited under the AGPL-3.0 open-source license. A hosted cloud version has a free tier plus paid Plus and Pro plans." },
+        { "question": "Can Papra import documents automatically?", "answer": "Yes, Papra generates dedicated email addresses that automatically import email attachments as archived documents." },
+        { "question": "Does Papra have an API?", "answer": "Yes, it offers a REST API, webhooks, a CLI, and an SDK for integrating with other tools." }
+      ],
+      "use_cases": [
+        { "title": "Personal invoice and receipt archiving", "description": "Automatically capture invoices and receipts via email ingestion and keep them tagged and searchable.", "audience": "Freelancers and individuals" },
+        { "title": "Team document archive", "description": "Centralize a small team's documents with shared organizations, tags, and full-text search.", "audience": "Small businesses and teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Unlimited documents, tags, and organizations", "Full feature set", "Docker deployment"] },
+        { "plan_name": "Free (Cloud)", "price": "$0/month", "billing_cycle": "monthly", "features": ["512MB storage", "3 team members per organization", "25MB max upload", "1 intake email"] },
+        { "plan_name": "Plus (Cloud)", "price": "$9/month ($7.50/month billed annually)", "billing_cycle": "monthly or annual", "features": ["5GB storage", "10 team members", "100MB max upload", "10 intake emails", "Priority support"] },
+        { "plan_name": "Pro (Cloud)", "price": "$30/month ($25/month billed annually)", "billing_cycle": "monthly or annual", "features": ["50GB storage", "50 team members", "500MB max upload", "100 intake emails", "Priority support"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "api", "freemium", "free-plan"],
+      "seo_meta_description": "Papra is an open-source document archiving platform with tagging, full-text search, and email ingestion, self-hostable or available as EU-hosted cloud plans."
+    }
+  },
+  {
+    "tool_id": "7407b9cd-1500-4f27-a02b-adda67302c80",
+    "slug": "pdfding",
+    "name": "PdfDing",
+    "enrichment": {
+      "short_description": "A free, open-source, self-hosted PDF manager for organizing, viewing, annotating, and sharing PDFs across devices.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "PdfDing is a self-hosted PDF management application that lets users organize, view, and edit PDFs while syncing reading position across devices. It supports workspaces, collections, multi-level tagging, and archiving for organization, plus text, highlight, and drawing annotation tools and digital signatures.",
+            "The project is open source and designed to be minimal, fast, and easy to deploy with Docker. It supports sharing PDFs via links or QR codes with optional access restrictions, OIDC-based single sign-on, two-factor authentication, and a customizable dark-mode interface. Development has been funded in part by the NGI0 Commons Fund via NLnet, and it emphasizes data ownership with no vendor lock-in."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "PdfDing fits self-hosters who want a personal or team PDF library — with reading-position sync, annotations, and shareable links — without relying on a third-party cloud PDF service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Cross-device reading sync", "description": "Remembers the last read position for each PDF so reading can continue seamlessly across devices." },
+        { "title": "Organization tools", "description": "Workspaces, collections, multi-level tagging, and archiving keep large PDF libraries organized." },
+        { "title": "Annotation and editing", "description": "Add text, highlights, and drawings directly on PDFs, plus digital signature support." },
+        { "title": "Shareable links and QR codes", "description": "Share PDFs externally via links or QR codes with optional access restrictions." },
+        { "title": "OIDC SSO and 2FA", "description": "Supports OIDC-based single sign-on and two-factor authentication for secure access." },
+        { "title": "Docker-first deployment", "description": "Designed to be minimal, fast, and easy to set up with Docker for full data ownership." }
+      ],
+      "pros": [
+        "Free and open source with no vendor lock-in",
+        "Reading position sync across devices out of the box",
+        "Built-in annotation, signing, and sharing features",
+        "Simple Docker-based self-hosted deployment"
+      ],
+      "cons": [
+        "Requires self-hosting and Docker familiarity — no official managed hosting",
+        "Smaller community/ecosystem compared to larger document management platforms"
+      ],
+      "faqs": [
+        { "question": "Is PdfDing free?", "answer": "Yes, PdfDing is fully open source and free to self-host." },
+        { "question": "Can PdfDing sync my reading progress across devices?", "answer": "Yes, it remembers the last position read in each PDF and syncs it across devices." },
+        { "question": "Does PdfDing support single sign-on?", "answer": "Yes, it supports OIDC-based SSO as well as two-factor authentication." }
+      ],
+      "use_cases": [
+        { "title": "Personal PDF library", "description": "Self-host a personal PDF reading and annotation library with cross-device sync.", "audience": "Individual self-hosters" },
+        { "title": "Shared document access", "description": "Share PDFs with others via links or QR codes with optional access controls.", "audience": "Small teams and families" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "PdfDing is a free, open-source, self-hosted PDF manager with cross-device reading sync, annotations, signing, and shareable links."
+    }
+  },
+  {
+    "tool_id": "b160eec3-7dec-4749-aa87-4cbf8e786590",
+    "slug": "simpledms",
+    "name": "SimpleDMS",
+    "enrichment": {
+      "short_description": "An open-source document management system for small businesses that organizes documents by tags and metadata instead of folders.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SimpleDMS is an open-source document management system built for small businesses, organized around a tag system and shared or private workspaces rather than traditional folder hierarchies. It includes duplicate detection, full-text search, document versioning, multiple viewing options, and an inbox that suggests metadata for newly added files.",
+            "SimpleDMS can be deployed either in the cloud on a subscription basis (Pro and Unlimited tiers) or self-hosted on-premises using the open-source codebase from GitHub, with a 30-day free trial available for the cloud version. A white-label SaaS option is also offered for businesses that want to resell the platform under their own brand."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "SimpleDMS targets small businesses that want a lightweight document management system organized around tags and metadata, and want the flexibility to run it either as a cloud subscription or self-hosted on their own servers."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Tag-based organization", "description": "Documents are categorized with tags instead of relying on nested folder structures." },
+        { "title": "Workspaces", "description": "Shared or private spaces control which documents are visible to which users or teams." },
+        { "title": "Duplicate detection", "description": "Automatically flags duplicate documents to keep the archive clean." },
+        { "title": "Full-text search", "description": "Search across document content, not just filenames or tags." },
+        { "title": "Document versioning", "description": "Tracks revisions of a document over time." },
+        { "title": "Smart inbox", "description": "An inbox view suggests metadata for newly added documents to speed up filing." }
+      ],
+      "pros": [
+        "Open-source codebase available on GitHub for self-hosting",
+        "Tag- and metadata-driven filing avoids manual folder organization",
+        "Flexible deployment: cloud subscription, on-premises, or white-label SaaS",
+        "30-day free trial for the cloud version"
+      ],
+      "cons": [
+        "Detailed pricing for cloud and on-premises tiers is not fully published and requires contacting the vendor",
+        "Smaller community/ecosystem compared to larger open-source DMS projects"
+      ],
+      "faqs": [
+        { "question": "Is SimpleDMS free?", "answer": "The self-hosted, open-source codebase is available on GitHub. Cloud hosting is subscription-based with a 30-day free trial." },
+        { "question": "Can I self-host SimpleDMS?", "answer": "Yes, it can be deployed on-premises using the open-source version, in addition to the cloud subscription option." },
+        { "question": "Does SimpleDMS support white-label reselling?", "answer": "Yes, a white-label SaaS option is available for businesses that want to offer SimpleDMS under their own brand." }
+      ],
+      "use_cases": [
+        { "title": "Small business document filing", "description": "Replace manual folder-based filing with tag- and metadata-driven document organization.", "audience": "Small businesses" },
+        { "title": "Self-hosted on-premises DMS", "description": "Run the open-source codebase on internal infrastructure for full data control.", "audience": "Small businesses with compliance needs" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "freemium", "free-trial"],
+      "seo_meta_description": "SimpleDMS is an open-source document management system for small businesses using tags and workspaces, available cloud-hosted or self-hosted."
+    }
+  },
+  {
+    "tool_id": "95db99cc-d2cd-4227-a213-282aa828ef80",
+    "slug": "atsumeru",
+    "name": "Atsumeru",
+    "enrichment": {
+      "short_description": "A free, open-source, self-hosted media server for organizing and reading manga, comics, and light novels.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Atsumeru is a free, open-source, self-hosted media server for personal manga, comic, and light novel libraries. It supports common comic and ebook formats — CBZ, CBR, CB7, PDF, ePub, FB2, and DjVu — and reads metadata from either ComicInfo.xml or its own native book_info.json format.",
+            "The server ships with a web-based reading interface (WebUI) and an official Android app, both supporting two-way reading history synchronization so progress stays in sync across devices. A separate Atsumeru Manager desktop application for Windows and Linux lets administrators control the server and edit library metadata."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Atsumeru is built for manga, comic, and light novel readers who want to self-host their own digital library and read it through a browser or dedicated Android app instead of relying on third-party reading services."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-format library support", "description": "Handles CBZ, CBR, CB7, PDF, ePub, FB2, and DjVu files in a single organized library." },
+        { "title": "Web-based reader", "description": "Read manga, comics, and light novels directly in the browser via the WebUI." },
+        { "title": "Android app", "description": "A dedicated Android app provides native reading with synced history." },
+        { "title": "Reading history sync", "description": "Two-way sync between the WebUI and Android app keeps reading progress consistent across devices." },
+        { "title": "Metadata management", "description": "Reads and organizes metadata via ComicInfo.xml or the native book_info.json format." },
+        { "title": "Desktop management app", "description": "Atsumeru Manager (Windows/Linux) provides server control and library/metadata editing outside the browser." }
+      ],
+      "pros": [
+        "Completely free and open source",
+        "Supports a wide range of comic/manga/ebook formats in one library",
+        "Cross-device reading progress sync via WebUI and Android app",
+        "Dedicated desktop manager for library administration"
+      ],
+      "cons": [
+        "No official iOS app",
+        "Requires self-hosting infrastructure and setup",
+        "Smaller community compared to larger self-hosted media server projects"
+      ],
+      "faqs": [
+        { "question": "Is Atsumeru free?", "answer": "Yes, Atsumeru is completely free and open source." },
+        { "question": "What file formats does Atsumeru support?", "answer": "CBZ, CBR, CB7, PDF, ePub, FB2, and DjVu, with metadata via ComicInfo.xml or its native book_info.json format." },
+        { "question": "Does Atsumeru sync reading progress across devices?", "answer": "Yes, two-way reading history synchronization is supported between the WebUI and the Android app." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted manga/comic library", "description": "Organize and read a personal manga, comic, or light novel collection from a self-hosted server.", "audience": "Manga and comic readers" },
+        { "title": "Cross-device reading", "description": "Start reading on a browser and continue on the Android app with synced progress.", "audience": "Mobile readers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "android", "windows"],
+      "seo_meta_description": "Atsumeru is a free, open-source, self-hosted server for manga, comics, and light novels with a web reader and Android app."
+    }
+  },
+  {
+    "tool_id": "3e99368f-6adc-431d-9ed6-588c0d07395e",
+    "slug": "calibre",
+    "name": "Calibre",
+    "enrichment": {
+      "short_description": "A free, open-source ebook management suite for organizing, converting, editing, and serving ebook libraries across devices.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Calibre is a cross-platform, free and open-source ebook management application maintained by Kovid Goyal. It handles organizing ebook libraries with metadata, tags, and custom columns, converting between formats such as EPUB, MOBI, AZW3, and PDF, editing EPUB and AZW3 files with a live HTML/CSS preview, and syncing books to e-readers.",
+            "Calibre also includes a built-in content server that turns a library into a personal ebook hub accessible from a browser on other devices on the network, and can fetch news and magazine content from online sources and convert it into ebook format for offline reading. An extensive plugin ecosystem extends metadata sources, reading statistics, and library organization features."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Calibre is the standard tool for anyone managing a personal ebook collection — organizing metadata, converting formats for different e-readers, editing EPUB files, or serving a library to other devices — on Windows, macOS, or Linux."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Library management with metadata", "description": "Organizes ebooks with tags, custom columns, and rich metadata editing so large libraries stay searchable." },
+        { "title": "Format conversion engine", "description": "Converts between EPUB, MOBI, AZW3, PDF, and other ebook formats while preserving layout, images, and fonts." },
+        { "title": "EPUB/AZW3 editor", "description": "Built-in editor exposes the underlying HTML/CSS of a book with a live preview for direct edits." },
+        { "title": "Content server", "description": "Serves a library over the network via a browser, functioning as a personal ebook hub accessible from other devices." },
+        { "title": "E-reader syncing", "description": "Syncs converted ebooks directly to a wide range of e-reader devices." },
+        { "title": "News and RSS to ebook", "description": "Fetches news and magazine content from online sources and converts it into ebook format for offline reading." },
+        { "title": "Plugin ecosystem", "description": "A large plugin library extends metadata sources, reading statistics, and other library organization features." }
+      ],
+      "pros": [
+        "Completely free and open source with no subscription fees",
+        "Extremely mature and feature-complete ebook conversion engine",
+        "Cross-platform on Windows, macOS, and Linux",
+        "Built-in content server for network-wide access to a library",
+        "Large plugin ecosystem for extending functionality"
+      ],
+      "cons": [
+        "Interface is dense and can feel dated compared to modern apps",
+        "Learning curve for advanced features like the editor and conversion options",
+        "No official mobile app; mobile access relies on the content server or third-party reader apps"
+      ],
+      "faqs": [
+        { "question": "Is Calibre free?", "answer": "Yes, Calibre is completely free and open source, though the project accepts donations." },
+        { "question": "What platforms does Calibre run on?", "answer": "Windows, macOS, and Linux." },
+        { "question": "Can Calibre convert ebooks between formats?", "answer": "Yes, its conversion engine supports EPUB, MOBI, AZW3, PDF, and many other formats, including batch conversion." },
+        { "question": "Can I access my Calibre library from another device?", "answer": "Yes, Calibre includes a built-in content server that lets you browse, download, and read your library from a browser on other devices on the network." }
+      ],
+      "use_cases": [
+        { "title": "Personal ebook library management", "description": "Organize a large ebook collection with metadata, tags, and custom columns.", "audience": "Avid readers and book collectors" },
+        { "title": "E-reader format conversion", "description": "Convert ebooks between formats to match the requirements of a specific e-reader device.", "audience": "E-reader owners" },
+        { "title": "Self-hosted ebook access", "description": "Serve a personal ebook library over the network via the built-in content server.", "audience": "Self-hosters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac"],
+      "seo_meta_description": "Calibre is a free, open-source ebook manager for organizing, converting, editing, and serving ebook libraries on Windows, macOS, and Linux."
+    }
+  }
+]
