@@ -9,6 +9,20 @@ import { RecentFeaturedAgencies } from '../components/RecentFeaturedAgencies';
 import { findState, searchStates, USState } from '../lib/usStates';
 import { TopAdRail, BottomAdRail } from '../components/home/MobileAdRails';
 
+// Real, published Gappsy tools with tools.featured = true — same tools the
+// on-page "Featured" ad slots (FeaturedToolPromo.tsx) draw from, so this
+// homepage rail and the rest of the site stay in sync as new tools get
+// featured. Taglines are hand-written short blurbs (not short_description,
+// which runs 150-200 chars — too long for this card's 2-line clamp).
+const RECENTLY_FEATURED_TOOLS = [
+  { slug: 'canva', name: 'Canva', logo: 'https://www.google.com/s2/favicons?domain=www.canva.com&sz=256', tagline: 'Design anything, no experience needed' },
+  { slug: 'figma', name: 'Figma', logo: 'https://www.google.com/s2/favicons?domain=www.figma.com&sz=256', tagline: 'Design and prototype together in real time' },
+  { slug: 'photoshop', name: 'Adobe Photoshop', logo: 'https://www.google.com/s2/favicons?domain=www.adobe.com&sz=256', tagline: 'The industry standard for photo editing' },
+  { slug: 'notion', name: 'Notion', logo: 'https://www.google.com/s2/favicons?domain=www.notion.com&sz=256', tagline: 'One workspace for notes, docs, and projects' },
+  { slug: 'miro', name: 'Miro', logo: 'https://www.google.com/s2/favicons?domain=miro.com&sz=256', tagline: 'Visual whiteboard for team collaboration' },
+  { slug: 'webflow', name: 'Webflow', logo: 'https://www.google.com/s2/favicons?domain=webflow.com&sz=256', tagline: 'Design and launch sites without writing code' },
+];
+
 export default function HomePage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -130,8 +144,8 @@ export default function HomePage() {
           <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#0A0F1B', margin: 0 }}>
             Recently Featured Tools
           </h2>
-          <a
-            href="#"
+          <Link
+            to="/tools"
             style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -145,7 +159,7 @@ export default function HomePage() {
             onMouseOut={(e) => e.currentTarget.style.color = '#94A3B8'}
           >
             View all →
-          </a>
+          </Link>
         </div>
 
         <div
@@ -160,105 +174,26 @@ export default function HomePage() {
             scrollbarColor: '#E5E7EB #F9FAFB'
           }}
         >
-          <a
-            href="https://mediaboost.ai/"
-            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-            style={{
-              flex: '0 0 210px',
-              textDecoration: 'none'
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="card-click-arrow">→</span>
-            <div className="ad-card-logo flex-shrink-0">
-              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--2--1765843177050.webp" alt="Mediaboost" width={32} height={32} loading="lazy" decoding="async" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Mediaboost</div>
-              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Guaranteed Feature in Top Global Media</div>
-            </div>
-          </a>
-
-          <a
-            href="https://newsletters.ai/"
-            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-            style={{
-              flex: '0 0 210px',
-              textDecoration: 'none'
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="card-click-arrow">→</span>
-            <div className="ad-card-logo flex-shrink-0">
-              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--3--1765843590667.webp" alt="Newsletters.ai" width={32} height={32} loading="lazy" decoding="async" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Newsletters.ai</div>
-              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Weekly AI Catchup for lazy readers</div>
-            </div>
-          </a>
-
-          <a
-            href="https://guidejar.com/"
-            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-            style={{
-              flex: '0 0 210px',
-              textDecoration: 'none'
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="card-click-arrow">→</span>
-            <div className="ad-card-logo flex-shrink-0">
-              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--4--1765843301590.webp" alt="Guidejar" width={32} height={32} loading="lazy" decoding="async" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Guidejar</div>
-              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Convert more customers with interactive demos</div>
-            </div>
-          </a>
-
-          <a
-            href="https://chargeback.io/"
-            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-            style={{
-              flex: '0 0 210px',
-              textDecoration: 'none'
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="card-click-arrow">→</span>
-            <div className="ad-card-logo flex-shrink-0">
-              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842395903.png" alt="Chargeback.io" width={32} height={32} loading="lazy" decoding="async" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Chargeback.io</div>
-              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Prevent chargebacks on autopilot</div>
-            </div>
-          </a>
-
-          <a
-            href="https://waitforit.app/"
-            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-            style={{
-              flex: '0 0 210px',
-              textDecoration: 'none'
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="card-click-arrow">→</span>
-            <div className="ad-card-logo flex-shrink-0">
-              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842505817.webp" alt="WaitforIt" width={32} height={32} loading="lazy" decoding="async" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">WaitforIt</div>
-              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Build a waitlist for your idea in 3 minutes</div>
-            </div>
-          </a>
+          {RECENTLY_FEATURED_TOOLS.map((tool) => (
+            <Link
+              key={tool.slug}
+              to={`/tools/${tool.slug}`}
+              className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+              style={{
+                flex: '0 0 210px',
+                textDecoration: 'none'
+              }}
+            >
+              <span className="card-click-arrow">→</span>
+              <div className="ad-card-logo flex-shrink-0">
+                <img src={tool.logo} alt={tool.name} width={32} height={32} loading="lazy" decoding="async" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">{tool.name}</div>
+                <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{tool.tagline}</div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -399,85 +334,22 @@ export default function HomePage() {
           </div>
           <div className="-mx-4 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth scrollbar-hide" style={{ scrollPaddingLeft: 16, scrollPaddingRight: 16 }}>
             <div className="flex gap-4 px-4 pb-2">
-              <a
-                href="https://mediaboost.ai/"
-                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="card-click-arrow">→</span>
-                <div className="ad-card-logo flex-shrink-0">
-                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--2--1765843177050.webp" alt="Mediaboost" width={32} height={32} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Mediaboost</div>
-                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Guaranteed Feature in Top Global Media</div>
-                </div>
-              </a>
-
-              <a
-                href="https://newsletters.ai/"
-                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="card-click-arrow">→</span>
-                <div className="ad-card-logo flex-shrink-0">
-                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--3--1765843590667.webp" alt="Newsletters.ai" width={32} height={32} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Newsletters.ai</div>
-                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Weekly AI Catchup for lazy readers</div>
-                </div>
-              </a>
-
-              <a
-                href="https://guidejar.com/"
-                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="card-click-arrow">→</span>
-                <div className="ad-card-logo flex-shrink-0">
-                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--4--1765843301590.webp" alt="Guidejar" width={32} height={32} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Guidejar</div>
-                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Convert more customers with interactive demos</div>
-                </div>
-              </a>
-
-              <a
-                href="https://chargeback.io/"
-                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="card-click-arrow">→</span>
-                <div className="ad-card-logo flex-shrink-0">
-                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842395903.png" alt="Chargeback.io" width={32} height={32} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Chargeback.io</div>
-                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Prevent chargebacks on autopilot</div>
-                </div>
-              </a>
-
-              <a
-                href="https://waitforit.app/"
-                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="card-click-arrow">→</span>
-                <div className="ad-card-logo flex-shrink-0">
-                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842505817.webp" alt="WaitforIt" width={32} height={32} loading="lazy" decoding="async" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">WaitforIt</div>
-                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Build a waitlist for your idea in 3 minutes</div>
-                </div>
-              </a>
+              {RECENTLY_FEATURED_TOOLS.map((tool) => (
+                <Link
+                  key={tool.slug}
+                  to={`/tools/${tool.slug}`}
+                  className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                >
+                  <span className="card-click-arrow">→</span>
+                  <div className="ad-card-logo flex-shrink-0">
+                    <img src={tool.logo} alt={tool.name} width={32} height={32} loading="lazy" decoding="async" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">{tool.name}</div>
+                    <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{tool.tagline}</div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
