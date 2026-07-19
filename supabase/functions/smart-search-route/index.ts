@@ -92,6 +92,31 @@ const ROUTE_TOOL = {
   },
 };
 
+function joinNames(names: string[]): string {
+  if (names.length <= 1) return names[0] || "";
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+}
+
+// Builds the chat-style reply shown before the visitor clicks through —
+// written from the resolved, real names above, never from anything the
+// model said directly, so it can't contradict what the button actually
+// links to.
+function buildReply(resultType: string, names: string[], query: string): { message: string; buttonLabel: string } {
+  switch (resultType) {
+    case "tool":
+      return { message: `${names[0]} looks like a great match for what you're looking for.`, buttonLabel: `Visit ${names[0]}` };
+    case "category":
+      return { message: `"${names[0]}" is the category that fits best — take a look at what's inside.`, buttonLabel: `Browse ${names[0]}` };
+    case "compare":
+      return { message: `Here's a side-by-side comparison of ${joinNames(names)}.`, buttonLabel: "See the comparison" };
+    case "state":
+      return { message: `Here are the top marketing agencies in ${names[0]}.`, buttonLabel: `See agencies in ${names[0]}` };
+    default:
+      return { message: `We couldn't find an exact match, but here are search results for "${query}".`, buttonLabel: "See search results" };
+  }
+}
+
 async function checkRateLimit(
   // deno-lint-ignore no-explicit-any
   supabase: any,
@@ -200,7 +225,8 @@ Never invent a slug that isn't in one of the lists above.`;
       const errText = await openaiResponse.text().catch(() => "");
       console.error("[smart-search-route] OpenAI error:", openaiResponse.status, errText);
       supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: "fallback", result_path: fallbackPath, ip_address: ip }).then(() => {});
-      return jsonResponse({ ok: true, path: fallbackPath, type: "fallback" });
+      const fallbackReply = buildReply("fallback", [], query);
+      return jsonResponse({ ok: true, path: fallbackPath, type: "fallback", ...fallbackReply });
     }
 
     const data = await openaiResponse.json();
@@ -215,29 +241,35 @@ Never invent a slug that isn't in one of the lists above.`;
 
     let path = fallbackPath;
     let resultType = "fallback";
+    // Human-readable name(s) of whatever we resolved to, used only to write
+    // the assistant's reply text below — never fed back into a query.
+    let resultNames: string[] = [];
 
     if (decision?.type === "state") {
       const state = US_STATES.find((s) => s.slug === decision.state_slug);
       if (state) {
         path = `/marketing-agencies-in-${state.slug}-united-states/`;
         resultType = "state";
+        resultNames = [state.name];
       }
     } else if (decision?.type === "tool") {
       const match = toolCandidates.find((t) => t.slug === decision.tool_slug);
       if (match) {
         path = `/tools/${match.slug}`;
         resultType = "tool";
+        resultNames = [match.name];
       }
     } else if (decision?.type === "category") {
       const match = categories.find((c) => c.slug === decision.category_slug);
       if (match) {
         path = `/tool-categories/${match.slug}`;
         resultType = "category";
+        resultNames = [match.name];
       }
     } else if (decision?.type === "compare" && Array.isArray(decision.tool_slugs) && decision.tool_slugs.length >= 2) {
       const slugs: string[] = decision.tool_slugs.filter((s: unknown): s is string => typeof s === "string" && toolCandidates.some((t) => t.slug === s));
       if (slugs.length === 2) {
-        const { data: toolRows } = await supabase.from("tools").select("id, slug").in("slug", slugs);
+        const { data: toolRows } = await supabase.from("tools").select("id, slug, name").in("slug", slugs);
         if (toolRows && toolRows.length === 2) {
           const [a, b] = toolRows;
           const { data: comparison } = await supabase
@@ -249,13 +281,15 @@ Never invent a slug that isn't in one of the lists above.`;
           if (comparison) {
             path = `/compare/${comparison.slug}`;
             resultType = "compare";
+            resultNames = [a.name, b.name];
           } else {
             path = `/tools/${a.slug}`;
             resultType = "tool";
+            resultNames = [a.name];
           }
         }
       } else if (slugs.length === 3) {
-        const { data: toolRows } = await supabase.from("tools").select("id, slug").in("slug", slugs);
+        const { data: toolRows } = await supabase.from("tools").select("id, slug, name").in("slug", slugs);
         if (toolRows && toolRows.length === 3) {
           const ids: string[] = toolRows.map((t: { id: string }) => t.id);
           const { data: memberRows } = await supabase
@@ -274,9 +308,11 @@ Never invent a slug that isn't in one of the lists above.`;
           if (groupSlug) {
             path = `/compare/${groupSlug}`;
             resultType = "compare";
+            resultNames = toolRows.map((t: { name: string }) => t.name);
           } else {
             path = `/tools/${toolRows[0].slug}`;
             resultType = "tool";
+            resultNames = [toolRows[0].name];
           }
         }
       }
@@ -284,7 +320,8 @@ Never invent a slug that isn't in one of the lists above.`;
 
     supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip }).then(() => {});
 
-    return jsonResponse({ ok: true, path, type: resultType });
+    const { message, buttonLabel } = buildReply(resultType, resultNames, query);
+    return jsonResponse({ ok: true, path, type: resultType, message, buttonLabel });
   } catch (error) {
     console.error("[smart-search-route] error:", error);
     return jsonResponse({ ok: false, error: "Something went wrong. Please try again." }, 500);
