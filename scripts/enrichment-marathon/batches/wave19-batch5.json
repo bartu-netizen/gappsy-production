@@ -1,0 +1,718 @@
+[
+  {
+    "tool_id": "cd709a3d-fa5f-4189-82f4-95c1e1fdb2f0",
+    "slug": "open-meteo",
+    "name": "Open-Meteo",
+    "enrichment": {
+      "short_description": "Open-Meteo is a free, open-source weather forecast API that blends data from more than 15 national weather services into one developer-friendly interface, with no API key required for non-commercial use.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2022,
+      "company_size": "1-10 employees",
+      "headquarters": "Burglen, Switzerland",
+      "languages": ["English"],
+      "seo_title": "Open-Meteo Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Open-Meteo review 2026: pricing tiers, forecast accuracy, historical data access, self-hosting options, and the best alternatives to this open-source weather API.",
+      "llm_readable_summary": "Open-Meteo is a free, open-source weather forecast API launched in 2022 by meteorologist and developer Patrick Zippenfenig through OpenMeteo GmbH, based in Burglen, Switzerland. Its core differentiator is data aggregation: rather than running its own proprietary forecast model, Open-Meteo ingests and blends open numerical weather prediction data from more than 15 national meteorological services, including NOAA (United States), DWD (Germany), ECMWF (Europe), the UK Met Office, Meteo-France, JMA (Japan), KMA (Korea), KNMI (Netherlands), DMI (Denmark), MeteoSwiss, BOM (Australia), CMA (China), and GeoSphere Austria, then normalizes them into a single consistent JSON API. This gives developers high-resolution local and global forecasts without needing to integrate a dozen separate government data feeds. The platform processes more than 2 terabytes of weather data daily. Open-Meteo's flagship feature is that its API requires no API key and no signup for non-commercial use, with a free tier allowing up to 300,000 calls per month, 10,000 per day, and 5,000 per hour. Beyond current and 16-day forecasts, Open-Meteo offers specialized endpoints for historical weather archives spanning decades, marine and ocean weather, air quality, flood forecasting, and climate change projection data. Its full source code is published on GitHub under an open license, letting technical teams self-host or audit the pipeline, which appeals to privacy-conscious developers and those wary of vendor lock-in. Commercial use requires a paid subscription, sold not per API call but as a fixed monthly call budget across API Standard (1M calls per month), API Professional (5M calls per month), and API Enterprise (50M+ calls per month, custom pricing) tiers, with no per-call overage charges. Its primary audience is software developers, data scientists, agritech and logistics teams, and hobbyists building weather-dependent apps, dashboards, or research pipelines who want an accurate, low-cost or free alternative to commercial weather APIs like OpenWeatherMap, Tomorrow.io, Weatherbit, or Visual Crossing. Because it is run by a small independent team rather than a large corporation, Open-Meteo competes primarily on price, transparency, and breadth of open meteorological data sources rather than enterprise SLAs, though enterprise support is available on request.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Open-Meteo is an open-source weather forecast API built for developers who need reliable, high-resolution weather data without the cost or complexity of commercial weather providers. Instead of running a single proprietary forecast model, it aggregates open data from more than 15 national weather services around the world and normalizes it into one consistent API response, covering current conditions, hourly and daily forecasts, and historical archives.",
+            "The project was founded by Swiss meteorologist and software developer Patrick Zippenfenig through OpenMeteo GmbH in 2022. It has since become a popular free tier option for hobby projects, dashboards, research, and low-to-mid volume commercial applications, while offering paid subscription tiers for higher-volume commercial use."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Open-Meteo's core strength is breadth of data: it blends numerical weather prediction models from agencies such as NOAA, DWD, ECMWF, the UK Met Office, Meteo-France, and JMA, letting developers query a single endpoint instead of integrating each source separately. It supports current conditions, hourly forecasts, 16-day outlooks, and a historical weather archive going back decades for backtesting and analytics.",
+            "Beyond general weather, Open-Meteo offers specialized APIs for marine and ocean conditions, air quality, flood forecasting, and climate change projections. The entire codebase is open source and published on GitHub, so teams that need full control or data sovereignty can self-host their own instance rather than depend on the hosted service."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Open-Meteo is free for non-commercial use, with no API key required and generous limits of up to 300,000 calls per month. Commercial use requires a paid plan, purchased as a fixed monthly call budget rather than per-request billing, which makes costs predictable for production applications.",
+            "Paid tiers scale from API Standard (1 million calls per month) to API Professional (5 million calls per month) up to API Enterprise (50 million or more calls per month with priority support and custom solutions). Subscriptions are managed through a self-service customer portal, and users can upgrade, downgrade, or cancel at any time."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "No-key free tier", "description": "Non-commercial developers can call the API immediately with no signup, API key, or credit card, up to 300,000 calls per month."},
+        {"title": "Multi-model data blending", "description": "Combines open numerical weather prediction data from over 15 national weather services into one consistent, high-resolution response."},
+        {"title": "Hourly, daily, and 16-day forecasts", "description": "Returns granular hourly variables alongside daily summaries and extended 16-day outlooks for temperature, precipitation, wind, and more."},
+        {"title": "Historical weather archive", "description": "Provides decades of reanalysis weather data through a dedicated archive API, useful for backtesting models and long-term analytics."},
+        {"title": "Specialized data APIs", "description": "Dedicated endpoints cover marine and ocean weather, air quality, flood forecasting, and climate change projection data."},
+        {"title": "Open-source codebase", "description": "Full source code is published on GitHub, allowing technical teams to audit the pipeline or self-host their own instance."},
+        {"title": "Predictable subscription pricing", "description": "Paid commercial tiers use a fixed monthly call budget instead of per-request billing, avoiding surprise overage charges."}
+      ],
+      "pros": [
+        "Free for non-commercial use with no API key or credit card required",
+        "Aggregates many authoritative national weather services into one consistent API",
+        "Fully open-source and auditable data pipeline, with self-hosting possible",
+        "Simple REST and JSON interface that integrates quickly into apps and scripts",
+        "Flat, predictable subscription pricing rather than unpredictable per-call billing"
+      ],
+      "cons": [
+        "Commercial use requires a paid subscription even at modest call volumes",
+        "No published uptime SLA on the free non-commercial tier",
+        "Run by a small independent team rather than a large vendor, so support capacity is limited",
+        "Historical archive queries can be slower than some dedicated commercial data providers",
+        "Enterprise-grade features such as dedicated infrastructure require contacting sales for custom pricing"
+      ],
+      "faqs": [
+        {"question": "Is Open-Meteo really free?", "answer": "Yes, for non-commercial use the core weather API is free with generous rate limits and no API key required; commercial applications require a paid subscription plan."},
+        {"question": "Do I need an API key to use Open-Meteo?", "answer": "No API key is needed for the free non-commercial tier. Paid commercial plans use an API key tied to a monthly call budget."},
+        {"question": "What weather data sources does Open-Meteo use?", "answer": "It blends open data from more than 15 national weather services, including NOAA, DWD, ECMWF, the UK Met Office, Meteo-France, and JMA, rather than running its own proprietary model."},
+        {"question": "Can I self-host Open-Meteo?", "answer": "Yes, the full source code is published on GitHub under an open-source license, so technical teams can run their own instance for full data control."},
+        {"question": "Does Open-Meteo provide historical weather data?", "answer": "Yes, it offers a historical weather archive API with decades of reanalysis data, suitable for analytics, backtesting, and research."},
+        {"question": "Who runs Open-Meteo?", "answer": "Open-Meteo is developed by OpenMeteo GmbH, founded by meteorologist and developer Patrick Zippenfenig and based in Switzerland."},
+        {"question": "What happens if I exceed my monthly call budget on a paid plan?", "answer": "Paid plans are priced around a fixed monthly call budget rather than per-call billing; teams needing more capacity can upgrade tiers or contact sales for an enterprise quote."}
+      ],
+      "use_cases": [
+        {"title": "Weather widgets for apps and websites", "description": "Embed accurate, low-cost forecast data into consumer apps, dashboards, and websites without integrating multiple national weather service feeds directly.", "audience": "Developers and indie hackers"},
+        {"title": "Agricultural and logistics analytics", "description": "Use historical and forecast weather data to model crop conditions, irrigation timing, or shipment and route risk.", "audience": "Agritech and supply chain teams"},
+        {"title": "Research and data science projects", "description": "Pull decades of historical weather and climate data for backtesting models, academic research, or teaching without licensing fees.", "audience": "Academic researchers and data scientists"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free / Open-Access", "price": "Free", "billing_cycle": "N/A", "features": ["300,000 calls per month", "10,000 calls per day, 5,000 per hour", "Non-commercial use only", "No API key required"]},
+        {"plan_name": "API Standard", "price": "Custom (subscription)", "billing_cycle": "Monthly", "features": ["1,000,000 calls per month", "No hourly or daily rate limits", "Commercial use permitted"]},
+        {"plan_name": "API Professional", "price": "Custom (subscription)", "billing_cycle": "Monthly", "features": ["5,000,000 calls per month", "No hourly or daily rate limits", "Suitable for production applications"]},
+        {"plan_name": "API Enterprise", "price": "Custom quote", "billing_cycle": "Monthly", "features": ["50,000,000+ calls per month", "Priority support", "Custom solutions and infrastructure"]}
+      ],
+      "tags": ["weather API", "open source", "developer tools", "geospatial data", "forecasting"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "eb3daa84-88c9-499e-95e5-0b30eb01de90",
+    "slug": "openarchiver",
+    "name": "openarchiver",
+    "enrichment": {
+      "short_description": "OpenArchiver is a self-hosted, open-source platform for legally compliant email archiving, giving organizations tamper-evident storage and full-text search across Google Workspace, Microsoft 365, and IMAP inboxes.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free (self-hosted)",
+      "company_size": "Small team (exact size undisclosed)",
+      "headquarters": "Tallinn, Estonia",
+      "languages": ["English"],
+      "seo_title": "openarchiver Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "openarchiver review 2026: self-hosted email archiving features, integrity reporting, full-text search, deployment options, pricing, and top alternatives.",
+      "llm_readable_summary": "OpenArchiver, built by LogicLabs OU (based in Tallinn, Estonia), is an open-source, self-hosted platform for legally compliant email archiving and eDiscovery. Its purpose is to give organizations a sovereign, vendor-lock-in-free alternative to commercial email archiving tools by letting them run the entire stack, including ingestion, storage, indexing, and search, on their own infrastructure. OpenArchiver connects to Google Workspace, Microsoft 365, PST files, and any generic IMAP-enabled mailbox to perform an initial bulk import and then maintain continuous, real-time synchronization of new mail. Archived messages are stored in the standard, portable .eml format with deduplication and compression to reduce storage costs, and files are encrypted at rest. A distinguishing feature is its Integrity Report, which verifies that archived files remain unaltered originals, paired with an immutable audit trail that logs every system action so administrators can show who accessed what and when, a capability aimed squarely at legal, compliance, and eDiscovery use cases. Under the hood, OpenArchiver uses Meilisearch for fast full-text search across email bodies and attachments, PostgreSQL for metadata and audit logs, and BullMQ on Redis for asynchronous processing, and it supports both local filesystem storage and S3-compatible object storage such as AWS S3 or MinIO. The project is entirely open source and self-hosted; there is no published commercial cloud pricing tier, so cost is limited to the infrastructure an organization already runs or provisions, plus a partner program for organizations that want implementation help. It is popular in the self-hosting and home-lab community, distributed via one-click installers for platforms like Coolify and Cloudron, and actively maintained on GitHub with community contributions and a Discord channel for support. Its primary audience is IT administrators, managed service providers, and compliance or legal teams at small and mid-sized organizations that need long-term, tamper-evident email retention, for example to satisfy regulatory retention requirements or support litigation holds, without paying per-mailbox fees to hosted providers like Barracuda, Mimecast, or Google Vault. Compared to those commercial archiving suites, OpenArchiver trades built-in cloud infrastructure and enterprise support contracts for full data ownership, transparent open-source code, and no recurring per-seat licensing cost.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenArchiver is an open-source, self-hosted email archiving platform designed for organizations that need to retain and search email for legal, compliance, or eDiscovery purposes without relying on a third-party cloud archiving vendor. It is built and maintained by LogicLabs OU, an Estonia-based software company.",
+            "The platform connects directly to Google Workspace, Microsoft 365, PST files, and generic IMAP mailboxes to bulk-import existing mail and then keep archives synchronized in real time as new messages arrive, keeping a permanent, tamper-evident record of an organization's communication history."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Emails are stored in the open, portable .eml format with deduplication and compression, and encrypted at rest, avoiding the vendor lock-in common with proprietary archiving formats. An Integrity Report verifies each archived message is an unaltered original, and an immutable audit trail records every access and administrative action for compliance reporting.",
+            "Under the hood, OpenArchiver runs on Meilisearch for full-text search across both email bodies and attachments, PostgreSQL for metadata and audit logs, and BullMQ on Redis for background processing, and it supports storage on local disks or S3-compatible object storage such as AWS S3 or MinIO."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenArchiver is free and open source; there is no license fee to download, deploy, and run the platform. Costs are limited to the infrastructure an organization already owns or provisions, such as servers, storage, and object storage capacity.",
+            "For organizations that want implementation help, LogicLabs OU runs a partner program offering deployment and support services, though these are arranged directly rather than through a published tiered pricing page."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Multi-source email ingestion", "description": "Connects to Google Workspace, Microsoft 365, PST files, and generic IMAP servers for bulk import and ongoing real-time synchronization."},
+        {"title": "Tamper-evident storage", "description": "Stores archived mail in the open .eml format with deduplication, compression, and encryption at rest."},
+        {"title": "Integrity Report", "description": "Verifies that archived email files remain unaltered originals, supporting legal and compliance evidentiary requirements."},
+        {"title": "Immutable audit trail", "description": "Logs all system activity, including who accessed which messages and when, for compliance and eDiscovery reporting."},
+        {"title": "Full-text search", "description": "Uses Meilisearch to provide fast full-text search across both email bodies and attachments."},
+        {"title": "Flexible storage backends", "description": "Supports local filesystem storage or S3-compatible object storage such as AWS S3 or MinIO."},
+        {"title": "Self-hosted deployment", "description": "Runs entirely on infrastructure the organization controls, with one-click installers available for platforms like Coolify and Cloudron."}
+      ],
+      "pros": [
+        "Fully open source with no license fee for the core platform",
+        "Full data ownership and sovereignty since everything is self-hosted",
+        "Tamper-evident storage and audit trails suited to compliance and eDiscovery needs",
+        "Supports major mail platforms including Google Workspace, Microsoft 365, and IMAP",
+        "Portable .eml storage format avoids vendor lock-in"
+      ],
+      "cons": [
+        "Requires self-hosting expertise and infrastructure to operate reliably",
+        "No official hosted cloud offering or published SaaS pricing tier",
+        "Smaller company and community compared to established commercial archiving vendors",
+        "Enterprise support depends on a partner program rather than a large in-house support team",
+        "Newer project with a shorter track record than long-established archiving suites"
+      ],
+      "faqs": [
+        {"question": "Is OpenArchiver free to use?", "answer": "Yes, OpenArchiver is open source and free to self-host; costs are limited to the infrastructure you run it on."},
+        {"question": "What email platforms does OpenArchiver support?", "answer": "It connects to Google Workspace, Microsoft 365, PST files, and any generic IMAP-enabled mailbox for both bulk import and ongoing synchronization."},
+        {"question": "Does OpenArchiver support eDiscovery and compliance use cases?", "answer": "Yes, it provides an Integrity Report to verify archived files are unaltered originals and an immutable audit trail logging all access and system activity."},
+        {"question": "Where is archived email stored?", "answer": "Emails are stored in the standard .eml format on local filesystem storage or S3-compatible object storage such as AWS S3 or MinIO, with deduplication, compression, and encryption at rest."},
+        {"question": "Who develops OpenArchiver?", "answer": "OpenArchiver is developed by LogicLabs OU, a software company based in Tallinn, Estonia."},
+        {"question": "Can I get commercial support for OpenArchiver?", "answer": "Yes, LogicLabs OU offers a partner program for organizations that want implementation and support assistance beyond the open-source community."},
+        {"question": "What search technology powers OpenArchiver?", "answer": "It uses Meilisearch for full-text search across email bodies and attachments, with PostgreSQL handling metadata and audit logs."}
+      ],
+      "use_cases": [
+        {"title": "Regulatory email retention", "description": "Meet legal and regulatory requirements to retain and produce email records for a defined retention period.", "audience": "Compliance and legal teams"},
+        {"title": "Litigation holds and eDiscovery", "description": "Search and export tamper-evident email archives with a verifiable chain of custody during legal disputes.", "audience": "Corporate legal departments"},
+        {"title": "Self-hosted mailbox migration and backup", "description": "Archive mailboxes before decommissioning accounts or migrating between email platforms, preserving full-text searchable history.", "audience": "IT administrators and managed service providers"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted Community", "price": "Free", "billing_cycle": "N/A", "features": ["Full open-source platform", "Unlimited mailboxes, limited only by your infrastructure", "Community support via Discord and GitHub", "Self-managed deployment"]}
+      ],
+      "tags": ["email archiving", "open source", "eDiscovery", "self-hosted", "compliance"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "7d420822-07a5-41e5-ace9-e3a4a6821dee",
+    "slug": "opencart",
+    "name": "OpenCart",
+    "enrichment": {
+      "short_description": "OpenCart is a free, open-source PHP e-commerce platform that lets merchants self-host an online store and extend it through a large marketplace of themes and extensions, or run it on official cloud hosting plans.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free (self-hosted); hosting from $59/month",
+      "founded_year": 2009,
+      "company_size": "Small company (exact size undisclosed)",
+      "headquarters": "Hong Kong",
+      "languages": ["English", "Multiple languages via community translations"],
+      "seo_title": "OpenCart Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenCart review 2026: features, extension marketplace, hosting costs, pricing plans, pros and cons, and how it compares to Shopify, WooCommerce, and Magento.",
+      "llm_readable_summary": "OpenCart is a free, open-source e-commerce platform built in PHP that lets merchants self-host and fully control their own online store. Its history is unusual: a project of the same name was originally written in Perl in 1998 by Christopher G. Mann, but development stalled by 2000. The domain and name were revived in 2005 by UK developer Daniel Kerr, who rewrote it from scratch in PHP; the first stable modern release, version 1.1.1, shipped in February 2009, which is generally treated as the effective founding of today's OpenCart. The platform is now maintained by Hong Kong-based OpenCart Limited and distributed under the GNU General Public License (GPL), meaning the core software can be downloaded, modified, and deployed at no cost. OpenCart's architecture uses a MySQLi (MySQL, MariaDB, Percona) or PostgreSQL database with a modular, extension-driven design: merchants install free or paid extensions and themes from the official OpenCart Marketplace to add payment gateways, shipping methods, SEO tools, and storefront designs, with typical extension prices ranging from about $15 to $100 or more depending on complexity. Because the core platform is self-hosted, merchants are also responsible for their own hosting, though OpenCart offers official managed cloud hosting packages (Bronze, Silver, and Gold tiers, roughly $59 to $199 per month) for merchants who prefer not to manage servers themselves. OpenCart's target audience is small to mid-sized online retailers, freelance developers, and agencies who want a lightweight, highly customizable store builder without recurring SaaS licensing fees, positioning it as a budget-conscious, developer-friendly alternative to hosted platforms like Shopify or BigCommerce, and a lighter-weight alternative to WooCommerce (WordPress) and Magento (Adobe Commerce). Its main strengths are low total cost of ownership for technically capable teams, a mature marketplace ecosystem, multi-store and multi-currency support out of the box, and a large, long-running community and forum. Its main tradeoffs versus fully hosted competitors are that merchants must handle their own server management, security patching, and scaling unless they buy managed hosting, and that achieving a fully custom storefront often requires paid extensions or developer work rather than built-in drag-and-drop tools.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenCart is a free, open-source e-commerce platform written in PHP that merchants can self-host to run their own online store. The modern PHP-based version was created by UK developer Daniel Kerr in 2005 after he revived the dormant OpenCart name and domain, with the first stable release shipping in 2009; the project is now maintained by Hong Kong-based OpenCart Limited under the GNU General Public License.",
+            "The platform ships with core admin, catalog, checkout, shipping, payment, and reporting functionality out of the box, and is designed to be extended through an official marketplace of themes and extensions rather than requiring a full custom rebuild for each new feature."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenCart supports multi-store management from a single admin panel, letting merchants run several storefronts with different domains, currencies, and languages from one installation. Built-in SEO tools, mobile-responsive default themes, and support for MySQLi or PostgreSQL databases round out the core platform.",
+            "The OpenCart Marketplace offers thousands of free and paid extensions and themes covering payment gateways, shipping carriers, marketing tools, and storefront redesigns, which is the primary way merchants add functionality beyond the default installation."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "The OpenCart software itself is free to download and use under an open-source license, with no recurring platform fee. Merchants who self-host pay only for their own web hosting and any paid extensions or themes they choose to purchase, which typically range from roughly $15 to $100 or more each.",
+            "For merchants who prefer not to manage their own servers, OpenCart offers official managed cloud hosting packages in Bronze, Silver, and Gold tiers, priced from about $59 to $199 per month depending on store size and traffic."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Free, open-source core platform", "description": "Download and self-host the full OpenCart codebase at no licensing cost under the GNU General Public License."},
+        {"title": "Extension and theme marketplace", "description": "Thousands of free and paid extensions and themes add payment gateways, shipping options, SEO tools, and storefront designs."},
+        {"title": "Multi-store management", "description": "Run multiple storefronts with different domains, currencies, and languages from a single admin installation."},
+        {"title": "Flexible database support", "description": "Runs on MySQLi (MySQL, MariaDB, Percona Server) or PostgreSQL databases."},
+        {"title": "Built-in SEO tools", "description": "Includes customizable URLs, meta tags, and sitemap support to help stores rank in search results."},
+        {"title": "Official managed hosting", "description": "Bronze, Silver, and Gold cloud hosting plans are available for merchants who want managed infrastructure."},
+        {"title": "Large developer community", "description": "A long-running forum and developer ecosystem provides support, tutorials, and custom development services."}
+      ],
+      "pros": [
+        "Free, open-source core platform with no recurring software license fee",
+        "Large, mature marketplace of extensions and themes",
+        "Full control over hosting, customization, and data since it is self-hosted",
+        "Multi-store and multi-currency support built into the core platform",
+        "Long-established community and forum with over a decade of documentation"
+      ],
+      "cons": [
+        "Self-hosting requires server management, security patching, and scaling expertise",
+        "Achieving a fully custom storefront often requires paid extensions or developer work",
+        "User interface feels dated compared to newer hosted platforms like Shopify",
+        "Extension and theme costs can add up, with premium options reaching $400 to $1,300 or more per year",
+        "Smaller out-of-the-box feature set than fully managed SaaS competitors before extensions are added"
+      ],
+      "faqs": [
+        {"question": "Is OpenCart free?", "answer": "Yes, the core OpenCart software is free and open source under the GNU General Public License; costs come from hosting and any paid extensions or themes you choose to add."},
+        {"question": "Do I need to know how to code to use OpenCart?", "answer": "Basic store setup does not require coding, but customizing themes, building custom extensions, or managing hosting typically requires PHP and server administration knowledge."},
+        {"question": "Does OpenCart offer managed hosting?", "answer": "Yes, OpenCart offers official Bronze, Silver, and Gold cloud hosting packages for merchants who do not want to manage their own servers."},
+        {"question": "How is OpenCart different from Shopify?", "answer": "Shopify is a fully hosted SaaS platform with a monthly subscription, while OpenCart is self-hosted open-source software with no core license fee but more hands-on server management."},
+        {"question": "What database does OpenCart use?", "answer": "OpenCart supports MySQLi (MySQL, MariaDB, Percona Server) or PostgreSQL as its database backend."},
+        {"question": "Who maintains OpenCart today?", "answer": "OpenCart is maintained by Hong Kong-based OpenCart Limited, built on a PHP rewrite created by developer Daniel Kerr, with the first stable release in 2009."},
+        {"question": "Can OpenCart run multiple stores from one installation?", "answer": "Yes, OpenCart supports multi-store management, allowing different domains, currencies, and languages to be run from a single admin panel."}
+      ],
+      "use_cases": [
+        {"title": "Budget-conscious online stores", "description": "Launch a fully featured online store without recurring SaaS subscription fees, paying only for hosting and chosen extensions.", "audience": "Small business owners and independent merchants"},
+        {"title": "Agency-built custom storefronts", "description": "Build highly customized e-commerce sites for clients using OpenCart's open codebase and extension ecosystem.", "audience": "Web development agencies and freelance developers"},
+        {"title": "Multi-brand or multi-region retail", "description": "Manage several storefronts with different currencies, languages, and domains from a single OpenCart installation.", "audience": "Retailers operating multiple brands or markets"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted Community", "price": "Free", "billing_cycle": "N/A", "features": ["Full open-source platform", "Self-managed hosting", "Access to free marketplace extensions", "Community forum support"]},
+        {"plan_name": "Bronze Cloud Hosting", "price": "$59/month", "billing_cycle": "Monthly", "features": ["Managed hosting for small stores", "Standard support", "Suitable for low-traffic startups"]},
+        {"plan_name": "Silver Cloud Hosting", "price": "$99/month", "billing_cycle": "Monthly", "features": ["Managed hosting for medium-sized businesses", "Higher traffic capacity", "Standard support"]},
+        {"plan_name": "Gold Cloud Hosting", "price": "$199/month", "billing_cycle": "Monthly", "features": ["Managed hosting for large, high-traffic stores", "Priority resources", "Standard support"]}
+      ],
+      "tags": ["ecommerce platform", "open source", "PHP", "online store builder", "self-hosted"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "448ec905-8c58-4b0c-931b-b7bedf89db12",
+    "slug": "opencats",
+    "name": "OpenCATS",
+    "enrichment": {
+      "short_description": "OpenCATS is a free, open-source applicant tracking system and recruiting CRM that helps staffing agencies and hiring teams manage candidates, job requisitions, and the placement pipeline in a self-hosted system.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2007,
+      "company_size": "Community-maintained (no single company)",
+      "headquarters": "Distributed open-source community (no headquarters)",
+      "languages": ["English"],
+      "seo_title": "OpenCATS Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenCATS review 2026: features, self-hosting requirements, pricing, pros and cons, and how this open-source ATS compares to modern recruiting software.",
+      "llm_readable_summary": "OpenCATS is a free, open-source applicant tracking system (ATS) and recruiting CRM designed for staffing agencies, internal recruiting teams, and hiring managers who want to manage the full recruitment lifecycle without paying per-seat SaaS fees. Its origins trace back to a commercial open-source recruiting product called CATS, which split into separate commercial and community-driven efforts; the open-source OpenCATS project that resulted from that split dates to around 2007-2009, making it one of the oldest and most widely recognized open-source ATS platforms still in active use, often described as the default answer whenever someone searches for an open-source applicant tracking system. Rather than being backed by a single venture-funded company, OpenCATS is maintained in the open by a community of users and contributors on GitHub, with development, bug fixes, and feature requests handled through public repositories rather than a corporate roadmap. Functionally, it covers the core recruiting workflow end to end: candidate records with resumes, notes, and status history; job order and requisition management; company and contact management for staffing agency clients; a searchable candidate database; pipeline tracking from application through submission, interview, and placement; and basic reporting on recruiting activity. Because it is self-hosted (typically on a LAMP-style PHP and MySQL stack), organizations install and run OpenCATS on their own servers, giving them full control over recruiting data, no per-recruiter licensing cost, and no dependency on a vendor's continued existence, which appeals particularly to smaller staffing agencies, nonprofits, and government or education hiring teams operating under tight software budgets or strict data residency requirements. Its tradeoffs versus modern commercial ATS platforms like Greenhouse, Lever, Bullhorn, or JobDiva are a more dated user interface, fewer out-of-the-box integrations (career site builders, job board syndication, AI resume parsing, calendaring), and reliance on the community or third-party consultants for setup, hosting, and support rather than a vendor support contract. There is no official SaaS-hosted version or tiered commercial pricing; the software itself is entirely free, with any cost limited to self-hosting infrastructure and optional paid implementation help from independent consultants. OpenCATS remains a relevant choice specifically for organizations that prioritize data ownership and zero licensing cost over polish and modern integrations.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenCATS is a free, open-source applicant tracking system and recruiting CRM built for staffing agencies and internal hiring teams that want to manage the recruitment lifecycle without paying per-seat software fees. It traces back to a commercial open-source recruiting tool called CATS that split into separate efforts around 2007-2009, with the community-driven OpenCATS project becoming the long-running open-source branch.",
+            "Rather than a single vendor, OpenCATS is maintained in the open by a community of contributors on GitHub, with organizations self-hosting the software on their own servers and retaining full control over their recruiting data."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenCATS covers the core recruiting workflow: candidate records with resumes, notes, and status history; job order and requisition management; company and contact management for staffing agency clients; and pipeline tracking from application through interview and placement.",
+            "It includes a searchable candidate database, resume parsing, and basic reporting on recruiting activity, all accessible through a self-hosted web application that recruiters and hiring managers use directly."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenCATS is completely free and open source with no license fee, no per-recruiter charge, and no official paid tier. Organizations only incur costs for the servers or hosting they use to run it themselves.",
+            "There is no official vendor-provided SaaS hosting or support contract; organizations that want implementation help typically engage independent consultants or developers familiar with the codebase."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Candidate database and resume management", "description": "Store candidate records, resumes, notes, and status history in one searchable system."},
+        {"title": "Job order and requisition tracking", "description": "Manage open job orders, requirements, and requisition status across clients or internal departments."},
+        {"title": "Recruiting pipeline management", "description": "Track candidates through application, submission, interview, and placement stages."},
+        {"title": "Company and contact management", "description": "Maintain client company records and contacts for staffing agencies managing multiple accounts."},
+        {"title": "Resume parsing", "description": "Automatically extracts candidate details from uploaded resumes to speed up data entry."},
+        {"title": "Self-hosted deployment", "description": "Runs on your own PHP and MySQL server infrastructure, giving full control over recruiting data."},
+        {"title": "Activity and pipeline reporting", "description": "Basic reporting tools summarize recruiting activity and pipeline status across jobs and recruiters."}
+      ],
+      "pros": [
+        "Completely free with no per-recruiter or per-seat licensing cost",
+        "Full data ownership since the system is entirely self-hosted",
+        "Covers the full core recruiting workflow from candidate to placement",
+        "Long track record as one of the most widely used open-source ATS platforms",
+        "Actively maintained by a community of contributors on GitHub"
+      ],
+      "cons": [
+        "User interface looks dated compared to modern commercial ATS platforms",
+        "Requires self-hosting and server management expertise to run and maintain",
+        "Fewer built-in integrations for job board syndication, career sites, or calendaring",
+        "No official vendor support contract or SaaS-hosted option",
+        "Slower pace of feature development than venture-funded competitors"
+      ],
+      "faqs": [
+        {"question": "Is OpenCATS really free?", "answer": "Yes, OpenCATS is free and open source with no license fee; the only costs are for the infrastructure you use to host it yourself."},
+        {"question": "Who maintains OpenCATS?", "answer": "OpenCATS is maintained in the open by a community of users and contributors on GitHub rather than by a single company."},
+        {"question": "What technology stack does OpenCATS run on?", "answer": "OpenCATS is a PHP web application typically deployed on a LAMP-style stack with a MySQL database."},
+        {"question": "Does OpenCATS offer a hosted or cloud version?", "answer": "No, there is no official vendor-provided SaaS hosting; organizations self-host OpenCATS on their own servers or engage third-party consultants."},
+        {"question": "Who typically uses OpenCATS?", "answer": "Staffing agencies, internal recruiting teams, nonprofits, and organizations with tight software budgets or strict data residency requirements are the primary users."},
+        {"question": "How does OpenCATS compare to modern ATS platforms like Greenhouse or Bullhorn?", "answer": "OpenCATS covers core recruiting workflows at no cost but has a more dated interface and fewer built-in integrations than well-funded commercial competitors."},
+        {"question": "Can I get support for OpenCATS?", "answer": "Support comes primarily from the community and documentation, though independent consultants and developers familiar with the codebase can be hired for implementation help."}
+      ],
+      "use_cases": [
+        {"title": "Staffing agency recruiting operations", "description": "Manage candidates, client companies, job orders, and placements in one system without per-seat SaaS fees.", "audience": "Staffing and recruiting agencies"},
+        {"title": "Internal corporate hiring", "description": "Track internal job requisitions and candidate pipelines for organizations that want full control over recruiting data.", "audience": "HR and talent acquisition teams"},
+        {"title": "Budget-constrained nonprofit and public sector hiring", "description": "Run a full-featured ATS at zero licensing cost for organizations under tight software budgets.", "audience": "Nonprofits, government agencies, and educational institutions"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted Community", "price": "Free", "billing_cycle": "N/A", "features": ["Full applicant tracking and recruiting CRM functionality", "Self-managed PHP and MySQL hosting", "Community and documentation support", "No per-recruiter or per-seat fees"]}
+      ],
+      "tags": ["applicant tracking system", "recruiting CRM", "open source", "HR software", "self-hosted"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "c5146704-2de4-4305-9ffc-65de453586a7",
+    "slug": "opencloud",
+    "name": "OpenCloud",
+    "enrichment": {
+      "short_description": "OpenCloud is an open-source file management, sharing, and collaboration platform forked from ownCloud Infinite Scale, developed by Germany's Heinlein Group as a sovereign, GDPR-focused alternative for European organizations.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (Community edition); Basic from EUR2/user/month",
+      "founded_year": 2024,
+      "company_size": "Small team (exact size undisclosed)",
+      "headquarters": "Berlin, Germany",
+      "languages": ["German", "English"],
+      "seo_title": "OpenCloud Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenCloud review 2026: features, ownCloud fork history, pricing plans from EUR2 per user, and how this sovereign file-sharing platform compares to Nextcloud.",
+      "llm_readable_summary": "OpenCloud is an open-source platform for file management, sharing, and collaboration, positioned around digital sovereignty and GDPR compliance for European organizations. It is built on a fork of ownCloud Infinite Scale (OCIS), the Go-based rewrite of ownCloud originally co-developed with contributors from CERN and the wider open-source community. The fork emerged in 2024-2025 after Kiteworks acquired ownCloud in late 2023, when a group of developers and community members split off over governance concerns, transparency gaps, and disagreements about the balance of power between the company and the open-source community, a pattern that echoes the earlier 2016 split when ownCloud's original founder, Frank Karlitschek, left to create Nextcloud. OpenCloud is developed by OpenCloud GmbH, part of the Berlin-based Heinlein Group, a German company known for its focus on digital sovereignty, data protection, and open source, whose other brands include mailbox.org and OpenTalk. OpenCloud GmbH was founded in September 2024 and launched operationally in January 2025. The platform provides core file management and collaboration features, including file storage, versioning, full-text search, granular sharing controls, end-to-end encryption, multi-factor authentication, and desktop and mobile clients, published under the Apache 2.0 and AGPL-3.0 licenses. Its Community Edition is completely free to self-host, while commercial tiers (Basic, Professional, and Premium) add long-term support (LTS) release access, SLA-backed support, high availability, Kubernetes support, custom branding, air-gapped operation, multi-tenancy, and EUDI Wallet integration, priced per user per month (roughly EUR2 for Basic, EUR4 for Professional, and EUR8 for Premium), plus a High Performance Computing add-on priced per terabyte per year for organizations needing Ceph, GPFS, or similar storage backend integration. OpenCloud's target audience is European businesses, public sector bodies, and privacy-conscious organizations that need GDPR-compliant, self-hosted file collaboration as an alternative to US-based cloud storage providers like Google Drive, Dropbox, or Microsoft OneDrive, and it competes most directly with Nextcloud and ownCloud itself, differentiating primarily on its newer OCIS-based Go architecture, sovereignty-first branding, and backing from an established German open-source hosting company rather than venture capital.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenCloud is an open-source file management, sharing, and collaboration platform built on a fork of ownCloud Infinite Scale (OCIS). The fork was created in 2024-2025 by developers and community members following ownCloud's acquisition by Kiteworks, driven by governance and transparency concerns similar to those that led to the earlier Nextcloud fork in 2016.",
+            "The project is developed by OpenCloud GmbH, part of the Berlin-based Heinlein Group, a German company focused on digital sovereignty and data protection whose other products include the mailbox.org email service and the OpenTalk video conferencing platform."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenCloud provides core file collaboration functionality: file storage and versioning, full-text search, granular sharing controls, end-to-end encryption, and multi-factor authentication, accessible via web, desktop, and mobile clients.",
+            "Commercial tiers add enterprise capabilities such as high availability and Kubernetes support, custom branding, air-gapped deployment for high-security environments, multi-tenancy, EUDI Wallet integration, and SLA-backed support with guaranteed response times."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "The Community Edition is free and open source, self-hosted at no license cost with community support through public channels. It is well suited to organizations comfortable managing their own infrastructure and support.",
+            "Commercial plans are billed per user per month: Basic (EUR2/user/month) for up to 100 users with community support, Professional (EUR4/user/month) with SLA-backed email support and high availability for larger deployments, and Premium (EUR8/user/month) with 24/7 phone support, multi-tenancy, and custom branding. A High Performance Computing add-on is priced at EUR10 per terabyte per year for large-scale storage integrations."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "File storage and versioning", "description": "Core file management with version history, accessible through web, desktop, and mobile clients."},
+        {"title": "Granular sharing controls", "description": "Share files and folders with fine-grained permissions for internal teams or external collaborators."},
+        {"title": "End-to-end encryption", "description": "Protects file content with encryption alongside multi-factor authentication for account security."},
+        {"title": "Full-text search", "description": "Search across stored documents and files, not just filenames."},
+        {"title": "High availability and Kubernetes support", "description": "Professional and Premium tiers support scalable, highly available deployments on Kubernetes."},
+        {"title": "Multi-tenancy and custom branding", "description": "Premium tier supports serving multiple isolated tenants with custom branding from one deployment."},
+        {"title": "Air-gapped and EUDI Wallet support", "description": "Premium tier supports fully air-gapped operation for high-security environments and EU Digital Identity Wallet integration."}
+      ],
+      "pros": [
+        "Free, open-source Community Edition available for self-hosting",
+        "Strong focus on GDPR compliance and European data sovereignty",
+        "Built on the modern, Go-based ownCloud Infinite Scale architecture",
+        "Backed by an established German open-source company rather than a single volunteer maintainer",
+        "Clear, published per-user pricing for commercial tiers"
+      ],
+      "cons": [
+        "Very new company and fork, founded in 2024, with a shorter track record than Nextcloud or ownCloud",
+        "Community Edition support is limited to public community channels",
+        "Feature parity with more mature platforms is still developing",
+        "SLA-backed support requires a paid Professional or Premium plan",
+        "Smaller ecosystem of third-party apps and integrations compared to Nextcloud"
+      ],
+      "faqs": [
+        {"question": "Is OpenCloud related to ownCloud?", "answer": "Yes, OpenCloud is built on a fork of ownCloud Infinite Scale (OCIS), created by developers and community members in 2024-2025 following governance concerns after ownCloud's acquisition by Kiteworks."},
+        {"question": "Who develops OpenCloud?", "answer": "OpenCloud is developed by OpenCloud GmbH, part of the Berlin-based Heinlein Group, a German company known for digital sovereignty and data protection products including mailbox.org."},
+        {"question": "Is OpenCloud free?", "answer": "Yes, the Community Edition is free and open source to self-host; paid Basic, Professional, and Premium plans add long-term support, SLAs, and enterprise features."},
+        {"question": "How is OpenCloud different from Nextcloud?", "answer": "Both are open-source file collaboration platforms with roots in the original ownCloud project, but OpenCloud is built on the newer Go-based Infinite Scale architecture and is backed by the Heinlein Group rather than Nextcloud GmbH."},
+        {"question": "What license does OpenCloud use?", "answer": "OpenCloud is published under the Apache 2.0 and AGPL-3.0 licenses."},
+        {"question": "Does OpenCloud support high availability deployments?", "answer": "Yes, the Professional and Premium tiers support high availability, scalability, and Kubernetes-based deployments."},
+        {"question": "Who is OpenCloud designed for?", "answer": "It targets European businesses, public sector bodies, and privacy-conscious organizations that need GDPR-compliant, self-hosted file sharing and collaboration."}
+      ],
+      "use_cases": [
+        {"title": "GDPR-compliant file collaboration", "description": "Replace US-based cloud storage with a self-hosted, sovereign file sharing platform for European data protection requirements.", "audience": "European businesses and public sector organizations"},
+        {"title": "Enterprise document collaboration at scale", "description": "Deploy a highly available, Kubernetes-backed file collaboration platform with SLA-backed support for larger organizations.", "audience": "IT and infrastructure teams at mid-to-large enterprises"},
+        {"title": "Secure, air-gapped file management", "description": "Run a fully air-gapped deployment for high-security environments such as government or defense-adjacent organizations.", "audience": "Government agencies and high-security enterprises"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted deployment", "Core file management and collaboration features", "Community support via public channels", "1-year access to production releases"]},
+        {"plan_name": "Basic", "price": "EUR2/user/month", "billing_cycle": "Monthly, per user", "features": ["Up to 100 users", "2-year long-term support access", "Community support", "Core file management and collaboration"]},
+        {"plan_name": "Professional", "price": "EUR4/user/month", "billing_cycle": "Monthly, per user", "features": ["100+ users", "Email support with SLA (9/5)", "High availability and Kubernetes support", "GDPR export and password policies"]},
+        {"plan_name": "Premium", "price": "EUR8/user/month", "billing_cycle": "Monthly, per user", "features": ["100+ users", "24/7 phone support with SLA", "Multi-tenancy and custom branding", "Air-gapped operation and EUDI Wallet integration"]},
+        {"plan_name": "High Performance Computing Add-On", "price": "EUR10/TB/year", "billing_cycle": "Annual, per terabyte", "features": ["Starting at 1 petabyte", "Native integration with Ceph, GPFS, and similar storage systems"]}
+      ],
+      "tags": ["file sharing", "open source", "content collaboration", "digital sovereignty", "self-hosted"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "51b8b175-b3a3-4820-80ba-3b5c9cb31c4e",
+    "slug": "opencti",
+    "name": "OpenCTI",
+    "enrichment": {
+      "short_description": "OpenCTI is an open-source cyber threat intelligence platform that helps security teams ingest, correlate, and visualize threat data from multiple sources using the STIX2 standard, developed by French company Filigran.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (Community Edition); Enterprise Edition custom pricing",
+      "founded_year": 2018,
+      "company_size": "Filigran: approximately 200 employees (as of late 2025)",
+      "headquarters": "Paris, France",
+      "languages": ["English", "French"],
+      "seo_title": "OpenCTI Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenCTI review 2026: threat intelligence features, STIX2 data model, Community vs Enterprise Edition pricing, and how it compares to other CTI platforms.",
+      "llm_readable_summary": "OpenCTI is an open-source cyber threat intelligence (CTI) platform used by security operations and intelligence teams to ingest, structure, correlate, and visualize threat data from commercial feeds, internal telemetry, and open-source intelligence into one unified view. The project originated in 2018 inside ANSSI, the French National Agency for the Security of Information Systems, which built it internally to store and structure its own knowledge about cyber threats in cooperation with CERT-EU. The tool was later open-sourced and placed under Luatix, a nonprofit created specifically to govern the project, with ANSSI as a founding member. In 2022, the company Filigran was founded in Paris by Samuel Hassine (CEO) and Julien Richard (CTO) to become the commercial steward of OpenCTI and its companion product OpenBAS (an attack simulation and breach-and-attack-simulation platform, since rebranded OpenAEV). OpenCTI structures threat data using the STIX2 (Structured Threat Information Expression) knowledge schema, letting analysts model indicators, threat actors, malware, campaigns, and their relationships, then correlate that data across sources and visualize it in an investigation-friendly interface. Filigran has raised substantial venture funding to grow the platform: a EUR5 million seed round in 2023 led by Moonfire, a EUR15 million (~$16 million) Series A in February 2024 led by Accel, a $35 million Series B in October 2024 led by Insight Partners, and a $58 million Series C in October 2025 led by Eurazeo with participation from Deutsche Telekom, bringing total funding to over $100 million in roughly three years. The company has grown from about 40 employees in 2024 to nearly 200 by late 2025, and OpenCTI and OpenBAS together are used by more than 6,000 public and private organizations, including government agencies like the FBI and the European Commission, and enterprises such as Airbus and Hermes. OpenCTI is offered as a free, fully functional open-source Community Edition, while an Enterprise Edition adds enterprise-grade scalability, automated playbooks, priority intelligence requirements (PIRs), AI-powered file import, report generation, and NLP search, with pricing available only through a private sales quote and a 30-day free trial. Its target audience is security operations centers, threat intelligence teams, CERTs and government cybersecurity agencies, and enterprises building in-house threat intelligence programs, competing with commercial platforms like Recorded Future, ThreatConnect, Anomali, and MISP (another open-source alternative), differentiating through its French/EU government origins, STIX2-native data model, and rapid, well-funded product development.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenCTI is an open-source cyber threat intelligence platform originally developed in 2018 inside ANSSI, the French national cybersecurity agency, to organize its own knowledge about cyber threats. It was later open-sourced under the Luatix nonprofit, with ANSSI as a founding member, before becoming the flagship product of Filigran, a Paris-based cybersecurity company founded in 2022.",
+            "The platform structures threat data using the STIX2 standard, letting security teams ingest information from commercial feeds, internal telemetry, and open-source intelligence, then correlate, visualize, and act on it from a single unified interface."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenCTI ingests threat data from multiple sources and structures it around the STIX2 knowledge schema, modeling indicators, threat actors, malware, and campaigns along with their relationships for investigation and correlation.",
+            "The Enterprise Edition extends this with automated playbooks, priority intelligence requirements (PIRs), AI-powered file import, automated report generation, and natural language search, aimed at larger security operations teams that need scale and workflow automation."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenCTI's Community Edition is free and fully open source, giving teams a complete threat intelligence platform they can self-host at no licensing cost.",
+            "The Enterprise Edition adds advanced scalability, automation, and expert support for mission-critical security operations, but pricing is not publicly published; organizations must contact Filigran for a private quote, with a 30-day free trial available to evaluate the added functionality."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "STIX2-based threat modeling", "description": "Structures threat data using the STIX2 standard to model indicators, threat actors, malware, and campaigns with their relationships."},
+        {"title": "Multi-source data ingestion", "description": "Ingests threat data from commercial feeds, internal telemetry, and open-source intelligence into one unified platform."},
+        {"title": "Correlation and investigation graphs", "description": "Visualizes relationships between threats, actors, and indicators to support analyst investigations."},
+        {"title": "Automated playbooks", "description": "Enterprise Edition supports automated workflows that act on incoming threat intelligence data."},
+        {"title": "Priority Intelligence Requirements (PIRs)", "description": "Helps teams focus analysis on the specific intelligence priorities that matter most to their organization."},
+        {"title": "AI-powered file import and report generation", "description": "Enterprise Edition uses AI to import unstructured files and automatically generate intelligence reports."},
+        {"title": "Open, self-hosted deployment", "description": "The Community Edition can be self-hosted, giving organizations full control over sensitive threat data."}
+      ],
+      "pros": [
+        "Free, fully functional open-source Community Edition",
+        "Backed by well-funded, actively developed commercial company in Filigran",
+        "Structured around the widely adopted STIX2 threat intelligence standard",
+        "Used by thousands of organizations including major government agencies and enterprises",
+        "Strong European origins with government-grade credibility from ANSSI"
+      ],
+      "cons": [
+        "Enterprise Edition pricing is not publicly published and requires a sales conversation",
+        "Learning curve for teams unfamiliar with the STIX2 data model",
+        "Advanced automation and AI features are reserved for the paid Enterprise Edition",
+        "Self-hosting the Community Edition requires infrastructure and security expertise",
+        "Smaller ecosystem of third-party integrations compared to long-established commercial CTI platforms"
+      ],
+      "faqs": [
+        {"question": "Is OpenCTI free?", "answer": "Yes, the Community Edition is free and fully open source; the Enterprise Edition adds advanced features and requires a custom quote from Filigran."},
+        {"question": "Who created OpenCTI?", "answer": "OpenCTI originated in 2018 at ANSSI, the French national cybersecurity agency, and is now developed commercially by Filigran, a Paris-based company founded in 2022."},
+        {"question": "What data standard does OpenCTI use?", "answer": "OpenCTI structures threat intelligence using the STIX2 (Structured Threat Information Expression) knowledge schema."},
+        {"question": "What is the difference between OpenCTI Community and Enterprise Edition?", "answer": "The Enterprise Edition adds automated playbooks, priority intelligence requirements, AI-powered file import, report generation, and NLP search on top of the free Community Edition."},
+        {"question": "Who uses OpenCTI?", "answer": "OpenCTI and its companion product OpenBAS are used by more than 6,000 public and private organizations, including government agencies and large enterprises."},
+        {"question": "Is there a free trial of the Enterprise Edition?", "answer": "Yes, Filigran offers a 30-day free trial to explore Enterprise Edition functionality before purchasing."},
+        {"question": "How is OpenCTI funded?", "answer": "Filigran, the company behind OpenCTI, has raised over $100 million across seed, Series A, B, and C rounds from investors including Accel, Insight Partners, and Eurazeo."}
+      ],
+      "use_cases": [
+        {"title": "Security operations center threat correlation", "description": "Ingest and correlate threat intelligence from multiple feeds into a single investigation platform.", "audience": "SOC analysts and threat intelligence teams"},
+        {"title": "Government and CERT threat intelligence sharing", "description": "Structure and share cyber threat knowledge across national or sector-level CERT and government cybersecurity teams.", "audience": "National cybersecurity agencies and CERTs"},
+        {"title": "Enterprise in-house threat intelligence programs", "description": "Build a centralized, self-hosted threat intelligence capability instead of relying solely on external commercial feeds.", "audience": "Enterprise security teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community Edition", "price": "Free", "billing_cycle": "N/A", "features": ["Full open-source threat intelligence platform", "STIX2-based data modeling", "Self-hosted deployment", "Community support"]},
+        {"plan_name": "Enterprise Edition", "price": "Custom quote", "billing_cycle": "Annual (typical)", "features": ["Automated playbooks", "Priority intelligence requirements (PIRs)", "AI-powered file import and report generation", "NLP search and expert support", "30-day free trial available"]}
+      ],
+      "tags": ["threat intelligence", "cybersecurity", "open source", "SOC tools", "STIX2"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "183473d1-eb82-4807-95c3-e4a1c525575e",
+    "slug": "openemr",
+    "name": "OpenEMR",
+    "enrichment": {
+      "short_description": "OpenEMR is the most widely used open-source electronic health records and medical practice management system, offering ONC-certified charting, scheduling, billing, and e-prescribing for clinics and healthcare organizations.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2001,
+      "company_size": "Nonprofit foundation with volunteer community",
+      "headquarters": "United States (OpenEMR Foundation, nonprofit)",
+      "languages": ["English", "30+ languages via community translations"],
+      "seo_title": "OpenEMR Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenEMR review 2026: ONC-certified EHR features, scheduling and billing tools, hosting options, pricing, and how it compares to other medical practice software.",
+      "llm_readable_summary": "OpenEMR is a free, open-source electronic health records (EHR) and medical practice management system, widely cited as the most popular open-source EHR platform in global use. Its roots go back to 2001, when it was originally developed by Synitech as commercial software called MedicalPractice Professional (MP Pro); the codebase was reworked for HIPAA compliance and released to the public as OpenEMR version 1.3 under the GNU General Public License (GPL) on SourceForge in August 2002. The Pennington Firm took over as primary maintainer in 2003, and governance was later formalized through two nonprofit organizations: OEMR, organized in 2010, and its successor, the OpenEMR Foundation, organized in April 2019, which today leads development, maintains a network of professional support vendors, and oversees the platform's ONC (Office of the National Coordinator for Health IT) Health IT certification. OpenEMR is written in PHP and covers the core operational needs of a medical practice: patient charting and clinical documentation, advanced scheduling with support for repeating appointments, integrated medical billing supporting HIPAA ASC X12 Version 5010 electronic claims, e-prescribing with direct transmission to pharmacies, laboratory order transmission and automated results integration, clinical decision support tools, and HIPAA-compliant security with granular access controls and encryption. It is available in more than 30 languages and is deployed by organizations ranging from small independent clinics to large NGOs, including the International Planned Parenthood Federation (IPPF) and the Peace Corps. As a fully open-source, GPL-licensed system, OpenEMR carries no software license fee; healthcare organizations can self-host it on their own on-premises servers or in the cloud, and a newer OpenCoreEMR initiative offers a fully hosted option at no cost for eligible U.S. healthcare providers. Because there is no central vendor, revenue in the ecosystem comes primarily from a network of third-party implementation, hosting, and support vendors rather than from OpenEMR itself. Its target audience spans small to mid-sized outpatient practices, community health centers, and international health NGOs that need a certified, HIPAA-compliant EHR without the high per-provider subscription costs of commercial systems like Epic, athenahealth, or eClinicalWorks, trading a steeper self-hosting and configuration learning curve for zero licensing cost, full data control, and a highly customizable, community-driven codebase.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenEMR is a free, open-source electronic health records and medical practice management system, widely recognized as the most popular open-source EHR platform in use worldwide. It began in 2001 as commercial software called MedicalPractice Professional, was reworked for HIPAA compliance, and released publicly under the GNU General Public License in 2002.",
+            "Development is now overseen by the OpenEMR Foundation, a 501(c)(3) nonprofit organized in 2019 that leads the project, maintains a network of professional support vendors, and manages the platform's official ONC Health IT certification."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenEMR covers the core operational needs of a medical practice: patient charting, advanced scheduling with repeating appointments, integrated medical billing supporting HIPAA ASC X12 electronic claims, e-prescribing, and automated lab order and results integration.",
+            "The platform also includes clinical decision support tools, HIPAA-compliant access controls and encryption, and is available in more than 30 languages, making it usable by clinics and NGOs operating in diverse international settings."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenEMR is free and open source under the GNU General Public License, with no software license fee for downloading, self-hosting, or modifying the platform.",
+            "Organizations typically pay third-party vendors for hosting, implementation, and support services rather than to OpenEMR itself, and a newer initiative called OpenCoreEMR offers a fully hosted option at no cost for eligible U.S. healthcare providers."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Patient charting and clinical documentation", "description": "Comprehensive electronic charting for outpatient and practice-based clinical documentation."},
+        {"title": "Advanced scheduling", "description": "Supports complex scheduling workflows including repeating appointments across providers and locations."},
+        {"title": "Integrated medical billing", "description": "Supports HIPAA ASC X12 Version 5010 electronic claims for practice billing and revenue cycle management."},
+        {"title": "E-prescribing", "description": "Electronically transmits prescriptions directly to pharmacies."},
+        {"title": "Lab integration", "description": "Automates lab order transmission and integrates results directly into patient records."},
+        {"title": "Clinical decision support", "description": "Provides algorithms and prompts to help guide complex patient care decisions."},
+        {"title": "ONC-certified security and compliance", "description": "HIPAA-compliant access controls and encryption, backed by official ONC Health IT certification."}
+      ],
+      "pros": [
+        "Completely free and open source with no per-provider licensing fee",
+        "ONC-certified, meeting official U.S. health IT certification requirements",
+        "Comprehensive feature set covering charting, billing, scheduling, and e-prescribing in one system",
+        "Available in over 30 languages, supporting international deployments",
+        "Backed by a dedicated nonprofit foundation and an established support vendor network"
+      ],
+      "cons": [
+        "Requires self-hosting expertise or a paid third-party hosting vendor to deploy reliably",
+        "User interface is less polished than modern commercial EHR competitors",
+        "Certification maintenance requires timely upgrades, such as the March 2026 deadline for Version 8",
+        "Implementation and configuration can require significant IT and clinical workflow expertise",
+        "Support quality depends on the third-party vendor chosen rather than a single accountable company"
+      ],
+      "faqs": [
+        {"question": "Is OpenEMR free?", "answer": "Yes, OpenEMR is free and open source under the GNU General Public License, with costs typically limited to hosting and optional third-party implementation or support services."},
+        {"question": "Is OpenEMR ONC certified?", "answer": "Yes, OpenEMR has achieved ONC (Office of the National Coordinator for Health IT) certification, which is required for many U.S. healthcare reimbursement programs."},
+        {"question": "Who maintains OpenEMR?", "answer": "The OpenEMR Foundation, a 501(c)(3) nonprofit organized in 2019, leads development and oversees a network of professional support vendors."},
+        {"question": "Can OpenEMR be hosted in the cloud?", "answer": "Yes, OpenEMR can be self-hosted on-premises or in the cloud, and the OpenCoreEMR initiative offers a fully hosted option at no cost for eligible U.S. healthcare providers."},
+        {"question": "What languages does OpenEMR support?", "answer": "OpenEMR is available in more than 30 languages through community translations."},
+        {"question": "Does OpenEMR support e-prescribing and lab integration?", "answer": "Yes, it supports electronic prescription transmission to pharmacies and automated lab order transmission with results integration."},
+        {"question": "Who uses OpenEMR?", "answer": "OpenEMR is used by small and mid-sized clinics, community health centers, and international health NGOs including the International Planned Parenthood Federation and the Peace Corps."}
+      ],
+      "use_cases": [
+        {"title": "Small and mid-sized outpatient practices", "description": "Run patient charting, scheduling, billing, and e-prescribing without paying per-provider commercial EHR subscription fees.", "audience": "Independent physicians and small clinics"},
+        {"title": "International health NGO deployments", "description": "Deploy a HIPAA-compliant, multilingual EHR across clinics in different countries using the same open-source codebase.", "audience": "Global health NGOs and humanitarian organizations"},
+        {"title": "Community health centers", "description": "Provide certified, cost-effective electronic health records for safety-net and community-based healthcare providers.", "audience": "Community health centers and public health clinics"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted Community", "price": "Free", "billing_cycle": "N/A", "features": ["Full ONC-certified EHR and practice management platform", "Self-managed hosting", "Community and documentation support", "No per-provider licensing fee"]},
+        {"plan_name": "OpenCoreEMR Hosted", "price": "Free for eligible U.S. providers", "billing_cycle": "N/A", "features": ["Fully hosted deployment", "Managed infrastructure", "Available to qualifying U.S. healthcare providers"]},
+        {"plan_name": "Third-Party Hosted and Supported", "price": "Varies by vendor", "billing_cycle": "Monthly or annual (vendor-dependent)", "features": ["Managed hosting and upgrades", "Vendor support contracts", "Implementation and training services"]}
+      ],
+      "tags": ["electronic health records", "open source", "healthcare software", "practice management", "HIPAA"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "801862d9-7d0d-4545-aa0d-0e249ca2ab37",
+    "slug": "openfga",
+    "name": "OpenFGA",
+    "enrichment": {
+      "short_description": "OpenFGA is a free, open-source fine-grained authorization engine inspired by Google's Zanzibar paper, originally built by Auth0/Okta and now a CNCF Incubating project used to add scalable permissions to applications.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2022,
+      "company_size": "CNCF community project (maintained by Okta and Grafana engineers)",
+      "headquarters": "San Francisco, California, United States (originating sponsor: Okta/Auth0)",
+      "languages": ["English"],
+      "seo_title": "OpenFGA Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenFGA review 2026: fine-grained authorization features, Zanzibar-inspired architecture, SDKs, self-hosting, pricing, and how it compares to other tools.",
+      "llm_readable_summary": "OpenFGA is a free, open-source fine-grained authorization (FGA) engine designed to let developers implement scalable, relationship-based permission systems in their applications. It was designed, built, and open-sourced by Auth0, the identity platform acquired by Okta, drawing directly on the ideas in Google's 2019 Zanzibar paper, which described the global authorization system Google built to power consistent, low-latency permission checks across products like Google Drive and YouTube. Auth0/Okta announced OpenFGA and donated it to the Cloud Native Computing Foundation (CNCF) in September 2022, initially as a Sandbox project; it has since advanced to CNCF Incubating status, reflecting growing adoption and a maturing governance model with an open RFC process for community contributions. Technically, OpenFGA lets engineering teams define an authorization model in a purpose-built modeling language that can express relationship-based access control (ReBAC, the core Zanzibar-style approach), while also supporting role-based access control (RBAC) and attribute-based access control (ABAC) patterns within the same system, which means teams do not need separate tools for simple role checks versus complex nested permission relationships such as 'a user can edit a document if they are an editor on a folder that contains it.' It is built for high performance, designed to answer authorization check calls in milliseconds even at scale, and ships with SDKs for popular languages and frameworks including Python, Java, Spring, and Next.js, plus integrations with identity providers such as Auth0, Okta, and Azure AD, and with infrastructure tools like OPA (Open Policy Agent), the Envoy proxy, and the Kong API gateway. Because it is entirely open source and free, teams can self-host the OpenFGA server themselves; Okta also offers a hosted commercial version through Auth0 FGA for teams that prefer a managed service. Companies publicly known to use OpenFGA include Grafana, Docker, and Canonical, and the project is jointly maintained by engineers from Okta and Grafana Labs under CNCF governance rather than a single company's roadmap. OpenFGA's target audience is backend and platform engineering teams building applications with complex, multi-tenant, or hierarchical permission requirements, such as SaaS products with organizations, teams, and shared resources, positioning it as a modern alternative to building bespoke authorization logic in-house or to commercial authorization platforms like Ory Keto, Permit.io, or AuthZed's SpiceDB, which is also a Zanzibar-inspired open-source system.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenFGA is a free, open-source fine-grained authorization engine that lets developers implement scalable, relationship-based permission systems inspired by Google's Zanzibar paper. It was originally designed and built by Auth0, later acquired by Okta, and donated to the Cloud Native Computing Foundation in September 2022.",
+            "The project has since advanced from CNCF Sandbox to CNCF Incubating status, and is jointly maintained by engineers from Okta and Grafana Labs under an open governance model with a public RFC process for community contributions."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenFGA supports relationship-based access control (ReBAC) in the style of Google Zanzibar, while also handling role-based (RBAC) and attribute-based (ABAC) authorization patterns within a single modeling language, so teams do not need separate systems for simple and complex permission logic.",
+            "It is designed for high performance, answering authorization check calls in milliseconds at scale, and ships with SDKs for languages and frameworks like Python, Java, Spring, and Next.js, along with integrations for identity providers and infrastructure tools such as OPA, Envoy, and Kong."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenFGA is fully open source and free to self-host, with no license fee for the core authorization engine, governed transparently under the Cloud Native Computing Foundation.",
+            "Teams that prefer a fully managed service can use Auth0 FGA, Okta's hosted commercial version built on OpenFGA, rather than self-hosting the open-source server."
+          ]
+        }
+      ],
+      "features": [
+        {"title": "Relationship-based access control (ReBAC)", "description": "Implements Zanzibar-style relationship-based permission models for complex, nested authorization scenarios."},
+        {"title": "Combined RBAC and ABAC support", "description": "Handles role-based and attribute-based authorization patterns within the same modeling language as ReBAC."},
+        {"title": "Purpose-built modeling language", "description": "A dedicated authorization modeling language that is expressive enough for engineers but readable enough for other stakeholders."},
+        {"title": "Low-latency authorization checks", "description": "Designed to answer permission check calls in milliseconds, even at large scale."},
+        {"title": "Multi-language SDKs", "description": "Official SDKs are available for languages and frameworks including Python, Java, Spring, and Next.js."},
+        {"title": "Identity and infrastructure integrations", "description": "Integrates with identity providers such as Auth0, Okta, and Azure AD, and infrastructure tools like OPA, Envoy, and Kong."},
+        {"title": "Open governance under CNCF", "description": "Governed transparently as a CNCF Incubating project with a public RFC process for community-driven development."}
+      ],
+      "pros": [
+        "Fully open source and free with no licensing cost for the core engine",
+        "Backed by Okta and Grafana Labs engineers under transparent CNCF governance",
+        "Handles ReBAC, RBAC, and ABAC authorization patterns in a single unified system",
+        "Built for low-latency performance at scale, following Google's proven Zanzibar model",
+        "Broad SDK and integration support across popular languages and identity providers"
+      ],
+      "cons": [
+        "Requires engineering effort to design and self-host an authorization model correctly",
+        "Steeper learning curve than simple built-in framework authorization for teams new to ReBAC concepts",
+        "No official first-party managed OpenFGA hosting outside of Okta's separate Auth0 FGA product",
+        "Smaller ecosystem than long-established authorization libraries baked into specific frameworks",
+        "As an infrastructure component, it adds an additional service to operate and monitor in production"
+      ],
+      "faqs": [
+        {"question": "Is OpenFGA free to use?", "answer": "Yes, OpenFGA is fully open source and free to self-host; Okta also offers a separate managed commercial version called Auth0 FGA."},
+        {"question": "Who created OpenFGA?", "answer": "OpenFGA was designed and built by Auth0, later acquired by Okta, and donated to the Cloud Native Computing Foundation in September 2022."},
+        {"question": "What is the Zanzibar paper, and how does it relate to OpenFGA?", "answer": "Zanzibar is Google's published system for global, low-latency authorization; OpenFGA takes the core relationship-based access control ideas from that paper and implements them as an open-source system."},
+        {"question": "Does OpenFGA support role-based access control (RBAC)?", "answer": "Yes, in addition to relationship-based access control, OpenFGA can also model role-based and attribute-based access control patterns."},
+        {"question": "What is OpenFGA's status within the CNCF?", "answer": "OpenFGA is a CNCF Incubating project, having advanced from the CNCF Sandbox after its 2022 donation by Auth0/Okta."},
+        {"question": "Which companies use OpenFGA?", "answer": "Publicly known users include Grafana, Docker, and Canonical, among other organizations building complex permission systems."},
+        {"question": "What programming languages does OpenFGA support?", "answer": "OpenFGA provides official SDKs for languages and frameworks including Python, Java, Spring, and Next.js, with additional community SDKs available."}
+      ],
+      "use_cases": [
+        {"title": "Multi-tenant SaaS permissions", "description": "Model complex organization, team, and resource-level permissions for a multi-tenant SaaS product using relationship-based access control.", "audience": "Backend and platform engineering teams"},
+        {"title": "Document and file sharing authorization", "description": "Implement nested sharing permissions, such as folder-level access that cascades to contained documents, similar to Google Drive.", "audience": "Product engineering teams building collaboration tools"},
+        {"title": "API and microservices authorization", "description": "Centralize authorization checks across distributed microservices with low-latency permission evaluation.", "audience": "Platform and infrastructure engineers"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source (Self-Hosted)", "price": "Free", "billing_cycle": "N/A", "features": ["Full fine-grained authorization engine", "Self-hosted deployment", "Community support via GitHub and CNCF channels", "SDKs for major languages and frameworks"]}
+      ],
+      "tags": ["authorization", "access control", "open source", "developer tools", "CNCF"],
+      "publish": true
+    }
+  }
+]

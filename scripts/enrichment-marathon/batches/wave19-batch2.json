@@ -1,0 +1,595 @@
+[
+  {
+    "tool_id": "ed103661-d4a3-4fa4-8ac8-dccb7c67ed04",
+    "slug": "omeka-s",
+    "name": "Omeka S",
+    "enrichment": {
+      "short_description": "Omeka S is a free, open-source web publishing platform that lets one installation power multiple independently themed digital collection sites sharing a common item pool, purpose-built for museums, libraries, archives and digital humanities projects.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free (self-hosted)",
+      "founded_year": 2017,
+      "company_size": "Small nonprofit team (Digital Scholar / Corporation for Digital Scholarship)",
+      "headquarters": "Vienna, Virginia, United States",
+      "languages": ["English"],
+      "seo_title": "Omeka S Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Omeka S review 2026: an open-source, multi-site, API-first platform for museums, archives and digital humanities. See features, pricing and top alternatives.",
+      "llm_readable_summary": "Omeka S is a free, open-source content management platform for building and publishing digital collections, exhibits and repositories, released as version 1.0 in November 2017 by the Roy Rosenzweig Center for History and New Media (RRCHNM) at George Mason University and maintained today by the nonprofit Corporation for Digital Scholarship (branded Digital Scholar), the same organization behind Omeka Classic and Zotero. Omeka S is architecturally distinct from its older sibling Omeka Classic: a single Omeka S installation can host and administer an unlimited number of independently themed, independently permissioned sites that all draw from one shared pool of items and media, which makes it well suited to consortia, multi-department universities, and networks of small archives that want centralized management with distinct public-facing sites. It ships with a full REST API returning JSON-LD by default, so institutions can run Omeka S purely as a headless data repository behind a custom-built front end. Content modeling is based on Linked Open Data principles: Resource Templates let curators compose item metadata from Dublin Core and other RDF vocabularies, and items can link out to external authorities such as Wikidata. Extensibility comes through Modules (Omeka S's equivalent of Omeka Classic's Plugins), covering mapping, IIIF image serving, CSV import/export, and connectors to repositories like Fedora, DSpace, and Zotero, plus a migration path from Omeka Classic. Granular roles (Global Admin, Site Admin, Editor, Reviewer, Author, Researcher) support multi-institution and multi-department governance. There is no cost to license or run Omeka S: it is free, open-source PHP software distributed for self-hosting on a standard LAMP-type server, and unlike Omeka Classic there is no first-party Omeka.net managed hosting tier specifically for Omeka S, so technical setup or a third-party hosting partner is required. This makes it strongest for institutions with in-house or contracted web/IT capacity rather than solo hobbyists wanting a point-and-click hosted site. Target users are academic libraries, museums, archives, historical societies and digital humanities researchers who need a public exhibit or repository site backed by structured, linkable metadata. Its closest competitors are CollectiveAccess (a deeper collections-management system better suited to complex archival description and provenance), Islandora (a Drupal plus Fedora repository framework aimed at long-term preservation), ContentDM, PastPerfect, and generic CMSs like WordPress or Drupal retrofitted with archive plugins. Omeka S differentiates itself by prioritizing public access, exhibition, and interpretation of digital collections over deep preservation workflows, while still exposing enough structure and API surface to support serious scholarly and institutional use.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Omeka S is the API-first, multi-site sibling of Omeka Classic, both developed by the Roy Rosenzweig Center for History and New Media at George Mason University and today maintained by the nonprofit Digital Scholar (Corporation for Digital Scholarship). Released as a 1.0 in November 2017, Omeka S was built from the ground up for institutions that need to run several related but independently branded websites from one shared backend of items, media and metadata.",
+          "Unlike Omeka Classic, which is a single standalone site with a 'plugin' extension model, Omeka S uses a 'module' system, exposes a full REST API by default, and treats every item as Linked Open Data that can reference external vocabularies such as Wikidata. That makes it a reasonable choice either as a traditional exhibit-building CMS or as a headless repository powering a custom front end."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Core strengths include true multi-site architecture from a single install, Resource Templates for consistent metadata built on Dublin Core and other RDF vocabularies, and a REST API returning JSON-LD, which together let developers decouple the public presentation layer from the underlying collection data if desired.",
+          "The module ecosystem adds mapping, IIIF-compliant image viewing for cultural heritage imagery, CSV bulk import and export, OAI-PMH harvesting, and connectors into Fedora, DSpace, and Zotero, plus tools to migrate content over from an existing Omeka Classic site."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Omeka S itself is completely free and open source under a GPL-style license; there is no subscription fee to download or run the software. Institutions do need to provide their own server (or use a third-party Omeka-friendly host) since, unlike Omeka Classic, there is no official Omeka.net managed hosting plan built specifically for Omeka S.",
+          "Because there is no vendor lock-in or per-user licensing, total cost of ownership is really a function of hosting, IT support, and any custom module or theme development an institution chooses to commission."
+        ]}
+      ],
+      "features": [
+        {"title": "Multi-site architecture", "description": "Run unlimited independently themed, independently permissioned sites from one installation, all drawing on a shared pool of items and media."},
+        {"title": "REST API with JSON-LD", "description": "A complete, documented REST API lets developers use Omeka S as a headless repository behind a custom front end."},
+        {"title": "Linked Open Data modeling", "description": "Resource Templates built on Dublin Core and other RDF vocabularies let items link out to external authorities such as Wikidata."},
+        {"title": "Modules extension system", "description": "Add mapping, IIIF image serving, CSV import and export, OAI-PMH harvesting and more through community and core modules."},
+        {"title": "Granular user roles", "description": "Global Admin, Site Admin, Editor, Reviewer, Author and Researcher roles support multi-department or multi-institution governance."},
+        {"title": "External repository connectors", "description": "Import from or connect to Fedora, DSpace, Zotero, CSV files, and existing Omeka Classic installations."},
+        {"title": "IIIF support", "description": "Serve and view high-resolution cultural heritage images using the IIIF standard used by libraries and museums worldwide."}
+      ],
+      "pros": [
+        "Completely free and open source with no per-seat or per-site licensing cost",
+        "True multi-site capability lets one team manage many public collection sites from a shared backend",
+        "Purpose-built data model for cultural heritage and digital humanities work (Dublin Core, Linked Open Data)",
+        "Full REST API enables headless or custom front-end builds",
+        "Backed by a long-running academic nonprofit (RRCHNM / Digital Scholar) with an established track record via Omeka Classic and Zotero"
+      ],
+      "cons": [
+        "No first-party managed hosting for Omeka S, so self-hosting or a third-party host is required",
+        "Steeper learning curve than Omeka Classic or fully hosted platforms",
+        "Smaller module ecosystem than large general-purpose CMSs like WordPress or Drupal",
+        "Deep front-end customization requires PHP and templating skill",
+        "Not designed as a long-term digital preservation system in the way Islandora or dedicated repository software is"
+      ],
+      "faqs": [
+        {"question": "What is Omeka S?", "answer": "Omeka S is a free, open-source web publishing platform that lets one installation run multiple independently themed digital collection sites from a shared pool of items, built for museums, libraries, archives and digital humanities projects."},
+        {"question": "How is Omeka S different from Omeka Classic?", "answer": "Omeka Classic runs a single standalone site and uses plugins, while Omeka S supports multiple sites from one install, ships a full REST API, uses a module system instead of plugins, and models content as Linked Open Data."},
+        {"question": "Is Omeka S free?", "answer": "Yes. Omeka S is open-source software that can be downloaded and run at no license cost, though you need your own server or hosting provider to run it."},
+        {"question": "Can I host multiple sites with Omeka S?", "answer": "Yes, that is Omeka S's defining feature: a single installation can power an unlimited number of independently themed and permissioned sites that share a common item pool."},
+        {"question": "Does Omeka S have an API?", "answer": "Yes, Omeka S includes a full REST API that returns data in JSON-LD by default, allowing it to be used as a headless backend behind a custom-built front end."},
+        {"question": "Who maintains Omeka S?", "answer": "Omeka S is maintained by Digital Scholar (the Corporation for Digital Scholarship), a nonprofit that also maintains Omeka Classic and Zotero, building on original development by the Roy Rosenzweig Center for History and New Media at George Mason University."},
+        {"question": "What skills do I need to run Omeka S?", "answer": "Basic web server administration is required to install and host Omeka S, and PHP/HTML/CSS knowledge is helpful for deeper theme or module customization, though day-to-day content entry does not require coding."}
+      ],
+      "use_cases": [
+        {"title": "University and library digital collections", "description": "Academic libraries digitize special collections and publish them as searchable, richly described online exhibits across multiple departmental sites.", "audience": "Academic libraries and archivists"},
+        {"title": "Museum online exhibits", "description": "Museums build public-facing exhibit sites drawing on a shared collections database, with IIIF image viewing for high-resolution artifacts.", "audience": "Museums and cultural heritage organizations"},
+        {"title": "Digital humanities research projects", "description": "Researchers structure and publish primary source material as Linked Open Data, linking items to external authorities like Wikidata for scholarly reuse.", "audience": "Digital humanities scholars and research teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code under an open-source license", "Unlimited sites and items, limited only by your server", "Full REST API access", "Community modules and themes", "Requires your own server/hosting"]}
+      ],
+      "tags": ["cms", "open-source", "digital-humanities", "museum-software", "archives", "api-first"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "902d8b1b-af39-4cdf-a2b7-db0c5672b059",
+    "slug": "omnisend",
+    "name": "Omnisend",
+    "enrichment": {
+      "short_description": "Omnisend is an email and SMS marketing automation platform built specifically for ecommerce brands, combining campaigns, prebuilt automation workflows, popups and forms, and sales-attributed reporting in one tool for Shopify, WooCommerce and BigCommerce stores.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (paid plans from about $16/month)",
+      "founded_year": 2014,
+      "company_size": "200-250 employees",
+      "headquarters": "Vilnius, Lithuania",
+      "languages": ["English"],
+      "seo_title": "Omnisend Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Omnisend review 2026: ecommerce email and SMS marketing automation. Compare features, pricing plans, pros, cons and top alternatives like Klaviyo.",
+      "llm_readable_summary": "Omnisend is an email and SMS marketing automation platform built specifically for ecommerce businesses, founded in 2014 in Lithuania under the name Soundest before rebranding to Omnisend in November 2017. The company is headquartered in Vilnius, Lithuania, with additional offices in Kaunas, Lithuania and Charleston, South Carolina, and employs roughly 200 to 250 people serving more than 150,000 ecommerce businesses worldwide. Omnisend's core differentiator is that it unifies email, SMS and web push notifications under one customer profile and one price, rather than requiring separate tools or add-on contracts for each channel, and it ships with deep native integrations for Shopify, WooCommerce, BigCommerce and Magento so store data (products, orders, discount codes) can be pulled directly into campaigns and automations. The platform includes a drag-and-drop email builder with ecommerce-specific content blocks, a library of prebuilt automation workflows for cart abandonment, welcome series, browse abandonment, order and shipping updates, and win-back campaigns, plus audience segmentation based on purchase and engagement behavior, A/B-testable popups and signup forms, and a reporting dashboard that attributes revenue back to specific campaigns and automations. Pricing follows a freemium, contact-based model: a Free plan supports 500 emails and 250 contacts per month with 500 web push notifications; the Standard plan starts around $16 per month for 6,000 emails and includes AI-assisted forms; the Pro plan starts around $59 per month with unlimited email sends, usage-based SMS credits (from about $0.007 per message depending on volume), and more advanced AI personalization and reporting; and a Custom/High-volume tier is available for large contact lists with dedicated account support. Omnisend targets small-to-midsize direct-to-commerce brands and marketing teams that want an all-in-one, ecommerce-native alternative to generic ESPs, competing most directly with Klaviyo, Mailchimp, ActiveCampaign, Drip, and SMS-focused tools like Yotpo SMSBump. Its main advantages versus larger competitors are a genuinely usable free tier, bundled multichannel pricing instead of per-channel billing, and out-of-the-box ecommerce automation templates that require less setup than more generalist marketing platforms; the tradeoff is that pricing scales quickly with list size and its most advanced AI and reporting capabilities are reserved for the Pro and Custom tiers.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Omnisend is a marketing automation platform focused exclusively on ecommerce, founded in 2014 in Lithuania (originally as Soundest) and rebranded to Omnisend in 2017. It is headquartered in Vilnius with additional offices in Kaunas and Charleston, South Carolina, and now serves over 150,000 online stores.",
+          "The platform's core proposition is unifying email, SMS and web push under a single customer profile, single automation builder and single price, so ecommerce teams do not need to stitch together separate tools for each channel."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Omnisend ships with native, deep integrations for Shopify, WooCommerce, BigCommerce and Magento, letting store data such as products, orders and discount codes flow directly into campaigns. A drag-and-drop email builder includes ecommerce-specific blocks like product pickers and dynamic discount codes.",
+          "Prebuilt automation workflows cover cart abandonment, welcome series, browse abandonment, order and shipping confirmations, and win-back sequences, alongside behavior-based segmentation, A/B-testable popups and signup forms, and a sales-attribution reporting dashboard."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Omnisend uses a freemium, contact-count-based pricing model. The Free plan covers 500 emails and 250 contacts per month with limited web push notifications. The Standard plan starts at roughly $16 per month for 6,000 monthly emails, and the Pro plan starts at roughly $59 per month with unlimited email sends plus usage-based SMS credits.",
+          "SMS is billed per message on top of the Pro plan (from about $0.007 to $0.009 per message depending on volume), and a Custom/High-volume tier is available for large contact lists with dedicated account management."
+        ]}
+      ],
+      "features": [
+        {"title": "Unified email, SMS and web push", "description": "Manage all three messaging channels from one customer profile, one automation builder, and one subscription price."},
+        {"title": "Ecommerce automation workflows", "description": "Prebuilt sequences for cart abandonment, welcome series, browse abandonment, order updates and win-back campaigns."},
+        {"title": "Native ecommerce integrations", "description": "Deep, direct integrations with Shopify, WooCommerce, BigCommerce and Magento pull store data straight into campaigns."},
+        {"title": "Drag-and-drop email builder", "description": "Visual editor with ecommerce-specific content blocks such as product pickers and dynamic discount codes."},
+        {"title": "Behavior-based segmentation", "description": "Segment audiences using purchase history, browsing behavior and campaign engagement."},
+        {"title": "Popups and signup forms", "description": "A/B-testable popups, landing pages and signup forms to grow email and SMS lists."},
+        {"title": "Sales-attribution reporting", "description": "Dashboard that ties revenue directly back to individual campaigns and automations."},
+        {"title": "AI-assisted content and personalization", "description": "AI tools for form copy, product recommendations and dynamic content on the Pro and Custom plans."}
+      ],
+      "pros": [
+        "Genuinely usable free plan, not just a trial",
+        "Bundles email, SMS and web push under one price instead of separate per-channel billing",
+        "Deep native integrations with Shopify, WooCommerce and other major ecommerce platforms",
+        "Large library of prebuilt ecommerce automation workflows reduces setup time",
+        "Usage-based SMS pricing that scales down at higher volumes"
+      ],
+      "cons": [
+        "Pricing rises quickly as your contact list grows",
+        "Free plan sending volumes are quite low for anything beyond a very small store",
+        "Most advanced AI personalization and reporting features are reserved for the Pro and Custom tiers",
+        "SMS deliverability and coverage are strongest in the US, Canada and UK",
+        "Complex multi-step automations can take time to learn for marketing teams new to the platform"
+      ],
+      "faqs": [
+        {"question": "Is Omnisend free?", "answer": "Yes, Omnisend offers a Free plan covering 500 emails and 250 contacts per month with limited web push notifications; paid plans start at roughly $16 per month."},
+        {"question": "What ecommerce platforms does Omnisend integrate with?", "answer": "Omnisend has native integrations with Shopify, WooCommerce, BigCommerce and Magento, plus a broader app marketplace for other platforms."},
+        {"question": "Does Omnisend support SMS marketing?", "answer": "Yes, SMS is built into the platform and billed on a per-message basis starting around $0.007 to $0.009 per message, included as credits on the Pro plan."},
+        {"question": "How is Omnisend priced?", "answer": "Pricing is based on your number of contacts and monthly send volume across a Free plan, Standard plan (from about $16/month), Pro plan (from about $59/month) and a Custom high-volume tier."},
+        {"question": "What was Omnisend called before?", "answer": "Omnisend was originally launched in 2014 as Soundest and rebranded to Omnisend in November 2017."},
+        {"question": "Can I use Omnisend for cart abandonment emails?", "answer": "Yes, cart abandonment is one of Omnisend's prebuilt automation workflows and one of its most commonly used features."},
+        {"question": "Who is Omnisend best suited for?", "answer": "Omnisend is best suited for small-to-midsize direct-to-consumer ecommerce brands that want combined email and SMS marketing without managing separate tools for each channel."}
+      ],
+      "use_cases": [
+        {"title": "Cart and browse abandonment recovery", "description": "Automatically follow up with shoppers who added items to cart or browsed products without purchasing, using email and SMS sequences.", "audience": "DTC ecommerce brands on Shopify or WooCommerce"},
+        {"title": "Combined email and SMS promotional campaigns", "description": "Run coordinated sale and product-launch campaigns across email, SMS and web push from a single audience segment.", "audience": "Mid-market ecommerce marketing teams"},
+        {"title": "Post-purchase lifecycle automation", "description": "Send order confirmations, shipping updates, review requests and win-back offers automatically after a purchase.", "audience": "Online retailers focused on repeat purchase and retention"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0/month", "billing_cycle": "Monthly", "features": ["500 emails per month", "250 contacts", "500 web push notifications", "Access to core features", "24/7 support"]},
+        {"plan_name": "Standard", "price": "From about $16/month", "billing_cycle": "Monthly, scales with contact count", "features": ["6,000 emails per month", "Unlimited web push notifications", "AI-assisted signup forms", "No Omnisend branding", "Account support from $400/month spend"]},
+        {"plan_name": "Pro", "price": "From about $59/month", "billing_cycle": "Monthly, scales with contact count", "features": ["Unlimited emails", "SMS credits included, from $0.007 per message", "Advanced AI personalization", "Dynamic content and product recommendations", "Advanced reporting"]},
+        {"plan_name": "Custom", "price": "Custom pricing", "billing_cycle": "Custom", "features": ["Tailored for high-volume senders and large contact lists", "Dedicated account support", "Custom onboarding"]}
+      ],
+      "tags": ["email-marketing", "sms-marketing", "ecommerce", "marketing-automation", "shopify-apps"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "ea56c01c-6b17-4ccc-b7b7-0f3ee6227368",
+    "slug": "omnitools",
+    "name": "OmniTools",
+    "enrichment": {
+      "short_description": "OmniTools is a free, open-source collection of 80-plus browser-based utilities for images, PDFs, video, text and data that process every file locally on your device, with an official hosted version and a lightweight self-hosted Docker option.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2024,
+      "company_size": "Independent open-source project (single maintainer plus community contributors)",
+      "headquarters": "N/A (open-source community project)",
+      "languages": ["English"],
+      "seo_title": "OmniTools Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OmniTools review 2026: a free, self-hosted, privacy-first alternative to iLovePDF and TinyPNG with 80+ browser-based tools. Features, pricing, alternatives.",
+      "llm_readable_summary": "OmniTools is a free, open-source, self-hostable web application that bundles more than 80 everyday utilities, covering image editing and background removal, PDF merging and splitting, video trimming, text and case conversion, date and time calculators, and data tools like JSON, CSV and XML converters, into a single browser-based interface. The project was created by developer iib0011 and its GitHub repository was created in June 2024; by mid-2026 it had accumulated close to 10,000 GitHub stars, reflecting fast community adoption. Its defining differentiator versus incumbents like iLovePDF, TinyPNG, Convertio and CloudConvert is a strict client-side, no-upload processing model: every conversion, resize, merge or edit runs entirely in the user's browser (or on their own server if self-hosted), so files never leave the device and nothing is stored on a remote cloud, which appeals to privacy-conscious individuals and organizations with data-handling constraints. OmniTools is MIT-licensed and free to use, either through the hosted demo at omnitools.app or by self-hosting via a lightweight roughly 28MB Docker image, making it an option for teams that want an internal, air-gapped or on-premises alternative to SaaS file-conversion tools such as iLovePDF, TinyPNG, Smallpdf, or Photopea. There is no paid tier, subscription, or account requirement: the tool is explicitly positioned as an ad-free, tracking-free public utility rather than a commercial SaaS product, and it does not currently publish company information such as headquarters, funding or employee count because it is a community open-source project rather than an incorporated company. Its target audience spans developers who want a self-hosted internal toolset, privacy-focused individuals who prefer not to upload sensitive files to third-party cloud services, and general users looking for a fast, no-signup alternative to fragmented single-purpose web tools. Compared to competitors, OmniTools trades a polished commercial support experience and integrated cloud storage for full data privacy, zero cost, and self-hosting flexibility; it also lacks some of the more specialized enterprise features (team accounts, API rate-limited cloud processing at scale, compliance certifications) that paid competitors offer. Because it is community-maintained, feature velocity depends on open-source contributions rather than a dedicated product roadmap, though the project has shown active, frequent releases since its 2024 launch.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "OmniTools is an open-source, self-hostable web app created by developer iib0011, with its GitHub repository dating to June 2024. It bundles more than 80 everyday utilities across image, PDF, video, text, date/time, and data-format categories into a single, ad-free interface.",
+          "It was built explicitly as a privacy-friendly alternative to popular proprietary services like iLovePDF and TinyPNG: rather than uploading files to a third-party server, OmniTools processes everything client-side in the browser, or on your own infrastructure if you self-host it."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "The toolset spans image tools (background removal, resizing, format conversion), PDF tools (merge, split, annotate), video tools (trim, convert, reverse), text and list utilities (case conversion, shuffling, formatting), date and time calculators, math and unit tools, and data utilities such as JSON, CSV and XML viewers and converters.",
+          "All processing happens locally, meaning no file uploads and no server-side storage of user data, and the project ships an official lightweight Docker image (about 28MB) for teams that want to self-host it internally."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "OmniTools is entirely free and MIT-licensed with no paid tier, subscription, or account requirement. Users can either use the hosted version at omnitools.app at no cost or self-host the Docker image on their own server for full control.",
+          "Because there is no commercial product behind it, there is no enterprise support contract or SLA; support comes from the open-source community via GitHub."
+        ]}
+      ],
+      "features": [
+        {"title": "Client-side, no-upload processing", "description": "Every conversion or edit runs locally in the browser (or your own server), so files never leave the device."},
+        {"title": "80-plus utilities in one app", "description": "Image, PDF, video, text, date/time, math and data tools consolidated into a single interface."},
+        {"title": "Self-hostable via Docker", "description": "An official, lightweight roughly 28MB Docker image lets teams run OmniTools on their own infrastructure."},
+        {"title": "Image and PDF editing", "description": "Background removal, resizing and format conversion for images; merging, splitting and annotating for PDFs."},
+        {"title": "Data format converters", "description": "JSON, CSV and XML viewers and converters aimed at developers handling structured data."},
+        {"title": "No ads, no tracking", "description": "The project is positioned explicitly as an ad-free, tracking-free public utility."},
+        {"title": "MIT-licensed open source", "description": "Fully open codebase on GitHub that can be forked, audited or extended by the community."}
+      ],
+      "pros": [
+        "Completely free with no account, subscription, or usage limits",
+        "Strong privacy model since files are processed client-side and never uploaded",
+        "Wide breadth of tools (80-plus) covering image, PDF, video, text and data needs in one app",
+        "Easy to self-host via a small official Docker image for internal or air-gapped use",
+        "Active open-source project with fast growth and frequent releases since its 2024 launch"
+      ],
+      "cons": [
+        "No official company, support contract or SLA since it is a community project, not a business",
+        "Feature velocity depends on volunteer contributions rather than a dedicated roadmap",
+        "Lacks enterprise features like team accounts, audit logs or compliance certifications",
+        "Client-side processing can be slower than server-side tools for very large files",
+        "No native mobile apps; it is a browser-based tool only"
+      ],
+      "faqs": [
+        {"question": "Is OmniTools free?", "answer": "Yes, OmniTools is completely free, open-source software with no paid tier or account requirement."},
+        {"question": "Is OmniTools safe for sensitive files?", "answer": "OmniTools processes files entirely client-side in the browser (or on your own server if self-hosted), so files are never uploaded to a third-party cloud, which improves privacy compared with typical online converters."},
+        {"question": "Can I self-host OmniTools?", "answer": "Yes, OmniTools provides an official lightweight Docker image (about 28MB) that can be deployed on your own server or home lab."},
+        {"question": "Who built OmniTools?", "answer": "OmniTools was created by developer iib0011 and is maintained as an open-source project on GitHub with community contributions."},
+        {"question": "What tools does OmniTools include?", "answer": "OmniTools includes over 80 utilities spanning image editing, PDF manipulation, video trimming, text conversion, date/time calculators, and data format converters like JSON, CSV and XML."},
+        {"question": "How is OmniTools different from iLovePDF or TinyPNG?", "answer": "Unlike those cloud-based services, OmniTools processes files locally in the browser or on your own server, is free and open source, and does not require uploading files to a third-party company."},
+        {"question": "Does OmniTools require an account?", "answer": "No, OmniTools does not require creating an account to use its tools on the hosted version."}
+      ],
+      "use_cases": [
+        {"title": "Privacy-conscious file conversion", "description": "Convert, resize or merge files without uploading them to a third-party cloud service.", "audience": "Privacy-conscious individuals and regulated organizations"},
+        {"title": "Self-hosted internal utility hub", "description": "Deploy OmniTools via Docker on internal infrastructure so a team has a shared, private set of file utilities.", "audience": "Developers and IT teams"},
+        {"title": "Everyday quick conversions", "description": "Handle one-off tasks like resizing an image, merging PDFs, or converting CSV to JSON without installing separate desktop software.", "audience": "General consumers and knowledge workers"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Hosted (omnitools.app)", "price": "Free", "billing_cycle": "N/A", "features": ["80-plus browser-based tools", "Client-side processing, no uploads", "No account required", "No ads or tracking"]},
+        {"plan_name": "Self-Hosted (Docker)", "price": "Free", "billing_cycle": "N/A", "features": ["Official lightweight Docker image (about 28MB)", "Run on your own server or home lab", "Full data control", "MIT-licensed source code"]}
+      ],
+      "tags": ["open-source", "self-hosted", "file-conversion", "privacy-tools", "productivity"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "0882639c-99a4-4dc9-ad54-7de7889c2d10",
+    "slug": "omnivore",
+    "name": "Omnivore",
+    "enrichment": {
+      "short_description": "Omnivore was a free, open-source read-it-later app for saving and reading articles, newsletters and PDFs across web, iOS, Android and browser extensions; it was acquired by ElevenLabs on November 1, 2024 and the service was shut down two weeks later on November 15, 2024.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free (service discontinued November 15, 2024)",
+      "founded_year": 2021,
+      "company_size": "Discontinued; team joined ElevenLabs in 2024",
+      "headquarters": "San Francisco, California, United States (prior to shutdown)",
+      "languages": ["English"],
+      "seo_title": "Omnivore Review 2026: Why It Shut Down and the Best Alternatives",
+      "seo_meta_description": "Omnivore was acquired by ElevenLabs and shut down in November 2024. See what it offered, why it closed, and the best read-it-later alternatives in 2026.",
+      "llm_readable_summary": "Omnivore was a free, open-source read-it-later application founded around 2021 and headquartered in San Francisco, built as a fully open alternative to Pocket, Instapaper and Readwise Reader. It let users save articles, newsletters, PDFs and web pages from a browser extension, mobile apps (iOS and Android), or direct email forwarding, then read them in a clean, distraction-free interface with highlighting, note-taking, full-text search, and integrations into note-taking tools like Obsidian and Logseq. As a genuinely open-source project, every layer of the stack, including the API server, mobile clients and self-hosting instructions, was published on GitHub, and the product was offered entirely free with no meaningful paid tier, funded instead through venture investment. On November 1, 2024, Omnivore announced it had been acquired by ElevenLabs, the AI voice and audio company backed by Andreessen Horowitz; critically, ElevenLabs acquired Omnivore's team rather than continuing to operate its product, and the Omnivore service itself was shut down on November 15, 2024, with all user data subsequently deleted after an extended export window (initially 14 days, later extended to November 30, 2024, following user criticism about the short notice). The Omnivore engineering team joined ElevenLabs to work on ElevenReader, an AI-powered reading and listening app, rather than continuing to maintain Omnivore. As of 2026, Omnivore is not an active, usable product: its hosted service, mobile apps and browser extensions no longer function for saving or syncing content, though its open-source codebase remains publicly archived on GitHub and can theoretically be self-hosted by technically capable users, since it was fully open source under its original license. For anyone evaluating tools today, Omnivore should be understood as a defunct, historical product rather than a live SaaS option; former users have migrated to alternatives such as Readwise Reader, Instapaper, Matter, Pocket (before its own later shutdown), or self-hosted options like Wallabag. This acquisition-then-shutdown pattern, an AI company acquiring a team and discontinuing the underlying open-source product, is a notable case study in the read-it-later and bookmarking software category and is the single most important fact anyone researching Omnivore needs to know.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Omnivore was a free, open-source read-it-later app founded around 2021 and based in San Francisco. It offered a clean reading experience for articles, newsletters and PDFs across web, iOS, Android and browser extensions, with highlighting, notes, full-text search and integrations into tools like Obsidian and Logseq.",
+          "Omnivore is no longer an operating product. ElevenLabs, the AI voice company, acquired Omnivore on November 1, 2024, primarily to bring on its engineering team, and the Omnivore service was shut down on November 15, 2024. All user data was subsequently deleted after an extended export window ending November 30, 2024."
+        ]},
+        {"id": "key-features", "heading": "Key Features (Historical)", "level": 2, "paragraphs": [
+          "While active, Omnivore supported saving content via browser extension, mobile app, or email forwarding, offline reading, highlighting and note-taking, full-text search across saved articles, a clean reader view stripped of ads and clutter, and newsletter subscription management.",
+          "It also stood out for being fully open source end to end, meaning technically capable users could self-host their own instance rather than relying solely on the hosted omnivore.app service."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing (Historical)", "level": 2, "paragraphs": [
+          "Omnivore was offered free of charge throughout its operating life, funded by venture investment rather than subscription revenue, with no meaningful paid tier for end users.",
+          "Since the November 2024 shutdown, there is no pricing to evaluate: the hosted service no longer accepts new users or syncs content, and the only remaining option is self-hosting the open-source codebase."
+        ]}
+      ],
+      "features": [
+        {"title": "Multi-platform saving (historical)", "description": "Saved content via browser extension, iOS/Android apps, or direct email forwarding into a unified reading list."},
+        {"title": "Distraction-free reader view (historical)", "description": "Stripped articles of ads and clutter for a clean reading experience."},
+        {"title": "Highlighting and notes (historical)", "description": "Users could highlight passages and attach notes to saved content."},
+        {"title": "Full-text search (historical)", "description": "Searched across the full text of all saved articles and documents."},
+        {"title": "Note-taking app integrations (historical)", "description": "Synced highlights and notes into Obsidian and Logseq."},
+        {"title": "Fully open-source codebase (historical)", "description": "The entire stack, API, and mobile clients were published on GitHub, enabling self-hosting."}
+      ],
+      "pros": [
+        "Was completely free with no paid tier while operating",
+        "Fully open source, so self-hosting was possible for technical users",
+        "Clean, ad-free reading experience across web and mobile",
+        "Strong integrations with note-taking tools like Obsidian and Logseq",
+        "Codebase remains publicly available on GitHub as a reference or self-host base even after shutdown"
+      ],
+      "cons": [
+        "The hosted service is permanently shut down as of November 15, 2024",
+        "All user data was deleted after the export window closed",
+        "No mobile apps or browser extensions currently function for saving new content",
+        "Self-hosting the abandoned codebase requires real technical effort with no official support",
+        "Former users must migrate to a different tool entirely, with no official import path forward from the company"
+      ],
+      "faqs": [
+        {"question": "Is Omnivore still available?", "answer": "No. Omnivore was acquired by ElevenLabs on November 1, 2024, and the hosted service was shut down on November 15, 2024, with user data deleted after an extended export window."},
+        {"question": "Why did Omnivore shut down?", "answer": "ElevenLabs acquired Omnivore primarily to bring its engineering team on board to work on its ElevenReader app, not to continue operating the Omnivore product, so the service had no continuing owner and was discontinued."},
+        {"question": "Can I still export my Omnivore data?", "answer": "The export window closed November 30, 2024, and all user data has since been deleted; no export is currently possible through the official service."},
+        {"question": "Is Omnivore's code still available?", "answer": "Yes, Omnivore was fully open source and its codebase remains publicly available on GitHub, so technically capable users can self-host their own instance."},
+        {"question": "What happened to the Omnivore team?", "answer": "The Omnivore team joined ElevenLabs to work on ElevenReader, an AI-powered reading and listening application."},
+        {"question": "What are good alternatives to Omnivore?", "answer": "Common alternatives include Readwise Reader, Instapaper, Matter, and self-hosted open-source options like Wallabag."},
+        {"question": "When was Omnivore founded?", "answer": "Omnivore was founded around 2021 and was based in San Francisco before its November 2024 acquisition and shutdown."}
+      ],
+      "use_cases": [
+        {"title": "Historical reference for read-it-later research", "description": "Understand Omnivore's feature set and acquisition history when comparing today's read-it-later tools.", "audience": "Researchers and journalists covering software acquisitions"},
+        {"title": "Self-hosting the open-source codebase", "description": "Technically capable users can deploy Omnivore's published code on their own infrastructure since the hosted service is discontinued.", "audience": "Developers comfortable with self-hosted open-source software"},
+        {"title": "Migration planning", "description": "Former Omnivore users evaluating where to move their reading workflow after the shutdown.", "audience": "Former Omnivore users choosing a replacement tool"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Service Discontinued", "price": "N/A", "billing_cycle": "N/A", "features": ["Hosted service shut down November 15, 2024", "No new signups or syncing available", "Open-source code remains on GitHub for self-hosting only"]}
+      ],
+      "tags": ["read-it-later", "discontinued", "open-source", "bookmarking", "acquired"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "60043245-a189-4894-95be-8b1ffc4e271a",
+    "slug": "omny-studio",
+    "name": "Omny Studio",
+    "enrichment": {
+      "short_description": "Omny Studio is an enterprise podcast hosting and radio-to-podcast platform for hosting, publishing, monetizing and analyzing audio content, originally built in Melbourne, Australia and now owned and operated by Triton Digital, a subsidiary of The E.W. Scripps Company.",
+      "pricing_model": "Custom",
+      "starting_price": "Custom (contact sales)",
+      "founded_year": 2012,
+      "company_size": "Part of Triton Digital / The E.W. Scripps Company (large enterprise)",
+      "headquarters": "Melbourne, Australia (founding headquarters); now operated by Triton Digital",
+      "languages": ["English"],
+      "seo_title": "Omny Studio Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Omny Studio review 2026: enterprise podcast hosting from Triton Digital. Features, pricing model, pros, cons and alternatives like Megaphone and Art19.",
+      "llm_readable_summary": "Omny Studio is an enterprise-grade podcast hosting and audio-on-demand platform originally built by a Melbourne, Australia startup founded in 2012 (initially called 121cast, working on text-to-speech technology branded SoundGecko before pivoting to personalized audio). The Omny Studio platform itself launched in 2015, and after a strategic reseller partnership with Triton Digital beginning in 2017, the company was fully acquired by Triton Digital on June 12, 2019; Triton Digital is a global digital audio technology company that is itself a subsidiary of The E.W. Scripps Company, a major US media conglomerate. Following the acquisition, Omny Studio's founding team, including co-founders Andrew Armstrong and Long Zheng, joined Triton Digital, and the product now operates as Triton's flagship enterprise podcast hosting solution rather than as an independent startup. Omny Studio's key differentiator is its focus on large broadcasters and branded media networks rather than independent podcasters: it offers tools to automatically capture and republish radio broadcasts as on-demand podcast episodes, drag-and-drop audio editing, embeddable and customizable audio players, dynamic ad insertion and monetization tools tied into Triton's ad marketplace, and detailed analytics and audience measurement built for advertising and ratings use cases. Because it targets enterprise radio groups, media companies and large branded podcast networks rather than individual creators, pricing is not published and is only available by contacting sales, positioning it against other enterprise-tier podcast platforms like Megaphone (owned by Spotify), Art19, and Acast's enterprise tier, rather than consumer-facing hosts like Buzzsprout or Anchor/Spotify for Podcasters. Target customers are radio broadcasters looking to repurpose linear radio content into podcasts, large publishers and branded content networks, and enterprises that need integrated ad monetization and advanced analytics rather than simple RSS hosting. Its main tradeoffs versus lighter-weight hosts are that it is not designed or priced for solo or small independent podcasters, pricing transparency is low since everything runs through a sales conversation, and the product is tightly coupled to Triton Digital's broader advertising and measurement ecosystem, which is an advantage for broadcasters already using Triton's other services but less relevant for standalone creators.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Omny Studio began life in Melbourne, Australia in 2012 as 121cast, initially focused on text-to-speech technology, before pivoting toward personalized audio and launching the Omny Studio platform in 2015. After a strategic partnership starting in 2017, Triton Digital, a global digital audio technology company and subsidiary of The E.W. Scripps Company, fully acquired Omny Studio in June 2019.",
+          "Today Omny Studio operates as Triton Digital's enterprise podcast hosting and audio-on-demand platform, aimed squarely at radio broadcasters, media companies and large branded podcast networks rather than independent creators."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Omny Studio can automatically capture live radio broadcasts and republish them as on-demand podcast episodes, alongside drag-and-drop audio editing tools, customizable embeddable players, and distribution to major podcast directories.",
+          "Its enterprise focus shows in built-in dynamic ad insertion and monetization tools connected to Triton's advertising marketplace, plus detailed analytics and audience measurement designed for advertiser reporting and ratings purposes."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Omny Studio does not publish self-serve pricing; it is sold through a sales-led enterprise process aimed at radio broadcasters, publishers and large branded podcast networks.",
+          "Prospective customers need to contact Triton Digital directly to get a quote, and pricing typically reflects broadcast volume, ad monetization needs and integration with Triton's broader audio advertising ecosystem."
+        ]}
+      ],
+      "features": [
+        {"title": "Radio-to-podcast automation", "description": "Automatically captures live radio broadcasts and republishes them as on-demand podcast episodes."},
+        {"title": "Drag-and-drop audio editing", "description": "Built-in editing tools for trimming, splicing and preparing episodes for publication."},
+        {"title": "Embeddable, customizable players", "description": "Shareable audio players that can be embedded on websites and branded to match a network's identity."},
+        {"title": "Dynamic ad insertion", "description": "Monetization tools connected to Triton Digital's advertising marketplace for programmatic and dynamic ads."},
+        {"title": "Enterprise analytics", "description": "Detailed audience measurement and reporting built for advertiser and ratings use cases."},
+        {"title": "Multi-directory distribution", "description": "Publishes episodes out to major podcast directories and platforms from a single dashboard."}
+      ],
+      "pros": [
+        "Purpose-built for radio broadcasters repurposing linear content into podcasts",
+        "Backed by Triton Digital's broader digital audio advertising and measurement ecosystem",
+        "Strong monetization tooling via dynamic ad insertion",
+        "Enterprise-grade analytics suited for advertiser and ratings reporting",
+        "Long operating history since its 2015 platform launch and 2019 acquisition by an established audio company"
+      ],
+      "cons": [
+        "No public self-serve pricing; requires a sales conversation to get a quote",
+        "Not designed or priced for independent or small-scale podcasters",
+        "Feature set and pricing are tightly coupled to Triton Digital's broader advertising ecosystem",
+        "Less suited to creators who just need simple, low-cost RSS hosting",
+        "Onboarding and setup are geared toward enterprise procurement rather than instant self-signup"
+      ],
+      "faqs": [
+        {"question": "What is Omny Studio?", "answer": "Omny Studio is an enterprise podcast hosting and audio-on-demand platform, originally built in Melbourne, Australia and now owned by Triton Digital, a subsidiary of The E.W. Scripps Company."},
+        {"question": "Who owns Omny Studio?", "answer": "Omny Studio is owned by Triton Digital, which acquired the company on June 12, 2019 after a strategic partnership that began in 2017; Triton Digital is itself a subsidiary of The E.W. Scripps Company."},
+        {"question": "How much does Omny Studio cost?", "answer": "Omny Studio does not publish pricing; it is sold through an enterprise sales process, so you need to contact the company directly for a quote."},
+        {"question": "Is Omny Studio good for independent podcasters?", "answer": "Omny Studio is primarily built for radio broadcasters, publishers and large branded podcast networks rather than independent or small podcasters, who are typically better served by lighter-weight hosts."},
+        {"question": "Does Omny Studio support radio broadcast capture?", "answer": "Yes, one of its signature features is automatically capturing live radio broadcasts and republishing them as on-demand podcast episodes."},
+        {"question": "Does Omny Studio offer ad monetization?", "answer": "Yes, it includes dynamic ad insertion tools connected to Triton Digital's advertising marketplace."},
+        {"question": "When was Omny Studio founded?", "answer": "The company behind Omny Studio was founded in 2012 in Melbourne, Australia, and the Omny Studio platform itself launched in 2015."}
+      ],
+      "use_cases": [
+        {"title": "Repurposing radio broadcasts as podcasts", "description": "Radio stations automatically capture live broadcasts and republish them as on-demand podcast episodes to reach digital audiences.", "audience": "Radio broadcasters and radio groups"},
+        {"title": "Branded media network podcast operations", "description": "Large publishers and media companies manage many shows across a single enterprise hosting and analytics platform.", "audience": "Media companies and branded podcast networks"},
+        {"title": "Advertiser-driven podcast monetization", "description": "Networks use dynamic ad insertion and detailed audience analytics to sell and report on podcast advertising at scale.", "audience": "Enterprise advertising and sales teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Enterprise (Custom)", "price": "Custom pricing", "billing_cycle": "Custom", "features": ["Radio-to-podcast automation", "Dynamic ad insertion and monetization", "Enterprise analytics and reporting", "Dedicated account management", "Contact sales for a quote"]}
+      ],
+      "tags": ["podcast-hosting", "audio-platform", "enterprise-media", "radio", "monetization"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "bde29d40-4c62-40a8-861e-ba3a8862dedc",
+    "slug": "oncehub",
+    "name": "OnceHub",
+    "enrichment": {
+      "short_description": "OnceHub (formerly ScheduleOnce) is an online scheduling and meeting-lifecycle platform used by B2B sales, financial services and professional services teams to book meetings, route leads to the right rep, and automate the prospect-to-meeting pipeline.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (paid plans from $10/seat/month billed annually)",
+      "founded_year": 2006,
+      "company_size": "About 200 employees",
+      "headquarters": "Claymont, Delaware, United States (with offices including Tel Aviv, Israel)",
+      "languages": ["English"],
+      "seo_title": "OnceHub Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OnceHub review 2026: scheduling and meeting-routing software for B2B sales teams. Compare features, pricing plans and alternatives like Calendly and Chili Piper.",
+      "llm_readable_summary": "OnceHub is an online scheduling and meeting-lifecycle platform, originally launched as ScheduleOnce and founded in 2006 by brothers Gilad and Rami Goraly; the company rebranded from ScheduleOnce to OnceHub in 2022 to reflect a broader focus on the entire prospect-to-meeting pipeline rather than just calendar booking. The company is incorporated in Claymont, Delaware and operates with roughly 200 employees across offices including Israel, the United Kingdom, South Africa, India, Ireland, Colombia and the United States, serving more than 15,000 businesses, primarily in B2B sales, financial services and professional services. OnceHub's key differentiator versus simpler scheduling tools like Calendly is that it covers the full meeting journey: booking pages with a WYSIWYG designer, calendar and video integrations (Google, Microsoft 365, Exchange, iCloud, Zoom, Google Meet, Microsoft Teams, Webex), inbound lead routing and distribution logic (round-robin and rules-based assignment across sales teams), multi-host and group meeting scheduling, embeddable chatbots for instant meeting handoff from a website visitor, CRM integrations with Salesforce and HubSpot, and Stripe-based payment collection at booking time. The product line consists of two core products, ScheduleOnce (booking) and InviteOnce, and pricing is structured as a freemium, per-seat model: a Basic plan is free for one user with one connected calendar and one booking page; Schedule starts at $10 per seat per month billed annually ($12 month-to-month) and adds unlimited booking links, multi-host meetings and CRM integrations; Route starts at $19 per seat per month annually and adds lead-routing forms and dynamic meeting distribution; Engage starts at $39 per seat per month annually and adds AI-powered chatbots and live chat handoff; and an Enterprise tier offers custom pricing for organizations with 30 or more seats, including a dedicated success manager and security/legal reviews. A separate Security and Compliance add-on (from $5/seat/month annually) provides SSO and HIPAA business associate agreements. OnceHub competes most directly with Calendly, Chili Piper, HubSpot Meetings and Acuity Scheduling, and it differentiates itself by targeting revenue teams that need lead qualification and routing logic layered on top of scheduling, not just a simple personal booking link, making it a stronger fit for sales development and inbound-lead-heavy organizations than for solo professionals who just need a booking page.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "OnceHub was founded in 2006 by brothers Gilad and Rami Goraly under the name ScheduleOnce and rebranded to OnceHub in 2022 to reflect a broader mission covering the full prospect-to-meeting pipeline, not just calendar booking. It is incorporated in Claymont, Delaware with roughly 200 employees across offices in Israel, the UK, South Africa, India, Ireland, Colombia and the US.",
+          "The platform now serves over 15,000 businesses, with a heavy concentration in B2B sales, financial services and professional services teams that need more than a simple personal booking link."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "OnceHub covers the full meeting journey: WYSIWYG booking pages, calendar integrations (Google, Microsoft 365, Exchange, iCloud), and video integrations (Zoom, Google Meet, Microsoft Teams, Webex), plus inbound lead routing with round-robin or rules-based distribution across sales teams and multi-host or group meeting booking.",
+          "Higher tiers add embeddable, AI-driven chatbots that hand a website visitor straight into a live meeting, CRM integrations with Salesforce and HubSpot, and Stripe-based payment collection at the time a meeting is booked."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "OnceHub uses a freemium, per-seat pricing model. Basic is free for a single user; Schedule starts at $10 per seat per month billed annually; Route starts at $19 per seat per month annually and adds lead-routing logic; Engage starts at $39 per seat per month annually and adds AI chatbots.",
+          "An Enterprise tier with custom pricing is available for organizations with 30-plus seats, and a separate Security and Compliance add-on (from $5/seat/month annually) provides SSO and HIPAA business associate agreements."
+        ]}
+      ],
+      "features": [
+        {"title": "WYSIWYG booking page designer", "description": "Build and customize branded booking pages without code."},
+        {"title": "Calendar and video integrations", "description": "Connects with Google, Microsoft 365, Exchange and iCloud calendars, and Zoom, Google Meet, Microsoft Teams and Webex for video meetings."},
+        {"title": "Lead routing and distribution", "description": "Round-robin and rules-based logic assigns inbound meeting requests to the right sales rep automatically."},
+        {"title": "Multi-host and group meetings", "description": "Supports meetings involving multiple hosts or group sessions, not just one-on-one bookings."},
+        {"title": "AI-powered chatbots", "description": "Embeddable chatbots handle natural-language conversations and hand visitors off to a live meeting instantly."},
+        {"title": "CRM integrations", "description": "Native integrations with Salesforce and HubSpot sync meeting and lead data automatically."},
+        {"title": "Stripe payment collection", "description": "Collect payment at the time of booking via built-in Stripe integration."},
+        {"title": "Security and compliance add-on", "description": "Optional SSO and HIPAA business associate agreement support for regulated industries."}
+      ],
+      "pros": [
+        "Covers the full meeting journey, from booking through lead routing to CRM sync, not just calendar links",
+        "Free plan available for individual users",
+        "Strong fit for B2B sales teams that need inbound lead distribution logic",
+        "Deep CRM integrations with Salesforce and HubSpot",
+        "Dedicated Enterprise tier with security and legal review support for larger organizations"
+      ],
+      "cons": [
+        "More complex to set up than simple scheduling tools if you only need a basic booking link",
+        "Advanced routing and AI chatbot features are locked behind higher-priced tiers",
+        "Per-seat pricing can add up quickly for larger sales teams",
+        "Security and compliance features like SSO require an additional paid add-on",
+        "Headquarters and company details are inconsistently reported across sources, reflecting a distributed multi-office structure"
+      ],
+      "faqs": [
+        {"question": "What was OnceHub called before?", "answer": "OnceHub was originally launched as ScheduleOnce in 2006 and rebranded to OnceHub in 2022 to reflect a broader focus on the full prospect-to-meeting pipeline."},
+        {"question": "Is OnceHub free?", "answer": "Yes, OnceHub offers a free Basic plan for one user with one connected calendar and one booking page; paid plans start at $10 per seat per month billed annually."},
+        {"question": "Does OnceHub support lead routing?", "answer": "Yes, the Route plan and above include rules-based and round-robin distribution logic to route inbound meeting requests to the right team member."},
+        {"question": "Does OnceHub integrate with Salesforce and HubSpot?", "answer": "Yes, CRM integrations with Salesforce and HubSpot are available starting on the Schedule plan."},
+        {"question": "Does OnceHub offer AI chatbots?", "answer": "Yes, the Engage plan includes AI-powered chatbots that can hand a website visitor directly into a live meeting."},
+        {"question": "How much does OnceHub cost for larger teams?", "answer": "Team plans range from $10 to $39 per seat per month billed annually, and organizations with 30 or more seats can get custom Enterprise pricing."},
+        {"question": "Who is OnceHub best suited for?", "answer": "OnceHub is best suited for B2B sales, financial services and professional services teams that need scheduling combined with lead routing and CRM integration, rather than solo users who just need a personal booking link."}
+      ],
+      "use_cases": [
+        {"title": "Inbound sales lead qualification and routing", "description": "Route inbound demo requests to the correct sales rep automatically using round-robin or rules-based logic.", "audience": "B2B sales development and revenue operations teams"},
+        {"title": "Client meeting scheduling for regulated industries", "description": "Financial services and professional services firms schedule client meetings with SSO and HIPAA compliance support.", "audience": "Financial services and professional services firms"},
+        {"title": "Website chatbot to instant meeting handoff", "description": "Convert website visitors into booked meetings in real time via an embedded AI chatbot.", "audience": "Marketing and sales teams running high-intent websites"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Basic", "price": "Free", "billing_cycle": "N/A", "features": ["1 user, 1 connected calendar, 1 booking page", "WYSIWYG booking page designer", "Calendar and video integrations", "Standard email and calendar notifications"]},
+        {"plan_name": "Schedule", "price": "$10/seat/month billed annually ($12 month-to-month)", "billing_cycle": "Annual or monthly", "features": ["Unlimited booking links and meetings", "One dedicated phone number included", "Multi-host and group meetings", "Salesforce and HubSpot CRM integrations", "Stripe payment integration", "24/7 email and live chat support"]},
+        {"plan_name": "Route", "price": "$19/seat/month billed annually ($23 month-to-month)", "billing_cycle": "Annual or monthly", "features": ["All Schedule features", "Two phone numbers included", "Unlimited routing forms", "Dynamic meeting distribution", "Room scheduling with directory integration"]},
+        {"plan_name": "Engage", "price": "$39/seat/month billed annually ($47 month-to-month)", "billing_cycle": "Annual or monthly", "features": ["All Route features", "Three phone numbers included", "AI-powered chatbots", "Live chat and instant meeting handoff", "Audience-specific targeting"]},
+        {"plan_name": "Enterprise", "price": "Custom pricing", "billing_cycle": "Custom (30+ seats)", "features": ["All Engage features", "Dedicated success manager", "Security and legal reviews", "VIP support"]}
+      ],
+      "tags": ["scheduling-software", "meeting-booking", "lead-routing", "b2b-sales", "calendar-integration"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "bb746904-348f-44b6-aca5-49626cad1b9a",
+    "slug": "oncrawl",
+    "name": "Oncrawl",
+    "enrichment": {
+      "short_description": "Oncrawl is a technical SEO platform for enterprise-scale website crawling and log file analysis, founded in Bordeaux, France in 2013 and acquired by BrightEdge in 2022, now operating as BrightEdge's dedicated technical SEO product line.",
+      "pricing_model": "Custom",
+      "starting_price": "Custom (contact sales)",
+      "founded_year": 2013,
+      "company_size": "Operates as part of BrightEdge (large enterprise SEO company)",
+      "headquarters": "Bordeaux (Mérignac), France; now operates as part of BrightEdge",
+      "languages": ["English", "French"],
+      "seo_title": "Oncrawl Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Oncrawl review 2026: enterprise technical SEO crawling and log file analysis, now part of BrightEdge. Features, pricing model, pros, cons and alternatives.",
+      "llm_readable_summary": "Oncrawl is a technical SEO platform specializing in large-scale website crawling and server log file analysis, founded in 2013 in Bordeaux (Mérignac), France by François Goube and Tanguy Moal. The company raised roughly $4.1 to $4.76 million in funding through 2018 from French investors including AQUITI Gestion and IRDI-ICSO, before being acquired by BrightEdge, a major US-based enterprise SEO platform, in February 2022; since the acquisition Oncrawl has operated as part of BrightEdge's product portfolio, positioned as BrightEdge's dedicated deep technical crawling and log analysis solution while BrightEdge's core platform handles broader enterprise SEO reporting and rank tracking. Oncrawl's key differentiator is its focus on very large, complex websites, typically ecommerce catalogs, marketplaces, publishers and other sites with hundreds of thousands to millions of URLs, where it combines crawl data with actual server log files to show exactly how Googlebot and other crawlers behave on a site, which pages get crawled and how often, crawl budget waste, orphan pages, and how crawl behavior correlates with organic traffic and rankings. Additional capabilities include JavaScript rendering for SEO analysis of JS-heavy sites, a SQL-like Data Explorer for building custom cross-referenced reports, structured data monitoring, crawl-over-crawl comparison to track technical regressions over time, and integrations with Google Search Console and Google Analytics. Since becoming part of BrightEdge, Oncrawl no longer publishes self-serve pricing; access is arranged through a sales/demo process and pricing is understood to reflect crawl volume, log file data volume and the scope of the wider BrightEdge relationship, making it firmly an enterprise-tier tool rather than a self-serve SaaS product. Its target customers are enterprise SEO teams, technical SEO consultants and agencies working with large, complex sites, and it competes most directly with other technical/enterprise crawlers such as Screaming Frog (desktop, much lower cost, less scale), Botify, Lumar (formerly Deepcrawl), Sitebulb and ContentKing. Oncrawl's main advantage is genuinely deep log file analysis at scale combined with flexible custom reporting; its main drawback for smaller teams is the lack of published pricing and self-serve signup, plus increasing integration with the broader BrightEdge suite rather than functioning as a fully independent standalone product.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Oncrawl was founded in 2013 in Bordeaux, France by François Goube and Tanguy Moal to build a more powerful, accessible technical SEO crawler for large and complex websites. It raised several million dollars from French investors before being acquired by BrightEdge, a major enterprise SEO platform, in February 2022.",
+          "Since the acquisition, Oncrawl has continued operating under its own brand as BrightEdge's dedicated technical crawling and log file analysis product, aimed at enterprise SEO teams managing very large sites."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Oncrawl combines crawl data with real server log files to show exactly how search engine crawlers behave on a site, including crawl frequency, crawl budget waste and orphan pages, and correlates that behavior with organic traffic and rankings.",
+          "It also offers JavaScript rendering for SEO analysis of JS-heavy sites, a SQL-like Data Explorer for building custom cross-referenced reports, structured data monitoring, crawl-over-crawl comparison, and integrations with Google Search Console and Google Analytics."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Oncrawl no longer publishes self-serve pricing since becoming part of BrightEdge in 2022; access is arranged through a sales and demo process rather than an online checkout.",
+          "Pricing is generally understood to scale with crawl volume, log file data volume and the broader scope of an organization's BrightEdge relationship, positioning it firmly as an enterprise-tier purchase."
+        ]}
+      ],
+      "features": [
+        {"title": "Log file analysis at scale", "description": "Analyzes real server log files to show exactly how search engine crawlers behave on a site."},
+        {"title": "Crawl budget and orphan page detection", "description": "Identifies wasted crawl budget and pages that receive no internal links or crawler attention."},
+        {"title": "JavaScript rendering", "description": "Crawls and renders JavaScript-heavy pages to analyze SEO issues invisible to a standard crawler."},
+        {"title": "SQL-like Data Explorer", "description": "Lets technical SEO teams build custom, cross-referenced reports combining crawl, log and ranking data."},
+        {"title": "Structured data monitoring", "description": "Tracks structured data implementation and errors across large sites."},
+        {"title": "Crawl-over-crawl comparison", "description": "Compares crawls over time to catch technical SEO regressions before they hurt rankings."},
+        {"title": "Search Console and Analytics integration", "description": "Pulls in Google Search Console and Google Analytics data to correlate technical issues with organic performance."}
+      ],
+      "pros": [
+        "Genuinely deep log file analysis built for very large, complex websites",
+        "Flexible custom reporting via a SQL-like Data Explorer",
+        "Strong JavaScript rendering support for modern, JS-heavy sites",
+        "Backed by BrightEdge's broader enterprise SEO resources since the 2022 acquisition",
+        "Established track record since 2013 with enterprise ecommerce and publisher clients"
+      ],
+      "cons": [
+        "No public self-serve pricing; requires a sales conversation to get a quote",
+        "Overkill and cost-prohibitive for small to mid-sized websites",
+        "Steeper learning curve than lighter desktop crawlers like Screaming Frog",
+        "Increasingly positioned as part of the broader BrightEdge suite rather than a fully independent product",
+        "Log file analysis requires access to and comfort working with raw server logs"
+      ],
+      "faqs": [
+        {"question": "Is Oncrawl still an independent company?", "answer": "No, Oncrawl was acquired by BrightEdge in February 2022 and now operates as part of BrightEdge's product portfolio, though it continues under its own brand name."},
+        {"question": "How much does Oncrawl cost?", "answer": "Oncrawl does not publish self-serve pricing; you need to contact sales or book a demo to get a quote, and pricing typically scales with crawl and log file volume."},
+        {"question": "What is Oncrawl best used for?", "answer": "Oncrawl is best used for technical SEO crawling and log file analysis on very large, complex websites such as ecommerce catalogs, marketplaces and large publishers."},
+        {"question": "Does Oncrawl analyze server log files?", "answer": "Yes, log file analysis is one of Oncrawl's core capabilities, showing exactly how search engine crawlers behave on a site."},
+        {"question": "Who founded Oncrawl?", "answer": "Oncrawl was founded in 2013 in Bordeaux, France by François Goube and Tanguy Moal."},
+        {"question": "Does Oncrawl support JavaScript SEO analysis?", "answer": "Yes, Oncrawl can crawl and render JavaScript-heavy pages to surface SEO issues that a standard HTML-only crawler would miss."},
+        {"question": "What are alternatives to Oncrawl?", "answer": "Common alternatives include Screaming Frog, Botify, Lumar (formerly Deepcrawl), Sitebulb and ContentKing."}
+      ],
+      "use_cases": [
+        {"title": "Enterprise ecommerce technical SEO audits", "description": "Analyze crawl behavior and log files across large product catalogs to fix crawl budget waste and indexing issues.", "audience": "Enterprise ecommerce and marketplace SEO teams"},
+        {"title": "Publisher crawl efficiency monitoring", "description": "Track how search engines crawl and index a high-volume publishing site over time.", "audience": "Large media and publisher SEO teams"},
+        {"title": "Agency technical SEO consulting", "description": "Agencies use Oncrawl's log analysis and custom reporting to diagnose technical issues for large enterprise clients.", "audience": "Technical SEO consultants and agencies"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Enterprise (Custom)", "price": "Custom pricing", "billing_cycle": "Custom", "features": ["Large-scale crawling and log file analysis", "JavaScript rendering", "Custom Data Explorer reporting", "Structured data monitoring", "Contact sales for a quote"]}
+      ],
+      "tags": ["technical-seo", "log-file-analysis", "enterprise-seo", "website-crawler", "brightedge"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "1d593e07-ef39-4892-8798-7b56252691bd",
+    "slug": "one-time-secret",
+    "name": "One Time Secret",
+    "enrichment": {
+      "short_description": "One Time Secret (Onetime Secret) is an open-source tool for sharing passwords, API keys and other sensitive text via a link that self-destructs after being viewed once, running since 2011 with a free tier and a paid Identity Plus tier for custom domains and branding.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2011,
+      "company_size": "Small, independently run team",
+      "headquarters": "Not publicly disclosed (distributed/remote team)",
+      "languages": ["English"],
+      "seo_title": "One Time Secret Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "One Time Secret review 2026: share passwords and secrets via self-destructing links. Features, free vs Identity Plus pricing, pros, cons and alternatives.",
+      "llm_readable_summary": "One Time Secret, also known as Onetime Secret, is an open-source web tool for securely sharing sensitive text, such as passwords, API keys, credentials and other one-off confidential information, via a link that permanently self-destructs after it is viewed a single time. The service has been running since 2011, started by a creator known as Delano, and has grown from what its own about page describes as a long-running hobby project into a sustainable small business offering subscription plans, custom domains and multi-region hosting across the US, Canada and New Zealand (Aotearoa). Its core mechanism is simple and widely imitated: a user pastes a secret, the service generates a unique one-time link, and once that link is opened the secret is permanently deleted from all storage, so it can never be viewed a second time even by the sender; the codebase is open source and published on GitHub, letting security-conscious teams self-host their own instance via Docker instead of relying on the hosted onetimesecret.com service. One important technical nuance is that encryption happens server-side: each secret is encrypted with its own unique key before being stored and the decryption key lives on the application server rather than in the database, which is a meaningfully different trust model than fully zero-knowledge, client-side-encrypted competitors like PrivateBin, since the operator's server briefly handles the plaintext. Pricing is freemium: the free Basic plan includes one custom domain, configurable expiration up to 14 days, automatic destruction after viewing, and REST API access for programmatic secret creation, all at no cost; the paid Identity Plus plan, priced at 35 euros per month, adds unlimited custom domains, custom branding with your own logo, expiration extended up to 30 days, unlimited team member invitations, and homepage access controls, and the company also offers discounted rates for students and non-profit organizations on request. One Time Secret's target users are IT and DevOps teams sharing credentials internally, developers and agencies sending API keys or database passwords to clients or contractors, and everyday individuals who want to avoid leaving sensitive information sitting permanently in email or chat history. Its closest competitors include PrivateBin (self-hosted, zero-knowledge encrypted pastes), Yopass, Password Pusher, and newer entrants like 1time.io; One Time Secret differentiates itself through over a decade of operating history, a fully functional free tier including API access and a custom domain, and the option to either use the hosted service or self-host the open-source code for full data control.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "One Time Secret has been running since 2011 as a simple, focused tool for sharing sensitive text, such as passwords or API keys, via a link that self-destructs after a single view. It started as a small hobby project and has grown into a sustainable small business with paid plans, custom domains and multi-region hosting.",
+          "The service is open source, with its full codebase published on GitHub, so security-conscious teams can either use the hosted onetimesecret.com service or self-host their own instance via Docker for complete control over their data."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Every secret is encrypted with its own unique key before storage and is permanently deleted from all storage the moment it is viewed once, so a link can never be reopened by anyone, including the original sender. Expiration can be configured from minutes up to 14 days on the free plan or 30 days on the paid plan.",
+          "The service supports custom domains for branded secret-sharing links, a REST API for programmatic integration into internal tools, and, on the paid tier, custom branding and unlimited team member invitations."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "One Time Secret offers a fully functional free Basic plan, including one custom domain, expiration up to 14 days and REST API access, at no cost.",
+          "The paid Identity Plus plan costs 35 euros per month and adds unlimited custom domains, custom branding, expiration up to 30 days and unlimited member invitations; discounted rates are available for students and non-profits on request."
+        ]}
+      ],
+      "features": [
+        {"title": "Self-destructing one-time links", "description": "A secret is permanently deleted from all storage the moment it is viewed once, so the link can never be reopened."},
+        {"title": "Configurable expiration", "description": "Set secrets to expire automatically after minutes up to 14 days on the free plan, or up to 30 days on the paid plan."},
+        {"title": "Custom domains", "description": "Share secrets from your own branded domain instead of the default onetimesecret.com link."},
+        {"title": "REST API", "description": "Programmatically create and manage secrets for integration into internal tools and workflows."},
+        {"title": "Open-source, self-hostable codebase", "description": "The full codebase is published on GitHub and can be self-hosted via Docker for complete data control."},
+        {"title": "Custom branding", "description": "Add your own logo and branding to the secret-sharing experience on the Identity Plus plan."},
+        {"title": "Team member invitations", "description": "Invite unlimited team members to a shared account on the Identity Plus plan."}
+      ],
+      "pros": [
+        "Free plan is fully functional, including a custom domain and REST API access",
+        "Open source with the option to self-host for full data control",
+        "Over a decade of continuous operating history since 2011",
+        "Simple, no-friction experience: no account required to view a shared secret",
+        "Straightforward, transparent paid tier at a flat monthly price"
+      ],
+      "cons": [
+        "Encryption is server-side, not fully zero-knowledge, so the operator's server briefly handles plaintext",
+        "Free plan expiration is capped at 14 days",
+        "Custom branding and unlimited domains require the paid Identity Plus tier",
+        "Built for short text secrets, not designed for sharing large files",
+        "No native mobile apps; it is a web-based tool only"
+      ],
+      "faqs": [
+        {"question": "What is One Time Secret used for?", "answer": "One Time Secret is used to share sensitive text like passwords, API keys and credentials via a link that self-destructs after being viewed once, so the information never sits permanently in email or chat history."},
+        {"question": "Is One Time Secret free?", "answer": "Yes, the Basic plan is free and includes one custom domain, expiration up to 14 days, and REST API access; a paid Identity Plus plan at 35 euros per month adds unlimited domains and custom branding."},
+        {"question": "What happens after a secret is viewed?", "answer": "Once a secret link is opened, it is permanently deleted from all storage and can never be viewed again, even by the original sender."},
+        {"question": "Is One Time Secret open source?", "answer": "Yes, the full codebase is open source and published on GitHub."},
+        {"question": "Can I self-host One Time Secret?", "answer": "Yes, because it is open source, technically capable users can self-host their own instance, typically via Docker, instead of using the hosted onetimesecret.com service."},
+        {"question": "Does One Time Secret use end-to-end encryption?", "answer": "Not fully. Each secret is encrypted with its own unique key before being stored, but encryption happens server-side, meaning the operator's server briefly handles the plaintext rather than using fully zero-knowledge client-side encryption."},
+        {"question": "How long can a secret stay active before it expires?", "answer": "Expiration is configurable up to 14 days on the free Basic plan and up to 30 days on the paid Identity Plus plan."}
+      ],
+      "use_cases": [
+        {"title": "Sharing credentials with teammates or IT support", "description": "Send passwords or access credentials internally without leaving them in permanent chat or email history.", "audience": "IT and DevOps teams"},
+        {"title": "Sending API keys or database passwords to clients", "description": "Developers and agencies share one-off credentials with clients or contractors via a link that disappears after use.", "audience": "Developers and digital agencies"},
+        {"title": "One-off sharing of sensitive personal information", "description": "Individuals send private information such as account numbers or personal details securely to another person.", "audience": "General consumers and individuals"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Basic", "price": "Free", "billing_cycle": "N/A", "features": ["One custom domain", "Automatic destruction after viewing", "Expiration configurable up to 14 days", "Email links to recipients", "REST API access"]},
+        {"plan_name": "Identity Plus", "price": "35 EUR/month", "billing_cycle": "Monthly", "features": ["Everything in Basic", "Unlimited custom domains", "Custom branding with your own logo", "Expiration up to 30 days", "Unlimited member invitations", "Homepage access controls"]}
+      ],
+      "tags": ["secure-sharing", "open-source", "password-sharing", "self-destructing-links", "devops-tools"],
+      "publish": true
+    }
+  }
+]
