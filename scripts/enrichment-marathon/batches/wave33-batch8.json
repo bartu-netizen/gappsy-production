@@ -1,0 +1,629 @@
+[
+{
+  "tool_id": "62e5423f-7b35-4d89-942b-e5a1783055ad",
+  "slug": "blender",
+  "name": "Blender",
+  "enrichment": {
+    "short_description": "Blender is a free, open-source 3D creation suite covering modeling, sculpting, rigging, animation, simulation, rendering, compositing, motion tracking, and video editing, maintained by the nonprofit Blender Foundation.",
+    "pricing_model": "open-source",
+    "starting_price": "Free",
+    "founded_year": 1994,
+    "company_size": "About 15 employees at the Blender Institute, plus a large global contributor community",
+    "headquarters": "Amsterdam, Netherlands",
+    "languages": ["English"],
+    "seo_title": "Blender: Free Open-Source 3D Creation Suite",
+    "seo_meta_description": "Blender is a free, open-source 3D suite for modeling, animation, VFX, rendering, and video editing, backed by the nonprofit Blender Foundation.",
+    "llm_readable_summary": "Blender is a free and open-source 3D creation suite maintained by the Blender Foundation, a Dutch nonprofit organization headquartered in Amsterdam, Netherlands. Its origin traces to January 1994, when Ton Roosendaal began writing the software's first source code as an in-house tool at the Dutch animation studio NeoGeo, a date Blender.org itself calls the software's official birthday. In 1998 Roosendaal founded Not a Number Technologies (NaN) to develop and distribute Blender commercially, but NaN went bankrupt in 2002. A crowdfunding campaign that year raised 100,000 euros to buy back the source code from NaN's investors, and Blender was released under the GNU General Public License on October 13, 2002, the same year the Blender Foundation was formally established to steward its future development. Blender is completely free to download and use, with no licensing fees or paid tiers for the core application, and it runs on Windows, macOS, and Linux. It covers the entire 3D production pipeline in one application: polygon modeling, digital sculpting, UV unwrapping and texture painting, rigging and skeletal animation, particle and physics simulation for cloth, fluid, smoke, fire, and rigid or soft bodies, two built-in render engines (the path-traced Cycles engine and the real-time EEVEE engine), a node-based compositor, camera and object motion tracking, a non-linear video sequence editor, and Grease Pencil for 2D animation inside a 3D workspace. Geometry Nodes adds a node-based system for procedural modeling and scattering, and a Python API allows scripting, custom tooling, and third-party add-on development, with both free and paid add-ons distributed through the Blender Extensions platform. Blender is used across film, game development, visual effects, product visualization, architecture, and education, and the Blender Foundation produces periodic open movie projects to test and showcase new features under real production conditions. Governance sits with the Blender Foundation, which owns the Blender trademark and coordinates a roughly 15-person Blender Institute team in Amsterdam alongside a large volunteer and corporate developer community; companies and individuals fund ongoing core development through the Blender Development Fund and corporate membership programs. Because there is no purchase cost, Blender is widely adopted by students, hobbyists, freelancers, and small studios, and increasingly by larger production pipelines that use it alongside or instead of commercial packages like Maya, 3ds Max, or Cinema 4D. Blender releases on a regular cadence with periodic Long-Term Support (LTS) versions intended for production stability, and the software's most recent major cycles have focused on performance improvements to Cycles and EEVEE, a rebuilt Grease Pencil toolset, and continued expansion of Geometry Nodes.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Blender", "level": 2, "paragraphs": [
+        "Blender is a free, open-source 3D creation suite that handles modeling, sculpting, rigging, animation, simulation, rendering, compositing, motion tracking, and video editing inside a single application. It is developed and maintained by the Blender Foundation, a nonprofit organization based in Amsterdam, Netherlands.",
+        "The software's roots go back to January 1994, when Ton Roosendaal wrote its first source code as an in-house tool at the studio NeoGeo. After the commercial venture built around it, Not a Number Technologies, went bankrupt in 2002, a public crowdfunding campaign bought back the source code and released it under the GNU General Public License, and the Blender Foundation was founded the same year to guide its ongoing development.",
+        "Since then, Blender has grown from a niche open-source tool into an industry-recognized application used in film, game, and VFX production, alongside its long-standing base of students, hobbyists, and independent artists who rely on it because it costs nothing to use."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "Blender's toolset spans the full 3D pipeline: polygon and sculpt modeling, UV unwrapping and texture painting, rigging with an armature system, keyframe and non-linear animation, and a particle and physics engine for cloth, fluid, smoke, fire, and rigid or soft body simulation.",
+        "For output, Blender includes two production render engines, the path-traced Cycles engine for photorealistic rendering and the real-time EEVEE engine for fast previews and stylized looks, plus a node-based compositor for post-processing rendered footage. Geometry Nodes provides a procedural, node-based approach to modeling and scattering objects across a scene.",
+        "Beyond 3D, Blender includes camera and object motion tracking, a built-in non-linear video sequence editor for cutting and grading footage, and Grease Pencil, a 2D animation toolset that draws directly inside the 3D viewport. A Python API supports scripting and custom add-ons, extending Blender well past its out-of-the-box feature set."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Blender itself carries no purchase price, subscription fee, or usage limit. It is distributed under the GNU General Public License, so anyone can download, use, modify, and even redistribute the software at no cost, on Windows, macOS, or Linux.",
+        "Development is funded through donations, corporate memberships in the Blender Development Fund, and revenue from the Blender Foundation's training platform and store rather than through charging end users for the software itself.",
+        "The only costs typically associated with Blender come from optional third-party add-ons sold through the Blender Extensions platform, or from separately purchased hardware and render-farm services some studios use to speed up Cycles rendering; none of this is required to use the core application."
+      ]}
+    ],
+    "features": [
+      {"title": "Modeling and Sculpting", "description": "Full polygon modeling toolkit plus a dedicated digital sculpting workflow with multi-resolution and dynamic topology tools."},
+      {"title": "Cycles and EEVEE Rendering", "description": "A path-traced Cycles engine for photorealistic output and a real-time EEVEE engine for fast previews and stylized rendering."},
+      {"title": "Rigging and Animation", "description": "Armature-based rigging, keyframe animation, and a non-linear animation editor for character and object animation."},
+      {"title": "Physics and Simulation", "description": "Built-in simulation for cloth, fluid, smoke, fire, and rigid or soft body dynamics."},
+      {"title": "Geometry Nodes", "description": "A node-based system for procedural modeling, scattering, and generating complex geometry non-destructively."},
+      {"title": "Grease Pencil 2D Animation", "description": "Draw and animate 2D artwork natively inside Blender's 3D workspace."},
+      {"title": "Video Sequence Editor", "description": "A built-in non-linear editor for cutting, compositing, and grading video directly inside Blender."},
+      {"title": "Python Scripting and Add-ons", "description": "A full Python API for custom tools and scripts, with a broad ecosystem of free and paid add-ons."}
+    ],
+    "pros": [
+      "Completely free with no licensing fees, ever",
+      "Covers modeling, animation, VFX, rendering, and video editing in one application",
+      "Actively developed with frequent releases and a large open-source community",
+      "Cross-platform support for Windows, macOS, and Linux",
+      "Extensible through a Python API and a large add-on ecosystem",
+      "Widely taught in schools and universities due to its zero-cost licensing"
+    ],
+    "cons": [
+      "Steep learning curve for complete beginners to 3D",
+      "Interface and shortcuts differ from industry-standard paid tools, requiring relearning for users coming from Maya or 3ds Max",
+      "No official enterprise support contract or SLA from the Blender Foundation itself",
+      "Very large or complex production scenes can be harder to manage than in some dedicated commercial pipelines",
+      "Third-party plugin quality and compatibility vary since add-ons are community-built"
+    ],
+    "faqs": [
+      {"question": "Is Blender really free?", "answer": "Yes. Blender is free and open-source software licensed under the GNU General Public License, with no purchase price, subscription fee, or feature paywall for the core application."},
+      {"question": "What is Blender used for?", "answer": "Blender is used for 3D modeling, sculpting, rigging, animation, simulation, rendering, compositing, motion tracking, and video editing across industries including film, games, VFX, product visualization, and architecture."},
+      {"question": "Does Blender include video editing?", "answer": "Yes, Blender has a built-in non-linear Video Sequence Editor for cutting, compositing, and grading footage alongside its 3D tools."},
+      {"question": "What render engines does Blender use?", "answer": "Blender ships with two built-in render engines: Cycles, a path-traced engine for photorealistic output, and EEVEE, a real-time engine for fast previews and stylized rendering."},
+      {"question": "Is Blender good for beginners?", "answer": "Blender is approachable for beginners thanks to extensive free tutorials and documentation, though its interface has a learning curve, especially for users coming from other 3D software."},
+      {"question": "Can Blender be used commercially?", "answer": "Yes, Blender's GNU General Public License permits commercial use, including selling artwork, models, and animations made with the software."},
+      {"question": "What operating systems does Blender support?", "answer": "Blender runs natively on Windows, macOS, and Linux."},
+      {"question": "Who develops Blender?", "answer": "Blender is developed and maintained by the Blender Foundation, a nonprofit organization based in Amsterdam, Netherlands, with support from the Blender Institute team and a large volunteer and corporate contributor community."}
+    ],
+    "use_cases": [
+      {"title": "Independent 3D Art and Animation", "description": "Freelancers and hobbyists use Blender's full modeling-to-rendering pipeline without paying for software licenses.", "audience": "Independent artists and hobbyists"},
+      {"title": "Film, VFX, and Game Production", "description": "Studios use Blender for modeling, rigging, simulation, and rendering as part of or alongside their production pipelines.", "audience": "Film, VFX, and game studios"},
+      {"title": "3D Education and Training", "description": "Schools and universities teach 3D modeling and animation with Blender because students can install it for free.", "audience": "Students and educators"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Blender", "price": "Free", "billing_cycle": "N/A", "features": ["Full 3D modeling, sculpting, and animation toolset", "Cycles and EEVEE render engines", "Video editing and 2D Grease Pencil animation", "Python scripting and add-on support", "No feature restrictions or paywalls"]}
+    ],
+    "tags": ["3d-modeling", "animation", "rendering", "open-source", "vfx", "video-editing"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "d3de63cc-8964-42d0-a306-17d133456303",
+  "slug": "bloomreach",
+  "name": "Bloomreach",
+  "enrichment": {
+    "short_description": "Bloomreach is an AI-driven commerce experience platform combining product search and merchandising (Discovery), marketing automation and customer data (Engagement), and headless content management (Content) for enterprise retail brands.",
+    "pricing_model": "custom",
+    "starting_price": "Custom quote-based pricing",
+    "founded_year": 2009,
+    "company_size": "1,000+ employees",
+    "headquarters": "Mountain View, California, United States",
+    "languages": ["English"],
+    "seo_title": "Bloomreach: AI Commerce Experience Platform",
+    "seo_meta_description": "Bloomreach powers e-commerce search, merchandising, marketing automation, and headless content for enterprise retail brands with built-in AI.",
+    "llm_readable_summary": "Bloomreach was founded in 2009 by Raj De Datta and Ashutosh Garg and is headquartered in Mountain View, California. De Datta, previously an entrepreneur-in-residence at Mohr Davidow Ventures, and Garg, a former Google engineer who worked on search quality, built the company to close what they described as a relevance gap in e-commerce: search engines like Google could find information generally, but individual retailers struggled to help shoppers find products within their own catalogs. Bloomreach launched its first product, an SEO-focused tool, in 2012, and expanded from there into site search, merchandising, and personalization. Two acquisitions reshaped the company's product portfolio: the 2016 acquisition of Amsterdam-based Hippo CMS added headless content management, later rebranded as Bloomreach Content, and the 2021 acquisition of Exponea added real-time customer data platform and marketing automation capabilities, rebranded as Bloomreach Engagement. That expansion, supported by a $150 million investment from Sixth Street at a roughly $900 million valuation followed by an additional $175 million round, pushed Bloomreach's valuation to approximately $2.2 billion by early 2022. Today Bloomreach organizes its offering around four products: Discovery, an AI-powered search and merchandising engine for product catalogs; Engagement, a marketing automation and customer data platform for email, SMS, and personalized campaigns; Content, a headless CMS for building and managing commerce content and experiences; and Clarity, an AI-driven conversational shopping assistant. Loomi, Bloomreach's generative AI layer, is built into every product at no additional charge, according to the company. Bloomreach serves more than 850 global brands, including Albertsons, Staples, Bosch, Puma, FC Bayern Munchen, and Marks and Spencer, and reports roughly 219.5 million dollars in annual revenue. Pricing is not published on a fixed rate card; Bloomreach instead prices subscriptions around a module fee plus usage, so customers pay only for the products they use (Discovery, Engagement, Content, or some combination), with usage-based pricing tied to factors like indexed product catalog size, annual API call volume, and campaign or event volume. Publicly referenced figures include an Engagement starter price around 19,020 dollars per year through the Shopify App Store for smaller merchants, with typical non-Shopify Engagement deployments ranging from roughly 40,000 to 250,000-plus dollars annually, and full-platform (Discovery plus Engagement plus Content) deals commonly cited in the range of 150,000 to 400,000-plus dollars per year for larger enterprise customers. Competitors in this space include Algolia and Coveo in search, Klaviyo and Braze in marketing automation, and Contentful and Adobe Experience Manager in headless content, though Bloomreach's differentiation is bundling all three categories under one commerce-focused platform with built-in AI.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Bloomreach", "level": 2, "paragraphs": [
+        "Bloomreach is an AI-driven commerce experience platform founded in 2009 by Raj De Datta and Ashutosh Garg and headquartered in Mountain View, California. It was built to help online retailers make their own product catalogs as easy to search and discover as the open web, and has since expanded well beyond search into marketing automation and content management.",
+        "Two key acquisitions shaped the modern product line: Hippo CMS in 2016 became the foundation for Bloomreach Content, and Exponea in 2021 became the foundation for Bloomreach Engagement, a real-time customer data and marketing automation platform. Bloomreach now serves more than 850 global brands, including Albertsons, Staples, Bosch, Puma, and Marks and Spencer.",
+        "The company's AI layer, called Loomi, is embedded across every Bloomreach product, generating product descriptions, personalized recommendations, and conversational shopping experiences without a separate add-on fee."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "Bloomreach Discovery handles product search, category pages, and merchandising, using AI-driven relevance ranking to help shoppers find products across large catalogs. Bloomreach Engagement covers email, SMS, and web personalization campaigns backed by a real-time customer data platform.",
+        "Bloomreach Content is a headless CMS that lets brands manage commerce content and page experiences independently of their storefront's front-end framework, while Bloomreach Clarity adds an AI-powered conversational shopping assistant that helps customers find products through natural-language interaction.",
+        "Because Loomi AI runs across all four products, features like AI-generated product content, personalized recommendations, and automated campaign optimization are available regardless of which specific Bloomreach module a customer adopts."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Bloomreach does not publish a fixed price list. Subscriptions are structured around a module fee for each product a customer adopts (Discovery, Engagement, or Content) plus usage-based charges, so total cost depends on factors like catalog size, annual API call volume, and marketing event or message volume.",
+        "Publicly cited reference points include an Engagement starter tier around 19,020 dollars per year through the Shopify App Store for smaller merchants, with typical non-Shopify Engagement deployments ranging roughly from 40,000 to 250,000-plus dollars annually depending on scale.",
+        "For larger enterprises adopting the full platform across Discovery, Engagement, and Content, industry pricing estimates commonly fall in the range of 150,000 to 400,000-plus dollars per year; exact pricing requires contacting Bloomreach's sales team for a custom quote."
+      ]}
+    ],
+    "features": [
+      {"title": "AI-Powered Product Search", "description": "Discovery uses machine learning to rank and surface relevant products across large, complex catalogs."},
+      {"title": "Merchandising Controls", "description": "Merchandisers can boost, bury, and rules-manage product placement in search and category results."},
+      {"title": "Marketing Automation and CDP", "description": "Engagement unifies customer data and powers email, SMS, and web personalization campaigns."},
+      {"title": "Headless Content Management", "description": "Content provides a headless CMS for building commerce pages and experiences independent of the storefront framework."},
+      {"title": "Loomi Generative AI", "description": "An AI layer built into every Bloomreach product for content generation, recommendations, and personalization."},
+      {"title": "Clarity Conversational Shopping", "description": "An AI shopping assistant that helps customers find products through natural-language search and conversation."},
+      {"title": "SEO Tooling", "description": "Search engine optimization features rooted in Bloomreach's original 2012 product for improving organic product visibility."},
+      {"title": "Omnichannel Campaign Orchestration", "description": "Coordinate personalized campaigns across email, SMS, web, and other channels from a single customer data view."}
+    ],
+    "pros": [
+      "Unifies search, merchandising, marketing automation, and content on one commerce-focused platform",
+      "Loomi AI is included across every product at no extra charge",
+      "Proven at enterprise scale with 850-plus global retail brands as customers",
+      "Modular pricing lets customers adopt only the products they need",
+      "Strong search relevance and personalization for very large product catalogs"
+    ],
+    "cons": [
+      "Pricing is not published and can be expensive for smaller merchants",
+      "Usage-based pricing tied to catalog size and API calls can create unpredictable costs as a business grows",
+      "Full implementation typically requires professional services and technical integration work",
+      "The breadth of the platform means a steep learning curve to use it to its full potential",
+      "Best suited to mid-market and enterprise retailers rather than very small stores"
+    ],
+    "faqs": [
+      {"question": "How much does Bloomreach cost?", "answer": "Bloomreach does not publish fixed pricing. Costs are based on a module fee plus usage, with an Engagement starter tier around 19,020 dollars per year through the Shopify App Store and full-platform enterprise deals often ranging from 150,000 to 400,000-plus dollars annually."},
+      {"question": "What is Bloomreach used for?", "answer": "Bloomreach is used by e-commerce and retail brands for product search and merchandising, marketing automation and customer data management, and headless content management."},
+      {"question": "What is the difference between Bloomreach Discovery, Engagement, and Content?", "answer": "Discovery powers product search and merchandising, Engagement handles marketing automation and customer data as a CDP, and Content is a headless CMS for managing commerce content and pages."},
+      {"question": "Does Bloomreach include AI?", "answer": "Yes, Bloomreach's Loomi AI is built into every product, including Discovery, Engagement, Content, and Clarity, at no separate charge."},
+      {"question": "Who founded Bloomreach?", "answer": "Bloomreach was founded in 2009 by Raj De Datta and Ashutosh Garg."},
+      {"question": "What companies use Bloomreach?", "answer": "Bloomreach serves more than 850 global brands, including Albertsons, Staples, Bosch, Puma, FC Bayern Munchen, and Marks and Spencer."},
+      {"question": "Is Bloomreach available for Shopify merchants?", "answer": "Yes, Bloomreach Engagement is available through the Shopify App Store with a published starter price, while larger deployments are quoted directly by Bloomreach's sales team."},
+      {"question": "Does Bloomreach offer a free trial?", "answer": "Bloomreach's public pricing pages direct prospective customers to request a quote or demo rather than offering a self-serve free trial."}
+    ],
+    "use_cases": [
+      {"title": "Enterprise E-Commerce Search and Merchandising", "description": "Large retailers use Bloomreach Discovery to improve on-site search relevance and control merchandising across huge product catalogs.", "audience": "Enterprise e-commerce merchandising teams"},
+      {"title": "Multichannel Marketing Automation", "description": "Marketing teams use Bloomreach Engagement's customer data platform to run personalized email, SMS, and web campaigns.", "audience": "E-commerce marketing teams"},
+      {"title": "Headless Content for Commerce Sites", "description": "Brands use Bloomreach Content to manage commerce content and landing pages independently of their storefront's front-end technology.", "audience": "Digital and content teams at retail brands"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Discovery", "price": "Custom", "billing_cycle": "Annual, usage-based", "features": ["AI product search and merchandising", "Standard and Premium feature packages", "Pricing based on indexed catalog size and API call volume"]},
+      {"plan_name": "Engagement", "price": "From approximately $19,020/year (Shopify App Store)", "billing_cycle": "Annual", "features": ["Marketing automation and customer data platform", "Email and SMS campaigns", "Loomi AI included"]},
+      {"plan_name": "Content", "price": "Custom", "billing_cycle": "Annual", "features": ["Grow, Scale, and Enterprise packages", "Headless CMS for commerce content", "Tailored to business size"]}
+    ],
+    "tags": ["ecommerce", "personalization", "site-search", "marketing-automation", "headless-cms", "commerce-ai"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "550831fa-f6ac-49ce-8f68-9bb633fdd5ec",
+  "slug": "blue-river-technology",
+  "name": "Blue River Technology",
+  "enrichment": {
+    "short_description": "Blue River Technology is a Silicon Valley agricultural technology company, now a subsidiary of John Deere, that builds computer vision and machine learning systems, most notably the See and Spray precision spraying technology, for row-crop farming.",
+    "pricing_model": "custom",
+    "starting_price": null,
+    "founded_year": 2011,
+    "company_size": "Over 80 employees (some estimates cite a broader range as a John Deere subsidiary)",
+    "headquarters": "Santa Clara, California, United States (originally founded in Sunnyvale, California)",
+    "languages": ["English"],
+    "seo_title": "Blue River Technology: John Deere's See and Spray AI",
+    "seo_meta_description": "Blue River Technology builds the computer vision behind John Deere's See and Spray precision agriculture system, acquired for 305 million dollars in 2017.",
+    "llm_readable_summary": "Blue River Technology was founded in 2011 by two Stanford graduate students, Jorge Heraud and Lee Redden, who met during a Lean LaunchPad course and decided to apply robotics, computer vision, and machine learning to make farming more sustainable. Heraud had previously led precision agriculture at Trimble, while Redden was pursuing graduate studies in computer vision and machine learning applied to robotics. The pair tested early prototypes in California's Central Valley with support from friends, family, and a National Science Foundation grant, then raised a 3.1 million dollar Series A led by Khosla Ventures in 2012 to move from garage research and development into a dedicated lab. Blue River's core innovation became See and Spray, a system that mounts computer vision and machine learning models onto agricultural sprayers to distinguish individual crop plants from weeds in real time and apply herbicide only where it is needed, rather than spraying an entire field uniformly. In September 2017, John Deere acquired Blue River Technology for approximately 305 million dollars, and the company has operated as a John Deere subsidiary ever since, continuing to develop its computer vision and robotics technology under the Deere umbrella while retaining a degree of startup-style autonomy in its engineering culture. The See and Spray technology has expanded significantly since the acquisition: a Premium version debuted for cotton in 2020 and expanded to corn and soybeans by 2022, and in 2024 John Deere launched the more affordable See and Spray Select, a retrofit kit for existing sprayers that broadened adoption beyond customers buying new equipment. By 2025, John Deere reported that See and Spray had reduced herbicide use by nearly 50 percent and saved an estimated 31 million gallons of herbicide across roughly 5 million acres. Blue River Technology today describes itself as developing intelligent machinery combining computer vision, robotics, and machine learning across agriculture and adjacent heavy industries such as construction and mining, framing its technology as the eyes, brains, and hands of a machine. The company is headquartered in Santa Clara, California (having originally been founded in nearby Sunnyvale), and continues to hire for roles in machine learning, computer vision, and field applications, indicating it remains an active operating subsidiary rather than a shuttered or fully absorbed division. Because Blue River's technology is delivered as an embedded feature of John Deere agricultural equipment rather than as standalone, self-serve software, there is no public consumer pricing; access comes through purchasing or retrofitting compatible John Deere sprayers via Deere's dealer network. Blue River's closest comparisons are other agricultural computer vision and robotics ventures such as Carbon Robotics and Bilberry, though Blue River is distinguished by its direct integration into John Deere's equipment lineup and dealer and service infrastructure at global scale.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Blue River Technology", "level": 2, "paragraphs": [
+        "Blue River Technology is an agricultural technology company founded in 2011 by Stanford graduate students Jorge Heraud and Lee Redden, built around applying computer vision and machine learning to make farming more precise and sustainable. Its best-known product, See and Spray, uses onboard cameras and machine learning models to tell crops apart from weeds in real time and spray herbicide only where it is needed.",
+        "In September 2017, John Deere acquired Blue River Technology for approximately 305 million dollars. The company has operated as a John Deere subsidiary since the acquisition, continuing its agricultural computer vision and robotics work while retaining a startup-style engineering culture within the larger Deere organization.",
+        "Blue River remains headquartered in Santa Clara, California, and continues to hire for machine learning, computer vision, and field application roles, indicating it remains an active part of John Deere's technology operations rather than a fully absorbed or discontinued division."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "See and Spray combines onboard cameras, edge computing, and machine learning models trained on agricultural imagery to differentiate individual crop plants from weeds while a sprayer moves through a field, triggering targeted herbicide application only where weeds are detected.",
+        "Since the John Deere acquisition, the technology has been packaged into multiple product tiers: See and Spray Premium, which debuted for cotton in 2020 and expanded to corn and soybeans by 2022, and See and Spray Select, launched in 2024 as a more affordable retrofit kit for existing sprayers.",
+        "The system integrates directly with John Deere sprayers and tractors, giving farmers real-time, in-field processing rather than requiring data to be sent off-site for analysis before spraying decisions are made."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Blue River Technology does not sell standalone software with public, self-serve pricing. Its See and Spray technology is delivered as a feature of John Deere agricultural equipment, either factory-installed on new sprayers or added as a retrofit kit through See and Spray Select.",
+        "Pricing and configuration are handled through John Deere's dealer network and vary based on the specific sprayer model, acreage, and configuration a farm operation needs, so there is no published flat rate for the technology itself.",
+        "Farmers interested in See and Spray typically work with a local John Deere dealer to determine equipment compatibility, retrofit options, and financing rather than purchasing access directly from Blue River Technology."
+      ]}
+    ],
+    "features": [
+      {"title": "See and Spray Computer Vision", "description": "Real-time onboard computer vision that distinguishes individual crop plants from weeds while spraying."},
+      {"title": "Targeted Herbicide Application", "description": "Sprays herbicide only where weeds are detected instead of applying it uniformly across an entire field."},
+      {"title": "See and Spray Premium", "description": "A precision spraying product line covering cotton, corn, and soybean row crops."},
+      {"title": "See and Spray Select", "description": "A retrofit kit launched in 2024 that adds precision spraying capability to existing sprayers."},
+      {"title": "Edge-Based Machine Learning", "description": "Processes camera imagery and makes spraying decisions in real time on the machine rather than relying on off-site processing."},
+      {"title": "John Deere Equipment Integration", "description": "Built directly into John Deere sprayers and supported through Deere's dealer and service network."},
+      {"title": "Field-Scale Impact Reporting", "description": "John Deere reports aggregate herbicide savings data from See and Spray usage across millions of acres."}
+    ],
+    "pros": [
+      "Meaningfully reduces herbicide use and cost for large row-crop operations",
+      "Proven at scale, with tens of millions of gallons of herbicide savings reported across millions of acres",
+      "Backed by John Deere's manufacturing, dealer, and service infrastructure",
+      "Combines deep robotics, computer vision, and machine learning expertise from a dedicated ag-tech team",
+      "Retrofit option (See and Spray Select) extends the technology to farmers with existing sprayers"
+    ],
+    "cons": [
+      "Not a standalone consumer software product; access requires John Deere equipment and a dealer relationship",
+      "Pricing is not publicly published and varies by configuration and region",
+      "Primarily suited to large-scale row-crop operations rather than small or diversified farms",
+      "Adoption depends on compatible sprayer hardware, limiting use for growers on other equipment brands"
+    ],
+    "faqs": [
+      {"question": "Is Blue River Technology still an independent company?", "answer": "No, Blue River Technology has operated as a subsidiary of John Deere since Deere acquired it in September 2017 for approximately 305 million dollars, though it continues to operate with a degree of startup-style autonomy."},
+      {"question": "What does Blue River Technology do?", "answer": "Blue River Technology develops computer vision, robotics, and machine learning systems for agriculture, most notably the See and Spray precision spraying technology used on John Deere equipment."},
+      {"question": "What is See and Spray?", "answer": "See and Spray is a system that uses onboard cameras and machine learning to distinguish crops from weeds in real time so herbicide is applied only where needed rather than across an entire field."},
+      {"question": "How much herbicide does See and Spray save?", "answer": "John Deere has reported that See and Spray reduced herbicide use by nearly 50 percent and saved an estimated 31 million gallons of herbicide across about 5 million acres in 2025."},
+      {"question": "Can I buy Blue River Technology's software without John Deere equipment?", "answer": "No, See and Spray is delivered as an integrated feature of John Deere sprayers or as a retrofit kit (See and Spray Select) for compatible existing sprayers, rather than as standalone software."},
+      {"question": "Who founded Blue River Technology?", "answer": "Blue River Technology was founded in 2011 by Stanford graduate students Jorge Heraud and Lee Redden."},
+      {"question": "When was Blue River Technology acquired by John Deere?", "answer": "John Deere acquired Blue River Technology in September 2017 for approximately 305 million dollars."},
+      {"question": "Where is Blue River Technology headquartered?", "answer": "Blue River Technology is headquartered in Santa Clara, California, United States, after originally being founded in nearby Sunnyvale, California."}
+    ],
+    "use_cases": [
+      {"title": "Row-Crop Herbicide Spraying", "description": "Farmers growing cotton, corn, and soybeans use See and Spray Premium to reduce herbicide costs and environmental impact.", "audience": "Row-crop farmers"},
+      {"title": "Retrofitting Existing Sprayers", "description": "Growers with existing sprayer equipment add See and Spray Select to gain precision spraying capability without buying an entirely new machine.", "audience": "Farmers with existing John Deere-compatible sprayers"},
+      {"title": "Agricultural Computer Vision R&D", "description": "Blue River's engineering team continues developing computer vision and robotics technology for future agricultural and heavy-industry applications under John Deere.", "audience": "John Deere product and engineering teams"}
+    ],
+    "pricing_plans": [],
+    "tags": ["agricultural-technology", "computer-vision", "machine-learning", "precision-agriculture", "robotics", "john-deere"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "4a95891a-9b70-49b6-9aa5-aacb25ea2e3e",
+  "slug": "bluefish",
+  "name": "Bluefish",
+  "enrichment": {
+    "short_description": "Bluefish is a free, open-source, cross-platform text editor built for web and script development, supporting HTML and more than 30 programming and markup languages.",
+    "pricing_model": "open-source",
+    "starting_price": "Free",
+    "founded_year": 1998,
+    "company_size": null,
+    "headquarters": null,
+    "languages": ["English"],
+    "seo_title": "Bluefish: Free Open-Source HTML and Code Editor",
+    "seo_meta_description": "Bluefish is a free, open-source text editor for web developers, supporting HTML, PHP, JavaScript, Python, and more than 30 other languages.",
+    "llm_readable_summary": "Bluefish is a free and open-source text editor built specifically for programmers and web developers, started in 1998 by Chris Mazuc and Olivier Sessink to give web development professionals a fast, capable editor on Linux desktops. The project quickly became part of major Linux distributions, appearing in Debian Potato in 2000, Knoppix 2.1, and the first release of Fedora. Bluefish's development has gone through several major branches: the 1.0.x series released in 2005 introduced a new logo and stabilized the core editor; the 2.0.x series was a significant rewrite that moved to the GTK 2 GtkTextView widget and introduced a new syntax scanning engine based on a deterministic finite automaton; and the current 2.2.x and later branches support both GTK 2 and GTK 3 toolkits. As of mid-2026, the most recent release is version 2.4.2, which added icon theme detection with built-in Breeze theme support and fixed a critical crash related to UTF-8 encoding handling; version 2.4.1 had already made Bluefish's side-by-side editing mode fully stable. Bluefish is released under the GNU General Public License and runs on Linux, macOS, Windows, FreeBSD, and OpenBSD, distributed as free software with no purchase price, subscription, or paid tier of any kind; there is no company behind it, only an open-source community led by its original developers and ongoing contributors, so it has no headquarters or employee count in the traditional sense. Functionally, Bluefish is designed to start in milliseconds and comfortably handle projects with a thousand or more open files, and it supports syntax highlighting and code intelligence for more than 30 markup and programming languages, including HTML, PHP, JavaScript, Python, C, Java, YAML, and XML. It can open, edit, and save files directly on remote servers over FTP, SFTP, FTPS, HTTP, HTTPS, and WebDAV, which lets web developers work directly against a live server without a separate file transfer step. Bluefish supports regular expressions in its search-and-replace functionality, a feature not all lightweight editors offer, and it ships with preconfigured external tool integrations for static code analysis and markup validation, such as lint-style syntax and markup checkers. Additional capabilities include project management for organizing multi-file websites or codebases, Zencoding/Emmet-style shorthand expansion for quickly generating HTML markup, and a highly customizable interface. Because it is lightweight, fast, and free, Bluefish is commonly used by web developers, students, and Linux users who want a capable code editor without the resource overhead of a full IDE, and it remains especially popular in Linux and open-source software communities where it has been bundled or packaged for over two decades.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Bluefish", "level": 2, "paragraphs": [
+        "Bluefish is a free, open-source text editor built specifically for programmers and web developers. It was started in 1998 by Chris Mazuc and Olivier Sessink to give Linux users a fast, capable tool for building websites and writing code, and it quickly became part of major Linux distributions including Debian, Knoppix, and Fedora.",
+        "The project has gone through several major rewrites over its history, moving from its original 1.0.x series through a significant GTK 2-based rewrite in the 2.0.x branch to today's 2.2.x and later releases, which support both GTK 2 and GTK 3. The current stable release, version 2.4.2, was published in mid-2026.",
+        "Bluefish is released under the GNU General Public License and is maintained as a community open-source project rather than by a commercial company, meaning there is no purchase price, subscription, or company headquarters associated with it."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "Bluefish is designed to be extremely fast, starting in milliseconds and handling projects with a thousand or more open files without slowing down. It supports syntax highlighting and code assistance for more than 30 markup and programming languages, including HTML, PHP, JavaScript, Python, C, Java, YAML, and XML.",
+        "One of Bluefish's standout capabilities is direct remote file editing: it can open, edit, and save files on a live server over FTP, SFTP, FTPS, HTTP, HTTPS, and WebDAV, letting developers work against production or staging servers without a separate upload step.",
+        "Bluefish also supports regular expressions in search and replace, project management for organizing multi-file sites, Zencoding/Emmet-style markup shortcuts, and preconfigured integrations with external linting and markup validation tools."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Bluefish is completely free software with no purchase price, subscription fee, or paid tier. It is licensed under the GNU General Public License, so it can be downloaded, used, modified, and redistributed at no cost.",
+        "Because Bluefish is a volunteer-maintained open-source project rather than a commercial product, there is no premium version, enterprise license, or paid support plan offered by its developers.",
+        "The only realistic costs associated with Bluefish come from the computer or Linux distribution it runs on, since Bluefish itself is bundled directly into many Linux package repositories at no additional charge."
+      ]}
+    ],
+    "features": [
+      {"title": "Fast Startup and Large-File Handling", "description": "Launches in milliseconds and can comfortably manage projects with a thousand or more open files."},
+      {"title": "30-Plus Language Support", "description": "Syntax highlighting and code assistance for HTML, PHP, JavaScript, Python, C, Java, YAML, XML, and more."},
+      {"title": "Remote File Editing", "description": "Open, edit, and save files directly on remote servers over FTP, SFTP, FTPS, HTTP, HTTPS, and WebDAV."},
+      {"title": "Regular Expression Search and Replace", "description": "Advanced search-and-replace functionality that supports regular expressions."},
+      {"title": "Project Management", "description": "Organize and manage multi-file websites or codebases within a single project view."},
+      {"title": "Zencoding and Emmet Support", "description": "Shorthand expansion for quickly generating HTML and CSS markup."},
+      {"title": "Side-by-Side Editing", "description": "A stable split-view editing mode for comparing or editing multiple files at once."},
+      {"title": "Cross-Platform Availability", "description": "Runs natively on Linux, macOS, Windows, FreeBSD, and OpenBSD."}
+    ],
+    "pros": [
+      "Completely free and open source under the GPL",
+      "Extremely lightweight and fast, even with large numbers of open files",
+      "Supports remote server editing over FTP, SFTP, and WebDAV without a separate upload step",
+      "Broad language support covering more than 30 markup and programming languages",
+      "Long, stable development history dating back to 1998"
+    ],
+    "cons": [
+      "Interface looks dated compared to modern code editors like VS Code",
+      "Lacks the extension marketplace and plugin ecosystem of more modern editors",
+      "No built-in version control integration comparable to mainstream IDEs",
+      "Community-driven development means slower feature releases than commercially backed editors"
+    ],
+    "faqs": [
+      {"question": "Is Bluefish free?", "answer": "Yes, Bluefish is entirely free and open-source software licensed under the GNU General Public License, with no paid tiers."},
+      {"question": "What platforms does Bluefish support?", "answer": "Bluefish runs on Linux, macOS, Windows, FreeBSD, and OpenBSD."},
+      {"question": "Can Bluefish edit files on a remote server?", "answer": "Yes, Bluefish can open, edit, and save files directly on remote servers over FTP, SFTP, FTPS, HTTP, HTTPS, and WebDAV."},
+      {"question": "Who created Bluefish?", "answer": "Bluefish was started in 1998 by Chris Mazuc and Olivier Sessink."},
+      {"question": "How many languages does Bluefish support?", "answer": "Bluefish supports syntax highlighting and code assistance for more than 30 markup and programming languages, including HTML, PHP, JavaScript, Python, and Java."},
+      {"question": "Is Bluefish still actively maintained?", "answer": "Yes, Bluefish continues to receive updates, with version 2.4.2 released in mid-2026 adding icon theme detection and bug fixes."},
+      {"question": "Does Bluefish support regular expressions in search and replace?", "answer": "Yes, Bluefish is one of the editors that supports regular expressions in its search-and-replace functionality."}
+    ],
+    "use_cases": [
+      {"title": "Lightweight Web Development", "description": "Developers use Bluefish to write and edit HTML, CSS, PHP, and JavaScript without the overhead of a full IDE.", "audience": "Web developers"},
+      {"title": "Direct Remote Server Editing", "description": "Developers edit files directly on live servers over FTP, SFTP, or WebDAV without a separate upload step.", "audience": "Freelance and small-team web developers"},
+      {"title": "Linux Desktop Coding", "description": "Linux users adopt Bluefish as a fast, native code editor bundled with or available in most major Linux distributions.", "audience": "Linux users and open-source contributors"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Bluefish", "price": "Free", "billing_cycle": "N/A", "features": ["Full code editing feature set", "Remote file editing over FTP, SFTP, and WebDAV", "Support for 30-plus languages", "No feature restrictions"]}
+    ],
+    "tags": ["html-editor", "open-source", "web-development", "code-editor", "cross-platform", "free-software"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "40873439-74d5-4c5a-9d8b-5e7348a903a9",
+  "slug": "bluej",
+  "name": "BlueJ",
+  "enrichment": {
+    "short_description": "BlueJ is a free, education-focused integrated development environment for Java that visualizes class structure and lets students interactively create and test objects, originally developed at the University of Kent and Monash University.",
+    "pricing_model": "open-source",
+    "starting_price": "Free",
+    "founded_year": 1999,
+    "company_size": null,
+    "headquarters": "London, United Kingdom (maintained by King's College London)",
+    "languages": ["English"],
+    "seo_title": "BlueJ: Free Java IDE for Learning Programming",
+    "seo_meta_description": "BlueJ is a free Java IDE built for teaching, with visual class diagrams and interactive objects, from the University of Kent and Monash University.",
+    "llm_readable_summary": "BlueJ is a free, education-focused integrated development environment for the Java programming language, with development started in 1999 by Michael Kolling and John Rosenberg at Monash University in Australia as a successor to an earlier teaching system called Blue. BlueJ was first released on August 23, 1999, and later became closely associated with the University of Kent in the United Kingdom, where it supported introductory object-oriented programming modules; it is now maintained by King's College London with support from Oracle. James Gosling, the creator of Java, has publicly praised BlueJ, calling it one of his favorite IDEs. BlueJ's central design goal is to lower the barrier to learning object-oriented programming by making class structure and object behavior visible and directly interactive rather than abstract. Its main screen displays an application's classes as a UML-like diagram, and from that diagram, students can create objects interactively, inspect their internal state, call methods on them directly, and pass objects as parameters to other method calls, all without writing a full test harness or main method first. This interactive object bench, combined with a Code Pad that lets users evaluate Java expressions on the fly without compiling a full program, functions as a graphical shell or REPL for Java that is specifically designed for teaching. BlueJ also includes an integrated source code editor with scope coloring, which visually highlights nested code blocks to help beginners understand program structure, along with a standard debugger. Early evaluations of BlueJ at Monash University found that students using it developed a stronger practical understanding of object-oriented programming concepts than students using C++-based teaching environments, attributed in part to its simplified error handling and object visualization. BlueJ is completely free to download and use, distributed under the GNU General Public License version 2 with the Classpath Exception, with copyright held jointly by Michael Kolling and John Rosenberg; there is no commercial licensing tier. As of mid-2026, the current release is version 6.0.0, published July 1, 2026, which added support for the Kotlin programming language alongside Java, expanding BlueJ's use beyond pure Java instruction. The application requires a 64-bit operating system, supporting Windows 8 or later, macOS 11 or later on both Apple Silicon and Intel processors, Ubuntu or Debian 20.04 or later, and generic Java or JavaFX 21 environments; users on older 32-bit systems can still run the legacy 4.1.4 build. BlueJ has been adopted by millions of learners and is widely integrated into secondary school and university introductory programming curricula worldwide, positioning it primarily as a teaching tool rather than a production-grade development environment, in contrast to professional IDEs like IntelliJ IDEA, Eclipse, or NetBeans.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is BlueJ", "level": 2, "paragraphs": [
+        "BlueJ is a free, education-focused integrated development environment for Java, built around visualizing class structure and letting students interact directly with objects while they learn to program. Development began in 1999 at Monash University by Michael Kolling and John Rosenberg, as a successor to an earlier teaching tool called Blue, with the first release on August 23, 1999.",
+        "BlueJ became closely tied to the University of Kent in the United Kingdom, where it supported introductory object-oriented programming courses, and is now maintained by King's College London with support from Oracle. James Gosling, the creator of the Java language, has publicly named BlueJ as one of his favorite IDEs.",
+        "Because BlueJ is aimed squarely at teaching, it deliberately simplifies parts of the software development workflow that full-scale professional IDEs make complex, prioritizing visual clarity and direct interaction with objects over the breadth of features found in tools like IntelliJ IDEA or Eclipse."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "BlueJ's main window displays an application's classes as a UML-like diagram, and students can create objects directly from that diagram, inspect their internal state, call methods on them interactively, and pass objects as parameters, all without first writing a main method or test harness.",
+        "The Code Pad lets users evaluate Java expressions immediately without compiling a full program, functioning as a graphical shell or REPL for Java that is specifically suited to experimentation and learning. The source code editor includes scope coloring, which visually highlights nested code blocks to help beginners follow program structure.",
+        "As of version 6.0.0, released July 1, 2026, BlueJ added support for the Kotlin programming language alongside its original Java focus, broadening the languages instructors can teach with the same visual, object-interactive workflow."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "BlueJ is completely free to download and use, with no purchase price, subscription, or commercial licensing tier. It is distributed under the GNU General Public License version 2 with the Classpath Exception, with copyright held by Michael Kolling and John Rosenberg.",
+        "Because it is free and open source, schools, universities, and individual learners can install BlueJ on an unlimited number of machines without licensing costs, which has been a significant factor in its widespread adoption in introductory programming courses.",
+        "BlueJ requires a 64-bit operating system, supporting Windows 8 or later, macOS 11 or later, and Ubuntu or Debian 20.04 or later; users on older 32-bit hardware can still run the free legacy 4.1.4 release."
+      ]}
+    ],
+    "features": [
+      {"title": "UML-Style Class Diagram", "description": "Visualizes an application's classes and their relationships as an interactive, UML-like diagram."},
+      {"title": "Interactive Object Bench", "description": "Create objects directly from the class diagram and interact with them without writing a main method first."},
+      {"title": "Code Pad REPL", "description": "Evaluate Java (and now Kotlin) expressions instantly without compiling a full program."},
+      {"title": "Scope-Colored Code Editor", "description": "The source editor visually highlights nested code blocks to help beginners follow program structure."},
+      {"title": "Direct Method Invocation", "description": "Call methods on live objects interactively and inspect their return values and internal state."},
+      {"title": "Integrated Debugger", "description": "A built-in debugger for stepping through code and inspecting program state during execution."},
+      {"title": "Kotlin Support", "description": "Version 6.0.0, released July 1, 2026, added Kotlin language support alongside Java."},
+      {"title": "Free and Open Source Licensing", "description": "Distributed under GPLv2 with the Classpath Exception at no cost for any number of installations."}
+    ],
+    "pros": [
+      "Completely free for schools, universities, and individual learners",
+      "Purpose-built to make object-oriented programming concepts visible and interactive",
+      "Widely adopted in secondary and university-level computer science curricula",
+      "Endorsed publicly by Java creator James Gosling",
+      "Actively maintained, with Kotlin support added in version 6.0.0"
+    ],
+    "cons": [
+      "Not designed for large-scale production software development",
+      "Fewer enterprise features and integrations than professional IDEs like IntelliJ IDEA or Eclipse",
+      "Requires a 64-bit operating system for current releases, though a legacy 32-bit build exists",
+      "Smaller plugin and extension ecosystem than mainstream commercial IDEs"
+    ],
+    "faqs": [
+      {"question": "Is BlueJ free?", "answer": "Yes, BlueJ is completely free to download and use, distributed under the GNU General Public License version 2 with the Classpath Exception."},
+      {"question": "What is BlueJ used for?", "answer": "BlueJ is used primarily for teaching object-oriented programming, especially Java, by visualizing class structure and letting students interact directly with objects."},
+      {"question": "Who created BlueJ?", "answer": "BlueJ was created by Michael Kolling and John Rosenberg, with development starting in 1999 at Monash University, and later strong ties to the University of Kent; it is now maintained by King's College London."},
+      {"question": "Does BlueJ support Kotlin?", "answer": "Yes, as of version 6.0.0, released July 1, 2026, BlueJ added support for the Kotlin programming language alongside Java."},
+      {"question": "What operating systems does BlueJ support?", "answer": "BlueJ supports 64-bit Windows 8 or later, macOS 11 or later, and Ubuntu or Debian 20.04 or later; older 32-bit systems can use the legacy 4.1.4 release."},
+      {"question": "Is BlueJ good for beginners?", "answer": "Yes, BlueJ was specifically designed for programming beginners, with features like an interactive object bench and scope-colored editor to simplify learning object-oriented concepts."},
+      {"question": "Is BlueJ still maintained?", "answer": "Yes, BlueJ continues to be actively maintained, with version 6.0.0 released July 1, 2026."},
+      {"question": "Does BlueJ replace a professional IDE like IntelliJ or Eclipse?", "answer": "No, BlueJ is designed for teaching and learning rather than large-scale production development, so most learners move to a professional IDE like IntelliJ IDEA or Eclipse as their projects grow."}
+    ],
+    "use_cases": [
+      {"title": "Teaching Introductory Programming", "description": "Instructors use BlueJ's visual class diagrams and interactive objects to teach object-oriented programming fundamentals in schools and universities.", "audience": "Computer science instructors"},
+      {"title": "Self-Directed Learning", "description": "Students learning Java or Kotlin independently use BlueJ's Code Pad and object bench to experiment with code without a full project setup.", "audience": "Self-learners and students"},
+      {"title": "Demonstrating OOP Concepts", "description": "Educators use BlueJ's UML-style diagrams and live object interaction to demonstrate class relationships and method calls in real time.", "audience": "Educators and course designers"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "BlueJ", "price": "Free", "billing_cycle": "N/A", "features": ["Interactive object bench and class diagrams", "Code Pad REPL", "Integrated debugger", "Kotlin and Java support", "Unlimited installations"]}
+    ],
+    "tags": ["java-ide", "education", "programming", "open-source", "teaching-tool", "free-software"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "fc8da50c-88b4-4b76-8a75-737643d423f5",
+  "slug": "bluemail",
+  "name": "BlueMail",
+  "enrichment": {
+    "short_description": "BlueMail is a free, cross-platform email client from Blix Inc. that unifies unlimited email accounts from any provider into one inbox across mobile, desktop, and web.",
+    "pricing_model": "freemium",
+    "starting_price": "Free (Plus plan from $5/user/month)",
+    "founded_year": 2014,
+    "company_size": "51-200 employees (Blix Inc.)",
+    "headquarters": "Jersey City, New Jersey, United States",
+    "languages": ["English"],
+    "seo_title": "BlueMail: Free Cross-Platform Email Client",
+    "seo_meta_description": "BlueMail is a free email client by Blix Inc. that unifies unlimited accounts on Android, iOS, Windows, macOS, and Linux with team and business plans.",
+    "llm_readable_summary": "BlueMail is a free, cross-platform email client developed by Blix Inc., a messaging software company headquartered at 101 Hudson Street in Jersey City, New Jersey, founded in 2014 by brothers Dan and Ben Volach. Before founding Blix, the Volach brothers built Followap, an early mobile messaging pioneer that reached over 200 million subscribers at its peak and helped lay technical groundwork later reflected in messaging platforms such as WhatsApp and Facebook Messenger, before Followap was acquired by NeuStar. With BlueMail, the Volach brothers aimed to give consumers and businesses an innovative, universally compatible, and privacy-conscious email experience capable of managing an unlimited number of accounts from any email provider in one place. BlueMail is available across a wide range of platforms, including Android, iOS, Windows, macOS, Linux, and Amazon's app store, with the desktop apps bringing the same unified-inbox experience found on mobile to computers, plus browser-based webmail access. Core features include a Unified Inbox that combines all connected accounts into one view, Clusters that automatically group emails by sender or topic, Share Mail for sharing messages with family, friends, or colleagues, an Integrated Calendar for scheduling within the email app, BlueChat for built-in messaging alongside email, Gem AI for AI-assisted email composition, and a Security Center for account protection; the app also supports dark themes, push notifications, unread-mail widgets, and mobile-based printing. BlueMail attracted public attention in 2019 when Blix sued Apple in federal court in Delaware over patent infringement and antitrust allegations tied to App Store policy, after which Apple reinstated BlueMail to the App Store in February 2020 following its earlier removal. For individuals, the core BlueMail app is free to download and use. For businesses and teams, BlueMail offers paid plans layered on top of the free Standard tier: a Plus plan priced around 5 dollars per user per month that removes limitations and adds features, a Team plan priced around 12 dollars per user per month that adds an admin dashboard and priority support, and a custom-priced Enterprise plan that adds enterprise mobility management (EMM) and mobile device management (MDM) support, bring-your-own-device (BYOD) compatibility, and dedicated support for organizations with more advanced security and administration needs. Blix Inc. is estimated to employ between 51 and 200 people, while the BlueMail product team itself is reported as a much smaller group within that organization. BlueMail's target audience spans individual consumers managing several personal and work email accounts, small businesses wanting simple team email administration, and larger organizations needing centralized device and security management across a workforce that relies on mobile and desktop email. Its competitors in the email client space include Microsoft Outlook, Gmail's native app, Spark, and Edison Mail, with BlueMail differentiating itself primarily through its unlimited multi-account support, broad platform coverage including Linux, and bundled productivity extras like calendar, chat, and AI-assisted writing.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is BlueMail", "level": 2, "paragraphs": [
+        "BlueMail is a free, cross-platform email client developed by Blix Inc., founded in 2014 by brothers Dan and Ben Volach and headquartered in Jersey City, New Jersey. Before BlueMail, the Volach brothers built Followap, an early mobile messaging service that reached over 200 million subscribers before being acquired by NeuStar.",
+        "BlueMail is designed to unify an unlimited number of email accounts from any provider into a single inbox, and it is available on Android, iOS, Windows, macOS, Linux, and Amazon's app store, giving it broader platform coverage than many competing email clients.",
+        "In 2019, Blix sued Apple over patent infringement and antitrust claims related to App Store policy affecting BlueMail; Apple reinstated the app to the App Store in February 2020, a notable episode in BlueMail's public history."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "BlueMail's core feature is its Unified Inbox, which brings together all connected email accounts into a single, consistent view. Clusters automatically group incoming mail by sender or topic, while Share Mail lets users share messages publicly or privately with family, friends, or colleagues.",
+        "The app also includes an Integrated Calendar for scheduling directly within email, BlueChat for built-in messaging alongside email conversations, and Gem AI, a generative AI feature for composing email content. A Security Center adds account protection tools on top of standard features like dark themes, push notifications, and unread-mail widgets.",
+        "Business and team users get additional administrative capabilities on paid tiers, including a corporate management dashboard, bring-your-own-device (BYOD) support, enterprise mobility management (EMM), and remote device management for organizations that need centralized control over how employees access email."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "BlueMail's core Standard tier is free, allowing individuals to connect an unlimited number of email accounts from any provider at no cost. Paid tiers are aimed at businesses and teams that need additional administration, security, or support.",
+        "The Plus plan is priced at around 5 dollars per user per month and removes free-tier limitations, while the Team plan is priced at around 12 dollars per user per month and adds an admin dashboard along with priority support for organizations managing multiple users.",
+        "The Enterprise plan uses custom pricing and adds enterprise mobility management (EMM), mobile device management (MDM), and dedicated support for organizations with more advanced security and compliance requirements."
+      ]}
+    ],
+    "features": [
+      {"title": "Unified Inbox", "description": "Combine an unlimited number of email accounts from any provider into a single inbox view."},
+      {"title": "Clusters", "description": "Automatically groups incoming emails by sender or topic for faster triage."},
+      {"title": "BlueChat", "description": "Built-in messaging that lets users chat alongside their email conversations."},
+      {"title": "Gem AI", "description": "AI-assisted email composition to help draft messages faster."},
+      {"title": "Integrated Calendar", "description": "Schedule and manage events directly within the BlueMail app."},
+      {"title": "Security Center", "description": "Centralized account protection and security controls within the app."},
+      {"title": "Share Mail", "description": "Share individual emails publicly or privately with family, friends, or colleagues."},
+      {"title": "Cross-Platform Availability", "description": "Available on Android, iOS, Windows, macOS, Linux, and Amazon's app store, plus webmail access."}
+    ],
+    "pros": [
+      "Free for individuals with support for unlimited email accounts from any provider",
+      "Available on nearly every major platform, including Linux",
+      "Adds productivity extras like integrated calendar, chat, and AI-assisted writing",
+      "Business tiers add admin dashboard, BYOD, and EMM/MDM support for teams",
+      "Long operating history and large installed base since its 2014 founding"
+    ],
+    "cons": [
+      "Some enterprise features like EMM and admin dashboards require paid or custom Enterprise plans",
+      "Historical App Store dispute with Apple (2019 to 2020) affected app availability for a period",
+      "AI features like Gem AI are newer and less established than dedicated productivity suites",
+      "Free tier functionality is more limited than the paid Plus and Team tiers"
+    ],
+    "faqs": [
+      {"question": "Is BlueMail free?", "answer": "Yes, BlueMail's core Standard tier is free and supports an unlimited number of connected email accounts from any provider. Paid Plus, Team, and Enterprise plans add business and admin features."},
+      {"question": "Who owns BlueMail?", "answer": "BlueMail is developed by Blix Inc., a messaging company headquartered in Jersey City, New Jersey, founded in 2014 by brothers Dan and Ben Volach."},
+      {"question": "What platforms does BlueMail support?", "answer": "BlueMail is available on Android, iOS, Windows, macOS, and Linux, as well as through webmail access in a browser."},
+      {"question": "Does BlueMail work with Gmail and Outlook?", "answer": "Yes, BlueMail is designed to connect to email accounts from any provider, including Gmail, Outlook, and other IMAP or Exchange-based services."},
+      {"question": "How much do BlueMail paid plans cost?", "answer": "BlueMail's Plus plan is priced around 5 dollars per user per month and its Team plan around 12 dollars per user per month, while Enterprise uses custom pricing."},
+      {"question": "Does BlueMail have an AI assistant?", "answer": "Yes, BlueMail includes Gem AI, a generative AI feature for composing email content."},
+      {"question": "What is BlueMail for Teams?", "answer": "BlueMail for Teams refers to the paid Plus, Team, and Enterprise tiers that add features such as an admin dashboard, priority support, and EMM/MDM device management for organizations."},
+      {"question": "Did Apple ever remove BlueMail from the App Store?", "answer": "Yes, following a 2019 lawsuit between Blix and Apple over patent and antitrust claims, Apple reinstated BlueMail to the App Store in February 2020."}
+    ],
+    "use_cases": [
+      {"title": "Personal Multi-Account Email Management", "description": "Individuals use BlueMail to manage multiple personal and work email accounts from different providers in one unified inbox.", "audience": "Individual consumers"},
+      {"title": "Small Business Team Email", "description": "Small businesses use BlueMail's Team plan for shared email administration, admin dashboards, and priority support.", "audience": "Small business teams"},
+      {"title": "Cross-Device Unified Inbox", "description": "Users with several email providers rely on BlueMail across mobile, desktop, and web for a consistent inbox experience on every device.", "audience": "Multi-device professionals"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Standard", "price": "Free", "billing_cycle": "Free", "features": ["Unlimited connected accounts", "Unified inbox", "Calendar integration", "Cross-platform apps"]},
+      {"plan_name": "Plus", "price": "$5/user/month", "billing_cycle": "Monthly", "features": ["Everything in Standard", "Ad-free experience", "Expanded features"]},
+      {"plan_name": "Team", "price": "$12/user/month", "billing_cycle": "Monthly", "features": ["Everything in Plus", "Admin dashboard", "Priority support"]},
+      {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Custom", "features": ["EMM/MDM support", "BYOD compatibility", "Dedicated support"]}
+    ],
+    "tags": ["email-client", "productivity", "cross-platform", "unified-inbox", "free-software", "mobile-app"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "f0737618-3545-4dd1-b3c4-a85b03b835bf",
+  "slug": "blynk",
+  "name": "Blynk",
+  "enrichment": {
+    "short_description": "Blynk is a low-code IoT platform that lets hardware teams and hobbyists connect devices like Arduino, ESP32, and Raspberry Pi to branded mobile and web dashboards for monitoring and control.",
+    "pricing_model": "freemium",
+    "starting_price": "Free (paid plans from $29/month)",
+    "founded_year": 2014,
+    "company_size": "About 33 employees",
+    "headquarters": "Miami, Florida, United States",
+    "languages": ["English"],
+    "seo_title": "Blynk: Low-Code IoT Platform for Hardware Teams",
+    "seo_meta_description": "Blynk is a low-code IoT platform for Arduino, ESP32, and Raspberry Pi, offering device connectivity, dashboards, and white-label apps from $29 per month.",
+    "llm_readable_summary": "Blynk began as an idea to help people build IoT mobile apps without writing code, launched publicly via a Kickstarter campaign in 2015 that quickly became one of the platform's most successful IoT crowdfunding launches and caught the attention of thousands of makers and developers worldwide. The company behind it, Blynk Inc., is now headquartered in Miami, Florida, and employs approximately 33 people across multiple continents, including Europe, Asia, and North America, with reported annual revenue around 5.5 million dollars and total funding of roughly 3.8 million dollars raised to date. Over more than a decade of operation, Blynk evolved from a hobbyist app builder into a low-code IoT platform used by more than 1.5 million developers and thousands of companies in production, spanning 136 countries and industries including smart home, agriculture, HVAC, and asset tracking; the platform reports processing over 180 billion IoT messages per month. Functionally, Blynk combines device connectivity, secure cloud infrastructure, and customizable mobile and web dashboards in one low-code system, letting hardware teams build, deploy, and manage connected products without building their own backend and app infrastructure from scratch. It natively supports Wi-Fi-enabled modules like the ESP8266 and ESP32 for direct internet connectivity, and its portable C++ Blynk Library runs on hundreds of development boards, including Arduino and Raspberry Pi, alongside broader support for over 100 device types across Wi-Fi, LoRaWAN, Cellular, Satellite, and hybrid connectivity options. Key platform capabilities include fully brandable, white-labeled iOS and Android apps; a console for managing devices, fleets, and users from one place; and, as of 2026, an AI Assistant included on all plans to help configure dashboards, debug devices, and automate workflows, with higher tiers unlocking AI-powered data conversion tools. Blynk's pricing is structured in five tiers. The Free plan costs nothing and supports up to 5 devices with one user account, one week of data retention, and roughly 100,000 messages per month, aimed at hobbyist prototyping. The Starter plan is 29 dollars per month and supports 10 devices with one user, one month of data retention, and up to 10 million messages per month, suited to hobby projects and early proofs of concept. The Prototype plan is 99 dollars per month and supports 50 devices and users with six months of data retention and unlimited messages. The Production plan ranges from roughly 199 to 1,099 dollars per month depending on device count (100 to 1,000 devices and users), and adds 12 months of data retention, unlimited messages, a 99.95 percent uptime SLA, SMS alerts, and priority support. The Enterprise plan is custom-priced and offers a white-label solution with private infrastructure, custom app publishing, 24/7 monitored private servers, on-premise deployment options, a 99.99 percent uptime SLA, and enterprise-grade security, requiring direct contact with Blynk's sales team. Blynk's target audience ranges from individual hobbyists prototyping with Arduino or ESP32 boards to startups and enterprises building commercial, white-labeled IoT products, competing with platforms such as Particle, Losant, and Ubidots in the low-code IoT space.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Blynk", "level": 2, "paragraphs": [
+        "Blynk is a low-code IoT platform that helps hardware teams and hobbyists connect physical devices to branded mobile and web dashboards for monitoring and control. It began as a Kickstarter project in 2015 aimed at letting people build IoT apps without writing code, and the campaign quickly became one of Kickstarter's most successful IoT launches.",
+        "The company behind Blynk, Blynk Inc., is headquartered in Miami, Florida, and has grown over more than a decade into a platform used by over 1.5 million developers and thousands of companies across 136 countries, processing more than 180 billion IoT messages per month.",
+        "Blynk is especially popular with the Arduino, ESP32, and Raspberry Pi hobbyist community because of its native hardware library support, while also serving startups and enterprises that need white-labeled, production-grade IoT apps."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "Blynk combines device connectivity, cloud infrastructure, and a low-code dashboard builder in one platform, supporting over 100 device types across Wi-Fi, LoRaWAN, Cellular, Satellite, and hybrid connectivity. Its portable C++ Blynk Library runs on hundreds of development boards, with native support for Wi-Fi modules like the ESP8266 and ESP32.",
+        "Higher tiers of the platform add fully brandable, white-labeled iOS and Android apps, a console for managing devices, fleets, and users at scale, and role-based access controls, along with an AI Assistant included on all plans to help configure dashboards, debug devices, and automate workflows.",
+        "For businesses that need reliability guarantees, Blynk's Production and Enterprise tiers add uptime SLAs, SMS alerting, private infrastructure, and on-premise deployment options for organizations with strict data or compliance requirements."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Blynk's Free plan supports up to 5 devices with one user account, one week of data retention, and roughly 100,000 messages per month, making it a genuinely usable option for hobbyist prototyping. The Starter plan is 29 dollars per month and raises those limits to 10 devices, one month of retention, and 10 million messages per month.",
+        "The Prototype plan is 99 dollars per month for 50 devices and users with six months of retention and unlimited messages, while the Production plan ranges from about 199 to 1,099 dollars per month depending on device count (100 to 1,000 devices), adding a 99.95 percent uptime SLA, SMS alerts, and priority support.",
+        "The Enterprise plan is custom-priced and includes a fully white-labeled solution with private, 24/7-monitored infrastructure, on-premise deployment options, and a 99.99 percent uptime SLA, requiring direct contact with Blynk's sales team for a quote."
+      ]}
+    ],
+    "features": [
+      {"title": "Low-Code Dashboard Builder", "description": "Build mobile and web IoT dashboards without writing custom app code."},
+      {"title": "Broad Hardware Support", "description": "Native support for Arduino, ESP32, ESP8266, Raspberry Pi, and over 100 other device types."},
+      {"title": "Multi-Protocol Connectivity", "description": "Connects devices over Wi-Fi, LoRaWAN, Cellular, Satellite, and hybrid connectivity options."},
+      {"title": "White-Label Mobile Apps", "description": "Publish fully brandable iOS and Android apps under your own company name."},
+      {"title": "Device and Fleet Management Console", "description": "Manage devices, fleets, and users from a single administrative console."},
+      {"title": "AI Assistant", "description": "An AI Assistant included on all plans to help configure dashboards, debug devices, and automate workflows."},
+      {"title": "Uptime SLAs and Alerts", "description": "Production and Enterprise tiers add uptime SLAs and SMS alerting for reliability-critical deployments."},
+      {"title": "Private and On-Premise Infrastructure", "description": "Enterprise tier offers private, monitored infrastructure and on-premise deployment options."}
+    ],
+    "pros": [
+      "Genuinely usable free tier for hobbyist prototyping with up to 5 devices",
+      "Low-code dashboard builder speeds up IoT product development",
+      "Broad hardware support including Arduino, ESP32, and Raspberry Pi",
+      "White-label branding available for commercial IoT products",
+      "Scales from hobby projects to enterprise deployments with SLA-backed production tiers",
+      "AI Assistant included on all plans, including the free tier"
+    ],
+    "cons": [
+      "Free and Starter tiers cap device count and message volume fairly low",
+      "Production tier pricing rises quickly with device count, from 199 to 1,099 dollars per month",
+      "Enterprise and white-label features require a custom sales conversation rather than self-serve pricing",
+      "Primarily geared toward teams building custom hardware rather than no-code end users"
+    ],
+    "faqs": [
+      {"question": "Is Blynk free?", "answer": "Yes, Blynk offers a free plan supporting up to 5 devices, one user account, one week of data retention, and around 100,000 messages per month."},
+      {"question": "What hardware does Blynk support?", "answer": "Blynk supports Arduino, ESP32, ESP8266, Raspberry Pi, and more than 100 other device types across Wi-Fi, LoRaWAN, Cellular, and Satellite connectivity."},
+      {"question": "How much does Blynk cost?", "answer": "Blynk's paid plans start at 29 dollars per month for the Starter tier, with Prototype at 99 dollars per month, Production ranging from 199 to 1,099 dollars per month, and custom Enterprise pricing for white-label deployments."},
+      {"question": "Can I white-label the Blynk app?", "answer": "Yes, Blynk's Production and Enterprise tiers include fully brandable, white-labeled iOS and Android apps."},
+      {"question": "Does Blynk require coding?", "answer": "Blynk is a low-code platform, so building dashboards and connecting devices requires little to no custom app coding, though device firmware still typically uses the Blynk library."},
+      {"question": "What is Blynk used for?", "answer": "Blynk is used to connect, monitor, and control IoT devices through mobile and web dashboards, spanning hobbyist projects to commercial products in smart home, agriculture, HVAC, and asset tracking."},
+      {"question": "Does Blynk support Raspberry Pi?", "answer": "Yes, Raspberry Pi is one of the development boards natively supported by the Blynk platform and its C++ library."},
+      {"question": "Where is Blynk headquartered?", "answer": "Blynk Inc. is headquartered in Miami, Florida, United States."}
+    ],
+    "use_cases": [
+      {"title": "Hobbyist Arduino and ESP32 Projects", "description": "Makers use Blynk's free tier to connect Arduino, ESP32, and Raspberry Pi projects to mobile dashboards for monitoring and control.", "audience": "Hobbyists and makers"},
+      {"title": "Branded IoT Product Development", "description": "Startups use Blynk's white-label apps and device management console to launch commercial connected products under their own brand.", "audience": "IoT hardware startups"},
+      {"title": "Enterprise Fleet Monitoring", "description": "Larger organizations use Blynk's Production and Enterprise tiers to monitor and manage large fleets of connected devices with SLA-backed reliability.", "audience": "Enterprise IoT teams"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Free", "price": "$0/month", "billing_cycle": "Free", "features": ["Up to 5 devices", "1 user account", "1 week data retention", "About 100,000 messages per month"]},
+      {"plan_name": "Starter", "price": "$29/month", "billing_cycle": "Monthly", "features": ["10 devices", "1 user", "1 month data retention", "10 million messages per month"]},
+      {"plan_name": "Prototype", "price": "$99/month", "billing_cycle": "Monthly", "features": ["50 devices and users", "6 months data retention", "Unlimited messages"]},
+      {"plan_name": "Production", "price": "$199-$1,099/month", "billing_cycle": "Monthly", "features": ["100-1,000 devices and users", "12 months data retention", "99.95% uptime SLA", "SMS alerts and priority support"]},
+      {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Custom", "features": ["White-label solution", "Private, monitored infrastructure", "On-premise deployment", "99.99% uptime SLA"]}
+    ],
+    "tags": ["iot-platform", "low-code", "arduino", "hardware", "device-management", "mobile-app"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "e3d6c369-5ccc-4a69-87aa-439e03e26dda",
+  "slug": "bold-commerce",
+  "name": "Bold Commerce",
+  "enrichment": {
+    "short_description": "Bold Commerce is a Winnipeg-based e-commerce technology company known for its suite of Shopify apps, including Bold Subscriptions, Bold Checkout, and Bold Upsell, plus composable commerce infrastructure for recurring revenue.",
+    "pricing_model": "freemium",
+    "starting_price": "Free for eligible small stores; paid plans from around $24.99/month plus a transaction fee",
+    "founded_year": 2012,
+    "company_size": "201-500 employees",
+    "headquarters": "Winnipeg, Manitoba, Canada",
+    "languages": ["English"],
+    "seo_title": "Bold Commerce: Shopify Subscriptions and Checkout Apps",
+    "seo_meta_description": "Bold Commerce powers Shopify apps like Bold Subscriptions, Checkout, and Upsell, plus composable commerce tools, used by over 760,000 merchants.",
+    "llm_readable_summary": "Bold Commerce was founded in 2012 in a basement in Winnipeg, Manitoba, Canada, by four co-founders: Jay Myers, Stefan Maynard, Eric Boisjoli, and Yvan Boisjoli. Myers, who had been selling his family's archery products online since 1998, identified a need for better tools to improve the e-commerce experience on the then-young Shopify platform, and the team's first app, Product Upsell, quickly gained traction. All four founders initially held full-time jobs elsewhere and transitioned into Bold Commerce one by one between October 2012 and March 2013 as the business grew. The company remained bootstrapped until its first outside funding round in 2019, and later raised 35 million dollars from investors including OMERS Ventures, the venture capital arm of the Ontario Municipal Employees Retirement System, funding that supported plans to hire around 100 additional staff. Bold Commerce remains headquartered in Winnipeg, at 50 Fultz Boulevard, and employs an estimated 201 to 500 people, with staff spread across North America, Europe, and Asia. The company describes itself as 'the repeat commerce company,' focused on helping Shopify merchants increase customer lifetime value by driving repeat purchases and higher-value transactions. Its product suite centers on six core apps: Bold Subscriptions for recurring orders and subscription billing, Bold Checkout for customizable, high-conversion Shopify checkout experiences, Bold Upsell for cart and post-purchase upsell offers, Bold Discounts for promotional pricing rules, Bold Custom Pricing for tiered or negotiated pricing, Bold Memberships for gated content and membership tiers, and rePete, a reorder-nudging tool that prompts customers to repurchase consumable products. Bold holds Shopify Plus certification and describes itself as the first Shopify front-end app developer, reflecting its long tenure building on the Shopify App Store; the company reports that more than 760,000 online merchants have installed apps it has built, and that its Subscriptions app alone powers more than 41,000 subscription brands. On pricing, Bold Subscriptions offers a free option for stores generating less than 100 dollars per month in subscription revenue, plus a 90-day free trial variant for new subscription businesses; the entry paid tier costs 24.99 dollars per month plus a 2 percent transaction fee for stores generating under 2,500 dollars per month in subscription revenue, with pricing scaling up through additional tiers as subscription revenue grows, and custom Enterprise pricing available for businesses generating over 1 million dollars in annual subscription revenue. Bold's other apps, such as Checkout and Upsell, are typically priced and sold separately through the Shopify App Store rather than bundled into a single flat subscription. Bold Commerce's primary customers are Shopify and Shopify Plus merchants ranging from small direct-to-consumer brands launching their first subscription program up to larger, high-volume retailers needing a highly customizable checkout experience; its competitors include Recharge and Skio in subscriptions, and Shopify's own native checkout customization tools for merchants who do not need Bold's additional layer of functionality.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "What Is Bold Commerce", "level": 2, "paragraphs": [
+        "Bold Commerce is an e-commerce technology company founded in 2012 in Winnipeg, Manitoba, Canada, by Jay Myers, Stefan Maynard, Eric Boisjoli, and Yvan Boisjoli. The company began by building apps to improve the Shopify merchant experience, starting with a product upsell tool, and has since grown into one of the longest-running third-party app developers on the Shopify platform.",
+        "Bold describes itself as 'the repeat commerce company,' focused on helping Shopify merchants generate more repeat purchases and higher customer lifetime value through subscriptions, upsells, discounts, and a customizable checkout. It remained bootstrapped until 2019, when it took on outside funding, including 35 million dollars backed by OMERS Ventures.",
+        "The company remains headquartered in Winnipeg and reports that more than 760,000 online merchants have installed apps it has built, making it one of the more established names in the Shopify app ecosystem."
+      ]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+        "Bold Commerce's core product suite includes Bold Subscriptions for recurring orders and subscription billing, Bold Checkout for a customizable and high-conversion Shopify checkout experience, and Bold Upsell for cart and post-purchase upsell offers.",
+        "Additional apps round out the suite: Bold Discounts for promotional pricing rules, Bold Custom Pricing for tiered or negotiated pricing, Bold Memberships for gated content and membership tiers, and rePete, a reorder-nudging tool that encourages customers to repurchase consumable products.",
+        "Bold holds Shopify Plus certification and positions itself as the first Shopify front-end app developer, reflecting deep, long-standing integration with the Shopify platform rather than a general-purpose e-commerce toolkit built for multiple platforms."
+      ]},
+      {"id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+        "Bold Subscriptions offers a free option for stores generating under 100 dollars per month in subscription revenue, along with a 90-day free trial for new subscription businesses evaluating the product. The entry paid tier is 24.99 dollars per month plus a 2 percent transaction fee for stores with under 2,500 dollars per month in subscription revenue.",
+        "Pricing scales through additional tiers as a merchant's subscription revenue grows, with custom Enterprise pricing available for businesses generating over 1 million dollars in annual subscription revenue.",
+        "Bold's other apps, such as Checkout and Upsell, are generally priced and purchased separately through the Shopify App Store rather than bundled into a single Bold Commerce subscription, so total cost depends on which combination of apps a merchant adopts."
+      ]}
+    ],
+    "features": [
+      {"title": "Bold Subscriptions", "description": "Recurring order and subscription billing management for Shopify merchants."},
+      {"title": "Bold Checkout", "description": "A customizable, high-conversion checkout experience for Shopify Plus stores."},
+      {"title": "Bold Upsell", "description": "Cart and post-purchase upsell offers to increase average order value."},
+      {"title": "Bold Discounts", "description": "Promotional pricing and discount rule management for Shopify stores."},
+      {"title": "Bold Custom Pricing", "description": "Tiered or negotiated pricing tools for B2B or wholesale-style Shopify storefronts."},
+      {"title": "Bold Memberships", "description": "Gated content and membership tier management for subscription-based access."},
+      {"title": "rePete Reorder Nudging", "description": "Prompts customers to repurchase consumable products at the right time to drive repeat orders."},
+      {"title": "Shopify Plus Certification", "description": "Certified integration for high-volume Shopify Plus merchants requiring enterprise-grade reliability."}
+    ],
+    "pros": [
+      "Deep, long-standing integration with Shopify, dating back to Shopify's early app ecosystem",
+      "Modular apps let merchants adopt only the specific tools they need",
+      "Proven at scale, with more than 760,000 merchant installs of Bold's apps",
+      "Shopify Plus certified partner with enterprise-grade checkout extensibility",
+      "Free tier available for very small subscription businesses"
+    ],
+    "cons": [
+      "Full feature set is spread across multiple separate apps rather than one bundled product",
+      "Percentage-based transaction fees on subscription revenue add cost as a store scales",
+      "Enterprise and composable commerce pricing is custom and not published",
+      "Primarily built around the Shopify ecosystem, which may limit portability for merchants on other platforms"
+    ],
+    "faqs": [
+      {"question": "What does Bold Commerce do?", "answer": "Bold Commerce builds e-commerce apps for Shopify merchants, including Bold Subscriptions, Bold Checkout, and Bold Upsell, focused on helping brands drive repeat purchases and higher order values."},
+      {"question": "Is Bold Commerce free?", "answer": "Bold Subscriptions offers a free option for stores generating under 100 dollars per month in subscription revenue, with paid tiers starting at 24.99 dollars per month plus a transaction fee as revenue grows."},
+      {"question": "How much does Bold Subscriptions cost?", "answer": "Bold Subscriptions starts at 24.99 dollars per month plus a 2 percent transaction fee for stores under 2,500 dollars per month in subscription revenue, with custom Enterprise pricing above 1 million dollars in annual subscription revenue."},
+      {"question": "Does Bold Commerce work outside Shopify?", "answer": "Bold Commerce's primary and best-known apps are built for the Shopify and Shopify Plus ecosystem; its composable commerce platform extends some capabilities beyond Shopify for larger enterprise customers."},
+      {"question": "What is Bold Checkout?", "answer": "Bold Checkout is a customizable checkout app for Shopify Plus merchants designed to improve conversion rates during the checkout process."},
+      {"question": "Who founded Bold Commerce?", "answer": "Bold Commerce was founded in 2012 in Winnipeg, Manitoba, by Jay Myers, Stefan Maynard, Eric Boisjoli, and Yvan Boisjoli."},
+      {"question": "How many merchants use Bold Commerce apps?", "answer": "Bold Commerce reports that more than 760,000 online merchants have installed apps it has built, with Bold Subscriptions alone powering over 41,000 subscription brands."},
+      {"question": "Is Bold Commerce Shopify Plus certified?", "answer": "Yes, Bold Commerce is a Shopify Plus certified partner."}
+    ],
+    "use_cases": [
+      {"title": "Launching a Subscription Program", "description": "Shopify merchants use Bold Subscriptions to set up recurring orders and subscription billing for consumable or replenishable products.", "audience": "Shopify merchants adding subscriptions"},
+      {"title": "High-Conversion Checkout for Shopify Plus", "description": "Larger Shopify Plus brands use Bold Checkout to customize and optimize their checkout flow for higher conversion rates.", "audience": "Shopify Plus enterprise brands"},
+      {"title": "Increasing Average Order Value", "description": "DTC brands use Bold Upsell and Bold Discounts together to run cart and post-purchase upsell campaigns alongside promotional pricing.", "audience": "Direct-to-consumer e-commerce brands"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Bold Subscriptions Free", "price": "$0/month", "billing_cycle": "Free (under $100/month in subscription revenue)", "features": ["Recurring order management", "Basic subscription billing", "90-day free trial option for new stores"]},
+      {"plan_name": "Bold Subscriptions Growth", "price": "$24.99/month + 2% transaction fee", "billing_cycle": "Monthly (under $2,500/month in subscription revenue)", "features": ["Recurring order management", "Subscription billing", "Customer subscription portal"]},
+      {"plan_name": "Bold Subscriptions Enterprise", "price": "Custom", "billing_cycle": "Custom (over $1M/year in subscription revenue)", "features": ["Enterprise-scale subscription billing", "Dedicated support", "Custom configuration"]}
+    ],
+    "tags": ["ecommerce", "shopify-apps", "subscriptions", "checkout", "composable-commerce", "saas"],
+    "publish": true
+  }
+}
+]
