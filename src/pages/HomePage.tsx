@@ -1,12 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Search, MapPin } from 'lucide-react';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import HomeStickyHeader from '../components/HomeStickyHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import ThreeColumnLayout from '../components/ThreeColumnLayout';
 import TrustPill from '../components/ui/TrustPill';
 import { RecentFeaturedAgencies } from '../components/RecentFeaturedAgencies';
-import { findState, searchStates, USState } from '../lib/usStates';
+import HomeSmartSearch from '../components/home/HomeSmartSearch';
 import { TopAdRail, BottomAdRail } from '../components/home/MobileAdRails';
 
 // Real, published Gappsy tools with tools.featured = true — same tools the
@@ -24,13 +23,6 @@ const RECENTLY_FEATURED_TOOLS = [
 ];
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<USState[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [error, setError] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     document.title = 'Gappsy - Find the best tools & marketing agencies to grow your business';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -47,43 +39,6 @@ export default function HomePage() {
     };
   }, []);
 
-  const handleSearchChange = (value: string) => {
-    setSearchQuery(value);
-    setError('');
-
-    if (value.trim()) {
-      const results = searchStates(value);
-      setSuggestions(results);
-      setShowSuggestions(results.length > 0);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  };
-
-  const handleStateSelect = (state: USState) => {
-    navigate(`/marketing-agencies-in-${state.slug}-united-states/`);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const state = findState(searchQuery);
-      if (state) {
-        handleStateSelect(state);
-      } else {
-        setError('Please enter a U.S. state (e.g. Texas).');
-        setShowSuggestions(false);
-      }
-    }
-  };
-
-  const handleBlur = () => {
-    // Delay to allow click on suggestion
-    setTimeout(() => {
-      setShowSuggestions(false);
-    }, 200);
-  };
-
   const centerContent = (
     <>
       <HomeStickyHeader searchAnchorId="find-agency-search" />
@@ -93,47 +48,11 @@ export default function HomePage() {
           Find the best tools & agencies<br />
           to grow your business
         </h1>
-        <div className="flex items-center justify-center mb-3 sm:mb-5">
+
+        <HomeSmartSearch id="find-agency-search" className="mb-3" />
+
+        <div className="flex items-center justify-center scale-90 opacity-80">
           <TrustPill />
-        </div>
-
-        <div id="find-agency-search" className="relative max-w-2xl mx-auto scroll-mt-28">
-          <div className="flex items-center w-full h-14 rounded-full bg-white text-gray-900 border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
-            <Search className="ml-5 h-5 w-5 text-slate-400" strokeWidth={2} aria-hidden="true" />
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Type a U.S. state (e.g. New Jersey)…"
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-              onBlur={handleBlur}
-              onFocus={() => searchQuery && setShowSuggestions(suggestions.length > 0)}
-              className="flex-1 h-full bg-transparent outline-none px-4 text-gray-900 placeholder-gray-500"
-            />
-          </div>
-
-          {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
-              {suggestions.map((state) => (
-                <button
-                  key={state.slug}
-                  onClick={() => handleStateSelect(state)}
-                  className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
-                >
-                  <span className="text-sm font-medium text-gray-900">{state.name}</span>
-                  <span className="text-xs text-gray-500">{state.abbr}</span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="text-center mt-2">
-            <p className="text-xs text-gray-500">
-              We'll take you to the Top 25 marketing agencies in that state.
-            </p>
-            {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
-          </div>
         </div>
       </div>
 
@@ -275,50 +194,10 @@ export default function HomePage() {
             Find the best tools & agencies<br />
             to grow your business
           </h1>
-          <div className="flex justify-center mb-2 sm:mb-5">
+          <HomeSmartSearch id="find-agency-search-mobile" className="mb-3 sm:mb-8" />
+
+          <div className="flex justify-center scale-90 opacity-80">
             <TrustPill />
-          </div>
-          <div id="find-agency-search-mobile" className="relative max-w-[390px] sm:max-w-2xl mx-auto mb-4 sm:mb-8 scroll-mt-24">
-            <div className="flex items-center h-8 sm:h-14 px-1.5 sm:px-4 gap-1 sm:gap-3 rounded-full bg-white border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
-              <div className="flex items-center justify-center flex-shrink-0">
-                <Search className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-slate-400 opacity-80" />
-              </div>
-              <input
-                type="text"
-                placeholder="Type a U.S. state to see the Top 25 agencies"
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                onKeyDown={handleKeyDown}
-                onBlur={handleBlur}
-                onFocus={() => searchQuery && setShowSuggestions(suggestions.length > 0)}
-                className="flex-1 bg-transparent text-[10px] sm:text-base font-normal leading-none text-gray-900 placeholder-gray-500 focus:outline-none overflow-hidden whitespace-nowrap"
-                style={{ textOverflow: 'clip' }}
-              />
-            </div>
-
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
-                {suggestions.map((state) => (
-                  <button
-                    key={state.slug}
-                    onClick={() => handleStateSelect(state)}
-                    className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
-                  >
-                    <span className="text-sm font-medium text-gray-900">{state.name}</span>
-                    <span className="text-xs text-gray-500">{state.abbr}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div className="text-center mt-1 sm:mt-2 hidden sm:block">
-              <p className="text-xs sm:text-xs leading-snug text-gray-500">
-                We'll take you to the Top 25 marketing agencies in that state.
-              </p>
-            </div>
-            {error && (
-              <p className="text-xs sm:text-xs leading-snug text-red-600 mt-1 text-center">{error}</p>
-            )}
           </div>
         </div>
 
