@@ -1,0 +1,563 @@
+-- Enrichment marathon batch: RelayThat, Relevance AI, remark42, Remix, Remote, RemotePass, Remove.bg, Render
+
+-- ── RelayThat ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$RelayThat is a brand design automation platform that lets marketing teams generate dozens of on-brand, correctly sized graphics for every social and ad channel from a single set of brand inputs.$q$, short_description),
+  pricing_model = COALESCE($q$Subscription, billed per user per month$q$, pricing_model),
+  starting_price = COALESCE($q$$15/month$q$, starting_price),
+  founded_year = COALESCE(2015, founded_year),
+  company_size = COALESCE($q$Small team (startup)$q$, company_size),
+  headquarters = COALESCE($q$Boston, Massachusetts, United States$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$RelayThat Review 2026: Pricing, Features and Alternatives$q$, seo_title),
+  seo_meta_description = COALESCE($q$See what RelayThat costs, what it does, and whether its SmartLayout design automation is worth it for your marketing team in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$RelayThat is a brand design automation tool founded in 2015 by Craig Carpenter and headquartered in Boston, Massachusetts. The platform is built for marketing managers, agencies, and small teams who need to produce large volumes of on-brand visual assets, such as display ads, social media graphics, email headers, and blog banners, without hiring a dedicated designer for every size and platform. The core workflow is input-once, output-many: a user uploads brand assets (logo, color palette, fonts, headline copy, body text, and a background image), and RelayThat applies more than 2,000 pre-built SmartLayouts to automatically generate dozens of platform-specific graphic variations that all share the same brand elements but adapt in composition to fit each channel's dimensions and conventions. Other notable features include a Headline Generator that produces ad copy using wildcard keyword substitution, a built-in library of more than 3 million stock images, One Click Resize/Remix for instantly adapting a single layout to different aspect ratios, Image SEO Automation intended to help images drive organic search traffic, custom font uploads for brand consistency, and Team Sharing for collaborating with other designers or virtual assistants inside shared brand workspaces. RelayThat's pricing is structured around three tiers: the Pro plan at $15 per month for a single user with five projects, the Pro+ Plus plan at $25 per month covering two users and twenty projects with team sharing enabled, and a custom-quoted Enterprise plan that adds branded sign-in pages, large-team collaboration, data integration, and white-label options. Independent reviews consistently describe RelayThat's core value proposition as speed: it is most useful for solo creators, in-house marketers, and small agencies who post across many channels and want consistent, on-brand visuals fast, rather than for designers who want granular creative control. The tradeoff reviewers flag most often is rigidity — RelayThat's SmartLayout templates constrain what can be added or repositioned, and the tool lacks an undo history, which can make outputs feel formulaic compared to open-canvas design tools like Canva or Adobe Express. RelayThat remains a niche, narrowly-scoped tool rather than a general graphic design suite, competing less on creative flexibility and more on the speed of turning one brand kit into a full set of multi-channel marketing graphics.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = '2b39520f-ab30-4e58-8473-236949ec4dc5' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Brand Portal and Brand Management$q$, $q$Centralizes logos, color palettes, fonts, and campaign assets so every generated graphic stays on-brand across multiple workspaces.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$SmartLayouts$q$, $q$A library of 2,000+ pre-built layout templates that automatically arrange brand assets into channel-specific graphics.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Headline Generator$q$, $q$Automatically produces ad copy variations using wildcard keyword substitution.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$One Click Resize/Remix$q$, $q$Instantly adapts an existing design to fit the dimensions of a different platform or ad unit.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Stock Image Library$q$, $q$Provides access to more than 3 million images that can be used directly inside layouts.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Image SEO Automation$q$, $q$Applies metadata and optimization intended to help published images perform better in search.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Team Sharing$q$, $q$Lets multiple users, designers, or virtual assistants collaborate on the same brand workspace.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Custom Font Uploads$q$, $q$Allows brands to upload proprietary fonts so generated layouts match existing brand guidelines.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Generates dozens of on-brand, correctly sized graphics from a single set of brand inputs$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Large built-in stock image library included in paid plans$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$No design skill required to produce consistent multi-channel creative$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Affordable entry price for solo marketers and very small teams$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Rigid SmartLayout templates limit creative control and custom element placement$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$No undo history, according to multiple independent reviews$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Entry-level plans cap out at just one or two users before requiring a custom Enterprise quote$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Narrower feature set than general-purpose design tools like Canva or Adobe Express$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$What is RelayThat used for?$q$, $q$RelayThat is used to generate large volumes of on-brand marketing graphics, such as social media posts, display ads, and email banners, from a single set of brand assets.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Does RelayThat require design skills?$q$, $q$No. RelayThat is built around pre-made SmartLayout templates so users without design training can produce on-brand graphics.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$What is a SmartLayout?$q$, $q$A SmartLayout is a pre-built template that automatically arranges a brand's logo, colors, fonts, and imagery into a finished graphic sized for a specific platform.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$How much does RelayThat cost?$q$, $q$RelayThat starts at $15/month for the Pro plan (one user), with a Pro+ Plus plan at $25/month for two users and custom Enterprise pricing for larger teams.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Can teams collaborate in RelayThat?$q$, $q$Yes, the Pro+ Plus and Enterprise plans include Team Sharing so multiple users can work within the same brand workspace.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Does RelayThat include stock images?$q$, $q$Yes, paid plans include access to a library of more than 3 million stock images.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$What is Image SEO Automation?$q$, $q$It is a RelayThat feature intended to optimize image metadata to help published graphics perform better in organic search.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Who founded RelayThat?$q$, $q$RelayThat was founded in 2015 by Craig Carpenter and is headquartered in Boston, Massachusetts.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Multi-channel ad production$q$, $q$Marketing managers use RelayThat to produce dozens of correctly sized display and social ad variations from one brand kit.$q$, $q$In-house marketing teams$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Agency client asset production$q$, $q$Agencies manage multiple brand workspaces to quickly generate on-brand creative for different clients.$q$, $q$Digital marketing and creative agencies$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Consistent social media graphics$q$, $q$Solo creators and small businesses generate consistent, on-brand social posts without hiring a designer.$q$, $q$Solo creators and small business owners$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Pro$q$, $q$$15$q$, $q$per user, per month$q$, NULL, $q$["1 user","5 projects","2,000+ SmartLayouts","Headline Generator","3 million+ image library","One Click Resize/Remix","Custom font uploads"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Pro+ Plus$q$, $q$$25$q$, $q$per month (includes 2 users)$q$, NULL, $q$["2 users","20 projects/workspaces","All Pro features","Team Sharing"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$Enterprise$q$, $q$Custom$q$, $q$Contact for pricing$q$, NULL, $q$["Branded sign-in pages","Large team collaboration","Data integration","White-label options","Unlimited/variable projects and portals"]$q$::jsonb, 2);
+
+DELETE FROM tool_content_blocks WHERE tool_id = '2b39520f-ab30-4e58-8473-236949ec4dc5';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$RelayThat is a design automation application founded in 2015 and based in Boston, Massachusetts. It targets marketing managers, agencies, and small teams that need to produce many correctly sized, on-brand graphics quickly rather than a small number of highly customized designs. Instead of manually resizing and redesigning assets for every platform, users set up their brand once and let RelayThat's SmartLayout system generate the variations.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$RelayThat's SmartLayouts (2,000+) automatically arrange a brand's logo, colors, fonts, and imagery into dozens of layout variations sized for different social, display, and email channels. The Headline Generator produces ad copy using wildcard keywords, One Click Resize/Remix adapts existing layouts to new dimensions instantly, and the platform includes access to more than 3 million stock images plus support for custom font uploads. Team Sharing and Image SEO Automation round out the feature set for collaborative, search-friendly output.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('2b39520f-ab30-4e58-8473-236949ec4dc5', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$RelayThat offers a Pro plan at $15/month for one user, a Pro+ Plus plan at $25/month for two users with expanded project limits and team sharing, and a custom-quoted Enterprise plan with branded sign-in pages, data integration, and white-label options for larger organizations.$q$]::text[], 2);
+
+
+-- ── Relevance AI ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$Relevance AI is a no-code platform for building, orchestrating, and deploying AI agents and multi-agent 'workforces' that automate business tasks such as calling, research, and workflow execution.$q$, short_description),
+  pricing_model = COALESCE($q$Freemium, credit-based subscription (Actions plus Vendor Credits)$q$, pricing_model),
+  starting_price = COALESCE($q$Free (Pro plan from $19/month billed annually)$q$, starting_price),
+  founded_year = COALESCE(2020, founded_year),
+  company_size = COALESCE($q$Venture-backed startup (headcount not publicly disclosed)$q$, company_size),
+  headquarters = COALESCE($q$Sydney, Australia$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$Relevance AI Review 2026: Pricing, Features and AI Agent Platform$q$, seo_title),
+  seo_meta_description = COALESCE($q$An overview of Relevance AI's no-code AI agent builder, its Actions and Vendor Credits pricing model, and how it compares for building AI workforces in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$Relevance AI is a Sydney, Australia-headquartered software company founded in 2020 by co-CEOs Daniel Vassilev and Jacky Koh alongside Daniel Palmer. The company builds a no-code platform for creating, orchestrating, and deploying AI agents, which it markets under the concept of an 'AI workforce' — multiple agents that can be chained together to handle multi-step business processes such as research, outreach, calling, meeting support, and customer operations without requiring custom software development. Relevance AI has raised a reported $37 million in total funding, including a $24 million Series B round led by Bessemer Venture Partners, positioning it as a venture-backed player in the fast-growing AI agent tooling space. The platform integrates with more than 2,000 third-party tools and services, and includes features such as custom Actions (discrete tool calls or task steps an agent performs), calling and meeting agents, agent evaluation and A/B testing analytics, and enterprise security controls like SSO, role-based access control, and audit logs on higher tiers. Relevance AI's pricing is unusual in that it separates two cost dimensions: Actions, which represent the number of discrete steps an agent executes, and Vendor Credits, which represent the underlying LLM and compute cost of running those steps, denominated in dollars. The Free plan includes 200 Actions per month plus a one-time allotment of 1,000 Vendor Credits. The Pro plan starts at $19 per month on annual billing and includes 2,500 Actions plus $20 of Vendor Credits per month. The Team plan costs $234 per month billed annually (or $349 month-to-month) and includes 7,000 Actions plus $70 of Vendor Credits per month. An Enterprise tier is available with custom pricing, unlimited agents, tools, users, and workforces, plus dedicated account management. Plan-included Actions reset monthly, though purchased Action top-ups carry over to the next billing cycle, while Vendor Credits roll over indefinitely as long as the subscription remains active; additional top-ups are available at $80 per 1,000 Actions and $20 per 10,000 Vendor Credits. Relevance AI is best suited for teams that want to build automated, multi-step AI workflows without writing code, but the two-part pricing model means costs can scale quickly once agents move from experimentation into production-level usage.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$No-code agent builder$q$, $q$Lets non-developers design AI agents and automated workflows without writing code.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Multi-agent workforces$q$, $q$Combines multiple agents into coordinated teams that can handle multi-step business processes.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$2,000+ integrations$q$, $q$Connects agents to a large library of third-party tools and data sources.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Custom Actions$q$, $q$Defines the discrete tool calls or task steps an agent can execute.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Calling and meeting agents$q$, $q$Purpose-built agents for handling phone calls and meeting-related tasks.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Agent evaluations and A/B testing$q$, $q$Provides analytics to test and compare agent performance.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Enterprise security controls$q$, $q$Includes SSO, role-based access control, and audit logs on higher-tier plans.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Actions and Vendor Credits billing$q$, $q$Separates task-step usage (Actions) from underlying AI model/compute cost (Vendor Credits) for transparent metering.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$No-code agent builder lowers the barrier to building AI automation$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Large integration library (2,000+) connects agents to existing tools$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Transparent two-part usage pricing separates task steps from model cost$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Free tier available for experimentation before committing to a paid plan$q$, 3);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Enterprise-grade security controls (SSO, RBAC, audit logs) available$q$, 4);
+
+DELETE FROM tool_cons WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Costs can scale quickly once agents move into production-level usage$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Two-part Actions plus Vendor Credits pricing can be confusing to estimate upfront$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Advanced governance features are gated behind Team and Enterprise tiers$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Company headcount and detailed operational scale are not publicly disclosed$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$What is Relevance AI?$q$, $q$Relevance AI is a no-code platform for building and orchestrating AI agents, including multi-agent 'workforces' that automate multi-step business tasks.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$How does Relevance AI pricing work?$q$, $q$Pricing is based on two metered components: Actions (the number of task steps an agent executes) and Vendor Credits (the dollar cost of underlying LLM and compute usage).$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Is there a free plan?$q$, $q$Yes, Relevance AI offers a Free plan with 200 Actions per month and a one-time allotment of 1,000 Vendor Credits.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Who founded Relevance AI?$q$, $q$Relevance AI was founded in 2020 by co-CEOs Daniel Vassilev and Jacky Koh, along with Daniel Palmer.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Where is Relevance AI headquartered?$q$, $q$Relevance AI is headquartered in Sydney, Australia.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Does Relevance AI offer enterprise security features?$q$, $q$Yes, the Enterprise plan includes SSO, role-based access control (RBAC), and audit logs.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$What integrations does Relevance AI support?$q$, $q$Relevance AI connects to more than 2,000 third-party tools and services.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$How much funding has Relevance AI raised?$q$, $q$Relevance AI has raised a reported $37 million in total funding, including a $24 million Series B led by Bessemer Venture Partners.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Sales and operations automation$q$, $q$Teams build AI agents to automate research, outreach, and repetitive operational workflows.$q$, $q$Sales and revenue operations teams$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$AI calling and meeting support$q$, $q$Support and customer success teams deploy calling and meeting agents to handle routine conversations.$q$, $q$Customer support and success teams$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Client workforce building for agencies$q$, $q$Agencies build custom multi-agent 'workforces' as automation products for their clients.$q$, $q$Automation and AI consulting agencies$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Free$q$, $q$$0$q$, $q$per month$q$, NULL, $q$["200 Actions per month","1,000 Vendor Credits (one-time)","Core no-code agent builder"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Pro$q$, $q$$19$q$, $q$per month, billed annually$q$, NULL, $q$["2,500 Actions per month","$20 Vendor Credits per month","Access to integration library"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Team$q$, $q$$234 (or $349 month-to-month)$q$, $q$per month, billed annually$q$, NULL, $q$["7,000 Actions per month","$70 Vendor Credits per month","Team collaboration features"]$q$::jsonb, 2);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$Enterprise$q$, $q$Custom$q$, $q$Contact sales$q$, NULL, $q$["Unlimited agents and tools","Unlimited users and workforces","2,000+ integrations","SSO, RBAC and audit logs","Dedicated account manager"]$q$::jsonb, 3);
+
+DELETE FROM tool_content_blocks WHERE tool_id = '13ab6855-36e8-4dcc-bfd6-c5394bdc3674';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$Relevance AI is a no-code AI agent platform founded in 2020 and headquartered in Sydney, Australia. It lets non-developers build and orchestrate AI agents that can be combined into multi-agent 'workforces' to automate business processes such as research, outreach, and customer support.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$The platform provides a no-code agent builder, a library of more than 2,000 integrations, custom Actions for defining agent tool calls, calling and meeting agents, and agent evaluation with A/B testing analytics. Enterprise customers get SSO, role-based access control, and audit logging.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('13ab6855-36e8-4dcc-bfd6-c5394bdc3674', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$Relevance AI uses a two-part pricing model of Actions (task steps) and Vendor Credits (underlying LLM/compute cost). Plans range from a Free tier with 200 Actions/month, through Pro at $19/month and Team at $234/month (both billed annually), up to custom Enterprise pricing.$q$]::text[], 2);
+
+
+-- ── remark42 ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$remark42 is a free, open-source, self-hosted commenting engine written in Go that site owners can embed on blogs and articles as a privacy-focused alternative to Disqus.$q$, short_description),
+  pricing_model = COALESCE($q$Free and open source (self-hosted)$q$, pricing_model),
+  starting_price = COALESCE($q$Free$q$, starting_price),
+  founded_year = COALESCE(NULL, founded_year),
+  company_size = COALESCE(NULL, company_size),
+  headquarters = COALESCE(NULL, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$remark42 Review 2026: Free, Self-Hosted, Privacy-First Comment Engine$q$, seo_title),
+  seo_meta_description = COALESCE($q$What remark42 is, how it compares to Disqus, and how to self-host this free, privacy-focused, open-source commenting engine.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$remark42 is an open-source, self-hosted commenting engine maintained on GitHub by developer umputun and released under the MIT license, making it completely free to use. It is written in Go and compiles down to a single statically-linked binary that can also be run as a small Docker container, requiring only around 50MB of RAM and no external database server — comments are stored locally in a single BoltDB file rather than requiring Redis, PostgreSQL, or a message queue. remark42 is positioned as a privacy-first alternative to hosted commenting services like Disqus: it does not use tracking pixels or third-party cookies and avoids behavioral profiling, storing only the minimum data needed to display comments and notifications, with user IDs, usernames, and avatar links hashed or proxied rather than exposed directly. Authentication is handled through a wide range of social and OAuth2 login providers, including Google, Facebook, Microsoft, GitHub, Apple, Yandex, Patreon, Telegram, Discord, and custom OAuth2 configurations, giving site owners flexibility in how visitors sign in to comment. The comment system itself supports full Markdown formatting including code blocks, nested threaded replies, comment voting, and configurable edit and delete time windows so users can correct or remove their own comments within a set period after posting. remark42 also supports email and Telegram notifications so commenters are alerted when someone replies to them. Because there is no hosted SaaS version offered by the project, adopting remark42 requires a site owner to self-host it, typically via Docker on a VPS or similar server, and to have enough technical comfort to configure and maintain that deployment, which is the main tradeoff compared to a plug-and-play hosted commenting service. There is no paid tier, subscription, or enterprise plan for remark42 — the entire feature set, including all authentication providers and moderation tools, is available for free to anyone willing to run the software themselves, which makes it popular among privacy-conscious bloggers, independent publishers, and self-hosting enthusiasts who want to avoid sending visitor data to third-party comment networks.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = 'f1b6cce1-f828-4060-b252-e9dae59643ea' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Self-hosted single-binary or Docker deployment$q$, $q$Runs as a statically-compiled Go binary or a lightweight Docker container with no external database required.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Multiple social and OAuth2 login providers$q$, $q$Supports Google, Facebook, Microsoft, GitHub, Apple, Yandex, Patreon, Telegram, Discord, and custom OAuth2.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Markdown comment formatting$q$, $q$Comments support full Markdown, including code blocks, for technical and general-purpose blogs.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Nested replies and voting$q$, $q$Readers can reply in threaded conversations and upvote or downvote comments.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Edit and delete time windows$q$, $q$Users can edit or delete their own comments within a configurable time period after posting.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Privacy-first design$q$, $q$Avoids tracking pixels, third-party cookies, and behavioral profiling, storing only minimal user data.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Email and Telegram notifications$q$, $q$Notifies users by email or Telegram when someone replies to their comment.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Lightweight resource footprint$q$, $q$Uses a local BoltDB file for storage instead of a separate database server, keeping deployment simple.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Completely free and open source under the MIT license$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Strong privacy stance with no tracking pixels or third-party cookies$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Lightweight resource footprint that runs in a small Docker container$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Wide range of supported login providers$q$, 3);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Actively maintained open-source project on GitHub$q$, 4);
+
+DELETE FROM tool_cons WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Requires self-hosting and ongoing server maintenance$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$No official managed/hosted SaaS option from the maintainer$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Smaller community and support surface compared to commercial platforms like Disqus$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Deep UI customization requires developer/technical skills$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Is remark42 free?$q$, $q$Yes, remark42 is completely free and open source under the MIT license, with no paid tiers.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Do I need a database to run remark42?$q$, $q$No, remark42 stores data locally in a single BoltDB file and does not require an external database server.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$What login providers does remark42 support?$q$, $q$It supports Google, Facebook, Microsoft, GitHub, Apple, Yandex, Patreon, Telegram, Discord, and custom OAuth2 providers.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Does remark42 track users?$q$, $q$No, remark42 is designed to avoid tracking pixels, third-party cookies, and behavioral profiling.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Can I self-host remark42 with Docker?$q$, $q$Yes, remark42 is distributed as a Docker image and can be deployed with minimal server resources.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Is remark42 open source?$q$, $q$Yes, it is maintained on GitHub by developer umputun under the MIT license.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Does remark42 support comment voting and nested replies?$q$, $q$Yes, both threaded nested replies and comment voting are built-in features.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Is there a hosted version of remark42?$q$, $q$No official hosted SaaS version is offered; remark42 must be self-hosted.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Privacy-conscious blog comments$q$, $q$Bloggers replace Disqus with remark42 to avoid sending visitor data to third-party ad networks.$q$, $q$Privacy-conscious bloggers and writers$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Self-hosted technical blogs$q$, $q$Developers running personal or technical blogs on their own VPS embed remark42 for lightweight, Markdown-friendly comments.$q$, $q$Self-hosting developers$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Publisher comment moderation without tracking$q$, $q$Independent publishers use remark42 to offer reader comments while controlling moderation and data locally.$q$, $q$Independent online publishers$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$Self-Hosted$q$, $q$Free$q$, $q$N/A (open source, MIT license)$q$, NULL, $q$["Full commenting engine source code","Single binary or Docker deployment","All authentication providers included","Community support via GitHub"]$q$::jsonb, 0);
+
+DELETE FROM tool_content_blocks WHERE tool_id = 'f1b6cce1-f828-4060-b252-e9dae59643ea';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$remark42 is a free, open-source, self-hosted commenting engine written in Go and maintained by developer umputun on GitHub under the MIT license. It is designed as a lightweight, privacy-respecting alternative to hosted comment platforms like Disqus, and can be embedded into blogs, articles, or any web page that needs reader comments.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$remark42 supports numerous social and OAuth2 login providers, full Markdown comment formatting, nested replies, voting, and configurable edit/delete windows. It stores data locally in a single BoltDB file with no external database dependency, avoids tracking pixels and third-party cookies, and can be deployed as a single binary or a small Docker container.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$remark42 has no paid plans. It is entirely free and open source under the MIT license; the only cost is the server or hosting resources a site owner uses to self-host it.$q$]::text[], 2);
+
+INSERT INTO tool_tag_links (tool_id, tag_id) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', '97eb8f3e-e378-4a5d-b2a5-331706e86e50') ON CONFLICT DO NOTHING;
+INSERT INTO tool_tag_links (tool_id, tag_id) VALUES ('f1b6cce1-f828-4060-b252-e9dae59643ea', 'efe7ced3-7cfa-4b39-9792-3427d24fa58d') ON CONFLICT DO NOTHING;
+
+-- ── Remix ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$Remix was a full-stack React web framework created by the makers of React Router; its data-loading and routing ideas have since been merged into React Router, while a new standalone framework called Remix 3 is being built separately from React.$q$, short_description),
+  pricing_model = COALESCE($q$Free and open source$q$, pricing_model),
+  starting_price = COALESCE($q$Free$q$, starting_price),
+  founded_year = COALESCE(2020, founded_year),
+  company_size = COALESCE($q$Small team, operating as part of Shopify$q$, company_size),
+  headquarters = COALESCE($q$Remote/distributed team (Remix Software, a Shopify subsidiary)$q$, headquarters),
+  languages = ARRAY[$q$JavaScript$q$, $q$TypeScript$q$]::text[],
+  seo_title = COALESCE($q$Remix Framework in 2026: Status, React Router Merger and Remix 3 Explained$q$, seo_title),
+  seo_meta_description = COALESCE($q$What happened to Remix, how it merged into React Router, and what Remix 3 is building next — a 2026 status guide.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$Remix is a web framework originally created by Michael Jackson and Ryan Florence, the developers previously known for React Training and React Router. Remix Software was founded around 2020 and publicly launched its full-stack React framework in late 2021, offering nested routing, server-side data loading via loaders, and form-based mutations via actions, with an emphasis on progressive enhancement and web standards. Shopify acquired the Remix team in 2022, with a commitment to keep development open source. At ReactConf 2024, the team announced that Remix would merge into React Router: because Remix v2 had effectively become a thin wrapper around React Router, the bundler and server-runtime code that made Remix distinctive was folded directly into React Router, which shipped a Vite-based 'framework mode' in React Router v7. That merge is now considered complete, and React Router has continued its own release cadence, with React Router v8 shipping in June 2026 on a yearly major-version schedule. Separately, in May 2025 the team unveiled Remix 3, a ground-up rebuild that is not based on React at all. Remix 3 runs directly on the web-standard Fetch API, using native Request and Response objects instead of Node's proprietary request/response system, which allows it to run unmodified on Node, Deno, or Bun without adapters. It still uses JSX syntax but has no virtual DOM, updating the UI explicitly rather than through React-style hooks like useState. The stated ambition for Remix 3 is to cover the full application stack — routing, request handling, responses, middleware, sessions, authentication, forms, file uploads, assets, and data/database management — all under one framework rather than being just a router or renderer. Early previews were shown publicly at Remix Jam 2025, and while those previews are usable for experimentation, the API was still described as actively moving as of mid-2026, with the first stable release targeted for early 2026 and not yet recommended for production workloads. Both React Router (with its now-merged Remix-derived framework mode) and the emerging Remix 3 remain free, open-source projects with no paid tiers.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = '037448f0-d565-48e0-bfb8-ee13f7081535' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Nested, file-based routing (legacy Remix/React Router)$q$, $q$Organizes application routes and their data dependencies in a nested hierarchy.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Server-side data loading and actions$q$, $q$Loaders fetch data per route on the server; actions handle form-based mutations, pioneered by Remix and now native to React Router.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Progressive enhancement via HTML forms$q$, $q$Forms work without client-side JavaScript and are progressively enhanced when it is available.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Fetch API-native architecture (Remix 3)$q$, $q$Built directly on standard Request and Response objects instead of Node-specific APIs.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Runtime-agnostic (Remix 3)$q$, $q$Runs unmodified on Node, Deno, or Bun without adapters.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$JSX without a virtual DOM (Remix 3)$q$, $q$Keeps JSX syntax but updates the UI explicitly instead of through React hooks.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Full-stack scope (Remix 3)$q$, $q$Aims to cover routing, middleware, sessions, auth, uploads, and data management in one framework.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Open source and free$q$, $q$Distributed under an open-source license with no paid tiers.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Built on web standards, making the framework portable across JavaScript runtimes$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Pioneered data-loading and forms patterns now built natively into React Router$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Backed by Shopify's engineering resources since the 2022 acquisition$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Fully open source and free with no paid tiers$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Brand confusion since Remix v2's framework features moved into React Router itself$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Remix 3 is a ground-up rewrite with an API still described as moving as of mid-2026$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Remix 3 drops React entirely, meaning existing Remix v2/React apps cannot adopt it without a rewrite$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Not yet recommended for production as the first stable Remix 3 release was still pending in 2026$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Is Remix still maintained?$q$, $q$Yes, but its original framework features have been merged into React Router, while a separate new framework called Remix 3 is being built independently of React.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$What happened to Remix and React Router?$q$, $q$Remix's bundler and server-runtime code were merged into React Router, which now offers a Vite-based 'framework mode' that includes what used to be distinctly Remix features.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Is Remix 3 based on React?$q$, $q$No, Remix 3 drops React and the virtual DOM entirely, building instead on the web-standard Fetch API while still using JSX syntax.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Can I still use the original Remix v2?$q$, $q$Existing Remix v2 apps continue to work, but new framework development has moved to React Router's framework mode.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Is Remix free to use?$q$, $q$Yes, Remix, React Router, and Remix 3 are all free, open-source projects.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Who created Remix?$q$, $q$Remix was created by Michael Jackson and Ryan Florence, who also created React Router; the team was acquired by Shopify in 2022.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$When will Remix 3 be production-ready?$q$, $q$Early previews were shown at Remix Jam 2025, with a stable release targeted for early 2026, though the API was still evolving as of mid-2026.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Does Remix 3 work with Node, Deno, and Bun?$q$, $q$Yes, because it is built on the standard Fetch API rather than Node-specific request/response objects.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Adopting former Remix patterns via React Router$q$, $q$Teams already using React Router adopt its framework mode to get the data-loading and routing patterns originally pioneered by Remix.$q$, $q$React developers building full-stack apps$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Experimenting with Remix 3's web-standards runtime$q$, $q$Early adopters try Remix 3 previews to build apps that run unmodified across Node, Deno, and Bun.$q$, $q$Framework early adopters and library authors$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Avoiding virtual DOM overhead$q$, $q$Developers interested in explicit, non-hook-based UI updates evaluate Remix 3's JSX-without-virtual-DOM model.$q$, $q$Performance-focused frontend engineers$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$Open Source$q$, $q$Free$q$, $q$N/A (MIT license)$q$, NULL, $q$["Full framework source code","Community support via GitHub and Discord","No paid tiers or subscriptions"]$q$::jsonb, 0);
+
+DELETE FROM tool_content_blocks WHERE tool_id = '037448f0-d565-48e0-bfb8-ee13f7081535';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$Remix was created by Michael Jackson and Ryan Florence, the developers behind React Router, and launched publicly in 2021 as a full-stack React framework emphasizing nested routing, server-side data loading, and progressive enhancement. Shopify acquired the Remix team in 2022.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$Remix's original framework features — nested file-based routing, server-side loaders and actions, and progressive enhancement via HTML forms — have been merged into React Router's 'framework mode' as of React Router v7/v8. Separately, Remix 3, previewed in 2025, drops React entirely, runs on the standard Fetch API across Node, Deno, and Bun, and aims to cover the full application stack including sessions, auth, uploads, and UI components.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$Remix, React Router, and the in-development Remix 3 are all free, open-source, MIT-licensed projects with no paid tiers or subscriptions.$q$]::text[], 2);
+
+INSERT INTO tool_tag_links (tool_id, tag_id) VALUES ('037448f0-d565-48e0-bfb8-ee13f7081535', '97eb8f3e-e378-4a5d-b2a5-331706e86e50') ON CONFLICT DO NOTHING;
+
+-- ── Remote ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$Remote is a global employment platform offering Employer of Record (EOR), international payroll, contractor management, and benefits so companies can hire employees and contractors abroad without setting up local legal entities.$q$, short_description),
+  pricing_model = COALESCE($q$Subscription, billed per employee or contractor per month$q$, pricing_model),
+  starting_price = COALESCE($q$$29/month per contractor (Contractor Management); EOR from $599/month per employee$q$, starting_price),
+  founded_year = COALESCE(2019, founded_year),
+  company_size = COALESCE($q$Large scale-up (headcount estimates vary widely across data providers)$q$, company_size),
+  headquarters = COALESCE($q$San Francisco, California, United States (distributed, remote-first team)$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$Remote.com Review 2026: EOR Pricing, Countries and Features$q$, seo_title),
+  seo_meta_description = COALESCE($q$How much Remote.com costs, which countries it covers for Employer of Record and payroll, and how its contractor management pricing works in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$Remote is a global employment infrastructure company founded in 2019 by Job van der Voort and Marcelo Lebre, both former engineering and product executives at GitLab. The company's registered headquarters is in San Francisco, California, though Remote operates as a remote-first, distributed organization without a central operational office, and its founders and early operations have also been associated with Lisbon and Amsterdam. Remote's core product is Employer of Record (EOR) services, which let companies legally hire full-time employees in other countries without establishing their own local entity; Remote states it can act as EOR in more than 90 countries and can run payroll in more than 100 countries. Beyond EOR, the platform offers contractor management and payments, global benefits administration, equity management, and compliance support for local labor law. Pricing is transparently published: Contractor Management costs $29 per month per contractor, while Employer of Record service starts at $599 per month per employee when billed annually, or $699 per month when billed monthly, with the company stating there are no hidden fees, minimum contract lengths, or exclusivity requirements. Remote has grown into one of the best-funded companies in the HR technology and 'remote work' infrastructure category, reaching a multi-billion-dollar valuation, though publicly available employee-count figures vary substantially across third-party data providers (ranging from roughly one thousand to well over ten thousand depending on the source and methodology), making an exact headcount difficult to state with confidence. Remote competes most directly with other global EOR and payroll platforms such as Deel and Papaya Global, differentiating itself on owning many of its own local entities in target countries rather than relying entirely on third-party partners, which the company positions as a compliance and reliability advantage. It is used primarily by startups and mid-market companies that want to hire internationally, convert existing contractors into compliant full-time employees, or consolidate payroll and benefits for a distributed global workforce without building out in-country legal infrastructure themselves.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Employer of Record (EOR)$q$, $q$Lets companies hire full-time employees in 90+ countries without establishing a local legal entity.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Global payroll$q$, $q$Runs compliant payroll for employees in more than 100 countries.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Contractor management and payments$q$, $q$Onboards and pays international contractors with compliant contracts.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Equity management$q$, $q$Helps companies manage equity grants for international employees.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Global benefits administration$q$, $q$Provides access to local benefits packages for employees hired through Remote.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Compliance and local labor law support$q$, $q$Manages country-specific employment regulations on behalf of the customer.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Contractor-to-employee conversion$q$, $q$Supports converting existing contractors into compliant full-time hires.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$HRIS integrations and API$q$, $q$Connects Remote's employment data with existing HR systems.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Broad country coverage for EOR (90+) and payroll (100+) services$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Transparent, published flat-fee pricing with no stated hidden fees$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Owns many of its own local entities rather than relying solely on third-party partners$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Well-funded, established player in the global employment infrastructure category$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$EOR pricing is higher than some contractor-only competitors$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Monthly billing carries a price premium over annual commitment$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Public employee-headcount figures are inconsistent across data providers, making company scale hard to pin down precisely$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Onboarding for complex, multi-country rollouts can take time to complete$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$What does Remote.com do?$q$, $q$Remote provides Employer of Record, global payroll, contractor management, and benefits services so companies can hire internationally without setting up local entities.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$How much does Remote's EOR service cost?$q$, $q$Remote's Employer of Record service starts at $599/month per employee billed annually, or $699/month billed monthly.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$In how many countries can Remote hire employees?$q$, $q$Remote states it can act as Employer of Record in more than 90 countries and run payroll in more than 100 countries.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Who founded Remote.com?$q$, $q$Remote was founded in 2019 by Job van der Voort and Marcelo Lebre, both former GitLab executives.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Does Remote offer contractor payments?$q$, $q$Yes, Contractor Management is priced at $29/month per contractor.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$What is the difference between EOR and contractor management on Remote?$q$, $q$EOR is for hiring full-time employees through Remote's local entities; contractor management is for paying independent contractors without an employment relationship.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Does Remote charge setup fees?$q$, $q$Remote states there are no hidden fees or minimum contract lengths on its published pricing.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Where is Remote.com headquartered?$q$, $q$Remote's registered headquarters is in San Francisco, California, though it operates as a distributed, remote-first company.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$First international hire without a local entity$q$, $q$Startups use Remote's EOR service to legally hire their first employee in a new country.$q$, $q$Startups expanding internationally$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Contractor-to-employee conversion$q$, $q$Companies convert existing international contractors into compliant full-time employees.$q$, $q$Growing companies managing compliance risk$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Consolidated global payroll and benefits$q$, $q$Distributed teams consolidate payroll, benefits, and compliance for employees across many countries.$q$, $q$Mid-market companies with distributed workforces$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Contractor Management$q$, $q$$29$q$, $q$per month, per contractor$q$, NULL, $q$["Compliant contractor contracts","International contractor payments","Onboarding workflows"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Employer of Record$q$, $q$$599 (annual) / $699 (monthly)$q$, $q$per month, per employee$q$, NULL, $q$["Local entity employment in 90+ countries","Payroll and tax compliance","Benefits administration","Local labor law compliance"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$Global Payroll / Enterprise$q$, $q$Custom$q$, $q$Contact sales$q$, NULL, $q$["Payroll in 100+ countries","Equity management","Dedicated support"]$q$::jsonb, 2);
+
+DELETE FROM tool_content_blocks WHERE tool_id = 'ad16437d-1117-4ccd-976f-2e70d7ae268c';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$Remote is a global employment platform founded in 2019 by former GitLab executives Job van der Voort and Marcelo Lebre. It provides Employer of Record, international payroll, contractor management, and benefits services so companies can hire abroad without setting up their own local entities.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$Remote offers Employer of Record services in 90+ countries, payroll in 100+ countries, contractor payments, equity management, global benefits administration, and compliance support for local labor law, all accessible through a unified dashboard.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad16437d-1117-4ccd-976f-2e70d7ae268c', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$Contractor Management costs $29/month per contractor. Employer of Record service starts at $599/month per employee billed annually, or $699/month billed monthly, with no stated setup fees or minimum contract lengths.$q$]::text[], 2);
+
+
+-- ── RemotePass ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$RemotePass is a global HR and payroll platform combining contractor management, Employer of Record, local payroll, and a built-in fintech app for paying remote teams across more than 150 countries.$q$, short_description),
+  pricing_model = COALESCE($q$Subscription, billed per worker per month$q$, pricing_model),
+  starting_price = COALESCE($q$$39/month per contractor$q$, starting_price),
+  founded_year = COALESCE(2020, founded_year),
+  company_size = COALESCE($q$Approximately 100 employees (as of 2026)$q$, company_size),
+  headquarters = COALESCE($q$Boston, Massachusetts, United States (with operations in Dubai, UAE)$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$RemotePass Review 2026: Pricing, EOR and Contractor Payments$q$, seo_title),
+  seo_meta_description = COALESCE($q$RemotePass pricing for contractors, Employer of Record, and local payroll, plus its fintech features for paying global remote teams in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$RemotePass is a global HR and payroll platform founded in 2020 by co-founders Kamal Reggad and Karim Nadi, who are reported to have met in Dubai before starting the company; the business maintains a registered headquarters in Boston, Massachusetts, alongside operations in Dubai, UAE. RemotePass has raised approximately $27.9 million in total funding, including a Series B round led by EBRD Venture Capital with participation from 500 Global, and reports roughly 100 employees as of 2026. The platform unifies HR compliance, international payroll, contractor onboarding, and benefits under a single dashboard, positioning itself as an all-in-one alternative to stitching together separate contractor-payment and EOR tools. Its pricing is tiered by service type: Contractor management costs $39 per month per contractor; Contractor of Record (where RemotePass takes on employer-like compliance responsibilities for a contractor) starts at $299 per month; Local Payroll processing starts at $15 per month; Employer of Record, for hiring full-time employees without a local entity, starts at $349 per month; and an optional Visa Sponsorship add-on is available at $549 per month. RemotePass supports payments in more than 130 countries and handles currency conversion so employees and contractors are paid on time in their local currency. A notable differentiator is its built-in fintech 'super app' layer, which gives remote workers access to a debit card for instant access to funds, the ability to request early pay, sign-up for premium health insurance, and an option to receive payouts in cryptocurrency. The platform also generates legally compliant employment and contractor agreements directly inside the product, tailored to the specific labor laws of each worker's country, reducing the need for separate legal review on every contract. RemotePass is positioned as a competitor to larger EOR and payroll platforms such as Remote.com and Deel, differentiating on transparent published pricing across every service tier and the bundled fintech extras that many competitors charge for separately.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = 'ad918d40-0018-4143-a607-5a36dd55baf6' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Global contractor onboarding and compliant contracts$q$, $q$Generates country-specific, legally compliant contracts directly inside the platform.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Employer of Record$q$, $q$Enables hiring full-time employees in 100+ countries without a local legal entity.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Local payroll processing$q$, $q$Runs compliant payroll for in-country employees starting at $15/month.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Multi-currency payouts$q$, $q$Supports payments in more than 130 countries with built-in currency conversion.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Fintech debit card and early pay$q$, $q$Gives workers a debit card and the option to request early access to earned pay.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Crypto payment option$q$, $q$Allows remote workers to receive payouts in cryptocurrency.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Visa sponsorship add-on$q$, $q$Optional service to help sponsor work visas for hired talent.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Benefits and health insurance access$q$, $q$Lets contractors and employees sign up for premium health insurance plans.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Transparent, published pricing across every service tier$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Wide payout coverage across 130+ countries and currencies$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Bundled fintech extras (debit card, early pay, crypto) included rather than sold separately$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Generates locally compliant contracts inside the platform for each country$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Employer of Record and Contractor of Record pricing is higher than pure contractor-payment competitors$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Smaller company scale than category leaders such as Deel or Remote.com$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Dual headquarters reporting (Boston and Dubai) can create ambiguity about primary operations$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Add-on services like visa sponsorship carry significant extra monthly cost$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$What is RemotePass used for?$q$, $q$RemotePass is used to onboard, manage, and pay international contractors and employees, including Employer of Record and local payroll services.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$How much does RemotePass cost for a contractor?$q$, $q$Contractor management on RemotePass costs $39 per month per contractor.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Does RemotePass offer Employer of Record services?$q$, $q$Yes, RemotePass's Employer of Record service starts at $349 per month per employee.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$In how many countries can RemotePass pay workers?$q$, $q$RemotePass supports payments in more than 130 countries and currencies.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Who founded RemotePass?$q$, $q$RemotePass was founded in 2020 by Kamal Reggad and Karim Nadi.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Does RemotePass support crypto payments?$q$, $q$Yes, RemotePass offers an option for workers to receive payouts in cryptocurrency.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$What is a RemotePass debit card?$q$, $q$It is a built-in fintech card that lets remote workers access their pay instantly and request early pay.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Is RemotePass different from Remote.com?$q$, $q$Yes, they are separate companies; RemotePass is headquartered in Boston with Dubai operations, while Remote.com is a separate global employment platform headquartered in San Francisco.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Paying international freelance contractors$q$, $q$Startups use RemotePass to pay monthly contractor invoices across multiple countries and currencies.$q$, $q$Startups hiring international freelancers$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Employer of Record hiring$q$, $q$Companies hire full-time employees abroad through RemotePass's Employer of Record service without setting up a local entity.$q$, $q$Companies expanding into new countries$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Fintech-enabled remote worker pay$q$, $q$Remote workers use RemotePass's debit card and early-pay features alongside standard payroll.$q$, $q$Remote employees and contractors$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Contractors$q$, $q$$39$q$, $q$per month, per contractor$q$, NULL, $q$["Compliant contracts","Multi-currency payments","Debit card access"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Contractors of Record$q$, $q$From $299$q$, $q$per month$q$, NULL, $q$["Employer-like compliance handling for contractors","Local labor law compliance"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Local Payroll$q$, $q$From $15$q$, $q$per month$q$, NULL, $q$["In-country payroll processing"]$q$::jsonb, 2);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Employer of Record$q$, $q$From $349$q$, $q$per month, per employee$q$, NULL, $q$["Full-time hiring in 100+ countries without a local entity","Benefits and health insurance access"]$q$::jsonb, 3);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$Visa Sponsorship (add-on)$q$, $q$$549$q$, $q$per month$q$, NULL, $q$["Work visa sponsorship support"]$q$::jsonb, 4);
+
+DELETE FROM tool_content_blocks WHERE tool_id = 'ad918d40-0018-4143-a607-5a36dd55baf6';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$RemotePass is a global HR and payroll platform founded in 2020 by Kamal Reggad and Karim Nadi, with a registered headquarters in Boston, Massachusetts and operations in Dubai, UAE. It combines contractor management, Employer of Record, local payroll, and fintech payment tools in a single platform.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$The platform supports payments in 130+ countries with multi-currency payouts, offers Employer of Record services in 100+ countries, generates compliant contracts inside the platform, and includes a built-in debit card, early pay access, and an optional crypto payout method.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('ad918d40-0018-4143-a607-5a36dd55baf6', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$RemotePass prices by service type: Contractors at $39/month, Contractors of Record from $299/month, Local Payroll from $15/month, Employer of Record from $349/month, and an optional Visa Sponsorship add-on at $549/month.$q$]::text[], 2);
+
+
+-- ── Remove.bg ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$Remove.bg is an AI-powered background removal tool and API, originally built by Vienna-based Kaleido AI and now owned by Canva, that automatically cuts out image backgrounds in seconds.$q$, short_description),
+  pricing_model = COALESCE($q$Freemium, credit-based subscription plus pay-per-image API$q$, pricing_model),
+  starting_price = COALESCE($q$$9/month for 40 credits (free preview-resolution use also available)$q$, starting_price),
+  founded_year = COALESCE(2013, founded_year),
+  company_size = COALESCE($q$Small team (roughly 50-60 people), operating within Canva, which employs several thousand people globally$q$, company_size),
+  headquarters = COALESCE($q$Vienna, Austria (Kaleido AI, now operating as Canva Austria GmbH)$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$Remove.bg Review 2026: Pricing, API and Canva Ownership Explained$q$, seo_title),
+  seo_meta_description = COALESCE($q$How much remove.bg costs, how its API pricing works, and what its acquisition by Canva means for the background-removal tool in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$Remove.bg is an AI-powered background removal tool built by Kaleido AI, a company founded in 2013 and based in Vienna, Austria. Kaleido launched remove.bg in 2018 as a fast, largely automated way to remove backgrounds from photos using computer vision, and the product quickly became one of the most widely used tools of its kind. In February 2021, Canva acquired Kaleido AI for an undisclosed sum; Kaleido's legal entity was subsequently renamed Canva Austria GmbH, but remove.bg has continued to operate as its own distinct, separately branded product with its own website, pricing, and API rather than being folded directly into the main Canva editor, alongside sibling Kaleido products Unscreen (AI video background removal) and Designify. Remove.bg's pricing is credit-based, where each credit corresponds to one processed image at full resolution: a starting plan costs roughly $9 per month for 40 credits (about $0.20 per image), while higher-volume plans such as 200 credits for around $39 per month bring the effective cost down to about $0.16 per image. Users can also process images for free, but free usage is restricted to a small, preview resolution rather than full-size downloads, and the product offers a limited number of free API calls per month under that same preview-resolution restriction. Developers can access the same background-removal technology through remove.bg's public API, billed at $0.20 per image at standard rates, which is widely integrated into e-commerce platforms, design tools, and custom applications for tasks like automatically cleaning up product photography. The tool also includes a Photoshop plugin and browser extension for users who prefer working outside the web app. Remove.bg is used heavily by e-commerce sellers producing clean, consistent product photos, by photographers and designers needing fast cutouts for composites, and by developers who need automated background removal built into their own applications via the API. Being part of Canva gives remove.bg access to substantial infrastructure and product-ecosystem backing, even though the Vienna-based team behind it remains comparatively small relative to Canva's overall global headcount of several thousand employees.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = '833f1acd-efc7-412a-b738-65bc35b6ddb1' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$One-click AI background removal$q$, $q$Automatically detects and removes image backgrounds using computer vision.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Batch/bulk image processing$q$, $q$Processes multiple images at once for e-commerce and production workflows.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Public REST API$q$, $q$Lets developers integrate automated background removal into their own applications, billed at $0.20 per image.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Photoshop plugin$q$, $q$Adds background removal directly inside Adobe Photoshop.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Browser extension$q$, $q$Provides background removal without leaving the browser.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$High-resolution export on paid plans$q$, $q$Paid credit plans unlock full-resolution downloads instead of preview-only output.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Free preview-resolution processing$q$, $q$Lets users test the tool for free at reduced resolution before subscribing.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Canva ecosystem integration$q$, $q$Operates alongside sibling Canva-owned products like Unscreen for video background removal.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Fast, high-quality automatic background removal with minimal manual effort$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Credit-based pricing that scales down per image at higher volumes$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Robust API well-suited for developer and e-commerce integrations$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Backed by Canva's infrastructure and broader product ecosystem$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Free tier is limited to low/preview resolution rather than full downloads$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Per-image cost can add up at high volume compared to flat-rate alternatives$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Complex edge cases like fine hair or transparent objects can still require manual touch-up$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Operates as a narrow, single-purpose tool outside Canva's main design suite$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Who owns remove.bg?$q$, $q$Remove.bg is owned by Canva, which acquired its original creator, Vienna-based Kaleido AI, in February 2021.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Is remove.bg free?$q$, $q$Remove.bg offers free processing at a small preview resolution; full-resolution downloads require a paid credit plan.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$How much does the remove.bg API cost?$q$, $q$The remove.bg API is billed at $0.20 per image at standard rates, with a limited number of free preview-resolution calls per month.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$What company originally built remove.bg?$q$, $q$Remove.bg was built by Kaleido AI, a Vienna, Austria company founded in 2013 that launched the product in 2018.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Does remove.bg work with Photoshop?$q$, $q$Yes, remove.bg offers a plugin for Adobe Photoshop as well as a browser extension.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$What is the difference between remove.bg and Unscreen?$q$, $q$Remove.bg removes backgrounds from still images, while Unscreen, a sister product also from Kaleido AI, removes backgrounds from video.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Is remove.bg part of Canva now?$q$, $q$Yes, since the February 2021 acquisition, remove.bg's parent company Kaleido AI has operated as Canva Austria GmbH.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$How much does a starting remove.bg subscription cost?$q$, $q$A starting plan costs around $9 per month for 40 credits, roughly $0.20 per processed image.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$E-commerce product photography$q$, $q$Online sellers use remove.bg to quickly create clean, consistent product photos on white or transparent backgrounds.$q$, $q$E-commerce sellers and marketplaces$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Photography and design compositing$q$, $q$Photographers and designers use remove.bg for fast image cutouts in composites and marketing materials.$q$, $q$Photographers and graphic designers$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Automated background removal via API$q$, $q$Developers integrate the remove.bg API into their own apps to automate background removal at scale.$q$, $q$Developers and SaaS platforms$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$Free$q$, $q$$0$q$, $q$N/A$q$, NULL, $q$["Preview/low-resolution background removal","Limited monthly free API calls at preview resolution"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$40 Credits$q$, $q$$9$q$, $q$per month$q$, NULL, $q$["40 full-resolution image credits (~$0.20/image)"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$200 Credits$q$, $q$$39$q$, $q$per month$q$, NULL, $q$["200 full-resolution image credits (~$0.16-0.20/image)","14-day money-back guarantee","Unused credits roll over while subscribed"]$q$::jsonb, 2);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$API$q$, $q$$0.20 per image$q$, $q$Pay-per-use$q$, NULL, $q$["Programmatic background removal","Limited free preview-resolution calls per month"]$q$::jsonb, 3);
+
+DELETE FROM tool_content_blocks WHERE tool_id = '833f1acd-efc7-412a-b738-65bc35b6ddb1';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$Remove.bg is an AI background removal tool originally built by Kaleido AI, a Vienna, Austria company founded in 2013 that launched the remove.bg product in 2018. Canva acquired Kaleido in February 2021 for an undisclosed sum, after which Kaleido's legal entity was renamed Canva Austria GmbH, though remove.bg continues to operate as its own separately branded product.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$Remove.bg offers one-click AI background removal, batch processing, a public REST API billed per image, a Photoshop plugin, and a browser extension. Free usage is available but restricted to preview/low resolution.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('833f1acd-efc7-412a-b738-65bc35b6ddb1', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$Pricing is credit-based, starting around $9/month for 40 credits (about $0.20/image) and scaling down to roughly $0.16/image on higher-volume plans like 200 credits for about $39/month. The API is billed at $0.20 per image, with a limited number of free preview-resolution calls per month.$q$]::text[], 2);
+
+
+-- ── Render ──────────────────────────────────────────────
+UPDATE tools SET
+  short_description = COALESCE($q$Render is a cloud application hosting platform, often described as 'the cloud for builders,' that lets developers deploy web services, static sites, managed databases, and background workers without managing their own servers.$q$, short_description),
+  pricing_model = COALESCE($q$Freemium, tiered workspace plans plus usage-based compute pricing$q$, pricing_model),
+  starting_price = COALESCE($q$Free tier available; Starter plan from $7/month$q$, starting_price),
+  founded_year = COALESCE(2018, founded_year),
+  company_size = COALESCE($q$Roughly 130-200 employees (estimates vary by source, 2026)$q$, company_size),
+  headquarters = COALESCE($q$San Francisco, California, United States$q$, headquarters),
+  languages = ARRAY[$q$English$q$]::text[],
+  seo_title = COALESCE($q$Render Review 2026: Pricing, Plans and Features Explained$q$, seo_title),
+  seo_meta_description = COALESCE($q$What Render costs, how its workspace plans and usage-based compute pricing work, and how it compares as a Heroku alternative in 2026.$q$, seo_meta_description),
+  llm_readable_summary = COALESCE($q$Render is a cloud application hosting platform founded in January 2018 by Anurag Goel, who previously served as head of risk at Stripe and founded the machine-learning platform Crestle; the company is headquartered in San Francisco, California. Render markets itself as a unified alternative to piecing together separate AWS, Heroku, or Vercel-style services, offering web service hosting, static site hosting, managed PostgreSQL databases, a Redis-compatible Key Value store, background workers, scheduled cron jobs, and both Docker-based and native-runtime deploys, along with autoscaling, private networking, preview environments, and zero-downtime deploys. The company has raised a reported $258 million in total funding from investors including General Catalyst, Georgian, and Bessemer Venture Partners, and reached unicorn status with a $1.5 billion valuation following a $100 million Series C extension announced in February 2026, driven in part by demand from AI-built applications needing quick, managed deployment infrastructure. Render's pricing combines a workspace-level subscription plan with per-service, usage-based compute costs layered on top. Workspace plans span a Free tier, a Starter plan at $7 per month (512MB RAM, 0.5 CPU), a Standard plan at $25 per month (2GB RAM, 1 CPU), a Pro plan at $85 per month (4GB RAM, 2 CPU), and higher Pro Plus, Pro Max, and Pro Ultra tiers reaching roughly $175, $225, and $450 per month respectively for teams needing more governance, support, and uptime guarantees. The Free tier includes static site hosting, a 1GB PostgreSQL database, and limited web service hours with no credit card required, making Render popular among indie developers and small teams prototyping projects before committing to paid compute. Render is frequently positioned as a modern Heroku alternative because of its simple git-push deployment workflow combined with managed infrastructure, appealing to startups and small teams that want production-grade hosting without operating their own DevOps function, while larger teams can move up through Pro-tier plans for the compute, support, and compliance needed for production-grade applications and agents.$q$, llm_readable_summary),
+  status = 'published',
+  noindex = false,
+  sitemap_eligible = true,
+  published_at = COALESCE(published_at, now()),
+  updated_at = now()
+WHERE id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+
+UPDATE tools SET logo = 'https://www.google.com/s2/favicons?domain=' || regexp_replace(regexp_replace(website, '^https?://', ''), '/.*$', '') || '&sz=256' WHERE id = '87cb32a2-9663-4c3e-a003-f1735380ac01' AND logo IS NULL AND website IS NOT NULL;
+
+DELETE FROM tool_features WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Web service and static site hosting$q$, $q$Deploys backend services and static frontends directly from a git repository.$q$, 0);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Managed PostgreSQL databases$q$, $q$Provides fully managed Postgres instances, including a 1GB free-tier database.$q$, 1);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Redis-compatible Key Value store$q$, $q$Offers managed in-memory data storage compatible with Redis clients.$q$, 2);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Background workers and cron jobs$q$, $q$Runs scheduled and long-running background tasks alongside web services.$q$, 3);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Docker and native-runtime deploys$q$, $q$Supports both containerized deployments and native runtimes for common languages.$q$, 4);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Autoscaling and private networking$q$, $q$Automatically scales services under load and connects services over a private network.$q$, 5);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Zero-downtime deploys and preview environments$q$, $q$Deploys updates without service interruption and spins up preview environments for pull requests.$q$, 6);
+INSERT INTO tool_features (tool_id, title, description, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Usage-based compute pricing$q$, $q$Charges for compute resources on top of the base workspace plan as usage scales.$q$, 7);
+
+DELETE FROM tool_pros WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Simple git-based deploy workflow similar to Heroku$q$, 0);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Generous free tier for prototypes and personal projects$q$, 1);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Unified platform covering web services, databases, and background jobs$q$, 2);
+INSERT INTO tool_pros (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Well-funded with continued platform investment, reaching unicorn status in 2026$q$, 3);
+
+DELETE FROM tool_cons WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Combined workspace-plan-plus-compute pricing can be harder to estimate upfront$q$, 0);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Higher Pro Plus/Max/Ultra tiers become expensive for larger production workloads$q$, 1);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Smaller service ecosystem and marketplace compared to AWS$q$, 2);
+INSERT INTO tool_cons (tool_id, text, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Some advanced governance and compliance features are reserved for top-tier plans$q$, 3);
+
+DELETE FROM tool_faqs WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$What is Render used for?$q$, $q$Render is used to deploy and host web services, static sites, managed databases, and background workers without managing your own servers.$q$, 0, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Does Render have a free tier?$q$, $q$Yes, Render's free tier includes static site hosting, a 1GB PostgreSQL database, and limited web service hours with no credit card required.$q$, 1, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$How much does Render cost?$q$, $q$Render's workspace plans start free and range from $7/month (Starter) up to roughly $450/month (Pro Ultra), plus usage-based compute costs on top.$q$, 2, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Who founded Render?$q$, $q$Render was founded in January 2018 by Anurag Goel, a former head of risk at Stripe.$q$, 3, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Is Render a Heroku alternative?$q$, $q$Yes, Render is commonly described as a modern alternative to Heroku, offering a similar git-push deploy workflow with managed infrastructure.$q$, 4, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Does Render support Docker?$q$, $q$Yes, Render supports both Docker-based deploys and native runtimes for common programming languages.$q$, 5, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$What database options does Render offer?$q$, $q$Render offers managed PostgreSQL databases and a Redis-compatible Key Value store.$q$, 6, 'published');
+INSERT INTO tool_faqs (tool_id, question, answer, sort_order, status) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Is Render suitable for production apps?$q$, $q$Yes, Render's Pro and higher tiers are designed for production-grade applications with autoscaling, private networking, and zero-downtime deploys.$q$, 7, 'published');
+
+DELETE FROM tool_use_cases WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Prototyping personal projects$q$, $q$Developers use Render's free tier to deploy static sites and small web services for prototypes.$q$, $q$Indie developers and hobbyists$q$, 0);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Production web services without dedicated DevOps$q$, $q$Startups run production web services and managed databases on Render without a dedicated infrastructure team.$q$, $q$Startups and small engineering teams$q$, 1);
+INSERT INTO tool_use_cases (tool_id, title, description, audience, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Scaling applications with preview environments$q$, $q$Growing teams use Render's autoscaling and preview environments to support larger, evolving applications.$q$, $q$Mid-size engineering teams$q$, 2);
+
+DELETE FROM tool_pricing_plans WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Free$q$, $q$$0$q$, $q$per month$q$, NULL, $q$["Static site hosting","1GB PostgreSQL database","Limited web service hours"]$q$::jsonb, 0);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Starter$q$, $q$$7$q$, $q$per month$q$, NULL, $q$["512MB RAM","0.5 CPU"]$q$::jsonb, 1);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Standard$q$, $q$$25$q$, $q$per month$q$, NULL, $q$["2GB RAM","1 CPU"]$q$::jsonb, 2);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Pro$q$, $q$$85$q$, $q$per month$q$, NULL, $q$["4GB RAM","2 CPU"]$q$::jsonb, 3);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Pro Plus$q$, $q$$175$q$, $q$per month$q$, NULL, $q$["Higher compute allocation","Advanced governance options"]$q$::jsonb, 4);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Pro Max$q$, $q$$225$q$, $q$per month$q$, NULL, $q$["Higher compute allocation","Priority support"]$q$::jsonb, 5);
+INSERT INTO tool_pricing_plans (tool_id, plan_name, price, billing_cycle, description, features, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$Pro Ultra$q$, $q$$450$q$, $q$per month$q$, NULL, $q$["Highest compute allocation","Dedicated support and uptime SLAs"]$q$::jsonb, 6);
+
+DELETE FROM tool_content_blocks WHERE tool_id = '87cb32a2-9663-4c3e-a003-f1735380ac01';
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$overview$q$, $q$Overview$q$, 2, ARRAY[$q$Render is a cloud application hosting platform founded in January 2018 by Anurag Goel, a former Stripe head of risk, and headquartered in San Francisco, California. It offers a unified platform for deploying web services, static sites, managed databases, and background workers without managing servers directly.$q$]::text[], 0);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$key-features$q$, $q$Key Features$q$, 2, ARRAY[$q$Render provides web service and static site hosting, managed PostgreSQL databases, a Redis-compatible Key Value store, background workers and cron jobs, Docker and native-runtime deploys, autoscaling, private networking, preview environments, and zero-downtime deploys.$q$]::text[], 1);
+INSERT INTO tool_content_blocks (tool_id, block_key, heading, level, paragraphs, sort_order) VALUES ('87cb32a2-9663-4c3e-a003-f1735380ac01', $q$pricing$q$, $q$Pricing$q$, 2, ARRAY[$q$Render combines a workspace-level plan (Free, Starter at $7/month, Standard at $25/month, Pro at $85/month, up to Pro Plus, Pro Max, and Pro Ultra around $175-$450/month) with per-service, usage-based compute pricing on top of the base plan.$q$]::text[], 2);
+
+
