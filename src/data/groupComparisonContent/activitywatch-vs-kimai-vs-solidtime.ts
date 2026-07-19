@@ -17,7 +17,7 @@ const activitywatchVsKimaiVsSolidtimeContent: GroupComparisonContent = {
     },
     {
       "title": "Kimai and Solidtime both turn tracked hours into invoices; ActivityWatch does not",
-      "description": "Kimai generates client invoices directly from recorded billable hours, and Solidtime offers invoicing on its Professional plan, while ActivityWatch's feature set has no billing or invoicing capability documented.",
+      "description": "Kimai turns logged billable hours straight into client invoices, Solidtime offers that same invoicing capability but only on its Professional plan, and ActivityWatch's documented feature set includes no billing or invoicing capability at all.",
       "toolSlugs": [
         "kimai",
         "solidtime"
@@ -25,7 +25,7 @@ const activitywatchVsKimaiVsSolidtimeContent: GroupComparisonContent = {
     },
     {
       "title": "Kimai is more enterprise-ready with SSO and 2FA",
-      "description": "Kimai documents native two-factor authentication (TOTP) and single sign-on via LDAP and SAML with providers like Google Workspace and Azure AD, plus an official plugin ecosystem; Solidtime's provided data does not document comparable authentication or plugin features.",
+      "description": "Kimai's documented feature set includes native two-factor authentication (TOTP) plus SSO support for LDAP and SAML, working with identity providers such as Google Workspace and Azure AD, alongside an official plugin ecosystem; Solidtime's provided data doesn't document any comparable authentication or plugin capabilities.",
       "toolSlugs": [
         "kimai"
       ]
@@ -120,7 +120,7 @@ const activitywatchVsKimaiVsSolidtimeContent: GroupComparisonContent = {
             "kimai": "available",
             "solidtime": "limited"
           },
-          "note": "Kimai supports unlimited users with role-based permissions in self-hosted installs; Solidtime's team access management is gated to its paid Professional plan."
+          "note": "Self-hosted Kimai installs allow any number of users, each governed by role-based permissions; Solidtime restricts team access management to its paid Professional plan."
         },
         {
           "feature": "Two-factor authentication or SSO (LDAP/SAML)",
@@ -144,7 +144,7 @@ const activitywatchVsKimaiVsSolidtimeContent: GroupComparisonContent = {
     },
     {
       "question": "Which has the lowest-cost paid cloud plan?",
-      "answer": "Solidtime's Solo cloud plan is free for individual freelancers, with its paid Professional tier at 8 euros/user/month billed annually. Kimai Cloud's Standard tier starts at EUR 2.99/user/month billed annually, with a discounted EUR 0.99/user/month rate for non-profits and select industries."
+      "answer": "Solidtime's Solo cloud plan is free for individual freelancers, with its paid Professional tier priced at 8 euros per user per month, billed annually. Kimai Cloud's Standard tier begins at EUR 2.99 per user per month billed annually, and drops to EUR 0.99 per user per month for qualifying non-profits and select industries."
     },
     {
       "question": "Which is the most established, longest-running project?",
@@ -156,7 +156,7 @@ const activitywatchVsKimaiVsSolidtimeContent: GroupComparisonContent = {
     },
     {
       "question": "Which one offers enterprise features like SSO and two-factor authentication?",
-      "answer": "Kimai is the only one of the three whose provided data documents native two-factor authentication (TOTP) and single sign-on via LDAP and SAML integrations. Neither ActivityWatch nor Solidtime documents comparable authentication features."
+      "answer": "Of the three, only Kimai's provided data documents native two-factor authentication (TOTP) alongside SSO integrations for LDAP and SAML. Neither ActivityWatch nor Solidtime documents comparable authentication features."
     }
   ]
 };

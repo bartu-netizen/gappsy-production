@@ -32,7 +32,7 @@ const chatgptVsClaudeVsGpt4allContent: GroupComparisonContent = {
     },
     {
       "title": "GPT4All's LocalDocs searches private files without ever uploading them",
-      "description": "LocalDocs indexes a user's own local documents into on-device embeddings so the model can reference them in chat, with nothing transmitted off the machine, unlike cloud-based file features in ChatGPT or Claude.",
+      "description": "LocalDocs turns a user's own files into embeddings stored right on their device, letting the model pull answers from them mid-chat without any data leaving the machine - a contrast to the cloud-based file handling in ChatGPT or Claude.",
       "toolSlugs": [
         "gpt4all"
       ]
@@ -140,7 +140,7 @@ const chatgptVsClaudeVsGpt4allContent: GroupComparisonContent = {
     },
     {
       "question": "Does GPT4All require a GPU?",
-      "answer": "No. GPT4All is designed to run quantized models efficiently on ordinary consumer CPUs, with optional GPU acceleration where available, so a dedicated GPU is not required to get started."
+      "answer": "No. GPT4All is built to run quantized models on standard consumer CPUs without trouble, and it can tap GPU acceleration when one is present, but getting started never requires owning a dedicated graphics card."
     }
   ]
 };

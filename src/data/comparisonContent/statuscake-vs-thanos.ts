@@ -142,7 +142,7 @@ const statuscakeVsThanosContent: ToolComparisonContent = {
     },
     {
       "question": "Does StatusCake have a free plan?",
-      "answer": "Yes, StatusCake's free plan includes 10 uptime monitors, 5-minute test intervals, and one each of page speed, domain, and SSL monitors, with no time limit."
+      "answer": "Yes — StatusCake's free tier gives you 10 uptime monitors checked every 5 minutes, plus one monitor apiece for page speed, domain expiry, and SSL, and it never expires."
     },
     {
       "question": "Does Thanos replace Prometheus?",

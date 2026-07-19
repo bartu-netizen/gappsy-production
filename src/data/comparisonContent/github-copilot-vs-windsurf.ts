@@ -29,7 +29,7 @@ const githubCopilotVsWindsurfContent: ToolComparisonContent = {
     },
     {
       "title": "IDE and platform breadth",
-      "toolA": "Works in Visual Studio Code, Visual Studio, JetBrains IDEs, Neovim, and directly on GitHub.com.",
+      "toolA": "Runs as a plugin across Visual Studio Code, Visual Studio, JetBrains, and Neovim, and is also available natively on GitHub.com.",
       "toolB": "Available as a single VS Code-based editor, preserving familiar keybindings, themes, and extensions.",
       "whyItMatters": "Broad support avoids forcing a team to standardize on one editor; a single editor offers a more unified, purpose-built experience.",
       "benefitsWho": "Copilot benefits teams with mixed editor preferences; Windsurf benefits developers willing to consolidate into one editor."
@@ -43,7 +43,7 @@ const githubCopilotVsWindsurfContent: ToolComparisonContent = {
     },
     {
       "title": "AI model selection",
-      "toolA": "Offers a choice of OpenAI GPT models, Anthropic Claude models, and Google Gemini models depending on plan and surface.",
+      "toolA": "Lets users pick among several frontier model families — OpenAI's GPT, Anthropic's Claude, and Google's Gemini — with the exact options varying by plan and surface.",
       "toolB": "Offers Anthropic Claude, OpenAI GPT models, and Windsurf's own in-house SWE coding model.",
       "whyItMatters": "Model choice affects cost, speed, and output quality trade-offs for different tasks.",
       "benefitsWho": "Teams wanting the widest frontier-model menu lean toward Copilot; teams wanting a coding-tuned in-house model option lean toward Windsurf."

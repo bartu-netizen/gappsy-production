@@ -10,28 +10,28 @@ const elementVsRocketChatVsZulipContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "Element defaults to end-to-end encryption",
-      "description": "Element secures one-to-one and group conversations in private rooms by default using Olm and Megolm cryptographic ratchets derived from the Double Ratchet Algorithm.",
+      "description": "By default, Element encrypts one-to-one and group chats in private rooms with the Olm and Megolm ratchets, a cryptographic scheme built on the Double Ratchet Algorithm.",
       "toolSlugs": [
         "element"
       ]
     },
     {
       "title": "Element's Matrix protocol is truly federated",
-      "description": "Built on the open Matrix protocol, Element lets organizations self-host or connect across independently operated servers rather than depending on a single central provider.",
+      "description": "Because it runs on the open Matrix protocol, Element gives organizations the option to run their own server or federate with other independently run servers instead of relying on one central provider.",
       "toolSlugs": [
         "element"
       ]
     },
     {
       "title": "Rocket.Chat merges team chat with customer support",
-      "description": "Rocket.Chat's omnichannel customer service capability lets teams use the same platform for internal collaboration and customer-facing support conversations across channels.",
+      "description": "With Rocket.Chat's omnichannel support tools, one platform covers both internal team collaboration and customer-facing conversations spanning multiple channels.",
       "toolSlugs": [
         "rocket-chat"
       ]
     },
     {
       "title": "Zulip organizes conversations by topic",
-      "description": "Every Zulip message is filed under a named topic within a stream, keeping parallel conversations organized in a way flat channel-based chat does not preserve as conversation volume grows.",
+      "description": "In Zulip, each message gets tagged with a topic inside its stream, which keeps multiple simultaneous conversations sorted out — something flat, channel-only chat tends to lose track of once volume picks up.",
       "toolSlugs": [
         "zulip"
       ]
@@ -141,7 +141,7 @@ const elementVsRocketChatVsZulipContent: GroupComparisonContent = {
   "faqs": [
     {
       "question": "Which of these three has true decentralized federation?",
-      "answer": "Element, built on the open Matrix protocol, is the one designed for federation, letting organizations self-host or connect across independently operated servers rather than depending on a single central provider."
+      "answer": "Element is the one built for true federation. Running on the open Matrix protocol, it allows organizations to host their own servers or link up with other independently managed servers, instead of being tied to one central provider."
     },
     {
       "question": "Can Rocket.Chat handle customer support as well as internal team chat?",
@@ -149,7 +149,7 @@ const elementVsRocketChatVsZulipContent: GroupComparisonContent = {
     },
     {
       "question": "What is topic-based threading in Zulip and why does it matter?",
-      "answer": "Every message in Zulip is filed under a named topic within a stream, so parallel conversations stay organized and can be revisited later, an approach designed for asynchronous, distributed teams rather than always-on real-time chat."
+      "answer": "Zulip files every message under a named topic inside a stream, so separate threads of conversation remain organized and easy to find again later. It's built with asynchronous, distributed teams in mind rather than teams expecting always-on, real-time chat."
     },
     {
       "question": "Do all three support self-hosting for free?",

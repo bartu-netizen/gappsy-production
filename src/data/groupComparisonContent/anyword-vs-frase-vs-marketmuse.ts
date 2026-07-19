@@ -10,14 +10,14 @@ const anywordVsFraseVsMarketmuseContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "Anyword scores copy before you publish it",
-      "description": "Anyword's Data-Driven Editor generates multiple copy variations and scores them using proprietary performance-prediction data trained on historical A/B-test results, a capability neither Frase nor MarketMuse documents.",
+      "description": "The Data-Driven Editor inside Anyword produces several copy variations at once, then ranks them with proprietary performance-prediction scoring built from historical A/B-test results — something neither Frase nor MarketMuse documents.",
       "toolSlugs": [
         "anyword"
       ]
     },
     {
       "title": "Frase covers the full SEO content pipeline in one tool",
-      "description": "Frase combines SERP and competitor research, AI-generated briefs, an AI writing assistant, Content Guard monitoring for underperforming pages, technical site audits, and generative-engine (GEO) visibility tracking under a single subscription.",
+      "description": "A single Frase subscription bundles SERP and competitor research, AI-generated briefs, an AI writing assistant, Content Guard alerts for underperforming pages, site audits, and tracking of visibility in generative-engine (GEO) results.",
       "toolSlugs": [
         "frase"
       ]
@@ -40,7 +40,7 @@ const anywordVsFraseVsMarketmuseContent: GroupComparisonContent = {
     },
     {
       "title": "Both Frase and MarketMuse changed hands recently",
-      "description": "Frase was acquired by Copysmith AI in October 2022 and continues to ship new features as an independently branded product, while MarketMuse was acquired by Siteimprove in late 2024 and has since shifted toward sales-assisted, quote-based pricing.",
+      "description": "Copysmith AI acquired Frase back in October 2022, and the product has kept shipping new features under its own brand since then, whereas MarketMuse's 2024 acquisition by Siteimprove pushed it toward sales-assisted, quote-based pricing.",
       "toolSlugs": [
         "frase",
         "marketmuse"
@@ -161,7 +161,7 @@ const anywordVsFraseVsMarketmuseContent: GroupComparisonContent = {
     },
     {
       "question": "Do any of these track visibility in AI chatbot answers?",
-      "answer": "Frase has added generative-engine optimization (GEO) tracking that monitors whether a brand's content is cited in AI chatbot answers. This capability is not documented for Anyword or MarketMuse."
+      "answer": "Frase now offers generative-engine optimization (GEO) tracking, which checks whether AI chatbots are citing a brand's content in their answers. Anyword and MarketMuse don't document this kind of tracking."
     },
     {
       "question": "What is the starting price for each tool?",

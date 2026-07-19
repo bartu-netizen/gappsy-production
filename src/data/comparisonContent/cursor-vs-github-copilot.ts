@@ -1,7 +1,7 @@
 import type { ToolComparisonContent } from './types';
 
 const cursorVsGithubCopilotContent: ToolComparisonContent = {
-  "verdict": "Cursor and GitHub Copilot solve overlapping but distinct problems. Cursor is a standalone AI-native editor built by forking VS Code, designed for developers who want AI woven directly into every layer of the coding surface: predictive multi-line Tab completions, a semantic codebase index, Cmd+K inline edits, and a Composer/Agent mode that can plan, edit multiple files, run terminal commands, and self-correct on errors. Its Bugbot then extends that agentic approach to pull request review, proposing fixes directly on PRs. GitHub Copilot, by contrast, is an AI pair-programming layer that plugs into the IDEs teams already use, including Visual Studio Code, Visual Studio, JetBrains IDEs, Neovim, and GitHub.com itself, plus the command line. Its coding agent takes a different agentic path: assign it a GitHub issue and it works in a sandboxed environment to produce a draft pull request, tying automation tightly to GitHub's existing issue-and-PR workflow. Pricing reflects these different bets: Copilot Pro starts at $10 per month versus Cursor Pro's $20, though Cursor's Hobby tier and Copilot's Free tier both let developers try core features before paying. Neither tool is objectively superior; the right choice depends on whether a team wants to adopt a new editor for deeper, more autonomous in-editor AI work, or wants to add AI capabilities on top of the IDEs and GitHub workflow it already runs, at a lower entry price and with broader platform reach.",
+  "verdict": "Cursor and GitHub Copilot solve overlapping but distinct problems. Cursor is a standalone AI-native editor built by forking VS Code, designed for developers who want AI woven directly into every layer of the coding surface: predictive multi-line Tab completions, a semantic codebase index, Cmd+K inline edits, and a Composer/Agent mode that can plan, edit multiple files, run terminal commands, and self-correct on errors. Its Bugbot then extends that agentic approach to pull request review, proposing fixes directly on PRs. GitHub Copilot, by contrast, is an AI pair-programming layer that plugs into the IDEs teams already use -- VS Code, Visual Studio, the JetBrains family, Neovim, and GitHub.com itself -- plus the command line. Its coding agent takes a different agentic path: assign it a GitHub issue and it works in a sandboxed environment to produce a draft pull request, tying automation tightly to GitHub's existing issue-and-PR workflow. Pricing reflects these different bets: Copilot Pro starts at $10 per month versus Cursor Pro's $20, though Cursor's Hobby tier and Copilot's Free tier both let developers try core features before paying. Neither tool is objectively superior; the right choice depends on whether a team wants to adopt a new editor for deeper, more autonomous in-editor AI work, or wants to add AI capabilities on top of the IDEs and GitHub workflow it already runs, at a lower entry price and with broader platform reach.",
   "bestForToolA": "Developers willing to switch editors for the deepest possible in-editor AI experience, especially those who want autonomous multi-file Agent mode, terminal-integrated actions, and a semantic codebase index alongside Tab autocomplete.",
   "bestForToolB": "Teams already standardized on GitHub who want AI assistance inside their existing IDE (VS Code, Visual Studio, JetBrains, Neovim) without switching editors, plus issue-to-pull-request automation and a lower $10/month entry price.",
   "whoNeedsBoth": "A GitHub-centric engineering team that uses Cursor for deep, autonomous in-editor coding and agentic multi-file work, while keeping Copilot active for its native GitHub issue-to-PR automation, code review comments, and coverage across IDEs (like JetBrains or Visual Studio) where Cursor isn't used.",
@@ -37,21 +37,21 @@ const cursorVsGithubCopilotContent: ToolComparisonContent = {
     {
       "title": "IDE and editor breadth",
       "toolA": "Only VS Code (as a fork), though most VS Code extensions, themes, and keybindings carry over",
-      "toolB": "Native support across Visual Studio Code, Visual Studio, JetBrains IDEs, Neovim, and GitHub.com",
+      "toolB": "Works natively inside VS Code, Visual Studio, the JetBrains lineup, Neovim, and GitHub.com itself",
       "whyItMatters": "Organizations with mixed IDE usage need a tool that covers all the editors their developers already use",
       "benefitsWho": "Copilot benefits organizations with diverse IDE preferences; Cursor benefits VS Code-standardized teams"
     },
     {
       "title": "Pull request review depth",
       "toolA": "Bugbot automatically reviews PRs for likely bugs and can propose fixes directly on the PR",
-      "toolB": "Copilot code review adds automated comments flagging potential bugs, style inconsistencies, and missed edge cases",
+      "toolB": "Copilot's code review posts automated comments that call out likely bugs, inconsistent style, and edge cases the author may have missed",
       "whyItMatters": "Whether the tool only flags issues or also proposes concrete fixes changes how much manual work remains",
       "benefitsWho": "Teams wanting fix suggestions, not just flags, get more from Bugbot as documented"
     },
     {
       "title": "Model transparency",
       "toolA": "Lets users choose among several unnamed frontier AI models",
-      "toolB": "Explicitly offers OpenAI GPT models, Anthropic Claude models, and Google Gemini models depending on plan and surface",
+      "toolB": "Names its supported models outright: GPT from OpenAI, Claude from Anthropic, and Gemini from Google, with availability varying by plan and surface",
       "whyItMatters": "Some buyers want to know exactly which model families are available before committing",
       "benefitsWho": "Teams with model-specific preferences or compliance needs benefit from Copilot's named model list"
     },
@@ -256,7 +256,7 @@ const cursorVsGithubCopilotContent: ToolComparisonContent = {
     },
     {
       "question": "Which AI models can I use in each tool?",
-      "answer": "GitHub Copilot explicitly documents support for OpenAI GPT models, Anthropic Claude models, and Google Gemini models depending on plan and surface, while Cursor documents support for multiple frontier AI models without naming the specific providers available."
+      "answer": "GitHub Copilot is explicit about which model families it supports: OpenAI's GPT line, Anthropic's Claude, and Google's Gemini, with actual availability depending on plan and surface, whereas Cursor confirms access to multiple frontier AI models without disclosing exactly which providers back them."
     },
     {
       "question": "Is Cursor or GitHub Copilot better for a team that lives inside GitHub issues and pull requests?",
@@ -264,7 +264,7 @@ const cursorVsGithubCopilotContent: ToolComparisonContent = {
     },
     {
       "question": "Is my code sent to the cloud with either tool?",
-      "answer": "Yes, both process code through cloud-hosted AI models: Cursor offers privacy-focused settings intended to limit code retention, while Copilot processes code and prompts through GitHub's cloud infrastructure and, per its documented cons, has no fully offline or air-gapped deployment option for the mainstream product, which can rule it out for the most security-restricted environments."
+      "answer": "Yes, both send code through cloud-hosted AI models: Cursor provides privacy-focused settings meant to limit how long code is retained, while Copilot routes code and prompts through GitHub's cloud infrastructure and, according to its documented cons, offers no offline or air-gapped deployment for its mainstream product -- a gap that can disqualify it in the most security-restricted environments."
     }
   ]
 };

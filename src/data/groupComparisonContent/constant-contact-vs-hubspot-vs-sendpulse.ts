@@ -10,7 +10,7 @@ const constantContactVsHubspotVsSendpulseContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "SendPulse's free tier includes a CRM",
-      "description": "SendPulse's free plan covers up to 15,000 emails per month along with basic CRM and automation access, a broader free starting point than Constant Contact, which offers only a trial with no permanent free tier.",
+      "description": "With SendPulse, the free tier allows sending as many as 15,000 emails monthly and throws in basic CRM and automation tools — a more generous starting point than Constant Contact, which offers only a time-limited trial and no lasting free option.",
       "toolSlugs": [
         "sendpulse"
       ]
@@ -125,7 +125,7 @@ const constantContactVsHubspotVsSendpulseContent: GroupComparisonContent = {
     },
     {
       "question": "Which tool offers the most marketing channels beyond email?",
-      "answer": "SendPulse covers the most channels, bundling email, SMS, web push notifications, and chatbots for WhatsApp, Instagram, Telegram, and Facebook Messenger into one platform."
+      "answer": "SendPulse reaches the widest range of channels: it combines email, SMS, and web push alerts with chatbot support across WhatsApp, Instagram, Telegram, and Facebook Messenger, all inside a single platform."
     },
     {
       "question": "Is HubSpot overkill for a small business that just needs email marketing?",

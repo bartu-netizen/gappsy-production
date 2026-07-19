@@ -1,7 +1,7 @@
 import type { GroupComparisonContent } from './types';
 
 const chatgptVsClaudeVsGrokContent: GroupComparisonContent = {
-  "verdict": "ChatGPT, Claude, and Grok are all general-purpose AI chatbots with free tiers and developer APIs, but each leans into a different strength. ChatGPT still offers the broadest and most polished consumer feature set, from voice mode to Custom GPTs. Claude is the pick for developers who want agentic coding through Claude Code plus enterprise-grade compliance controls. Grok's differentiator is real-time integration with X, giving it access to live public conversation and breaking news that the other two don't natively pull from, though its pricing is split confusingly across standalone SuperGrok plans and separate X Premium bundles.",
+  "verdict": "ChatGPT, Claude, and Grok are all general-purpose AI chatbots with free tiers and developer APIs, but each leans into a different strength. ChatGPT still offers the broadest and most polished consumer feature set, from voice mode to Custom GPTs. Claude is the pick for developers who want agentic coding through Claude Code plus enterprise-grade compliance controls. Grok's differentiator is real-time integration with X, which keeps it current on live public conversation and breaking news that ChatGPT and Claude can't natively tap, though pricing is awkwardly split — a standalone SuperGrok subscription on one side and separate X Premium bundles on the other.",
   "bestFor": {
     "chatgpt": "Users who want the most full-featured, widely integrated consumer AI assistant across web, mobile, and desktop, with voice, image generation, and Custom GPTs.",
     "claude": "Developers and teams building agentic coding workflows through Claude Code who also need enterprise-grade compliance controls like SSO and audit logs.",
@@ -10,14 +10,14 @@ const chatgptVsClaudeVsGrokContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "Grok's real-time X integration is unique",
-      "description": "Grok has native access to live posts and trends on X, giving it up-to-date awareness of breaking news and public conversation that ChatGPT and Claude don't natively pull from.",
+      "description": "Grok pulls directly from live posts and trending topics on X, keeping it current on breaking news and public conversation in a way ChatGPT and Claude don't natively tap into.",
       "toolSlugs": [
         "grok"
       ]
     },
     {
       "title": "Claude Code targets agentic development",
-      "description": "Claude Code lets Claude read, edit, and run code across a codebase from a terminal or IDE, a dedicated agentic coding surface deeper than what's documented for ChatGPT or Grok.",
+      "description": "With Claude Code, Claude can work directly inside a project's codebase — reading files, making edits, and executing commands from either a terminal session or an IDE plugin, a dedicated agentic coding surface deeper than what's documented for ChatGPT or Grok.",
       "toolSlugs": [
         "claude"
       ]
@@ -31,7 +31,7 @@ const chatgptVsClaudeVsGrokContent: GroupComparisonContent = {
     },
     {
       "title": "Grok's pricing is fragmented",
-      "description": "Grok access is split across standalone SuperGrok plans and separate X Premium bundles, which can make it harder to compare cost against ChatGPT's or Claude's single-track subscription tiers.",
+      "description": "Getting Grok means choosing between a standalone SuperGrok subscription or a separate X Premium bundle, a fragmented setup that makes cost comparisons against ChatGPT's or Claude's single-track pricing tiers more difficult.",
       "toolSlugs": [
         "grok"
       ]
@@ -134,7 +134,7 @@ const chatgptVsClaudeVsGrokContent: GroupComparisonContent = {
   "faqs": [
     {
       "question": "Which gives the most real-time awareness of current events?",
-      "answer": "Grok, because it has native access to live posts and trends on X, giving it up-to-date awareness of breaking news and public conversation. ChatGPT and Claude both offer general real-time web search but don't have that same native social-platform integration."
+      "answer": "Grok has the edge here — it draws directly from live X posts and trending topics, so it stays current on breaking news and ongoing public conversation. ChatGPT and Claude both offer general real-time web search but don't have that same native social-platform integration."
     },
     {
       "question": "Which has the cheapest entry-level paid plan?",
@@ -142,7 +142,7 @@ const chatgptVsClaudeVsGrokContent: GroupComparisonContent = {
     },
     {
       "question": "Which is best for coding agents?",
-      "answer": "Claude, through Claude Code, which is purpose-built for reading, editing, and running code across a codebase from a terminal or IDE. ChatGPT also includes coding-agent tools within its Plus tier."
+      "answer": "Claude is the strongest fit, since Claude Code is purpose-built as an agentic development tool that can read, modify, and execute a project's code straight from a terminal session or IDE integration. ChatGPT also includes coding-agent tools within its Plus tier."
     },
     {
       "question": "Do any of these have enterprise-grade admin controls?",

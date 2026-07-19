@@ -22,8 +22,8 @@ const formatVsPixpaContent: ToolComparisonContent = {
     },
     {
       "title": "Trial length and refund policy",
-      "toolA": "Format offers a 14-day free trial with no credit card required, with no money-back guarantee mentioned in the facts.",
-      "toolB": "Pixpa offers a 15-day free trial with no credit card required, plus a 30-day money-back guarantee on top of the trial.",
+      "toolA": "Format's free trial runs 14 days and doesn't ask for a credit card up front, though the facts don't mention any money-back guarantee.",
+      "toolB": "Pixpa gives you 15 days to try it out with no credit card needed, and backs that up with a 30-day money-back guarantee once you've subscribed.",
       "whyItMatters": "A longer evaluation window plus a refund guarantee reduces the financial risk of committing to a paid plan.",
       "benefitsWho": "Buyers who want extra downside protection after moving from trial to paid plan."
     },

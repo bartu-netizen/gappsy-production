@@ -22,6 +22,7 @@ import { supabase } from '../lib/supabase';
 import { getToolContent } from '../data/toolContent';
 import { getComparisonContent } from '../data/comparisonContent';
 import { useRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparisons';
+import { buildCompareItemListJsonLd } from '../utils/compareJsonLd';
 import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
@@ -270,6 +271,8 @@ export default function CompareDetailPage() {
         ]
       : [];
 
+  const itemListJsonLd = buildCompareItemListJsonLd([factsA, factsB], canonicalUrl);
+
   const tocSections: TocSection[] = [
     ...(comparisonContent ? [{ id: 'verdict', label: 'Verdict' }] : []),
     { id: 'at-a-glance', label: 'At a Glance' },
@@ -299,7 +302,7 @@ export default function CompareDetailPage() {
         path={`/compare/${comparison.slug}`}
         ogImage={factsA.logo || factsB.logo || '/og/default-og-image.svg'}
         breadcrumbs={[{ name: 'Compare', path: '/compare' }, { name: `${aRow.name} vs ${bRow.name}`, path: `/compare/${comparison.slug}` }]}
-        jsonLd={[...articleJsonLd, ...faqJsonLd]}
+        jsonLd={[...articleJsonLd, ...itemListJsonLd, ...faqJsonLd]}
       />
 
       <SoftwareHeader variant="premium" />

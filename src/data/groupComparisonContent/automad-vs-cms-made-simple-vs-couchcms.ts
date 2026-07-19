@@ -5,7 +5,7 @@ const automadVsCmsMadeSimpleVsCouchcmsContent: GroupComparisonContent = {
   "bestFor": {
     "automad": "Developers who want a database-free, git-friendly CMS with a page-tree content structure.",
     "cms-made-simple": "Developers and agencies who want a mature, module-extensible CMS with real-time content editing and permissions.",
-    "couchcms": "Web designers who want to make an existing HTML/CSS template editable without rebuilding it in a new theming system."
+    "couchcms": "Designers with a hand-built HTML/CSS site who want to turn it into an editable CMS without adopting an unfamiliar theming layer."
   },
   "highlights": [
     {
@@ -120,7 +120,7 @@ const automadVsCmsMadeSimpleVsCouchcmsContent: GroupComparisonContent = {
     },
     {
       "question": "Does CouchCMS require attribution in its free version?",
-      "answer": "Yes, its free license requires visible attribution in the source code unless a paid commercial license is purchased."
+      "answer": "Yes, the free version keeps an attribution credit visible in the source code, and that credit only goes away once a paid commercial license is bought."
     },
     {
       "question": "Which supports multiple languages for site content?",

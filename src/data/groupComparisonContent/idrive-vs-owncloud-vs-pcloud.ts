@@ -1,7 +1,7 @@
 import type { GroupComparisonContent } from './types';
 
 const idriveVsOwncloudVsPcloudContent: GroupComparisonContent = {
-  "verdict": "IDrive, ownCloud, and pCloud all fall under cloud storage, but they solve different problems for different buyers. IDrive is built for low-cost, ransomware-resistant backup across an unlimited number of devices on a single account. ownCloud is the only genuinely self-hosted, on-premises option of the three, aimed at organizations with strict data-sovereignty or GDPR requirements. pCloud stands apart on pricing model, offering one-time lifetime payment plans as an alternative to the recurring subscriptions that dominate cloud storage.",
+  "verdict": "IDrive, ownCloud, and pCloud are all grouped under cloud storage, yet each targets a different kind of buyer. IDrive is built for low-cost, ransomware-resistant backup across an unlimited number of devices on a single account. ownCloud is the only genuinely self-hosted, on-premises option of the three, making it the pick for organizations bound by strict GDPR or data-sovereignty rules. pCloud's angle is its pricing: instead of the recurring subscriptions common across cloud storage, it sells storage through a single upfront lifetime payment.",
   "bestFor": {
     "idrive": "Budget-conscious individuals and small teams who want unlimited-device backup with ransomware-resistant snapshots at a low per-terabyte price.",
     "owncloud": "Organizations with strict data-sovereignty or GDPR compliance needs that want a fully self-hosted, on-premises file platform they control end to end.",
@@ -10,7 +10,7 @@ const idriveVsOwncloudVsPcloudContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "pCloud's lifetime plans are unusual in cloud storage",
-      "description": "pCloud lets users pay once for 500GB, 2TB, or 10TB of storage that lasts as long as the service operates, an option neither IDrive nor ownCloud offers in the same form.",
+      "description": "pCloud offers a single upfront payment for 500GB, 2TB, or 10TB that keeps your storage active for as long as pCloud stays in business — a model neither IDrive nor ownCloud matches.",
       "toolSlugs": [
         "pcloud"
       ]
@@ -24,14 +24,14 @@ const idriveVsOwncloudVsPcloudContent: GroupComparisonContent = {
     },
     {
       "title": "IDrive undercuts on backup cost for many devices",
-      "description": "IDrive's personal plans back up an unlimited number of computers, phones, and external drives under a single account and storage allowance, at a low cost per terabyte compared to typical backup competitors.",
+      "description": "On IDrive's personal plans, a single account and one storage allowance can cover any number of computers, phones, and external drives you want backed up, at a low cost per terabyte compared to typical backup competitors.",
       "toolSlugs": [
         "idrive"
       ]
     },
     {
       "title": "Encryption approaches differ across all three",
-      "description": "IDrive includes an optional private encryption key at no extra cost, ownCloud offers end-to-end encryption on its Enterprise tiers, and pCloud sells its zero-knowledge Crypto encryption as a separate paid add-on rather than including it by default.",
+      "description": "IDrive includes an optional private encryption key at no extra cost, ownCloud offers end-to-end encryption on its Enterprise tiers, and pCloud charges extra for its zero-knowledge Crypto encryption — it's an add-on, not something bundled in by default.",
       "toolSlugs": [
         "idrive",
         "owncloud",
@@ -40,7 +40,7 @@ const idriveVsOwncloudVsPcloudContent: GroupComparisonContent = {
     },
     {
       "title": "Pricing structures carry different gotchas",
-      "description": "IDrive's renewal pricing can jump significantly after the first promotional year, ownCloud's paid tiers require a minimum of 25 users on annual billing, and pCloud's lifetime plans require a large upfront payment.",
+      "description": "IDrive's renewal pricing can jump significantly after the first promotional year, ownCloud's paid plans won't sell to fewer than 25 users on an annual contract, and pCloud's lifetime plans require a large upfront payment.",
       "toolSlugs": [
         "idrive",
         "owncloud",
@@ -142,11 +142,11 @@ const idriveVsOwncloudVsPcloudContent: GroupComparisonContent = {
     },
     {
       "question": "Which is cheapest for backing up many devices?",
-      "answer": "IDrive, since its personal plans back up an unlimited number of computers, phones, and external drives under a single account and storage allowance at a low cost per terabyte."
+      "answer": "IDrive, because one account and one storage allowance on its personal plans can back up as many computers, phones, and external drives as you have, at a low cost per terabyte."
     },
     {
       "question": "Is encryption included by default on all three?",
-      "answer": "IDrive includes an optional private encryption key at no extra cost, and ownCloud offers end-to-end encryption on its paid Enterprise tiers. pCloud sells its zero-knowledge Crypto encryption as a separate paid add-on rather than including it by default."
+      "answer": "IDrive includes an optional private encryption key at no extra cost, and ownCloud offers end-to-end encryption on its paid Enterprise tiers. pCloud, however, keeps its zero-knowledge Crypto encryption behind a separate paid upgrade instead of bundling it in."
     },
     {
       "question": "Which is best for GDPR or EU compliance requirements?",

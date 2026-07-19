@@ -17,7 +17,7 @@ const gpt4allVsJanVsLibrechatContent: GroupComparisonContent = {
     },
     {
       "title": "GPT4All's LocalDocs stands out for offline document chat",
-      "description": "GPT4All's LocalDocs feature indexes a user's own files into on-device embeddings so the model can search and cite them in chat, entirely offline - a capability not documented for Jan.",
+      "description": "With LocalDocs, GPT4All converts a person's own files into embeddings stored locally, which lets the assistant search through them and cite sources during a chat without any internet connection - something Jan doesn't document.",
       "toolSlugs": [
         "gpt4all"
       ]
@@ -31,7 +31,7 @@ const gpt4allVsJanVsLibrechatContent: GroupComparisonContent = {
     },
     {
       "title": "LibreChat has the broadest provider list and developer tooling",
-      "description": "LibreChat connects to OpenAI, Anthropic, Google, AWS Bedrock, Azure, Mistral, Groq, DeepSeek, OpenRouter, and Ollama-compatible endpoints, and adds AI agents with Model Context Protocol tool integration plus a sandboxed Code Interpreter that neither GPT4All nor Jan document.",
+      "description": "LibreChat's provider list spans OpenAI, Anthropic, Google, Azure, AWS Bedrock, Mistral, Groq, DeepSeek, OpenRouter, and any Ollama-compatible endpoint, and it layers on AI agents with Model Context Protocol tool integration plus a sandboxed Code Interpreter - neither of which GPT4All or Jan document.",
       "toolSlugs": [
         "librechat"
       ]
@@ -137,7 +137,7 @@ const gpt4allVsJanVsLibrechatContent: GroupComparisonContent = {
     },
     {
       "question": "Which supports multi-user login and SSO for a team?",
-      "answer": "Only LibreChat documents multi-user authentication with SSO (OAuth, SAML, LDAP) and two-factor authentication. GPT4All and Jan are both designed as single-user desktop tools."
+      "answer": "LibreChat is the only one of the three that documents SSO-based multi-user authentication (OAuth, SAML, LDAP) alongside two-factor authentication - GPT4All and Jan are both built as single-user desktop tools instead."
     },
     {
       "question": "Which one can chat with my own local documents?",
@@ -153,7 +153,7 @@ const gpt4allVsJanVsLibrechatContent: GroupComparisonContent = {
     },
     {
       "question": "Are any of these three paid products?",
-      "answer": "No. GPT4All, Jan, and LibreChat are all free and open source with no subscription tiers from the project itself. The only ongoing costs are optional cloud API usage (for Jan and LibreChat) or self-hosting infrastructure (for LibreChat)."
+      "answer": "No. GPT4All, Jan, and LibreChat cost nothing to use and are all published as open source, with none of the projects themselves charging a subscription. Any ongoing expense comes from optional cloud API usage (for Jan and LibreChat) or the infrastructure needed to self-host (for LibreChat)."
     }
   ]
 };

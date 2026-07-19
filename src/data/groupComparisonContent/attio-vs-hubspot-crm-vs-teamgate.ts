@@ -10,7 +10,7 @@ const attioVsHubspotCrmVsTeamgateContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "HubSpot CRM is the only one with unlimited free users",
-      "description": "HubSpot CRM has no seat cap on its free tier, while Attio's free plan is capped at 3 seats and Teamgate's free Starter plan is capped at 2 users and 500 contacts.",
+      "description": "HubSpot CRM places no seat limit on its free tier, whereas Attio caps its free plan at 3 seats and Teamgate's free Starter tier tops out at 2 users with a 500-contact ceiling.",
       "toolSlugs": [
         "hubspot-crm",
         "attio",
@@ -34,7 +34,7 @@ const attioVsHubspotCrmVsTeamgateContent: GroupComparisonContent = {
     },
     {
       "title": "HubSpot's ecosystem and upgrade path is unmatched",
-      "description": "With over 1,700 App Marketplace listings and the ability to add Marketing, Sales, or Service Hub later without migrating existing CRM data, HubSpot CRM offers a scaling path that neither Attio nor Teamgate's documented integration counts (50-plus for Attio) currently match.",
+      "description": "HubSpot CRM lists more than 1,700 App Marketplace integrations, and its shared data model lets teams layer on Marketing Hub, Sales Hub, or Service Hub down the road while keeping every existing contact and deal intact - a scaling path neither Attio's roughly 50 integrations nor Teamgate's documented ecosystem currently matches.",
       "toolSlugs": [
         "hubspot-crm"
       ]
@@ -133,7 +133,7 @@ const attioVsHubspotCrmVsTeamgateContent: GroupComparisonContent = {
   "faqs": [
     {
       "question": "Which of Attio, HubSpot CRM, and Teamgate has a genuinely free plan for a whole team?",
-      "answer": "HubSpot CRM, since its free tier has no seat limit at all. Attio's free plan is capped at 3 seats and Teamgate's free Starter plan is capped at 2 users and 500 contacts."
+      "answer": "HubSpot CRM, since its free tier doesn't limit the number of seats. Attio's free tier tops out at 3 seats, and Teamgate's free Starter tier allows only 2 users along with 500 contacts."
     },
     {
       "question": "What makes Attio different from HubSpot CRM and Teamgate?",
@@ -153,7 +153,7 @@ const attioVsHubspotCrmVsTeamgateContent: GroupComparisonContent = {
     },
     {
       "question": "Do Attio, HubSpot CRM, and Teamgate all have mobile apps?",
-      "answer": "Yes, all three offer native iOS and Android apps for managing contacts and deals on the go."
+      "answer": "Yes, all three ship dedicated mobile apps for both iOS and Android so reps can track contacts and deals from a phone."
     }
   ]
 };

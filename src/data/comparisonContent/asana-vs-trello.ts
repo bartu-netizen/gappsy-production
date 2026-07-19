@@ -1,7 +1,7 @@
 import type { ToolComparisonContent } from './types';
 
 const asanaVsTrelloContent: ToolComparisonContent = {
-  "verdict": "Asana and Trello both offer free tiers and paid plans that scale into enterprise territory, but they are built around different mental models. Asana organizes work around tasks that can be viewed as list, board, timeline, or calendar without duplicating data, and layers on AI Studio plus modular enterprise add-ons like AI Teammates, Timesheets and Budgets, Compliance Management, and Permissions Management that can be attached to any plan rather than requiring a jump to Enterprise. That makes Asana a fit for teams managing structured, cross-functional work who want to add specific enterprise capabilities incrementally. Trello centers on Kanban-style boards with cards that move across customizable lists, plus card mirroring so a single task can appear and stay in sync across multiple boards, and Butler automation with unlimited runs on Premium and above. Its additional Calendar, Timeline, Table, and Map views sit on top of that same board-first card data on Premium plans and up. Trello suits teams who think visually in boards first and want lightweight automation without adopting a full task-management system. Neither tool strictly beats the other: Asana is the more structured work-management platform, while Trello is the more visual, board-centric tool with its own automation and multi-board sync features. The right choice depends on whether a team's primary mental model is tasks with multiple views, or boards with cards moving across lists.",
+  "verdict": "Asana and Trello both offer free tiers and paid plans that scale into enterprise territory, but they are built around different mental models. Asana organizes work around tasks that can be viewed as list, board, timeline, or calendar without duplicating data, and layers on AI Studio plus modular enterprise add-ons like AI Teammates, Timesheets and Budgets, Compliance Management, and Permissions Management that can be attached to any plan rather than requiring a jump to Enterprise. That makes Asana a fit for teams managing structured, cross-functional work who want to add specific enterprise capabilities incrementally. Trello centers on Kanban-style boards with cards that move across customizable lists, plus card mirroring that keeps one task visible and updated on several boards at once, and Butler automation with unlimited runs on Premium and above. Its additional Calendar, Timeline, Table, and Map views sit on top of that same board-first card data on Premium plans and up. Trello suits teams who think visually in boards first and want lightweight automation without adopting a full task-management system. Neither tool strictly beats the other: Asana is the more structured work-management platform, while Trello is the more visual, board-centric tool with its own automation and multi-board sync features. The right choice depends on whether a team's primary mental model is tasks with multiple views, or boards with cards moving across lists.",
   "bestForToolA": "Asana fits teams that need the same underlying tasks viewable as list, board, timeline, and calendar, and that want to add specific enterprise capabilities like AI Teammates, Timesheets and Budgets, or Compliance Management without upgrading to a full Enterprise plan.",
   "bestForToolB": "Trello fits teams that think in Kanban boards first and want a single card to stay synced across multiple boards, paired with Butler automation to cut down on manual card handling.",
   "whoNeedsBoth": "A larger organization might run Asana for structured, cross-functional project tracking with timelines and enterprise add-ons while individual teams keep lightweight Trello boards for simple, visual task tracking on specific workflows.",
@@ -16,7 +16,7 @@ const asanaVsTrelloContent: ToolComparisonContent = {
     {
       "title": "Cross-board task sync",
       "toolA": "Not documented as a distinct feature in Asana's provided facts",
-      "toolB": "Card mirroring lets a single task appear and stay in sync across multiple boards",
+      "toolB": "One card can mirror onto several boards at once and remains synced everywhere it appears",
       "whyItMatters": "Teams juggling overlapping projects need a way to avoid manually duplicating the same task in several places",
       "benefitsWho": "Teams running many boards for related workstreams benefit most from Trello's card mirroring"
     },
@@ -58,21 +58,21 @@ const asanaVsTrelloContent: ToolComparisonContent = {
     {
       "title": "Entry paid tier price",
       "toolA": "Starter plan is 10.99 dollars per user per month, billed annually",
-      "toolB": "Standard plan is 5 dollars per user per month, billed annually",
+      "toolB": "Standard plan runs 5 dollars per user, per month, under annual billing",
       "whyItMatters": "Entry-level paid pricing affects total cost for teams that outgrow the free tier",
       "benefitsWho": "Cost-sensitive teams needing just a step above free get a lower entry price from Trello's Standard plan"
     },
     {
       "title": "Mid-tier paid price",
       "toolA": "Advanced plan is 24.99 dollars per user per month, billed annually",
-      "toolB": "Premium plan is 10 dollars per user per month, billed annually, and unlocks Calendar, Timeline, Table, and Map views plus unlimited Butler runs",
+      "toolB": "Premium plan costs 10 dollars per user monthly on an annual plan, and unlocks Calendar, Timeline, Table, and Map views plus unlimited Butler runs",
       "whyItMatters": "Mid-tier pricing shows the cost of unlocking deeper views and automation in each tool",
       "benefitsWho": "Teams wanting more views and automation at lower cost benefit from Trello's Premium tier pricing"
     },
     {
       "title": "Enterprise tier pricing structure",
       "toolA": "Enterprise plan uses custom pricing",
-      "toolB": "Enterprise plan is listed at 17.50 dollars per user per month, billed annually, and includes Atlassian Guard Standard",
+      "toolB": "Enterprise plan pricing is quoted at 17.50 dollars for each user every month, on an annual billing plan, and includes Atlassian Guard Standard",
       "whyItMatters": "A published Enterprise price versus custom quoting affects how easily a buyer can budget upfront",
       "benefitsWho": "Buyers wanting transparent enterprise pricing without a sales negotiation benefit from Trello's published Enterprise rate"
     }
@@ -200,7 +200,7 @@ const asanaVsTrelloContent: ToolComparisonContent = {
           "feature": "Free plan",
           "toolA": "limited",
           "toolB": "limited",
-          "note": "Asana Personal caps at 2 users; Trello Free caps at 10 collaborators and 10 boards per Workspace"
+          "note": "Asana Personal caps at 2 users; Trello Free allows up to 10 collaborators, capped at 10 boards in each Workspace"
         },
         {
           "feature": "Entry paid plan",
@@ -218,7 +218,7 @@ const asanaVsTrelloContent: ToolComparisonContent = {
           "feature": "Enterprise plan",
           "toolA": "available",
           "toolB": "available",
-          "note": "Asana Enterprise uses custom pricing; Trello Enterprise is listed at 17.50 dollars per user per month billed annually"
+          "note": "Asana Enterprise uses custom pricing; Trello Enterprise pricing is published at 17.50 dollars for each user every month on an annual plan"
         }
       ]
     },

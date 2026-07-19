@@ -10,7 +10,7 @@ const oliveVideoEditorVsOpenshotVsShotcutContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "Node-based compositing is Olive's core differentiator",
-      "description": "Olive builds effects and transitions as a graph of connected nodes rather than a fixed stack, a workflow closer to professional compositing tools than what OpenShot or Shotcut offer.",
+      "description": "Rather than relying on a fixed effects stack, Olive represents effects and transitions as a network of interconnected nodes — a workflow that resembles professional compositing software more than anything OpenShot or Shotcut provide.",
       "toolSlugs": [
         "olive-video-editor"
       ]
@@ -33,7 +33,7 @@ const oliveVideoEditorVsOpenshotVsShotcutContent: GroupComparisonContent = {
     },
     {
       "title": "Shotcut runs portable, install-free",
-      "description": "Shotcut offers a portable edition that runs from a USB drive on Windows and Linux with no installation required.",
+      "description": "Shotcut ships a portable edition you can run straight off a USB stick on Windows or Linux, with nothing to install.",
       "toolSlugs": [
         "shotcut"
       ]
@@ -140,11 +140,11 @@ const oliveVideoEditorVsOpenshotVsShotcutContent: GroupComparisonContent = {
     },
     {
       "question": "What makes Olive different from OpenShot and Shotcut?",
-      "answer": "Olive's headline feature is node-based compositing: effects and transitions are built as a graph of connected nodes rather than a fixed effects stack, offering a more flexible, professional-style workflow than the fixed-stack approach used by OpenShot and Shotcut."
+      "answer": "Node-based compositing is Olive's headline feature: instead of a fixed effects stack, it models effects and transitions through a network of interconnected nodes, giving editors a more flexible, professional-style workflow than the fixed-stack approach OpenShot and Shotcut use."
     },
     {
       "question": "Can Shotcut run without being installed?",
-      "answer": "Yes. Shotcut offers a portable edition that runs directly from a USB drive on Windows and Linux, with the same feature set as the installed version and no installation step required."
+      "answer": "Yes. Shotcut's portable edition runs right off a USB drive on Windows or Linux, carrying the same feature set as the installed version with no setup step needed."
     },
     {
       "question": "Do any of these editors include built-in screen recording?",

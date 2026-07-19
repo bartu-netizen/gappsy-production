@@ -10,14 +10,14 @@ const formpressVsMicrosoftFormsVsZohoFormsContent: GroupComparisonContent = {
   "highlights": [
     {
       "title": "Zoho Forms has the deepest feature set of the three",
-      "description": "Zoho Forms adds workflow automation with multi-level approvals, built-in payment integrations (PayPal, Stripe, 2Checkout), and offline mobile data collection with geolocation and QR code scanning, none of which are documented for FormPress or Microsoft Forms.",
+      "description": "Zoho Forms goes further with multi-level approval workflows, built-in payment processing through PayPal, Stripe, and 2Checkout, and a mobile app that can capture form data offline, complete with location tagging and QR scanning — none of which FormPress or Microsoft Forms document.",
       "toolSlugs": [
         "zoho-forms"
       ]
     },
     {
       "title": "Microsoft Forms wins on cost if you are already a Microsoft 365 customer",
-      "description": "Microsoft Forms is included at no extra cost with any Microsoft 365 or Office 365 subscription, rather than requiring a separate purchase, which is its core differentiator versus standalone form builders.",
+      "description": "Any active Microsoft 365 or Office 365 subscription already includes Microsoft Forms — there's no separate purchase needed, and that bundled access is what sets it apart from standalone form builders.",
       "toolSlugs": [
         "microsoft-forms"
       ]
@@ -147,15 +147,15 @@ const formpressVsMicrosoftFormsVsZohoFormsContent: GroupComparisonContent = {
     },
     {
       "question": "Does Microsoft Forms cost extra on top of my Microsoft 365 subscription?",
-      "answer": "No. Microsoft Forms is included at no additional cost with any Microsoft 365 or Office 365 subscription, which is its primary differentiator from standalone form builders like Zoho Forms."
+      "answer": "No — Microsoft Forms comes bundled with every Microsoft 365 and Office 365 subscription at no added charge, which is the main way it stands apart from standalone tools like Zoho Forms."
     },
     {
       "question": "Which tool is best for collecting data in the field without an internet connection?",
-      "answer": "Zoho Forms, whose mobile app supports offline data collection with geolocation tagging and QR code scanning. This capability is not documented for FormPress or Microsoft Forms."
+      "answer": "Zoho Forms is the answer here — its mobile app can gather submissions without an internet connection while still tagging each entry's location and scanning QR codes. Neither FormPress nor Microsoft Forms documents this capability."
     },
     {
       "question": "Is HIPAA compliance available with any of these three?",
-      "answer": "Only Zoho Forms documents HIPAA compliance, and it is limited to the top-tier Premium plan at $90 per month. HIPAA support is not documented for FormPress or Microsoft Forms."
+      "answer": "Zoho Forms is the only one of the three that documents HIPAA compliance, and that coverage is reserved for its highest-priced Premium plan, which runs $90 per month. Neither FormPress nor Microsoft Forms documents HIPAA support."
     }
   ]
 };

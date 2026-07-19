@@ -29,7 +29,7 @@ const ghostVsWithknownContent: ToolComparisonContent = {
     },
     {
       "title": "Hosting Model",
-      "toolA": "Ghost is open source at its core and can be self-hosted, or run on Ghost's own managed hosting.",
+      "toolA": "At its core, Ghost's codebase is open source, giving users the choice to self-host it or instead run it on Ghost's own managed hosting service.",
       "toolB": "Known is open source and self-hostable, with no managed-hosting option documented.",
       "whyItMatters": "A managed hosting option removes server-maintenance burden for publishers who don't want to run their own infrastructure.",
       "benefitsWho": "Non-technical publishers benefit from Ghost's managed hosting option; technically comfortable individuals benefit from self-hosting either tool."

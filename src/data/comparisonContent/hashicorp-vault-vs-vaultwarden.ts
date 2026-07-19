@@ -1,14 +1,14 @@
 import type { ToolComparisonContent } from './types';
 
 const hashicorpVaultVsVaultwardenContent: ToolComparisonContent = {
-  "verdict": "Despite the similar name, these solve different problems. HashiCorp Vault manages machine and application secrets — API keys, database credentials, encryption keys, and certificates — accessed via UI, CLI, or HTTP API. Vaultwarden is a free, open-source Rust server that implements the Bitwarden Client API, letting official Bitwarden mobile, desktop, and browser apps connect to a self-hosted backend for personal and team password management. One is infrastructure plumbing for developers and services; the other is a consumer-style password manager for humans.",
+  "verdict": "Despite the similar name, these solve different problems. HashiCorp Vault manages machine and application secrets — API keys, database credentials, encryption keys, and certificates — accessed via UI, CLI, or HTTP API. Vaultwarden is a free, open-source server written in Rust that reimplements the Bitwarden Client API, so official Bitwarden mobile, desktop, and browser apps can connect to a self-hosted backend for personal and team password management. One is infrastructure plumbing for developers and services; the other is a consumer-style password manager for humans.",
   "bestForToolA": "Platform and DevOps teams that need to dynamically generate short-lived database credentials, provide encryption as a service via the Transit Secrets Engine, or manage certificates for applications and services.",
   "bestForToolB": "Individuals, families, or small teams who want a self-hosted, Bitwarden-compatible password vault with Send for secure file/text sharing, organizations with member roles, and MFA options including FIDO2 WebAuthn and YubiKey.",
   "whoNeedsBoth": "A realistic pairing: an engineering organization uses HashiCorp Vault to manage application and infrastructure secrets like API keys and database credentials, while its employees separately use Vaultwarden as their personal or team password manager for logging into SaaS tools and internal accounts — different secret types serving humans versus machines.",
   "keyDifferences": [
     {
       "title": "Primary Purpose",
-      "toolA": "Vault secures, stores, and tightly controls access to tokens, passwords, certificates, and encryption keys for applications and infrastructure.",
+      "toolA": "Vault secures and stores sensitive material — tokens, passwords, certificates, and encryption keys — while tightly governing which applications and infrastructure can reach them.",
       "toolB": "Vaultwarden is a self-hosted server implementing the Bitwarden Client API for personal vault management, designed for humans storing and sharing their own passwords.",
       "whyItMatters": "Machine/application secrets and human login credentials have different lifecycle, rotation, and access patterns.",
       "benefitsWho": "DevOps/platform teams need Vault's application secrets management; end users and IT teams managing employee logins need Vaultwarden."
@@ -30,14 +30,14 @@ const hashicorpVaultVsVaultwardenContent: ToolComparisonContent = {
     {
       "title": "Multi-Factor Authentication Methods",
       "toolA": "Vault documents policy-driven, identity-based access control for humans, machines, and AI agents, without listing specific consumer MFA methods.",
-      "toolB": "Vaultwarden documents specific MFA methods: Authenticator apps, Email, FIDO2 WebAuthn, YubiKey, and Duo.",
+      "toolB": "Vaultwarden lists out its supported MFA options by name: Authenticator apps, Email, YubiKey, FIDO2 WebAuthn, and Duo.",
       "whyItMatters": "Password managers need concrete, user-facing MFA options that everyday employees can set up on their own accounts.",
       "benefitsWho": "Security-conscious individuals and IT admins configuring employee vault security benefit from Vaultwarden's documented MFA method list."
     },
     {
       "title": "Official Support and Enterprise Tier",
       "toolA": "Vault Community is HashiCorp's official open-source project, with Vault Enterprise available under a paid license and Vault Associate/Operations Professional certification programs.",
-      "toolB": "Vaultwarden is an unofficial, community-built project not affiliated with or officially supported by Bitwarden Inc., with no documented enterprise support tier.",
+      "toolB": "Vaultwarden is a community-built, unofficial project — it has no formal ties to or backing from Bitwarden Inc., and no documented enterprise support tier exists.",
       "whyItMatters": "Organizations with compliance or vendor-support requirements need to know whether official commercial support exists.",
       "benefitsWho": "Enterprises needing vendor-backed support and certification paths benefit from Vault's official Enterprise tier; hobbyists and small teams comfortable with community support benefit from Vaultwarden."
     }
@@ -140,11 +140,11 @@ const hashicorpVaultVsVaultwardenContent: ToolComparisonContent = {
     },
     {
       "question": "Are both free to use?",
-      "answer": "Yes, Vault Community edition is free and open source, and Vaultwarden is free and open source under the AGPL-3.0 license."
+      "answer": "Yes — Vault Community edition costs nothing and is open source, and Vaultwarden is likewise free, releasing its code under the AGPL-3.0 license."
     },
     {
       "question": "What MFA options does Vaultwarden support?",
-      "answer": "Vaultwarden supports Authenticator apps, Email, FIDO2 WebAuthn, YubiKey, and Duo for multi-factor authentication."
+      "answer": "For multi-factor authentication, Vaultwarden offers Authenticator apps, Email, YubiKey, FIDO2 WebAuthn, and Duo as options."
     }
   ]
 };

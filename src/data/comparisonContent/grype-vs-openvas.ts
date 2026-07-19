@@ -1,7 +1,7 @@
 import type { ToolComparisonContent } from './types';
 
 const grypeVsOpenvasContent: ToolComparisonContent = {
-  "verdict": "Grype and OpenVAS are both free, open-source vulnerability scanners, but they target different attack surfaces. Grype, from Anchore, scans container images, filesystems, and SBOMs for known vulnerabilities in OS packages and language dependencies, with EPSS/CISA KEV-based prioritization. OpenVAS, maintained by Greenbone since 2006, is a network vulnerability scanner that performs authenticated and unauthenticated testing across internet and industrial protocols, forming the core of Greenbone Community Edition. Neither replaces the other because they scan fundamentally different things.",
+  "verdict": "Grype and OpenVAS are both free, open-source vulnerability scanners, but they target different attack surfaces. Built by Anchore, Grype inspects container images, filesystem trees, and SBOMs to flag known vulnerabilities across OS packages and language dependencies, prioritizing results with EPSS and CISA KEV data. OpenVAS, maintained by Greenbone since 2006, is a network vulnerability scanner that performs authenticated and unauthenticated testing across internet and industrial protocols, forming the core of Greenbone Community Edition. Neither replaces the other because they scan fundamentally different things.",
   "bestForToolA": "DevSecOps teams who need to scan container images, filesystems, or SBOM files (CycloneDX/SPDX) in CI/CD pipelines, with EPSS and CISA KEV data to prioritize which vulnerabilities to fix first.",
   "bestForToolB": "Security teams performing network vulnerability assessments against live infrastructure, including both authenticated and unauthenticated scans across internet and industrial protocols.",
   "whoNeedsBoth": "A realistic complementary setup: use Grype in CI/CD to catch dependency and container vulnerabilities before deployment, and run OpenVAS (or the broader Greenbone Community Edition it powers) against deployed infrastructure to catch network-facing exposures — supply-chain security and network security are different layers that both need coverage.",
@@ -15,14 +15,14 @@ const grypeVsOpenvasContent: ToolComparisonContent = {
     },
     {
       "title": "Ecosystem Coverage",
-      "toolA": "Grype covers OS packages from Alpine, Debian, Ubuntu, RHEL, Oracle Linux, and Amazon Linux, plus language dependencies in Ruby, Java, JavaScript, Python, .NET, Go, PHP, and Rust.",
+      "toolA": "Grype's OS package detection spans Alpine, Debian, Ubuntu, RHEL, Oracle Linux, and Amazon Linux, and it also tracks language-level dependencies across Ruby, Java, JavaScript, Python, .NET, Go, PHP, and Rust.",
       "toolB": "OpenVAS is not documented as scanning language package dependencies; it focuses on internet and industrial protocol testing.",
       "whyItMatters": "Modern applications depend on many language ecosystems whose vulnerabilities live in dependency manifests, not network services.",
       "benefitsWho": "Development teams tracking vulnerable dependencies across multiple programming languages benefit specifically from Grype's coverage."
     },
     {
       "title": "Vulnerability Prioritization",
-      "toolA": "Grype uses EPSS scores, CISA KEV data, and risk scoring to help prioritize which vulnerabilities to fix first, plus OpenVEX support to filter results.",
+      "toolA": "To help teams decide what to patch first, Grype combines EPSS scores, CISA KEV data, and its own risk scoring, and it also supports OpenVEX for filtering results.",
       "toolB": "Not documented as an OpenVAS feature; OpenVAS pulls detection tests from a feed updated daily but doesn't document EPSS/KEV-based scoring.",
       "whyItMatters": "Prioritization data reduces alert fatigue by helping teams focus on vulnerabilities that are actually being exploited in the wild.",
       "benefitsWho": "Teams drowning in vulnerability findings who need to triage by real-world exploitability benefit from Grype's EPSS/KEV integration."
@@ -36,7 +36,7 @@ const grypeVsOpenvasContent: ToolComparisonContent = {
     },
     {
       "title": "Deployment Form",
-      "toolA": "Grype is a command-line tool with no built-in graphical dashboard, installable via curl, Homebrew, Docker, Chocolatey, or MacPorts.",
+      "toolA": "Grype runs purely from the terminal -- it ships no graphical dashboard -- and can be installed via curl, Homebrew, Docker, Chocolatey, or MacPorts.",
       "toolB": "OpenVAS is documented as best used as part of the broader Greenbone Community Edition rather than standalone, with enterprise features requiring Greenbone's commercial products.",
       "whyItMatters": "Teams need to know whether they're adopting a CLI utility for pipelines or a broader scanning suite for ongoing operations.",
       "benefitsWho": "CI/CD pipeline engineers benefit from Grype's lightweight CLI; security operations teams benefit from OpenVAS's role inside the fuller Greenbone suite."
@@ -128,7 +128,7 @@ const grypeVsOpenvasContent: ToolComparisonContent = {
     },
     {
       "question": "Are both tools free?",
-      "answer": "Yes, both Grype (Apache-2.0) and OpenVAS (core of Greenbone Community Edition) are free and open source."
+      "answer": "Yes -- Grype is released under Apache-2.0, and OpenVAS, which forms the core of Greenbone Community Edition, is likewise free and open source."
     },
     {
       "question": "Does Grype prioritize which vulnerabilities to fix first?",

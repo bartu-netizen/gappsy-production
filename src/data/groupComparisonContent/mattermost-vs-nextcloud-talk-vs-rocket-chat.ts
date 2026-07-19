@@ -5,7 +5,7 @@ const mattermostVsNextcloudTalkVsRocketChatContent: GroupComparisonContent = {
   "bestFor": {
     "mattermost": "Software engineering, DevOps, and incident-response teams that want Slack-style channels plus Playbooks-driven workflow automation and deep developer tool integrations, self-hosted or air-gapped.",
     "nextcloud-talk": "Organizations already using or considering Nextcloud's file-sync and collaboration suite that want video calls, screen sharing, and chat bundled into the same self-hosted, privacy-focused platform.",
-    "rocket-chat": "Teams that need both internal team chat and customer-facing omnichannel support in one self-hosted platform, including government and defense organizations needing FIPS-validated, air-gapped deployments."
+    "rocket-chat": "Teams that want a single self-hosted platform covering both internal messaging and customer-facing omnichannel support, plus government and defense organizations that need FIPS-validated, air-gapped deployments."
   },
   "highlights": [
     {
@@ -24,7 +24,7 @@ const mattermostVsNextcloudTalkVsRocketChatContent: GroupComparisonContent = {
     },
     {
       "title": "Nextcloud Talk is bundled inside a broader collaboration suite",
-      "description": "Talk ships as part of every Nextcloud installation, letting calls, chat, file sharing, and collaborative document editing happen within the same interface rather than as a standalone chat product.",
+      "description": "Talk ships as part of every Nextcloud installation, bringing voice and video calls, messaging, file sharing, and joint document editing together in one interface instead of a separate, standalone chat app.",
       "toolSlugs": [
         "nextcloud-talk"
       ]
@@ -143,7 +143,7 @@ const mattermostVsNextcloudTalkVsRocketChatContent: GroupComparisonContent = {
     },
     {
       "question": "Which has government or defense-grade certifications?",
-      "answer": "Rocket.Chat documents FIPS 140-3 validated cryptography and air-gapped, SCIF-ready deployment options for regulated and public-sector customers under its Enterprise/Government/Defense tier. This is not documented for Mattermost or Nextcloud Talk."
+      "answer": "Rocket.Chat's Enterprise/Government/Defense tier documents support for FIPS 140-3 cryptography plus SCIF-ready, air-gapped deployments aimed at regulated and public-sector buyers. Neither Mattermost nor Nextcloud Talk documents this."
     },
     {
       "question": "Do these tools support end-to-end encryption?",

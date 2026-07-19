@@ -138,7 +138,7 @@ const buddypressVsForumbeeVsHigherLogicVanillaContent: GroupComparisonContent = 
   "faqs": [
     {
       "question": "Which of these three community platforms is free?",
-      "answer": "BuddyPress is completely free and open source with no licensing cost; you only pay for your own WordPress hosting. Forumbee starts at $250/month for its Premium plan, and Higher Logic Vanilla does not publish pricing at all, requiring a custom quote from sales."
+      "answer": "BuddyPress carries no license fee at all since it's open-source software — the only expense is whatever you pay to host WordPress yourself. Forumbee's paid plans begin at $250 per month for Premium, while Higher Logic Vanilla keeps its pricing private and routes every prospect through a sales quote."
     },
     {
       "question": "Which platform is easiest to self-host?",
@@ -154,11 +154,11 @@ const buddypressVsForumbeeVsHigherLogicVanillaContent: GroupComparisonContent = 
     },
     {
       "question": "Which platform has AI features?",
-      "answer": "Higher Logic Vanilla is the only one of the three with documented AI capabilities, including AI-powered sentiment and community health insights and native MCP-based integrations with ChatGPT, Claude, and Cursor."
+      "answer": "Higher Logic Vanilla is the only platform of the three with documented AI capabilities: it offers AI-driven sentiment analysis and community health insights, and it connects natively via MCP to tools like ChatGPT, Claude, and Cursor."
     },
     {
       "question": "Is BuddyPress a good fit for a large enterprise community program?",
-      "answer": "It can work, but its cons list notes that feature depth for large-scale communities often requires premium add-ons or the commercial BuddyBoss fork, so organizations with complex enterprise needs may find Forumbee or Higher Logic Vanilla a more complete out-of-the-box fit."
+      "answer": "It's workable, but the review notes a tradeoff: scaling BuddyPress up to serve large communities typically means layering on paid add-ons or switching to the commercial BuddyBoss fork to get comparable depth. Organizations with more complex enterprise requirements may be better served out of the box by Forumbee or Higher Logic Vanilla."
     }
   ]
 };

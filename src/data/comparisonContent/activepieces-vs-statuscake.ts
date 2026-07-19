@@ -1,7 +1,7 @@
 import type { ToolComparisonContent } from './types';
 
 const activepiecesVsStatuscakeContent: ToolComparisonContent = {
-  "verdict": "activepieces and StatusCake serve different jobs. activepieces is an open-source workflow automation platform for connecting apps and building automated processes across HR, finance, marketing, and sales, priced at $0 per execution with a $5/active-flow/month Standard tier. StatusCake, founded in 2012 and serving over 220,000 customers, is external monitoring software for uptime, SSL certificates, domains, page speed, and servers, with a permanent free plan and paid tiers starting at €16.66/month. They aren't substitutes for each other -- one automates work, the other watches infrastructure.",
+  "verdict": "activepieces and StatusCake serve different jobs. Built as an open-source platform for workflow and process automation, activepieces connects apps and builds automated processes spanning HR, finance, marketing, and sales; it prices execution at $0 per run, with its Standard tier costing $5 per active flow each month. StatusCake, founded in 2012 and serving over 220,000 customers, is external monitoring software for uptime, SSL certificates, domains, page speed, and servers, with a permanent free plan and paid tiers starting at €16.66/month. They aren't substitutes for each other -- one automates work, the other watches infrastructure.",
   "bestForToolA": "Teams wanting to build automated workflows across HR, finance, marketing, and sales tools, especially those who want self-hosting flexibility and usage-based pricing that doesn't punish high execution volume.",
   "bestForToolB": "Teams needing external monitoring of uptime, SSL certificates, domains, and page speed, starting from a permanent free plan with 10 monitors.",
   "whoNeedsBoth": "A DevOps or IT team could plausibly use both together -- StatusCake to monitor uptime, SSL, and page speed and trigger alerts, with an activepieces workflow (via its integration \"pieces\" like Gmail) automating what happens next, such as routing incident alerts to the right team -- though the facts don't document a direct StatusCake-activepieces integration.",
@@ -30,7 +30,7 @@ const activepiecesVsStatuscakeContent: ToolComparisonContent = {
     {
       "title": "Free Tier",
       "toolA": "No permanent free plan is documented for activepieces; its cheapest published tier is Standard at $5/active flow/month.",
-      "toolB": "StatusCake offers a permanent free plan with 10 uptime monitors, 5-minute check intervals, and one each of page speed, domain, and SSL monitors.",
+      "toolB": "StatusCake's permanent free tier includes 10 uptime monitors checked every 5 minutes, along with a single page speed monitor, a single domain monitor, and a single SSL monitor.",
       "whyItMatters": "A permanent free tier lets small teams monitor a handful of sites indefinitely at no cost.",
       "benefitsWho": "Small sites or solo developers wanting basic monitoring without a subscription."
     },
@@ -144,7 +144,7 @@ const activepiecesVsStatuscakeContent: ToolComparisonContent = {
     },
     {
       "question": "Does StatusCake have a free plan?",
-      "answer": "Yes, StatusCake offers a free plan with 10 uptime monitors, 5-minute test intervals, and one each of page speed, domain, and SSL monitors, with no time limit."
+      "answer": "Yes -- StatusCake's free tier never expires and includes 10 uptime monitors on 5-minute test intervals, plus one page speed monitor, one domain monitor, and one SSL monitor."
     },
     {
       "question": "How is activepieces priced?",

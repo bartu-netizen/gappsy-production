@@ -9,10 +9,13 @@ import TableOfContents, { type TocSection } from '../components/tools/detail/Tab
 import GroupCompareHero from '../components/groupCompare/GroupCompareHero';
 import GroupCompareHighlights from '../components/groupCompare/GroupCompareHighlights';
 import GroupCompareFeatureMatrix from '../components/groupCompare/GroupCompareFeatureMatrix';
+import GroupCompareCard from '../components/groupCompare/GroupCompareCard';
+import ComparisonCard from '../components/compare/ComparisonCard';
 import { fetchToolExtras, buildFacts, type ToolRow } from '../components/compare/compareToolFacts';
 import type { CompareToolFacts } from '../components/compare/types';
 import { supabase } from '../lib/supabase';
 import { getGroupComparisonContent } from '../data/groupComparisonContent';
+import { buildCompareItemListJsonLd } from '../utils/compareJsonLd';
 import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
@@ -77,6 +80,59 @@ export default function GroupCompareDetailPage() {
         setLoading(false);
       });
   }, [groupSlug]);
+
+  // Real, always-populated "related comparisons": other published
+  // comparisons (both 3-tool and 2-tool) sharing at least one member tool
+  // with this one — mirrors CompareDetailPage's sameToolComparisons so
+  // /compare/group pages get the same crawl-depth/topical-linking benefit
+  // instead of dead-ending after their own content.
+  const [relatedGroupComparisons, setRelatedGroupComparisons] = useState<{ slug: string; title: string; tools: { slug: string; name: string; logo: string | null }[] }[]>([]);
+  const [relatedPairComparisons, setRelatedPairComparisons] = useState<{ slug: string; tool_a: ToolRow; tool_b: ToolRow }[]>([]);
+
+  useEffect(() => {
+    if (!groupComparison) {
+      setRelatedGroupComparisons([]);
+      setRelatedPairComparisons([]);
+      return;
+    }
+    const memberIds = groupComparison.tool_group_comparison_members.map((m) => m.tools.id);
+
+    supabase
+      .from('tool_group_comparison_members')
+      .select('tool_group_comparisons!inner(slug, title, status, tool_group_comparison_members(sort_order, tools(slug,name,logo,status)))')
+      .in('tool_id', memberIds)
+      .eq('tool_group_comparisons.status', 'published')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then(({ data }: { data: any[] | null }) => {
+        const seen = new Map<string, { slug: string; title: string; tools: { slug: string; name: string; logo: string | null }[] }>();
+        for (const row of data || []) {
+          const g = row.tool_group_comparisons;
+          if (!g || g.slug === groupComparison.slug || seen.has(g.slug)) continue;
+          const tools = (g.tool_group_comparison_members || [])
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .filter((m: any) => m.tools?.status === 'published')
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .sort((a: any, b: any) => a.sort_order - b.sort_order)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((m: any) => ({ slug: m.tools.slug, name: m.tools.name, logo: m.tools.logo }));
+          if (tools.length >= 3) seen.set(g.slug, { slug: g.slug, title: g.title, tools });
+        }
+        setRelatedGroupComparisons([...seen.values()].slice(0, 4));
+      });
+
+    const orFilter = memberIds.map((id) => `tool_a_id.eq.${id},tool_b_id.eq.${id}`).join(',');
+    supabase
+      .from('tool_comparisons')
+      .select('slug, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo)')
+      .or(orFilter)
+      .eq('status', 'published')
+      .order('slug', { ascending: true })
+      .limit(4)
+      .then(({ data }) => {
+        const rows = (data || []) as unknown as { slug: string; tool_a: ToolRow; tool_b: ToolRow }[];
+        setRelatedPairComparisons(rows.filter((r) => r.tool_a && r.tool_b));
+      });
+  }, [groupComparison]);
 
   // Same featured-ad mechanism as ToolDetailPage/CompareDetailPage: a pool
   // of up to 6, excluding all 3 tools in this comparison, distributed across
@@ -172,11 +228,14 @@ export default function GroupCompareDetailPage() {
         ]
       : [];
 
+  const itemListJsonLd = buildCompareItemListJsonLd(facts, canonicalUrl);
+
   const tocSections: TocSection[] = [
     ...(groupComparisonContent ? [{ id: 'verdict', label: 'Verdict' }] : []),
     ...(groupComparisonContent?.highlights.length ? [{ id: 'highlights', label: 'Highlights' }] : []),
     ...(groupComparisonContent?.featureMatrix.length ? [{ id: 'features', label: 'Features' }] : []),
     ...(groupComparisonContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
+    ...(relatedGroupComparisons.length > 0 || relatedPairComparisons.length > 0 ? [{ id: 'related-comparisons', label: 'Related Comparisons' }] : []),
   ];
 
   return (
@@ -187,7 +246,7 @@ export default function GroupCompareDetailPage() {
         path={`/compare/${groupComparison.slug}`}
         ogImage={facts[0]?.logo || '/og/default-og-image.svg'}
         breadcrumbs={[{ name: 'Compare', path: '/compare' }, { name: groupComparison.title, path: `/compare/${groupComparison.slug}` }]}
-        jsonLd={[...articleJsonLd, ...faqJsonLd]}
+        jsonLd={[...articleJsonLd, ...itemListJsonLd, ...faqJsonLd]}
       />
 
       <SoftwareHeader variant="premium" />
@@ -248,6 +307,20 @@ export default function GroupCompareDetailPage() {
                       <summary className="font-medium text-[#0B1221] text-sm cursor-pointer list-none">{faq.question}</summary>
                       <p className="text-sm text-slate-500 leading-relaxed mt-2.5">{faq.answer}</p>
                     </details>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {(relatedGroupComparisons.length > 0 || relatedPairComparisons.length > 0) && (
+              <section id="related-comparisons" className="scroll-mt-24">
+                <h2 className="text-xl font-bold text-[#0B1221] mb-4">Related Comparisons</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {relatedGroupComparisons.map((g) => (
+                    <GroupCompareCard key={g.slug} slug={g.slug} title={g.title} tools={g.tools} />
+                  ))}
+                  {relatedPairComparisons.map((c) => (
+                    <ComparisonCard key={c.slug} slug={c.slug} toolA={c.tool_a} toolB={c.tool_b} />
                   ))}
                 </div>
               </section>

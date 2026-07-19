@@ -17,7 +17,7 @@ const difyVsFlowiseVsLangflowContent: GroupComparisonContent = {
     },
     {
       "title": "Flowise offers the widest integration catalog",
-      "description": "Flowise natively supports more than 100 LLM providers, embedding models, and vector databases, giving it the broadest out-of-the-box connectivity of the three.",
+      "description": "Flowise's integration catalog spans over 100 connectors across LLM providers, embedding models, and vector databases, making it the most broadly connected of the three right out of the box.",
       "toolSlugs": [
         "flowise"
       ]
@@ -141,7 +141,7 @@ const difyVsFlowiseVsLangflowContent: GroupComparisonContent = {
     },
     {
       "question": "Which has the largest integration library?",
-      "answer": "Flowise, with native support for more than 100 LLM providers, embedding models, and vector databases, including OpenAI, Anthropic, Pinecone, Weaviate, and Chroma."
+      "answer": "Flowise. It plugs natively into more than 100 integrations spanning LLM providers, embedding models, and vector stores - covering names such as Pinecone, Weaviate, Chroma, OpenAI, and Anthropic among them."
     },
     {
       "question": "Are these tools really free to self-host?",

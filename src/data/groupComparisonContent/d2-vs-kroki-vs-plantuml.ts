@@ -24,7 +24,7 @@ const d2VsKrokiVsPlantumlContent: GroupComparisonContent = {
     },
     {
       "title": "PlantUML remains the deepest native UML tool, and a Kroki backend",
-      "description": "PlantUML natively covers sequence, class, use case, activity, component, state and deployment diagrams plus extensions like C4 and Gantt charts, and it is also one of the syntaxes Kroki's unified API can render, giving it reach both as a standalone tool and inside Kroki-based pipelines.",
+      "description": "Among native UML diagram types, PlantUML supports state, class, sequence, use case, activity, component and deployment diagrams out of the box, plus extensions like C4 and Gantt charts, and because it's also one of the syntaxes rendered by Kroki's unified API, it has reach both as a standalone tool and inside Kroki-based pipelines.",
       "toolSlugs": [
         "plantuml",
         "kroki"
@@ -151,7 +151,7 @@ const d2VsKrokiVsPlantumlContent: GroupComparisonContent = {
     },
     {
       "question": "Which tool has the broadest native UML diagram support?",
-      "answer": "PlantUML has the deepest native coverage of classic UML diagram types, including sequence, class, use case, activity, component, state and deployment diagrams, plus extensions like C4, Gantt charts and mind maps. D2's shape library is more architecture-focused, and Kroki reaches UML coverage indirectly by routing PlantUML syntax through its API rather than defining UML support itself."
+      "answer": "PlantUML goes deepest on classic UML: activity, component, state, class, sequence, use case and deployment diagrams are all natively supported, alongside extensions such as C4, Gantt charts and mind maps. D2 leans architecture-focused rather than UML-complete, and Kroki only reaches UML territory indirectly, by passing PlantUML markup through its API instead of implementing UML support of its own."
     }
   ]
 };

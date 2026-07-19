@@ -1,7 +1,7 @@
 import type { ToolComparisonContent } from './types';
 
 const activepiecesVsHashicorpConsulContent: ToolComparisonContent = {
-  "verdict": "Activepieces automates business workflows across SaaS apps for operations teams. HashiCorp Consul is a service networking platform providing service discovery, service mesh, and secure service-to-service communication across VM and Kubernetes runtimes. They sit at completely different layers — app-level workflow automation versus network-level service communication infrastructure.",
+  "verdict": "Activepieces automates business workflows across SaaS apps for operations teams. HashiCorp Consul, by contrast, is infrastructure software for service networking — it handles service discovery, builds a service mesh, and secures service-to-service traffic across both VM-based and Kubernetes-based runtimes. They sit at completely different layers — app-level workflow automation versus network-level service communication infrastructure.",
   "bestForToolA": "Business/ops teams automating SaaS-app processes, paying per active flow starting at $5/month.",
   "bestForToolB": "Platform/infrastructure teams that need service discovery, a service mesh, and secure service-to-service communication across VM and Kubernetes runtimes in on-prem, hybrid, or multi-cloud environments, with an optional managed HCP Consul option.",
   "whoNeedsBoth": "A platform team could run Consul to manage service-to-service networking for microservices, while a business team separately uses Activepieces to automate SaaS workflows — the two would coexist without any documented direct integration.",

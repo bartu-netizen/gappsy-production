@@ -1,8 +1,8 @@
 import type { ToolComparisonContent } from './types';
 
 const syftVsTrivyContent: ToolComparisonContent = {
-  "verdict": "Syft and Trivy are both free, open-source, Go-based command-line tools from the container security ecosystem, but they differ in scope: Syft, sponsored by Anchore, is a focused SBOM generator that creates detailed software bills of materials from container images and filesystems, while Trivy, from Aqua Security, is an all-in-one scanner bundling vulnerability scanning, misconfiguration detection, secret scanning, SBOM generation, and Kubernetes scanning into a single tool. Teams that specifically want the deepest, most format-flexible SBOM tool — designed to pair with Grype for vulnerability scanning — lean toward Syft; teams that want one tool to cover vulnerabilities, secrets, misconfigurations, and SBOMs together lean toward Trivy.",
-  "bestForToolA": "Syft fits teams that want a dedicated, best-in-class SBOM generator supporting Alpine, Debian, RPM, Go, Python, Java, JavaScript, Ruby, Rust, PHP, and .NET packages, exporting to CycloneDX, SPDX, or Syft's own JSON format, and designed to pair with Grype for vulnerability scanning.",
+  "verdict": "Syft and Trivy are both free, open-source, Go-based command-line tools from the container security ecosystem, but they differ in scope: Syft, sponsored by Anchore, is a focused SBOM generator that catalogs every software component packaged inside container images and filesystems into a detailed bill of materials, while Trivy, from Aqua Security, is an all-in-one scanner bundling vulnerability scanning, misconfiguration detection, secret scanning, SBOM generation, and Kubernetes scanning into a single tool. Teams that specifically want the deepest, most format-flexible SBOM tool — designed to pair with Grype for vulnerability scanning — lean toward Syft; teams that want one tool to cover vulnerabilities, secrets, misconfigurations, and SBOMs together lean toward Trivy.",
+  "bestForToolA": "Syft fits teams that want a dedicated, best-in-class SBOM generator. It reads package data from Debian and Alpine images, RPM-based systems, and codebases written in Go, Java, JavaScript, Python, Ruby, Rust, PHP, or .NET, then exports SBOMs to CycloneDX, SPDX, or Syft's own JSON format — built to pair with Grype for vulnerability scanning.",
   "bestForToolB": "Trivy fits teams that want a single all-in-one scanner covering vulnerability scanning, misconfiguration detection, secret scanning, SBOM generation, and Kubernetes cluster scanning without needing to combine multiple separate tools.",
   "whoNeedsBoth": "A platform engineering team already using Trivy for day-to-day vulnerability and misconfiguration scanning might still reach for Syft specifically when they need the most detailed SBOM with signed in-toto attestations or need to convert between SBOM formats — a task Syft documents explicitly and Trivy does not detail to the same degree.",
   "keyDifferences": [
@@ -15,7 +15,7 @@ const syftVsTrivyContent: ToolComparisonContent = {
     },
     {
       "title": "SBOM Format Support",
-      "toolA": "Syft exports SBOMs in CycloneDX, SPDX, and its own Syft JSON format, and can convert SBOMs between supported standards, plus create signed SBOM attestations using the in-toto specification.",
+      "toolA": "Syft exports SBOMs in CycloneDX, SPDX, and its own Syft JSON format, can convert between those supported standards, and is able to produce cryptographically signed SBOM attestations built on the in-toto spec.",
       "toolB": "Trivy's SBOM generation feature produces a Software Bill of Materials for container images and file systems, without documented format-conversion or signed-attestation capabilities.",
       "whyItMatters": "Format conversion and signed attestations matter for organizations with specific downstream SBOM consumption or supply-chain verification requirements.",
       "benefitsWho": "Supply-chain security teams needing signed, standards-flexible SBOMs benefit from Syft's documented attestation and conversion features."
@@ -36,7 +36,7 @@ const syftVsTrivyContent: ToolComparisonContent = {
     },
     {
       "title": "Image Format Support",
-      "toolA": "Syft works with OCI, Docker, and Singularity image formats.",
+      "toolA": "Image support for Syft spans OCI, Docker, and Singularity formats.",
       "toolB": "Trivy integrates with Docker, GitLab, Azure Container Registry, and Harbor for scanning.",
       "whyItMatters": "Support for specific image formats and registries determines how easily a tool fits into an existing container pipeline.",
       "benefitsWho": "Teams using Singularity images specifically benefit from Syft's documented support for that format, which Trivy's facts do not mention."
@@ -135,7 +135,7 @@ const syftVsTrivyContent: ToolComparisonContent = {
     },
     {
       "question": "Are Syft and Trivy both free?",
-      "answer": "Yes, both are free and open source under the Apache-2.0 license, with no paid tiers documented for either tool."
+      "answer": "Yes — both ship under the Apache 2.0 open-source license at no cost, and neither tool documents any paid tier."
     },
     {
       "question": "Which tool supports more SBOM formats?",

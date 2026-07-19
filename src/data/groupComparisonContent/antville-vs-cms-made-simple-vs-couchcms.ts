@@ -5,7 +5,7 @@ const antvilleVsCmsMadeSimpleVsCouchcmsContent: GroupComparisonContent = {
   "bestFor": {
     "antville": "Individuals who want free, donation-supported community blog hosting with no server management required.",
     "cms-made-simple": "Developers and agencies who want a mature, module-extensible CMS with Smarty templating and permissioned multi-editor access.",
-    "couchcms": "Web designers who want to make an existing hand-coded HTML/CSS template editable without rebuilding it in a new templating system."
+    "couchcms": "Ideal for designers who already have a hand-coded HTML/CSS template and want it to become editable, without having to rebuild it inside a new templating system."
   },
   "highlights": [
     {
@@ -125,7 +125,7 @@ const antvilleVsCmsMadeSimpleVsCouchcmsContent: GroupComparisonContent = {
     },
     {
       "question": "Is CouchCMS completely free to use?",
-      "answer": "Its core is free and open source under the Common Public Attribution License, though a paid commercial license is available for designers who want to remove the visible attribution link and rebrand the admin panel."
+      "answer": "The core software is released at no cost under the Common Public Attribution License and is open source; designers who prefer to strip out the visible attribution link and put their own branding on the admin panel can instead purchase a commercial license."
     },
     {
       "question": "Which platform has the largest, most active community today?",

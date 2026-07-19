@@ -19,14 +19,14 @@ const davinciResolveVsOliveVideoEditorVsShotcutContent: GroupComparisonContent =
     },
     {
       "title": "Node-Based Compositing",
-      "description": "Olive builds effects and transitions as a graph of connected nodes rather than a fixed stack, offering a modular workflow more commonly found in tools like Nuke or Resolve's Fusion page.",
+      "description": "Rather than stacking effects in a fixed list, Olive represents them as a network of linked nodes you wire together — a modular approach more commonly found in tools like Nuke or Resolve's Fusion page.",
       "toolSlugs": [
         "olive-video-editor"
       ]
     },
     {
       "title": "Industry-Benchmark Color Grading",
-      "description": "DaVinci Resolve's color tools trace back to the original da Vinci Systems technology and are considered the industry standard, used widely in professional film and television post-production.",
+      "description": "DaVinci Resolve's color-grading toolset descends from the original da Vinci Systems technology and remains the benchmark professionals reach for across film and television post houses.",
       "toolSlugs": [
         "davinci-resolve"
       ]
@@ -128,7 +128,7 @@ const davinciResolveVsOliveVideoEditorVsShotcutContent: GroupComparisonContent =
   "faqs": [
     {
       "question": "Is DaVinci Resolve completely free?",
-      "answer": "The base version of DaVinci Resolve is entirely free, with no watermark, time limit, or subscription requirement, supporting editing, color grading, VFX, and audio work up to Ultra HD at 60fps. A separate Studio version costs $295 as a one-time perpetual license and unlocks AI tools, higher resolutions, and additional effects."
+      "answer": "Yes — the free base edition of DaVinci Resolve has no watermark, no time limit, and no subscription requirement, and it covers editing, color grading, visual effects, and audio at resolutions up to Ultra HD/60fps. Only the separate Studio edition, a $295 one-time perpetual license, adds AI tools, higher-resolution support, and extra effects."
     },
     {
       "question": "Is Olive Video Editor stable enough for real projects?",
@@ -136,11 +136,11 @@ const davinciResolveVsOliveVideoEditorVsShotcutContent: GroupComparisonContent =
     },
     {
       "question": "What makes Shotcut different from DaVinci Resolve and Olive?",
-      "answer": "Shotcut is built directly on FFmpeg, giving it native support for hundreds of audio and video formats without transcoding, and it can run as a portable application from a USB drive with no installation. Unlike DaVinci Resolve, it has no paid upgrade tier, and unlike Olive, it is considered stable software."
+      "answer": "Shotcut is built directly on FFmpeg, which means it can natively handle hundreds of different audio and video formats without any transcoding step, and it can even run portably from a USB drive with no installation required. Unlike DaVinci Resolve, it has no paid upgrade tier, and unlike Olive, it is considered stable software."
     },
     {
       "question": "Which of these three editors has node-based compositing?",
-      "answer": "DaVinci Resolve's Fusion page and Olive Video Editor both use node-based compositing, where effects and transitions are built as a graph of connected nodes. Shotcut uses a more conventional fixed effects stack instead."
+      "answer": "DaVinci Resolve's Fusion page and Olive Video Editor share a node-based compositing approach, wiring effects and transitions together as interconnected nodes rather than a linear list. Shotcut uses a more conventional fixed effects stack instead."
     },
     {
       "question": "Do any of these editors require a subscription?",
