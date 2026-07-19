@@ -13,6 +13,9 @@ import { fetchToolExtras, buildFacts, type ToolRow } from '../components/compare
 import type { CompareToolFacts } from '../components/compare/types';
 import { supabase } from '../lib/supabase';
 import { getGroupComparisonContent } from '../data/groupComparisonContent';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
+import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
+import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 
 interface GroupComparisonMemberRow {
   sort_order: number;
@@ -73,6 +76,18 @@ export default function GroupCompareDetailPage() {
         setLoading(false);
       });
   }, [groupSlug]);
+
+  // Same featured-ad mechanism as ToolDetailPage/CompareDetailPage: a pool
+  // of up to 6, excluding all 3 tools in this comparison, distributed across
+  // a couple of sidebar slots (desktop, below the TOC), two inline
+  // mid-content cards, and the sticky footer bars.
+  const featuredExcludeSlugs = facts.map((f) => f.slug);
+  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 6);
+  const featuredPromo = featuredPool?.[0];
+  const featuredPromoSecondary = featuredPool?.[1];
+  const inlineFeaturedPromoA = featuredPool?.[2];
+  const inlineFeaturedPromoB = featuredPool?.[3];
+  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
 
   if (loading) {
     return (
@@ -184,8 +199,14 @@ export default function GroupCompareDetailPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="lg:grid lg:grid-cols-[180px_1fr] lg:gap-10">
-          <div className="hidden lg:block">
+          <div className="hidden lg:block space-y-4 lg:sticky lg:top-24 lg:self-start">
             <TableOfContents sections={tocSections} />
+            {hasSidebarPromos && (
+              <div className="space-y-4">
+                {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
+                {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
+              </div>
+            )}
           </div>
 
           <div className="min-w-0 space-y-14">
@@ -197,7 +218,11 @@ export default function GroupCompareDetailPage() {
 
             {groupComparisonContent && <GroupCompareHighlights toolNames={toolNames} highlights={groupComparisonContent.highlights} />}
 
+            {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
+
             {groupComparisonContent && <GroupCompareFeatureMatrix toolNames={toolNames} groups={groupComparisonContent.featureMatrix} />}
+
+            {inlineFeaturedPromoB && <FeaturedToolInlineCard tool={inlineFeaturedPromoB} />}
 
             {groupComparisonContent && groupComparisonContent.faqs.length > 0 && (
               <section id="faq" className="scroll-mt-24">
@@ -232,6 +257,12 @@ export default function GroupCompareDetailPage() {
       </main>
 
       <FooterWrapper />
+
+      <StickyMobileToolBar featuredPromo={featuredPromo} />
+
+      <StickyDesktopToolBar
+        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
+      />
     </div>
   );
 }

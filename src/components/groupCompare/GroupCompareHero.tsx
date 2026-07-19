@@ -53,6 +53,11 @@ function GroupCompareToolCard({ tool, bestFor }: { tool: CompareToolFacts; bestF
         </p>
       )}
 
+      {/* Fills any leftover height so the CTA lands on the same baseline
+          across all cards, regardless of how much text (rating, pricing,
+          bestFor length) precedes it in a given card. */}
+      <div className="flex-1" />
+
       {outboundCta && (
         <a
           href={outboundCta}
@@ -80,7 +85,7 @@ export default function GroupCompareHero({ title, tools, bestFor }: { title: str
 
       <h1 className="text-2xl sm:text-4xl font-bold text-[#0B1221] tracking-tight text-center mb-8">{title}</h1>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap items-stretch justify-center gap-4">
         {tools.map((tool) => (
           <GroupCompareToolCard key={tool.slug} tool={tool} bestFor={bestFor[tool.slug]} />
         ))}

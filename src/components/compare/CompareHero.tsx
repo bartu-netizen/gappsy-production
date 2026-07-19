@@ -23,7 +23,7 @@ function ToolIdentity({
   const outboundCta = cta ? buildOutboundUrl(cta) : null;
 
   return (
-    <div className="flex-1 min-w-0 flex flex-col items-center text-center">
+    <div className="flex-1 min-w-0 flex flex-col items-center text-center h-full">
       <div className="relative mb-3">
         <div
           className="absolute -inset-3 -z-10 rounded-full opacity-60 blur-xl"
@@ -83,6 +83,10 @@ function ToolIdentity({
           {bestFor}
         </p>
       )}
+
+      {/* Fills any leftover height so the CTA lands on the same baseline
+          for both cards, regardless of how much text precedes it. */}
+      <div className="flex-1" />
 
       <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
         {outboundCta && (
