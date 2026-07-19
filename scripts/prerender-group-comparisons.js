@@ -6,6 +6,16 @@ import { createClient } from '@supabase/supabase-js';
 import { build as esbuildBuild } from 'esbuild';
 import { injectToolSEOTags } from './tool-seo-generator.js';
 import { generateGroupComparisonSEOData, generateGroupComparisonJSONLD, generateGroupComparisonStaticBodyHTML } from './group-comparison-seo-generator.js';
+import {
+  buildFactsFlags,
+  fetchTagsByToolId,
+  fetchCategoriesByToolId,
+  fetchPricingPlansByToolId,
+  fetchProsByToolId,
+  fetchConsByToolId,
+  fetchUseCasesByToolId,
+  fetchScreenshotsByToolId,
+} from './compare-prerender-shared.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, '..');
@@ -46,7 +56,7 @@ async function fetchPublishedGroupComparisons(supabase) {
   const { data, error } = await supabase
     .from('tool_group_comparisons')
     .select(
-      'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, tools(id,slug,name,logo,pricing_model,starting_price,status))'
+      'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, tools(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status))'
     )
     .eq('status', 'published')
     .order('slug', { ascending: true });
@@ -96,6 +106,43 @@ export async function prerenderGroupComparisons(options = {}) {
 
   const getGroupComparisonContent = await loadGetGroupComparisonContent();
 
+  // Same enrichment fetchToolExtras + buildFacts provide client-side for
+  // GroupCompareDetailPage.tsx, fetched once for every member tool across
+  // every group comparison rather than per-page, then merged in below —
+  // this is what makes At a Glance / Pricing / Pros & Cons / Use Cases /
+  // Screenshots actually non-empty in the crawlable static HTML.
+  const toolIds = [...new Set(groupComparisons.flatMap((g) => g.tools.map((t) => t.id)))];
+  const [tagsByToolId, categoriesByToolId, plansByToolId, prosByToolId, consByToolId, useCasesByToolId, screenshotsByToolId] = await Promise.all([
+    fetchTagsByToolId(supabase, toolIds),
+    fetchCategoriesByToolId(supabase, toolIds),
+    fetchPricingPlansByToolId(supabase, toolIds),
+    fetchProsByToolId(supabase, toolIds),
+    fetchConsByToolId(supabase, toolIds),
+    fetchUseCasesByToolId(supabase, toolIds),
+    fetchScreenshotsByToolId(supabase, toolIds),
+  ]);
+
+  // Index group comparisons by the tool IDs they involve, so each page can
+  // list sibling comparisons that share a member (mirrors the live
+  // GroupCompareDetailPage.tsx "Related Comparisons" section, but crawlable).
+  const groupComparisonsByToolId = new Map();
+  for (const g of groupComparisons) {
+    for (const tool of g.tools) {
+      const list = groupComparisonsByToolId.get(tool.id) || [];
+      list.push(g);
+      groupComparisonsByToolId.set(tool.id, list);
+    }
+  }
+  function findRelatedGroupComparisons(groupComparison) {
+    const siblings = new Map();
+    for (const tool of groupComparison.tools) {
+      for (const other of groupComparisonsByToolId.get(tool.id) || []) {
+        if (other.slug !== groupComparison.slug) siblings.set(other.slug, other);
+      }
+    }
+    return [...siblings.values()].sort((a, b) => a.slug.localeCompare(b.slug)).slice(0, 4);
+  }
+
   let successCount = 0;
   let errorCount = 0;
   const failedGroupComparisons = [];
@@ -111,17 +158,41 @@ export async function prerenderGroupComparisons(options = {}) {
         throw new Error(`group comparison "${groupComparison.slug}" has fewer than ${MIN_GROUP_COMPARISON_TOOLS} published tools`);
       }
 
+      const enrichedTools = groupComparison.tools.map((t) => ({
+        id: t.id,
+        slug: t.slug,
+        name: t.name,
+        logo: t.logo,
+        pricingModel: t.pricing_model || null,
+        startingPrice: t.starting_price || null,
+        rating: t.rating || 0,
+        reviewCount: t.review_count || 0,
+        category: categoriesByToolId.get(t.id) || null,
+        plans: plansByToolId.get(t.id) || [],
+        pros: prosByToolId.get(t.id) || [],
+        cons: consByToolId.get(t.id) || [],
+        useCases: useCasesByToolId.get(t.id) || [],
+        screenshots: screenshotsByToolId.get(t.id) || [],
+        ...buildFactsFlags(tagsByToolId.get(t.id) || new Set()),
+      }));
+
       const groupComparisonContent = getGroupComparisonContent(groupComparison.slug);
-      const seoData = generateGroupComparisonSEOData({ groupComparison, tools: groupComparison.tools, groupComparisonContent });
+      const seoData = generateGroupComparisonSEOData({ groupComparison, tools: enrichedTools, groupComparisonContent });
       const jsonLd = generateGroupComparisonJSONLD({
         groupComparison,
-        tools: groupComparison.tools,
+        tools: enrichedTools,
         groupComparisonContent,
         seoData,
         createdAt: groupComparison.created_at,
         updatedAt: groupComparison.updated_at,
       });
-      const staticBodyHTML = generateGroupComparisonStaticBodyHTML({ groupComparison, tools: groupComparison.tools, groupComparisonContent, seoData });
+      const staticBodyHTML = generateGroupComparisonStaticBodyHTML({
+        groupComparison,
+        tools: enrichedTools,
+        groupComparisonContent,
+        seoData,
+        relatedGroupComparisons: findRelatedGroupComparisons(groupComparison),
+      });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
 
       const groupComparisonDir = join(distDir, 'compare', groupComparison.slug);

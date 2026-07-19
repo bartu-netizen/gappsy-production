@@ -9,9 +9,14 @@ import TableOfContents, { type TocSection } from '../components/tools/detail/Tab
 import GroupCompareHero from '../components/groupCompare/GroupCompareHero';
 import GroupCompareHighlights from '../components/groupCompare/GroupCompareHighlights';
 import GroupCompareFeatureMatrix from '../components/groupCompare/GroupCompareFeatureMatrix';
+import GroupCompareFactsTable from '../components/groupCompare/GroupCompareFactsTable';
+import GroupComparePricing from '../components/groupCompare/GroupComparePricing';
+import GroupCompareProsCons from '../components/groupCompare/GroupCompareProsCons';
+import GroupCompareUseCases from '../components/groupCompare/GroupCompareUseCases';
+import GroupCompareScreenshots from '../components/groupCompare/GroupCompareScreenshots';
 import GroupCompareCard from '../components/groupCompare/GroupCompareCard';
 import ComparisonCard from '../components/compare/ComparisonCard';
-import { fetchToolExtras, buildFacts, type ToolRow } from '../components/compare/compareToolFacts';
+import { fetchToolExtras, buildFacts, type ToolRow, type ToolExtras } from '../components/compare/compareToolFacts';
 import type { CompareToolFacts } from '../components/compare/types';
 import { supabase } from '../lib/supabase';
 import { getGroupComparisonContent } from '../data/groupComparisonContent';
@@ -52,6 +57,7 @@ export default function GroupCompareDetailPage() {
   const { comparisonSlug: groupSlug } = useParams<{ comparisonSlug: string }>();
   const [groupComparison, setGroupComparison] = useState<GroupComparisonRow | null>(null);
   const [facts, setFacts] = useState<CompareToolFacts[]>([]);
+  const [extrasList, setExtrasList] = useState<ToolExtras[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -77,6 +83,7 @@ export default function GroupCompareDetailPage() {
         setGroupComparison({ ...row, tool_group_comparison_members: members });
         const extras = await Promise.all(members.map((m) => fetchToolExtras(m.tools.id)));
         setFacts(members.map((m, i) => buildFacts(m.tools, extras[i])));
+        setExtrasList(extras);
         setLoading(false);
       });
   }, [groupSlug]);
@@ -135,15 +142,17 @@ export default function GroupCompareDetailPage() {
   }, [groupComparison]);
 
   // Same featured-ad mechanism as ToolDetailPage/CompareDetailPage: a pool
-  // of up to 6, excluding all 3 tools in this comparison, distributed across
-  // a couple of sidebar slots (desktop, below the TOC), two inline
-  // mid-content cards, and the sticky footer bars.
+  // of up to 7, excluding all 3 tools in this comparison, distributed across
+  // a couple of sidebar slots (desktop, below the TOC), three inline
+  // mid-content cards spread across the now much longer page, and the
+  // sticky footer bars — never stacked back-to-back.
   const featuredExcludeSlugs = facts.map((f) => f.slug);
-  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 6);
+  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 7);
   const featuredPromo = featuredPool?.[0];
   const featuredPromoSecondary = featuredPool?.[1];
   const inlineFeaturedPromoA = featuredPool?.[2];
   const inlineFeaturedPromoB = featuredPool?.[3];
+  const inlineFeaturedPromoC = featuredPool?.[4];
   const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
 
   if (loading) {
@@ -230,10 +239,27 @@ export default function GroupCompareDetailPage() {
 
   const itemListJsonLd = buildCompareItemListJsonLd(facts, canonicalUrl);
 
+  const plansByTool: Record<string, typeof extrasList[number]['pricingPlans']> = Object.fromEntries(
+    facts.map((f, i) => [f.slug, extrasList[i]?.pricingPlans || []])
+  );
+  const prosConsByTool = facts.map((f, i) => ({ slug: f.slug, name: f.name, pros: extrasList[i]?.pros || [], cons: extrasList[i]?.cons || [] }));
+  const useCasesByTool = facts.map((f, i) => ({ slug: f.slug, name: f.name, useCases: extrasList[i]?.useCases || [] }));
+  const screenshotsByTool = facts.map((f, i) => ({ slug: f.slug, name: f.name, screenshots: extrasList[i]?.screenshots || [], websiteUrl: f.websiteUrl }));
+
+  const hasPricing = extrasList.some((e) => e.pricingPlans.length > 0) || facts.some((f) => f.pricingModel || f.startingPrice);
+  const hasProsCons = extrasList.some((e) => e.pros.length > 0 || e.cons.length > 0);
+  const hasUseCases = extrasList.some((e) => e.useCases.length > 0) || facts.some((f) => groupComparisonContent?.bestFor[f.slug]);
+  const hasScreenshots = extrasList.some((e) => e.screenshots.length > 0);
+
   const tocSections: TocSection[] = [
     ...(groupComparisonContent ? [{ id: 'verdict', label: 'Verdict' }] : []),
+    { id: 'at-a-glance', label: 'At a Glance' },
     ...(groupComparisonContent?.highlights.length ? [{ id: 'highlights', label: 'Highlights' }] : []),
     ...(groupComparisonContent?.featureMatrix.length ? [{ id: 'features', label: 'Features' }] : []),
+    ...(hasPricing ? [{ id: 'pricing', label: 'Pricing' }] : []),
+    ...(hasProsCons ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
+    ...(hasUseCases ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
+    ...(hasScreenshots ? [{ id: 'screenshots', label: 'Screenshots' }] : []),
     ...(groupComparisonContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(relatedGroupComparisons.length > 0 || relatedPairComparisons.length > 0 ? [{ id: 'related-comparisons', label: 'Related Comparisons' }] : []),
   ];
@@ -290,13 +316,25 @@ export default function GroupCompareDetailPage() {
               </section>
             )}
 
+            <GroupCompareFactsTable tools={facts} bestFor={groupComparisonContent?.bestFor || {}} />
+
             {groupComparisonContent && <GroupCompareHighlights toolNames={toolNames} highlights={groupComparisonContent.highlights} />}
 
             {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
 
             {groupComparisonContent && <GroupCompareFeatureMatrix toolNames={toolNames} groups={groupComparisonContent.featureMatrix} />}
 
+            {hasPricing && <GroupComparePricing tools={facts} plansByTool={plansByTool} />}
+
             {inlineFeaturedPromoB && <FeaturedToolInlineCard tool={inlineFeaturedPromoB} />}
+
+            <GroupCompareProsCons tools={prosConsByTool} />
+
+            <GroupCompareUseCases tools={useCasesByTool} bestFor={groupComparisonContent?.bestFor || {}} />
+
+            {inlineFeaturedPromoC && <FeaturedToolInlineCard tool={inlineFeaturedPromoC} />}
+
+            <GroupCompareScreenshots tools={screenshotsByTool} />
 
             {groupComparisonContent && groupComparisonContent.faqs.length > 0 && (
               <section id="faq" className="scroll-mt-24">

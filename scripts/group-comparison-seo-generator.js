@@ -77,8 +77,18 @@ export function generateGroupComparisonJSONLD({ groupComparison, tools, groupCom
 
 const NOT_DOCUMENTED = 'Not documented';
 const FEATURE_STATUS_LABEL = { available: 'Available', limited: 'Limited', unavailable: 'Unavailable', 'not-documented': NOT_DOCUMENTED };
+const yesOrUnknown = (value) => (value ? 'Yes' : NOT_DOCUMENTED);
 
-export function generateGroupComparisonStaticBodyHTML({ groupComparison, tools, groupComparisonContent, seoData }) {
+function factsRow(label, values) {
+  return `<tr><th scope="row" style="text-align:left;padding:0.6rem 0.9rem;color:#6B7280;font-weight:500;">${escapeHtml(label)}</th>${values.map((v) => `<td style="padding:0.6rem 0.9rem;color:#374151;">${escapeHtml(v)}</td>`).join('')}</tr>`;
+}
+
+// `tools` items here carry more than the base id/slug/name/logo/pricing
+// fields used elsewhere in this file — the prerender script merges in
+// category, rating, reviewCount, the hasX tag-derived flags, platforms,
+// plans, pros, cons, useCases, and screenshots per tool (mirrors what
+// fetchToolExtras + buildFacts assemble client-side for GroupCompareDetailPage).
+export function generateGroupComparisonStaticBodyHTML({ groupComparison, tools, groupComparisonContent, seoData, relatedGroupComparisons = [] }) {
   const toolCardsHTML = `
     <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:1.5rem 0;">
       ${tools
@@ -91,6 +101,24 @@ export function generateGroupComparisonStaticBodyHTML({ groupComparison, tools, 
         )
         .join('')}
     </div>`;
+
+  const factsTableHTML = `
+    <h2 id="at-a-glance" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">At a Glance</h2>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;">
+      <thead><tr style="background:#F9FAFB;"><th scope="col" style="text-align:left;padding:0.6rem 0.9rem;">&nbsp;</th>${tools.map((t) => `<th scope="col" style="text-align:left;padding:0.6rem 0.9rem;">${escapeHtml(t.name)}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${factsRow('Primary category', tools.map((t) => t.category?.name || NOT_DOCUMENTED))}
+        ${factsRow('Rating', tools.map((t) => (t.rating > 0 ? `${t.rating.toFixed(1)} (${t.reviewCount || 0})` : NOT_DOCUMENTED)))}
+        ${factsRow('Pricing model', tools.map((t) => t.pricingModel || NOT_DOCUMENTED))}
+        ${factsRow('Starting price', tools.map((t) => t.startingPrice || NOT_DOCUMENTED))}
+        ${factsRow('Free plan', tools.map((t) => yesOrUnknown(t.hasFreePlan)))}
+        ${factsRow('Free trial', tools.map((t) => yesOrUnknown(t.hasFreeTrial)))}
+        ${factsRow('Platforms', tools.map((t) => ((t.platforms || []).length ? t.platforms.join(', ') : NOT_DOCUMENTED)))}
+        ${factsRow('Team collaboration', tools.map((t) => yesOrUnknown(t.hasTeamCollaboration)))}
+        ${factsRow('AI features', tools.map((t) => yesOrUnknown(t.hasAI)))}
+        ${factsRow('Public API', tools.map((t) => yesOrUnknown(t.hasApi)))}
+      </tbody>
+    </table>`;
 
   const highlightsHTML = groupComparisonContent?.highlights?.length
     ? `<h2 id="highlights" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Standout Differences</h2>
@@ -123,6 +151,97 @@ export function generateGroupComparisonStaticBodyHTML({ groupComparison, tools, 
         .join('\n      ')}`
     : '';
 
+  const pricingColumn = (plans = []) =>
+    plans.length
+      ? plans
+          .map(
+            (p) =>
+              `<div style="border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem;margin-bottom:0.5rem;"><strong>${escapeHtml(p.plan_name || 'Plan')}</strong> — ${escapeHtml(p.price || 'Custom')}${p.billing_cycle ? ` ${escapeHtml(p.billing_cycle)}` : ''}</div>`
+          )
+          .join('')
+      : `<p style="color:#6B7280;">No individual plan breakdown documented yet.</p>`;
+
+  const hasPricing = tools.some((t) => (t.plans || []).length > 0 || t.pricingModel || t.startingPrice);
+  const pricingHTML = hasPricing
+    ? `<h2 id="pricing" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Pricing Compared</h2>
+    <p style="color:#6B7280;font-size:0.9rem;margin-bottom:1rem;">Starting price reflects the lowest paid tier, not the full cost for every team size or usage level.</p>
+    <div style="display:grid;grid-template-columns:${tools.map(() => '1fr').join(' ')};gap:1rem;">
+      ${tools.map((t) => `<div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(t.name)}</h3>${pricingColumn(t.plans)}</div>`).join('')}
+    </div>`
+    : '';
+
+  const prosConsColumn = (pros = [], cons = []) => `
+      ${pros.length ? `<p style="font-weight:600;color:#047857;margin-bottom:0.35rem;">Pros</p><ul style="list-style:disc;padding-left:1.25rem;margin-bottom:0.75rem;">${pros.slice(0, 6).map((p) => `<li style="color:#374151;margin-bottom:0.25rem;">${escapeHtml(p)}</li>`).join('')}</ul>` : ''}
+      ${cons.length ? `<p style="font-weight:600;color:#BE123C;margin-bottom:0.35rem;">Cons</p><ul style="list-style:disc;padding-left:1.25rem;">${cons.slice(0, 6).map((c) => `<li style="color:#374151;margin-bottom:0.25rem;">${escapeHtml(c)}</li>`).join('')}</ul>` : ''}`;
+
+  const hasProsCons = tools.some((t) => (t.pros || []).length || (t.cons || []).length);
+  const prosConsHTML = hasProsCons
+    ? `<h2 id="pros-and-cons" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Pros &amp; Cons</h2>
+      <div style="display:grid;grid-template-columns:${tools.map(() => '1fr').join(' ')};gap:1rem;">
+        ${tools.map((t) => `<div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(t.name)}</h3>${prosConsColumn(t.pros, t.cons)}</div>`).join('')}
+      </div>`
+    : '';
+
+  const useCasesColumn = (useCases = []) =>
+    useCases.length
+      ? `<ul style="list-style:disc;padding-left:1.25rem;">${useCases.slice(0, 4).map((u) => `<li style="color:#374151;margin-bottom:0.35rem;"><strong>${escapeHtml(u.title)}</strong> — ${escapeHtml(u.description)}</li>`).join('')}</ul>`
+      : '';
+
+  const whoShouldChooseHTML = groupComparisonContent?.bestFor
+    ? `<div style="display:grid;grid-template-columns:${tools.map(() => '1fr').join(' ')};gap:0.75rem;margin-bottom:1rem;">
+        ${tools
+          .filter((t) => groupComparisonContent.bestFor[t.slug])
+          .map((t) => `<div style="border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem;"><strong>Choose ${escapeHtml(t.name)}:</strong> ${escapeHtml(groupComparisonContent.bestFor[t.slug])}</div>`)
+          .join('')}
+      </div>`
+    : '';
+
+  const hasUseCases = tools.some((t) => (t.useCases || []).length > 0);
+  const useCasesHTML =
+    hasUseCases || groupComparisonContent?.bestFor
+      ? `<h2 id="use-cases" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Use Cases</h2>
+      ${whoShouldChooseHTML}
+      ${
+        hasUseCases
+          ? `<div style="display:grid;grid-template-columns:${tools.map(() => '1fr').join(' ')};gap:1rem;">
+        ${tools.map((t) => `<div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(t.name)}</h3>${useCasesColumn(t.useCases)}</div>`).join('')}
+      </div>`
+          : ''
+      }`
+      : '';
+
+  const hasScreenshots = tools.some((t) => (t.screenshots || []).length > 0);
+  const screenshotsHTML = hasScreenshots
+    ? `<h2 id="screenshots" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Screenshots</h2>
+      ${tools
+        .filter((t) => (t.screenshots || []).length > 0)
+        .map(
+          (t) => `<h3 style="font-weight:600;color:#111827;margin-top:1rem;margin-bottom:0.5rem;">${escapeHtml(t.name)}</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+          ${t.screenshots
+            .slice(0, 6)
+            .map(
+              (s) =>
+                `<img src="${escapeHtml(s.image_url)}" alt="${escapeHtml(s.caption || `${t.name} screenshot`)}" loading="lazy" style="width:220px;height:140px;object-fit:cover;border-radius:0.5rem;border:1px solid #E5E7EB;" />`
+            )
+            .join('')}
+        </div>`
+        )
+        .join('\n      ')}`
+    : '';
+
+  const relatedComparisonsHTML = relatedGroupComparisons.length
+    ? `<h2 id="related-comparisons" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Related Comparisons</h2>
+      <ul style="list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        ${relatedGroupComparisons
+          .map(
+            (c) =>
+              `<li style="border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem;"><a href="/compare/${escapeHtml(c.slug)}/" style="color:#4F46E5;font-weight:500;">${escapeHtml(c.title)}</a></li>`
+          )
+          .join('')}
+      </ul>`
+    : '';
+
   const faqHTML = groupComparisonContent?.faqs?.length
     ? `<h2 id="faq" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Frequently Asked Questions</h2>
       <div>${groupComparisonContent.faqs.map((faq) => `<details style="margin-bottom:0.75rem;border:1px solid #E5E7EB;border-radius:0.5rem;padding:0.75rem 1rem;"><summary style="font-weight:600;cursor:pointer;">${escapeHtml(faq.question)}</summary><p style="margin-top:0.5rem;color:#374151;line-height:1.6;">${escapeHtml(faq.answer)}</p></details>`).join('\n        ')}</div>`
@@ -141,9 +260,15 @@ export function generateGroupComparisonStaticBodyHTML({ groupComparison, tools, 
       <h1 style="font-size:2.25rem;font-weight:800;margin-bottom:1rem;color:#111827;">${escapeHtml(groupComparison.title)}</h1>
       ${seoData.description ? `<p id="verdict" style="font-size:1.15rem;color:#374151;line-height:1.6;margin-bottom:1rem;">${escapeHtml(seoData.description)}</p>` : ''}
       ${toolCardsHTML}
+      ${factsTableHTML}
       ${highlightsHTML}
       ${featureMatrixHTML}
+      ${pricingHTML}
+      ${prosConsHTML}
+      ${useCasesHTML}
+      ${screenshotsHTML}
       ${faqHTML}
+      ${relatedComparisonsHTML}
       ${exploreMoreHTML}
       <noscript>
         <p style="background:#FEF3C7;border:1px solid #F59E0B;padding:1rem;border-radius:0.5rem;margin-top:2rem;">

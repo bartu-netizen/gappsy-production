@@ -98,6 +98,12 @@ export function generateComparisonStaticBodyHTML({
   categoryB,
   plansA = [],
   plansB = [],
+  prosA = [],
+  consA = [],
+  useCasesA = [],
+  prosB = [],
+  consB = [],
+  useCasesB = [],
   contentA,
   contentB,
   comparisonContent,
@@ -178,14 +184,14 @@ export function generateComparisonStaticBodyHTML({
       ${pros.length ? `<p style="font-weight:600;color:#047857;margin-bottom:0.35rem;">Pros</p><ul style="list-style:disc;padding-left:1.25rem;margin-bottom:0.75rem;">${pros.slice(0, 6).map((p) => `<li style="color:#374151;margin-bottom:0.25rem;">${escapeHtml(p)}</li>`).join('')}</ul>` : ''}
       ${cons.length ? `<p style="font-weight:600;color:#BE123C;margin-bottom:0.35rem;">Cons</p><ul style="list-style:disc;padding-left:1.25rem;">${cons.slice(0, 6).map((c) => `<li style="color:#374151;margin-bottom:0.25rem;">${escapeHtml(c)}</li>`).join('')}</ul>` : ''}`;
 
-  const hasProsConsA = (contentA?.pros?.length || contentA?.cons?.length) > 0;
-  const hasProsConsB = (contentB?.pros?.length || contentB?.cons?.length) > 0;
+  const hasProsConsA = (prosA?.length || consA?.length) > 0;
+  const hasProsConsB = (prosB?.length || consB?.length) > 0;
   const prosConsHTML =
     hasProsConsA || hasProsConsB
       ? `<h2 id="pros-and-cons" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Pros &amp; Cons</h2>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolA.name)}</h3>${prosConsColumn(contentA?.pros, contentA?.cons)}</div>
-        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolB.name)}</h3>${prosConsColumn(contentB?.pros, contentB?.cons)}</div>
+        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolA.name)}</h3>${prosConsColumn(prosA, consA)}</div>
+        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolB.name)}</h3>${prosConsColumn(prosB, consB)}</div>
       </div>`
       : '';
 
@@ -202,7 +208,7 @@ export function generateComparisonStaticBodyHTML({
       </div>`
     : '';
 
-  const hasUseCases = (contentA?.useCases?.length || contentB?.useCases?.length) > 0;
+  const hasUseCases = (useCasesA?.length || useCasesB?.length) > 0;
   const useCasesHTML =
     hasUseCases || comparisonContent
       ? `<h2 id="use-cases" style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Use Cases</h2>
@@ -210,8 +216,8 @@ export function generateComparisonStaticBodyHTML({
       ${
         hasUseCases
           ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolA.name)}</h3>${useCasesColumn(contentA?.useCases)}</div>
-        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolB.name)}</h3>${useCasesColumn(contentB?.useCases)}</div>
+        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolA.name)}</h3>${useCasesColumn(useCasesA)}</div>
+        <div><h3 style="font-weight:600;color:#111827;margin-bottom:0.5rem;">${escapeHtml(toolB.name)}</h3>${useCasesColumn(useCasesB)}</div>
       </div>`
           : ''
       }`

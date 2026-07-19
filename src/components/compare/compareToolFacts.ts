@@ -5,6 +5,7 @@
 import { PLATFORM_TAGS } from '../tools/detail/ToolFactsSidebar';
 import type { TaxonomyRef, ScreenshotItem, PricingPlanItem } from '../tools/detail/types';
 import type { CompareToolFacts } from './types';
+import type { ToolUseCase } from '../../data/toolContent/types';
 import { supabase } from '../../lib/supabase';
 
 export interface ToolRow {
@@ -27,9 +28,26 @@ export interface ToolExtras {
   integrationCount: number;
   pricingPlans: PricingPlanItem[];
   screenshots: ScreenshotItem[];
+  // Live from tool_pros/tool_cons/tool_use_cases — unlike toolContent's
+  // getToolContent() (a hand-authored file registry that only covers a
+  // couple of flagship tools), these work for every published tool, so
+  // compare pages no longer silently render an empty Pros & Cons / Use
+  // Cases section for the vast majority of comparisons.
+  pros: string[];
+  cons: string[];
+  useCases: ToolUseCase[];
 }
 
-export const EMPTY_EXTRAS: ToolExtras = { primaryCategory: null, tagSlugs: new Set(), integrationCount: 0, pricingPlans: [], screenshots: [] };
+export const EMPTY_EXTRAS: ToolExtras = {
+  primaryCategory: null,
+  tagSlugs: new Set(),
+  integrationCount: 0,
+  pricingPlans: [],
+  screenshots: [],
+  pros: [],
+  cons: [],
+  useCases: [],
+};
 
 export function isSafeHttpUrl(value: string | null | undefined): value is string {
   if (!value) return false;
@@ -43,7 +61,7 @@ export function isSafeHttpUrl(value: string | null | undefined): value is string
 }
 
 export async function fetchToolExtras(toolId: string): Promise<ToolExtras> {
-  const [catResult, tagResult, integrationsResult, pricingResult, screenshotsResult] = await Promise.all([
+  const [catResult, tagResult, integrationsResult, pricingResult, screenshotsResult, prosResult, consResult, useCasesResult] = await Promise.all([
     supabase
       .from('tool_category_links')
       .select('primary_category, tool_categories!inner(id, slug, name, status)')
@@ -57,6 +75,9 @@ export async function fetchToolExtras(toolId: string): Promise<ToolExtras> {
       .eq('tool_id', toolId)
       .order('sort_order', { ascending: true }),
     supabase.from('tool_screenshots').select('id, image_url, caption').eq('tool_id', toolId).order('sort_order', { ascending: true }),
+    supabase.from('tool_pros').select('text').eq('tool_id', toolId).order('sort_order', { ascending: true }),
+    supabase.from('tool_cons').select('text').eq('tool_id', toolId).order('sort_order', { ascending: true }),
+    supabase.from('tool_use_cases').select('title, description, audience').eq('tool_id', toolId).order('sort_order', { ascending: true }),
   ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,6 +94,9 @@ export async function fetchToolExtras(toolId: string): Promise<ToolExtras> {
     integrationCount: integrationsResult.count || 0,
     pricingPlans: (pricingResult.data || []).map((p) => ({ ...p, features: Array.isArray(p.features) ? p.features : [] })),
     screenshots: (screenshotsResult.data || []).filter((s) => isSafeHttpUrl(s.image_url)),
+    pros: (prosResult.data || []).map((r) => r.text),
+    cons: (consResult.data || []).map((r) => r.text),
+    useCases: (useCasesResult.data || []).map((u) => ({ title: u.title, description: u.description || '', audience: u.audience || '' })),
   };
 }
 

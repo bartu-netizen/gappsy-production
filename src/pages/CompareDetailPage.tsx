@@ -279,8 +279,8 @@ export default function CompareDetailPage() {
     ...(comparisonContent?.keyDifferences.length ? [{ id: 'differences', label: 'Differences' }] : []),
     ...(comparisonContent?.featureMatrix.length ? [{ id: 'features', label: 'Features' }] : []),
     { id: 'pricing', label: 'Pricing' },
-    ...((contentA?.pros.length || contentA?.cons.length || contentB?.pros.length || contentB?.cons.length) ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
-    ...((contentA?.useCases.length || contentB?.useCases.length || comparisonContent?.whoNeedsBoth) ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
+    ...((extrasA.pros.length || extrasA.cons.length || extrasB.pros.length || extrasB.cons.length) ? [{ id: 'pros-and-cons', label: 'Pros & Cons' }] : []),
+    ...((extrasA.useCases.length || extrasB.useCases.length || comparisonContent?.whoNeedsBoth) ? [{ id: 'use-cases', label: 'Use Cases' }] : []),
     ...(extrasA.screenshots.length || extrasB.screenshots.length ? [{ id: 'screenshots', label: 'Screenshots' }] : []),
     ...((contentA?.alternatives.length || contentB?.alternatives.length) ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(comparisonContent?.faqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
@@ -378,15 +378,15 @@ export default function CompareDetailPage() {
             <ComparePricing toolA={factsA} toolB={factsB} plansA={extrasA.pricingPlans} plansB={extrasB.pricingPlans} />
 
             <CompareProsCons
-              toolA={{ name: aRow.name, pros: contentA?.pros || [], cons: contentA?.cons || [] }}
-              toolB={{ name: bRow.name, pros: contentB?.pros || [], cons: contentB?.cons || [] }}
+              toolA={{ name: aRow.name, pros: extrasA.pros, cons: extrasA.cons }}
+              toolB={{ name: bRow.name, pros: extrasB.pros, cons: extrasB.cons }}
             />
 
             {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
 
             <CompareUseCases
-              toolA={{ name: aRow.name, useCases: contentA?.useCases || [] }}
-              toolB={{ name: bRow.name, useCases: contentB?.useCases || [] }}
+              toolA={{ name: aRow.name, useCases: extrasA.useCases }}
+              toolB={{ name: bRow.name, useCases: extrasB.useCases }}
               whoShouldChooseA={comparisonContent?.bestForToolA}
               whoShouldChooseB={comparisonContent?.bestForToolB}
               whoNeedsBoth={comparisonContent?.whoNeedsBoth}

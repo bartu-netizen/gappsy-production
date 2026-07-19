@@ -5,26 +5,22 @@ import { tmpdir } from 'os';
 import { createClient } from '@supabase/supabase-js';
 import { build as esbuildBuild } from 'esbuild';
 import { injectToolSEOTags } from './tool-seo-generator.js';
-import { loadGetToolContent, fetchInChunks } from './prerender-tools.js';
+import { loadGetToolContent } from './prerender-tools.js';
 import { generateComparisonSEOData, generateComparisonJSONLD, generateComparisonStaticBodyHTML } from './comparison-seo-generator.js';
+import {
+  buildFactsFlags,
+  fetchTagsByToolId,
+  fetchCategoriesByToolId,
+  fetchPricingPlansByToolId,
+  fetchProsByToolId,
+  fetchConsByToolId,
+  fetchUseCasesByToolId,
+} from './compare-prerender-shared.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, '..');
 
 const SLUG_PATTERN = /^[a-z0-9-]+$/;
-
-// Mirrors src/components/tools/detail/ToolFactsSidebar.tsx's PLATFORM_TAGS —
-// tag slugs with no dedicated `tools` column, read from tool_tag_links.
-const PLATFORM_TAG_LABELS = {
-  'web-app': 'Web',
-  ios: 'iOS',
-  android: 'Android',
-  mac: 'Mac',
-  windows: 'Windows',
-  'chrome-extension': 'Browser Extension',
-  'desktop-app': 'Desktop App',
-  'mobile-app': 'Mobile App',
-};
 
 function initSupabase() {
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -72,64 +68,13 @@ async function fetchPublishedComparisons(supabase) {
   return (data || []).filter((c) => c.tool_a?.status === 'published' && c.tool_b?.status === 'published');
 }
 
-async function fetchTagsByToolId(supabase, toolIds) {
-  if (toolIds.length === 0) return new Map();
-  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase.from('tool_tag_links').select('tool_id, tool_tags(slug)').in('tool_id', ids));
-  if (error) throw new Error(`Failed to fetch tool tags: ${error.message}`);
-  const map = new Map();
-  for (const row of data || []) {
-    const slugs = map.get(row.tool_id) || new Set();
-    if (row.tool_tags?.slug) slugs.add(row.tool_tags.slug);
-    map.set(row.tool_id, slugs);
-  }
-  return map;
-}
-
-async function fetchCategoriesByToolId(supabase, toolIds) {
-  if (toolIds.length === 0) return new Map();
-  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase
-    .from('tool_category_links')
-    .select('tool_id, primary_category, tool_categories!inner(slug, name, status)')
-    .in('tool_id', ids)
-    .eq('tool_categories.status', 'published'));
-  if (error) throw new Error(`Failed to fetch tool categories: ${error.message}`);
-  const map = new Map();
-  for (const row of data || []) {
-    const existing = map.get(row.tool_id);
-    if (!existing || row.primary_category) map.set(row.tool_id, row.tool_categories);
-  }
-  return map;
-}
-
-async function fetchPricingPlansByToolId(supabase, toolIds) {
-  if (toolIds.length === 0) return new Map();
-  const { data, error } = await fetchInChunks(toolIds, (ids) => supabase
-    .from('tool_pricing_plans')
-    .select('tool_id, plan_name, price, billing_cycle, sort_order')
-    .in('tool_id', ids)
-    .order('sort_order', { ascending: true }));
-  if (error) throw new Error(`Failed to fetch tool pricing plans: ${error.message}`);
-  const map = new Map();
-  for (const row of data || []) {
-    const list = map.get(row.tool_id) || [];
-    list.push(row);
-    map.set(row.tool_id, list);
-  }
-  return map;
-}
-
 function buildFacts(tool, tagSlugs) {
   return {
     rating: tool.rating || 0,
     reviewCount: tool.review_count || 0,
     pricingModel: tool.pricing_model || null,
     startingPrice: tool.starting_price || null,
-    hasFreePlan: tagSlugs.has('free-plan') || tagSlugs.has('freemium'),
-    hasFreeTrial: tagSlugs.has('free-trial'),
-    hasApi: tagSlugs.has('api'),
-    hasAI: tagSlugs.has('ai'),
-    hasTeamCollaboration: tagSlugs.has('real-time-collaboration') || tagSlugs.has('team-management'),
-    platforms: Object.entries(PLATFORM_TAG_LABELS).filter(([slug]) => tagSlugs.has(slug)).map(([, label]) => label),
+    ...buildFactsFlags(tagSlugs),
   };
 }
 
@@ -184,10 +129,13 @@ export async function prerenderComparisons(options = {}) {
     }
     return [...siblings.values()].sort((a, b) => a.slug.localeCompare(b.slug)).slice(0, 8);
   }
-  const [tagsByToolId, categoriesByToolId, pricingPlansByToolId] = await Promise.all([
+  const [tagsByToolId, categoriesByToolId, pricingPlansByToolId, prosByToolId, consByToolId, useCasesByToolId] = await Promise.all([
     fetchTagsByToolId(supabase, toolIds),
     fetchCategoriesByToolId(supabase, toolIds),
     fetchPricingPlansByToolId(supabase, toolIds),
+    fetchProsByToolId(supabase, toolIds),
+    fetchConsByToolId(supabase, toolIds),
+    fetchUseCasesByToolId(supabase, toolIds),
   ]);
   const [getComparisonContent, getToolContent] = await Promise.all([loadGetComparisonContent(), loadGetToolContent()]);
 
@@ -229,6 +177,12 @@ export async function prerenderComparisons(options = {}) {
         categoryB: categoriesByToolId.get(toolB.id) || null,
         plansA: pricingPlansByToolId.get(toolA.id) || [],
         plansB: pricingPlansByToolId.get(toolB.id) || [],
+        prosA: prosByToolId.get(toolA.id) || [],
+        consA: consByToolId.get(toolA.id) || [],
+        useCasesA: useCasesByToolId.get(toolA.id) || [],
+        prosB: prosByToolId.get(toolB.id) || [],
+        consB: consByToolId.get(toolB.id) || [],
+        useCasesB: useCasesByToolId.get(toolB.id) || [],
         contentA: getToolContent(toolA.slug),
         contentB: getToolContent(toolB.slug),
         comparisonContent,
