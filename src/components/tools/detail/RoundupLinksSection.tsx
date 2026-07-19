@@ -21,8 +21,8 @@ export default function RoundupLinksSection({ toolName, roundups }: { toolName: 
 
   return (
     <section>
-      <ToolsSectionHeader eyebrow="Roundups" title={`${toolName} in multi-tool roundups`} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <ToolsSectionHeader eyebrow="Roundups" title={`See ${toolName} compared in multi-tool roundups`} />
+      <div className="grid grid-cols-1 gap-3">
         {roundups.map((r) => (
           <RoundupCard key={r.slug} slug={r.slug} title={r.title} tools={r.tools} />
         ))}

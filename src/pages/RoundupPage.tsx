@@ -94,13 +94,13 @@ export default function RoundupPage() {
         <section>
           <ToolsSectionHeader eyebrow="Roundups" title="Published Roundups" />
           {loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               <RoundupCardSkeleton />
               <RoundupCardSkeleton />
             </div>
           )}
           {!loading && roundups.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               {roundups.map((r) => (
                 <RoundupCard key={r.slug} slug={r.slug} title={r.title} tools={r.tools} />
               ))}
