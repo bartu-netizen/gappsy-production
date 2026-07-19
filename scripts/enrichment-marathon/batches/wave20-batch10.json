@@ -1,0 +1,541 @@
+[
+{
+  "tool_id": "b95ba4cb-96d7-4478-9722-2807aa591486",
+  "slug": "permify",
+  "name": "Permify",
+  "enrichment": {
+    "short_description": "Permify is an open-source, Google Zanzibar-inspired authorization engine that lets engineering teams centralize fine-grained permission logic (RBAC, ABAC and ReBAC) outside application code. The project was acquired by FusionAuth in November 2025 and now ships as part of FusionAuth's identity stack.",
+    "pricing_model": "Open Source",
+    "starting_price": "Free (self-hosted Community Edition)",
+    "founded_year": 2022,
+    "company_size": "11-50 employees (pre-acquisition team, now part of FusionAuth)",
+    "headquarters": "Westminster, Colorado, United States",
+    "languages": ["English"],
+    "seo_title": "Permify Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Permify is an open-source Zanzibar-style authorization engine now part of FusionAuth. See features, self-hosting pricing, and top alternatives.",
+    "llm_readable_summary": "Permify is an open-source authorization service built around the ideas in Google's Zanzibar paper, the system Google uses to manage access control for products like Drive, YouTube and Google Cloud. Rather than hard-coding permission checks into application logic, engineering teams model roles, relationships and attributes in a dedicated Permify schema and query a centralized service for real-time access decisions, supporting role-based access control (RBAC), attribute-based access control (ABAC) and relationship-based access control (ReBAC) in one unified policy language. Founded in 2022, Permify grew into a widely adopted open-source project reportedly used by both startups and Fortune 100 companies, processing billions of authorization checks per day across dozens of production deployments before being acquired by identity platform FusionAuth in November 2025. The core Community Edition remains free and open source under the AGPL-3.0 license, and can be self-hosted indefinitely via Docker or Kubernetes with no seat or usage fees; teams that want a managed option can instead use the hosted Permify Cloud service, which historically added backups, high availability and enterprise support. Following the FusionAuth acquisition, commercial and enterprise pricing for Permify now runs through FusionAuth's plans, combining Permify's authorization layer with FusionAuth's authentication and customer identity platform into what the two companies describe as a complete, self-hostable stack for both authentication and authorization. Permify's target users are software engineering, platform and security teams, particularly at B2B SaaS, fintech and enterprise software companies, that have outgrown hard-coded if-else permission checks or simple database role columns and need centralized, auditable, low-latency authorization as their tenancy and permission models grow more complex. Its closest direct competitor is Permit.io, another Zanzibar-inspired authorization platform, though Permit.io is commercial and hosted-first with a low-code policy editor, while Permify leans more heavily into being open source and self-hosted first. Other alternatives include Oso, a policy engine and authorization library; Auth0 FGA and its open-source counterpart OpenFGA, Okta's own Zanzibar-inspired project; and AWS Verified Permissions, Amazon's managed authorization service. Because Permify is developer infrastructure rather than a business tool, its buyers are typically platform engineers, backend developers and security engineers rather than non-technical stakeholders.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Permify is an open-source authorization service built around the ideas in Google's Zanzibar paper, the system Google uses to manage access control for products like Drive, YouTube and Google Cloud. Rather than hard-coding permission checks into application logic, engineering teams model roles, relationships and attributes in a dedicated Permify schema and query a centralized service for real-time access decisions.", "Founded in 2022, Permify grew into a widely adopted open-source project used by both startups and Fortune 100 companies before being acquired by identity platform FusionAuth in November 2025. The core Community Edition remains free, open source under the AGPL-3.0 license, and self-hostable via Docker or Kubernetes."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Permify's core strength is its support for role-based (RBAC), attribute-based (ABAC) and relationship-based (ReBAC) access control through a single unified policy language. This lets teams express complex permission graphs, such as nested organizations, shared folders or delegated admin rights, that traditional role tables struggle to represent.", "The service exposes gRPC and REST APIs for permission checks, bulk permission listing, and access-control-list lookups, with response times designed to stay in the low milliseconds even at large scale. Multi-tenancy support lets a single Permify deployment isolate authorization data and policies per customer or business unit."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Permify's Community Edition is free and open source, and teams can self-host it indefinitely with no seat or usage fees beyond their own infrastructure costs. For teams that prefer a managed option, Permify previously offered Permify Cloud, a hosted, SLA-backed service with backups and enterprise support.", "Following the November 2025 acquisition by FusionAuth, managed and enterprise pricing for Permify is now handled through FusionAuth's commercial plans, so organizations evaluating paid options should contact FusionAuth sales directly for current quotes."]}
+    ],
+    "features": [
+      {"title": "Zanzibar-inspired ReBAC engine", "description": "Implements a Google Zanzibar-style relationship-based access control model for handling deeply nested permission graphs."},
+      {"title": "Unified RBAC, ABAC and ReBAC schema", "description": "Lets teams combine role-based, attribute-based and relationship-based rules in one policy language."},
+      {"title": "Low-latency access checks", "description": "Designed to answer permission check requests in the low milliseconds even at high query volume."},
+      {"title": "Self-hosted Community Edition", "description": "Free, open-source deployment via Docker or Kubernetes with no usage-based licensing fees."},
+      {"title": "Multi-tenant isolation", "description": "Separates authorization data and policies per tenant within a single Permify deployment."},
+      {"title": "gRPC and REST APIs", "description": "Provides language-agnostic APIs and SDKs for integrating permission checks into any backend stack."},
+      {"title": "Audit-friendly permission listing", "description": "Offers bulk lookup endpoints to list what a user can access or who can access a given resource."},
+      {"title": "Backed by FusionAuth", "description": "Since its November 2025 acquisition, Permify is paired with FusionAuth's authentication and CIAM platform."}
+    ],
+    "pros": [
+      "Free, self-hostable open-source core with no per-seat licensing costs",
+      "Handles complex, deeply nested permission relationships that simple role tables cannot express",
+      "Sub-millisecond to low-millisecond permission check performance at scale",
+      "Backed by FusionAuth's engineering resources and support organization since the 2025 acquisition",
+      "Active open-source community with frequent releases"
+    ],
+    "cons": [
+      "AGPL-3.0 licensing can require legal review for companies embedding Permify in proprietary products",
+      "Steeper learning curve than basic RBAC libraries due to the relationship-based modeling approach",
+      "Public, self-serve pricing became less transparent after the FusionAuth acquisition",
+      "Requires teams to operate and maintain additional infrastructure unless using a managed offering",
+      "Long-term standalone product roadmap is now tied to FusionAuth's strategy"
+    ],
+    "faqs": [
+      {"question": "What is Permify?", "answer": "Permify is an open-source authorization service, inspired by Google Zanzibar, that centralizes fine-grained permission logic such as RBAC, ABAC and ReBAC outside of application code."},
+      {"question": "Is Permify free to use?", "answer": "Yes. The Permify Community Edition is free and open source under the AGPL-3.0 license and can be self-hosted indefinitely."},
+      {"question": "Is Permify still an independent company?", "answer": "No. Permify was acquired by identity platform FusionAuth in November 2025 and now operates as Permify, a FusionAuth company."},
+      {"question": "What authorization models does Permify support?", "answer": "Permify supports role-based access control (RBAC), attribute-based access control (ABAC) and relationship-based access control (ReBAC) in a single schema."},
+      {"question": "How is Permify different from Permit.io?", "answer": "Both are Zanzibar-inspired authorization platforms, but Permify is open source and self-hosting first, while Permit.io is a commercial, hosted-first platform with a low-code policy UI and a free managed tier."},
+      {"question": "Can Permify replace OpenFGA or Auth0 FGA?", "answer": "Permify is a comparable alternative to OpenFGA and Auth0 FGA, since all three are open-source, Zanzibar-inspired authorization engines with similar relationship-based modeling approaches."},
+      {"question": "Does Permify require rewriting an existing application?", "answer": "No. Permify is typically integrated incrementally by replacing existing permission checks with calls to the Permify API rather than requiring a full rewrite."},
+      {"question": "What license does Permify use?", "answer": "The Permify Community Edition is released under the AGPL-3.0 open-source license."}
+    ],
+    "use_cases": [
+      {"title": "Multi-tenant SaaS permissions", "description": "B2B SaaS platforms use Permify to manage per-tenant roles and permissions, so each customer organization can define its own access rules without custom code.", "audience": "Platform and backend engineering teams at B2B SaaS companies"},
+      {"title": "Fine-grained document and resource sharing", "description": "Teams building Google-Drive-like sharing features use Permify's ReBAC model to represent nested folder, workspace and delegated-access permissions.", "audience": "Engineering teams building collaboration or content-sharing products"},
+      {"title": "Centralized compliance and audit trails", "description": "Security and compliance teams use Permify's permission-listing APIs to audit who has access to what across an application, supporting regulatory reviews.", "audience": "Security and compliance teams at regulated software companies"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Community Edition", "price": "Free", "billing_cycle": "N/A (self-hosted)", "features": ["Open-source, AGPL-3.0 licensed", "Self-hosted via Docker or Kubernetes", "RBAC, ABAC and ReBAC support", "Community support channels"]},
+      {"plan_name": "Managed / Enterprise (via FusionAuth)", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["SLA-backed managed hosting", "Backups and high availability", "Enterprise support", "Bundled with FusionAuth authentication platform"]}
+    ],
+    "tags": ["authorization", "access-control", "open-source", "developer-tools", "identity-management", "zanzibar"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "7d826762-9d50-46fb-93f2-f3db167ecdd7",
+  "slug": "permit-io",
+  "name": "Permit.io",
+  "enrichment": {
+    "short_description": "Permit.io is a full-stack authorization-as-a-service platform that gives developers a hosted policy engine, embeddable UI components and SDKs to implement RBAC, ABAC and ReBAC access control without building permissions from scratch.",
+    "pricing_model": "Freemium",
+    "starting_price": "Free (up to 1,000 monthly active users); paid plans from $5/month",
+    "founded_year": 2021,
+    "company_size": "11-50 employees",
+    "headquarters": "Tel Aviv, Israel",
+    "languages": ["English"],
+    "seo_title": "Permit.io Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Permit.io is an authorization-as-a-service platform for RBAC, ABAC and ReBAC access control. Compare features, pricing tiers and alternatives.",
+    "llm_readable_summary": "Permit.io is a full-stack authorization-as-a-service platform founded in 2021 in Tel Aviv, Israel by Or Weis, previously the founder of the observability company Rookout, and Asaf Cohen, a former Facebook engineer. The company raised a $6 million seed round in 2022 and an additional $8 million in 2024 to expand its US sales presence, building a hosted policy engine, low-code policy editor, embeddable authorization UI components and SDKs that let developers implement role-based access control (RBAC), attribute-based access control (ABAC), relationship-based access control (ReBAC) and policy-based access control (PBAC) without writing permission logic from scratch. Unlike pure open-source authorization libraries, Permit.io positions itself as a hosted-first platform: teams define policies through its dashboard or as code, sync them via a GitOps CI/CD pipeline, and enforce decisions through a lightweight policy decision point that can run at the edge or embedded in the application for low-latency checks. Permit.io's pricing follows a freemium model: a free Community tier supports up to 1,000 monthly active users, 20 tenants and 25 roles with full feature access; a Startup tier starts around $5 per month and scales to 25,000 monthly active users; a Pro tier starts around $25 per month, supports up to 50,000 monthly active users, and adds SOC 2 Type II compliance and optional SSO; and an Enterprise tier offers unlimited scale, HIPAA, GDPR and CCPA compliance support, multi-cloud or on-premises deployment and custom SLAs, priced on request. Permit.io targets software engineering and platform teams, from early-stage startups through enterprises, that need to ship secure, auditable access control quickly rather than build and maintain a custom permissions system in-house, with particular focus on AI application builders who need to authorize agent and tool actions. Its most direct competitor is Permify, another Zanzibar-inspired authorization platform, though Permify emphasizes open-source self-hosting while Permit.io emphasizes a hosted, low-code developer experience. Other competitors include Oso, a policy engine and authorization library; Auth0 FGA and its open-source counterpart OpenFGA, Okta's Zanzibar-inspired authorization service; AWS Verified Permissions, Amazon's managed Cedar-based authorization service; and Cerbos, an open-source policy decision point.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Permit.io is a full-stack authorization-as-a-service platform that helps engineering teams implement access control without writing permission logic from scratch. It provides a hosted policy engine, a low-code policy editor, and embeddable UI components for building permission-management screens directly into a product.", "Founded in 2021 by Or Weis and Asaf Cohen in Tel Aviv, Israel, Permit.io has raised roughly $14 million across seed and follow-on funding to expand its platform and grow its go-to-market team, with a particular recent focus on authorizing AI agent and tool actions."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Permit.io supports RBAC, ABAC, ReBAC and PBAC models from a single dashboard, letting teams mix policy types as their application's access-control needs evolve. Policies can be managed visually or as code and synced through a GitOps CI/CD pipeline for version control and review.", "Enforcement happens through a lightweight, embeddable policy decision point designed for low-latency checks, while extendable audit and decision logs give teams visibility into every access decision for debugging and compliance reviews."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Permit.io offers a free Community tier covering up to 1,000 monthly active users with full feature access, making it accessible for small projects and early-stage startups. Paid tiers scale by monthly active users, tenants and environments: Startup starts around $5 per month and Pro starts around $25 per month, both billed monthly or yearly with an annual discount.", "Enterprise pricing is custom and adds unlimited scale, dedicated support, full compliance coverage (HIPAA, GDPR, CCPA) and multi-cloud or on-premises deployment options for larger organizations."]}
+    ],
+    "features": [
+      {"title": "Low-code policy editor", "description": "Visual interface for defining RBAC, ABAC, ReBAC and PBAC policies without writing policy code."},
+      {"title": "Embeddable permission UI components", "description": "Ready-made UI elements for building user- and role-management screens into customer-facing apps."},
+      {"title": "GitOps policy pipelines", "description": "Syncs authorization policies through Git-based CI/CD workflows for version control and review."},
+      {"title": "Policy decision point (PDP)", "description": "Lightweight, embeddable enforcement layer for low-latency access checks close to the application."},
+      {"title": "Multi-tenancy support", "description": "Manages isolated roles, tenants and permissions for multiple customer organizations from one account."},
+      {"title": "Audit and decision logs", "description": "Extendable logs of every access decision for compliance and debugging."},
+      {"title": "SSO and SOC 2 Type II", "description": "Optional single sign-on and SOC 2 Type II certification on paid tiers for enterprise security requirements."},
+      {"title": "AI agent authorization", "description": "Supports authorizing AI agent and tool actions for teams building AI-powered applications."}
+    ],
+    "pros": [
+      "Generous free tier (1,000 monthly active users with full feature access)",
+      "Visual, low-code policy editor lowers the barrier to implementing fine-grained access control",
+      "Supports RBAC, ABAC, ReBAC and PBAC models in one platform",
+      "Ready-made embeddable UI components speed up building permission-management screens",
+      "GitOps workflow fits naturally into existing CI/CD pipelines"
+    ],
+    "cons": [
+      "Hosted-first architecture means less control than a fully self-hosted, open-source alternative",
+      "Costs can scale quickly as monthly active users and tenants grow beyond the free and Startup tiers",
+      "Enterprise features like HIPAA and GDPR compliance support and multi-cloud deployment require custom Enterprise pricing",
+      "Smaller company (reported around 14-25 employees) than some enterprise-focused competitors",
+      "Advanced compliance certifications such as SOC 2 Type II are gated behind the paid Pro tier"
+    ],
+    "faqs": [
+      {"question": "What is Permit.io?", "answer": "Permit.io is a full-stack authorization-as-a-service platform that gives developers a hosted policy engine, UI components and SDKs for RBAC, ABAC, ReBAC and PBAC access control."},
+      {"question": "Is Permit.io free?", "answer": "Yes, Permit.io offers a free Community tier for up to 1,000 monthly active users with full feature access."},
+      {"question": "Who founded Permit.io?", "answer": "Permit.io was founded in 2021 in Tel Aviv, Israel by Or Weis and Asaf Cohen."},
+      {"question": "How does Permit.io pricing work?", "answer": "Pricing scales with monthly active users, tenants and environments, moving from a free Community tier through Startup, Pro and custom Enterprise tiers."},
+      {"question": "What is the difference between Permit.io and Permify?", "answer": "Permit.io is a hosted, low-code platform, while Permify is an open-source, self-hosted-first authorization engine; both are inspired by Google Zanzibar."},
+      {"question": "Does Permit.io support AI agent authorization?", "answer": "Yes, Permit.io markets specific support for authorizing AI agent and tool actions in AI-powered applications."},
+      {"question": "Can Permit.io be self-hosted?", "answer": "Permit.io is primarily a hosted service, though its policy decision point can run embedded at the edge close to the application."},
+      {"question": "What compliance certifications does Permit.io offer?", "answer": "SOC 2 Type II is available on the Pro tier, with HIPAA, GDPR and CCPA compliance support available on the Enterprise tier."}
+    ],
+    "use_cases": [
+      {"title": "Startup and scale-up access control", "description": "Early-stage engineering teams use Permit.io's free and Startup tiers to stand up fine-grained permissions quickly without building an in-house system.", "audience": "Startups and scale-up engineering teams"},
+      {"title": "AI agent and tool authorization", "description": "Teams building AI products use Permit.io to gate what autonomous agents and tools are allowed to do within an application.", "audience": "AI application engineering teams"},
+      {"title": "Enterprise compliance-driven authorization", "description": "Larger organizations use Permit.io's Enterprise tier to meet HIPAA, GDPR and CCPA requirements while deploying across multi-cloud or on-premises environments.", "audience": "Enterprise security and platform teams"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Community", "price": "Free", "billing_cycle": "N/A", "features": ["Up to 1,000 monthly active users", "20 tenants, 3 environments, 25 roles", "Full RBAC, ABAC, ReBAC and PBAC access", "Unlimited microservices, basic Slack support", "14-day log retention"]},
+      {"plan_name": "Startup", "price": "From $5/month", "billing_cycle": "Monthly or yearly (18% discount)", "features": ["Up to 25,000 monthly active users", "100 tenants, 5 environments", "GitOps CI/CD pipeline", "Extendable audit and decision logs"]},
+      {"plan_name": "Pro", "price": "From $25/month", "billing_cycle": "Monthly or yearly (18% discount)", "features": ["Up to 50,000 monthly active users", "20,000 tenants, 50 environments", "Dedicated Slack support", "SOC 2 Type II certification, optional SSO", "21-day log retention"]},
+      {"plan_name": "Enterprise", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Unlimited monthly active users and tenants", "Full HIPAA, GDPR and CCPA compliance suite", "Multi-cloud or on-premises deployment", "Dedicated success representative", "Up to 0.9999% SLA option"]}
+    ],
+    "tags": ["authorization", "access-control", "developer-tools", "identity-management", "rbac", "saas"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "fca1586c-759c-47c3-b289-f752d876f509",
+  "slug": "perplexity",
+  "name": "Perplexity",
+  "enrichment": {
+    "short_description": "Perplexity is an AI-powered answer engine that pairs large language models with real-time web search to deliver conversational, cited answers, alongside an agentic browser (Comet) and enterprise search offerings.",
+    "pricing_model": "Freemium",
+    "starting_price": "Free; Pro $20/month",
+    "founded_year": 2022,
+    "company_size": "Approximately 1,400 employees (as of mid-2026)",
+    "headquarters": "San Francisco, California, United States",
+    "languages": ["English"],
+    "seo_title": "Perplexity Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Perplexity is an AI answer engine with real-time web search and citations. Compare Free, Pro and Max pricing, features and top alternatives.",
+    "llm_readable_summary": "Perplexity is an AI-powered answer engine, often described as a challenger to traditional search engines, founded in 2022 by Aravind Srinivas (CEO), Denis Yarats, Johnny Ho and Andy Konwinski, several of them former researchers at organizations including OpenAI, DeepMind and Databricks. Headquartered in San Francisco, Perplexity combines large language models with real-time web retrieval to generate conversational, source-cited answers rather than a plain list of links, and has expanded into an agentic browser called Comet, a Sonar developer API, and enterprise search and deep-research products. The company has raised more than $1.7 billion across multiple funding rounds from investors including Nvidia, SoftBank and Jeff Bezos, reaching a valuation reported around $20 to $22 billion in early 2026, making it one of the most highly valued AI startups outside the major foundation-model labs themselves. Perplexity's pricing is freemium: the Free plan offers a limited number of daily Pro searches using its default model; Perplexity Pro costs $20 per month, or $200 per year, and unlocks unlimited quick searches, access to multiple underlying models from providers such as OpenAI, Anthropic and Google, file uploads and image generation; Perplexity Max costs $200 per month and adds access to Perplexity's most advanced reasoning models, extended use of Comet's agentic browsing features, and priority access to new capabilities; and Enterprise plans, Enterprise Pro and Enterprise Max, are priced per seat, from roughly $40 to $325 per seat per month, adding SSO, SCIM, audit logs and higher usage limits for organizations. Perplexity's key differentiator versus traditional search is that it functions as an answer engine: rather than returning ranked links, it synthesizes a direct answer with inline citations to sources, positioning it as a challenger to Google Search as well as to conversational AI products like ChatGPT and Microsoft Copilot. Target users span individual knowledge workers, researchers and students on the free or Pro tiers, through professionals and enterprises purchasing Max or Enterprise plans for higher-volume research and agentic workflows. Named competitors include Google, both classic Search and its Gemini-powered AI Overviews, OpenAI's ChatGPT including its search features, Microsoft Copilot, and You.com, another AI-native search startup.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Perplexity is an AI-powered answer engine that combines large language models with real-time web search to produce direct, conversational answers backed by cited sources, rather than a traditional list of ranked links. Founded in 2022 and based in San Francisco, the company has grown quickly into one of the best-known challengers to traditional search.", "Beyond its core search product, Perplexity has expanded into Comet, an agentic AI browser that can complete multi-step tasks, a Sonar developer API for building on top of its search and retrieval technology, and dedicated Enterprise offerings for organizations."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Perplexity's core product generates answers with inline citations so users can verify claims against the original web sources, a key differentiator from typical chatbot interfaces. Pro and Max subscribers can choose between multiple underlying AI models from different providers for a given query.", "Additional capabilities include Perplexity Labs and deep research modes that produce longer-form reports, spreadsheets and visualizations from a single prompt, file and image analysis, and the Comet agentic browser for automating multi-step web tasks like research and form-filling."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Perplexity offers a free tier with a limited number of daily Pro searches, alongside a Pro plan at $20 per month (or $200 per year) that unlocks unlimited quick searches and access to multiple frontier AI models. A Max plan at $200 per month adds top-tier reasoning models and extended agentic browser usage for professionals who rely on AI search as core work infrastructure.", "For organizations, Perplexity offers Enterprise Pro and Enterprise Max plans priced per seat, from roughly $40 to $325 per seat per month, adding admin controls, SSO, SCIM provisioning and audit logs."]}
+    ],
+    "features": [
+      {"title": "AI answer engine with citations", "description": "Generates direct, conversational answers backed by inline citations to live web sources rather than a list of links."},
+      {"title": "Multi-model access", "description": "Lets Pro and Max subscribers choose between multiple underlying AI models from different providers for a given query."},
+      {"title": "Comet agentic browser", "description": "An AI-powered browser that can complete multi-step tasks like research, form-filling and shopping on a user's behalf."},
+      {"title": "Perplexity Labs and deep research", "description": "Produces longer-form research reports, spreadsheets and visualizations from a single prompt."},
+      {"title": "Sonar API", "description": "A developer-facing search and answer API for building Perplexity's retrieval capabilities into third-party applications."},
+      {"title": "File and image analysis", "description": "Supports uploading documents and images for the AI to analyze alongside web search."},
+      {"title": "Enterprise admin controls", "description": "SSO, SCIM provisioning and audit logs available on Enterprise plans for organizational deployment."}
+    ],
+    "pros": [
+      "Cited, source-linked answers make it easier to verify AI-generated claims than typical chatbots",
+      "Free tier gives meaningful daily usage without a credit card",
+      "Access to multiple frontier AI models under one subscription on Pro and Max",
+      "Rapidly growing feature set, including the Comet browser and deep research, beyond simple Q and A",
+      "Backed by major investors, suggesting continued investment in product development"
+    ],
+    "cons": [
+      "Max tier at $200/month is significantly more expensive than many competing AI subscriptions",
+      "Enterprise per-seat pricing, up to $325/seat/month, is costly for larger teams",
+      "As a challenger answer engine, indexing depth and freshness can vary versus Google's decades of crawl infrastructure",
+      "Rapid pricing and product changes make it necessary to check current plan details before purchasing",
+      "Heavy reliance on external model providers for some features ties quality to third-party model performance"
+    ],
+    "faqs": [
+      {"question": "What is Perplexity?", "answer": "Perplexity is an AI-powered answer engine that combines large language models with real-time web search to generate cited, conversational answers."},
+      {"question": "Is Perplexity free?", "answer": "Yes, Perplexity has a free tier with a limited number of daily Pro searches using its default model."},
+      {"question": "How much does Perplexity Pro cost?", "answer": "Perplexity Pro costs $20 per month or $200 per year."},
+      {"question": "What is Perplexity Max?", "answer": "Perplexity Max is a $200-per-month tier that adds Perplexity's most advanced reasoning models and extended use of the Comet agentic browser."},
+      {"question": "Who founded Perplexity?", "answer": "Perplexity was founded in 2022 by Aravind Srinivas, Denis Yarats, Johnny Ho and Andy Konwinski."},
+      {"question": "What is Perplexity's valuation?", "answer": "Perplexity's valuation was reported around $20 to $22 billion in early 2026 following its most recent funding round."},
+      {"question": "What is Comet?", "answer": "Comet is Perplexity's AI agentic browser, designed to complete multi-step web tasks such as research and form-filling automatically."},
+      {"question": "How is Perplexity different from ChatGPT?", "answer": "Perplexity is built primarily as a search and answer engine with live citations to web sources, while ChatGPT is a general-purpose conversational assistant that later added search features."}
+    ],
+    "use_cases": [
+      {"title": "Research and fact-finding", "description": "Individuals use Perplexity to quickly get cited, synthesized answers to research questions instead of manually reviewing multiple search results.", "audience": "Students, researchers and knowledge workers"},
+      {"title": "Competitive and market research", "description": "Analysts and marketers use Perplexity's deep research mode to generate structured reports and summaries on markets, competitors and trends.", "audience": "Analysts, marketers and consultants"},
+      {"title": "Agentic task automation via Comet", "description": "Professionals use Perplexity's Comet browser to automate multi-step web tasks such as booking, form-filling and research aggregation.", "audience": "Professionals seeking AI-driven browsing automation"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Free", "price": "$0", "billing_cycle": "N/A", "features": ["Limited daily Pro searches", "Default AI model", "Basic web search with citations"]},
+      {"plan_name": "Pro", "price": "$20/month ($200/year)", "billing_cycle": "Monthly or annual", "features": ["Unlimited quick searches", "Access to multiple frontier AI models", "File upload and analysis", "Image generation"]},
+      {"plan_name": "Max", "price": "$200/month ($2,000/year)", "billing_cycle": "Monthly or annual", "features": ["Access to top-tier reasoning models", "Extended Comet agentic browser use", "Priority access to new features"]},
+      {"plan_name": "Enterprise Pro", "price": "$40/seat/month", "billing_cycle": "Per seat, monthly or annual", "features": ["Team collaboration and admin controls", "SSO", "Higher usage limits"]},
+      {"plan_name": "Enterprise Max", "price": "$325/seat/month", "billing_cycle": "Per seat, monthly or annual", "features": ["All models plus advanced options", "Expanded Pro Search, Research and Comet usage", "SCIM and audit logs"]}
+    ],
+    "tags": ["ai-search", "answer-engine", "productivity", "research-tools", "generative-ai"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "e162b95f-b9ff-4468-a12d-35d5c34b4108",
+  "slug": "persado",
+  "name": "Persado",
+  "enrichment": {
+    "short_description": "Persado is an enterprise AI platform that generates, tests and optimizes marketing language and creative content for regulated industries like banking, insurance and telecom.",
+    "pricing_model": "Custom",
+    "starting_price": "Custom (contact sales)",
+    "founded_year": 2012,
+    "company_size": "201-500 employees",
+    "headquarters": "New York, New York, United States",
+    "languages": ["English"],
+    "seo_title": "Persado Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Persado is an enterprise AI platform for regulated-industry marketing copy. See features, pricing model, and top alternatives for 2026.",
+    "llm_readable_summary": "Persado is an enterprise AI platform, founded in 2012 by Alex Vratskides, Assaf Baciu, Moray Maclennan and Guy Krief and headquartered in New York City, that generates, tests and optimizes marketing language at scale for large, regulated organizations. Historically known as a marketing-language or emotional-AI platform, Persado uses machine learning, natural language processing and, more recently, generative and multi-agent AI systems to produce on-brand, compliance-checked copy for channels including email, direct mail, web, SMS, push notifications and paid social, then predicts which message variants will perform best before they go live. The company has raised roughly $66 million in funding from investors including Goldman Sachs, Bain Capital Ventures and StarVest Partners, and today positions itself specifically around regulated industries such as financial services, insurance and telecom, where marketing claims must clear legal and compliance review before publication. Its named enterprise customers include Bank of America, U.S. Bank, Ally Financial, Discover, NatWest and TD Bank, reflecting a go-to-market strategy built almost entirely around Fortune 500 and multinational financial institutions rather than small or mid-market businesses. Persado's platform is organized around three core capabilities: Create, which generates production-ready content with built-in compliance validation against more than 20 financial-services regulatory frameworks; Optimize, which refreshes and scores existing creative assets without re-triggering a full compliance review; and Automate, which delivers real-time content variant selection through API integrations with marketing platforms such as Salesforce Marketing Cloud, Adobe Campaign and Braze. Pricing is not publicly disclosed; Persado sells through an enterprise, quote-based model split between a fully managed Enterprise tier and a more self-service Studio tier for optimization use cases, and onboarding for new enterprise customers typically takes around four weeks. Persado's target buyers are marketing, brand and compliance leaders at large regulated enterprises who need to produce high volumes of legally vetted, performance-tested copy faster than in-house creative and legal review cycles typically allow. Competitors and adjacent alternatives include Phrasee, an AI marketing-language tool now part of Movable Ink and rebranded as Jacquard, Seventh Sense, and more broadly, general-purpose generative AI copywriting tools like Jasper and Copy.ai, though Persado differentiates itself through compliance tooling built specifically for financial services and insurance marketing.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Persado is an enterprise AI platform that generates and optimizes marketing language for large, regulated organizations. Founded in 2012 and headquartered in New York City, the company built its reputation on machine-learning models that predict which words and phrases will drive the strongest customer response.", "Today Persado focuses almost entirely on regulated industries, financial services, insurance and telecom, where every piece of marketing copy typically needs to clear legal and compliance review, and its named clients include major banks such as Bank of America, U.S. Bank and TD Bank."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Persado's platform spans content creation, optimization and automated deployment. Its Create capability generates production-ready copy across email, direct mail, web, SMS and social with compliance validation built in, checking generated content against more than 20 financial-services regulatory frameworks.", "Its Optimize capability refreshes and scores existing creative libraries without triggering a full compliance re-review, while Automate delivers real-time content variant selection through API integrations with marketing clouds like Salesforce Marketing Cloud, Adobe Campaign and Braze."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Persado does not publish pricing publicly and sells exclusively through an enterprise, quote-based sales model. Prospective customers typically start with a demo or portfolio audit, with onboarding for a new enterprise customer taking around four weeks.", "The platform is organized into a fully managed Enterprise tier with a dedicated team, and a more self-service Studio tier focused on optimization features, both priced individually based on scope, channels and volume."]}
+    ],
+    "features": [
+      {"title": "Compliance-validated content generation", "description": "Produces marketing copy that is automatically checked against more than 20 financial-services regulatory frameworks before publishing."},
+      {"title": "Multi-channel creative generation", "description": "Generates on-brand copy for email, direct mail, web, SMS, push and paid social from a single platform."},
+      {"title": "Performance prediction and scoring", "description": "Scores new and existing creative assets for predicted performance before they are deployed."},
+      {"title": "Real-time variant selection (Automate)", "description": "Delivers the best-performing content variant to each customer in real time via API."},
+      {"title": "Marketing platform integrations", "description": "Connects natively with Salesforce Marketing Cloud, Adobe Campaign and Braze, among others."},
+      {"title": "Brand voice and tone enforcement", "description": "Uses specialized AI models to keep generated copy consistent with a brand's approved voice."},
+      {"title": "Asset library optimization (Optimize)", "description": "Refreshes existing creative libraries without re-triggering full legal and compliance review cycles."}
+    ],
+    "pros": [
+      "Deep, purpose-built compliance tooling for regulated industries like banking and insurance",
+      "Backed by over a decade of proprietary language-performance data across enterprise campaigns",
+      "Reduces legal and compliance review cycles by validating content against regulatory frameworks up front",
+      "Native integrations with major marketing clouds simplify deployment into existing workflows",
+      "Proven enterprise customer base including major banks and financial institutions"
+    ],
+    "cons": [
+      "Enterprise-only, quote-based pricing with no self-serve or small-business option",
+      "Undisclosed pricing makes it hard to budget or comparison-shop without a sales conversation",
+      "Onboarding, around four weeks, is slower than lightweight, self-serve AI copywriting tools",
+      "Focused heavily on regulated verticals, which may make it overkill for general marketing content needs",
+      "Requires integration work with existing marketing clouds to realize full automation value"
+    ],
+    "faqs": [
+      {"question": "What does Persado do?", "answer": "Persado uses AI to generate, test and optimize marketing language for large, regulated enterprises across email, web, SMS, direct mail and social channels."},
+      {"question": "How much does Persado cost?", "answer": "Persado does not publish pricing; it sells through a custom, quote-based enterprise model."},
+      {"question": "Who is Persado for?", "answer": "Persado targets large regulated enterprises such as banks, insurers and telecom companies that need compliance-validated marketing content."},
+      {"question": "When was Persado founded?", "answer": "Persado was founded in 2012 and is headquartered in New York City."},
+      {"question": "What industries does Persado specialize in?", "answer": "Persado specializes in financial services, insurance, telecom and other heavily regulated sectors."},
+      {"question": "What marketing platforms does Persado integrate with?", "answer": "Persado integrates with marketing platforms including Salesforce Marketing Cloud, Adobe Campaign and Braze."},
+      {"question": "How is Persado different from generic AI copywriting tools?", "answer": "Persado builds in regulatory compliance validation specific to financial services and insurance, unlike general-purpose AI copywriting tools."},
+      {"question": "Who are Persado's competitors?", "answer": "Persado competes with Phrasee (now Jacquard, part of Movable Ink), Seventh Sense, and general AI copywriting tools such as Jasper."}
+    ],
+    "use_cases": [
+      {"title": "Compliant campaign copy for banks and lenders", "description": "Banks and lenders use Persado to generate marketing and lifecycle copy that automatically clears internal legal and compliance requirements.", "audience": "Marketing teams at banks, credit unions and mortgage lenders"},
+      {"title": "Insurance and wealth management marketing", "description": "Insurance and wealth management firms use Persado to produce regulation-aware messaging for policy renewals, cross-sell and acquisition campaigns.", "audience": "Marketing and compliance teams at insurance and wealth management firms"},
+      {"title": "Always-on creative optimization", "description": "Enterprise lifecycle marketing teams use Persado's Optimize tools to continuously refresh and score large existing asset libraries.", "audience": "Enterprise CRM and lifecycle marketing teams"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Enterprise", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Fully managed AI content generation and compliance validation", "Multi-channel creative production", "Real-time variant automation via API", "Dedicated enterprise support team"]},
+      {"plan_name": "Studio", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Self-service optimization and scoring tools", "Asset library refresh without full compliance re-review", "Access to Persado's language performance insights"]}
+    ],
+    "tags": ["marketing-ai", "copywriting", "enterprise-software", "content-generation", "regulated-industries"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "b4891f9c-1a2c-4ad0-96e4-9cd56abe94d2",
+  "slug": "persistiq",
+  "name": "PersistIQ",
+  "enrichment": {
+    "short_description": "PersistIQ is a sales engagement platform that helps small sales teams automate personalized email outreach, calling and follow-up sequences, owned by Wishpond Technologies since 2021.",
+    "pricing_model": "Subscription",
+    "starting_price": "$59/user/month (billed annually)",
+    "founded_year": 2014,
+    "company_size": "11-50 employees (subsidiary of Wishpond Technologies)",
+    "headquarters": "San Mateo, California, United States",
+    "languages": ["English"],
+    "seo_title": "PersistIQ Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "PersistIQ is a sales engagement platform for small teams. Compare features, Essentials and Premium pricing, and top alternatives for 2026.",
+    "llm_readable_summary": "PersistIQ is a sales engagement platform founded in 2014 and based in San Mateo, California, built specifically for small sales teams that need to automate outbound prospecting without the complexity or cost of enterprise sales-engagement suites. The platform lets users build multi-step, personalized outreach sequences that combine automated email, LinkedIn touches, calling and task reminders, track opens, clicks and replies, and run A/B tests on messaging, all from a single inbox-style workspace. In March 2021, PersistIQ was acquired by Wishpond Technologies Ltd., a Vancouver-based, publicly traded marketing software company, for approximately US$3 million; PersistIQ has continued to operate as a standalone product and brand under Wishpond's ownership, serving more than 900 customers around the time of acquisition. PersistIQ's pricing is subscription-based and per user: the Essentials plan starts at $59 per user per month billed annually, or $75 per user per month billed monthly, and includes unlimited prospects and campaigns with roughly 300 emails sent per day; the Premium plan runs about $99 per user per month billed annually, or around $120 per user per month billed monthly, and raises the daily email limit to around 600 while adding Salesforce integration, a built-in phone dialer with call recording, and live onboarding support; a Teams plan is also available for growing sales organizations. PersistIQ does not offer an ongoing free plan but provides a 14-day free trial. The platform targets small and mid-sized B2B sales teams, sales development representatives and founder-led sales motions at startups that want an easy-to-set-up outreach tool rather than a heavyweight revenue platform requiring dedicated sales-ops administration. Its most direct competitors are Outreach and Salesloft, both larger, enterprise-oriented sales engagement platforms, as well as Mailshake and Woodpecker.co, which similarly target smaller teams with simpler, email-centric outbound workflows; PersistIQ differentiates itself with a lower price point, faster setup, and a feature set intentionally scoped to what small sales teams need rather than the broader revenue-intelligence and forecasting capabilities of larger platforms.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["PersistIQ is a sales engagement platform built for small sales teams that want to automate outbound prospecting without adopting a heavyweight enterprise revenue platform. Founded in 2014 and based in San Mateo, California, the company was acquired by publicly traded marketing software company Wishpond Technologies in March 2021.", "Since the acquisition, PersistIQ has continued to operate as a standalone product focused specifically on small B2B sales teams, sales development representatives and founder-led sales motions at startups."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["PersistIQ lets users build multi-step outreach sequences that combine automated email, LinkedIn touches, calling and task reminders, tracking opens, clicks and replies along the way. Built-in A/B testing helps teams identify which subject lines and messages perform best.", "The Premium plan adds a built-in phone dialer with call recording and native Salesforce integration, while both core plans include unlimited prospects and campaigns, distinguishing PersistIQ from tools that cap list sizes."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["PersistIQ charges per user on a monthly or annual subscription. The Essentials plan starts at $59 per user per month billed annually (or $75 per user per month billed monthly) and includes around 300 emails sent per day, while the Premium plan runs about $99 per user per month billed annually (or around $120 per user per month billed monthly) and raises the daily sending limit to about 600 emails.", "There is no permanent free plan, but PersistIQ offers a 14-day free trial, and a Teams plan is available for larger sales organizations that need volume pricing."]}
+    ],
+    "features": [
+      {"title": "Multi-channel outreach sequences", "description": "Combines automated email, LinkedIn steps, calling and task reminders into one outbound sequence."},
+      {"title": "Built-in phone dialer", "description": "Lets reps place and record calls directly from PersistIQ on the Premium plan."},
+      {"title": "Email open, click and reply tracking", "description": "Tracks engagement on every sequence step to surface which prospects are responding."},
+      {"title": "A/B testing", "description": "Tests subject lines and message variants to identify higher-performing outreach copy."},
+      {"title": "CRM integrations", "description": "Syncs with Salesforce and other CRMs to keep prospect and activity data in sync."},
+      {"title": "Unlimited prospects and campaigns", "description": "Both core plans include unlimited prospect lists and outreach campaigns."},
+      {"title": "Team performance reporting", "description": "Provides visibility into rep-level activity and reply rates for sales managers."}
+    ],
+    "pros": [
+      "Simple setup aimed specifically at small sales teams rather than enterprise sales-ops",
+      "Unlimited prospects and campaigns on all paid plans",
+      "Combines email, calling and LinkedIn touches in one sequence builder",
+      "Lower price point than enterprise sales engagement platforms like Outreach or Salesloft",
+      "14-day free trial available before committing to a paid plan"
+    ],
+    "cons": [
+      "No permanent free plan",
+      "Daily email sending caps, around 300 to 600 per day, may constrain high-volume outbound teams",
+      "Premium features like the phone dialer and Salesforce integration are locked behind the higher-priced tier",
+      "Smaller company under Wishpond ownership means a smaller roadmap and integration ecosystem than larger competitors",
+      "Monthly billing carries a notable premium over annual pricing"
+    ],
+    "faqs": [
+      {"question": "What is PersistIQ?", "answer": "PersistIQ is a sales engagement platform that helps small sales teams automate personalized email, LinkedIn and calling outreach sequences."},
+      {"question": "How much does PersistIQ cost?", "answer": "PersistIQ's Essentials plan starts at $59 per user per month billed annually, and Premium starts at about $99 per user per month billed annually."},
+      {"question": "Does PersistIQ have a free plan?", "answer": "No, PersistIQ does not offer a permanent free plan, but it does provide a 14-day free trial."},
+      {"question": "Who owns PersistIQ?", "answer": "PersistIQ has been owned by Wishpond Technologies Ltd. since the acquisition closed in March 2021."},
+      {"question": "Does PersistIQ include a phone dialer?", "answer": "Yes, a built-in phone dialer with call recording is available on the Premium plan."},
+      {"question": "What CRMs does PersistIQ integrate with?", "answer": "PersistIQ integrates with Salesforce, among other CRM and sales tools."},
+      {"question": "Who is PersistIQ for?", "answer": "PersistIQ is designed for small and mid-sized B2B sales teams, sales development representatives, and founder-led sales at startups."},
+      {"question": "What are PersistIQ's main competitors?", "answer": "PersistIQ competes with Outreach, Salesloft, Mailshake and Woodpecker.co."}
+    ],
+    "use_cases": [
+      {"title": "Outbound prospecting for small SDR teams", "description": "Small sales development teams use PersistIQ to run personalized, multi-step outbound campaigns without dedicated sales-ops support.", "audience": "Small sales teams and sales development representatives"},
+      {"title": "Founder-led sales outreach at startups", "description": "Startup founders and early sales hires use PersistIQ to run their own outbound outreach before hiring a dedicated sales team.", "audience": "Founders and early sales hires at startups"},
+      {"title": "Multi-channel follow-up automation", "description": "Sales teams use PersistIQ to combine email, LinkedIn and calling touches into a single coordinated follow-up cadence.", "audience": "Sales teams running multi-channel outbound campaigns"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Essentials", "price": "$59/user/month (annual) or $75/user/month (monthly)", "billing_cycle": "Monthly or annual", "features": ["Unlimited prospects and campaigns", "Around 300 emails per day", "Email open, click and reply tracking", "A/B testing"]},
+      {"plan_name": "Premium", "price": "$99/user/month (annual) or about $120/user/month (monthly)", "billing_cycle": "Monthly or annual", "features": ["Around 600 emails per day", "Salesforce integration", "Built-in phone dialer with call recording", "Live onboarding support"]},
+      {"plan_name": "Teams", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Volume pricing for larger sales teams", "Team performance reporting", "Dedicated support"]}
+    ],
+    "tags": ["sales-engagement", "sales-automation", "email-outreach", "crm-tools", "b2b-sales"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "3ed578b8-4db9-4fce-98af-7a24c8e0021c",
+  "slug": "personio",
+  "name": "Personio",
+  "enrichment": {
+    "short_description": "Personio is an all-in-one European HR management platform covering recruiting, HR administration, payroll and talent management, built for small and mid-sized businesses and headquartered in Munich, Germany.",
+    "pricing_model": "Custom",
+    "starting_price": "Custom (contact sales)",
+    "founded_year": 2015,
+    "company_size": "Approximately 2,000 employees",
+    "headquarters": "Munich, Germany",
+    "languages": ["English", "German", "Spanish", "French", "Italian", "Dutch", "Swedish", "Finnish", "Polish"],
+    "seo_title": "Personio Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Personio is a European all-in-one HR platform for recruiting, payroll and people management. Compare features, pricing and alternatives.",
+    "llm_readable_summary": "Personio is a cloud-based, all-in-one human resources management platform founded in 2015 in Munich, Germany by Hanno Renner, Ignaz Forstmeier, Roman Schumacher and Arseniy Vershinin, built specifically to serve the compliance and localization needs of small and mid-sized businesses operating in Europe. The platform combines core HR administration, recruiting and applicant tracking, onboarding, time tracking and absence management, performance and talent management, and payroll (directly in several countries, via partners elsewhere) into a single system designed to handle the complex, country-specific labor law and payroll requirements that pan-European employers face. Personio has raised more than $724 million in funding from investors including Index Ventures, Accel and Meritech, most notably a $270 million round in October 2021 that valued the company at $6.3 billion and a further $200 million Series E in June 2022 that pushed its valuation to $8.5 billion, making it one of Europe's best-known HR technology unicorns; by 2026 some reports place its valuation closer to $10 billion. As of mid-2024 the company reported roughly 2,000 employees and around 12,000 customers across 70 countries, with its interface available in more than a dozen languages including English, German, Spanish, French, Italian, Dutch, Swedish, Finnish and Polish. Personio does not publish list pricing; it sells through a custom, quote-based model organized around Essential, Professional and Enterprise editions, with independent market estimates placing core HRIS pricing in the range of roughly EUR5 to EUR15 per employee per month depending on modules, headcount and contract length, and volume discounts commonly available for larger or multi-year deals. Personio's target customers are small and mid-sized businesses, typically ranging from about 10 to 2,000 employees, that need a single system covering HR, recruiting and payroll compliance across multiple European jurisdictions rather than assembling separate point solutions. Its main competitors include BambooHR and Workday for broader HRIS and talent management, SAP SuccessFactors for larger enterprise deployments, and HiBob, another Europe-friendly HR platform aimed at mid-market companies, with Personio differentiating primarily through deep European payroll and compliance localization.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Personio is an all-in-one HR management platform built to handle the compliance and localization complexity of running HR, recruiting and payroll across multiple European countries. Founded in 2015 in Munich, Germany, it has grown into one of Europe's largest HR technology companies.", "The platform serves small and mid-sized businesses, roughly 10 to 2,000 employees, that need a single system rather than stitching together separate recruiting, HR and payroll tools for each country they operate in."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Personio covers the full employee lifecycle: recruiting and applicant tracking, onboarding, core HR record-keeping, time tracking and absence management, performance and talent management, and payroll, run directly in several countries or through local partners elsewhere.", "The platform's interface is available in more than a dozen languages, and its payroll and compliance tooling is built specifically to handle country-by-country labor law differences across the European markets it primarily serves."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Personio does not publish list pricing and instead sells through a custom, quote-based model organized around Essential, Professional and Enterprise editions that scale with company size and the number of modules a customer needs.", "Independent market estimates place core HRIS pricing in the range of roughly EUR5 to EUR15 per employee per month depending on modules and contract length, with volume discounts typically available for larger deals and longer contract terms."]}
+    ],
+    "features": [
+      {"title": "Core HR administration", "description": "Centralizes employee records, contracts and organizational data in one system."},
+      {"title": "Recruiting and applicant tracking", "description": "Manages job postings, candidate pipelines and interview scheduling."},
+      {"title": "Payroll and compliance", "description": "Runs or integrates payroll with built-in compliance for country-specific European labor law."},
+      {"title": "Time tracking and absence management", "description": "Tracks working hours, time off and leave balances against local regulations."},
+      {"title": "Performance and talent management", "description": "Supports goal setting, reviews and talent development workflows."},
+      {"title": "Onboarding and offboarding workflows", "description": "Automates new-hire paperwork, equipment requests and offboarding checklists."},
+      {"title": "Multi-language, multi-country support", "description": "Interface and payroll localization across dozens of European languages and jurisdictions."},
+      {"title": "Reporting and people analytics", "description": "Provides HR dashboards and reports on headcount, turnover and other workforce metrics."}
+    ],
+    "pros": [
+      "Deep localization for European payroll and labor-law compliance across dozens of countries",
+      "All-in-one platform reduces the need for separate recruiting, HR and payroll point solutions",
+      "Interface available in a wide range of European languages",
+      "Well-funded, established vendor with a large existing customer base of around 12,000 customers",
+      "Scales from small businesses up through mid-market and larger organizations"
+    ],
+    "cons": [
+      "No public pricing; requires a sales conversation and custom quote for every deal",
+      "Primarily optimized for European employers, which may limit fit for companies focused outside Europe",
+      "Feature depth in some areas, such as advanced talent management, can lag more specialized point solutions",
+      "Implementation and onboarding can take meaningful time for multi-country payroll setups",
+      "Enterprise-tier features and compliance modules add cost as a company scales past the Essential tier"
+    ],
+    "faqs": [
+      {"question": "What is Personio?", "answer": "Personio is an all-in-one HR platform covering recruiting, HR administration, payroll, time tracking and talent management."},
+      {"question": "How much does Personio cost?", "answer": "Personio does not publish pricing; it requires a custom quote based on company size and modules across its Essential, Professional and Enterprise tiers."},
+      {"question": "Where is Personio based?", "answer": "Personio is headquartered in Munich, Germany."},
+      {"question": "When was Personio founded?", "answer": "Personio was founded in 2015."},
+      {"question": "Does Personio handle payroll?", "answer": "Yes, Personio runs payroll directly in several countries and integrates with local payroll partners elsewhere."},
+      {"question": "What languages does Personio support?", "answer": "Personio's interface is available in English, German, Spanish, French, Italian, Dutch, Swedish, Finnish, Polish and additional languages."},
+      {"question": "Who is Personio best suited for?", "answer": "Personio is best suited for small and mid-sized businesses operating across multiple European countries."},
+      {"question": "What are Personio's main competitors?", "answer": "Personio competes with BambooHR, Workday, SAP SuccessFactors and HiBob."}
+    ],
+    "use_cases": [
+      {"title": "Multi-country European HR compliance", "description": "HR teams use Personio to manage employee records and payroll compliance consistently across multiple European jurisdictions.", "audience": "HR teams at companies operating across multiple EU countries"},
+      {"title": "Recruiting and onboarding at scale", "description": "Talent acquisition teams use Personio to manage job postings, candidate pipelines and structured onboarding as headcount grows.", "audience": "Talent acquisition teams at growing mid-market companies"},
+      {"title": "Consolidating HR, payroll and performance in one system", "description": "HR leaders replace multiple disconnected point solutions with Personio's single platform covering the full employee lifecycle.", "audience": "HR leaders consolidating HR technology stacks"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Essential", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Core HR administration", "Basic time and absence tracking", "Suited for smaller teams, roughly 10-100 employees"]},
+      {"plan_name": "Professional", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Recruiting and applicant tracking", "Performance management", "Automation for growing teams, roughly 100-500 employees"]},
+      {"plan_name": "Enterprise", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Multi-country payroll and compliance", "Advanced reporting and people analytics", "Support for large, complex organizations, 500-2,000+ employees"]}
+    ],
+    "tags": ["hr-software", "payroll", "recruiting", "hris", "people-management"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "aa4f4092-fd7c-44e6-a8d5-8c7d5fc2b085",
+  "slug": "phorge",
+  "name": "Phorge",
+  "enrichment": {
+    "short_description": "Phorge is a free, open-source suite of software development collaboration tools, maintained as a community fork of the discontinued Phabricator project, covering code review, task tracking and project wikis.",
+    "pricing_model": "Open Source",
+    "starting_price": "Free",
+    "founded_year": 2021,
+    "company_size": "Not applicable (volunteer-run open-source community project)",
+    "headquarters": "Not publicly disclosed (distributed open-source community)",
+    "languages": ["English"],
+    "seo_title": "Phorge Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "Phorge is a free, open-source Phabricator fork for code review, task tracking and wikis. See features, self-hosting details and alternatives.",
+    "llm_readable_summary": "Phorge is a free and open-source software development collaboration suite, best understood as a community-maintained continuation of Phabricator, the project-management and code-review toolkit originally built inside Facebook and later open-sourced before being declared unmaintained by its original maintainer in June 2021. When Phabricator's future became uncertain, a group of community contributors forked the codebase to create Phorge, publishing an initial release that carried over all of Phabricator's existing functionality and has since actively developed the project, reporting hundreds of commits since the fork compared to only a handful on the original, now largely dormant Phabricator repository. Phorge is released under the Apache 2.0 license, the same license Phabricator used, and is entirely free to self-host; there is no paid or hosted commercial tier, and the project is run by volunteer maintainers rather than a company, with its central hub at we.phorge.it hosting documentation, a changelog, and notes from biweekly community planning meetings. Functionally, Phorge provides a suite of applications for software teams: Differential for code review, Diffusion for repository browsing across Git, Subversion and Mercurial, Maniphest for issue and task tracking, Phriction for team wikis, and additional tools for project planning, all under one self-hosted deployment. Because it is entirely community-run, Phorge has no founding company, headquarters, funding round or venture-backed history in the traditional sense; it is governed by an open, rotating group of core contributors known as the Phorge Team. Its target users are engineering teams and open-source projects that were already using Phabricator and needed a maintained successor, as well as organizations that want a free, self-hosted, all-in-one alternative to hosted SaaS developer tools. Because Phorge duplicates much of what commercial platforms offer, it competes indirectly with GitLab, available self-hosted or as SaaS with code review plus CI/CD, Gitea and Forgejo, lightweight self-hosted Git platforms, and Redmine, an open-source project and issue tracker, as well as hosted tools like GitHub and Atlassian's Jira for teams that eventually outgrow it, though none of these are drop-in replacements for the specific Differential-based code review workflow that Phorge preserves from Phabricator.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Phorge is a free, open-source software development collaboration suite created as a community fork of Phabricator after Phabricator's original maintainer declared the project unmaintained in June 2021. It preserves Phabricator's full feature set while continuing active development under a volunteer-run community.", "Unlike commercial developer tools, Phorge has no company, funding or headquarters behind it; it is maintained by a rotating group of open-source contributors who coordinate publicly through the project's we.phorge.it hub, including a public changelog and biweekly planning meeting notes."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Phorge bundles several applications for software teams into one self-hosted deployment: Differential for structured code review, Diffusion for browsing Git, Subversion and Mercurial repositories, Maniphest for issue and task tracking, and Phriction for team wikis and documentation.", "Because the entire suite is self-hosted and open source, teams retain full control over their data and infrastructure, and the project has continued to ship active development, including migration paths for teams moving from legacy Phabricator installations."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Phorge is entirely free and open source under the Apache 2.0 license, with no paid tiers, seat limits or commercial hosting offered directly by the project. Any hosting cost comes from the infrastructure a team chooses to run it on.", "Because there is no company behind Phorge, there is no official enterprise support contract; teams that need guaranteed support typically rely on community channels or third-party consultants familiar with the Phabricator and Phorge codebase."]}
+    ],
+    "features": [
+      {"title": "Differential code review", "description": "Provides a structured, revision-based code review workflow inherited from Phabricator."},
+      {"title": "Diffusion repository browsing", "description": "Browses and manages Git, Subversion and Mercurial repositories from a unified web UI."},
+      {"title": "Maniphest task tracking", "description": "Tracks issues, bugs and project tasks with customizable workflows."},
+      {"title": "Phriction team wikis", "description": "Built-in wiki application for team documentation and knowledge sharing."},
+      {"title": "Self-hosted deployment", "description": "Runs entirely on infrastructure the user controls, with no mandatory external service."},
+      {"title": "Free and open source", "description": "Released under the Apache 2.0 license with no licensing fees."},
+      {"title": "Active community development", "description": "Maintained by volunteer contributors with regular releases and public planning meetings."}
+    ],
+    "pros": [
+      "Completely free, open-source and self-hosted with no vendor lock-in",
+      "Preserves the Differential code-review workflow that many former Phabricator users relied on",
+      "Actively maintained by a volunteer community after Phabricator itself was discontinued",
+      "All-in-one suite, code review, tasks, wikis and repository browsing, avoids stitching together multiple tools",
+      "Apache 2.0 license permits broad commercial and non-commercial use"
+    ],
+    "cons": [
+      "No official managed or hosted offering or commercial support contract, since it is entirely volunteer-run",
+      "Smaller contributor base and slower feature velocity than well-funded commercial developer tools",
+      "Dated user interface and workflows compared to modern SaaS alternatives like GitLab or GitHub",
+      "Requires self-hosting expertise, server setup, upgrades and backups, with no vendor to fall back on",
+      "Migration tooling from Phabricator, while present, still requires manual effort"
+    ],
+    "faqs": [
+      {"question": "What is Phorge?", "answer": "Phorge is an open-source fork of Phabricator that provides code review, repository browsing, task tracking and team wikis in one self-hosted suite."},
+      {"question": "Is Phorge free?", "answer": "Yes, Phorge is entirely free and open source with no paid tiers."},
+      {"question": "Why was Phorge created?", "answer": "Phorge was created after Phabricator was declared unmaintained by its original maintainer in June 2021, prompting community contributors to fork the project."},
+      {"question": "What license does Phorge use?", "answer": "Phorge is released under the Apache 2.0 open-source license."},
+      {"question": "Can I migrate from Phabricator to Phorge?", "answer": "Yes, Phorge provides documented update paths for teams migrating from existing Phabricator installations."},
+      {"question": "Does Phorge offer hosted or cloud plans?", "answer": "No, Phorge is self-hosted only; there is no official commercial hosting offered by the project."},
+      {"question": "What version control systems does Phorge support?", "answer": "Phorge supports Git, Subversion and Mercurial."},
+      {"question": "Who maintains Phorge?", "answer": "Phorge is maintained by a volunteer, community-driven group of contributors known as the Phorge Team rather than a company."}
+    ],
+    "use_cases": [
+      {"title": "Migrating existing Phabricator installs", "description": "Teams already running Phabricator use Phorge as a maintained, drop-in successor with documented migration paths.", "audience": "Teams already using Phabricator needing a maintained successor"},
+      {"title": "Self-hosted code review for privacy-conscious teams", "description": "Engineering teams that require on-premises tooling use Phorge to keep code review and project data entirely under their own control.", "audience": "Engineering teams that require on-premises tooling"},
+      {"title": "All-in-one project collaboration for open-source projects", "description": "Open-source maintainers use Phorge's bundled code review, task tracking and wiki tools instead of assembling several separate services.", "audience": "Open-source project maintainers"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Community (self-hosted)", "price": "Free", "billing_cycle": "N/A (self-hosted)", "features": ["Open-source, Apache 2.0 licensed", "Full Differential, Diffusion, Maniphest and Phriction applications", "Community support via chat and forums", "No user or seat limits"]}
+    ],
+    "tags": ["open-source", "code-review", "project-management", "developer-tools", "self-hosted"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "2f89cac5-124c-4e1b-8f09-b84e459dd4dc",
+  "slug": "photoprism",
+  "name": "PhotoPrism",
+  "enrichment": {
+    "short_description": "PhotoPrism is a self-funded, open-source, AI-powered photo and video management app that you self-host to organize, tag and search your personal media library privately.",
+    "pricing_model": "Freemium",
+    "starting_price": "Free (self-hosted Community Edition); paid memberships from about EUR2/month",
+    "founded_year": 2018,
+    "company_size": "1-10 employees",
+    "headquarters": "Berlin, Germany",
+    "languages": ["English"],
+    "seo_title": "PhotoPrism Review 2026: Features, Pricing and Alternatives",
+    "seo_meta_description": "PhotoPrism is a self-hosted, open-source AI photo manager. Compare free and paid Essentials/Plus pricing, features and alternatives.",
+    "llm_readable_summary": "PhotoPrism is a self-hosted, open-source photo and video management application founded in 2018 by Michael Mayer and Theresa Gresch and based in Berlin, Germany, built for people who want Google-Photos-style AI organization, such as automatic tagging, face recognition, duplicate detection and a searchable world map of where photos were taken, without uploading their personal media to a third-party cloud service. The company behind it, PhotoPrism UG, is 100 percent self-funded and has taken no outside venture capital, with a small team, reported around three people as of 2026, which the founders present as core to their promise never to sell user data and to remain transparent about how the software works. The core PhotoPrism Community Edition is free and open source, licensed under the AGPLv3, and can be self-hosted via Docker on anything from a Raspberry Pi to a home server or cloud VPS, giving users unlimited storage limited only by their own hardware. For users who want extra functionality, PhotoPrism sells optional paid memberships on top of the same self-hosted software: an Essentials membership priced around EUR2 per month self-hosted, or roughly EUR200 per month for a managed or hosted version, adds features like additional user roles and enhanced maps, while a Plus membership priced around EUR6 per month self-hosted, or roughly EUR600 per month managed, adds a full user-management UI, integrations with AI backends like Ollama and OpenAI, single sign-on via OpenID Connect, and hardened security options; both memberships are billed annually. Third-party hosts such as PikaPods also offer fully managed PhotoPrism instances starting around $6.50 per month for users who don't want to self-host at all. PhotoPrism's target users are privacy-conscious individuals, families, photographers and small organizations who want AI-powered photo search and organization while keeping full ownership and control of their media library. Its closest competitors are Immich, another fast-growing open-source, self-hosted photo and video backup app with a more mobile-app-first design, Google Photos and Apple Photos, the dominant cloud-hosted consumer alternatives, and Nextcloud Memories, a photo-management add-on for the broader Nextcloud self-hosted platform.",
+    "long_form_blocks": [
+      {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["PhotoPrism is a self-hosted, open-source photo and video management application that brings AI-powered organization, tagging, face recognition and search to a user's own personal media library, without requiring uploads to a third-party cloud service. It was founded in 2018 by Michael Mayer and Theresa Gresch and is based in Berlin, Germany.", "The company behind PhotoPrism, PhotoPrism UG, is 100 percent self-funded with a small team, which the founders present as central to their commitment to user privacy and transparency, since the business does not depend on advertising or selling user data."]},
+      {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["PhotoPrism uses AI to automatically tag photos by content, detect and group faces, find duplicate images, and plot geotagged photos on an interactive world map, all running on infrastructure the user controls rather than a third-party cloud.", "The software deploys via Docker on anything from a Raspberry Pi to a home server or cloud VPS, and paid memberships add optional capabilities such as a full user-management interface, integrations with AI backends like Ollama and OpenAI, and single sign-on via OpenID Connect."]},
+      {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["The core PhotoPrism Community Edition is free and open source under the AGPLv3 license, with unlimited storage limited only by a user's own hardware. Optional Essentials and Plus memberships, priced from around EUR2 and EUR6 per month respectively for self-hosted use, unlock extra features and are billed annually.", "For users who don't want to self-host at all, PhotoPrism itself offers managed hosting from roughly EUR200 to EUR600 per month, and third-party providers such as PikaPods offer fully managed PhotoPrism instances starting around $6.50 per month."]}
+    ],
+    "features": [
+      {"title": "AI-powered tagging and search", "description": "Automatically labels and indexes photos so they can be found by content, not just filenames."},
+      {"title": "Face recognition", "description": "Detects and groups faces across a photo library for people-based browsing."},
+      {"title": "Duplicate detection", "description": "Identifies and helps remove duplicate or near-duplicate images."},
+      {"title": "Interactive world map", "description": "Plots geotagged photos on a map to browse a library by location."},
+      {"title": "Self-hosted via Docker", "description": "Deploys on personal hardware or any Docker-compatible host for full data ownership."},
+      {"title": "Open-source core", "description": "Community Edition is free and licensed under AGPLv3."},
+      {"title": "Optional AI backend integrations", "description": "Plus membership connects to Ollama and OpenAI for enhanced AI features."},
+      {"title": "SSO and hardened security (Plus)", "description": "OpenID Connect single sign-on and advanced security hardening on the paid Plus tier."}
+    ],
+    "pros": [
+      "Fully open-source core that is free to self-host indefinitely",
+      "No third-party cloud upload required, giving users complete control over their photo data",
+      "100 percent self-funded, independent company with no ad-driven or data-selling business model",
+      "AI features, face recognition, tagging and duplicate detection, rival mainstream cloud photo apps",
+      "Optional paid memberships are affordable and add clearly scoped extra functionality"
+    ],
+    "cons": [
+      "Requires self-hosting knowledge, Docker, storage and backups, unless using a managed provider",
+      "Small team, reported around three people, means slower feature velocity than large commercial competitors",
+      "Some advanced features, such as SSO, the user management UI and AI backend integrations, are locked behind paid memberships",
+      "Managed or hosted pricing, roughly EUR200 to EUR600 per month, is significantly more expensive than self-hosting",
+      "Mobile app experience is generally considered less polished than competitors like Immich"
+    ],
+    "faqs": [
+      {"question": "What is PhotoPrism?", "answer": "PhotoPrism is an open-source, self-hosted AI photo and video management application."},
+      {"question": "Is PhotoPrism free?", "answer": "Yes, the Community Edition is free and open source; paid memberships add extra features on top."},
+      {"question": "How much do PhotoPrism memberships cost?", "answer": "Essentials starts at about EUR2 per month self-hosted, and Plus starts at about EUR6 per month self-hosted, both billed annually."},
+      {"question": "Who makes PhotoPrism?", "answer": "PhotoPrism is made by PhotoPrism UG, a self-funded company founded by Michael Mayer and Theresa Gresch in Berlin, Germany."},
+      {"question": "Does PhotoPrism require the cloud?", "answer": "No, PhotoPrism is designed to be self-hosted on a user's own hardware, though managed hosting options also exist."},
+      {"question": "What license does PhotoPrism use?", "answer": "The PhotoPrism Community Edition is licensed under the AGPLv3."},
+      {"question": "How is PhotoPrism different from Immich?", "answer": "Both are open-source, self-hosted photo managers; PhotoPrism emphasizes AI search and a mature web UI, while Immich emphasizes mobile-first backup."},
+      {"question": "Can I use PhotoPrism without self-hosting?", "answer": "Yes, via managed hosting offered by PhotoPrism itself or third parties such as PikaPods."}
+    ],
+    "use_cases": [
+      {"title": "Private family photo library", "description": "Families use PhotoPrism to organize and search decades of photos and videos without uploading them to a third-party cloud service.", "audience": "Privacy-conscious individuals and families"},
+      {"title": "Self-hosted alternative to Google Photos", "description": "Home lab and self-hosting enthusiasts run PhotoPrism as a privacy-respecting replacement for commercial cloud photo services.", "audience": "Home lab and self-hosting enthusiasts"},
+      {"title": "Organizing large professional photo archives", "description": "Photographers and small studios use PhotoPrism's AI tagging and duplicate detection to manage large personal media archives.", "audience": "Photographers and small studios"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Community Edition", "price": "Free", "billing_cycle": "N/A (self-hosted)", "features": ["Open-source, AGPLv3 licensed", "Unlimited storage on your own hardware", "AI tagging, face recognition and duplicate detection", "Community support"]},
+      {"plan_name": "Essentials", "price": "From about EUR2/month self-hosted (about EUR200/month managed)", "billing_cycle": "Annual", "features": ["Additional user roles", "Enhanced maps and geocoding", "Private member chat support"]},
+      {"plan_name": "Plus", "price": "From about EUR6/month self-hosted (about EUR600/month managed)", "billing_cycle": "Annual", "features": ["Full user-management UI", "Ollama and OpenAI AI backend integrations", "Single sign-on via OpenID Connect", "Hardened security options"]}
+    ],
+    "tags": ["photo-management", "self-hosted", "open-source", "ai-tools", "privacy"],
+    "publish": true
+  }
+}
+]
