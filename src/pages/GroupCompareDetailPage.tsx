@@ -16,6 +16,7 @@ import { getGroupComparisonContent } from '../data/groupComparisonContent';
 import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
+import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
 
 interface GroupComparisonMemberRow {
   sort_order: number;
@@ -196,6 +197,20 @@ export default function GroupCompareDetailPage() {
       </div>
 
       <GroupCompareHero title={groupComparison.title} tools={facts} bestFor={groupComparisonContent?.bestFor || {}} />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-10">
+        <div className="rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
+          <AskGappsyChat
+            toolSlugs={facts.map((f) => f.slug)}
+            toolNames={facts.map((f) => f.name)}
+            suggestedQuestions={[
+              `Which of these is best for beginners?`,
+              `How do these compare on pricing?`,
+              `What's the biggest difference between them?`,
+            ]}
+          />
+        </div>
+      </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="lg:grid lg:grid-cols-[180px_1fr] lg:gap-10">

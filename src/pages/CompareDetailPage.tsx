@@ -25,6 +25,7 @@ import { useRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparis
 import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
+import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
 
 interface ComparisonRow {
   id: string;
@@ -315,6 +316,20 @@ export default function CompareDetailPage() {
         onSwitchToolA={handleSwitchA}
         onSwitchToolB={handleSwitchB}
       />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-10">
+        <div className="rounded-2xl border border-slate-100 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] overflow-hidden">
+          <AskGappsyChat
+            toolSlugs={[aRow.slug, bRow.slug]}
+            toolNames={[aRow.name, bRow.name]}
+            suggestedQuestions={[
+              `Which is better for beginners, ${aRow.name} or ${bRow.name}?`,
+              `How does ${aRow.name}'s pricing compare to ${bRow.name}?`,
+              `What's the biggest difference between them?`,
+            ]}
+          />
+        </div>
+      </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="lg:grid lg:grid-cols-[180px_1fr] lg:gap-10">

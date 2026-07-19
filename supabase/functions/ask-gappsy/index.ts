@@ -1,11 +1,15 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 
-// "Ask Gappsy" — a GPT-style chat grounded in real site data. Two modes:
+// "Ask Gappsy" — a GPT-style chat grounded in real site data. Three modes:
 //   - tool_slug given: answers questions about that one tool, using its
 //     actual DB content (description, pricing, features, pros/cons, FAQs)
 //     as the only source of truth, so it never invents pricing or features.
-//   - no tool_slug (homepage): a directory-wide assistant that can
+//   - tool_slugs given (2-3 slugs, /compare pages): same grounding, but for
+//     every tool in the comparison at once, so the assistant can answer
+//     questions about any one of them or help the visitor decide between
+//     them — still never inventing facts outside what's fetched per tool.
+//   - neither given (homepage): a directory-wide assistant that can
 //     recommend across the catalog. Given the catalog is small enough
 //     (~140 published tools), the full list is injected as static context
 //     rather than using OpenAI function-calling — much simpler to stream
@@ -146,6 +150,88 @@ If the visitor asks whether a different tool might suit them better, recommend f
   return { prompt, toolName: tool.name };
 }
 
+// Trimmed sibling of buildToolSystemPrompt for /compare pages — pulls the
+// same kind of data but skips the full article/reviews/alternatives text so
+// a 3-tool combined prompt stays a reasonable size, while still being rich
+// enough (pricing plans, features, pros/cons, FAQs) to answer real questions
+// and to compare tools against each other without inventing anything.
+// deno-lint-ignore no-explicit-any
+async function buildMultiToolSystemPrompt(supabase: any, toolSlugs: string[]): Promise<{ prompt: string; toolNames: string[]; toolIds: string[] } | null> {
+  const { data: tools } = await supabase
+    .from("tools")
+    .select(
+      `id, name, slug, short_description, pricing_model, starting_price, best_for, target_audience,
+       founded_year, company_size, headquarters, rating, review_count, featured`
+    )
+    .in("slug", toolSlugs)
+    .eq("status", "published");
+  if (!tools || tools.length === 0) return null;
+
+  // deno-lint-ignore no-explicit-any
+  const orderedTools = toolSlugs.map((slug) => tools.find((t: any) => t.slug === slug)).filter(Boolean);
+  if (orderedTools.length === 0) return null;
+
+  const sections = await Promise.all(
+    // deno-lint-ignore no-explicit-any
+    orderedTools.map(async (tool: any) => {
+      const [plansResult, featuresResult, prosResult, consResult, faqsResult] = await Promise.all([
+        supabase.from("tool_pricing_plans").select("plan_name, price, billing_cycle").eq("tool_id", tool.id).order("sort_order"),
+        supabase.from("tool_features").select("title").eq("tool_id", tool.id).order("sort_order").limit(10),
+        supabase.from("tool_pros").select("text").eq("tool_id", tool.id).order("sort_order").limit(6),
+        supabase.from("tool_cons").select("text").eq("tool_id", tool.id).order("sort_order").limit(6),
+        supabase.from("tool_faqs").select("question, answer").eq("tool_id", tool.id).eq("status", "published").order("sort_order").limit(5),
+      ]);
+
+      const plans = (plansResult.data || []).map((p: { plan_name: string | null; price: string | null; billing_cycle: string | null }) =>
+        `- ${p.plan_name || "Plan"}: ${p.price || "Custom"}${p.billing_cycle ? ` (${p.billing_cycle})` : ""}`
+      ).join("\n") || "Not documented.";
+      const features = (featuresResult.data || []).map((f: { title: string }) => `- ${f.title}`).join("\n") || "Not documented.";
+      const pros = (prosResult.data || []).map((p: { text: string }) => `- ${p.text}`).join("\n") || "Not documented.";
+      const cons = (consResult.data || []).map((c: { text: string }) => `- ${c.text}`).join("\n") || "Not documented.";
+      const faqs = (faqsResult.data || []).map((f: { question: string; answer: string }) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n") || "None yet.";
+
+      return `## ${tool.name} (gappsy.com/tools/${tool.slug})
+Short description: ${tool.short_description || "Not documented."}
+Best for: ${tool.best_for || "Not documented."}
+Target audience: ${tool.target_audience || "Not documented."}
+Company: founded ${tool.founded_year || "unknown"}, ${tool.company_size || "size not documented"}, headquartered in ${tool.headquarters || "an undocumented location"}.
+Pricing model: ${tool.pricing_model || "Not documented."}${tool.starting_price ? `, starting at ${tool.starting_price}` : ""}
+Rating: ${tool.rating > 0 ? `${tool.rating}/5 from ${tool.review_count} reviews` : "No reviews yet."}
+${tool.featured ? "This is one of Gappsy's Featured (paid, sponsored) listings." : "This is a standard, non-featured listing."}
+
+Pricing plans:
+${plans}
+
+Key features:
+${features}
+
+Pros:
+${pros}
+
+Cons:
+${cons}
+
+FAQs:
+${faqs}`;
+    })
+  );
+
+  // deno-lint-ignore no-explicit-any
+  const names = orderedTools.map((t: any) => t.name);
+  const namesList = names.length === 2 ? `${names[0]} and ${names[1]}` : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+
+  const prompt = `You are "Ask Gappsy", a helpful, honest assistant embedded on the Gappsy software directory's comparison page for ${namesList}. Answer questions about any of these tools individually, or help the visitor decide between them, using ONLY the information below for each tool — never invent pricing, features, or facts that aren't here. If something isn't covered for a given tool, say so plainly and suggest checking that tool's own page on gappsy.com or its official website, rather than guessing.
+
+${sections.join("\n\n")}
+
+Disclosure rule: if a tool above is marked as a Featured/sponsored Gappsy listing, say so plainly when it's relevant to the conversation — never let featured status make you oversell it or hide a real weakness listed in its Cons. Being featured means it paid for visibility, not that it's objectively the best fit for every visitor.
+
+Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text. When comparing, be specific about which tool wins on which dimension rather than giving a vague "it depends."`;
+
+  // deno-lint-ignore no-explicit-any
+  return { prompt, toolNames: names, toolIds: orderedTools.map((t: any) => t.id) };
+}
+
 // deno-lint-ignore no-explicit-any
 async function buildDirectorySystemPrompt(supabase: any): Promise<string> {
   const [toolsResult, comparisonsResult] = await Promise.all([
@@ -217,6 +303,7 @@ Deno.serve(async (req: Request) => {
     const payload = await req.json();
     const sessionId = typeof payload.session_id === "string" ? payload.session_id : null;
     const toolSlug = typeof payload.tool_slug === "string" ? payload.tool_slug : null;
+    const toolSlugs = Array.isArray(payload.tool_slugs) ? (payload.tool_slugs as unknown[]).filter((s): s is string => typeof s === "string") : null;
     const messages = Array.isArray(payload.messages) ? (payload.messages as ChatMessage[]) : [];
     if (!sessionId || messages.length === 0) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
 
@@ -225,9 +312,17 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ ok: false, error: "You've sent a lot of messages — please wait a few minutes and try again." }, 429);
     }
 
+    // Multi-tool sessions (compare pages) aren't logged against a single
+    // tool_id — that column is a single FK and no schema change is in
+    // scope here, so it's left null for those rows (still fully covered by
+    // session_id for rate limiting and admin review).
     let toolId: string | null = null;
     let systemPrompt: string;
-    if (toolSlug) {
+    if (toolSlugs && toolSlugs.length > 0) {
+      const context = await buildMultiToolSystemPrompt(supabase, toolSlugs);
+      if (!context) return jsonResponse({ ok: false, error: "Tools not found" }, 404);
+      systemPrompt = context.prompt;
+    } else if (toolSlug) {
       const context = await buildToolSystemPrompt(supabase, toolSlug);
       if (!context) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
       systemPrompt = context.prompt;

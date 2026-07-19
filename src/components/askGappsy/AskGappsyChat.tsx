@@ -25,6 +25,11 @@ function getSessionId(): string {
 interface AskGappsyChatProps {
   toolSlug?: string;
   toolName?: string;
+  /** Multi-tool scope for /compare pages (2 or 3 tools) — takes priority
+   * over toolSlug/toolName when present. The edge function grounds the
+   * assistant in all of these tools' real data at once instead of one. */
+  toolSlugs?: string[];
+  toolNames?: string[];
   suggestedQuestions: string[];
   placeholder?: string;
   /** Caps the message-thread height so the surrounding layout (inline hero
@@ -33,12 +38,19 @@ interface AskGappsyChatProps {
   threadMaxHeightClass?: string;
 }
 
-// Shared chat engine used both inline in the tool-detail hero and in the
-// homepage's floating bubble. Talks directly to the ask-gappsy edge
-// function's streaming response (plain UTF-8 text chunks, not raw OpenAI
-// SSE — the edge function already unwraps that) so this component just
-// reads the stream and appends, no SSE parsing needed here.
-export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]' }: AskGappsyChatProps) {
+function joinNames(names: string[]): string {
+  if (names.length <= 1) return names[0] || '';
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+}
+
+// Shared chat engine used both inline in the tool-detail hero, inline on
+// /compare pages (scoped to 2-3 tools via toolSlugs), and in the homepage's
+// floating bubble. Talks directly to the ask-gappsy edge function's
+// streaming response (plain UTF-8 text chunks, not raw OpenAI SSE — the
+// edge function already unwraps that) so this component just reads the
+// stream and appends, no SSE parsing needed here.
+export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]' }: AskGappsyChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -67,7 +79,11 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
       const res = await fetch(`${SUPABASE_URL}/functions/v1/ask-gappsy`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
-        body: JSON.stringify({ session_id: sessionIdRef.current, tool_slug: toolSlug, messages: nextMessages }),
+        body: JSON.stringify({
+          session_id: sessionIdRef.current,
+          ...(toolSlugs && toolSlugs.length > 0 ? { tool_slugs: toolSlugs } : { tool_slug: toolSlug }),
+          messages: nextMessages,
+        }),
       });
 
       if (!res.ok || !res.body) {
@@ -122,7 +138,9 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
           <Sparkles className="w-4 h-4 text-white" aria-hidden="true" />
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-[#0B1221] text-sm leading-tight">Ask Gappsy{toolName ? ` about ${toolName}` : ''}</p>
+          <p className="font-bold text-[#0B1221] text-sm leading-tight">
+            Ask Gappsy{toolNames && toolNames.length > 0 ? ` about ${joinNames(toolNames)}` : toolName ? ` about ${toolName}` : ''}
+          </p>
           <p className="text-[11.5px] text-slate-400 leading-tight">AI answers, grounded in real listing data</p>
         </div>
       </div>
@@ -171,7 +189,14 @@ export default function AskGappsyChat({ toolSlug, toolName, suggestedQuestions, 
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={placeholder || (toolName ? `Ask anything about ${toolName}...` : 'Ask about any tool on Gappsy...')}
+          placeholder={
+            placeholder ||
+            (toolNames && toolNames.length > 0
+              ? `Ask anything about ${joinNames(toolNames)}...`
+              : toolName
+                ? `Ask anything about ${toolName}...`
+                : 'Ask about any tool on Gappsy...')
+          }
           disabled={streaming}
           className="flex-1 h-10 min-w-0 rounded-full border border-slate-200 px-4 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow disabled:opacity-60"
         />
