@@ -299,6 +299,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'GitCompare',
   },
   {
+    id: 'tool-roundups',
+    label: 'Roundups',
+    description: 'Manage approved 3+ tool roundup comparison pages',
+    href: '/wp-admin/tool-roundups',
+    keywords: ['roundups', 'roundup', 'compare', 'vs', 'tools', 'software'],
+    group: 'Editorial',
+    scopes: ['software'],
+    iconName: 'Layers',
+  },
+  {
     id: 'top25-editor',
     label: 'Edit Top-25 Pages',
     description: 'Edit state page content, agencies, and spotlights',

@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar, PlayCircle, UserCog, MousePointerClick } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar, PlayCircle, UserCog, MousePointerClick, Layers } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS, ADMIN_VIEWS, TOOL_GROUPS, isToolVisibleInView, inferScopeForPath, type AdminScope, type AdminTool } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -52,6 +52,7 @@ const ICON_MAP: Record<string, JSX.Element> = {
   FolderTree: <FolderTree className="w-4 h-4" />,
   Tag: <Tag className="w-4 h-4" />,
   GitCompare: <GitCompare className="w-4 h-4" />,
+  Layers: <Layers className="w-4 h-4" />,
   Rocket: <Rocket className="w-4 h-4" />,
   ListChecks: <ListChecks className="w-4 h-4" />,
   FileEdit: <FileEdit className="w-4 h-4" />,

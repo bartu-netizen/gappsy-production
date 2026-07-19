@@ -143,6 +143,8 @@ const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
 const WpAdminToolTagEditorPage = lazy(() => import("./pages/WpAdminToolTagEditorPage"));
 const WpAdminToolComparisonsPage = lazy(() => import("./pages/WpAdminToolComparisonsPage"));
 const WpAdminToolComparisonEditorPage = lazy(() => import("./pages/WpAdminToolComparisonEditorPage"));
+const WpAdminToolRoundupsPage = lazy(() => import("./pages/WpAdminToolRoundupsPage"));
+const WpAdminToolRoundupEditorPage = lazy(() => import("./pages/WpAdminToolRoundupEditorPage"));
 const AdminBulkStateImport = lazy(() => import("./pages/AdminBulkStateImport"));
 const BulkLogoUploadPage = lazy(() => import("./pages/BulkLogoUploadPage"));
 const WpAdminFunnelAnalyticsPage = lazy(() => import("./pages/WpAdminFunnelAnalyticsPage"));
@@ -285,6 +287,9 @@ export default function App() {
         <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-roundups" element={<AdminRoute><WpAdminToolRoundupsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-roundups/new" element={<AdminRoute><WpAdminToolRoundupEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-roundups/:id/edit" element={<AdminRoute><WpAdminToolRoundupEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/json-import" element={<AdminRoute><AdminBulkStateImport /></AdminRoute>} />
         <Route path="/wp-admin/logo-upload" element={<AdminRoute><BulkLogoUploadPage /></AdminRoute>} />
         <Route path="/wp-admin/content-scanner" element={<AdminRoute><AdminContentScanPage /></AdminRoute>} />
