@@ -13,10 +13,10 @@ function PricingColumn({ tool, plans }: { tool: CompareToolFacts; plans: Pricing
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-[#0B1221] text-sm">{tool.name}</h3>
+      <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 mb-3">
+        <h3 className="font-semibold text-[#0B1221] text-sm min-w-0 break-words">{tool.name}</h3>
         {(tool.pricingModel || tool.startingPrice) && (
-          <p className="text-[12px] text-slate-500">
+          <p className="text-[12px] text-slate-500 min-w-0 break-words">
             {tool.pricingModel}
             {tool.pricingModel && tool.startingPrice ? ' · ' : ''}
             {tool.startingPrice && <span className="font-medium text-slate-700">from {tool.startingPrice}</span>}
@@ -27,13 +27,13 @@ function PricingColumn({ tool, plans }: { tool: CompareToolFacts; plans: Pricing
       {sorted.length > 0 ? (
         <div className="space-y-2.5">
           {sorted.map((plan) => (
-            <Card key={plan.id} className="p-4">
-              <div className="flex items-baseline justify-between gap-2 mb-1">
-                <span className="font-semibold text-[#0B1221] text-[13.5px]">{plan.plan_name || 'Plan'}</span>
-                <span className="text-[13.5px] font-bold text-[#0B1221] tabular-nums shrink-0">{plan.price || 'Custom'}</span>
+            <Card key={plan.id} className="p-4 min-w-0">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 mb-1">
+                <span className="font-semibold text-[#0B1221] text-[13.5px] min-w-0 break-words">{plan.plan_name || 'Plan'}</span>
+                <span className="text-[13.5px] font-bold text-[#0B1221] tabular-nums min-w-0 break-words">{plan.price || 'Custom'}</span>
               </div>
-              {plan.billing_cycle && <p className="text-[11px] text-slate-400 mb-1.5">{plan.billing_cycle}</p>}
-              {plan.description && <p className="text-[12.5px] text-slate-500 leading-relaxed">{plan.description}</p>}
+              {plan.billing_cycle && <p className="text-[11px] text-slate-400 mb-1.5 break-words">{plan.billing_cycle}</p>}
+              {plan.description && <p className="text-[12.5px] text-slate-500 leading-relaxed break-words">{plan.description}</p>}
             </Card>
           ))}
         </div>

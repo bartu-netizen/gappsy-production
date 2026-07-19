@@ -38,25 +38,25 @@ export default function PricingSection({ toolSlug, toolName, plans, websiteUrl, 
               key={plan.id}
               highlight={isRecommended}
               hoverLift={!isRecommended}
-              className={`p-5 flex flex-col ${isRecommended ? 'lg:scale-105 z-10' : ''}`}
+              className={`p-5 flex flex-col min-w-0 ${isRecommended ? 'lg:scale-105 z-10' : ''}`}
             >
               {isRecommended && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full">
                   Popular
                 </span>
               )}
-              <h3 className="font-semibold text-[#0B1221] text-base mb-1">{plan.plan_name || 'Plan'}</h3>
-              <div className="mb-1">
-                <span className="text-2xl font-bold text-[#0B1221] tabular-nums">{plan.price || 'Custom'}</span>
-                {plan.billing_cycle && <span className="text-slate-400 text-sm ml-1">{plan.billing_cycle}</span>}
+              <h3 className="font-semibold text-[#0B1221] text-base mb-1 break-words">{plan.plan_name || 'Plan'}</h3>
+              <div className="mb-1 flex flex-wrap items-baseline gap-x-1.5">
+                <span className="text-2xl font-bold text-[#0B1221] tabular-nums break-words">{plan.price || 'Custom'}</span>
+                {plan.billing_cycle && <span className="text-slate-400 text-sm break-words">{plan.billing_cycle}</span>}
               </div>
-              {plan.description && <p className="text-[13px] text-slate-500 leading-relaxed mb-4">{plan.description}</p>}
+              {plan.description && <p className="text-[13px] text-slate-500 leading-relaxed mb-4 break-words">{plan.description}</p>}
               {plan.features.length > 0 && (
                 <ul className="space-y-2 pt-3 border-t border-slate-100 mb-4">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-[13px] text-slate-600">
                       <Check className="w-3.5 h-3.5 text-[#4F47E6] shrink-0 mt-0.5" />
-                      {feature}
+                      <span className="min-w-0 break-words">{feature}</span>
                     </li>
                   ))}
                 </ul>
