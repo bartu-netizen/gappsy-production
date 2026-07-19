@@ -74,10 +74,10 @@ interface ToolComparisonRow {
   tool_b: { slug: string; name: string; logo: string | null };
 }
 
-// One row per roundup this tool belongs to, with every member tool's
-// slug/name/logo so RoundupLinksSection can render the same RoundupCard
-// used on /roundup without a second query.
-interface ToolRoundupRow {
+// One row per group comparison this tool belongs to, with every member
+// tool's slug/name/logo so GroupComparisonLinksSection can render the same
+// GroupCompareCard used on /compare/roundup without a second query.
+interface ToolGroupComparisonRow {
   slug: string;
   title: string;
   tools: { slug: string; name: string; logo: string | null }[];
@@ -176,7 +176,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const [dbFaqs, setDbFaqs] = useState<ToolFAQ[]>([]);
   const [dbAlternatives, setDbAlternatives] = useState<ToolAlternative[]>([]);
   const [dbComparisons, setDbComparisons] = useState<ToolComparisonRow[]>([]);
-  const [dbRoundups, setDbRoundups] = useState<ToolRoundupRow[]>([]);
+  const [dbGroupComparisons, setDbGroupComparisons] = useState<ToolGroupComparisonRow[]>([]);
   const [dbLongForm, setDbLongForm] = useState<ToolContentBlock[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -293,12 +293,12 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
             .eq('status', 'published')
             .order('slug', { ascending: true }),
           supabase
-            .from('tool_roundup_members')
-            .select('tool_roundups!inner(slug, title, status, tool_roundup_members(sort_order, tools(slug,name,logo,status)))')
+            .from('tool_group_comparison_members')
+            .select('tool_group_comparisons!inner(slug, title, status, tool_group_comparison_members(sort_order, tools(slug,name,logo,status)))')
             .eq('tool_id', data.id)
-            .eq('tool_roundups.status', 'published'),
+            .eq('tool_group_comparisons.status', 'published'),
           supabase.from('tool_content_blocks').select('block_key, heading, level, paragraphs').eq('tool_id', data.id).order('sort_order', { ascending: true }),
-        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonsResult, roundupsResult, contentBlocksResult]) => {
+        ]).then(([catResult, tagResult, screenshotResult, pricingResult, integrationsResult, reviewsResult, editorPicksResult, featuresResult, prosResult, consResult, useCasesResult, faqsResult, alternativesResult, comparisonsResult, groupComparisonsResult, contentBlocksResult]) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const categoryLinks = (catResult.data || []) as any[];
           const cats: TaxonomyRef[] = categoryLinks.map((r) => r.tool_categories).filter(Boolean);
@@ -338,14 +338,14 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           );
           setDbComparisons(((comparisonsResult.data || []) as unknown as ToolComparisonRow[]).filter((c) => c.tool_a && c.tool_b));
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setDbRoundups(
-            ((roundupsResult.data || []) as any[])
-              .map((r) => r.tool_roundups)
+          setDbGroupComparisons(
+            ((groupComparisonsResult.data || []) as any[])
+              .map((r) => r.tool_group_comparisons)
               .filter(Boolean)
-              .map((tr) => ({
-                slug: tr.slug,
-                title: tr.title,
-                tools: (tr.tool_roundup_members || [])
+              .map((tgc) => ({
+                slug: tgc.slug,
+                title: tgc.title,
+                tools: (tgc.tool_group_comparison_members || [])
                   .filter((m: any) => m.tools?.status === 'published') // eslint-disable-line @typescript-eslint/no-explicit-any
                   .sort((a: any, b: any) => a.sort_order - b.sort_order) // eslint-disable-line @typescript-eslint/no-explicit-any
                   .map((m: any) => ({ slug: m.tools.slug, name: m.tools.name, logo: m.tools.logo })), // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -499,7 +499,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     ...(mergedFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : []),
     ...(mergedAlternatives.length ? [{ id: 'alternatives', label: 'Alternatives' }] : []),
     ...(dbComparisons.length || legacyComparisons.length ? [{ id: 'comparisons', label: 'Comparisons' }] : []),
-    ...(dbRoundups.length ? [{ id: 'roundups', label: 'Roundups' }] : []),
+    ...(dbGroupComparisons.length ? [{ id: 'group-comparisons', label: 'Group Comparisons' }] : []),
   ];
 
   // Only real, published comparison pages — never a link that promises a
@@ -692,8 +692,8 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               {dbComparisons.length === 0 && legacyComparisons.length > 0 && (
                 <LazyLoad id="comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/ComparisonLinksSection')} componentProps={{ toolName: tool.name, comparisons: legacyComparisons }} />
               )}
-              {dbRoundups.length > 0 && (
-                <LazyLoad id="roundups" className="scroll-mt-24" component={() => import('../components/tools/detail/RoundupLinksSection')} componentProps={{ toolName: tool.name, roundups: dbRoundups }} />
+              {dbGroupComparisons.length > 0 && (
+                <LazyLoad id="group-comparisons" className="scroll-mt-24" component={() => import('../components/tools/detail/GroupComparisonLinksSection')} componentProps={{ toolName: tool.name, groupComparisons: dbGroupComparisons }} />
               )}
             </div>
           </div>

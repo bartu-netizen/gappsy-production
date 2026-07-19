@@ -78,8 +78,8 @@ else {
     /^https:\/\/www\.gappsy\.com\/tool-categories\/[a-z0-9-]+\/$/,
     /^https:\/\/www\.gappsy\.com\/compare\/$/,
     /^https:\/\/www\.gappsy\.com\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
-    /^https:\/\/www\.gappsy\.com\/roundup\/$/,
-    /^https:\/\/www\.gappsy\.com\/roundup\/[a-z0-9-]+\/$/,
+    /^https:\/\/www\.gappsy\.com\/compare\/roundup\/$/,
+    /^https:\/\/www\.gappsy\.com\/compare\/roundup\/[a-z0-9-]+\/$/,
   ];
   for (const loc of locs) {
     if (!allowed.some((re) => re.test(loc))) {

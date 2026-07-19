@@ -14,7 +14,7 @@
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
-const SCAN_DIRS = ['dist/tools', 'dist/compare', 'dist/roundup'];
+const SCAN_DIRS = ['dist/tools', 'dist/compare'];
 const CORRUPTION_PATTERN = /<div id="root"><\/div>[0-9]/;
 
 let violations = 0;

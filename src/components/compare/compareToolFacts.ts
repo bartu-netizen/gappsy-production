@@ -1,6 +1,6 @@
 // Shared DB-fetch + fact-building logic for one tool's side of a
-// comparison — extracted from CompareDetailPage so RoundupDetailPage (N
-// tools instead of exactly 2) can reuse the exact same logic rather than
+// comparison — extracted from CompareDetailPage so GroupCompareDetailPage
+// (N tools instead of exactly 2) can reuse the exact same logic rather than
 // duplicating it.
 import { PLATFORM_TAGS } from '../tools/detail/ToolFactsSidebar';
 import type { TaxonomyRef, ScreenshotItem, PricingPlanItem } from '../tools/detail/types';

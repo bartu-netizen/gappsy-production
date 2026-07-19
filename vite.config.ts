@@ -4,7 +4,7 @@ import { prerender } from './scripts/prerender.js';
 import { prerenderTools } from './scripts/prerender-tools.js';
 import { prerenderCategories } from './scripts/prerender-categories.js';
 import { prerenderComparisons } from './scripts/prerender-comparisons.js';
-import { prerenderRoundups } from './scripts/prerender-roundups.js';
+import { prerenderGroupComparisons } from './scripts/prerender-group-comparisons.js';
 
 /**
  * Vite plugin that automatically runs prerender after build
@@ -70,18 +70,18 @@ function prerenderPlugin() {
 
         console.log('✅ Comparison prerender completed successfully - All published comparisons have crawlable HTML\n');
 
-        // Extend the same prerender step to approved /roundup pages (3+
-        // tool comparisons). Same failure path, same plugin — everything
-        // above is untouched either way. An empty approved-roundups set is
-        // valid (not a failure) — see prerenderRoundups.
-        console.log('\n🔄 Running roundup-page prerender with Supabase data...\n');
-        const roundupResult = await prerenderRoundups({ failOnError: true });
+        // Extend the same prerender step to approved /compare/roundup pages
+        // (3+ tool group comparisons). Same failure path, same plugin —
+        // everything above is untouched either way. An empty approved set
+        // is valid (not a failure) — see prerenderGroupComparisons.
+        console.log('\n🔄 Running group comparison page prerender with Supabase data...\n');
+        const groupComparisonResult = await prerenderGroupComparisons({ failOnError: true });
 
-        if (!roundupResult.success) {
-          throw new Error(`Roundup prerender failed for ${roundupResult.errorCount} roundup(s)`);
+        if (!groupComparisonResult.success) {
+          throw new Error(`Group comparison prerender failed for ${groupComparisonResult.errorCount} group comparison(s)`);
         }
 
-        console.log('✅ Roundup prerender completed successfully - All published roundups have crawlable HTML\n');
+        console.log('✅ Group comparison prerender completed successfully - All published group comparisons have crawlable HTML\n');
       } catch (error) {
         console.error('\n❌ PRERENDER FAILED - Build cannot continue\n');
         console.error('Error:', error.message);

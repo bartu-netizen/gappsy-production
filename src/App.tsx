@@ -37,8 +37,8 @@ const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage
 const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
-const RoundupPage = lazy(() => import("./pages/RoundupPage"));
-const RoundupDetailPage = lazy(() => import("./pages/RoundupDetailPage"));
+const GroupComparePage = lazy(() => import("./pages/GroupComparePage"));
+const GroupCompareDetailPage = lazy(() => import("./pages/GroupCompareDetailPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
@@ -143,8 +143,8 @@ const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
 const WpAdminToolTagEditorPage = lazy(() => import("./pages/WpAdminToolTagEditorPage"));
 const WpAdminToolComparisonsPage = lazy(() => import("./pages/WpAdminToolComparisonsPage"));
 const WpAdminToolComparisonEditorPage = lazy(() => import("./pages/WpAdminToolComparisonEditorPage"));
-const WpAdminToolRoundupsPage = lazy(() => import("./pages/WpAdminToolRoundupsPage"));
-const WpAdminToolRoundupEditorPage = lazy(() => import("./pages/WpAdminToolRoundupEditorPage"));
+const WpAdminToolComparisons3Page = lazy(() => import("./pages/WpAdminToolComparisons3Page"));
+const WpAdminToolComparisons3EditorPage = lazy(() => import("./pages/WpAdminToolComparisons3EditorPage"));
 const AdminBulkStateImport = lazy(() => import("./pages/AdminBulkStateImport"));
 const BulkLogoUploadPage = lazy(() => import("./pages/BulkLogoUploadPage"));
 const WpAdminFunnelAnalyticsPage = lazy(() => import("./pages/WpAdminFunnelAnalyticsPage"));
@@ -287,9 +287,9 @@ export default function App() {
         <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
-        <Route path="/wp-admin/tool-roundups" element={<AdminRoute><WpAdminToolRoundupsPage /></AdminRoute>} />
-        <Route path="/wp-admin/tool-roundups/new" element={<AdminRoute><WpAdminToolRoundupEditorPage /></AdminRoute>} />
-        <Route path="/wp-admin/tool-roundups/:id/edit" element={<AdminRoute><WpAdminToolRoundupEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3" element={<AdminRoute><WpAdminToolComparisons3Page /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3/new" element={<AdminRoute><WpAdminToolComparisons3EditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3/:id/edit" element={<AdminRoute><WpAdminToolComparisons3EditorPage /></AdminRoute>} />
         <Route path="/wp-admin/json-import" element={<AdminRoute><AdminBulkStateImport /></AdminRoute>} />
         <Route path="/wp-admin/logo-upload" element={<AdminRoute><BulkLogoUploadPage /></AdminRoute>} />
         <Route path="/wp-admin/content-scanner" element={<AdminRoute><AdminContentScanPage /></AdminRoute>} />
@@ -386,9 +386,9 @@ export default function App() {
         <Route path="/tool-categories/:categorySlug" element={<ToolCategoryDetailPage />} />
         <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
+        <Route path="/compare/roundup" element={<GroupComparePage />} />
+        <Route path="/compare/roundup/:groupSlug" element={<GroupCompareDetailPage />} />
         <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
-        <Route path="/roundup" element={<RoundupPage />} />
-        <Route path="/roundup/:roundupSlug" element={<RoundupDetailPage />} />
         <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
         <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
         <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
