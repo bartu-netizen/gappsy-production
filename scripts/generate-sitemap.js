@@ -66,9 +66,10 @@ const ALLOWED_PATTERNS = [
   /^\/tool-categories\/$/,
   /^\/tool-categories\/[a-z0-9-]+\/$/,
   /^\/compare\/$/,
+  // Matches both pairwise ("a-vs-b") and group ("a-vs-b-vs-c") comparison
+  // slugs — the pattern is generic to any number of "-vs-"-joined segments.
   /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
   /^\/compare\/roundup\/$/,
-  /^\/compare\/roundup\/[a-z0-9-]+\/$/,
 ];
 
 async function fetchPublishedToolSlugs() {
@@ -253,7 +254,7 @@ async function generateSitemap() {
 
   const groupComparisonSlugs = await fetchPublishedGroupComparisonSlugs();
   groupComparisonSlugs.forEach((slug) => {
-    const url = `/compare/roundup/${slug}/`;
+    const url = `/compare/${slug}/`;
     assertAllowed(url);
     paths.push(url);
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));

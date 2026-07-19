@@ -28,7 +28,7 @@ function ToolAvatar({ tool, index }: { tool: GroupCompareCardTool; index: number
 export default function GroupCompareCard({ slug, title, tools }: { slug: string; title: string; tools: GroupCompareCardTool[] }) {
   return (
     <Link
-      to={`/compare/roundup/${slug}`}
+      to={`/compare/${slug}`}
       className="group flex items-center gap-4 bg-white border border-[#eef0f3] rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] hover:border-slate-200"
     >
       <div className="flex items-center -space-x-2 shrink-0">

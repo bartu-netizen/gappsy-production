@@ -124,7 +124,7 @@ export async function prerenderGroupComparisons(options = {}) {
       const staticBodyHTML = generateGroupComparisonStaticBodyHTML({ groupComparison, tools: groupComparison.tools, groupComparisonContent, seoData });
       const html = injectToolSEOTags(baseHtml, seoData, jsonLd, staticBodyHTML);
 
-      const groupComparisonDir = join(distDir, 'compare', 'roundup', groupComparison.slug);
+      const groupComparisonDir = join(distDir, 'compare', groupComparison.slug);
       mkdirSync(groupComparisonDir, { recursive: true });
       writeFileSync(join(groupComparisonDir, 'index.html'), html, 'utf-8');
 

@@ -1,4 +1,4 @@
-// Pure functions for /compare/roundup page prerendering (N-tool
+// Pure functions for /compare/:slug page prerendering (N-tool
 // comparisons, 3+). Mirrors comparison-seo-generator.js's structure and
 // reuses the same generic tag/JSON-LD injection plumbing from
 // tool-seo-generator.js — only the comparison-specific parts here are
@@ -25,7 +25,7 @@ export function generateGroupComparisonSEOData({ groupComparison, tools, groupCo
   const description = groupComparisonContent?.verdict
     ? truncate(groupComparisonContent.verdict, META_DESCRIPTION_MAX)
     : `Compare ${tools.map((t) => t.name).join(', ')} on pricing, features, and who each one is built for.`;
-  const canonical = `${DOMAIN}/compare/roundup/${groupComparison.slug}/`;
+  const canonical = `${DOMAIN}/compare/${groupComparison.slug}/`;
   const ogImage = tools.find((t) => isSafeHttpUrl(t.logo))?.logo || `${DOMAIN}/og/default-og-image.svg`;
   return { title, description, canonical, ogImage, slug: groupComparison.slug };
 }

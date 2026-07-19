@@ -248,7 +248,7 @@ export default function WpAdminToolComparisons3EditorPage() {
 
           {previewSlug && (
             <p className="text-xs text-gray-400">
-              Canonical URL: /compare/roundup/{previewSlug} (ordering is always alphabetical by slug, regardless of pick order)
+              Canonical URL: /compare/{previewSlug} (ordering is always alphabetical by slug, regardless of pick order)
             </p>
           )}
 

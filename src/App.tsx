@@ -36,9 +36,8 @@ const ToolCategoriesIndexPage = lazy(() => import("./pages/ToolCategoriesIndexPa
 const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage"));
 const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
-const CompareDetailPage = lazy(() => import("./pages/CompareDetailPage"));
+const CompareRouterPage = lazy(() => import("./pages/CompareRouterPage"));
 const GroupComparePage = lazy(() => import("./pages/GroupComparePage"));
-const GroupCompareDetailPage = lazy(() => import("./pages/GroupCompareDetailPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
@@ -387,8 +386,7 @@ export default function App() {
         <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/roundup" element={<GroupComparePage />} />
-        <Route path="/compare/roundup/:groupSlug" element={<GroupCompareDetailPage />} />
-        <Route path="/compare/:comparisonSlug" element={<CompareDetailPage />} />
+        <Route path="/compare/:comparisonSlug" element={<CompareRouterPage />} />
         <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
         <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
         <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />

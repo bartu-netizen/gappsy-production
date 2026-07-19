@@ -158,7 +158,7 @@ export default function WpAdminToolComparisons3Page() {
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
                         <Link
-                          to={`/compare/roundup/${gc.slug}`}
+                          to={`/compare/${gc.slug}`}
                           target="_blank"
                           className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition"
                           title="View public page"

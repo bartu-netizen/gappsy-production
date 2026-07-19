@@ -42,7 +42,7 @@ function truncateDescription(text: string, max = 160): string {
 }
 
 export default function GroupCompareDetailPage() {
-  const { groupSlug } = useParams<{ groupSlug: string }>();
+  const { comparisonSlug: groupSlug } = useParams<{ comparisonSlug: string }>();
   const [groupComparison, setGroupComparison] = useState<GroupComparisonRow | null>(null);
   const [facts, setFacts] = useState<CompareToolFacts[]>([]);
   const [loading, setLoading] = useState(true);
@@ -95,7 +95,7 @@ export default function GroupCompareDetailPage() {
   if (notFound || !groupComparison) {
     return (
       <div className="bg-[#f7f8fa] min-h-screen">
-        <EntitySEOTags title="Comparison Not Found | Gappsy" description="This comparison could not be found." path={`/compare/roundup/${groupSlug || ''}`} noindex />
+        <EntitySEOTags title="Comparison Not Found | Gappsy" description="This comparison could not be found." path={`/compare/${groupSlug || ''}`} noindex />
         <SoftwareHeader variant="premium" />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-6">
@@ -120,7 +120,7 @@ export default function GroupCompareDetailPage() {
     ? truncateDescription(groupComparisonContent.verdict)
     : `Compare ${facts.map((f) => f.name).join(', ')} on pricing, features, and who each one is built for.`;
 
-  const canonicalUrl = `https://www.gappsy.com/compare/roundup/${groupComparison.slug}/`;
+  const canonicalUrl = `https://www.gappsy.com/compare/${groupComparison.slug}/`;
   const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://www.gappsy.com' };
 
   const articleJsonLd = groupComparisonContent
@@ -168,9 +168,9 @@ export default function GroupCompareDetailPage() {
       <EntitySEOTags
         title={`${groupComparison.title} | Gappsy`}
         description={description}
-        path={`/compare/roundup/${groupComparison.slug}`}
+        path={`/compare/${groupComparison.slug}`}
         ogImage={facts[0]?.logo || '/og/default-og-image.svg'}
-        breadcrumbs={[{ name: 'Compare', path: '/compare' }, { name: groupComparison.title, path: `/compare/roundup/${groupComparison.slug}` }]}
+        breadcrumbs={[{ name: 'Compare', path: '/compare' }, { name: groupComparison.title, path: `/compare/${groupComparison.slug}` }]}
         jsonLd={[...articleJsonLd, ...faqJsonLd]}
       />
 

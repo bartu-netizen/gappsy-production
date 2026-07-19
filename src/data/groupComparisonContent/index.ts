@@ -17,7 +17,7 @@ import reviewtrackersVsSociVsYextContent from './reviewtrackers-vs-soci-vs-yext'
 
 // Registry of per-group-comparison editorial content, keyed by canonical
 // slug. A published tool_group_comparisons row with no entry here still
-// renders on /compare/roundup/:slug using DB-sourced facts only — this is
+// renders on /compare/:slug using DB-sourced facts only — this is
 // purely additive.
 const GROUP_COMPARISON_CONTENT: Record<string, GroupComparisonContent> = {
   'activitywatch-vs-kimai-vs-solidtime': activitywatchVsKimaiVsSolidtimeContent,

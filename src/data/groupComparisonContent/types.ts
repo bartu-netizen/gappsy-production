@@ -4,7 +4,7 @@
 // supabase tool_group_comparisons) that has enough real, defensible
 // editorial substance gets one file here, registered in index.ts by
 // canonical slug. A group comparison with no entry here still renders on
-// /compare/roundup/:slug using DB-sourced facts only (pricing, rating,
+// /compare/:slug using DB-sourced facts only (pricing, rating,
 // platforms, tags per member tool); the sections below are additive, never
 // required for the page to render.
 
