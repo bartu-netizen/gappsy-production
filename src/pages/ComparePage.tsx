@@ -7,6 +7,7 @@ import EntitySEOTags from '../components/EntitySEOTags';
 import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
 import ComparisonCard from '../components/compare/ComparisonCard';
+import GroupCompareCard from '../components/groupCompare/GroupCompareCard';
 import { supabase } from '../lib/supabase';
 import { readRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparisons';
 
@@ -20,6 +21,12 @@ interface ApprovedComparison {
   slug: string;
   tool_a: ComparisonToolRef;
   tool_b: ComparisonToolRef;
+}
+
+interface GroupComparisonListItem {
+  slug: string;
+  title: string;
+  tools: ComparisonToolRef[];
 }
 
 const COMPARISON_LIST_SELECT =
@@ -48,6 +55,8 @@ export default function ComparePage() {
   const [approved, setApproved] = useState<ApprovedComparison[]>([]);
   const [recent, setRecent] = useState<ApprovedComparison[]>([]);
   const [loadingApproved, setLoadingApproved] = useState(true);
+  const [groupComparisons, setGroupComparisons] = useState<GroupComparisonListItem[]>([]);
+  const [loadingGroupComparisons, setLoadingGroupComparisons] = useState(true);
 
   // Read once on mount — a stable reference so the fetch effect below
   // doesn't re-run every render (this list only changes by visiting a
@@ -65,6 +74,31 @@ export default function ComparePage() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setApproved(((data || []) as any[]).filter((c) => c.tool_a && c.tool_b) as ApprovedComparison[]);
         setLoadingApproved(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    supabase
+      .from('tool_group_comparisons')
+      .select('slug, title, tool_group_comparison_members(sort_order, tools(slug, name, logo))')
+      .eq('status', 'published')
+      .order('created_at', { ascending: false })
+      .limit(24)
+      .then(({ data }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const rows = (data || []) as any[];
+        const mapped = rows
+          .map((r) => ({
+            slug: r.slug,
+            title: r.title,
+            tools: (r.tool_group_comparison_members || [])
+              .sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
+              .map((m: { tools: ComparisonToolRef }) => m.tools)
+              .filter(Boolean),
+          }))
+          .filter((r) => r.tools.length >= 3);
+        setGroupComparisons(mapped);
+        setLoadingGroupComparisons(false);
       });
   }, []);
 
@@ -186,6 +220,25 @@ export default function ComparePage() {
             </div>
           )}
         </section>
+
+        {(loadingGroupComparisons || groupComparisons.length > 0) && (
+          <section className="mb-14">
+            <ToolsSectionHeader eyebrow="Multi-Tool" title="3+ Tool Comparisons" subtitle="See three or more tools compared side by side in one page." />
+            {loadingGroupComparisons && (
+              <div className="grid grid-cols-1 gap-3">
+                <ComparisonCardSkeleton />
+                <ComparisonCardSkeleton />
+              </div>
+            )}
+            {!loadingGroupComparisons && groupComparisons.length > 0 && (
+              <div className="grid grid-cols-1 gap-3">
+                {groupComparisons.map((r) => (
+                  <GroupCompareCard key={r.slug} slug={r.slug} title={r.title} tools={r.tools} />
+                ))}
+              </div>
+            )}
+          </section>
+        )}
 
         {recent.length > 0 && (
           <section>

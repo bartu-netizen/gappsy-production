@@ -13,7 +13,7 @@ interface GroupComparisonLinkRow {
   tools: GroupComparisonLinkTool[];
 }
 
-// Reuses the exact GroupCompareCard used on /compare/roundup, so a group
+// Reuses the exact GroupCompareCard used on /compare, so a group
 // comparison a tool belongs to looks identical whether discovered from the
 // hub or from one of its member tools' own pages.
 export default function GroupComparisonLinksSection({ toolName, groupComparisons }: { toolName: string; groupComparisons: GroupComparisonLinkRow[] }) {

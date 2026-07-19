@@ -79,7 +79,6 @@ else {
     /^https:\/\/www\.gappsy\.com\/compare\/$/,
     // Matches both pairwise ("a-vs-b") and group ("a-vs-b-vs-c") comparisons.
     /^https:\/\/www\.gappsy\.com\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
-    /^https:\/\/www\.gappsy\.com\/compare\/roundup\/$/,
   ];
   for (const loc of locs) {
     if (!allowed.some((re) => re.test(loc))) {

@@ -84,13 +84,13 @@ export default function WpAdminToolComparisons3Page() {
   }
 
   return (
-    <WpAdminLayout title="3-Tool Comparisons" subtitle="Manage approved /compare/roundup (3+ tool) pages">
+    <WpAdminLayout title="3-Tool Comparisons" subtitle="Manage approved /compare (3+ tool) pages">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">3-Tool Comparisons</h1>
             <p className="text-gray-500 mt-1 text-sm">
-              Only published rows with 3 or more member tools appear on /compare/roundup and get sitemap/prerender coverage. Never publish a comparison without real editorial content.
+              Only published rows with 3 or more member tools appear on /compare and get sitemap/prerender coverage. Never publish a comparison without real editorial content.
             </p>
           </div>
           <div className="flex gap-2">
@@ -129,7 +129,7 @@ export default function WpAdminToolComparisons3Page() {
         {isLoading && <AdminLoadingState message="Loading comparisons..." />}
 
         {!isLoading && !isError && allGroupComparisons.length === 0 && (
-          <AdminEmptyState icon={Layers} title="No comparisons yet" message="Approve your first 3-tool set to start building /compare/roundup." />
+          <AdminEmptyState icon={Layers} title="No comparisons yet" message="Approve your first 3-tool set to start building /compare." />
         )}
 
         {!isLoading && !isError && allGroupComparisons.length > 0 && groupComparisons.length === 0 && (

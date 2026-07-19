@@ -76,7 +76,7 @@ interface ToolComparisonRow {
 
 // One row per group comparison this tool belongs to, with every member
 // tool's slug/name/logo so GroupComparisonLinksSection can render the same
-// GroupCompareCard used on /compare/roundup without a second query.
+// GroupCompareCard used on /compare without a second query.
 interface ToolGroupComparisonRow {
   slug: string;
   title: string;

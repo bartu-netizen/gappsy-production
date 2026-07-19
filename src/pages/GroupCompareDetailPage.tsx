@@ -103,7 +103,7 @@ export default function GroupCompareDetailPage() {
           </div>
           <h1 className="text-2xl font-bold text-[#0B1221] mb-2">This comparison isn't available</h1>
           <p className="text-slate-500 mb-6">It doesn't exist, or it hasn't been approved for publishing yet.</p>
-          <Link to="/compare/roundup" className="inline-flex items-center gap-1.5 text-[#4F47E6] font-semibold hover:text-[#4338CA]">
+          <Link to="/compare" className="inline-flex items-center gap-1.5 text-[#4F47E6] font-semibold hover:text-[#4338CA]">
             <ArrowLeft className="w-4 h-4" />
             Browse comparisons
           </Link>

@@ -69,7 +69,6 @@ const ALLOWED_PATTERNS = [
   // Matches both pairwise ("a-vs-b") and group ("a-vs-b-vs-c") comparison
   // slugs — the pattern is generic to any number of "-vs-"-joined segments.
   /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
-  /^\/compare\/roundup\/$/,
 ];
 
 async function fetchPublishedToolSlugs() {
@@ -247,11 +246,9 @@ async function generateSitemap() {
   });
   console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
 
-  const groupComparisonHubUrl = '/compare/roundup/';
-  assertAllowed(groupComparisonHubUrl);
-  paths.push(groupComparisonHubUrl);
-  urls.push(generateUrlEntry(groupComparisonHubUrl, TODAY, '0.6', 'weekly'));
-
+  // No separate hub URL — group comparisons are listed on the same /compare
+  // hub as pairwise comparisons (see ComparePage.tsx's "3+ Tool Comparisons"
+  // section), so only their individual detail-page URLs need sitemap entries.
   const groupComparisonSlugs = await fetchPublishedGroupComparisonSlugs();
   groupComparisonSlugs.forEach((slug) => {
     const url = `/compare/${slug}/`;
@@ -259,7 +256,7 @@ async function generateSitemap() {
     paths.push(url);
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
-  console.log(`Group comparison URLs included: ${groupComparisonSlugs.length} (+ 1 hub)`);
+  console.log(`Group comparison URLs included: ${groupComparisonSlugs.length}`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
