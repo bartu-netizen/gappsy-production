@@ -41,7 +41,7 @@ export default function Footer({ currentState }: FooterProps = {}) {
                   maxWidth: '400px'
                 }}
               >
-                A directory of 3,000+ software tools across every category, so you can compare pricing, features, and reviews to find exactly what your business needs to grow.
+                A directory of software tools across every category, so you can compare pricing, features, and reviews to find exactly what your business needs to grow.
               </p>
             </div>
 
