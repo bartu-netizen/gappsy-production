@@ -142,17 +142,19 @@ export default function GroupCompareDetailPage() {
   }, [groupComparison]);
 
   // Same featured-ad mechanism as ToolDetailPage/CompareDetailPage: a pool
-  // of up to 7, excluding all 3 tools in this comparison, distributed across
-  // a couple of sidebar slots (desktop, below the TOC), three inline
-  // mid-content cards spread across the now much longer page, and the
-  // sticky footer bars — never stacked back-to-back.
+  // of up to 8, excluding all 3 tools in this comparison, distributed across
+  // a couple of sidebar slots (desktop, sticky alongside the verdict/facts/
+  // highlights "Zone A" — see render below), four inline mid-content cards
+  // spread across the now much longer page, and the sticky footer bars —
+  // never stacked back-to-back.
   const featuredExcludeSlugs = facts.map((f) => f.slug);
-  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 7);
+  const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 8);
   const featuredPromo = featuredPool?.[0];
   const featuredPromoSecondary = featuredPool?.[1];
   const inlineFeaturedPromoA = featuredPool?.[2];
   const inlineFeaturedPromoB = featuredPool?.[3];
   const inlineFeaturedPromoC = featuredPool?.[4];
+  const inlineFeaturedPromoD = featuredPool?.[5];
   const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
 
   if (loading) {
@@ -299,26 +301,40 @@ export default function GroupCompareDetailPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="lg:grid lg:grid-cols-[180px_1fr] lg:gap-10">
-          <div className="hidden lg:block space-y-4 lg:sticky lg:top-24 lg:self-start">
+          {/* TableOfContents is sticky on its own (see TableOfContents.tsx) —
+              it must stay the only sticky element in this column. Nesting
+              the featured-ad cards inside a second `lg:sticky` wrapper here
+              caused a double-sticky-context glitch where the ad cards would
+              visually jump/overlap the "On this page" list while scrolling.
+              The ad sidebar instead lives in its own independent sticky
+              column further down, paired with the verdict/facts/highlights
+              content — same split CompareDetailPage.tsx (2-tool) already
+              uses, which never had this bug. */}
+          <div className="hidden lg:block">
             <TableOfContents sections={tocSections} />
-            {hasSidebarPromos && (
-              <div className="space-y-4">
-                {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
-                {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
-              </div>
-            )}
           </div>
 
           <div className="min-w-0 space-y-14">
-            {groupComparisonContent && (
-              <section id="verdict" className="scroll-mt-24">
-                <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{groupComparisonContent.verdict}</p>
-              </section>
-            )}
+            <div className={hasSidebarPromos ? 'flex flex-col lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start' : ''}>
+              <div className="space-y-14 min-w-0">
+                {groupComparisonContent && (
+                  <section id="verdict" className="scroll-mt-24">
+                    <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{groupComparisonContent.verdict}</p>
+                  </section>
+                )}
 
-            <GroupCompareFactsTable tools={facts} bestFor={groupComparisonContent?.bestFor || {}} />
+                <GroupCompareFactsTable tools={facts} bestFor={groupComparisonContent?.bestFor || {}} />
 
-            {groupComparisonContent && <GroupCompareHighlights toolNames={toolNames} highlights={groupComparisonContent.highlights} />}
+                {groupComparisonContent && <GroupCompareHighlights toolNames={toolNames} highlights={groupComparisonContent.highlights} />}
+              </div>
+
+              {hasSidebarPromos && (
+                <div className="space-y-4 lg:sticky lg:top-24">
+                  {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
+                  {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
+                </div>
+              )}
+            </div>
 
             {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
 
@@ -349,6 +365,8 @@ export default function GroupCompareDetailPage() {
                 </div>
               </section>
             )}
+
+            {inlineFeaturedPromoD && <FeaturedToolInlineCard tool={inlineFeaturedPromoD} />}
 
             {(relatedGroupComparisons.length > 0 || relatedPairComparisons.length > 0) && (
               <section id="related-comparisons" className="scroll-mt-24">
