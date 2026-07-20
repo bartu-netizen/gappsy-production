@@ -74,7 +74,7 @@ export default function HomePage() {
 
   const centerContent = (
     <>
-      <HomeStickyHeader searchAnchorId="find-agency-search" />
+      <HomeStickyHeader />
 
       <div className="text-center mb-8">
         <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '8px' }}>
@@ -223,7 +223,7 @@ export default function HomePage() {
           <TopAdRail />
         </div>
 
-        <HomeStickyHeader searchAnchorId="find-agency-search-mobile" />
+        <HomeStickyHeader />
 
         <div className="text-center mb-6 sm:mb-8 mt-2">
           <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-1.5 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>

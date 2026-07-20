@@ -9,26 +9,15 @@ import { Menu, X } from 'lucide-react';
 // spanning the full 900px footer width — with no nav links left, stretching
 // it that wide just left a dead gap between the logo and the buttons.
 //
-// "Get Listed" scrolls to the existing state-search box (#find-agency-search)
-// rather than opening a submission flow directly: listing an agency is
-// inherently state-scoped (SubmitAgencyModal needs a real stateName for its
-// copy), and that flow already lives, fully built, on the state page each
-// search result leads to — the homepage's job is just routing a visitor to
-// their state first.
-interface HomeStickyHeaderProps {
-  /**
-   * HomePage renders separate desktop and mobile JSX subtrees at the same
-   * time (toggled via responsive classes, not conditionally mounted), each
-   * with its own copy of the state-search box — so each needs its own
-   * anchor id to scroll to, or two elements would share one id.
-   */
-  searchAnchorId?: string;
-}
-
-export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search' }: HomeStickyHeaderProps) {
+// "Get Listed" goes to /get-listed, a short branching page: listing a
+// software tool vs. a marketing agency are two entirely different flows
+// (the agency one is state-scoped — SubmitAgencyModal needs a real
+// stateName/stateSlug — while software goes straight to
+// /feature-my-product), so the homepage button just hands off the choice
+// instead of assuming one.
+export default function HomeStickyHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const searchHref = `#${searchAnchorId}`;
 
   useEffect(() => {
     function handleScroll() {
@@ -71,12 +60,12 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
                 >
                   Sign In
                 </Link>
-                <a
-                  href={searchHref}
+                <Link
+                  to="/get-listed"
                   className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors whitespace-nowrap"
                 >
                   Get Listed
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -98,12 +87,12 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
                   </Link>
                 </div>
 
-                <a
-                  href={searchHref}
+                <Link
+                  to="/get-listed"
                   className="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium text-[#0A1735] bg-white whitespace-nowrap shrink-0"
                 >
                   Get Listed
-                </a>
+                </Link>
               </div>
 
               {menuOpen && (
