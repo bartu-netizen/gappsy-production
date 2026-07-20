@@ -10,15 +10,21 @@
 /api/admin/email/messages/:id  /.netlify/functions/quick-send-detail  200!
 
 # ========================================
-# CANONICAL SEO REDIRECTS (WWW PRIMARY DOMAIN)
+# CANONICAL SEO REDIRECTS (APEX PRIMARY DOMAIN)
 # ========================================
-# Target: https://www.gappsy.com/<path>/
-# We enforce www as the primary domain for all requests
+# Target: https://gappsy.com/<path>/
+# Netlify's site config has gappsy.com (apex) set as the primary custom
+# domain, which makes Netlify auto-redirect www.gappsy.com -> gappsy.com
+# at the platform level. This file previously forced the opposite
+# direction (apex -> www), and the two redirect rules fought each other,
+# producing an infinite gappsy.com <-> www.gappsy.com redirect loop that
+# took the whole site down. We enforce apex as the primary domain here to
+# match Netlify's actual configuration.
 
-# Step 1: Redirect non-www to www (force HTTPS + WWW)
-http://gappsy.com/*  https://www.gappsy.com/:splat  301!
-https://gappsy.com/*  https://www.gappsy.com/:splat  301!
-http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
+# Step 1: Redirect www and HTTP to the canonical apex HTTPS URL
+http://gappsy.com/*  https://gappsy.com/:splat  301!
+http://www.gappsy.com/*  https://gappsy.com/:splat  301!
+https://www.gappsy.com/*  https://gappsy.com/:splat  301!
 
 # Step 2: Add trailing slash for page URLs only (exclude files with extensions and API routes)
 # This regex matches paths without dots (files) and without trailing slash
