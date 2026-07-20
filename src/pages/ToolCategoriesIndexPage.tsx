@@ -8,6 +8,8 @@ import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import ToolCardRow from '../components/tools/detail/ToolCardRow';
+import TrendingToolsSection from '../components/tools/TrendingToolsSection';
+import { useFeaturedToolPool, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
 import { buildCanonicalUrl } from '../utils/canonicalUrl';
 import { supabase } from '../lib/supabase';
 import type { ToolCardData } from '../components/ToolCard';
@@ -21,9 +23,14 @@ export default function ToolCategoriesIndexPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
+  // Same featured-ad mechanism as tool/compare pages — this index page had
+  // zero ad placements before, unlike every other detail-page type.
+  const featuredPool = useFeaturedToolPool([], 2);
+  const inlineFeaturedPromo = featuredPool?.[0];
+
   useEffect(() => {
     Promise.all([
-      supabase.from('tool_categories').select('id, slug, name, description').eq('status', 'published').order('name'),
+      supabase.from('tool_categories').select('id, slug, name, description, icon').eq('status', 'published').order('name'),
       supabase.from('tool_category_links').select('category_id, tools!inner(status)').eq('tools.status', 'published'),
       supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').order('updated_at', { ascending: false }).limit(8),
     ]).then(([categoriesResult, linksResult, recentResult]) => {
@@ -84,9 +91,16 @@ export default function ToolCategoriesIndexPage() {
         <h1 className="text-3xl sm:text-[38px] font-bold text-[#0B1221] leading-[1.1] mb-4">
           Find tools by category
         </h1>
-        <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
+        <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto mb-5">
           Every category is a starting point — pick the one closest to what you're trying to solve.
         </p>
+
+        {!loading && categories.length > 0 && (
+          <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 mb-8 shadow-sm">
+            <span className="text-sm font-bold text-[#4F47E6] tabular-nums">{categories.length}</span>
+            <span className="text-[13px] text-slate-500">categories to explore</span>
+          </div>
+        )}
 
         <div className="relative max-w-lg mx-auto">
           <div className="flex items-center w-full h-12 rounded-full bg-white border border-slate-200 shadow-sm focus-within:ring-2 focus-within:ring-[#4F47E6]/20 focus-within:border-[#A8AEF0] transition-shadow">
@@ -162,6 +176,8 @@ export default function ToolCategoriesIndexPage() {
               </section>
             )}
 
+            <TrendingToolsSection />
+
             {rest.length > 0 && (
               <section>
                 <ToolsSectionHeader title="All categories" />
@@ -172,6 +188,8 @@ export default function ToolCategoriesIndexPage() {
                 </div>
               </section>
             )}
+
+            {inlineFeaturedPromo && <FeaturedToolInlineCard tool={inlineFeaturedPromo} />}
 
             <ToolCardRow eyebrow="Fresh listings" title="Recently updated tools" tools={recentlyUpdated} minToShow={1} />
           </div>

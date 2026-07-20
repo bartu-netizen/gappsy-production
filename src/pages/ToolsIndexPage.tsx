@@ -39,7 +39,7 @@ export default function ToolsIndexPage() {
         .eq('status', 'published')
         .order('featured', { ascending: false })
         .order('name'),
-      supabase.from('tool_categories').select('id, slug, name, description').eq('status', 'published').order('name'),
+      supabase.from('tool_categories').select('id, slug, name, description, icon').eq('status', 'published').order('name'),
       supabase.from('tool_category_links').select('category_id, tools!inner(status)').eq('tools.status', 'published'),
       supabase.from('tool_tags').select('id, slug, name').order('name'),
       supabase.from('tool_tag_links').select('tag_id, tools!inner(status)').eq('tools.status', 'published'),
