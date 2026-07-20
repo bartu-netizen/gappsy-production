@@ -92,8 +92,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      <RecentFeaturedAgencies />
-
       <section className="recent-tools mb-10" style={{ maxWidth: '1300px', margin: '40px auto', padding: '0 20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }}>
           <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#0A0F1B', margin: 0 }}>
@@ -151,6 +149,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <RecentFeaturedAgencies />
 
       <section className="recent-tools mb-10" style={{ maxWidth: '1300px', margin: '40px auto', padding: '0 20px' }}>
         <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#0A0F1B', marginBottom: '14px' }}>
@@ -240,8 +240,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        <RecentFeaturedAgencies isMobile={true} />
-
         {/* Recently Featured Tools - Mobile */}
         <section className="mb-5">
           <div className="flex items-center justify-between mb-1.5">
@@ -271,6 +269,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <RecentFeaturedAgencies isMobile={true} />
 
         {/* Gappsy Tools - Mobile */}
         <section className="mb-5">
