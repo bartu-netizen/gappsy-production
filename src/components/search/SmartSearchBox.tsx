@@ -134,7 +134,7 @@ export default function SmartSearchBox({
 
   return (
     <div ref={containerRef} id={id} className={`relative max-w-2xl mx-auto scroll-mt-28 text-left ${className}`}>
-      <div className="rounded-2xl bg-white border border-[#E0E3FC] shadow-[0_12px_32px_rgba(79,71,230,0.12)] overflow-hidden">
+      <div className="rounded-2xl bg-white border border-slate-200 shadow-[0_12px_32px_rgba(10,23,53,0.12)] overflow-hidden">
         <div className="flex items-center gap-2.5 px-4 sm:px-5 py-3.5 border-b border-slate-100">
           <div className="w-8 h-8 rounded-lg bg-[#0A1735] flex items-center justify-center shrink-0">
             <Sparkles className="w-4 h-4 text-white" aria-hidden="true" />
@@ -154,7 +154,7 @@ export default function SmartSearchBox({
                   key={example}
                   type="button"
                   onClick={() => handleExampleClick(example)}
-                  className="text-left text-[12.5px] font-medium text-[#4F47E6] bg-[#EEF0FE] hover:bg-[#E0E3FC] px-3 py-2 rounded-xl transition-colors"
+                  className="text-left text-[12.5px] font-medium text-[#0A1735] bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl transition-colors"
                 >
                   {example}
                 </button>
@@ -166,7 +166,7 @@ export default function SmartSearchBox({
             {exchanges.map((ex, i) => (
               <div key={i} className="space-y-2.5">
                 <div className="flex justify-end">
-                  <div className="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed bg-[#4F47E6] text-white">{ex.query}</div>
+                  <div className="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed bg-[#0A1735] text-white">{ex.query}</div>
                 </div>
                 <div className="flex justify-start">
                   {ex.status === 'loading' && (
@@ -187,7 +187,7 @@ export default function SmartSearchBox({
                         <button
                           type="button"
                           onClick={() => navigate(ex.path!)}
-                          className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2 rounded-xl font-semibold transition-all text-[12.5px]"
+                          className="inline-flex items-center gap-1.5 bg-[#0A1735] hover:bg-[#1B2E5C] active:scale-[0.98] text-white px-4 py-2 rounded-xl font-semibold transition-all text-[12.5px]"
                         >
                           {ex.buttonLabel || 'View'}
                           <ArrowRight className="w-3.5 h-3.5" />
@@ -208,13 +208,13 @@ export default function SmartSearchBox({
             onChange={(e) => setInput(e.target.value)}
             placeholder={placeholder}
             disabled={busy}
-            className="flex-1 h-11 min-w-0 rounded-full border border-slate-200 px-4 text-[13.5px] sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow disabled:opacity-60"
+            className="flex-1 h-11 min-w-0 rounded-full border border-slate-200 px-4 text-[13.5px] sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/15 focus:border-[#0A1735]/40 transition-shadow disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
             aria-label="Search"
-            className="w-11 h-11 shrink-0 rounded-full bg-[#4F47E6] hover:bg-[#4338CA] text-white flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-11 h-11 shrink-0 rounded-full bg-[#0A1735] hover:bg-[#1B2E5C] text-white flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </button>

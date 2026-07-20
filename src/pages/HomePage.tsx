@@ -24,10 +24,10 @@ const RECENTLY_FEATURED_TOOLS = [
 
 export default function HomePage() {
   useEffect(() => {
-    document.title = 'Gappsy - Find the best tools & marketing agencies to grow your business';
+    document.title = 'Gappsy - Find the Best Software Tools for Your Business';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover the best tools and agencies to grow and scale your business.');
+      metaDescription.setAttribute('content', 'Discover and compare the best software tools for your business, plus top-rated marketing agencies — all in one directory.');
     }
 
     document.body.style.backgroundColor = '#f7f8fa';
@@ -77,14 +77,17 @@ export default function HomePage() {
       <HomeStickyHeader searchAnchorId="find-agency-search" />
 
       <div className="text-center mb-8">
-        <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '12px' }}>
-          Find the best tools & agencies<br />
+        <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '8px' }}>
+          Find the best software tools<br />
           to grow your business
         </h1>
+        <p className="text-sm sm:text-base text-slate-500 mb-4" style={{ marginBottom: '16px' }}>
+          Plus top-rated marketing agencies, all in one directory.
+        </p>
 
         <SmartSearchBox id="find-agency-search" className="mb-3" />
 
-        <div className="flex items-center justify-center scale-90 opacity-80">
+        <div className="flex items-center justify-center">
           <TrustPill />
         </div>
       </div>
@@ -223,13 +226,16 @@ export default function HomePage() {
         <HomeStickyHeader searchAnchorId="find-agency-search-mobile" />
 
         <div className="text-center mb-6 sm:mb-8 mt-2">
-          <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-2 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>
-            Find the best tools & agencies<br />
+          <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-1.5 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>
+            Find the best software tools<br />
             to grow your business
           </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mb-3">
+            Plus top-rated marketing agencies, all in one directory.
+          </p>
           <SmartSearchBox id="find-agency-search-mobile" className="mb-3 sm:mb-8" />
 
-          <div className="flex justify-center scale-90 opacity-80">
+          <div className="flex justify-center">
             <TrustPill />
           </div>
         </div>
