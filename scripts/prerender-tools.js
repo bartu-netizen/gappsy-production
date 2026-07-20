@@ -64,15 +64,38 @@ function groupBy(rows, keyFn) {
 // tools exist, preserving the "fixed queries at any scale" contract above.
 const IN_CLAUSE_CHUNK_SIZE = 100;
 
+// How many chunk requests a single fetchInChunks() call runs at once. Left
+// unbounded, chunk count scales with the tools table (3122 tools / 100 per
+// chunk = ~32 chunks), and fetchRelatedData below fires 12 of these calls
+// in parallel — 32 * 12 = ~384 simultaneous requests, enough to exhaust
+// undici's connection pool and surface as a bare "TypeError: fetch failed"
+// with no HTTP status (same failure signature as the oversized-URL bug this
+// chunking already guards against, but a different root cause: too many
+// concurrent requests rather than one request that's too large).
+const CHUNK_CONCURRENCY = 6;
+
 function chunkArray(arr, size) {
   const chunks = [];
   for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
   return chunks;
 }
 
+async function mapWithConcurrencyLimit(items, limit, worker) {
+  const results = new Array(items.length);
+  let nextIndex = 0;
+  async function runNext() {
+    while (nextIndex < items.length) {
+      const i = nextIndex++;
+      results[i] = await worker(items[i]);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, runNext));
+  return results;
+}
+
 export async function fetchInChunks(ids, queryFactory) {
   const chunks = chunkArray(ids, IN_CLAUSE_CHUNK_SIZE);
-  const results = await Promise.all(chunks.map((chunk) => queryFactory(chunk)));
+  const results = await mapWithConcurrencyLimit(chunks, CHUNK_CONCURRENCY, queryFactory);
   for (const r of results) {
     if (r.error) return { data: null, error: r.error };
   }
