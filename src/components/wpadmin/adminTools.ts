@@ -489,6 +489,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'LayoutGrid',
   },
   {
+    id: 'smart-search-stats',
+    label: 'Smart Search',
+    description: 'Homepage AI search: fallback rate and what visitors actually typed',
+    href: '/wp-admin/smart-search-stats',
+    keywords: ['search', 'smart search', 'ai', 'homepage', 'analytics', 'fallback', 'content gaps'],
+    group: 'Content',
+    scopes: ['shared'],
+    iconName: 'BarChart2',
+  },
+  {
     id: 'stripe',
     label: 'Revenue',
     description: 'Revenue analytics, orders, subscriptions, and Stripe sync',

@@ -92,6 +92,7 @@ const WpAdminEmailNotificationsPage = lazy(() => import("./pages/WpAdminEmailNot
 const WpAdminCustomerSuppressionPage = lazy(() => import("./pages/WpAdminCustomerSuppressionPage"));
 const WpAdminAgencyEmailAutomationsPage = lazy(() => import("./pages/WpAdminAgencyEmailAutomationsPage"));
 const WpAdminAvailabilityAnalyticsPage = lazy(() => import("./pages/WpAdminAvailabilityAnalyticsPage"));
+const WpAdminSmartSearchStatsPage = lazy(() => import("./pages/WpAdminSmartSearchStatsPage"));
 const WpAdminClaimLinksPage = lazy(() => import("./pages/WpAdminClaimLinksPage"));
 const WpAdminIntentCenterPage = lazy(() => import("./pages/WpAdminIntentCenterPage"));
 const WpAdminActivityFeedPage = lazy(() => import("./pages/WpAdminActivityFeedPage"));
@@ -305,6 +306,7 @@ export default function App() {
         <Route path="/wp-admin/email-cleaning" element={<AdminRoute><AdminEmailCleaningExportPage /></AdminRoute>} />
         <Route path="/wp-admin/availability-analytics" element={<AdminRoute><WpAdminAvailabilityAnalyticsPage /></AdminRoute>} />
         <Route path="/wp-admin/availability-analytics/agency/:agencyId" element={<AdminRoute><WpAdminAvailabilityAnalyticsPage /></AdminRoute>} />
+        <Route path="/wp-admin/smart-search-stats" element={<AdminRoute><WpAdminSmartSearchStatsPage /></AdminRoute>} />
 
         {/* Email Module — unified /wp-admin/email/* routes */}
         <Route path="/wp-admin/email" element={<Navigate to="/wp-admin/email/overview" replace />} />
