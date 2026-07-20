@@ -41,8 +41,51 @@ export default function Footer({ currentState }: FooterProps = {}) {
                   maxWidth: '400px'
                 }}
               >
-                Connecting businesses with top-performing marketing agencies and software tools to help them grow faster.
+                A directory of 3,000+ software tools across every category, so you can compare pricing, features, and reviews to find exactly what your business needs to grow.
               </p>
+            </div>
+
+            <div>
+              <h3
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  marginBottom: '20px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}
+              >
+                Software Directory
+              </h3>
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <Link
+                  to="/tools"
+                  style={{
+                    color: '#94A3B8',
+                    textDecoration: 'none',
+                    fontSize: '15px',
+                    transition: 'color 0.2s'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#94A3B8'; }}
+                >
+                  All Software Tools
+                </Link>
+                <Link
+                  to="/tool-categories"
+                  style={{
+                    color: '#94A3B8',
+                    textDecoration: 'none',
+                    fontSize: '15px',
+                    transition: 'color 0.2s'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#94A3B8'; }}
+                >
+                  Browse Categories
+                </Link>
+              </nav>
             </div>
 
             <div>
@@ -307,7 +350,7 @@ export default function Footer({ currentState }: FooterProps = {}) {
         }
         @media (min-width: 1024px) {
           .footer-grid {
-            grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr !important;
+            grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr 1fr !important;
           }
         }
       `}</style>
