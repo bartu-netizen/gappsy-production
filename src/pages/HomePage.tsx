@@ -5,7 +5,7 @@ import FooterWrapper from '../components/FooterWrapper';
 import ThreeColumnLayout from '../components/ThreeColumnLayout';
 import TrustPill from '../components/ui/TrustPill';
 import { RecentFeaturedAgencies } from '../components/RecentFeaturedAgencies';
-import HomeSmartSearch from '../components/home/HomeSmartSearch';
+import SmartSearchBox from '../components/search/SmartSearchBox';
 import { TopAdRail, BottomAdRail } from '../components/home/MobileAdRails';
 
 // Real, published Gappsy tools with tools.featured = true — same tools the
@@ -82,7 +82,7 @@ export default function HomePage() {
           to grow your business
         </h1>
 
-        <HomeSmartSearch id="find-agency-search" className="mb-3" />
+        <SmartSearchBox id="find-agency-search" className="mb-3" />
 
         <div className="flex items-center justify-center scale-90 opacity-80">
           <TrustPill />
@@ -227,7 +227,7 @@ export default function HomePage() {
             Find the best tools & agencies<br />
             to grow your business
           </h1>
-          <HomeSmartSearch id="find-agency-search-mobile" className="mb-3 sm:mb-8" />
+          <SmartSearchBox id="find-agency-search-mobile" className="mb-3 sm:mb-8" />
 
           <div className="flex justify-center scale-90 opacity-80">
             <TrustPill />

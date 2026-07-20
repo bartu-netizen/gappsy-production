@@ -15,6 +15,7 @@ import { getCategoryContent } from '../data/categoryContent';
 import { formatLastUpdated } from '../utils/formatLastUpdated';
 import { buildCanonicalUrl } from '../utils/canonicalUrl';
 import { supabase } from '../lib/supabase';
+import SmartSearchBox from '../components/search/SmartSearchBox';
 
 interface CategoryDetail {
   id: string;
@@ -284,7 +285,7 @@ export default function ToolCategoryDetailPage() {
         {category.description && (
           <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto">{category.description}</p>
         )}
-        <div className="flex items-center justify-center gap-3 mt-4 text-xs text-slate-400">
+        <div className="flex items-center justify-center gap-3 mt-4 mb-8 text-xs text-slate-400">
           <span>{tools.length} tool{tools.length === 1 ? '' : 's'}</span>
           {updatedLabel && (
             <>
@@ -293,6 +294,17 @@ export default function ToolCategoryDetailPage() {
             </>
           )}
         </div>
+
+        {tools.length > 0 && (
+          <SmartSearchBox
+            mode="category-tools"
+            categorySlug={category.slug}
+            title={`Find the right tool in ${category.name}`}
+            subtitle="Describe what you need — we'll point you to the best match in this category"
+            placeholder={`What do you need from a ${category.name.toLowerCase()} tool?`}
+            exampleQueries={[`The most beginner-friendly option`, `Something with a generous free plan`, `Built for larger teams`]}
+          />
+        )}
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">

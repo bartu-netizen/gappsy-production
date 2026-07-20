@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { FolderTree, Search, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { FolderTree } from 'lucide-react';
 import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
@@ -9,6 +9,7 @@ import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import ToolCardRow from '../components/tools/detail/ToolCardRow';
 import TrendingToolsSection from '../components/tools/TrendingToolsSection';
+import SmartSearchBox from '../components/search/SmartSearchBox';
 import { useFeaturedToolPool, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
 import { buildCanonicalUrl } from '../utils/canonicalUrl';
 import { supabase } from '../lib/supabase';
@@ -17,11 +18,16 @@ import type { ToolCardData } from '../components/ToolCard';
 const FEATURED_COUNT = 3;
 const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
 
+const CATEGORY_EXAMPLE_QUERIES = [
+  'A free tool to design social posts',
+  'Something to track team tasks',
+  'CRM with a free trial',
+];
+
 export default function ToolCategoriesIndexPage() {
   const [categories, setCategories] = useState<CategoryTileData[]>([]);
   const [recentlyUpdated, setRecentlyUpdated] = useState<ToolCardData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
 
   // Same featured-ad mechanism as tool/compare pages — this index page had
   // zero ad placements before, unlike every other detail-page type.
@@ -48,13 +54,6 @@ export default function ToolCategoriesIndexPage() {
     });
   }, []);
 
-  const searchResults = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return null;
-    return categories.filter((c) => c.name.toLowerCase().includes(q) || (c.description || '').toLowerCase().includes(q));
-  }, [categories, search]);
-
-  const isSearching = search.trim().length > 0;
   const featured = categories.slice(0, FEATURED_COUNT);
   const rest = categories.slice(FEATURED_COUNT);
 
@@ -102,23 +101,13 @@ export default function ToolCategoriesIndexPage() {
           </div>
         )}
 
-        <div className="relative max-w-lg mx-auto">
-          <div className="flex items-center w-full h-12 rounded-full bg-white border border-slate-200 shadow-sm focus-within:ring-2 focus-within:ring-[#4F47E6]/20 focus-within:border-[#A8AEF0] transition-shadow">
-            <Search className="ml-4 h-4 w-4 text-slate-400 shrink-0" strokeWidth={2} aria-hidden="true" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter categories…"
-              className="flex-1 h-full bg-transparent outline-none px-3 text-sm text-[#0B1221] placeholder-slate-400"
-            />
-            {isSearching && (
-              <button onClick={() => setSearch('')} className="mr-4 text-slate-400 hover:text-slate-600 transition-colors" aria-label="Clear filter">
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        </div>
+        <SmartSearchBox
+          mode="category"
+          title="What do you need help finding?"
+          subtitle="Tell us what you're trying to solve — we'll point you to the right category"
+          placeholder="A tool, a need, or 'agency in New Jersey'…"
+          exampleQueries={CATEGORY_EXAMPLE_QUERIES}
+        />
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
@@ -135,35 +124,7 @@ export default function ToolCategoriesIndexPage() {
           />
         )}
 
-        {!loading && isSearching && (
-          <section>
-            <ToolsSectionHeader title={`${searchResults?.length || 0} categor${searchResults?.length === 1 ? 'y' : 'ies'} match "${search.trim()}"`} />
-            {searchResults && searchResults.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {searchResults.map((category) => (
-                  <CategoryTile key={category.slug} category={category} size="compact" />
-                ))}
-              </div>
-            ) : (
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#EEF0FE] via-white to-white border border-[#eef0f3] px-6 sm:px-12 py-14 sm:py-16 text-center">
-                <div className="mx-auto w-14 h-14 rounded-2xl bg-white border border-[#E0E3FC] shadow-sm flex items-center justify-center mb-6">
-                  <Search className="w-6 h-6 text-[#4F47E6]" strokeWidth={1.75} />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0B1221] mb-3 max-w-lg mx-auto leading-snug">No categories match that filter</h3>
-                <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mx-auto mb-7">Try a different word, or browse the full list below.</p>
-                <button
-                  type="button"
-                  onClick={() => setSearch('')}
-                  className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
-                >
-                  Clear filter
-                </button>
-              </div>
-            )}
-          </section>
-        )}
-
-        {!loading && !isSearching && categories.length > 0 && (
+        {!loading && categories.length > 0 && (
           <div className="space-y-14">
             {featured.length > 0 && (
               <section>

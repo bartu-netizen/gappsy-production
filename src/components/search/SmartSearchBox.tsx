@@ -6,7 +6,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 const SESSION_STORAGE_KEY = 'smart_search_session_id';
 
-const EXAMPLE_QUERIES = [
+const DEFAULT_EXAMPLE_QUERIES = [
   'A free tool to design social posts',
   'CRM with a free trial',
   'Marketing agency in New Jersey',
@@ -33,15 +33,45 @@ function getSessionId(): string {
   }
 }
 
-// The homepage's single entry point for "what are you looking for" —
-// replaces the old state-name-only search bar. Deliberately chat-shaped
-// rather than a plain search box: a query never navigates immediately: it
-// gets a short reply plus a "Visit X" button, so the visitor sees *why*
-// they're being sent somewhere before committing to the click. Every
-// destination is a real, DB-validated path (see smart-search-route) — a
-// hallucinated slug can only ever fall back to the /tools search page,
-// never a 404.
-export default function HomeSmartSearch({ id, className = '' }: { id?: string; className?: string }) {
+interface SmartSearchBoxProps {
+  id?: string;
+  className?: string;
+  /** 'category' biases smart-search-route toward always resolving to a
+   * category (even a specific-tool query resolves to that tool's own
+   * category) instead of the general tool/compare/category/state mix —
+   * used on /tool-categories, where routing straight to a tool page would
+   * skip past the category-browsing context entirely. 'category-tools'
+   * scopes matching to the tools inside ONE category (requires
+   * categorySlug) — used on /tool-categories/:slug to help pick the right
+   * tool within that category specifically. */
+  mode?: 'general' | 'category' | 'category-tools';
+  /** Required when mode="category-tools" — which category's tool list to
+   * search within. */
+  categorySlug?: string;
+  title?: string;
+  subtitle?: string;
+  placeholder?: string;
+  exampleQueries?: string[];
+}
+
+// Shared chat-style "what are you looking for" entry point — originally
+// built for the homepage, reused as-is on /tool-categories (mode="category")
+// since the UX (query → short reply → "Visit X" button, never an instant
+// navigation) is identical, only the routing bias differs. A query never
+// navigates immediately: the visitor sees *why* they're being sent
+// somewhere before committing to the click. Every destination is a real,
+// DB-validated path (see smart-search-route) — a hallucinated slug can
+// only ever fall back to the /tools search page, never a 404.
+export default function SmartSearchBox({
+  id,
+  className = '',
+  mode = 'general',
+  categorySlug,
+  title = 'What are you looking for?',
+  subtitle = "Tell us what you need — we'll point you to the right page",
+  placeholder = "A tool, a need, or 'agency in New Jersey'…",
+  exampleQueries = DEFAULT_EXAMPLE_QUERIES,
+}: SmartSearchBoxProps) {
   const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
@@ -64,7 +94,7 @@ export default function HomeSmartSearch({ id, className = '' }: { id?: string; c
       const res = await fetch(`${SUPABASE_URL}/functions/v1/smart-search-route`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
-        body: JSON.stringify({ session_id: sessionIdRef.current, query: trimmed }),
+        body: JSON.stringify({ session_id: sessionIdRef.current, query: trimmed, mode, ...(categorySlug ? { category_slug: categorySlug } : {}) }),
       });
       const data = await res.json().catch(() => null);
 
@@ -110,8 +140,8 @@ export default function HomeSmartSearch({ id, className = '' }: { id?: string; c
             <Sparkles className="w-4 h-4 text-white" aria-hidden="true" />
           </div>
           <div className="min-w-0">
-            <p className="font-bold text-[#0B1221] text-sm leading-tight">What are you looking for?</p>
-            <p className="text-[11.5px] text-slate-400 leading-tight">Tell us what you need — we'll point you to the right page</p>
+            <p className="font-bold text-[#0B1221] text-sm leading-tight">{title}</p>
+            <p className="text-[11.5px] text-slate-400 leading-tight">{subtitle}</p>
           </div>
         </div>
 
@@ -119,7 +149,7 @@ export default function HomeSmartSearch({ id, className = '' }: { id?: string; c
           <div className="px-4 sm:px-5 py-5">
             <p className="text-[13px] text-slate-500 mb-3">Try asking:</p>
             <div className="flex flex-wrap gap-2">
-              {EXAMPLE_QUERIES.map((example) => (
+              {exampleQueries.map((example) => (
                 <button
                   key={example}
                   type="button"
@@ -176,7 +206,7 @@ export default function HomeSmartSearch({ id, className = '' }: { id?: string; c
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="A tool, a need, or 'agency in New Jersey'…"
+            placeholder={placeholder}
             disabled={busy}
             className="flex-1 h-11 min-w-0 rounded-full border border-slate-200 px-4 text-[13.5px] sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow disabled:opacity-60"
           />

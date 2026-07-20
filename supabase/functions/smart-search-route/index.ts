@@ -1,19 +1,28 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 
-// Homepage "smart search" — takes one free-text query ("a free tool to
-// design social posts", "marketing agency in New Jersey", "notion vs
-// asana") and decides where to send the visitor: a specific tool page, a
-// category page, a comparison page, or a state's agency list. Replaces the
-// old state-only search bar.
+// Smart search router behind every "what are you looking for" chat box on
+// the site (homepage, /tool-categories, /tool-categories/:slug). Takes one
+// free-text query and decides where to send the visitor — behavior depends
+// on `mode`:
+//   - "general" (homepage): tool, category, comparison, or a state's
+//     agency list.
+//   - "category" (/tool-categories index): always resolves to a category —
+//     even a specific-tool query resolves to that tool's own category,
+//     since routing straight to a tool page would skip past the
+//     category-browsing context this box lives in.
+//   - "category-tools" (/tool-categories/:slug): scoped to the tools
+//     inside ONE given category (`category_slug` required) — helps pick
+//     the right tool within that category, never a different category or
+//     a sitewide match.
 //
 // Grounding strategy: the model NEVER invents a destination slug on its
 // own. It only picks from real candidates fetched from the DB first
-// (published categories, search_software RPC matches, the fixed US state
-// list) via forced function-calling, and every pick is re-validated
-// server-side against those same candidate lists before building the
-// final path — a hallucinated slug can only ever fall back to the /tools
-// search-results page, never a 404.
+// (published categories, search_software RPC matches or a category's own
+// tool list, the fixed US state list) via forced function-calling, and
+// every pick is re-validated server-side against those same candidate
+// lists before building the final path — a hallucinated slug can only
+// ever fall back to the /tools search-results page, never a 404.
 //
 // Same public/no-admin-auth/CORS/rate-limit pattern as ask-gappsy.
 
@@ -27,6 +36,9 @@ const MODEL = "gpt-4o-mini";
 const RATE_LIMIT_WINDOW_MINUTES = 5;
 const RATE_LIMIT_MAX_QUERIES = 20;
 const MAX_QUERY_LENGTH = 300;
+const CATEGORY_TOOLS_LIMIT = 80;
+
+type Mode = "general" | "category" | "category-tools";
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
@@ -64,33 +76,40 @@ const US_STATES = [
   { name: "Wisconsin", slug: "wisconsin", abbr: "WI" }, { name: "Wyoming", slug: "wyoming", abbr: "WY" },
 ];
 
-const ROUTE_TOOL = {
-  type: "function",
-  function: {
-    name: "route_search",
-    description: "Decide where to send a Gappsy visitor based on their free-text search query.",
-    parameters: {
-      type: "object",
-      properties: {
-        type: {
-          type: "string",
-          enum: ["state", "tool", "category", "compare", "fallback"],
-          description:
-            "state = they want marketing agencies/services in a specific US state. tool = they named one specific software tool that appears in the candidate list. category = they described a need/problem/type of software (use the best-matching category from the provided list). compare = they named 2 or 3 specific tools to compare against each other. fallback = nothing confidently matches.",
+function routeToolSchema(mode: Mode) {
+  const typeEnum = mode === "category" ? ["category", "state", "fallback"] : mode === "category-tools" ? ["tool", "fallback"] : ["state", "tool", "category", "compare", "fallback"];
+  return {
+    type: "function",
+    function: {
+      name: "route_search",
+      description: "Decide where to send a Gappsy visitor based on their free-text search query.",
+      parameters: {
+        type: "object",
+        properties: {
+          type: {
+            type: "string",
+            enum: typeEnum,
+            description:
+              mode === "category"
+                ? "category = the single best-matching category slug for what they described — if they named a specific tool, use that tool's own category instead of routing to the tool directly. state = they want marketing agencies/services in a specific US state. fallback = nothing confidently matches."
+                : mode === "category-tools"
+                  ? "tool = the single best-matching tool slug from the candidate list (tools inside this one category). fallback = nothing in this category confidently matches."
+                  : "state = they want marketing agencies/services in a specific US state. tool = they named one specific software tool that appears in the candidate list. category = they described a need/problem/type of software. compare = they named 2 or 3 specific tools to compare against each other. fallback = nothing confidently matches.",
+          },
+          state_slug: { type: "string", description: "Required if type=state. Must be exactly one of the provided state slugs." },
+          tool_slug: { type: "string", description: "Required if type=tool. Must be exactly one of the provided candidate tool slugs." },
+          tool_slugs: {
+            type: "array",
+            items: { type: "string" },
+            description: "Required if type=compare. 2 or 3 tool slugs from the provided candidates, in no particular order.",
+          },
+          category_slug: { type: "string", description: "Required if type=category. Must be exactly one of the provided category slugs." },
         },
-        state_slug: { type: "string", description: "Required if type=state. Must be exactly one of the provided state slugs." },
-        tool_slug: { type: "string", description: "Required if type=tool. Must be exactly one of the provided candidate tool slugs." },
-        tool_slugs: {
-          type: "array",
-          items: { type: "string" },
-          description: "Required if type=compare. 2 or 3 tool slugs from the provided candidates, in no particular order.",
-        },
-        category_slug: { type: "string", description: "Required if type=category. Must be exactly one of the provided category slugs." },
+        required: ["type"],
       },
-      required: ["type"],
     },
-  },
-};
+  };
+}
 
 function joinNames(names: string[]): string {
   if (names.length <= 1) return names[0] || "";
@@ -150,6 +169,11 @@ Deno.serve(async (req: Request) => {
     if (!sessionId || !rawQuery) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
     const query = rawQuery.slice(0, MAX_QUERY_LENGTH);
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null;
+    const requestedMode = payload.mode === "category" || payload.mode === "category-tools" ? payload.mode : "general";
+    const categorySlugParam = typeof payload.category_slug === "string" ? payload.category_slug : null;
+    // category-tools with no category_slug can't do anything scoped — fall
+    // back to plain category mode rather than erroring.
+    const mode: Mode = requestedMode === "category-tools" && !categorySlugParam ? "category" : requestedMode;
 
     const withinLimit = await checkRateLimit(supabase, sessionId);
     if (!withinLimit) {
@@ -157,6 +181,91 @@ Deno.serve(async (req: Request) => {
     }
 
     const fallbackPath = `/tools?q=${encodeURIComponent(query)}`;
+
+    // ── category-tools: scoped entirely to one category's own tool list ──
+    if (mode === "category-tools" && categorySlugParam) {
+      const { data: categoryRow } = await supabase
+        .from("tool_categories")
+        .select("id, slug, name")
+        .eq("slug", categorySlugParam)
+        .eq("status", "published")
+        .maybeSingle();
+
+      if (!categoryRow) {
+        return jsonResponse({ ok: true, path: fallbackPath, type: "fallback", ...buildReply("fallback", [], query) });
+      }
+
+      const { data: links } = await supabase
+        .from("tool_category_links")
+        .select("tools!inner(slug, name, short_description, status)")
+        .eq("category_id", categoryRow.id)
+        .eq("tools.status", "published")
+        .limit(CATEGORY_TOOLS_LIMIT);
+
+      // deno-lint-ignore no-explicit-any
+      const categoryTools: { slug: string; name: string; short_description: string | null }[] = (links || []).map((r: any) => r.tools).filter(Boolean);
+
+      if (categoryTools.length === 0) {
+        return jsonResponse({ ok: true, path: fallbackPath, type: "fallback", ...buildReply("fallback", [], query) });
+      }
+
+      const toolsText = categoryTools.map((t) => `${t.slug}: ${t.name}${t.short_description ? ` — ${t.short_description}` : ""}`).join("\n");
+      const systemPrompt = `You are Gappsy's assistant on the "${categoryRow.name}" category page. A visitor described what they need and wants the single best-matching tool from THIS category. Call route_search exactly once.
+
+Tools in this category:
+${toolsText}
+
+Rules:
+- Use type=tool with the single best-matching slug from the list above.
+- If nothing in this category confidently matches what they described, use type=fallback.
+- Never invent a slug that isn't in the list above, and never suggest a tool outside this category.`;
+
+      const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${openaiKey}` },
+        body: JSON.stringify({
+          model: MODEL,
+          temperature: 0,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: query },
+          ],
+          tools: [routeToolSchema(mode)],
+          tool_choice: { type: "function", function: { name: "route_search" } },
+        }),
+      });
+
+      let path = fallbackPath;
+      let resultType = "fallback";
+      let resultNames: string[] = [];
+
+      if (openaiResponse.ok) {
+        const data = await openaiResponse.json();
+        const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+        // deno-lint-ignore no-explicit-any
+        let decision: any = null;
+        try {
+          decision = toolCall?.function?.arguments ? JSON.parse(toolCall.function.arguments) : null;
+        } catch {
+          decision = null;
+        }
+        if (decision?.type === "tool") {
+          const match = categoryTools.find((t) => t.slug === decision.tool_slug);
+          if (match) {
+            path = `/tools/${match.slug}`;
+            resultType = "tool";
+            resultNames = [match.name];
+          }
+        }
+      } else {
+        console.error("[smart-search-route] OpenAI error (category-tools):", openaiResponse.status);
+      }
+
+      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip }).then(() => {});
+      return jsonResponse({ ok: true, path, type: resultType, ...buildReply(resultType, resultNames, query) });
+    }
+
+    // ── general + category modes: share the sitewide candidate fetch ──
 
     // A query like "notion vs asana" rarely matches well as one trigram
     // search of the whole phrase — split on common comparison separators
@@ -187,10 +296,25 @@ Deno.serve(async (req: Request) => {
     const statesText = US_STATES.map((s) => `${s.slug}: ${s.name} (${s.abbr})`).join("\n");
     const toolCandidatesText =
       toolCandidates.length > 0
-        ? toolCandidates.map((t) => `${t.slug}: ${t.name}${t.subtitle ? ` — ${t.subtitle}` : ""}`).join("\n")
+        ? toolCandidates.map((t) => `${t.slug}: ${t.name}${t.subtitle ? ` — ${t.subtitle}` : ""}${t.primary_category_name ? ` (category: ${t.primary_category_name})` : ""}`).join("\n")
         : "(no tool name matches found for this query)";
 
-    const systemPrompt = `You are Gappsy's homepage search router. A visitor typed a free-text query into the search bar. Decide where to send them by calling route_search exactly once.
+    const systemPrompt =
+      mode === "category"
+        ? `You are Gappsy's assistant on the /tool-categories browsing page. A visitor typed a free-text query. Decide where to send them by calling route_search exactly once.
+
+Rules:
+- If they're asking about marketing agencies, services, or businesses in a specific US state (e.g. "agency in New Jersey"), use type=state with the matching slug from this list:
+${statesText}
+- Otherwise, ALWAYS resolve to a category — this box's job is to point at the right category, not a specific tool page. If they described a need or problem (e.g. "something to design social posts", "free CRM"), pick the best-matching category. If they named a specific tool instead, use that tool's own category shown in parentheses next to it below, and map it to the matching slug in the category list. Category list:
+${categoriesText}
+
+Tool name candidates already matched for this query, each with its own category noted (may be empty):
+${toolCandidatesText}
+- If genuinely nothing matches any category, use type=fallback.
+
+Never invent a slug that isn't in one of the lists above.`
+        : `You are Gappsy's homepage search router. A visitor typed a free-text query into the search bar. Decide where to send them by calling route_search exactly once.
 
 Rules:
 - If they're asking about marketing agencies, services, or businesses in a specific US state (e.g. "agency in New Jersey", "who works with NJ businesses"), use type=state with the matching slug from this list:
@@ -216,7 +340,7 @@ Never invent a slug that isn't in one of the lists above.`;
           { role: "system", content: systemPrompt },
           { role: "user", content: query },
         ],
-        tools: [ROUTE_TOOL],
+        tools: [routeToolSchema(mode)],
         tool_choice: { type: "function", function: { name: "route_search" } },
       }),
     });
@@ -252,7 +376,7 @@ Never invent a slug that isn't in one of the lists above.`;
         resultType = "state";
         resultNames = [state.name];
       }
-    } else if (decision?.type === "tool") {
+    } else if (decision?.type === "tool" && mode === "general") {
       const match = toolCandidates.find((t) => t.slug === decision.tool_slug);
       if (match) {
         path = `/tools/${match.slug}`;
@@ -266,7 +390,7 @@ Never invent a slug that isn't in one of the lists above.`;
         resultType = "category";
         resultNames = [match.name];
       }
-    } else if (decision?.type === "compare" && Array.isArray(decision.tool_slugs) && decision.tool_slugs.length >= 2) {
+    } else if (decision?.type === "compare" && mode === "general" && Array.isArray(decision.tool_slugs) && decision.tool_slugs.length >= 2) {
       const slugs: string[] = decision.tool_slugs.filter((s: unknown): s is string => typeof s === "string" && toolCandidates.some((t) => t.slug === s));
       if (slugs.length === 2) {
         const { data: toolRows } = await supabase.from("tools").select("id, slug, name").in("slug", slugs);
