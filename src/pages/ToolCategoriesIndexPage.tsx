@@ -10,6 +10,7 @@ import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import ToolCardRow from '../components/tools/detail/ToolCardRow';
 import TrendingToolsSection from '../components/tools/TrendingToolsSection';
 import SmartSearchBox from '../components/search/SmartSearchBox';
+import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { useFeaturedToolPool, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
 import { buildCanonicalUrl } from '../utils/canonicalUrl';
 import { supabase } from '../lib/supabase';
@@ -158,6 +159,7 @@ export default function ToolCategoriesIndexPage() {
       </main>
 
       <FooterWrapper />
+      <AskGappsyBubble />
     </div>
   );
 }
