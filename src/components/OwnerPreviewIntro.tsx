@@ -85,7 +85,7 @@ export default function OwnerPreviewIntro({
         <button
           type="button"
           onClick={handleStart}
-          className={`inline-flex items-center justify-center gap-3 ${pressed ? 'bg-[#0d172a] scale-[0.97]' : 'bg-[#151f34] hover:bg-[#1e2d4a]'} text-white font-bold text-lg sm:text-xl px-12 py-5 rounded-xl transition-all duration-150 ease-out`}
+          className={`inline-flex items-center justify-center gap-3 ${pressed ? 'bg-[#0d172a] scale-[0.97]' : 'bg-[#151f34] hover:bg-[#1e2d4a]'} text-white font-bold text-lg sm:text-xl px-12 py-5 rounded-full transition-all duration-150 ease-out`}
         >
           Show me my listing
           <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />

@@ -484,7 +484,7 @@ export default function AvailabilityOwnerEditListingPage() {
             <button
               onClick={handleSaveAndContinue}
               disabled={isSaving}
-              className="w-full rounded-xl py-3 text-sm sm:text-base font-semibold bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-full py-3 text-sm sm:text-base font-semibold bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving...' : 'Save & Continue'}
             </button>

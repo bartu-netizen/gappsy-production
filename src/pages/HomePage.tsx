@@ -1,33 +1,27 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import HomeStickyHeader from '../components/HomeStickyHeader';
+import { useEffect, useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, MapPin } from 'lucide-react';
+import MiniHeader from '../components/MiniHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import ThreeColumnLayout from '../components/ThreeColumnLayout';
 import TrustPill from '../components/ui/TrustPill';
 import { RecentFeaturedAgencies } from '../components/RecentFeaturedAgencies';
-import SmartSearchBox from '../components/search/SmartSearchBox';
+import { findState, searchStates, USState } from '../lib/usStates';
 import { TopAdRail, BottomAdRail } from '../components/home/MobileAdRails';
 
-// Real, published Gappsy tools with tools.featured = true — same tools the
-// on-page "Featured" ad slots (FeaturedToolPromo.tsx) draw from, so this
-// homepage rail and the rest of the site stay in sync as new tools get
-// featured. Taglines are hand-written short blurbs (not short_description,
-// which runs 150-200 chars — too long for this card's 2-line clamp).
-const RECENTLY_FEATURED_TOOLS = [
-  { slug: 'canva', name: 'Canva', logo: 'https://www.google.com/s2/favicons?domain=www.canva.com&sz=256', tagline: 'Design anything, no experience needed' },
-  { slug: 'figma', name: 'Figma', logo: 'https://www.google.com/s2/favicons?domain=www.figma.com&sz=256', tagline: 'Design and prototype together in real time' },
-  { slug: 'photoshop', name: 'Adobe Photoshop', logo: 'https://www.google.com/s2/favicons?domain=www.adobe.com&sz=256', tagline: 'The industry standard for photo editing' },
-  { slug: 'notion', name: 'Notion', logo: 'https://www.google.com/s2/favicons?domain=www.notion.com&sz=256', tagline: 'One workspace for notes, docs, and projects' },
-  { slug: 'miro', name: 'Miro', logo: 'https://www.google.com/s2/favicons?domain=miro.com&sz=256', tagline: 'Visual whiteboard for team collaboration' },
-  { slug: 'webflow', name: 'Webflow', logo: 'https://www.google.com/s2/favicons?domain=webflow.com&sz=256', tagline: 'Design and launch sites without writing code' },
-];
-
 export default function HomePage() {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<USState[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [error, setError] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    document.title = 'Gappsy - Find the Best Software Tools for Your Business';
+    document.title = 'Gappsy - Find the best tools & marketing agencies to grow your business';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover and compare the best software tools for your business, plus top-rated marketing agencies — all in one directory.');
+      metaDescription.setAttribute('content', 'Discover the best tools and agencies to grow and scale your business.');
     }
 
     document.body.style.backgroundColor = '#f7f8fa';
@@ -39,66 +33,107 @@ export default function HomePage() {
     };
   }, []);
 
-  // WebSite + SearchAction structured data — lets Google offer a sitelinks
-  // search box straight in results. Points at /tools?q={search_term_string}
-  // (a real, working GET search-results page — see ToolsIndexPage.tsx)
-  // rather than the homepage's own chat-style smart search, since
-  // SearchAction requires a plain URL-template target, not a POST endpoint.
-  // Isolated from the title/meta-description effect above on purpose — this
-  // only ever touches its own <script data-homepage-jsonld> tag, so it can
-  // never clobber or race with existing SEO-critical meta tags.
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.setAttribute('data-homepage-jsonld', 'true');
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      url: 'https://www.gappsy.com/',
-      name: 'Gappsy',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: 'https://www.gappsy.com/tools?q={search_term_string}',
-        },
-        'query-input': 'required name=search_term_string',
-      },
-    });
-    document.head.appendChild(script);
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setError('');
 
-    return () => {
-      script.remove();
-    };
-  }, []);
+    if (value.trim()) {
+      const results = searchStates(value);
+      setSuggestions(results);
+      setShowSuggestions(results.length > 0);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleStateSelect = (state: USState) => {
+    navigate(`/marketing-agencies-in-${state.slug}-united-states/`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const state = findState(searchQuery);
+      if (state) {
+        handleStateSelect(state);
+      } else {
+        setError('Please enter a U.S. state (e.g. Texas).');
+        setShowSuggestions(false);
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    // Delay to allow click on suggestion
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 200);
+  };
 
   const centerContent = (
     <>
-      <HomeStickyHeader />
+      <div className="mt-0 mb-6">
+        <MiniHeader />
+      </div>
 
       <div className="text-center mb-8">
-        <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '8px' }}>
-          Find the best software tools<br />
+        <h1 className="homepage-hero-title text-2xl sm:text-[32px] lg:text-[36px] font-bold mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px', marginBottom: '12px' }}>
+          Find the best tools & agencies<br />
           to grow your business
         </h1>
-        <p className="text-sm sm:text-base text-slate-500 mb-4" style={{ marginBottom: '16px' }}>
-          Plus top-rated marketing agencies, all in one directory.
-        </p>
-
-        <SmartSearchBox id="find-agency-search" className="mb-3" />
-
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mb-3 sm:mb-5">
           <TrustPill />
         </div>
+
+        <div className="relative max-w-2xl mx-auto">
+          <div className="flex items-center w-full h-14 rounded-full bg-white text-gray-900 border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
+            <Search className="ml-5 h-5 w-5 text-slate-400" strokeWidth={2} aria-hidden="true" />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Type a U.S. state (e.g. New Jersey)…"
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onBlur={handleBlur}
+              onFocus={() => searchQuery && setShowSuggestions(suggestions.length > 0)}
+              className="flex-1 h-full bg-transparent outline-none px-4 text-gray-900 placeholder-gray-500"
+            />
+          </div>
+
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+              {suggestions.map((state) => (
+                <button
+                  key={state.slug}
+                  onClick={() => handleStateSelect(state)}
+                  className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
+                >
+                  <span className="text-sm font-medium text-gray-900">{state.name}</span>
+                  <span className="text-xs text-gray-500">{state.abbr}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="text-center mt-2">
+            <p className="text-xs text-gray-500">
+              We'll take you to the Top 25 marketing agencies in that state.
+            </p>
+            {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+          </div>
+        </div>
       </div>
+
+      <RecentFeaturedAgencies />
 
       <section className="recent-tools mb-10" style={{ maxWidth: '1300px', margin: '40px auto', padding: '0 20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }}>
           <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#0A0F1B', margin: 0 }}>
             Recently Featured Tools
           </h2>
-          <Link
-            to="/tools"
+          <a
+            href="#"
             style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -112,7 +147,7 @@ export default function HomePage() {
             onMouseOut={(e) => e.currentTarget.style.color = '#94A3B8'}
           >
             View all →
-          </Link>
+          </a>
         </div>
 
         <div
@@ -127,30 +162,107 @@ export default function HomePage() {
             scrollbarColor: '#E5E7EB #F9FAFB'
           }}
         >
-          {RECENTLY_FEATURED_TOOLS.map((tool) => (
-            <Link
-              key={tool.slug}
-              to={`/tools/${tool.slug}`}
-              className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
-              style={{
-                flex: '0 0 210px',
-                textDecoration: 'none'
-              }}
-            >
-              <span className="card-click-arrow">→</span>
-              <div className="ad-card-logo flex-shrink-0">
-                <img src={tool.logo} alt={tool.name} width={32} height={32} loading="lazy" decoding="async" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">{tool.name}</div>
-                <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{tool.tagline}</div>
-              </div>
-            </Link>
-          ))}
+          <a
+            href="https://mediaboost.ai/"
+            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+            style={{
+              flex: '0 0 210px',
+              textDecoration: 'none'
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-click-arrow">→</span>
+            <div className="ad-card-logo flex-shrink-0">
+              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--2--1765843177050.webp" alt="Mediaboost" width={32} height={32} loading="lazy" decoding="async" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Mediaboost</div>
+              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Guaranteed Feature in Top Global Media</div>
+            </div>
+          </a>
+
+          <a
+            href="https://newsletters.ai/"
+            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+            style={{
+              flex: '0 0 210px',
+              textDecoration: 'none'
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-click-arrow">→</span>
+            <div className="ad-card-logo flex-shrink-0">
+              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--3--1765843590667.webp" alt="Newsletters.ai" width={32} height={32} loading="lazy" decoding="async" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Newsletters.ai</div>
+              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Weekly AI Catchup for lazy readers</div>
+            </div>
+          </a>
+
+          <a
+            href="https://guidejar.com/"
+            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+            style={{
+              flex: '0 0 210px',
+              textDecoration: 'none'
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-click-arrow">→</span>
+            <div className="ad-card-logo flex-shrink-0">
+              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--4--1765843301590.webp" alt="Guidejar" width={32} height={32} loading="lazy" decoding="async" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Guidejar</div>
+              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Convert more customers with interactive demos</div>
+            </div>
+          </a>
+
+          <a
+            href="https://chargeback.io/"
+            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+            style={{
+              flex: '0 0 210px',
+              textDecoration: 'none'
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-click-arrow">→</span>
+            <div className="ad-card-logo flex-shrink-0">
+              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842395903.png" alt="Chargeback.io" width={32} height={32} loading="lazy" decoding="async" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Chargeback.io</div>
+              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Prevent chargebacks on autopilot</div>
+            </div>
+          </a>
+
+          <a
+            href="https://waitforit.app/"
+            className="tool-card bg-white rounded-[14px] p-3 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow"
+            style={{
+              flex: '0 0 210px',
+              textDecoration: 'none'
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-click-arrow">→</span>
+            <div className="ad-card-logo flex-shrink-0">
+              <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842505817.webp" alt="WaitforIt" width={32} height={32} loading="lazy" decoding="async" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">WaitforIt</div>
+              <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Build a waitlist for your idea in 3 minutes</div>
+            </div>
+          </a>
         </div>
       </section>
-
-      <RecentFeaturedAgencies />
 
       <section className="recent-tools mb-10" style={{ maxWidth: '1300px', margin: '40px auto', padding: '0 20px' }}>
         <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#0A0F1B', marginBottom: '14px' }}>
@@ -223,22 +335,63 @@ export default function HomePage() {
           <TopAdRail />
         </div>
 
-        <HomeStickyHeader />
+        <div className="mt-2 md:mt-6">
+          <MiniHeader />
+        </div>
 
         <div className="text-center mb-6 sm:mb-8 mt-2">
-          <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-1.5 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>
-            Find the best software tools<br />
+          <h1 className="homepage-hero-title text-2xl sm:text-[32px] font-bold mb-2 mx-auto" style={{ lineHeight: '1.1', fontWeight: '700', color: '#0B1221', maxWidth: '900px' }}>
+            Find the best tools & agencies<br />
             to grow your business
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mb-3">
-            Plus top-rated marketing agencies, all in one directory.
-          </p>
-          <SmartSearchBox id="find-agency-search-mobile" className="mb-3 sm:mb-8" />
-
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-2 sm:mb-5">
             <TrustPill />
           </div>
+          <div className="relative max-w-[390px] sm:max-w-2xl mx-auto mb-4 sm:mb-8">
+            <div className="flex items-center h-8 sm:h-14 px-1.5 sm:px-4 gap-1 sm:gap-3 rounded-full bg-white border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#0A1735]">
+              <div className="flex items-center justify-center flex-shrink-0">
+                <Search className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-slate-400 opacity-80" />
+              </div>
+              <input
+                type="text"
+                placeholder="Type a U.S. state to see the Top 25 agencies"
+                value={searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onBlur={handleBlur}
+                onFocus={() => searchQuery && setShowSuggestions(suggestions.length > 0)}
+                className="flex-1 bg-transparent text-[10px] sm:text-base font-normal leading-none text-gray-900 placeholder-gray-500 focus:outline-none overflow-hidden whitespace-nowrap"
+                style={{ textOverflow: 'clip' }}
+              />
+            </div>
+
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+                {suggestions.map((state) => (
+                  <button
+                    key={state.slug}
+                    onClick={() => handleStateSelect(state)}
+                    className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
+                  >
+                    <span className="text-sm font-medium text-gray-900">{state.name}</span>
+                    <span className="text-xs text-gray-500">{state.abbr}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="text-center mt-1 sm:mt-2 hidden sm:block">
+              <p className="text-xs sm:text-xs leading-snug text-gray-500">
+                We'll take you to the Top 25 marketing agencies in that state.
+              </p>
+            </div>
+            {error && (
+              <p className="text-xs sm:text-xs leading-snug text-red-600 mt-1 text-center">{error}</p>
+            )}
+          </div>
         </div>
+
+        <RecentFeaturedAgencies isMobile={true} />
 
         {/* Recently Featured Tools - Mobile */}
         <section className="mb-5">
@@ -250,27 +403,88 @@ export default function HomePage() {
           </div>
           <div className="-mx-4 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth scrollbar-hide" style={{ scrollPaddingLeft: 16, scrollPaddingRight: 16 }}>
             <div className="flex gap-4 px-4 pb-2">
-              {RECENTLY_FEATURED_TOOLS.map((tool) => (
-                <Link
-                  key={tool.slug}
-                  to={`/tools/${tool.slug}`}
-                  className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
-                >
-                  <span className="card-click-arrow">→</span>
-                  <div className="ad-card-logo flex-shrink-0">
-                    <img src={tool.logo} alt={tool.name} width={32} height={32} loading="lazy" decoding="async" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">{tool.name}</div>
-                    <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{tool.tagline}</div>
-                  </div>
-                </Link>
-              ))}
+              <a
+                href="https://mediaboost.ai/"
+                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="card-click-arrow">→</span>
+                <div className="ad-card-logo flex-shrink-0">
+                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--2--1765843177050.webp" alt="Mediaboost" width={32} height={32} loading="lazy" decoding="async" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Mediaboost</div>
+                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Guaranteed Feature in Top Global Media</div>
+                </div>
+              </a>
+
+              <a
+                href="https://newsletters.ai/"
+                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="card-click-arrow">→</span>
+                <div className="ad-card-logo flex-shrink-0">
+                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--3--1765843590667.webp" alt="Newsletters.ai" width={32} height={32} loading="lazy" decoding="async" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Newsletters.ai</div>
+                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Weekly AI Catchup for lazy readers</div>
+                </div>
+              </a>
+
+              <a
+                href="https://guidejar.com/"
+                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="card-click-arrow">→</span>
+                <div className="ad-card-logo flex-shrink-0">
+                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons--4--1765843301590.webp" alt="Guidejar" width={32} height={32} loading="lazy" decoding="async" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Guidejar</div>
+                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Convert more customers with interactive demos</div>
+                </div>
+              </a>
+
+              <a
+                href="https://chargeback.io/"
+                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="card-click-arrow">→</span>
+                <div className="ad-card-logo flex-shrink-0">
+                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842395903.png" alt="Chargeback.io" width={32} height={32} loading="lazy" decoding="async" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">Chargeback.io</div>
+                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Prevent chargebacks on autopilot</div>
+                </div>
+              </a>
+
+              <a
+                href="https://waitforit.app/"
+                className="bg-white rounded-[14px] p-3.5 border border-[#eef0f3] flex items-center gap-2 hover:shadow-md transition-shadow flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="card-click-arrow">→</span>
+                <div className="ad-card-logo flex-shrink-0">
+                  <img src="https://jczdgzhnsyzvbpfqueyy.supabase.co/storage/v1/object/public/agency-logos/sidebar/favicons-1765842505817.webp" alt="WaitforIt" width={32} height={32} loading="lazy" decoding="async" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-bold text-gray-800 leading-tight mb-0.5">WaitforIt</div>
+                  <div className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">Build a waitlist for your idea in 3 minutes</div>
+                </div>
+              </a>
             </div>
           </div>
         </section>
-
-        <RecentFeaturedAgencies isMobile={true} />
 
         {/* Gappsy Tools - Mobile */}
         <section className="mb-5">

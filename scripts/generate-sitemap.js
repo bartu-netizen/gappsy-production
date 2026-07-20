@@ -10,8 +10,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { createClient } from '@supabase/supabase-js';
-import { loadEnv } from 'vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,70 +60,7 @@ const ALLOWED_PATTERNS = [
   /^\/editorial-policy\/$/,
   /^\/terms\/$/,
   /^\/privacy\/$/,
-  /^\/tools\/[a-z0-9-]+\/$/,
-  /^\/tool-categories\/$/,
-  /^\/tool-categories\/[a-z0-9-]+\/$/,
-  /^\/compare\/$/,
-  // Matches both pairwise ("a-vs-b") and group ("a-vs-b-vs-c") comparison
-  // slugs — the pattern is generic to any number of "-vs-"-joined segments.
-  /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
 ];
-
-async function fetchPublishedToolSlugs() {
-  try {
-    const env = loadEnv('production', path.join(__dirname, '..'), '');
-    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-      console.warn('⚠️  Supabase credentials not found — skipping tool URLs in sitemap');
-      return [];
-    }
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    // PostgREST caps a single response at 1000 rows — paginate so the tool
-    // count can grow past that without silently dropping URLs from the sitemap.
-    const PAGE_SIZE = 1000;
-    const slugs = [];
-    for (let page = 0; ; page++) {
-      const { data, error } = await supabase
-        .from('tools')
-        .select('slug')
-        .eq('status', 'published')
-        .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
-      if (error) {
-        console.warn(`⚠️  Failed to fetch tool slugs for sitemap: ${error.message}`);
-        return slugs;
-      }
-      slugs.push(...(data || []).map((t) => t.slug));
-      if (!data || data.length < PAGE_SIZE) break;
-    }
-    return slugs;
-  } catch (err) {
-    console.warn(`⚠️  Error fetching tool slugs for sitemap: ${err.message}`);
-    return [];
-  }
-}
-
-async function fetchPublishedCategorySlugs() {
-  try {
-    const env = loadEnv('production', path.join(__dirname, '..'), '');
-    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-      console.warn('⚠️  Supabase credentials not found — skipping category URLs in sitemap');
-      return [];
-    }
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_categories').select('slug').eq('status', 'published');
-    if (error) {
-      console.warn(`⚠️  Failed to fetch category slugs for sitemap: ${error.message}`);
-      return [];
-    }
-    return (data || []).map((c) => c.slug);
-  } catch (err) {
-    console.warn(`⚠️  Error fetching category slugs for sitemap: ${err.message}`);
-    return [];
-  }
-}
 
 function generateUrlEntry(url, lastmod, priority, changefreq) {
   return `  <url>
@@ -139,54 +74,6 @@ function generateUrlEntry(url, lastmod, priority, changefreq) {
 function assertAllowed(url) {
   if (!ALLOWED_PATTERNS.some((re) => re.test(url))) {
     throw new Error(`Sitemap regression: url not in allowlist: ${url}`);
-  }
-}
-
-// Only approved, published comparisons — never every possible tool pair.
-// Mirrors fetchPublishedToolSlugs/fetchPublishedCategorySlugs above.
-async function fetchPublishedComparisonSlugs() {
-  try {
-    const env = loadEnv('production', path.join(__dirname, '..'), '');
-    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-      console.warn('⚠️  Supabase credentials not found — skipping comparison URLs in sitemap');
-      return [];
-    }
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_comparisons').select('slug').eq('status', 'published');
-    if (error) {
-      console.warn(`⚠️  Failed to fetch comparison slugs for sitemap: ${error.message}`);
-      return [];
-    }
-    return (data || []).map((c) => c.slug);
-  } catch (err) {
-    console.warn(`⚠️  Error fetching comparison slugs for sitemap: ${err.message}`);
-    return [];
-  }
-}
-
-// Only approved, published group comparisons (3+ tools) — mirrors
-// fetchPublishedComparisonSlugs above for the N-ary comparison page type.
-async function fetchPublishedGroupComparisonSlugs() {
-  try {
-    const env = loadEnv('production', path.join(__dirname, '..'), '');
-    const supabaseUrl = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-      console.warn('⚠️  Supabase credentials not found — skipping group comparison URLs in sitemap');
-      return [];
-    }
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_group_comparisons').select('slug').eq('status', 'published');
-    if (error) {
-      console.warn(`⚠️  Failed to fetch group comparison slugs for sitemap: ${error.message}`);
-      return [];
-    }
-    return (data || []).map((r) => r.slug);
-  } catch (err) {
-    console.warn(`⚠️  Error fetching group comparison slugs for sitemap: ${err.message}`);
-    return [];
   }
 }
 
@@ -206,57 +93,6 @@ async function generateSitemap() {
     paths.push(url);
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
-
-  const toolSlugs = await fetchPublishedToolSlugs();
-  toolSlugs.forEach((slug) => {
-    const url = `/tools/${slug}/`;
-    assertAllowed(url);
-    paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
-  });
-  console.log(`Tool URLs included: ${toolSlugs.length}`);
-
-  const hubUrl = '/tool-categories/';
-  assertAllowed(hubUrl);
-  paths.push(hubUrl);
-  urls.push(generateUrlEntry(hubUrl, TODAY, '0.7', 'weekly'));
-
-  const categorySlugs = await fetchPublishedCategorySlugs();
-  categorySlugs.forEach((slug) => {
-    const url = `/tool-categories/${slug}/`;
-    assertAllowed(url);
-    paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.6', 'weekly'));
-  });
-  console.log(`Category URLs included: ${categorySlugs.length} (+ 1 hub)`);
-
-  const compareHubUrl = '/compare/';
-  assertAllowed(compareHubUrl);
-  paths.push(compareHubUrl);
-  urls.push(generateUrlEntry(compareHubUrl, TODAY, '0.6', 'weekly'));
-
-  const comparisonSlugs = await fetchPublishedComparisonSlugs();
-  comparisonSlugs.forEach((slug) => {
-    const url = `/compare/${slug}/`;
-    assertAllowed(url);
-    paths.push(url);
-    // High-intent, long-form editorial content — matches tool-page priority (0.7),
-    // above the /compare/ hub itself and generic category pages (both 0.6).
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
-  });
-  console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
-
-  // No separate hub URL — group comparisons are listed on the same /compare
-  // hub as pairwise comparisons (see ComparePage.tsx's "3+ Tool Comparisons"
-  // section), so only their individual detail-page URLs need sitemap entries.
-  const groupComparisonSlugs = await fetchPublishedGroupComparisonSlugs();
-  groupComparisonSlugs.forEach((slug) => {
-    const url = `/compare/${slug}/`;
-    assertAllowed(url);
-    paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
-  });
-  console.log(`Group comparison URLs included: ${groupComparisonSlugs.length}`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

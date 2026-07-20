@@ -678,10 +678,7 @@ function injectSEOTags(baseHtml, seoData, stateName, stateSlug, fullData) {
   const staticBodyHTML = generateStaticBodyHTML(stateName, stateSlug, fullData);
   const rootDivRegex = /(<div id="root"><\/div>)/;
   if (rootDivRegex.test(modifiedHtml)) {
-    // Use a replacer function, not a string: a string replacement interprets
-    // $1/$2/... as backreferences, which silently corrupts any staticBodyHTML
-    // content containing a literal "$1"-style sequence (e.g. "$10.99" pricing).
-    modifiedHtml = modifiedHtml.replace(rootDivRegex, () => `<div id="root">${staticBodyHTML}</div>`);
+    modifiedHtml = modifiedHtml.replace(rootDivRegex, `<div id="root">${staticBodyHTML}</div>`);
   } else {
     console.warn('⚠️  Could not find <div id="root"></div> in base HTML');
   }

@@ -18,7 +18,7 @@ export function extractToken(req: Request): string | null {
   return null;
 }
 
-export async function verifySessionToken(token: string): Promise<{ ok: boolean; error?: string; exp?: number; email?: string | null }> {
+export async function verifySessionToken(token: string): Promise<{ ok: boolean; error?: string; exp?: number }> {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -30,7 +30,7 @@ export async function verifySessionToken(token: string): Promise<{ ok: boolean; 
 
     const { data, error } = await supabase
       .from("admin_sessions")
-      .select("id, expires_at, email")
+      .select("id, expires_at")
       .eq("token", token)
       .maybeSingle();
 
@@ -41,17 +41,14 @@ export async function verifySessionToken(token: string): Promise<{ ok: boolean; 
     if (!data) return { ok: false, error: "invalid" };
     const expiresAt = new Date(data.expires_at);
     if (expiresAt < new Date()) return { ok: false, error: "expired" };
-    return { ok: true, exp: expiresAt.getTime(), email: data.email ?? null };
+    return { ok: true, exp: expiresAt.getTime() };
   } catch (e) {
     console.error("[verifySessionToken] Exception:", e);
     return { ok: false, error: "exception" };
   }
 }
 
-// email is the admin_sessions row's email column — always server-verified,
-// never trusted from client input. Used to stamp "who did this" fields
-// (e.g. tool_import_history.created_by) honestly.
-export async function requireAdminSession(req: Request): Promise<{ exp: number; email: string | null }> {
+export async function requireAdminSession(req: Request): Promise<{ exp: number }> {
   const token = extractToken(req);
   if (!token) throw new Error("Missing admin token");
   const result = await verifySessionToken(token);
@@ -59,7 +56,7 @@ export async function requireAdminSession(req: Request): Promise<{ exp: number; 
     if (result.error === "expired") throw new Error("Admin session expired — please login again");
     throw new Error("Invalid or expired admin session");
   }
-  return { exp: result.exp ?? 0, email: result.email ?? null };
+  return { exp: result.exp ?? 0 };
 }
 
 export async function createSessionToken(): Promise<{ token: string; expiresAt: number }> {

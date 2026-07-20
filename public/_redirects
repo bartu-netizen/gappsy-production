@@ -42,6 +42,7 @@ http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
 /marketing-agency-calta-marketing-reviews/ /agency-reviews/calta-marketing-new-york/ 301!
 
 /pricing /appbuilder 301
+/login /login/apps 301
 /home / 301
 /ai / 301
 /contact-us /contact 301
@@ -371,18 +372,6 @@ http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
 # Using splat syntax for maximum Netlify compatibility
 /marketing-agencies-in-*-united-states   /marketing-agencies-in-:splat-united-states.html  200
 /marketing-agencies-in-*-united-states/  /marketing-agencies-in-:splat-united-states.html  200
-
-# Prerendered tool pages: deliberately NO explicit redirect rule here.
-# dist/tools/{slug}/index.html is served by Netlify's default static-file
-# precedence (an exact file match always wins over any redirect rule,
-# without needing "force"), so a valid slug resolves correctly with zero
-# rewrite risk. Both explicit-rule variants tried here (named :slug, then
-# splat *) misbehaved on production for the missing-target case — one
-# 404'd nonexistent tool slugs instead of falling through to the SPA, the
-# other broke the bare /tools listing page too. Relying on native
-# resolution avoids that whole failure class: no rule to misfire, so an
-# unmatched slug (or the bare /tools / /tools/ listing, which also has no
-# generated file) falls straight through to the SPA fallback below.
 
 # 4. SPA fallback
 /*  /index.html 200

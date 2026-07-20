@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { fetchSidebarAds, type SidebarAd } from '../../lib/sidebarAdsCache';
 
 const defaultBgColors = [
   '#E0F2FE',
@@ -8,6 +7,18 @@ const defaultBgColors = [
   '#F3E8FF',
   '#FCE7F3'
 ];
+
+interface SidebarAd {
+  id: string;
+  position: string;
+  display_order: number;
+  logo_url: string;
+  title: string;
+  subtitle: string;
+  target_url: string;
+  bg_color: string;
+  is_active: boolean;
+}
 
 interface MobileAdChipProps {
   ad: SidebarAd;
@@ -107,9 +118,20 @@ export function TopAdRail() {
   }, []);
 
   const loadAds = async () => {
-    const data = await fetchSidebarAds();
-    setAds(data.filter((ad) => ad.is_active).slice(0, 3));
-    setLoading(false);
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sidebar-ads-fetch`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      if (data.ads) {
+        const activeAds = data.ads.filter((ad: SidebarAd) => ad.is_active);
+        setAds(activeAds.slice(0, 3));
+      }
+    } catch (err) {
+      console.error('Failed to load top rail ads:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading || ads.length === 0) return null;
@@ -130,9 +152,20 @@ export function BottomAdRail() {
   }, []);
 
   const loadAds = async () => {
-    const data = await fetchSidebarAds();
-    setAds(data.filter((ad) => ad.is_active).slice(3, 8));
-    setLoading(false);
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sidebar-ads-fetch`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      if (data.ads) {
+        const activeAds = data.ads.filter((ad: SidebarAd) => ad.is_active);
+        setAds(activeAds.slice(3, 8));
+      }
+    } catch (err) {
+      console.error('Failed to load bottom rail ads:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading || ads.length === 0) return null;
