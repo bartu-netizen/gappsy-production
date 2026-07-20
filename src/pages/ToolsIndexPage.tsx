@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, Sparkles, Tag as TagIcon, Clock, Mail, X } from 'lucide-react';
+import { Search, Sparkles, Tag as TagIcon, Clock, Mail } from 'lucide-react';
 import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
@@ -11,7 +11,14 @@ import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
+import SmartSearchBox from '../components/search/SmartSearchBox';
 import { supabase } from '../lib/supabase';
+
+const TOOLS_EXAMPLE_QUERIES = [
+  'A free tool to design social posts',
+  'Something to track team tasks',
+  'CRM with a free trial',
+];
 
 interface ToolRow extends ToolCardData {
   created_at: string;
@@ -29,7 +36,7 @@ export default function ToolsIndexPage() {
   const [tags, setTags] = useState<TagWithCount[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
-  const [search, setSearch] = useState(() => searchParams.get('q') || '');
+  const [search] = useState(() => searchParams.get('q') || '');
 
   useEffect(() => {
     Promise.all([
@@ -116,27 +123,13 @@ export default function ToolsIndexPage() {
           A curated directory of tools — hand-picked, organized by category, and easy to compare.
         </p>
 
-        <div className="relative max-w-xl mx-auto">
-          <div className="flex items-center w-full h-14 rounded-full bg-white border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-[#4F47E6] transition-shadow">
-            <Search className="ml-5 h-5 w-5 text-slate-400 shrink-0" strokeWidth={2} aria-hidden="true" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search tools by name or use case…"
-              className="flex-1 h-full bg-transparent outline-none px-4 text-[#0B1221] placeholder-slate-400"
-            />
-            {isSearching && (
-              <button
-                onClick={() => setSearch('')}
-                className="mr-4 text-slate-400 hover:text-slate-600 transition-colors"
-                aria-label="Clear search"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        </div>
+        <SmartSearchBox
+          mode="general"
+          title="What do you need help finding?"
+          subtitle="Tell us what you're trying to solve — we'll point you to the right tool"
+          placeholder="A tool, a need, or 'agency in New Jersey'…"
+          exampleQueries={TOOLS_EXAMPLE_QUERIES}
+        />
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
