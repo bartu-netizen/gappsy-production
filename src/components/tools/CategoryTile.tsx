@@ -54,7 +54,10 @@ function hashSlug(slug: string): number {
   return hash;
 }
 
-function getCategoryVisual(category: CategoryTileData): { Icon: LucideIcon; accent: { bg: string; icon: string } } {
+// Exported so other category displays (e.g. the "Related categories" pills
+// on ToolCategoryDetailPage) can reuse the same icon lookup + per-slug accent
+// color instead of re-deriving it.
+export function getCategoryVisual(category: { slug: string; icon?: string | null }): { Icon: LucideIcon; accent: { bg: string; icon: string } } {
   const Icon = (category.icon && ICON_MAP[category.icon]) || FolderTree;
   const accent = ACCENT_PALETTE[hashSlug(category.slug) % ACCENT_PALETTE.length];
   return { Icon, accent };

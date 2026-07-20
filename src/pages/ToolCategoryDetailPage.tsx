@@ -6,6 +6,7 @@ import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ToolCard, { type ToolCardData } from '../components/ToolCard';
 import ToolSpotlight from '../components/tools/ToolSpotlight';
+import { getCategoryVisual } from '../components/tools/CategoryTile';
 import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState, { type ToolsEmptyStateLink } from '../components/tools/ToolsEmptyState';
@@ -33,6 +34,13 @@ interface CategoryToolRow extends ToolCardData {
   tagSlugs: string[];
 }
 
+interface RelatedCategoryLink {
+  slug: string;
+  name: string;
+  icon: string | null;
+  href: string;
+}
+
 const CATEGORY_TOOLS_LIMIT = 60;
 
 export default function ToolCategoryDetailPage() {
@@ -41,7 +49,7 @@ export default function ToolCategoryDetailPage() {
   const [category, setCategory] = useState<CategoryDetail | null>(null);
   const [tools, setTools] = useState<CategoryToolRow[]>([]);
   const [otherCategories, setOtherCategories] = useState<ToolsEmptyStateLink[]>([]);
-  const [relatedCategories, setRelatedCategories] = useState<ToolsEmptyStateLink[]>([]);
+  const [relatedCategories, setRelatedCategories] = useState<RelatedCategoryLink[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -114,13 +122,15 @@ export default function ToolCategoryDetailPage() {
 
         supabase
           .from('tool_categories')
-          .select('slug, name')
+          .select('slug, name, icon')
           .eq('status', 'published')
           .neq('id', data.id)
           .order('name')
           .limit(6)
           .then(({ data: related }) => {
-            setRelatedCategories((related || []).map((c) => ({ label: c.name, href: `/tool-categories/${c.slug}` })));
+            setRelatedCategories(
+              (related || []).map((c) => ({ slug: c.slug, name: c.name, icon: c.icon, href: `/tool-categories/${c.slug}` }))
+            );
           });
       });
   }, [categorySlug]);
@@ -436,15 +446,21 @@ export default function ToolCategoryDetailPage() {
               <section>
                 <ToolsSectionHeader title="Related categories" />
                 <div className="flex flex-wrap gap-2">
-                  {relatedCategories.map((c) => (
-                    <Link
-                      key={c.href}
-                      to={c.href}
-                      className="text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-[#4F47E6] hover:border-[#C7CCF7] px-3.5 py-1.5 rounded-full transition-colors"
-                    >
-                      {c.label}
-                    </Link>
-                  ))}
+                  {relatedCategories.map((c) => {
+                    const { Icon, accent } = getCategoryVisual(c);
+                    return (
+                      <Link
+                        key={c.href}
+                        to={c.href}
+                        className="flex items-center gap-2 text-sm font-medium bg-white border border-[#eef0f3] text-slate-600 hover:text-[#4F47E6] hover:border-[#C7CCF7] pl-2 pr-3.5 py-1.5 rounded-full transition-colors"
+                      >
+                        <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: accent.bg }}>
+                          <Icon className="w-3 h-3" style={{ color: accent.icon }} />
+                        </span>
+                        {c.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </section>
             )}
