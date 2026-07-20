@@ -4,9 +4,10 @@ import { Menu, X } from 'lucide-react';
 
 // The homepage's own sticky header — visually mirrors SoftwareHeader's
 // "premium" tool-page header (floating #0A1735 card, sticky, scroll shadow),
-// kept deliberately minimal (logo + Sign In + Get Listed only, no nav links)
-// and width-capped to match FooterWrapper's homepage card (900px) so header
-// and footer read as the same width instead of the header floating narrower.
+// kept deliberately minimal (logo + Sign In + Get Listed only, no nav links).
+// On desktop the card shrinks to fit its content (md:w-fit) rather than
+// spanning the full 900px footer width — with no nav links left, stretching
+// it that wide just left a dead gap between the logo and the buttons.
 //
 // "Get Listed" scrolls to the existing state-search box (#find-agency-search)
 // rather than opening a submission flow directly: listing an agency is
@@ -54,25 +55,25 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
       {/* Edge-to-edge on mobile (no inset, no rounding), matching
           Top25Header's mobile bar — the floating inset/rounded card is a
           md:+ (desktop) treatment only. */}
-      <div className="max-w-full md:max-w-[900px] mx-auto px-0 md:px-6">
+      <div className="max-w-full md:max-w-fit mx-auto px-0">
         <div className={`rounded-none md:rounded-2xl bg-[#0A1735] shadow-lg overflow-hidden transition-shadow duration-200 ${scrolled ? 'shadow-xl' : ''}`}>
-          <div className="px-4 md:px-6">
+          <div className="px-4 md:px-5">
             {/* Desktop */}
-            <div className="hidden md:flex items-center justify-between h-14 gap-4">
+            <div className="hidden md:flex items-center gap-10 h-12">
               <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
-                <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-9 w-auto" />
+                <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-8 w-auto" />
               </Link>
 
               <div className="flex items-center gap-2 shrink-0">
                 <Link
                   to="/login/apps"
-                  className="px-3.5 py-2 rounded-xl text-sm font-medium text-white border border-white/30 hover:bg-white/10 transition-colors"
+                  className="px-3.5 py-1.5 rounded-xl text-sm font-medium text-white border border-white/30 hover:bg-white/10 transition-colors"
                 >
                   Sign In
                 </Link>
                 <a
                   href={searchHref}
-                  className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors whitespace-nowrap"
+                  className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors whitespace-nowrap"
                 >
                   Get Listed
                 </a>
