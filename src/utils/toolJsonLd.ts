@@ -48,7 +48,7 @@ export function buildToolJsonLd(input: BuildToolJsonLdInput): Record<string, any
   return [
     {
       '@type': 'SoftwareApplication',
-      '@id': `https://www.gappsy.com/tools/${input.slug}/#software`,
+      '@id': `https://gappsy.com/tools/${input.slug}/#software`,
       name: input.name,
       description: input.shortDescription || input.longDescription || undefined,
       image: input.logo || undefined,
@@ -64,7 +64,7 @@ export function buildToolJsonLd(input: BuildToolJsonLdInput): Record<string, any
       ? [
           {
             '@type': 'FAQPage',
-            '@id': `https://www.gappsy.com/tools/${input.slug}/#faq`,
+            '@id': `https://gappsy.com/tools/${input.slug}/#faq`,
             mainEntity: input.faqs.map((faq) => ({
               '@type': 'Question',
               name: faq.question,

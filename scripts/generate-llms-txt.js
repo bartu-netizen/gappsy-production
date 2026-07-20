@@ -17,7 +17,7 @@ import { loadEnv } from 'vite';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CANONICAL_DOMAIN = 'https://www.gappsy.com';
+const CANONICAL_DOMAIN = 'https://gappsy.com';
 
 function initSupabase() {
   const env = loadEnv('production', path.join(__dirname, '..'), '');

@@ -393,7 +393,7 @@ export default function AnalyticsPage() {
             <div className="flex items-center justify-center order-1 lg:order-2 mb-6 lg:mb-0 mt-4 sm:mt-0 w-full">
               <pre className="bg-gray-900 text-gray-100 p-4 md:p-6 rounded-lg overflow-x-auto w-full text-xs md:text-sm leading-relaxed font-mono" style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
                 <code>{`curl --request POST \\
-  --url 'https://www.gappsy.com/demo/api/campaigns' \\
+  --url 'https://gappsy.com/demo/api/campaigns' \\
   --header 'Authorization: Bearer `}<span style={{ color: '#60a5fa' }}>{`{api_key}`}</span>{`' \\
   --header 'Content-Type: multipart/form-data' \\
   --form 'name=`}<span style={{ color: '#34d399' }}>{`Example`}</span>{`' \\

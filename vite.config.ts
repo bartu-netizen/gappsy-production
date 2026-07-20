@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import { prerenderHomepage } from './scripts/prerender-homepage.js';
 import { prerender } from './scripts/prerender.js';
 import { prerenderTools } from './scripts/prerender-tools.js';
 import { prerenderCategories } from './scripts/prerender-categories.js';
@@ -82,10 +83,29 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Group comparison prerender completed successfully - All published group comparisons have crawlable HTML\n');
+
+        // Prerender "/" LAST. dist/index.html doubles as the pristine SPA
+        // shell every step above reads as its injection template (state/tool/
+        // category/comparison pages all inject into a copy of it, writing to
+        // their own subdirectory) — only this step overwrites dist/index.html
+        // itself. Running it first previously poisoned that shared template
+        // (double canonical tags, stripped <ol> agency list on every state
+        // page) because later steps read the already-homepage-rewritten file.
+        console.log('\n🔄 Running homepage prerender with Supabase data...\n');
+        const homepageResult = await prerenderHomepage({ failOnError: true });
+
+        if (!homepageResult.success) {
+          throw new Error('Homepage prerender failed');
+        }
+
+        console.log('✅ Homepage prerender completed successfully - / has crawlable content\n');
       } catch (error) {
         console.error('\n❌ PRERENDER FAILED - Build cannot continue\n');
         console.error('Error:', error.message);
-        console.error('\nAll 52 states must have:');
+        console.error('\nHomepage (/) must have:');
+        console.error('  • At least 1 published tool (refuses to prerender degenerate data)');
+        console.error('  • Real category/tool stats injected into static HTML + JSON-LD\n');
+        console.error('All 52 states must have:');
         console.error('  • Multi-paragraph intro (200+ chars)');
         console.error('  • Exactly 25 agencies with descriptions');
         console.error('  • FAQ section');

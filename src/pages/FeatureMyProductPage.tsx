@@ -14,7 +14,7 @@ import FmpPricingSection from '../components/featureMyProduct/FmpPricingSection'
 import FmpFaqSection from '../components/featureMyProduct/FmpFaqSection';
 import { FMP_FAQS } from '../components/featureMyProduct/fmpFaqData';
 
-const CANONICAL_BASE = 'https://www.gappsy.com/feature-my-product';
+const CANONICAL_BASE = 'https://gappsy.com/feature-my-product';
 
 // Same construction style as buildToolJsonLd (src/utils/toolJsonLd.ts) —
 // FAQPage built from the same FMP_FAQS array the visible accordion renders,
@@ -36,7 +36,7 @@ const JSON_LD = [
     name: 'Gappsy Featured Listing',
     serviceType: 'Software directory featured placement',
     description: 'Editorially reviewed, priority-placed software listing across category pages, comparison pages, alternative pages, search, and the homepage on the Gappsy software directory.',
-    provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://www.gappsy.com' },
+    provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' },
     areaServed: 'Worldwide',
     audience: { '@type': 'Audience', audienceType: 'SaaS founders and software marketing teams' },
     offers: {

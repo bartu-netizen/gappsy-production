@@ -203,8 +203,8 @@ export default function GroupCompareDetailPage() {
     ? truncateDescription(groupComparisonContent.verdict)
     : `Compare ${facts.map((f) => f.name).join(', ')} on pricing, features, and who each one is built for.`;
 
-  const canonicalUrl = `https://www.gappsy.com/compare/${groupComparison.slug}/`;
-  const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://www.gappsy.com' };
+  const canonicalUrl = `https://gappsy.com/compare/${groupComparison.slug}/`;
+  const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' };
 
   const articleJsonLd = groupComparisonContent
     ? [

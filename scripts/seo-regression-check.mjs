@@ -27,41 +27,41 @@ const GOOGLEBOT_UA =
 const TEST_URLS = [
   {
     name: 'Homepage',
-    url: 'https://www.gappsy.com/',
+    url: 'https://gappsy.com/',
     expectNoindex: false,
     expectH1: true,
-    expectCanonical: 'https://www.gappsy.com/',
+    expectCanonical: 'https://gappsy.com/',
   },
   {
     name: 'New Jersey State Page',
-    url: 'https://www.gappsy.com/marketing-agencies-in-new-jersey-united-states/',
+    url: 'https://gappsy.com/marketing-agencies-in-new-jersey-united-states/',
     expectNoindex: false,
     expectH1: true,
     expectCanonical:
-      'https://www.gappsy.com/marketing-agencies-in-new-jersey-united-states/',
+      'https://gappsy.com/marketing-agencies-in-new-jersey-united-states/',
   },
   {
     name: 'California State Page',
-    url: 'https://www.gappsy.com/marketing-agencies-in-california-united-states/',
+    url: 'https://gappsy.com/marketing-agencies-in-california-united-states/',
     expectNoindex: false,
     expectH1: true,
     expectCanonical:
-      'https://www.gappsy.com/marketing-agencies-in-california-united-states/',
+      'https://gappsy.com/marketing-agencies-in-california-united-states/',
   },
   {
     name: 'Texas State Page',
-    url: 'https://www.gappsy.com/marketing-agencies-in-texas-united-states/',
+    url: 'https://gappsy.com/marketing-agencies-in-texas-united-states/',
     expectNoindex: false,
     expectH1: true,
     expectCanonical:
-      'https://www.gappsy.com/marketing-agencies-in-texas-united-states/',
+      'https://gappsy.com/marketing-agencies-in-texas-united-states/',
   },
   {
     name: '/your-agency (funnel)',
-    url: 'https://www.gappsy.com/your-agency',
+    url: 'https://gappsy.com/your-agency',
     expectNoindex: false,
     expectH1: true,
-    expectCanonical: 'https://www.gappsy.com/your-agency',
+    expectCanonical: 'https://gappsy.com/your-agency',
   },
 ];
 

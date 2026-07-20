@@ -76,7 +76,7 @@ export default function EntitySEOTags({
         '@type': 'BreadcrumbList',
         '@id': `${canonical}#breadcrumb`,
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.gappsy.com/' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://gappsy.com/' },
           ...breadcrumbs.map((item, index) => ({
             '@type': 'ListItem',
             position: index + 2,

@@ -28,9 +28,9 @@ export function buildCompareItemListJsonLd(
         position: index + 1,
         item: {
           '@type': 'SoftwareApplication',
-          '@id': `https://www.gappsy.com/tools/${tool.slug}/#software`,
+          '@id': `https://gappsy.com/tools/${tool.slug}/#software`,
           name: tool.name,
-          url: `https://www.gappsy.com/tools/${tool.slug}/`,
+          url: `https://gappsy.com/tools/${tool.slug}/`,
           ...(tool.logo ? { image: tool.logo } : {}),
           ...(tool.pricingModel ? { applicationCategory: 'BusinessApplication' } : {}),
           ...(() => {

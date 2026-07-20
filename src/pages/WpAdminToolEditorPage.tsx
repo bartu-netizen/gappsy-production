@@ -1195,7 +1195,7 @@ export default function WpAdminToolEditorPage() {
                     <textarea value={formData.seo_meta_description} onChange={(e) => setFormData((p) => ({ ...p, seo_meta_description: e.target.value }))} rows={2} className={inputCls} placeholder={formData.short_description || 'Meta description...'} />
                   </Field>
                   <Field label="Canonical URL" hint="Defaults to the auto-generated canonical from the slug when empty">
-                    <input type="text" value={formData.canonical_url} onChange={(e) => setFormData((p) => ({ ...p, canonical_url: e.target.value }))} className={inputCls} placeholder={`https://www.gappsy.com/tools/${formData.slug || '...'}`} />
+                    <input type="text" value={formData.canonical_url} onChange={(e) => setFormData((p) => ({ ...p, canonical_url: e.target.value }))} className={inputCls} placeholder={`https://gappsy.com/tools/${formData.slug || '...'}`} />
                   </Field>
 
                   <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">

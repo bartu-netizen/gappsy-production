@@ -16,7 +16,7 @@ import { loadEnv } from 'vite';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CANONICAL_DOMAIN = 'https://www.gappsy.com';
+const CANONICAL_DOMAIN = 'https://gappsy.com';
 const TODAY = new Date().toISOString().split('T')[0];
 
 const CORE_PAGES = [

@@ -814,7 +814,7 @@ export default function AppbuilderPage() {
                 <br /><br />
                 However if you just want to save that money, we will provide you with documentation on how you can publish the app on your own.
                 <br /><br />
-                More information on publishing here: https://www.gappsy.com/how-to-publish-your-app/
+                More information on publishing here: https://gappsy.com/how-to-publish-your-app/
               </p>
             </details>
 

@@ -62,32 +62,56 @@ function groupBy(rows, keyFn) {
   return map;
 }
 
+// PostgREST caps a single response at 1000 rows by default. A plain
+// .select() with no .range() silently returns only the first page once the
+// result set passes that cap — no error, just quietly missing rows (see
+// fetchAllPublishedTools in prerender-tools.js). Category count itself is
+// small today, but paginate anyway for consistency and to not re-introduce
+// this exact class of bug the next time someone copies this function.
 async function fetchAllPublishedCategories(supabase) {
-  const { data, error } = await supabase
-    .from('tool_categories')
-    .select('id, slug, name, description, seo_title, seo_description, updated_at')
-    .eq('status', 'published')
-    .order('name', { ascending: true });
+  const PAGE_SIZE = 1000;
+  const categories = [];
+  for (let page = 0; ; page++) {
+    const { data, error } = await supabase
+      .from('tool_categories')
+      .select('id, slug, name, description, seo_title, seo_description, updated_at')
+      .eq('status', 'published')
+      .order('name', { ascending: true })
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
-  if (error) throw new Error(`Failed to fetch published categories: ${error.message}`);
-  return data || [];
+    if (error) throw new Error(`Failed to fetch published categories: ${error.message}`);
+    categories.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) break;
+  }
+  return categories;
 }
 
 // One bulk query for every category's tools regardless of category count —
-// same scaling answer as prerender-tools.js's fetchRelatedData.
+// same scaling answer as prerender-tools.js's fetchRelatedData. Paginated:
+// with 3000+ published tools now spread across categories, the total
+// tool_category_links row count (not just the category count) can easily
+// exceed PostgREST's 1000-row cap, so this needs the same .range() loop as
+// the categories fetch above, not just a bigger .in() list.
 async function fetchToolsByCategory(supabase, categoryIds) {
   if (categoryIds.length === 0) return new Map();
 
-  const { data, error } = await supabase
-    .from('tool_category_links')
-    .select('category_id, tools!inner(slug, name, short_description, status)')
-    .in('category_id', categoryIds)
-    .eq('tools.status', 'published');
+  const PAGE_SIZE = 1000;
+  const links = [];
+  for (let page = 0; ; page++) {
+    const { data, error } = await supabase
+      .from('tool_category_links')
+      .select('category_id, tools!inner(slug, name, short_description, status)')
+      .in('category_id', categoryIds)
+      .eq('tools.status', 'published')
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
-  if (error) throw new Error(`Failed to fetch category tools: ${error.message}`);
+    if (error) throw new Error(`Failed to fetch category tools: ${error.message}`);
+    links.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) break;
+  }
 
   const byCategory = new Map();
-  for (const row of data || []) {
+  for (const row of links) {
     if (!row.tools) continue;
     const list = byCategory.get(row.category_id) || [];
     list.push(row.tools);

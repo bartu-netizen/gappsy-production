@@ -279,7 +279,7 @@ function dedupeFaqs(faqs) {
 // UNIFIED SCHEMA GENERATION - Single @graph with ALL schemas
 // This prevents duplication and ensures clean, consolidated structured data
 function generateUnifiedSchema(agencies, faqs, stateName, stateSlug, seoData) {
-  const DOMAIN = 'https://www.gappsy.com';
+  const DOMAIN = 'https://gappsy.com';
   const canonicalUrl = `${DOMAIN}/marketing-agencies-in-${stateSlug}-united-states/`;
   const currentYear = new Date().getFullYear();
 
@@ -878,7 +878,7 @@ ${statesSummary.map(s => `- ${s.stateName} (${s.stateSlug}): ${s.agencies} agenc
 
   console.log(`\n✅ Deploy marker written to dist/__prerendered.txt`);
   console.log(`   Timestamp: ${buildTimestamp}`);
-  console.log(`   Verify at: https://www.gappsy.com/__prerendered.txt`);
+  console.log(`   Verify at: https://gappsy.com/__prerendered.txt`);
 
   if (errorCount > 0 && failOnError) {
     throw new Error(`Prerender failed for ${errorCount} states. Build cannot continue.`);

@@ -51,21 +51,34 @@ async function loadGetComparisonContent() {
   }
 }
 
+// PostgREST caps a single response at 1000 rows by default. A plain
+// .select() with no .range() silently returns only the first page once the
+// table passes that cap — no error, so a growing tool_comparisons table
+// would quietly drop pages from the prerendered build rather than fail
+// loudly (bit us once already with the tools table — see
+// fetchAllPublishedTools in prerender-tools.js for the same fix).
 async function fetchPublishedComparisons(supabase) {
-  const { data, error } = await supabase
-    .from('tool_comparisons')
-    .select(
-      'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status)'
-    )
-    .eq('status', 'published')
-    .order('slug', { ascending: true });
+  const PAGE_SIZE = 1000;
+  const comparisons = [];
+  for (let page = 0; ; page++) {
+    const { data, error } = await supabase
+      .from('tool_comparisons')
+      .select(
+        'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status)'
+      )
+      .eq('status', 'published')
+      .order('slug', { ascending: true })
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
-  if (error) throw new Error(`Failed to fetch published comparisons: ${error.message}`);
+    if (error) throw new Error(`Failed to fetch published comparisons: ${error.message}`);
+    comparisons.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) break;
+  }
   // Defense in depth: RLS already enforces both tools published, but a
   // service-role-free client running this script uses the anon key same as
   // production, so this filter is redundant-but-cheap insurance against a
   // malformed embed (missing tool_a/tool_b) ever reaching the writer below.
-  return (data || []).filter((c) => c.tool_a?.status === 'published' && c.tool_b?.status === 'published');
+  return comparisons.filter((c) => c.tool_a?.status === 'published' && c.tool_b?.status === 'published');
 }
 
 function buildFacts(tool, tagSlugs) {

@@ -7,20 +7,7 @@ import TrustPill from '../components/ui/TrustPill';
 import { RecentFeaturedAgencies } from '../components/RecentFeaturedAgencies';
 import SmartSearchBox from '../components/search/SmartSearchBox';
 import { TopAdRail, BottomAdRail } from '../components/home/MobileAdRails';
-
-// Real, published Gappsy tools with tools.featured = true — same tools the
-// on-page "Featured" ad slots (FeaturedToolPromo.tsx) draw from, so this
-// homepage rail and the rest of the site stay in sync as new tools get
-// featured. Taglines are hand-written short blurbs (not short_description,
-// which runs 150-200 chars — too long for this card's 2-line clamp).
-const RECENTLY_FEATURED_TOOLS = [
-  { slug: 'canva', name: 'Canva', logo: 'https://www.google.com/s2/favicons?domain=www.canva.com&sz=256', tagline: 'Design anything, no experience needed' },
-  { slug: 'figma', name: 'Figma', logo: 'https://www.google.com/s2/favicons?domain=www.figma.com&sz=256', tagline: 'Design and prototype together in real time' },
-  { slug: 'photoshop', name: 'Adobe Photoshop', logo: 'https://www.google.com/s2/favicons?domain=www.adobe.com&sz=256', tagline: 'The industry standard for photo editing' },
-  { slug: 'notion', name: 'Notion', logo: 'https://www.google.com/s2/favicons?domain=www.notion.com&sz=256', tagline: 'One workspace for notes, docs, and projects' },
-  { slug: 'miro', name: 'Miro', logo: 'https://www.google.com/s2/favicons?domain=miro.com&sz=256', tagline: 'Visual whiteboard for team collaboration' },
-  { slug: 'webflow', name: 'Webflow', logo: 'https://www.google.com/s2/favicons?domain=webflow.com&sz=256', tagline: 'Design and launch sites without writing code' },
-];
+import { RECENTLY_FEATURED_TOOLS } from '../data/recentlyFeaturedTools';
 
 export default function HomePage() {
   useEffect(() => {
@@ -39,31 +26,52 @@ export default function HomePage() {
     };
   }, []);
 
-  // WebSite + SearchAction structured data — lets Google offer a sitelinks
-  // search box straight in results. Points at /tools?q={search_term_string}
-  // (a real, working GET search-results page — see ToolsIndexPage.tsx)
-  // rather than the homepage's own chat-style smart search, since
-  // SearchAction requires a plain URL-template target, not a POST endpoint.
-  // Isolated from the title/meta-description effect above on purpose — this
-  // only ever touches its own <script data-homepage-jsonld> tag, so it can
-  // never clobber or race with existing SEO-critical meta tags.
+  // WebSite + SearchAction + Organization structured data — lets Google
+  // offer a sitelinks search box straight in results and establishes the
+  // Gappsy entity for knowledge-graph/LLM citation purposes. Points at
+  // /tools?q={search_term_string} (a real, working GET search-results page
+  // — see ToolsIndexPage.tsx) rather than the homepage's own chat-style
+  // smart search, since SearchAction requires a plain URL-template target,
+  // not a POST endpoint. Isolated from the title/meta-description effect
+  // above on purpose — this only ever touches script[data-homepage-jsonld]
+  // tags, so it can never clobber or race with existing SEO-critical meta
+  // tags. Removes any existing [data-homepage-jsonld] script first (mirrors
+  // EntitySEOTags.tsx's cleanup pattern) so the version scripts/prerender-
+  // homepage.js bakes into the static HTML doesn't end up duplicated
+  // alongside this one once React mounts.
   useEffect(() => {
+    const existing = document.querySelectorAll('script[data-homepage-jsonld]');
+    existing.forEach((el) => el.remove());
+
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.setAttribute('data-homepage-jsonld', 'true');
     script.textContent = JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      url: 'https://www.gappsy.com/',
-      name: 'Gappsy',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: 'https://www.gappsy.com/tools?q={search_term_string}',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': 'https://gappsy.com/#website',
+          url: 'https://gappsy.com/',
+          name: 'Gappsy',
+          publisher: { '@id': 'https://gappsy.com/#organization' },
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: {
+              '@type': 'EntryPoint',
+              urlTemplate: 'https://gappsy.com/tools?q={search_term_string}',
+            },
+            'query-input': 'required name=search_term_string',
+          },
         },
-        'query-input': 'required name=search_term_string',
-      },
+        {
+          '@type': 'Organization',
+          '@id': 'https://gappsy.com/#organization',
+          name: 'Gappsy',
+          url: 'https://gappsy.com/',
+          logo: 'https://gappsy.com/logos/gappsy_-_white_-_logo_-_small.png',
+        },
+      ],
     });
     document.head.appendChild(script);
 

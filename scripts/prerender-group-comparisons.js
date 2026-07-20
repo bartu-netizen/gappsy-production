@@ -52,16 +52,28 @@ async function loadGetGroupComparisonContent() {
   }
 }
 
+// PostgREST caps a single response at 1000 rows by default. A plain
+// .select() with no .range() silently returns only the first page once the
+// table passes that cap — no error, so a growing tool_group_comparisons
+// table would quietly drop pages from the prerendered build rather than
+// fail loudly (see fetchAllPublishedTools in prerender-tools.js).
 async function fetchPublishedGroupComparisons(supabase) {
-  const { data, error } = await supabase
-    .from('tool_group_comparisons')
-    .select(
-      'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, tools(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status))'
-    )
-    .eq('status', 'published')
-    .order('slug', { ascending: true });
+  const PAGE_SIZE = 1000;
+  const data = [];
+  for (let page = 0; ; page++) {
+    const { data: pageData, error } = await supabase
+      .from('tool_group_comparisons')
+      .select(
+        'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, tools(id,slug,name,logo,pricing_model,starting_price,rating,review_count,status))'
+      )
+      .eq('status', 'published')
+      .order('slug', { ascending: true })
+      .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
 
-  if (error) throw new Error(`Failed to fetch published group comparisons: ${error.message}`);
+    if (error) throw new Error(`Failed to fetch published group comparisons: ${error.message}`);
+    data.push(...(pageData || []));
+    if (!pageData || pageData.length < PAGE_SIZE) break;
+  }
   // Defense in depth: RLS already enforces every member tool published, but
   // a service-role-free client running this script uses the anon key same
   // as production, so this filter is redundant-but-cheap insurance against a

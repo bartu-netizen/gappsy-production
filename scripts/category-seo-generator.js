@@ -5,7 +5,7 @@
 import { escapeHtml } from './seo-generator.js';
 import { generateSEOTagsHTML, generateJSONLDScriptHTML, injectToolSEOTags as injectSEOTags } from './tool-seo-generator.js';
 
-const DOMAIN = 'https://www.gappsy.com';
+const DOMAIN = 'https://gappsy.com';
 const META_DESCRIPTION_MAX = 160;
 
 function truncate(text, max) {

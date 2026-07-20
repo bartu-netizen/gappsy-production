@@ -62,7 +62,7 @@ export default function ToolCategoriesIndexPage() {
       ? [
           {
             '@type': 'ItemList',
-            '@id': 'https://www.gappsy.com/tool-categories/#itemlist',
+            '@id': 'https://gappsy.com/tool-categories/#itemlist',
             itemListElement: categories.map((c, i) => ({
               '@type': 'ListItem',
               position: i + 1,

@@ -3,7 +3,7 @@
 // build client-side, so the prerendered and hydrated versions agree.
 import { escapeHtml } from './seo-generator.js';
 
-const DOMAIN = 'https://www.gappsy.com';
+const DOMAIN = 'https://gappsy.com';
 const META_DESCRIPTION_MAX = 160;
 
 export function isSafeHttpUrl(value) {

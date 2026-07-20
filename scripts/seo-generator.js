@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-const DOMAIN = 'https://www.gappsy.com';
+const DOMAIN = 'https://gappsy.com';
 const CURRENT_YEAR = new Date().getFullYear();
 
 function truncateDescription(text, maxLength = 155) {

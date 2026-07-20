@@ -232,7 +232,7 @@ export default function ToolCategoryDetailPage() {
       ? [
           {
             '@type': 'ItemList',
-            '@id': `https://www.gappsy.com/tool-categories/${category.slug}/#itemlist`,
+            '@id': `https://gappsy.com/tool-categories/${category.slug}/#itemlist`,
             itemListElement: tools.map((t, i) => ({
               '@type': 'ListItem',
               position: i + 1,
@@ -248,7 +248,7 @@ export default function ToolCategoryDetailPage() {
       ? [
           {
             '@type': 'FAQPage',
-            '@id': `https://www.gappsy.com/tool-categories/${category.slug}/#faq`,
+            '@id': `https://gappsy.com/tool-categories/${category.slug}/#faq`,
             mainEntity: extendedContent.faqs.map((faq) => ({
               '@type': 'Question',
               name: faq.question,
@@ -267,7 +267,7 @@ export default function ToolCategoryDetailPage() {
         breadcrumbs={[{ name: 'Tool Categories', path: '/tool-categories' }, { name: category.name, path: `/tool-categories/${category.slug}` }]}
         noindex={isFiltered}
         jsonLd={[
-          { '@type': 'CollectionPage', '@id': `https://www.gappsy.com/tool-categories/${category.slug}/#collection`, name: `${category.name} Tools` },
+          { '@type': 'CollectionPage', '@id': `https://gappsy.com/tool-categories/${category.slug}/#collection`, name: `${category.name} Tools` },
           ...itemListJsonLd,
           ...faqJsonLd,
         ]}

@@ -262,7 +262,7 @@ export default function GappsyProofPage() {
               <div>
                 <div className="bg-gray-900 text-white rounded-2xl p-6 font-mono text-sm">
                   <div className="text-green-400">curl --request POST \</div>
-                  <div className="text-green-400">--url 'https://www.gappsy.com/proof/api/campaigns' \</div>
+                  <div className="text-green-400">--url 'https://gappsy.com/proof/api/campaigns' \</div>
                   <div className="text-green-400">--header 'Authorization: Bearer <span className="text-[#E8ECFA]">{'{'}api_key{'}'}</span>' \</div>
                   <div className="text-green-400">--header 'Content-Type: multipart/form-data' \</div>
                   <div className="text-green-400">--form 'name=<span className="text-[#E8ECFA]">Example</span>' \</div>

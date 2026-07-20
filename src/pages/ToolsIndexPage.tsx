@@ -101,7 +101,7 @@ export default function ToolsIndexPage() {
         description="Browse a curated directory of software tools, filterable by category and use case."
         path="/tools"
         breadcrumbs={[{ name: 'Tools', path: '/tools' }]}
-        jsonLd={[{ '@type': 'CollectionPage', '@id': 'https://www.gappsy.com/tools/#collection', name: 'Tools Directory' }]}
+        jsonLd={[{ '@type': 'CollectionPage', '@id': 'https://gappsy.com/tools/#collection', name: 'Tools Directory' }]}
       />
 
       <SoftwareHeader variant="premium" />

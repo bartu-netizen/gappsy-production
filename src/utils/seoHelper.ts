@@ -6,7 +6,7 @@
  * prerenderer captures correct metadata.
  */
 
-const DOMAIN = 'https://www.gappsy.com';
+const DOMAIN = 'https://gappsy.com';
 
 interface StateSEO {
   title: string;

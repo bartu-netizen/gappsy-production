@@ -127,7 +127,7 @@ export default function ToolTagDetailPage() {
         description={tag.description || `Browse tools tagged "${tag.name}".`}
         path={`/tool-tags/${tag.slug}`}
         breadcrumbs={[{ name: 'Tools', path: '/tools' }, { name: tag.name, path: `/tool-tags/${tag.slug}` }]}
-        jsonLd={[{ '@type': 'CollectionPage', '@id': `https://www.gappsy.com/tool-tags/${tag.slug}/#collection`, name: `${tag.name} Tools` }]}
+        jsonLd={[{ '@type': 'CollectionPage', '@id': `https://gappsy.com/tool-tags/${tag.slug}/#collection`, name: `${tag.name} Tools` }]}
       />
 
       <SoftwareHeader variant="premium" />

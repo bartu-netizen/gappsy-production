@@ -238,8 +238,8 @@ export default function CompareDetailPage() {
     ? truncateDescription(comparisonContent.verdict)
     : `Compare ${aRow.name} and ${bRow.name} on pricing, features, platforms, and ratings.`;
 
-  const canonicalUrl = `https://www.gappsy.com/compare/${comparison.slug}/`;
-  const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://www.gappsy.com' };
+  const canonicalUrl = `https://gappsy.com/compare/${comparison.slug}/`;
+  const gappsyOrg = { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' };
 
   const articleJsonLd = comparisonContent
     ? [
@@ -264,7 +264,7 @@ export default function CompareDetailPage() {
       ? [
           {
             '@type': 'FAQPage',
-            '@id': `https://www.gappsy.com/compare/${comparison.slug}/#faq`,
+            '@id': `https://gappsy.com/compare/${comparison.slug}/#faq`,
             mainEntity: comparisonContent.faqs.map((faq) => ({
               '@type': 'Question',
               name: faq.question,

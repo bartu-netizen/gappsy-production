@@ -3,7 +3,7 @@ import { Search, Eye, ExternalLink, Image, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 
-const DOMAIN = 'https://www.gappsy.com';
+const DOMAIN = 'https://gappsy.com';
 const CURRENT_YEAR = new Date().getFullYear();
 
 interface StateOption {
