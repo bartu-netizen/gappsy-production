@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Loader2, Mail, Lock, ArrowRight, LayoutDashboard, Rocket } from 'lucide-react';
+import { Loader2, Mail, Lock, ArrowRight, LayoutDashboard, Rocket, Grid2x2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../hooks/useAuth';
 import EntitySEOTags from '../components/EntitySEOTags';
@@ -137,6 +137,20 @@ export default function VendorLoginPage() {
               </Link>
             </div>
           )}
+
+          <Link
+            to="/login/apps"
+            className="mt-4 flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-4 hover:bg-white/10 transition-colors"
+          >
+            <div className="w-9 h-9 shrink-0 rounded-xl bg-white/10 flex items-center justify-center">
+              <Grid2x2 className="w-4 h-4 text-white/70" aria-hidden="true" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-white">Looking to log into a Gappsy product?</p>
+              <p className="text-[12px] text-white/50">Appbuilder, Proof, or Analytics — click here</p>
+            </div>
+            <ArrowRight className="w-4 h-4 text-white/40 shrink-0" aria-hidden="true" />
+          </Link>
 
           <p className="text-center mt-6">
             <Link to="/" className="text-[13px] text-white/50 hover:text-white/80 transition-colors">← Back to Gappsy</Link>

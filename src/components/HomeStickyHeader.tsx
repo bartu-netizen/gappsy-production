@@ -66,7 +66,7 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
 
               <div className="flex items-center gap-2 shrink-0">
                 <Link
-                  to="/login/apps"
+                  to="/login"
                   className="px-3.5 py-1.5 rounded-xl text-sm font-medium text-white border border-white/30 hover:bg-white/10 transition-colors"
                 >
                   Sign In
@@ -122,7 +122,7 @@ export default function HomeStickyHeader({ searchAnchorId = 'find-agency-search'
                   </div>
                   <div className="pt-2 mt-2 border-t border-white/10">
                     <Link
-                      to="/login/apps"
+                      to="/login"
                       onClick={closeMenu}
                       className="w-full inline-flex items-center justify-center text-center px-4 py-2.5 rounded-xl text-sm font-medium text-white border border-white/20 hover:bg-white/10 transition-colors"
                     >
