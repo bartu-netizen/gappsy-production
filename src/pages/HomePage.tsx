@@ -39,6 +39,39 @@ export default function HomePage() {
     };
   }, []);
 
+  // WebSite + SearchAction structured data — lets Google offer a sitelinks
+  // search box straight in results. Points at /tools?q={search_term_string}
+  // (a real, working GET search-results page — see ToolsIndexPage.tsx)
+  // rather than the homepage's own chat-style smart search, since
+  // SearchAction requires a plain URL-template target, not a POST endpoint.
+  // Isolated from the title/meta-description effect above on purpose — this
+  // only ever touches its own <script data-homepage-jsonld> tag, so it can
+  // never clobber or race with existing SEO-critical meta tags.
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-homepage-jsonld', 'true');
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      url: 'https://www.gappsy.com/',
+      name: 'Gappsy',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://www.gappsy.com/tools?q={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   const centerContent = (
     <>
       <HomeStickyHeader searchAnchorId="find-agency-search" />
