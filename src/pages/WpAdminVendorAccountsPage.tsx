@@ -153,7 +153,7 @@ export default function WpAdminVendorAccountsPage() {
               <div>
                 <p className="text-sm text-slate-500 mb-3">
                   Share these with yourself to test — sign in at{' '}
-                  <a href="https://gappsy.netlify.app/login" target="_blank" rel="noopener noreferrer" className="text-indigo-600 font-medium hover:underline">
+                  <a href="/login" target="_blank" rel="noopener noreferrer" className="text-indigo-600 font-medium hover:underline">
                     /login
                   </a>.
                 </p>
@@ -255,7 +255,7 @@ export default function WpAdminVendorAccountsPage() {
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
                   <a
-                    href={`https://gappsy.netlify.app/tools/${account.tool_slug}`}
+                    href={`/tools/${account.tool_slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View listing"

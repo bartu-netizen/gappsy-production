@@ -170,7 +170,7 @@ export default function WpAdminToolAnalyticsPage() {
                   )}
                   <div>
                     <h2 className="font-bold text-[#0B1221]">{detail.tool.name}</h2>
-                    <a href={`https://gappsy.netlify.app/tools/${detail.tool.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700">
+                    <a href={`/tools/${detail.tool.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700">
                       View live listing <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
