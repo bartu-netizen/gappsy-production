@@ -39,13 +39,13 @@ export default function GetListedPage() {
         aria-hidden="true"
       />
 
-      <header className="flex items-center justify-center pt-10 pb-2 relative">
+      <header className="flex items-center justify-center pt-6 lg:pt-8 pb-2 relative">
         <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
-          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-8 w-auto" />
+          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-9 lg:h-10 w-auto" />
         </Link>
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-4 py-10 relative">
+      <main className="flex-1 flex items-start justify-center px-4 pt-4 lg:pt-6 pb-10 relative">
         <div className="w-full max-w-md">
           {step === 'choose' ? (
             <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)]">
