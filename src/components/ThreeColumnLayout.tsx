@@ -1,17 +1,6 @@
 import { ReactNode, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
-interface SidebarAd {
-  id: string;
-  position: string;
-  display_order: number;
-  logo_url: string;
-  title: string;
-  subtitle: string;
-  target_url: string;
-  bg_color: string;
-  is_active: boolean;
-}
+import { fetchSidebarAds, type SidebarAd } from '../lib/sidebarAdsCache';
 
 const defaultBgColors = [
   '#E0F2FE',
@@ -88,19 +77,9 @@ export default function ThreeColumnLayout({ children, className }: ThreeColumnLa
   }, [showAdRails]);
 
   const loadAds = async () => {
-    try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sidebar-ads-fetch`;
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (data.ads) {
-        setAds(data.ads);
-      }
-    } catch (err) {
-      console.error('Failed to load sidebar ads:', err);
-    } finally {
-      setLoading(false);
-    }
+    const data = await fetchSidebarAds();
+    setAds(data);
+    setLoading(false);
   };
 
   const leftAds = ads.filter(ad => ad.position === 'left').slice(0, 5);

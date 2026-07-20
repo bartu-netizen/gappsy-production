@@ -74,17 +74,20 @@ export default function CompareDetailPage() {
 
   // Same featured-ad mechanism as ToolDetailPage: a pool of up to 6,
   // excluding BOTH tools being compared (neither is "this page's own tool"
-  // here), distributed across 1 prominent sidebar slot + 2 quieter ones and
-  // up to 2 inline mid-article cards. Thin inventory just means later slots
-  // come back empty and render nothing — see FeaturedToolPromo.tsx.
+  // here), distributed across 2 sidebar slots and 3 inline cards spread
+  // through the page. Only 2 in the sidebar (not 3) — a 3rd stacked
+  // straight underneath the first two with nothing but whitespace between
+  // them read as a wall of ads, so that slot moved to an inline card near
+  // Related Comparisons instead. Thin inventory just means later slots come
+  // back empty and render nothing — see FeaturedToolPromo.tsx.
   const featuredExcludeSlugs = comparison ? [comparison.tool_a.slug, comparison.tool_b.slug] : [];
   const featuredPool = useFeaturedToolPool(featuredExcludeSlugs, 6);
   const featuredPromo = featuredPool?.[0];
   const featuredPromoSecondary = featuredPool?.[1];
-  const featuredPromoTertiary = featuredPool?.[2];
-  const inlineFeaturedPromoA = featuredPool?.[3];
-  const inlineFeaturedPromoB = featuredPool?.[4];
-  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary || featuredPromoTertiary);
+  const inlineFeaturedPromoA = featuredPool?.[2];
+  const inlineFeaturedPromoB = featuredPool?.[3];
+  const inlineFeaturedPromoC = featuredPool?.[4];
+  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
 
   useEffect(() => {
     if (!comparisonSlug) return;
@@ -367,7 +370,6 @@ export default function CompareDetailPage() {
                 <div className="space-y-4 lg:sticky lg:top-24">
                   {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
                   {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
-                  {featuredPromoTertiary && <FeaturedToolSidebarCompact tool={featuredPromoTertiary} />}
                 </div>
               )}
             </div>
@@ -445,6 +447,8 @@ export default function CompareDetailPage() {
                 )}
               </div>
             </section>
+
+            {inlineFeaturedPromoC && <FeaturedToolInlineCard tool={inlineFeaturedPromoC} />}
 
             {sameToolComparisons.length > 0 && (
               <section id="related-comparisons">

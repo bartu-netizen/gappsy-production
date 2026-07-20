@@ -336,9 +336,16 @@ export default function GroupCompareDetailPage() {
               )}
             </div>
 
-            {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
-
+            {/* inlineFeaturedPromoA deliberately renders AFTER the feature
+                matrix, not before it. On mobile/tablet the grid above
+                collapses to flex-col, so DOM order becomes visual stacking
+                order — putting an inline ad right after the sidebar promos
+                (also ads) would stack 3 ad cards back-to-back with nothing
+                but whitespace between them. Real content in between fixes
+                that on every breakpoint, not just desktop. */}
             {groupComparisonContent && <GroupCompareFeatureMatrix toolNames={toolNames} groups={groupComparisonContent.featureMatrix} />}
+
+            {inlineFeaturedPromoA && <FeaturedToolInlineCard tool={inlineFeaturedPromoA} />}
 
             {hasPricing && <GroupComparePricing tools={facts} plansByTool={plansByTool} />}
 
