@@ -7,7 +7,6 @@ import ScrollReveal from '../components/featureMyProduct/ScrollReveal';
 import PlacementMockup from '../components/featureMyProduct/PlacementMockups';
 import TrustSection from '../components/featureMyProduct/TrustSection';
 import WhyFeatureSection from '../components/featureMyProduct/WhyFeatureSection';
-import PlacementsSection from '../components/featureMyProduct/PlacementsSection';
 import BenefitsSection from '../components/featureMyProduct/BenefitsSection';
 import HowItWorksSection from '../components/featureMyProduct/HowItWorksSection';
 import FmpPricingSection from '../components/featureMyProduct/FmpPricingSection';
@@ -33,40 +32,20 @@ const JSON_LD = [
   {
     '@type': 'Service',
     '@id': `${CANONICAL_BASE}/#service`,
-    name: 'Gappsy Featured Listing',
-    serviceType: 'Software directory listing claim and featured placement',
-    description: 'Claim and verify your software listing on the Gappsy directory for a one-time fee, then optionally upgrade to Growth for priority placement across category pages, comparison pages, alternative pages, search, and the homepage.',
+    name: 'Gappsy Claim & Verify',
+    serviceType: 'Software directory listing claim and ownership verification',
+    description: 'Claim your existing listing, or add your product if it isn\'t listed yet, then verify ownership for a one-time fee — get a verified badge, self-serve editing, and the ability to reply to reviews.',
     provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' },
     areaServed: 'Worldwide',
     audience: { '@type': 'Audience', audienceType: 'SaaS founders and software marketing teams' },
-    offers: [
-      {
-        '@type': 'Offer',
-        name: 'Claim & Verify',
-        price: '29',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: `${CANONICAL_BASE}/`,
-      },
-      {
-        '@type': 'Offer',
-        name: 'Growth (Monthly)',
-        price: '89',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: `${CANONICAL_BASE}/`,
-        priceSpecification: { '@type': 'UnitPriceSpecification', price: '89', priceCurrency: 'USD', unitText: 'MONTH' },
-      },
-      {
-        '@type': 'Offer',
-        name: 'Growth (Yearly)',
-        price: '890',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: `${CANONICAL_BASE}/`,
-        priceSpecification: { '@type': 'UnitPriceSpecification', price: '890', priceCurrency: 'USD', unitText: 'YEAR' },
-      },
-    ],
+    offers: {
+      '@type': 'Offer',
+      name: 'Claim & Verify',
+      price: '29',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: `${CANONICAL_BASE}/`,
+    },
   },
 ];
 
@@ -74,8 +53,8 @@ export default function FeatureMyProductPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <EntitySEOTags
-        title="Feature My Product — Claim Your Software Listing | Gappsy"
-        description="Claim your software listing on Gappsy's software directory for a one-time $29 fee, then optionally upgrade to Growth for featured placement in front of buyers actively comparing tools. Cancel anytime."
+        title="Feature My Product — Claim or List Your Product | Gappsy"
+        description="Claim your existing listing on Gappsy's software directory, or add your product if it isn't listed yet — one-time $29 fee. Get a verified badge, self-serve editing, and the ability to reply to reviews."
         path="/feature-my-product"
         breadcrumbs={[{ name: 'Feature My Product', path: '/feature-my-product' }]}
         jsonLd={JSON_LD}
@@ -93,33 +72,32 @@ export default function FeatureMyProductPage() {
             <ScrollReveal>
               <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F47E6] bg-[#EEF0FE] rounded-full px-3 py-1.5">
                 <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                Featured Listings
+                Claim & Verify
               </span>
               <h1 className="mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-[#0B1221] leading-[1.1]">
-                Claim your listing, then feature it where buyers are already comparing products.
+                Claim your listing — or add it if it's not there yet.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
-                Start with a one-time $29 claim to verify ownership and unlock self-serve editing. When
-                you're ready, upgrade to Growth for priority placement across category pages, comparison
-                pages, search, and more — Yearly adds a produced video review, a newsletter feature, and
-                an ad-free listing.
+                Enter your product's website and we'll tell you which applies. Either way, a one-time $29
+                fee gets you a verified badge, self-serve editing, and the ability to reply to reviews.
+                No recurring charge.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/feature-my-product/onboarding"
                   className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
-                  Claim your listing — $29
+                  Claim or list your product — $29
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <a
-                  href="#placements"
+                  href="#how-it-works"
                   className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl text-[15px] font-semibold text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
                 >
-                  See placements
+                  See how it works
                 </a>
               </div>
-              <p className="mt-4 text-sm text-slate-400">One-time claim fee. Growth is optional, cancel anytime.</p>
+              <p className="mt-4 text-sm text-slate-400">One-time fee. No recurring charge.</p>
             </ScrollReveal>
 
             <ScrollReveal delayMs={120}>
@@ -132,10 +110,10 @@ export default function FeatureMyProductPage() {
                   <PlacementMockup type="toolPage" />
                 </div>
                 <div className="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-2 rounded-2xl bg-white border border-[#eef0f3] shadow-[0_12px_28px_rgba(15,23,42,0.10)] px-4 py-3">
-                  <span className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-bold shrink-0">↑</span>
+                  <span className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-bold shrink-0">✓</span>
                   <div>
-                    <div className="text-[13px] font-semibold text-[#0B1221] leading-none">Priority ranking</div>
-                    <div className="text-[11px] text-slate-400 mt-1">in your category</div>
+                    <div className="text-[13px] font-semibold text-[#0B1221] leading-none">Verified badge</div>
+                    <div className="text-[11px] text-slate-400 mt-1">ownership confirmed</div>
                   </div>
                 </div>
               </div>
@@ -145,7 +123,6 @@ export default function FeatureMyProductPage() {
 
         <TrustSection />
         <WhyFeatureSection />
-        <PlacementsSection />
         <BenefitsSection />
         <HowItWorksSection />
         <FmpPricingSection />
@@ -162,17 +139,17 @@ export default function FeatureMyProductPage() {
                 />
                 <div className="relative">
                   <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-                    Put your software in front of buyers comparing tools right now.
+                    Make sure your listing says what you want it to say.
                   </h2>
                   <p className="mt-4 text-lg text-slate-300 max-w-xl mx-auto">
-                    Claim your listing for a one-time $29 fee, then upgrade to Growth whenever you're ready. No contracts.
+                    Claim it, or add it if it's not listed yet — one-time $29 fee, no recurring charge.
                   </p>
                   <div className="mt-8">
                     <Link
                       to="/feature-my-product/onboarding"
                       className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-xl text-[15px] font-semibold text-[#0B1221] bg-white hover:bg-slate-100 transition-colors active:scale-[0.99]"
                     >
-                      Claim your listing — $29
+                      Claim or list your product — $29
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                   </div>
@@ -189,7 +166,7 @@ export default function FeatureMyProductPage() {
           to="/feature-my-product/onboarding"
           className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] active:scale-[0.99] transition-transform"
         >
-          Claim your listing — $29
+          Claim or list your product — $29
         </Link>
       </div>
 

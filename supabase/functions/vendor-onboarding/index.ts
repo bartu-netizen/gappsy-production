@@ -38,6 +38,12 @@ const GROWTH_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
 };
 const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "pending_verification"];
 const RATE_LIMIT_PER_HOUR = 20;
+// A visitor who opens Stripe Checkout and never completes it leaves a
+// "pending_payment" row behind. Without a cutoff, that row blocks this
+// tool/product combination forever — nobody, including the real owner,
+// could ever claim or subscribe to it again. Anything older than this
+// window is treated as abandoned.
+const PENDING_PAYMENT_STALE_MINUTES = 30;
 
 async function getOrCreateClaimPriceId(stripe: Stripe): Promise<string> {
   const existing = await stripe.prices.list({ lookup_keys: [CLAIM_PRICE_LOOKUP_KEY], limit: 1 });
@@ -117,6 +123,33 @@ async function fetchToolSummary(toolId: string) {
     .limit(1)
     .maybeSingle();
   return { ...tool, category: (catLink as any)?.tool_categories?.name || null };
+}
+
+// Flips stale "pending_payment" rows to "canceled" so they stop counting as
+// active — both for the application-level already_featured/already_claimed
+// checks below and for the DB's partial unique index (which would otherwise
+// reject a legitimate retry with a duplicate-key error). Run this before
+// every read/write that cares whether a subscription is "active".
+async function reapStalePendingPayments(toolId: string | null, discoveredToolId: string | null, product: "claim" | "growth") {
+  const staleCutoff = new Date(Date.now() - PENDING_PAYMENT_STALE_MINUTES * 60 * 1000).toISOString();
+  if (toolId) {
+    await supabase
+      .from("vendor_feature_subscriptions")
+      .update({ status: "canceled", canceled_at: new Date().toISOString() })
+      .eq("tool_id", toolId)
+      .eq("product", product)
+      .eq("status", "pending_payment")
+      .lt("created_at", staleCutoff);
+  }
+  if (discoveredToolId) {
+    await supabase
+      .from("vendor_feature_subscriptions")
+      .update({ status: "canceled", canceled_at: new Date().toISOString() })
+      .eq("discovered_tool_id", discoveredToolId)
+      .eq("product", product)
+      .eq("status", "pending_payment")
+      .lt("created_at", staleCutoff);
+  }
 }
 
 async function findActiveSubscription(toolId: string | null, discoveredToolId: string | null, product: "claim" | "growth") {
@@ -208,6 +241,8 @@ Deno.serve(async (req: Request) => {
 
         if (duplicateMatch.againstTable === "tools") {
           const tool = await fetchToolSummary(duplicateMatch.id!);
+          await reapStalePendingPayments(duplicateMatch.id, null, "growth");
+          await reapStalePendingPayments(duplicateMatch.id, null, "claim");
           const activeSub = await findActiveSubscription(duplicateMatch.id, null, "growth");
           const alreadyClaimed = await hasActiveClaim(duplicateMatch.id, null);
 
@@ -250,6 +285,8 @@ Deno.serve(async (req: Request) => {
             .select("id, name, official_website, short_description, logo_url, status")
             .eq("id", duplicateMatch.id)
             .maybeSingle();
+          await reapStalePendingPayments(null, duplicateMatch.id, "growth");
+          await reapStalePendingPayments(null, duplicateMatch.id, "claim");
           const activeSub = await findActiveSubscription(null, duplicateMatch.id, "growth");
           const alreadyClaimed = await hasActiveClaim(null, duplicateMatch.id);
 
@@ -390,6 +427,8 @@ Deno.serve(async (req: Request) => {
         if (!session || !session.contact_email) return jsonResponse({ ok: false, error: "Session not ready for checkout" }, 400);
 
         await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed", metadata: { product, billing_interval: billingInterval } });
+
+        await reapStalePendingPayments(session.matched_tool_id, session.matched_discovered_tool_id, product);
 
         // Growth is only purchasable once the one-time claim fee has cleared.
         if (product === "growth") {

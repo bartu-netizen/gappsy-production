@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Top25Header from './components/Top25Header';
 import Footer from './components/Footer';
+import SmartSearchBox from './components/search/SmartSearchBox';
 import { getStatesByRegion, type StateRegion } from './lib/stateDatabase';
+
+const AGENCY_STATE_EXAMPLE_QUERIES = [
+  'Marketing agency in New Jersey',
+  'Marketing agency in California',
+  'Marketing agency in Texas',
+];
 
 function USAHub() {
   const [isIntroExpanded, setIsIntroExpanded] = useState(false);
@@ -82,6 +89,16 @@ function USAHub() {
                   </button>
                 </div>
               )}
+
+              <div className="mt-6">
+                <SmartSearchBox
+                  mode="general"
+                  title="Which state are you looking for?"
+                  subtitle="Tell us a state — we'll point you to the right agency rankings"
+                  placeholder="A state, or 'agency in New Jersey'…"
+                  exampleQueries={AGENCY_STATE_EXAMPLE_QUERIES}
+                />
+              </div>
             </div>
           </div>
         </div>

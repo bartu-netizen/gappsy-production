@@ -58,7 +58,7 @@ export default function FeatureMyProductVerifyPage() {
       <OnboardingShell step={0}>
         <div className="flex-1 w-full max-w-md mx-auto px-5 sm:px-6 py-8">
           {loadState === 'loading' && (
-            <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 text-[#7C3AED] animate-spin" /></div>
+            <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
           )}
 
           {loadState === 'not_found' && (
@@ -84,7 +84,7 @@ export default function FeatureMyProductVerifyPage() {
               </p>
               <Link
                 to={`/vendor/claim?token=${encodeURIComponent(token || '')}`}
-                className="mt-6 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] transition-opacity hover:opacity-95"
+                className="mt-6 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] transition-opacity hover:opacity-95"
               >
                 Create your account to manage this listing
                 <ArrowRight className="w-4 h-4" />
@@ -105,7 +105,7 @@ export default function FeatureMyProductVerifyPage() {
                     key={m}
                     type="button"
                     onClick={() => { setMethod(m); setCheckResult('idle'); }}
-                    className={`flex-1 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${method === m ? 'bg-[#4F46E5] text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                    className={`flex-1 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${method === m ? 'bg-[#4F47E6] text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
                   >
                     {m === 'html_meta_tag' ? 'Meta tag' : m === 'dns_txt' ? 'DNS TXT' : 'HTML file'}
                   </button>
@@ -117,7 +117,7 @@ export default function FeatureMyProductVerifyPage() {
                   <>
                     <p className="text-xs text-slate-500 mb-2">Add this to your homepage's <code>&lt;head&gt;</code>:</p>
                     <code className="block text-[12px] text-slate-700 break-all bg-white rounded-lg border border-slate-200 px-3 py-2">{data.meta_tag_snippet}</code>
-                    <button type="button" onClick={() => copy(data.meta_tag_snippet!, 'meta')} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#4F46E5]"><Copy className="w-3 h-3" />{copied === 'meta' ? 'Copied' : 'Copy'}</button>
+                    <button type="button" onClick={() => copy(data.meta_tag_snippet!, 'meta')} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#4F47E6]"><Copy className="w-3 h-3" />{copied === 'meta' ? 'Copied' : 'Copy'}</button>
                   </>
                 )}
                 {method === 'dns_txt' && data.dns_txt_record && (
@@ -127,7 +127,7 @@ export default function FeatureMyProductVerifyPage() {
                       <div className="bg-white rounded-lg border border-slate-200 px-3 py-2"><span className="text-slate-400">Host: </span><span className="text-slate-700 break-all">{data.dns_txt_record.host}</span></div>
                       <div className="bg-white rounded-lg border border-slate-200 px-3 py-2"><span className="text-slate-400">Value: </span><span className="text-slate-700 break-all">{data.dns_txt_record.value}</span></div>
                     </div>
-                    <button type="button" onClick={() => copy(data.dns_txt_record!.value, 'dns')} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#4F46E5]"><Copy className="w-3 h-3" />{copied === 'dns' ? 'Copied' : 'Copy value'}</button>
+                    <button type="button" onClick={() => copy(data.dns_txt_record!.value, 'dns')} className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#4F47E6]"><Copy className="w-3 h-3" />{copied === 'dns' ? 'Copied' : 'Copy value'}</button>
                   </>
                 )}
                 {method === 'html_file' && data.html_file && (
@@ -148,7 +148,7 @@ export default function FeatureMyProductVerifyPage() {
                 type="button"
                 onClick={handleCheck}
                 disabled={checking}
-                className="mt-5 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] disabled:opacity-50 transition-opacity"
+                className="mt-5 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] disabled:opacity-50 transition-opacity"
               >
                 {checking && <Loader2 className="w-4 h-4 animate-spin" />}
                 I've added it — check now

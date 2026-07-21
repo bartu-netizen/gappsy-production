@@ -11,7 +11,7 @@ import ToolCardRow from '../components/tools/detail/ToolCardRow';
 import TrendingToolsSection from '../components/tools/TrendingToolsSection';
 import SmartSearchBox from '../components/search/SmartSearchBox';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
-import { useFeaturedToolPool, FeaturedToolInlineCard } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact } from '../components/tools/detail/FeaturedToolPromo';
 import { buildCanonicalUrl } from '../utils/canonicalUrl';
 import { supabase } from '../lib/supabase';
 import type { ToolCardData } from '../components/ToolCard';
@@ -30,10 +30,10 @@ export default function ToolCategoriesIndexPage() {
   const [recentlyUpdated, setRecentlyUpdated] = useState<ToolCardData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Same featured-ad mechanism as tool/compare pages — this index page had
-  // zero ad placements before, unlike every other detail-page type.
+  // Same featured-ad mechanism as tool/compare pages, shown beside the
+  // search box — this index page had zero ad placements before, unlike
+  // every other detail-page type.
   const featuredPool = useFeaturedToolPool([], 2);
-  const inlineFeaturedPromo = featuredPool?.[0];
 
   useEffect(() => {
     Promise.all([
@@ -86,29 +86,39 @@ export default function ToolCategoriesIndexPage() {
 
       <SoftwareHeader variant="premium" />
 
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 text-center">
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-6 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#4F47E6] mb-3">Browse</p>
-        <h1 className="text-3xl sm:text-[38px] font-bold text-[#0B1221] leading-[1.1] mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#0B1221] leading-[1.15] mb-4">
           Find tools by category
         </h1>
-        <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto mb-5">
-          Every category is a starting point — pick the one closest to what you're trying to solve.
-        </p>
 
         {!loading && categories.length > 0 && (
-          <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 mb-8 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm">
             <span className="text-sm font-bold text-[#4F47E6] tabular-nums">{categories.length}</span>
             <span className="text-[13px] text-slate-500">categories to explore</span>
           </div>
         )}
+      </section>
 
-        <SmartSearchBox
-          mode="category"
-          title="What do you need help finding?"
-          subtitle="Tell us what you're trying to solve — we'll point you to the right category"
-          placeholder="A tool, a need, or 'agency in New Jersey'…"
-          exampleQueries={CATEGORY_EXAMPLE_QUERIES}
-        />
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-8 sm:pb-10">
+        <div className="grid lg:grid-cols-[1.6fr_1fr] gap-5 items-start">
+          <div className="min-w-0">
+            <SmartSearchBox
+              mode="category"
+              title="What do you need help finding?"
+              subtitle="Tell us what you're trying to solve — we'll point you to the right category"
+              placeholder="A tool, a need, or 'agency in New Jersey'…"
+              exampleQueries={CATEGORY_EXAMPLE_QUERIES}
+            />
+          </div>
+          {featuredPool && featuredPool.length > 0 && (
+            <div className="min-w-0 flex flex-col gap-3">
+              {featuredPool.map((promo) => (
+                <FeaturedToolSidebarCompact key={promo.slug} tool={promo} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
@@ -150,8 +160,6 @@ export default function ToolCategoriesIndexPage() {
                 </div>
               </section>
             )}
-
-            {inlineFeaturedPromo && <FeaturedToolInlineCard tool={inlineFeaturedPromo} />}
 
             <ToolCardRow eyebrow="Fresh listings" title="Recently updated tools" tools={recentlyUpdated} minToShow={1} />
           </div>

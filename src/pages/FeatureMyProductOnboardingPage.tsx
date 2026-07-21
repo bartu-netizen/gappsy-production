@@ -49,7 +49,7 @@ function StepLayout({
   return (
     <>
       <div className="flex-1 flex flex-col justify-center w-full max-w-md mx-auto px-5 sm:px-6 py-4 sm:py-6">
-        {eyebrow && <p className="text-[13px] font-semibold text-[#4F46E5] mb-1">{eyebrow}</p>}
+        {eyebrow && <p className="text-[13px] font-semibold text-[#4F47E6] mb-1">{eyebrow}</p>}
         <h1 className="text-xl sm:text-[26px] font-bold tracking-tight text-[#0B1221] leading-tight">{title}</h1>
         {subtitle && <p className="mt-1.5 text-[14px] sm:text-[15px] text-slate-500 leading-snug">{subtitle}</p>}
         {children && <div className="mt-4">{children}</div>}
@@ -60,7 +60,7 @@ function StepLayout({
             type="button"
             onClick={onCta}
             disabled={ctaDisabled || ctaLoading}
-            className="w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
+            className="w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
           >
             {ctaLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : null}
             {ctaLabel}
@@ -91,7 +91,10 @@ export default function FeatureMyProductOnboardingPage() {
   const [contactName, setContactName] = useState('');
   const [ownershipConfirmed, setOwnershipConfirmed] = useState(false);
 
-  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year');
+  // Which card's button is mid-checkout — two independent pricing cards
+  // (Monthly / Yearly) instead of one shared toggle, so each has its own
+  // loading state instead of a single global one.
+  const [checkingOutInterval, setCheckingOutInterval] = useState<'month' | 'year' | null>(null);
   const [purchasedGrowth, setPurchasedGrowth] = useState(false);
 
   const [ownershipToken, setOwnershipToken] = useState<string | null>(null);
@@ -254,13 +257,13 @@ export default function FeatureMyProductOnboardingPage() {
   }
 
   // ── Step 5: growth upsell -> recurring checkout (or skip) ───────────────
-  async function handleGrowthCheckout() {
-    if (!sessionId || loading) return;
-    setLoading(true);
+  async function handleGrowthCheckout(interval: 'month' | 'year') {
+    if (!sessionId || checkingOutInterval) return;
+    setCheckingOutInterval(interval);
     setErrorMessage(null);
-    const res = await vendorOnboarding.createCheckout(sessionId, 'growth', billingInterval);
+    const res = await vendorOnboarding.createCheckout(sessionId, 'growth', interval);
     if (!res.ok) {
-      setLoading(false);
+      setCheckingOutInterval(null);
       setErrorMessage(res.error_code === 'already_subscribed' ? 'This product already has an active Growth subscription.' : (res.error || 'Could not start checkout. Please try again.'));
       return;
     }
@@ -325,7 +328,7 @@ export default function FeatureMyProductOnboardingPage() {
               value={rawUrl}
               onChange={(e) => setRawUrl(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleUrlSubmit(); }}
-              className="w-full h-14 rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 focus:border-slate-300"
+              className="w-full h-14 rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
             />
           </StepLayout>
         )}
@@ -379,7 +382,7 @@ export default function FeatureMyProductOnboardingPage() {
                   type="text"
                   value={prefillName}
                   onChange={(e) => setPrefillName(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 focus:border-slate-300"
+                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <div>
@@ -389,7 +392,7 @@ export default function FeatureMyProductOnboardingPage() {
                   type="text"
                   value={prefillWebsite}
                   onChange={(e) => setPrefillWebsite(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 focus:border-slate-300"
+                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
             </div>
@@ -415,7 +418,7 @@ export default function FeatureMyProductOnboardingPage() {
                   autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 focus:border-slate-300"
+                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <div>
@@ -425,7 +428,7 @@ export default function FeatureMyProductOnboardingPage() {
                   type="text"
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/20 focus:border-slate-300"
+                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <label className="flex items-start gap-2.5 pt-1 cursor-pointer">
@@ -433,7 +436,7 @@ export default function FeatureMyProductOnboardingPage() {
                   type="checkbox"
                   checked={ownershipConfirmed}
                   onChange={(e) => setOwnershipConfirmed(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#7C3AED] focus:ring-[#7C3AED]/30"
+                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#4F47E6] focus:ring-[#4F47E6]/30"
                 />
                 <span className="text-[13.5px] text-slate-500 leading-snug">I confirm this is my product, or I'm authorized to promote it on Gappsy.</span>
               </label>
@@ -459,7 +462,7 @@ export default function FeatureMyProductOnboardingPage() {
             <ul className="space-y-2">
               {['Verified badge on your listing', 'Self-serve editing of your listing', 'Reply to reviews from your dashboard'].map((item) => (
                 <li key={item} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-[#4F46E5] shrink-0 mt-0.5" aria-hidden="true" />
+                  <Check className="w-3.5 h-3.5 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                   {item}
                 </li>
               ))}
@@ -468,73 +471,117 @@ export default function FeatureMyProductOnboardingPage() {
         )}
 
         {step === 'growth_upsell' && (
-          <StepLayout
-            eyebrow="Upgrade to Growth"
-            title="Get seen by buyers actively comparing tools"
-            subtitle="Your listing is claimed and verified. Growth adds featured placement — and Yearly unlocks a produced video review, a newsletter feature, and an ad-free listing."
-            ctaLabel={billingInterval === 'year' ? 'Continue with Yearly — $890/yr' : 'Continue with Monthly — $89/mo'}
-            onCta={handleGrowthCheckout}
-            ctaLoading={loading}
-            footnote="Billed via Stripe. Cancel anytime."
-            secondaryAction={
-              <button
-                type="button"
-                onClick={handleSkipGrowth}
-                className="mt-2.5 w-full text-center text-[13.5px] font-medium text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                Not now — I'll upgrade later from my dashboard
-              </button>
-            }
-          >
+          <div className="flex-1 w-full max-w-3xl mx-auto px-5 sm:px-6 py-6 sm:py-10">
+            <div className="text-center mb-6 sm:mb-8">
+              <p className="text-[13px] font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
+              <h1 className="text-xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">
+                Your listing is claimed. Ready to get seen?
+              </h1>
+              <p className="mt-2 text-[14px] sm:text-[15px] text-slate-500 leading-snug max-w-lg mx-auto">
+                Growth puts your product in front of buyers who are already comparing tools like yours.
+              </p>
+            </div>
+
             {cancelledNotice && (
-              <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700">
+              <div className="mb-4 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700 text-center">
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-            <div className="flex rounded-xl bg-slate-100 p-1 mb-4">
-              <button
-                type="button"
-                onClick={() => setBillingInterval('month')}
-                className={`flex-1 py-2 rounded-lg text-[13px] font-semibold transition-colors ${billingInterval === 'month' ? 'bg-white text-[#0B1221] shadow-sm' : 'text-slate-500'}`}
-              >
-                Monthly — $89/mo
-              </button>
-              <button
-                type="button"
-                onClick={() => setBillingInterval('year')}
-                className={`flex-1 py-2 rounded-lg text-[13px] font-semibold transition-colors ${billingInterval === 'year' ? 'bg-white text-[#0B1221] shadow-sm' : 'text-slate-500'}`}
-              >
-                Yearly — $890/yr
-              </button>
+
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+              {/* Yearly first — the recommended plan should be the one visible
+                  without scrolling once these stack on mobile. */}
+              <div className="relative order-1 rounded-2xl border-2 border-[#4F47E6] bg-white p-5 sm:p-6 shadow-[0_16px_40px_rgba(79,71,230,0.16)] flex flex-col">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10.5px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full whitespace-nowrap">
+                  Best value — 2 months free
+                </span>
+                <h3 className="text-sm font-semibold text-[#4F47E6] mt-1">Yearly</h3>
+                <div className="mt-2 flex items-end gap-1.5">
+                  <span className="text-3xl font-bold text-[#0B1221]">$890</span>
+                  <span className="text-sm text-slate-400 mb-0.5">/year</span>
+                </div>
+                <p className="mt-1 text-xs text-slate-400">Works out to ~$74/mo, billed yearly</p>
+                <ul className="mt-5 space-y-2.5 flex-1">
+                  {GROWTH_MONTHLY_FEATURES.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-600">
+                      <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                  {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-700 font-medium">
+                      <Sparkles className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => handleGrowthCheckout('year')}
+                  disabled={checkingOutInterval !== null}
+                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl text-[14.5px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
+                >
+                  {checkingOutInterval === 'year' && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
+                  Continue with Yearly
+                </button>
+              </div>
+
+              <div className="order-2 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col">
+                <h3 className="text-sm font-semibold text-slate-500">Monthly</h3>
+                <div className="mt-2 flex items-end gap-1.5">
+                  <span className="text-3xl font-bold text-[#0B1221]">$89</span>
+                  <span className="text-sm text-slate-400 mb-0.5">/month</span>
+                </div>
+                <p className="mt-1 text-xs text-slate-400">Cancel anytime</p>
+                <ul className="mt-5 space-y-2.5 flex-1">
+                  {GROWTH_MONTHLY_FEATURES.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-600">
+                      <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                  {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-300">
+                      <Sparkles className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" aria-hidden="true" />
+                      {item}
+                      <span className="text-[10.5px] font-medium text-slate-400 whitespace-nowrap">(Yearly only)</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => handleGrowthCheckout('month')}
+                  disabled={checkingOutInterval !== null}
+                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl text-[14.5px] font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  {checkingOutInterval === 'month' && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
+                  Continue with Monthly
+                </button>
+              </div>
             </div>
-            <ul className="space-y-2">
-              {GROWTH_MONTHLY_FEATURES.map((item) => (
-                <li key={item} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-[#4F46E5] shrink-0 mt-0.5" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-              {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
-                <li key={item} className={`flex items-start gap-1.5 text-[13px] leading-snug ${billingInterval === 'year' ? 'text-slate-600' : 'text-slate-300'}`}>
-                  <Sparkles className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${billingInterval === 'year' ? 'text-[#7C3AED]' : 'text-slate-300'}`} aria-hidden="true" />
-                  {item}
-                  {billingInterval !== 'year' && <span className="text-[11px] font-medium text-slate-400">(Yearly only)</span>}
-                </li>
-              ))}
-            </ul>
-          </StepLayout>
+
+            <p className="mt-5 text-center text-xs text-slate-400">Billed via Stripe. Cancel anytime.</p>
+
+            <button
+              type="button"
+              onClick={handleSkipGrowth}
+              className="mt-3 w-full text-center text-[13.5px] font-medium text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              Not now — I'll upgrade later from my dashboard
+            </button>
+          </div>
         )}
 
         {step === 'redirecting' && (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
-            <Loader2 className="w-6 h-6 text-[#7C3AED] animate-spin" aria-hidden="true" />
+            <Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" aria-hidden="true" />
             <p className="text-sm text-slate-500">Redirecting you to secure checkout…</p>
           </div>
         )}
 
         {step === 'finalizing' && (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
-            <Loader2 className="w-6 h-6 text-[#7C3AED] animate-spin" aria-hidden="true" />
+            <Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" aria-hidden="true" />
             <p className="text-sm text-slate-500">Finalizing…</p>
           </div>
         )}
@@ -567,7 +614,7 @@ function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: stri
           purchasedGrowth ? 'Featured placement activates after eligibility checks' : 'Upgrade to Growth anytime from your dashboard',
         ].map((item, i) => (
           <li key={item} className="flex items-start gap-3 text-[14px] text-slate-600">
-            <span className="w-5 h-5 rounded-full bg-indigo-50 text-[#4F46E5] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+            <span className="w-5 h-5 rounded-full bg-indigo-50 text-[#4F47E6] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
             {item}
           </li>
         ))}
@@ -577,7 +624,7 @@ function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: stri
         {verifyUrl && (
           <a
             href={verifyUrl}
-            className="flex items-center justify-center gap-1.5 w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] hover:opacity-90 transition-opacity"
+            className="flex items-center justify-center gap-1.5 w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity"
           >
             Verify ownership
             <ArrowRight className="w-4 h-4" aria-hidden="true" />

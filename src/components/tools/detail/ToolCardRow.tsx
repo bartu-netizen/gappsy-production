@@ -14,12 +14,18 @@ export default function ToolCardRow({
   subtitle,
   tools,
   minToShow = 1,
+  autoScroll = false,
 }: {
   eyebrow: string;
   title: string;
   subtitle?: string;
   tools: ToolCardData[];
   minToShow?: number;
+  /** Opt-in only (Trending Today) — auto-advances the row every few seconds,
+   * looping back to the start at the end. Paused on hover/touch/manual
+   * scroll and skipped entirely under prefers-reduced-motion. Every other
+   * caller of this component is a plain manual-scroll row by default. */
+  autoScroll?: boolean;
 }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -49,6 +55,40 @@ export default function ToolCardRow({
     el.scrollBy({ left: direction * step * 2, behavior: 'smooth' });
   }
 
+  useEffect(() => {
+    if (!autoScroll || tools.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    let paused = false;
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; };
+    el.addEventListener('mouseenter', pause);
+    el.addEventListener('mouseleave', resume);
+    el.addEventListener('touchstart', pause, { passive: true });
+    el.addEventListener('touchend', resume);
+
+    const interval = window.setInterval(() => {
+      if (paused) return;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollByCards(1);
+      }
+    }, 4000);
+
+    return () => {
+      window.clearInterval(interval);
+      el.removeEventListener('mouseenter', pause);
+      el.removeEventListener('mouseleave', resume);
+      el.removeEventListener('touchstart', pause);
+      el.removeEventListener('touchend', resume);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoScroll, tools.length]);
+
   if (tools.length < minToShow) return null;
 
   return (
@@ -59,7 +99,7 @@ export default function ToolCardRow({
         <div
           ref={scrollerRef}
           onScroll={updateScrollState}
-          className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-thin"
+          className="flex items-stretch gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-thin"
         >
           {tools.map((tool) => (
             <div key={tool.slug} data-card className="w-[260px] sm:w-[280px] shrink-0 snap-start">

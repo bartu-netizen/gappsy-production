@@ -52,19 +52,24 @@ Deno.serve(async (req: Request) => {
     const session = await requireVendorSession(req, supabase);
 
     if (req.method === "GET") {
-      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, subResult] = await Promise.all([
+      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, growthResult] = await Promise.all([
         supabase.from("tools").select(
           `id, slug, name, logo, website, short_description, long_description, pricing_model, starting_price,
            youtube_url, founded_year, company_size, headquarters, languages, best_for, target_audience,
            pricing_summary, features_summary, integrations_summary, company_summary, rating, review_count,
-           verified, featured, featured_until, status, updated_at`
+           verified, featured, featured_until, billing_interval, status, updated_at`
         ).eq("id", session.toolId).single(),
         supabase.from("tool_features").select("id, title, description, sort_order").eq("tool_id", session.toolId).order("sort_order"),
         supabase.from("tool_pros").select("id, text, sort_order").eq("tool_id", session.toolId).order("sort_order"),
         supabase.from("tool_cons").select("id, text, sort_order").eq("tool_id", session.toolId).order("sort_order"),
         supabase.from("tool_faqs").select("id, question, answer, sort_order").eq("tool_id", session.toolId).eq("status", "published").order("sort_order"),
         supabase.from("tool_user_reviews").select("id, reviewer_name, rating, title, body, status, vendor_response, vendor_response_at, created_at").eq("tool_id", session.toolId).order("created_at", { ascending: false }),
-        supabase.from("vendor_feature_subscriptions").select("status, current_period_end, featured_until, stripe_customer_id, canceled_at").eq("tool_id", session.toolId).order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        // Claim and Growth are two independent products (see the v2 vendor
+        // claim/growth migration) — queried separately so the dashboard can
+        // show accurate, distinct status for each instead of whichever
+        // subscription row happens to be newest.
+        supabase.from("vendor_feature_subscriptions").select("status, created_at").eq("tool_id", session.toolId).eq("product", "claim").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        supabase.from("vendor_feature_subscriptions").select("status, billing_interval, current_period_end, featured_until, stripe_customer_id, canceled_at").eq("tool_id", session.toolId).eq("product", "growth").order("created_at", { ascending: false }).limit(1).maybeSingle(),
       ]);
 
       if (toolResult.error) return jsonResponse({ ok: false, error: "Failed to load listing" }, 500);
@@ -77,7 +82,8 @@ Deno.serve(async (req: Request) => {
         cons: consResult.data || [],
         faqs: faqsResult.data || [],
         reviews: reviewsResult.data || [],
-        subscription: subResult.data || null,
+        claimSubscription: claimResult.data || null,
+        growthSubscription: growthResult.data || null,
       });
     }
 
@@ -154,8 +160,11 @@ Deno.serve(async (req: Request) => {
       }
 
       if (action === "create_billing_portal_session") {
-        const { data: sub } = await supabase.from("vendor_feature_subscriptions").select("stripe_customer_id").eq("tool_id", session.toolId).not("stripe_customer_id", "is", null).order("created_at", { ascending: false }).limit(1).maybeSingle();
-        if (!sub?.stripe_customer_id) return jsonResponse({ ok: false, error: "No billing account found for this listing" }, 404);
+        // Only Growth is a real recurring subscription — Claim is a one-time
+        // charge with nothing to manage in a billing portal (no upcoming
+        // renewal, no payment method to update for it).
+        const { data: sub } = await supabase.from("vendor_feature_subscriptions").select("stripe_customer_id").eq("tool_id", session.toolId).eq("product", "growth").not("stripe_customer_id", "is", null).order("created_at", { ascending: false }).limit(1).maybeSingle();
+        if (!sub?.stripe_customer_id) return jsonResponse({ ok: false, error: "No Growth subscription found for this listing" }, 404);
 
         const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
         if (!stripeKey) return jsonResponse({ ok: false, error: "Billing is not configured" }, 500);

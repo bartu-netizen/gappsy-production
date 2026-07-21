@@ -5,13 +5,13 @@ import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ToolCard, { type ToolCardData } from '../components/ToolCard';
-import ToolSpotlight from '../components/tools/ToolSpotlight';
 import CategoryTile, { type CategoryTileData } from '../components/tools/CategoryTile';
 import ToolsSectionHeader from '../components/tools/ToolsSectionHeader';
 import ToolsSkeletonGrid from '../components/tools/ToolsSkeletonGrid';
 import ToolsEmptyState from '../components/tools/ToolsEmptyState';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import SmartSearchBox from '../components/search/SmartSearchBox';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact } from '../components/tools/detail/FeaturedToolPromo';
 import { supabase } from '../lib/supabase';
 
 const TOOLS_EXAMPLE_QUERIES = [
@@ -19,6 +19,26 @@ const TOOLS_EXAMPLE_QUERIES = [
   'Something to track team tasks',
   'CRM with a free trial',
 ];
+
+const SPOTLIGHT_COUNT = 3;
+
+// Small curated accent palette so tag chips read as distinct, colored
+// entities instead of one flat gray pill repeated N times — same idea as
+// CategoryTile's per-slug accent hashing, kept local since tags have no
+// icon field of their own to key off of.
+const TAG_ACCENT_PALETTE: { bg: string; icon: string }[] = [
+  { bg: '#EEF0FE', icon: '#4F47E6' },
+  { bg: '#E0F2FE', icon: '#0284C7' },
+  { bg: '#D1FAE5', icon: '#059669' },
+  { bg: '#FEF3C7', icon: '#D97706' },
+  { bg: '#FCE7F3', icon: '#DB2777' },
+  { bg: '#EDE9FE', icon: '#7C3AED' },
+];
+function tagAccent(slug: string): { bg: string; icon: string } {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
+  return TAG_ACCENT_PALETTE[hash % TAG_ACCENT_PALETTE.length];
+}
 
 interface ToolRow extends ToolCardData {
   created_at: string;
@@ -37,6 +57,11 @@ export default function ToolsIndexPage() {
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const [search] = useState(() => searchParams.get('q') || '');
+
+  // Sponsored placements shown beside the search box — same ad mechanism
+  // used on tool detail pages, just relocated here to fill what was dead
+  // white space next to the chat box.
+  const heroAdPool = useFeaturedToolPool([], 2);
 
   useEffect(() => {
     Promise.all([
@@ -85,17 +110,20 @@ export default function ToolsIndexPage() {
     return tools.filter((t) => t.name.toLowerCase().includes(q) || (t.short_description || '').toLowerCase().includes(q));
   }, [tools, search]);
 
-  const spotlightTool = useMemo(() => {
-    if (tools.length === 0) return null;
-    return tools.find((t) => t.featured) || [...tools].sort((a, b) => b.rating - a.rating)[0];
+  const spotlightTools = useMemo(() => {
+    if (tools.length === 0) return [];
+    const featured = tools.filter((t) => t.featured);
+    const rest = [...tools].filter((t) => !t.featured).sort((a, b) => b.rating - a.rating);
+    return [...featured, ...rest].slice(0, SPOTLIGHT_COUNT);
   }, [tools]);
+  const spotlightSlugs = useMemo(() => new Set(spotlightTools.map((t) => t.slug)), [spotlightTools]);
 
   const recentTools = useMemo(() => {
     return [...tools]
-      .filter((t) => t.slug !== spotlightTool?.slug)
+      .filter((t) => !spotlightSlugs.has(t.slug))
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 5);
-  }, [tools, spotlightTool]);
+  }, [tools, spotlightSlugs]);
 
   const topCategories = categories.slice(0, 3);
   const isSearching = search.trim().length > 0;
@@ -114,22 +142,32 @@ export default function ToolsIndexPage() {
       <SoftwareHeader variant="premium" />
 
       {/* Hero */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-10 sm:pb-14 text-center">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-6 sm:pb-8 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#4F47E6] mb-3">Tools Directory</p>
-        <h1 className="text-3xl sm:text-[40px] font-bold text-[#0B1221] leading-[1.1] mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#0B1221] leading-[1.15] lg:whitespace-nowrap">
           Software worth building your stack around
         </h1>
-        <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
-          A curated directory of tools — hand-picked, organized by category, and easy to compare.
-        </p>
+      </section>
 
-        <SmartSearchBox
-          mode="general"
-          title="What do you need help finding?"
-          subtitle="Tell us what you're trying to solve — we'll point you to the right tool"
-          placeholder="A tool, a need, or 'agency in New Jersey'…"
-          exampleQueries={TOOLS_EXAMPLE_QUERIES}
-        />
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-14">
+        <div className="grid lg:grid-cols-[1.6fr_1fr] gap-5 items-start">
+          <div className="min-w-0">
+            <SmartSearchBox
+              mode="general"
+              title="What do you need help finding?"
+              subtitle="Tell us what you're trying to solve — we'll point you to the right tool"
+              placeholder="A tool, a need, or 'agency in New Jersey'…"
+              exampleQueries={TOOLS_EXAMPLE_QUERIES}
+            />
+          </div>
+          {heroAdPool && heroAdPool.length > 0 && (
+            <div className="min-w-0 flex flex-col gap-3">
+              {heroAdPool.map((promo) => (
+                <FeaturedToolSidebarCompact key={promo.slug} tool={promo} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
@@ -172,9 +210,14 @@ export default function ToolsIndexPage() {
 
         {!loading && !isSearching && tools.length > 0 && (
           <div className="space-y-16 sm:space-y-20">
-            {spotlightTool && (
+            {spotlightTools.length > 0 && (
               <section>
-                <ToolSpotlight tool={spotlightTool} />
+                <ToolsSectionHeader eyebrow="Editors' picks" title="Spotlight" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                  {spotlightTools.map((tool) => (
+                    <ToolCard key={tool.slug} tool={tool} />
+                  ))}
+                </div>
               </section>
             )}
 
@@ -233,14 +276,17 @@ export default function ToolsIndexPage() {
                 <div className="flex flex-wrap gap-2.5">
                   {tags.map((tag) => {
                     const weight = tag.toolCount / maxTagCount;
-                    const scaleClass = weight > 0.66 ? 'text-[15px] px-4 py-2' : weight > 0.33 ? 'text-sm px-3.5 py-1.5' : 'text-[13px] px-3 py-1.5';
+                    const scaleClass = weight > 0.66 ? 'text-[15px] pl-2 pr-4 py-2' : weight > 0.33 ? 'text-sm pl-1.5 pr-3.5 py-1.5' : 'text-[13px] pl-1.5 pr-3 py-1.5';
+                    const accent = tagAccent(tag.slug);
                     return (
                       <Link
                         key={tag.slug}
                         to={`/tool-tags/${tag.slug}`}
-                        className={`inline-flex items-center gap-1.5 bg-white border border-[#eef0f3] rounded-full font-medium text-slate-600 hover:text-[#4F47E6] hover:border-[#C7CCF7] transition-colors ${scaleClass}`}
+                        className={`inline-flex items-center gap-2 bg-white border border-[#eef0f3] rounded-full font-medium text-slate-600 hover:border-[#C7CCF7] hover:shadow-sm transition-all ${scaleClass}`}
                       >
-                        <TagIcon className="w-3 h-3 text-slate-300" />
+                        <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: accent.bg }}>
+                          <TagIcon className="w-3 h-3" style={{ color: accent.icon }} />
+                        </span>
                         {tag.name}
                       </Link>
                     );

@@ -135,15 +135,15 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
       <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center mb-2.5 shadow-sm">
         <Rocket className="w-4.5 h-4.5 text-[#4F47E6]" aria-hidden="true" />
       </div>
-      <p className="font-bold text-[#0B1221] text-sm">Are you the maker of {toolName}?</p>
+      <p className="font-bold text-[#0B1221] text-sm">Is {toolName} your product?</p>
       <p className="text-xs text-slate-600 leading-relaxed mt-1">
-        Claim this listing to manage it directly and get featured placement across the directory.
+        Verify it and get a verified badge, self-serve editing, and the ability to reply to reviews — then optionally unlock featured placement.
       </p>
       <Link
         to={onboardingHref}
         className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:bg-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
       >
-        Claim & feature this listing
+        Verify it now
         <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
       </Link>
     </div>

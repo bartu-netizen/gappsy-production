@@ -1,12 +1,11 @@
 import { Fragment } from 'react';
-import { FileText, ClipboardCheck, Rocket, TrendingUp, ArrowRight, ArrowDown } from 'lucide-react';
+import { FileText, ShieldCheck, LayoutDashboard, ArrowRight, ArrowDown } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const STEPS = [
-  { icon: FileText, title: 'Submit', body: 'Tell us about your product — website, pricing, and what it does.' },
-  { icon: ClipboardCheck, title: 'Review', body: 'Our editorial team checks accuracy and writes a real listing, not a copy-paste of your homepage.' },
-  { icon: Rocket, title: 'Go live', body: 'Your featured listing publishes across category, comparison, and search surfaces.' },
-  { icon: TrendingUp, title: 'Get qualified traffic', body: 'Buyers actively comparing software in your category start finding you.' },
+  { icon: FileText, title: 'Submit', body: 'Tell us your product\'s website — we\'ll check if it\'s already in the Gappsy directory.' },
+  { icon: ShieldCheck, title: 'Verify', body: 'Prove ownership with a meta tag, DNS record, or hosted file — takes a couple of minutes.' },
+  { icon: LayoutDashboard, title: 'Manage it yourself', body: 'Verified badge goes live, and you get self-serve access to edit your listing and reply to reviews.' },
 ];
 
 export default function HowItWorksSection() {
@@ -15,7 +14,7 @@ export default function HowItWorksSection() {
       <div className="max-w-5xl mx-auto px-6 sm:px-8">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">How it works</h2>
-          <p className="mt-4 text-lg text-slate-500">From submission to qualified traffic, usually in a couple of days.</p>
+          <p className="mt-4 text-lg text-slate-500">Submit, verify, done — usually just a few minutes.</p>
         </ScrollReveal>
 
         <div className="flex flex-col md:flex-row items-stretch gap-4 md:gap-3">

@@ -26,7 +26,11 @@ interface ReviewRow {
   id: string; reviewer_name: string; rating: number; title: string | null; body: string;
   status: string; vendor_response: string | null; vendor_response_at: string | null; created_at: string;
 }
-interface SubscriptionRow { status: string; current_period_end: string | null; featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null }
+interface ClaimSubscriptionRow { status: string; created_at: string }
+interface GrowthSubscriptionRow {
+  status: string; billing_interval: string | null; current_period_end: string | null;
+  featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null;
+}
 
 type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing';
 
@@ -51,7 +55,8 @@ export default function VendorDashboardPage() {
   const [cons, setCons] = useState<TextRow[]>([]);
   const [faqs, setFaqs] = useState<FaqRow[]>([]);
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
-  const [subscription, setSubscription] = useState<SubscriptionRow | null>(null);
+  const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
+  const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -67,7 +72,8 @@ export default function VendorDashboardPage() {
       setCons(res.cons);
       setFaqs(res.faqs);
       setReviews(res.reviews);
-      setSubscription(res.subscription);
+      setClaimSubscription(res.claimSubscription);
+      setGrowthSubscription(res.growthSubscription);
       setLoading(false);
     }).catch(() => {
       setLoadError('Failed to load your dashboard');
@@ -146,13 +152,15 @@ export default function VendorDashboardPage() {
             </nav>
 
             <div className="flex-1 min-w-0">
-              {tab === 'overview' && <OverviewTab tool={tool} subscription={subscription} reviews={reviews} />}
+              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} />}
               {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
               {tab === 'content' && (
                 <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
               )}
               {tab === 'reviews' && <ReviewsTab reviews={reviews} onReviews={setReviews} />}
-              {tab === 'billing' && <BillingTab subscription={subscription} toolSlug={tool.slug} />}
+              {tab === 'billing' && (
+                <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} />
+              )}
             </div>
           </div>
         )}
@@ -165,10 +173,10 @@ function Card({ children }: { children: React.ReactNode }) {
   return <div className="bg-white border border-[#eef0f3] rounded-2xl p-5 sm:p-6 shadow-[0_4px_16px_rgba(15,23,42,0.04)]">{children}</div>;
 }
 
-function OverviewTab({ tool, subscription, reviews }: { tool: ToolRow; subscription: SubscriptionRow | null; reviews: ReviewRow[] }) {
+function OverviewTab({ tool, growthSubscription, reviews }: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[] }) {
   const pendingCount = reviews.filter((r) => r.status === 'pending').length;
   const publishedCount = reviews.filter((r) => r.status === 'approved').length;
-  const isActive = subscription?.status === 'active';
+  const isActive = growthSubscription?.status === 'active';
 
   return (
     <div className="space-y-5">
@@ -206,11 +214,32 @@ function OverviewTab({ tool, subscription, reviews }: { tool: ToolRow; subscript
         <Card><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Awaiting moderation</p><p className="text-2xl font-bold text-[#0B1221]">{pendingCount}</p></Card>
       </div>
 
-      {tool.featured_until && (
+      {isActive ? (
         <Card>
           <p className="text-sm text-slate-600">
-            Your featured placement is active until <strong className="text-[#0B1221]">{new Date(tool.featured_until).toLocaleDateString()}</strong>.
+            You're on Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>}
+            {tool.featured_until && <> — active until <strong className="text-[#0B1221]">{new Date(tool.featured_until).toLocaleDateString()}</strong></>}.
+            {growthSubscription?.billing_interval !== 'year' && (
+              <> <Link to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`} className="font-medium text-[#4F47E6] hover:text-[#4338CA]">Switch to Yearly</Link> for a produced video review, a newsletter feature, and an ad-free listing.</>
+            )}
           </p>
+        </Card>
+      ) : (
+        <Card>
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <p className="text-sm font-bold text-[#0B1221]">You're on Claim & Verify only</p>
+              <p className="text-[13px] text-slate-500 mt-1 max-w-md">
+                Upgrade to Growth for featured placement across category, comparison, and search — Yearly adds a produced video review, a newsletter feature, and an ad-free listing.
+              </p>
+            </div>
+            <Link
+              to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`}
+              className="shrink-0 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
+            >
+              Upgrade to Growth
+            </Link>
+          </div>
         </Card>
       )}
     </div>
@@ -614,7 +643,11 @@ function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: Rev
   );
 }
 
-function BillingTab({ subscription, toolSlug }: { subscription: SubscriptionRow | null; toolSlug: string }) {
+function BillingTab({
+  claimSubscription, growthSubscription, toolSlug, toolWebsite,
+}: {
+  claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; toolSlug: string; toolWebsite: string | null;
+}) {
   const [opening, setOpening] = useState(false);
 
   async function openPortal() {
@@ -624,35 +657,62 @@ function BillingTab({ subscription, toolSlug }: { subscription: SubscriptionRow 
     if (res.ok && res.url) window.location.href = res.url;
   }
 
-  if (!subscription) {
+  if (!claimSubscription && !growthSubscription) {
     return <Card><p className="text-sm text-slate-500 text-center py-6">No billing history found for this listing.</p></Card>;
   }
 
   return (
-    <Card>
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
-        <div>
-          <p className="text-sm font-bold text-[#0B1221]">Featured placement — {toolSlug}</p>
-          <p className={`text-[13px] font-medium ${subscription.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
-            {subscription.status === 'active' ? 'Active' : subscription.status === 'past_due' ? 'Payment past due' : subscription.status === 'canceled' ? 'Canceled' : subscription.status}
-          </p>
+    <div className="space-y-4">
+      {/* Claim — one-time charge, nothing to renew or manage in a portal */}
+      <Card>
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
+          <div>
+            <p className="text-sm font-bold text-[#0B1221]">Claim & Verify — {toolSlug}</p>
+            <p className={`text-[13px] font-medium ${claimSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
+              {claimSubscription?.status === 'active' ? 'Paid — one-time, $29' : claimSubscription ? claimSubscription.status : 'Not claimed yet'}
+            </p>
+          </div>
         </div>
-      </div>
-      {subscription.current_period_end && (
-        <p className="text-[13px] text-slate-500 mb-4">
-          {subscription.status === 'canceled' ? 'Ended' : 'Renews'} on {new Date(subscription.current_period_end).toLocaleDateString()}
-        </p>
-      )}
-      <button
-        type="button"
-        onClick={openPortal}
-        disabled={opening || !subscription.stripe_customer_id}
-        className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-60"
-      >
-        {opening && <Loader2 className="w-4 h-4 animate-spin" />}
-        Manage billing
-      </button>
-    </Card>
+      </Card>
+
+      {/* Growth — recurring, so this is the only one with a billing portal */}
+      <Card>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
+          <div>
+            <p className="text-sm font-bold text-[#0B1221]">
+              Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>} — {toolSlug}
+            </p>
+            <p className={`text-[13px] font-medium ${growthSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
+              {!growthSubscription ? 'Not subscribed' : growthSubscription.status === 'active' ? 'Active' : growthSubscription.status === 'past_due' ? 'Payment past due' : growthSubscription.status === 'canceled' ? 'Canceled' : growthSubscription.status}
+            </p>
+          </div>
+        </div>
+        {growthSubscription?.current_period_end && (
+          <p className="text-[13px] text-slate-500 mb-4">
+            {growthSubscription.status === 'canceled' ? 'Ended' : 'Renews'} on {new Date(growthSubscription.current_period_end).toLocaleDateString()}
+          </p>
+        )}
+        {growthSubscription ? (
+          <button
+            type="button"
+            onClick={openPortal}
+            disabled={opening || !growthSubscription.stripe_customer_id}
+            className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-60"
+          >
+            {opening && <Loader2 className="w-4 h-4 animate-spin" />}
+            Manage billing
+          </button>
+        ) : (
+          <Link
+            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
+          >
+            Upgrade to Growth
+          </Link>
+        )}
+      </Card>
+    </div>
   );
 }

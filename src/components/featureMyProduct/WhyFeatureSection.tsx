@@ -1,36 +1,36 @@
-import { GitCompare, LayoutGrid, Search, Sparkles, Layers, Target } from 'lucide-react';
+import { ShieldCheck, PenLine, MessageSquare, Lock, RefreshCw, Ban } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const REASONS = [
   {
-    icon: Target,
-    title: 'Buyer intent, not browsing',
-    body: 'Someone on a comparison or category page has already decided they need software like yours. They\'re evaluating, not scrolling for entertainment.',
+    icon: ShieldCheck,
+    title: 'Buyers trust verified listings',
+    body: 'A verified badge signals this is the real product owner speaking — not a guess or a third-party description.',
   },
   {
-    icon: GitCompare,
-    title: 'Comparison traffic converts',
-    body: 'Visitors reading "X vs Y" pages are choosing between a short list of finalists. Being one of the options they see is worth far more than generic ad impressions.',
+    icon: PenLine,
+    title: 'Keep your info accurate',
+    body: 'Your product changes — pricing, features, screenshots. Self-serve editing means your listing keeps up without waiting on us.',
   },
   {
-    icon: Layers,
-    title: 'Alternative-page visibility',
-    body: 'When buyers search "alternatives to [competitor]", your product can be the answer — right on the page they land on to switch.',
+    icon: MessageSquare,
+    title: 'Be the one who answers',
+    body: 'Reply to reviews directly from your own dashboard instead of leaving the conversation one-sided.',
   },
   {
-    icon: LayoutGrid,
-    title: 'Category pages that already rank',
-    body: 'Gappsy\'s category pages are built and indexed for search. A featured spot puts you in front of everyone who lands there.',
+    icon: Lock,
+    title: 'Protect your listing',
+    body: 'Claiming locks in ownership, so nobody else can manage or misrepresent your product\'s page.',
   },
   {
-    icon: Sparkles,
-    title: 'Built for AI recommendations',
-    body: 'As AI assistants start recommending software directly, structured, editorially-reviewed listings are what gets cited. We\'re building for that shift.',
+    icon: Ban,
+    title: 'No recurring commitment',
+    body: 'A single $29 fee, not a subscription you have to remember to cancel.',
   },
   {
-    icon: Search,
-    title: 'Findable the moment you\'re live',
-    body: 'Internal search indexes your listing immediately — no waiting for a crawler to notice you exist.',
+    icon: RefreshCw,
+    title: 'A few minutes, once',
+    body: 'Submit your URL, verify ownership, done. No back-and-forth with an editorial team required.',
   },
 ];
 
@@ -40,10 +40,10 @@ export default function WhyFeatureSection() {
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">
-            Why feature your software on a directory built around buyer intent
+            Why claim or list your product
           </h2>
           <p className="mt-4 text-lg text-slate-500">
-            Most software promotion pays for attention. Gappsy puts you in front of people who already showed up looking to compare.
+            If your product's already on Gappsy, its page exists whether you claim it or not — claiming it just means you're the one in control. If it's not listed yet, this is how it gets added.
           </p>
         </ScrollReveal>
 

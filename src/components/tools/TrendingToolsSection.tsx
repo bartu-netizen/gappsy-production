@@ -33,5 +33,5 @@ export default function TrendingToolsSection() {
     };
   }, []);
 
-  return <ToolCardRow eyebrow="Right now" title={label} tools={tools} minToShow={3} />;
+  return <ToolCardRow eyebrow="Right now" title={label} tools={tools} minToShow={3} autoScroll />;
 }

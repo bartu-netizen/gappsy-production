@@ -16,18 +16,18 @@ interface ListedTool {
 }
 
 // Placeholder copy — swap for real founder quotes once the first cohort of
-// featured listings has run for a few weeks.
+// claimed listings has run for a few weeks.
 const TESTIMONIALS = [
   {
-    quote: 'We went live in two days and started showing up in comparison pages against tools we’d never ranked next to before.',
+    quote: 'Verification took about five minutes — one meta tag and we were done.',
     role: 'Founder, project management SaaS',
   },
   {
     quote: 'The editorial review actually improved our listing — it wasn’t just a form we filled in and forgot about.',
-    role: 'Head of Growth, dev tools startup',
+    role: 'Marketing lead, dev tools startup',
   },
   {
-    quote: 'Cancel-anytime made it an easy yes. We kept it because it kept sending qualified clicks, not because we were locked in.',
+    quote: 'A one-time fee to stop a stale description from just sitting there. Now we can fix it ourselves in two minutes.',
     role: 'Co-founder, no-code platform',
   },
 ];
@@ -35,7 +35,7 @@ const TESTIMONIALS = [
 const METRICS = [
   { value: '141+', label: 'software tools already listed' },
   { value: '61', label: 'categories to be discovered in' },
-  { value: '9', label: 'placement surfaces per listing' },
+  { value: '$29', label: 'one-time, no subscription' },
 ];
 
 function LogoTile({ tool }: { tool: ListedTool }) {
