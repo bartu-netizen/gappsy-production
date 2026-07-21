@@ -22,12 +22,17 @@ const CORS_HEADERS = {
 
 const MIN_RESULTS = 6;
 const LIMIT = 8;
+// Wider than LIMIT so there's a real pool to prefer non-open-source tools
+// from below — capping the candidate list at LIMIT before that reordering
+// would lock in whichever tools happened to rank in the top 8 by views/
+// rating alone, open-source or not.
+const POOL_SIZE = LIMIT * 3;
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
 }
 
-const TOOL_COLUMNS = "slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured";
+const TOOL_COLUMNS = "slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source";
 
 // deno-lint-ignore no-explicit-any
 async function topViewedSince(supabase: any, sinceIso: string, limit: number) {
@@ -52,11 +57,11 @@ Deno.serve(async (req: Request) => {
     const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-    let ranked = await topViewedSince(supabase, dayAgo, LIMIT);
+    let ranked = await topViewedSince(supabase, dayAgo, POOL_SIZE);
     let tier: "today" | "week" | "popular" = "today";
 
     if (ranked.length < MIN_RESULTS) {
-      const weekRanked = await topViewedSince(supabase, weekAgo, LIMIT);
+      const weekRanked = await topViewedSince(supabase, weekAgo, POOL_SIZE);
       if (weekRanked.length > ranked.length) {
         ranked = weekRanked;
         tier = "week";
@@ -77,7 +82,7 @@ Deno.serve(async (req: Request) => {
         .gt("rating", 0)
         .order("rating", { ascending: false })
         .order("review_count", { ascending: false })
-        .limit(LIMIT);
+        .limit(POOL_SIZE);
       toolIds = (popular || []).map((t: { id: string }) => t.id);
       viewCountById = new Map();
       tier = "popular";
@@ -87,10 +92,17 @@ Deno.serve(async (req: Request) => {
 
     const { data: toolRows } = await supabase.from("tools").select(`id, ${TOOL_COLUMNS}`).in("id", toolIds).eq("status", "published");
     const bySlugOrder = new Map(toolIds.map((id, i) => [id, i]));
+    // Paid/non-open-source tools first (open-source only fills remaining
+    // slots when the pool doesn't have enough alternatives), preserving
+    // each group's original trending/rating rank as the secondary key.
     const tools = (toolRows || [])
-      .sort((a: { id: string }, b: { id: string }) => (bySlugOrder.get(a.id) ?? 0) - (bySlugOrder.get(b.id) ?? 0))
+      .sort((a: { id: string; is_open_source: boolean }, b: { id: string; is_open_source: boolean }) => {
+        if (a.is_open_source !== b.is_open_source) return a.is_open_source ? 1 : -1;
+        return (bySlugOrder.get(a.id) ?? 0) - (bySlugOrder.get(b.id) ?? 0);
+      })
+      .slice(0, LIMIT)
       .map((t: { id: string; [key: string]: unknown }) => {
-        const { id, ...rest } = t;
+        const { id, is_open_source, ...rest } = t;
         return { ...rest, views: viewCountById.get(id) ?? null };
       });
 

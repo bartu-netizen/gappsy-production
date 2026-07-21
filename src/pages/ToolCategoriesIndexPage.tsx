@@ -17,7 +17,7 @@ import { supabase } from '../lib/supabase';
 import type { ToolCardData } from '../components/ToolCard';
 
 const FEATURED_COUNT = 3;
-const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
+const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source';
 
 const CATEGORY_EXAMPLE_QUERIES = [
   'A free tool to design social posts',
@@ -39,7 +39,7 @@ export default function ToolCategoriesIndexPage() {
     Promise.all([
       supabase.from('tool_categories').select('id, slug, name, description, icon').eq('status', 'published').order('name'),
       supabase.from('tool_category_links').select('category_id, tools!inner(status)').eq('tools.status', 'published'),
-      supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').order('updated_at', { ascending: false }).limit(8),
+      supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('status', 'published').order('is_open_source', { ascending: true }).order('updated_at', { ascending: false }).limit(8),
     ]).then(([categoriesResult, linksResult, recentResult]) => {
       const counts = new Map<string, number>();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

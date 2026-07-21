@@ -113,7 +113,7 @@ async function fetchAllPublishedTools(supabase) {
     const { data, error } = await supabase
       .from('tools')
       .select(
-        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description, is_open_source'
       )
       .eq('status', 'published')
       .order('name', { ascending: true })
@@ -276,9 +276,12 @@ function buildToolContext(tool, related, allToolsBySlugId) {
       if (otherToolId === tool.id) continue;
       if (links.some((l) => l.category_id === primaryCategoryId)) sameCategoryToolIds.add(otherToolId);
     }
+    // Non-open-source candidates first — only fills remaining slots with
+    // open-source tools when the category doesn't have 5 alternatives.
     relatedTools = [...sameCategoryToolIds]
       .map((id) => allToolsBySlugId.get(id))
       .filter(Boolean)
+      .sort((a, b) => (a.is_open_source === b.is_open_source ? 0 : a.is_open_source ? 1 : -1))
       .slice(0, 5);
   }
 

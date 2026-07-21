@@ -11,6 +11,7 @@ export interface FeaturedTool {
   short_description: string | null;
   pricing_model: string | null;
   starting_price: string | null;
+  is_open_source?: boolean;
 }
 
 // The actual fulfillment surface for Feature My Product's "your software
@@ -37,7 +38,7 @@ export function useFeaturedToolPool(excludeSlug: string | string[], count: numbe
     let cancelled = false;
     let query = supabase
       .from('tools')
-      .select('slug, name, logo, short_description, pricing_model, starting_price')
+      .select('slug, name, logo, short_description, pricing_model, starting_price, is_open_source')
       .eq('featured', true)
       .eq('status', 'published');
     for (const slug of excludeSlugs) {
@@ -45,8 +46,13 @@ export function useFeaturedToolPool(excludeSlug: string | string[], count: numbe
     }
     query.limit(20).then(({ data }) => {
       if (cancelled) return;
-      const shuffled = [...(data || [])].sort(() => Math.random() - 0.5);
-      setPool(shuffled.slice(0, count));
+      // Shuffled within each tier separately, non-open-source tier first —
+      // keeps genuine placement randomization while still filling these ad
+      // slots with paid/non-open-source tools whenever there are enough.
+      const rows = data || [];
+      const nonOpenSource = rows.filter((t) => !t.is_open_source).sort(() => Math.random() - 0.5);
+      const openSource = rows.filter((t) => t.is_open_source).sort(() => Math.random() - 0.5);
+      setPool([...nonOpenSource, ...openSource].slice(0, count));
     });
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -30,11 +30,17 @@ async function resolveCanonicalMembers(supabase: any, members: MemberInput[]) {
   if (ids.length < MIN_MEMBERS) {
     throw new ValidationError(`A group comparison needs at least ${MIN_MEMBERS} distinct tools`);
   }
-  const { data, error } = await supabase.from("tools").select("id, slug, name").in("id", ids);
+  const { data, error } = await supabase.from("tools").select("id, slug, name, is_open_source").in("id", ids);
   if (error) throw new Error(`Failed to load tools: ${error.message}`);
   const toolsById = new Map((data || []).map((t: { id: string }) => [t.id, t]));
   if (toolsById.size !== ids.length) {
     throw new ValidationError("One or more selected tools could not be found");
+  }
+  // Paid tools drive more real business value than open-source ones — a
+  // group made up entirely of open-source tools is blocked rather than
+  // just deprioritized in listings, mirroring the pairwise comparisons rule.
+  if (ids.every((id) => (toolsById.get(id) as { is_open_source?: boolean }).is_open_source)) {
+    throw new ValidationError("Cannot create a group comparison made up entirely of open-source tools — include at least one non-open-source tool");
   }
   const sorted = ids
     .map((id) => toolsById.get(id) as { id: string; slug: string; name: string })

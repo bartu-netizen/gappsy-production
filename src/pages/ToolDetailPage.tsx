@@ -63,7 +63,7 @@ interface ToolDetail {
   seo_meta_description: string | null;
 }
 
-const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured';
+const TOOL_CARD_COLUMNS = 'slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source';
 
 // Rich comparison row (both tools' name/logo) — sourced directly from
 // tool_comparisons, the same table CompareDetailPage's "Related
@@ -284,7 +284,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           supabase.from('tool_pricing_plans').select('id, plan_name, price, billing_cycle, description, features, sort_order').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_integrations').select('id, integration_name, integration_slug, integration_logo, description').eq('tool_id', data.id),
           supabase.from('tool_user_reviews_public').select('id, reviewer_name, rating, title, body, created_at').eq('tool_id', data.id).order('created_at', { ascending: false }),
-          supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('rating', { ascending: false }).limit(6),
+          supabase.from('tools').select(TOOL_CARD_COLUMNS).eq('featured', true).eq('status', 'published').neq('id', data.id).order('is_open_source', { ascending: true }).order('rating', { ascending: false }).limit(6),
           supabase.from('tool_features').select('title, description').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_pros').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
           supabase.from('tool_cons').select('text').eq('tool_id', data.id).order('sort_order', { ascending: true }),
@@ -370,10 +370,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
             Promise.all([
               supabase
                 .from('tool_category_links')
-                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status)')
+                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status, is_open_source)')
                 .eq('category_id', primaryCategoryId)
                 .neq('tool_id', data.id)
                 .eq('tools.status', 'published')
+                .order('is_open_source', { ascending: true, referencedTable: 'tools' })
                 .order('featured', { ascending: false, referencedTable: 'tools' })
                 .order('rating', { ascending: false, referencedTable: 'tools' })
                 .limit(8),
@@ -384,10 +385,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               // category happened to have a fresher updated_at.
               supabase
                 .from('tool_category_links')
-                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status, updated_at)')
+                .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status, updated_at, is_open_source)')
                 .eq('category_id', primaryCategoryId)
                 .neq('tool_id', data.id)
                 .eq('tools.status', 'published')
+                .order('is_open_source', { ascending: true, referencedTable: 'tools' })
                 .order('updated_at', { ascending: false, referencedTable: 'tools' })
                 .limit(8),
             ]).then(([{ data: relatedLinks }, { data: freshLinks }]) => {
@@ -419,7 +421,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
       .eq('status', 'published')
       .then(({ data }) => {
         const bySlug = new Map((data || []).map((t) => [t.slug, t]));
-        setRecentTools(recentSlugs.map((slug) => bySlug.get(slug)).filter((t): t is ToolCardData => Boolean(t)));
+        setRecentTools(recentSlugs.map((slug) => bySlug.get(slug)).filter(Boolean) as ToolCardData[]);
       });
   }, [recentSlugs]);
 

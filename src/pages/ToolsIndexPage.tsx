@@ -67,7 +67,7 @@ export default function ToolsIndexPage() {
     Promise.all([
       supabase
         .from('tools')
-        .select('slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, created_at')
+        .select('slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source, created_at')
         .eq('status', 'published')
         .order('featured', { ascending: false })
         .order('name'),
@@ -113,7 +113,9 @@ export default function ToolsIndexPage() {
   const spotlightTools = useMemo(() => {
     if (tools.length === 0) return [];
     const featured = tools.filter((t) => t.featured);
-    const rest = [...tools].filter((t) => !t.featured).sort((a, b) => b.rating - a.rating);
+    const rest = [...tools]
+      .filter((t) => !t.featured)
+      .sort((a, b) => (a.is_open_source === b.is_open_source ? b.rating - a.rating : a.is_open_source ? 1 : -1));
     return [...featured, ...rest].slice(0, SPOTLIGHT_COUNT);
   }, [tools]);
   const spotlightSlugs = useMemo(() => new Set(spotlightTools.map((t) => t.slug)), [spotlightTools]);
@@ -121,7 +123,10 @@ export default function ToolsIndexPage() {
   const recentTools = useMemo(() => {
     return [...tools]
       .filter((t) => !spotlightSlugs.has(t.slug))
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .sort((a, b) => {
+        if (a.is_open_source !== b.is_open_source) return a.is_open_source ? 1 : -1;
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      })
       .slice(0, 5);
   }, [tools, spotlightSlugs]);
 

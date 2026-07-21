@@ -23,11 +23,17 @@ class ValidationError extends Error {}
 // DB-level backstop against ever storing both orderings as separate rows.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function resolveCanonicalPair(supabase: any, idX: string, idY: string) {
-  const { data, error } = await supabase.from("tools").select("id, slug, name").in("id", [idX, idY]);
+  const { data, error } = await supabase.from("tools").select("id, slug, name, is_open_source").in("id", [idX, idY]);
   if (error) throw new Error(`Failed to load tools: ${error.message}`);
   const toolX = (data || []).find((t: { id: string }) => t.id === idX);
   const toolY = (data || []).find((t: { id: string }) => t.id === idY);
   if (!toolX || !toolY) throw new ValidationError("Both tool_a_id and tool_b_id must reference existing tools");
+  // Paid tools drive more real business value than open-source ones — an
+  // open-source-vs-open-source pairing is deliberately blocked rather than
+  // just deprioritized in listings, per an explicit content-strategy call.
+  if (toolX.is_open_source && toolY.is_open_source) {
+    throw new ValidationError("Cannot create a comparison between two open-source tools — pair at least one non-open-source tool");
+  }
   const [toolA, toolB] = toolX.slug.localeCompare(toolY.slug) <= 0 ? [toolX, toolY] : [toolY, toolX];
   return { toolA, toolB, slug: `${toolA.slug}-vs-${toolB.slug}` };
 }

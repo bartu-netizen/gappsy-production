@@ -12,6 +12,7 @@ export interface ToolCardData {
   review_count: number;
   verified: boolean;
   featured: boolean;
+  is_open_source?: boolean;
 }
 
 export default function ToolCard({ tool }: { tool: ToolCardData }) {
