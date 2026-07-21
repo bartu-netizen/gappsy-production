@@ -44,10 +44,13 @@ export default function StickyMobileToolBar({ featuredPromo }: StickyMobileToolB
         ) : (
           <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-sm shrink-0">{featuredPromo.name.charAt(0)}</div>
         )}
-        <div className="min-w-0 flex-1 pr-14">
-          <p className="text-[13px] font-semibold text-[#0B1221] leading-tight truncate">{featuredPromo.name}</p>
+        <div className="min-w-0 flex-1">
+          {/* Only the name sits on the same line as the corner FeaturedBadge,
+              so only it needs the pr-14 clearance — the description row
+              below has nothing overlapping it and can run almost full width. */}
+          <p className="text-[13px] font-semibold text-[#0B1221] leading-tight truncate pr-14">{featuredPromo.name}</p>
           {featuredPromo.short_description && (
-            <OverflowMarqueeText text={featuredPromo.short_description} className="text-[11px] text-slate-500 mt-0.5 w-full" />
+            <OverflowMarqueeText text={featuredPromo.short_description} className="text-[11px] text-slate-500 mt-0.5 w-full pr-3" />
           )}
         </div>
         <div className="absolute top-1.5 right-1.5 scale-90 origin-top-right">
