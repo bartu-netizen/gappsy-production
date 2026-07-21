@@ -21,24 +21,54 @@ function jsonResponse(body: unknown, status = 200) {
 const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "");
 
 // Server-side price source of truth — the frontend never supplies a price.
-const FEATURE_PRICE_LOOKUP_KEY = "feature_my_product_monthly_v1";
-const FEATURE_PRICE_AMOUNT_CENTS = 3700; // $37/mo
+// Two products now instead of one: a one-time "claim" fee (required first),
+// then a recurring "growth" upgrade (monthly or yearly) that unlocks the
+// actual visibility features. ACTIVE_SUBSCRIPTION_STATUSES is shared by
+// both — the DB's per-(tool, product) unique indexes are what actually let
+// a tool hold one active row of each product at once (see the v2 migration).
+const CLAIM_PRICE_LOOKUP_KEY = "feature_my_product_claim_v1";
+const CLAIM_PRICE_AMOUNT_CENTS = 2900; // $29 one-time
+const GROWTH_PRICE_LOOKUP_KEYS: Record<"month" | "year", string> = {
+  month: "feature_my_product_growth_monthly_v1",
+  year: "feature_my_product_growth_yearly_v1",
+};
+const GROWTH_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
+  month: 8900, // $89/mo
+  year: 89000, // $890/yr (~2 months free vs. paying monthly)
+};
 const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "pending_verification"];
 const RATE_LIMIT_PER_HOUR = 20;
 
-async function getOrCreateFeaturePriceId(stripe: Stripe): Promise<string> {
-  const existing = await stripe.prices.list({ lookup_keys: [FEATURE_PRICE_LOOKUP_KEY], limit: 1 });
+async function getOrCreateClaimPriceId(stripe: Stripe): Promise<string> {
+  const existing = await stripe.prices.list({ lookup_keys: [CLAIM_PRICE_LOOKUP_KEY], limit: 1 });
   if (existing.data[0]) return existing.data[0].id;
   const product = await stripe.products.create({
-    name: "Gappsy Featured Listing",
+    name: "Gappsy Listing Claim & Verify",
+    description: "One-time verification of your product listing on the Gappsy software directory — verified badge, self-serve editing, and review replies.",
+  });
+  const price = await stripe.prices.create({
+    product: product.id,
+    unit_amount: CLAIM_PRICE_AMOUNT_CENTS,
+    currency: "usd",
+    lookup_key: CLAIM_PRICE_LOOKUP_KEY,
+  });
+  return price.id;
+}
+
+async function getOrCreateGrowthPriceId(stripe: Stripe, interval: "month" | "year"): Promise<string> {
+  const lookupKey = GROWTH_PRICE_LOOKUP_KEYS[interval];
+  const existing = await stripe.prices.list({ lookup_keys: [lookupKey], limit: 1 });
+  if (existing.data[0]) return existing.data[0].id;
+  const product = await stripe.products.create({
+    name: `Gappsy Growth Listing (${interval === "year" ? "Yearly" : "Monthly"})`,
     description: "Priority software directory placement across category, comparison, alternative, and search surfaces.",
   });
   const price = await stripe.prices.create({
     product: product.id,
-    unit_amount: FEATURE_PRICE_AMOUNT_CENTS,
+    unit_amount: GROWTH_PRICE_AMOUNT_CENTS[interval],
     currency: "usd",
-    recurring: { interval: "month" },
-    lookup_key: FEATURE_PRICE_LOOKUP_KEY,
+    recurring: { interval },
+    lookup_key: lookupKey,
   });
   return price.id;
 }
@@ -89,12 +119,13 @@ async function fetchToolSummary(toolId: string) {
   return { ...tool, category: (catLink as any)?.tool_categories?.name || null };
 }
 
-async function findActiveSubscription(toolId: string | null, discoveredToolId: string | null) {
+async function findActiveSubscription(toolId: string | null, discoveredToolId: string | null, product: "claim" | "growth") {
   if (toolId) {
     const { data } = await supabase
       .from("vendor_feature_subscriptions")
       .select("id, status")
       .eq("tool_id", toolId)
+      .eq("product", product)
       .in("status", ACTIVE_SUBSCRIPTION_STATUSES)
       .maybeSingle();
     if (data) return data;
@@ -104,11 +135,21 @@ async function findActiveSubscription(toolId: string | null, discoveredToolId: s
       .from("vendor_feature_subscriptions")
       .select("id, status")
       .eq("discovered_tool_id", discoveredToolId)
+      .eq("product", product)
       .in("status", ACTIVE_SUBSCRIPTION_STATUSES)
       .maybeSingle();
     if (data) return data;
   }
   return null;
+}
+
+// Growth is only purchasable once the one-time claim fee has actually
+// cleared — checked against vendor_feature_subscriptions directly (not the
+// tools.claim_paid_at mirror) so a not-yet-published new product (which has
+// no tools row at all yet) is still gated correctly via discovered_tool_id.
+async function hasActiveClaim(toolId: string | null, discoveredToolId: string | null): Promise<boolean> {
+  const claim = await findActiveSubscription(toolId, discoveredToolId, "claim");
+  return Boolean(claim && claim.status === "active");
 }
 
 Deno.serve(async (req: Request) => {
@@ -167,7 +208,8 @@ Deno.serve(async (req: Request) => {
 
         if (duplicateMatch.againstTable === "tools") {
           const tool = await fetchToolSummary(duplicateMatch.id!);
-          const activeSub = await findActiveSubscription(duplicateMatch.id, null);
+          const activeSub = await findActiveSubscription(duplicateMatch.id, null, "growth");
+          const alreadyClaimed = await hasActiveClaim(duplicateMatch.id, null);
 
           const { data: session } = await supabase
             .from("vendor_onboarding_sessions")
@@ -193,12 +235,13 @@ Deno.serve(async (req: Request) => {
               session_id: session?.id,
               is_new_product: false,
               already_featured: true,
+              already_claimed: alreadyClaimed,
               requires_verification_to_manage: true,
               tool: tool ? { name: tool.name, slug: tool.slug, logo: tool.logo } : null,
             });
           }
 
-          return jsonResponse({ ok: true, session_id: session?.id, is_new_product: false, already_featured: false, tool });
+          return jsonResponse({ ok: true, session_id: session?.id, is_new_product: false, already_featured: false, already_claimed: alreadyClaimed, tool });
         }
 
         if (duplicateMatch.againstTable === "discovered_tools") {
@@ -207,7 +250,8 @@ Deno.serve(async (req: Request) => {
             .select("id, name, official_website, short_description, logo_url, status")
             .eq("id", duplicateMatch.id)
             .maybeSingle();
-          const activeSub = await findActiveSubscription(null, duplicateMatch.id);
+          const activeSub = await findActiveSubscription(null, duplicateMatch.id, "growth");
+          const alreadyClaimed = await hasActiveClaim(null, duplicateMatch.id);
 
           const { data: session } = await supabase
             .from("vendor_onboarding_sessions")
@@ -230,7 +274,7 @@ Deno.serve(async (req: Request) => {
           ]);
 
           if (activeSub) {
-            return jsonResponse({ ok: true, session_id: session?.id, is_new_product: true, already_featured: true, requires_verification_to_manage: true });
+            return jsonResponse({ ok: true, session_id: session?.id, is_new_product: true, already_featured: true, already_claimed: alreadyClaimed, requires_verification_to_manage: true });
           }
 
           return jsonResponse({
@@ -238,6 +282,7 @@ Deno.serve(async (req: Request) => {
             session_id: session?.id,
             is_new_product: true,
             pending_submission: true,
+            already_claimed: alreadyClaimed,
             prefill: { name: candidate?.name || "", website: candidate?.official_website || finalUrl, description: candidate?.short_description || null, logo: candidate?.logo_url || null },
           });
         }
@@ -267,6 +312,7 @@ Deno.serve(async (req: Request) => {
           session_id: session?.id,
           is_new_product: true,
           pending_submission: false,
+          already_claimed: false,
           prefill: { name: metadata.title || "", website: finalUrl, description: metadata.description, logo: metadata.faviconUrl || metadata.ogImageUrl },
         });
       }
@@ -337,13 +383,28 @@ Deno.serve(async (req: Request) => {
       // ── Step 4/5: create the Stripe Checkout session ──────────────────
       case "create_checkout": {
         const sessionId = typeof payload.session_id === "string" ? payload.session_id : "";
+        const product: "claim" | "growth" = payload.product === "growth" ? "growth" : "claim";
+        const billingInterval: "month" | "year" = payload.billing_interval === "year" ? "year" : "month";
+
         const { data: session } = await supabase.from("vendor_onboarding_sessions").select("*").eq("id", sessionId).maybeSingle();
         if (!session || !session.contact_email) return jsonResponse({ ok: false, error: "Session not ready for checkout" }, 400);
 
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed" });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed", metadata: { product, billing_interval: billingInterval } });
 
-        const existingActive = await findActiveSubscription(session.matched_tool_id, session.matched_discovered_tool_id);
-        if (existingActive) return jsonResponse({ ok: false, error_code: "already_subscribed", error: "This product already has an active featured subscription." }, 409);
+        // Growth is only purchasable once the one-time claim fee has cleared.
+        if (product === "growth") {
+          const claimed = await hasActiveClaim(session.matched_tool_id, session.matched_discovered_tool_id);
+          if (!claimed) return jsonResponse({ ok: false, error_code: "claim_required", error: "Claim & Verify your listing before upgrading to Growth." }, 409);
+        }
+
+        const existingActive = await findActiveSubscription(session.matched_tool_id, session.matched_discovered_tool_id, product);
+        if (existingActive) {
+          return jsonResponse({
+            ok: false,
+            error_code: product === "claim" ? "already_claimed" : "already_subscribed",
+            error: product === "claim" ? "This product has already been claimed." : "This product already has an active Growth subscription.",
+          }, 409);
+        }
 
         const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
         if (!stripeKey) return jsonResponse({ ok: false, error: "Billing is not configured" }, 500);
@@ -357,37 +418,67 @@ Deno.serve(async (req: Request) => {
             discovered_tool_id: session.matched_discovered_tool_id,
             status: "pending_payment",
             contact_email: session.contact_email,
+            product,
+            billing_interval: product === "claim" ? "one_time" : billingInterval,
           })
           .select("id")
           .single();
         if (subInsertError) {
           const isDuplicateRace = (subInsertError as { code?: string }).code === "23505";
-          return jsonResponse({ ok: false, error_code: isDuplicateRace ? "already_subscribed" : "insert_failed", error: isDuplicateRace ? "This product already has an active featured subscription." : subInsertError.message }, isDuplicateRace ? 409 : 500);
+          return jsonResponse({
+            ok: false,
+            error_code: isDuplicateRace ? (product === "claim" ? "already_claimed" : "already_subscribed") : "insert_failed",
+            error: isDuplicateRace ? (product === "claim" ? "This product has already been claimed." : "This product already has an active Growth subscription.") : subInsertError.message,
+          }, isDuplicateRace ? 409 : 500);
         }
 
-        const priceId = await getOrCreateFeaturePriceId(stripe);
-        const baseUrl = Deno.env.get("PUBLIC_BASE_URL") || "https://www.gappsy.com";
-        const successUrl = `${baseUrl}/feature-my-product/onboarding?step=success&session_id=${sessionId}&stripe_session_id={CHECKOUT_SESSION_ID}`;
-        const cancelUrl = `${baseUrl}/feature-my-product/onboarding?step=plan&session_id=${sessionId}&checkout=cancelled`;
+        const priceId = product === "claim" ? await getOrCreateClaimPriceId(stripe) : await getOrCreateGrowthPriceId(stripe, billingInterval);
+        const baseUrl = Deno.env.get("PUBLIC_BASE_URL") || "https://gappsy.com";
+        // Claim success routes to the Growth upsell screen next; Growth
+        // success (whichever interval) is the end of the wizard.
+        const nextStage = product === "claim" ? "growth_upsell" : "done";
+        const successUrl = `${baseUrl}/feature-my-product/onboarding?step=success&session_id=${sessionId}&stripe_session_id={CHECKOUT_SESSION_ID}&next=${nextStage}`;
+        const cancelUrl = `${baseUrl}/feature-my-product/onboarding?step=${product === "claim" ? "claim" : "growth_upsell"}&session_id=${sessionId}&checkout=cancelled`;
 
-        const metadata: Record<string, string> = { funnel_type: "feature_my_product", onboarding_session_id: sessionId, contact_email: session.contact_email };
+        const metadata: Record<string, string> = {
+          funnel_type: "feature_my_product",
+          onboarding_session_id: sessionId,
+          contact_email: session.contact_email,
+          product,
+          billing_interval: product === "claim" ? "one_time" : billingInterval,
+        };
         if (session.matched_tool_id) metadata.matched_tool_id = session.matched_tool_id;
         if (session.matched_discovered_tool_id) metadata.discovered_tool_id = session.matched_discovered_tool_id;
 
-        const stripeSession = await stripe.checkout.sessions.create({
-          mode: "subscription",
-          line_items: [{ price: priceId, quantity: 1 }],
-          customer_email: session.contact_email,
-          success_url: successUrl,
-          cancel_url: cancelUrl,
-          metadata,
-          subscription_data: { metadata },
-          custom_text: { submit: { message: "Billed monthly — cancel anytime." } },
-        });
+        // Claim is a genuine one-time charge (mode: "payment", no
+        // subscription_data) — growth stays a recurring subscription like
+        // the original single-tier flow.
+        const stripeSession = await stripe.checkout.sessions.create(
+          product === "claim"
+            ? {
+                mode: "payment",
+                line_items: [{ price: priceId, quantity: 1 }],
+                customer_email: session.contact_email,
+                success_url: successUrl,
+                cancel_url: cancelUrl,
+                metadata,
+                custom_text: { submit: { message: "One-time payment — no recurring charge." } },
+              }
+            : {
+                mode: "subscription",
+                line_items: [{ price: priceId, quantity: 1 }],
+                customer_email: session.contact_email,
+                success_url: successUrl,
+                cancel_url: cancelUrl,
+                metadata,
+                subscription_data: { metadata },
+                custom_text: { submit: { message: billingInterval === "year" ? "Billed yearly — cancel anytime." : "Billed monthly — cancel anytime." } },
+              }
+        );
 
         await supabase.from("vendor_feature_subscriptions").update({ stripe_checkout_session_id: stripeSession.id }).eq("id", subRow.id);
         await supabase.from("vendor_onboarding_sessions").update({ stripe_checkout_session_id: stripeSession.id, status: "checkout_pending", updated_at: new Date().toISOString() }).eq("id", sessionId);
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "checkout_started", metadata: { stripe_checkout_session_id: stripeSession.id } });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "checkout_started", metadata: { stripe_checkout_session_id: stripeSession.id, product, billing_interval: billingInterval } });
 
         return jsonResponse({ ok: true, checkout_url: stripeSession.url });
       }
@@ -402,27 +493,34 @@ Deno.serve(async (req: Request) => {
         const { data: session } = sessionId ? await query.eq("id", sessionId).maybeSingle() : await query.eq("stripe_checkout_session_id", stripeSessionId).maybeSingle();
         if (!session) return jsonResponse({ ok: false, error: "Session not found" }, 404);
 
-        const { data: subscription } = await supabase
+        const { data: subscriptions } = await supabase
           .from("vendor_feature_subscriptions")
-          .select("id, status, tool_id, discovered_tool_id")
+          .select("id, status, tool_id, discovered_tool_id, product, billing_interval")
           .eq("onboarding_session_id", session.id)
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .maybeSingle();
+          .order("created_at", { ascending: false });
 
+        const latest = subscriptions?.[0] || null;
+        const claimRow = subscriptions?.find((s) => s.product === "claim") || null;
+        const growthRow = subscriptions?.find((s) => s.product === "growth") || null;
+
+        // Looked up by onboarding_session_id (not the latest subscription's
+        // id) — the ownership token is only ever created once, during claim
+        // activation, and must still resolve after a later Growth checkout
+        // round creates its own separate vendor_feature_subscriptions row.
         let ownershipToken: string | null = null;
-        if (subscription) {
-          const { data: tokenRow } = await supabase.from("vendor_ownership_tokens").select("token, verified").eq("vendor_subscription_id", subscription.id).order("created_at", { ascending: false }).limit(1).maybeSingle();
-          ownershipToken = tokenRow?.token || null;
-        }
+        const { data: tokenRow } = await supabase.from("vendor_ownership_tokens").select("token, verified").eq("onboarding_session_id", session.id).order("created_at", { ascending: false }).limit(1).maybeSingle();
+        ownershipToken = tokenRow?.token || null;
 
         return jsonResponse({
           ok: true,
           session_status: session.status,
-          subscription_status: subscription?.status || null,
-          tool_id: subscription?.tool_id || null,
-          discovered_tool_id: subscription?.discovered_tool_id || null,
+          subscription_status: latest?.status || null,
+          tool_id: latest?.tool_id || null,
+          discovered_tool_id: latest?.discovered_tool_id || null,
           ownership_token: ownershipToken,
+          claim_status: claimRow?.status || null,
+          growth_status: growthRow?.status || null,
+          growth_billing_interval: growthRow?.billing_interval || null,
         });
       }
 

@@ -10,13 +10,13 @@ interface StickyDesktopToolBarProps {
 
 // Desktop counterpart to StickyMobileToolBar. The sidebar's own featured-ad
 // card is lg:sticky and stays in view for the whole read, so this bar isn't
-// filling a visibility gap — it's additional exposure, shown on every tool
-// page including a featured tool's own: `tools.featured` today is purely an
-// editorial flag (no tool has an actual paid feature subscription yet —
-// see vendor_feature_subscriptions), so there's no real paying listing
-// whose page this should be an ad-free zone for. Dismissible because a
-// second permanent bar on top of an already-persistent sidebar would be
-// one nag too many if the reader can't close it.
+// filling a visibility gap — it's additional exposure. The caller
+// (ToolDetailPage.tsx) skips rendering this component entirely when the
+// current tool is on a Growth Yearly subscription
+// (`tool.billing_interval === 'year'`) — that's the one paid tier that buys
+// "no competitor ads on your own listing." Dismissible because a second
+// permanent bar on top of an already-persistent sidebar would be one nag
+// too many if the reader can't close it.
 //
 // Each promo renders as its own bordered "chip" (not plain inline text next
 // to a divider) with a persistent trailing chevron — both are there so the

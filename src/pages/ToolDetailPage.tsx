@@ -52,6 +52,7 @@ interface ToolDetail {
   review_count: number;
   verified: boolean;
   featured: boolean;
+  billing_interval: 'month' | 'year' | null;
   updated_at: string | null;
   founded_year: number | null;
   company_size: string | null;
@@ -198,6 +199,10 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const featuredPromoSecondary = featuredPool?.[1];
   const featuredPromoTertiary = featuredPool?.[2];
   const inlineFeaturedPromos = (featuredPool || []).slice(3);
+  // Growth Yearly's one exclusive perk that isn't a fulfillment task (video
+  // review, newsletter feature) but an actual render-time gate — no
+  // competitor ads anywhere on this tool's own page.
+  const isAdFree = tool?.billing_interval === 'year';
 
   useEffect(() => {
     if (previewToolId) {
@@ -215,7 +220,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           id: t.id, slug: t.slug, name: t.name, logo: t.logo, website: t.website, affiliate_link: t.affiliate_link,
           short_description: t.short_description, long_description: t.long_description, pricing_model: t.pricing_model,
           starting_price: t.starting_price, youtube_url: t.youtube_url, rating: t.rating, review_count: t.review_count,
-          verified: t.verified, featured: t.featured, updated_at: t.updated_at,
+          verified: t.verified, featured: t.featured, billing_interval: t.billing_interval ?? null, updated_at: t.updated_at,
           founded_year: t.founded_year, company_size: t.company_size, headquarters: t.headquarters, languages: t.languages || [],
           status: t.status, seo_title: t.seo_title ?? null, seo_meta_description: t.seo_meta_description ?? null,
         });
@@ -255,7 +260,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     supabase
       .from('tools')
       .select(
-        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, billing_interval, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
       )
       .eq('slug', toolSlug)
       .eq('status', 'published')
@@ -663,11 +668,11 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 languages={tool.languages}
                 quickCompareLinks={quickCompareLinks}
                 categoryHref={primaryCategory ? `/tool-categories/${primaryCategory.slug}` : null}
-                secondarySlot={tool.featured && featuredPromoSecondary ? <FeaturedToolSidebarCompact tool={featuredPromoSecondary} /> : undefined}
-                tertiarySlot={tool.featured && featuredPromoTertiary ? <FeaturedToolSidebarCompact tool={featuredPromoTertiary} /> : undefined}
+                secondarySlot={tool.featured && !isAdFree && featuredPromoSecondary ? <FeaturedToolSidebarCompact tool={featuredPromoSecondary} /> : undefined}
+                tertiarySlot={tool.featured && !isAdFree && featuredPromoTertiary ? <FeaturedToolSidebarCompact tool={featuredPromoTertiary} /> : undefined}
               >
                 {tool.featured
-                  ? featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />
+                  ? !isAdFree && featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />
                   : <ClaimListingCard toolName={tool.name} website={websiteUrl} />}
               </ToolFactsSidebar>
             </div>
@@ -723,11 +728,13 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
 
       <FooterWrapper />
 
-      <StickyMobileToolBar featuredPromo={featuredPromo} />
+      {!isAdFree && <StickyMobileToolBar featuredPromo={featuredPromo} />}
 
-      <StickyDesktopToolBar
-        promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
-      />
+      {!isAdFree && (
+        <StickyDesktopToolBar
+          promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
+        />
+      )}
     </div>
   );
 }

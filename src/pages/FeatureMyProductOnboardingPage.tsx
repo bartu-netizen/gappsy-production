@@ -1,20 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy } from 'lucide-react';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Sparkles } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
 
 type WizardStep =
   | 'url' | 'matching' | 'match_existing' | 'already_featured' | 'new_product'
-  | 'contact' | 'plan' | 'redirecting' | 'finalizing' | 'success' | 'error';
+  | 'contact' | 'claim' | 'growth_upsell' | 'redirecting' | 'finalizing' | 'success' | 'error';
 
 const STEP_INDEX: Record<string, number> = {
   url: 1, matching: 1,
   match_existing: 2, already_featured: 2, new_product: 2,
   contact: 3,
-  plan: 4, redirecting: 4,
+  claim: 4,
+  growth_upsell: 5,
 };
+
+const GROWTH_MONTHLY_FEATURES = [
+  'Featured placement across category, comparison, and search',
+  'Priority ranking ahead of unfeatured listings',
+];
+const GROWTH_YEARLY_ONLY_FEATURES = [
+  'A produced video review, posted on our socials',
+  'A featured spot in the Gappsy newsletter',
+  'No competitor ads shown on your own listing',
+];
 
 interface ToolSummary { id: string; name: string; slug: string; logo: string | null; short_description: string | null; category: string | null }
 
@@ -22,7 +33,7 @@ interface ToolSummary { id: string; name: string; slug: string; logo: string | n
 // short viewport) + a CTA sticky to the bottom of that same scroll region,
 // so the primary action never gets hidden behind a mobile keyboard.
 function StepLayout({
-  eyebrow, title, subtitle, children, ctaLabel, onCta, ctaDisabled, ctaLoading, footnote,
+  eyebrow, title, subtitle, children, ctaLabel, onCta, ctaDisabled, ctaLoading, footnote, secondaryAction,
 }: {
   eyebrow?: string;
   title: string;
@@ -33,6 +44,7 @@ function StepLayout({
   ctaDisabled?: boolean;
   ctaLoading?: boolean;
   footnote?: string;
+  secondaryAction?: React.ReactNode;
 }) {
   return (
     <>
@@ -53,6 +65,7 @@ function StepLayout({
             {ctaLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : null}
             {ctaLabel}
           </button>
+          {secondaryAction}
           {footnote && <p className="mt-2 text-center text-xs text-slate-400">{footnote}</p>}
         </div>
       </div>
@@ -72,10 +85,14 @@ export default function FeatureMyProductOnboardingPage() {
   const [prefillName, setPrefillName] = useState('');
   const [prefillWebsite, setPrefillWebsite] = useState('');
   const [pendingSubmission, setPendingSubmission] = useState(false);
+  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   const [email, setEmail] = useState('');
   const [contactName, setContactName] = useState('');
   const [ownershipConfirmed, setOwnershipConfirmed] = useState(false);
+
+  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year');
+  const [purchasedGrowth, setPurchasedGrowth] = useState(false);
 
   const [ownershipToken, setOwnershipToken] = useState<string | null>(null);
   const [cancelledNotice, setCancelledNotice] = useState(false);
@@ -86,17 +103,18 @@ export default function FeatureMyProductOnboardingPage() {
     const stepParam = searchParams.get('step');
     const sidParam = searchParams.get('session_id');
     const stripeSid = searchParams.get('stripe_session_id');
+    const next = searchParams.get('next');
 
     if (stepParam === 'success' && (sidParam || stripeSid)) {
       setSessionId(sidParam);
       setStep('finalizing');
-      pollForCompletion(sidParam, stripeSid);
+      pollForCompletion(sidParam, stripeSid, next === 'growth_upsell' ? 'growth_upsell' : 'success');
       return;
     }
-    if (stepParam === 'plan' && sidParam) {
+    if ((stepParam === 'claim' || stepParam === 'growth_upsell') && sidParam) {
       setSessionId(sidParam);
       setCancelledNotice(searchParams.get('checkout') === 'cancelled');
-      setStep('plan');
+      setStep(stepParam);
       return;
     }
 
@@ -112,9 +130,17 @@ export default function FeatureMyProductOnboardingPage() {
     const stored = getStoredSessionId();
     if (stored) {
       vendorOnboarding.sessionStatus({ sessionId: stored }).then((res) => {
-        if (res.ok && (res.session_status === 'checkout_completed' || res.session_status === 'verified')) {
+        if (!res.ok) { clearStoredSessionId(); return; }
+        if (res.claim_status === 'active' && res.growth_status !== 'active') {
+          // Claimed before but never added Growth — send them straight to
+          // the upsell instead of the static success screen.
           setSessionId(stored);
           setOwnershipToken(res.ownership_token || null);
+          setStep('growth_upsell');
+        } else if (res.session_status === 'checkout_completed' || res.session_status === 'verified') {
+          setSessionId(stored);
+          setOwnershipToken(res.ownership_token || null);
+          setPurchasedGrowth(res.growth_status === 'active');
           setStep('success');
         } else {
           clearStoredSessionId();
@@ -126,19 +152,22 @@ export default function FeatureMyProductOnboardingPage() {
 
   useEffect(() => () => { if (pollRef.current) window.clearInterval(pollRef.current); }, []);
 
-  function pollForCompletion(sid: string | null, stripeSid: string | null) {
+  function pollForCompletion(sid: string | null, stripeSid: string | null, onDone: 'growth_upsell' | 'success') {
     let attempts = 0;
     pollRef.current = window.setInterval(async () => {
       attempts += 1;
       const res = await vendorOnboarding.sessionStatus({ sessionId: sid || undefined, stripeSessionId: stripeSid || undefined });
-      if (res.ok && (res.session_status === 'checkout_completed' || res.session_status === 'verified')) {
+      const isDone = res.ok && (res.session_status === 'checkout_completed' || res.session_status === 'verified');
+      if (isDone || attempts >= 15) {
         if (pollRef.current) window.clearInterval(pollRef.current);
         setOwnershipToken(res.ownership_token || null);
-        setStep('success');
-        clearStoredSessionId();
-      } else if (attempts >= 15) {
-        if (pollRef.current) window.clearInterval(pollRef.current);
-        setStep('success'); // webhook is just slow — still a success from the buyer's POV
+        if (onDone === 'growth_upsell') {
+          setStep('growth_upsell');
+        } else {
+          setPurchasedGrowth(res.growth_status === 'active');
+          setStep('success');
+          clearStoredSessionId();
+        }
       }
     }, 2000);
   }
@@ -156,6 +185,7 @@ export default function FeatureMyProductOnboardingPage() {
     }
     setSessionId(res.session_id);
     setStoredSessionId(res.session_id);
+    setAlreadyClaimed(Boolean(res.already_claimed));
 
     if (res.already_featured) {
       setTool(res.tool || null);
@@ -203,39 +233,62 @@ export default function FeatureMyProductOnboardingPage() {
       setErrorMessage(res.error || 'Please check your email address and try again.');
       return;
     }
-    setStep('plan');
+    // Already claimed in an earlier visit (paid the one-time fee, never
+    // added Growth) — skip straight to the upsell instead of charging again.
+    setStep(alreadyClaimed ? 'growth_upsell' : 'claim');
   }
 
-  // ── Step 4: plan -> checkout ─────────────────────────────────────────────
-  async function handleCheckout() {
+  // ── Step 4: claim -> one-time checkout ──────────────────────────────────
+  async function handleClaimCheckout() {
     if (!sessionId || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.createCheckout(sessionId);
+    const res = await vendorOnboarding.createCheckout(sessionId, 'claim');
     if (!res.ok) {
       setLoading(false);
-      setErrorMessage(res.error_code === 'already_subscribed' ? 'This product already has an active featured subscription.' : (res.error || 'Could not start checkout. Please try again.'));
+      setErrorMessage(res.error_code === 'already_claimed' ? 'This product has already been claimed.' : (res.error || 'Could not start checkout. Please try again.'));
       return;
     }
     setStep('redirecting');
     window.location.href = res.checkout_url;
   }
 
+  // ── Step 5: growth upsell -> recurring checkout (or skip) ───────────────
+  async function handleGrowthCheckout() {
+    if (!sessionId || loading) return;
+    setLoading(true);
+    setErrorMessage(null);
+    const res = await vendorOnboarding.createCheckout(sessionId, 'growth', billingInterval);
+    if (!res.ok) {
+      setLoading(false);
+      setErrorMessage(res.error_code === 'already_subscribed' ? 'This product already has an active Growth subscription.' : (res.error || 'Could not start checkout. Please try again.'));
+      return;
+    }
+    setStep('redirecting');
+    window.location.href = res.checkout_url;
+  }
+
+  function handleSkipGrowth() {
+    setPurchasedGrowth(false);
+    setStep('success');
+    clearStoredSessionId();
+  }
+
   function goBack() {
     setErrorMessage(null);
     if (step === 'match_existing' || step === 'new_product' || step === 'already_featured') setStep('url');
     else if (step === 'contact') setStep(tool ? 'match_existing' : 'new_product');
-    else if (step === 'plan') setStep('contact');
+    else if (step === 'claim') setStep('contact');
   }
 
-  const stepIndex = STEP_INDEX[step] ?? 0;
-  const showBack = ['match_existing', 'already_featured', 'new_product', 'contact', 'plan'].includes(step);
+  const stepIndex = STEP_INDEX[step] ?? (step === 'redirecting' ? (purchasedGrowth ? 5 : 4) : 0);
+  const showBack = ['match_existing', 'already_featured', 'new_product', 'contact', 'claim'].includes(step);
 
   return (
     <>
       <EntitySEOTags
         title="Get Featured on Gappsy — Start Your Listing"
-        description="Feature your software on Gappsy's software directory. $37/month, cancel anytime."
+        description="Claim your Gappsy software listing for a one-time fee, then optionally upgrade to Growth for featured placement, video reviews, and more."
         path="/feature-my-product/onboarding"
         noindex
       />
@@ -280,7 +333,7 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'already_featured' && (
           <StepLayout
             eyebrow="Already featured"
-            title={tool ? `${tool.name} already has a featured subscription` : 'This product is already featured'}
+            title={tool ? `${tool.name} already has a Growth subscription` : 'This product is already on Growth'}
             subtitle="To manage an existing subscription, verify ownership first — we don't show billing details to unverified visitors."
             ctaLabel="Contact support to manage this listing"
             onCta={() => { window.location.href = '/contact'; }}
@@ -291,8 +344,8 @@ export default function FeatureMyProductOnboardingPage() {
           <StepLayout
             eyebrow="Found your listing"
             title={tool.name}
-            subtitle="Your existing Gappsy listing stays exactly as it is — a featured subscription adds premium visibility and vendor-management access once ownership is verified."
-            ctaLabel="Feature this product"
+            subtitle="Your existing Gappsy listing stays exactly as it is — claiming it adds a verified badge and self-serve editing once ownership is verified."
+            ctaLabel="Claim this listing"
             onCta={handleConfirmExisting}
           >
             <div className="rounded-2xl border border-[#eef0f3] p-4 flex items-start gap-3">
@@ -388,33 +441,84 @@ export default function FeatureMyProductOnboardingPage() {
           </StepLayout>
         )}
 
-        {step === 'plan' && (
+        {step === 'claim' && (
           <StepLayout
-            eyebrow="Featured Listing"
-            title="$37/mo — cancel anytime"
-            subtitle="Placements depend on relevance, listing quality, and editorial eligibility — we never guarantee traffic, leads, or rankings."
+            eyebrow="Claim & Verify"
+            title="$29 one-time — no recurring charge"
+            subtitle="Prove you own this listing to unlock self-serve editing. This does not include featured placement — that's an optional upgrade on the next screen."
             ctaLabel="Continue to secure checkout"
-            onCta={handleCheckout}
+            onCta={handleClaimCheckout}
             ctaLoading={loading}
-            footnote="Billed monthly via Stripe. No setup fees, no contracts."
+            footnote="Billed once via Stripe. No subscription, no recurring charge."
           >
             {cancelledNotice && (
               <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700">
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-            <ul className="grid grid-cols-2 gap-x-3 gap-y-2">
-              {[
-                'Category & comparison placement',
-                'Featured tool page badge',
-                'Eligible search visibility',
-                'Vendor-managed listing',
-                'Priority content refresh',
-                'Future analytics access',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-1.5 text-[12.5px] leading-snug text-slate-600">
+            <ul className="space-y-2">
+              {['Verified badge on your listing', 'Self-serve editing of your listing', 'Reply to reviews from your dashboard'].map((item) => (
+                <li key={item} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
                   <Check className="w-3.5 h-3.5 text-[#4F46E5] shrink-0 mt-0.5" aria-hidden="true" />
                   {item}
+                </li>
+              ))}
+            </ul>
+          </StepLayout>
+        )}
+
+        {step === 'growth_upsell' && (
+          <StepLayout
+            eyebrow="Upgrade to Growth"
+            title="Get seen by buyers actively comparing tools"
+            subtitle="Your listing is claimed and verified. Growth adds featured placement — and Yearly unlocks a produced video review, a newsletter feature, and an ad-free listing."
+            ctaLabel={billingInterval === 'year' ? 'Continue with Yearly — $890/yr' : 'Continue with Monthly — $89/mo'}
+            onCta={handleGrowthCheckout}
+            ctaLoading={loading}
+            footnote="Billed via Stripe. Cancel anytime."
+            secondaryAction={
+              <button
+                type="button"
+                onClick={handleSkipGrowth}
+                className="mt-2.5 w-full text-center text-[13.5px] font-medium text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                Not now — I'll upgrade later from my dashboard
+              </button>
+            }
+          >
+            {cancelledNotice && (
+              <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700">
+                Checkout was cancelled — no charge was made. You can try again below.
+              </div>
+            )}
+            <div className="flex rounded-xl bg-slate-100 p-1 mb-4">
+              <button
+                type="button"
+                onClick={() => setBillingInterval('month')}
+                className={`flex-1 py-2 rounded-lg text-[13px] font-semibold transition-colors ${billingInterval === 'month' ? 'bg-white text-[#0B1221] shadow-sm' : 'text-slate-500'}`}
+              >
+                Monthly — $89/mo
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingInterval('year')}
+                className={`flex-1 py-2 rounded-lg text-[13px] font-semibold transition-colors ${billingInterval === 'year' ? 'bg-white text-[#0B1221] shadow-sm' : 'text-slate-500'}`}
+              >
+                Yearly — $890/yr
+              </button>
+            </div>
+            <ul className="space-y-2">
+              {GROWTH_MONTHLY_FEATURES.map((item) => (
+                <li key={item} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
+                  <Check className="w-3.5 h-3.5 text-[#4F46E5] shrink-0 mt-0.5" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+              {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
+                <li key={item} className={`flex items-start gap-1.5 text-[13px] leading-snug ${billingInterval === 'year' ? 'text-slate-600' : 'text-slate-300'}`}>
+                  <Sparkles className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${billingInterval === 'year' ? 'text-[#7C3AED]' : 'text-slate-300'}`} aria-hidden="true" />
+                  {item}
+                  {billingInterval !== 'year' && <span className="text-[11px] font-medium text-slate-400">(Yearly only)</span>}
                 </li>
               ))}
             </ul>
@@ -431,17 +535,17 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'finalizing' && (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             <Loader2 className="w-6 h-6 text-[#7C3AED] animate-spin" aria-hidden="true" />
-            <p className="text-sm text-slate-500">Finalizing your subscription…</p>
+            <p className="text-sm text-slate-500">Finalizing…</p>
           </div>
         )}
 
-        {step === 'success' && <SuccessStep ownershipToken={ownershipToken} />}
+        {step === 'success' && <SuccessStep ownershipToken={ownershipToken} purchasedGrowth={purchasedGrowth} />}
       </OnboardingShell>
     </>
   );
 }
 
-function SuccessStep({ ownershipToken }: { ownershipToken: string | null }) {
+function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: string | null; purchasedGrowth: boolean }) {
   const [copied, setCopied] = useState(false);
   const verifyUrl = ownershipToken ? `${window.location.origin}/feature-my-product/verify/${ownershipToken}` : null;
 
@@ -450,7 +554,9 @@ function SuccessStep({ ownershipToken }: { ownershipToken: string | null }) {
       <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
         <Check className="w-6 h-6 text-emerald-500" aria-hidden="true" />
       </div>
-      <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">Your featured listing is being prepared</h1>
+      <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">
+        {purchasedGrowth ? 'Your Growth listing is being prepared' : 'Your listing claim is being prepared'}
+      </h1>
       <p className="mt-2 text-[15px] text-slate-500 leading-relaxed">Here's what happens next:</p>
 
       <ol className="mt-5 space-y-3">
@@ -458,7 +564,7 @@ function SuccessStep({ ownershipToken }: { ownershipToken: string | null }) {
           'Verify ownership of your product',
           'Review or complete your product details',
           'Gappsy prepares or updates your listing',
-          'Featured placement activates after eligibility checks',
+          purchasedGrowth ? 'Featured placement activates after eligibility checks' : 'Upgrade to Growth anytime from your dashboard',
         ].map((item, i) => (
           <li key={item} className="flex items-start gap-3 text-[14px] text-slate-600">
             <span className="w-5 h-5 rounded-full bg-indigo-50 text-[#4F46E5] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>

@@ -18,14 +18,12 @@ interface StickyMobileToolBarProps {
 // bottom-of-viewport placement. `lg:hidden` (not `md:hidden`) so there's no
 // dead zone between this bar and StickyDesktopToolBar's `lg:` breakpoint —
 // without it, viewports in the 768-1023px range (e.g. iPad portrait) showed
-// neither bar at all. Shows on every tool page, including a featured tool's
-// own: `tools.featured` today is purely an editorial flag (no tool has an
-// actual paid feature subscription yet — see vendor_feature_subscriptions),
-// so there's no real listing whose page this slot should be reserved away
-// from. Once real paid subscriptions exist, that's the point to reintroduce
-// a "paying tool's own page skips the ad" branch, gated on actual payment
-// status rather than the editorial flag. Renders nothing if there's no
-// promo candidate (pool exhausted — no placeholder clutter).
+// neither bar at all. The caller (ToolDetailPage.tsx) skips rendering this
+// component entirely when the current tool is on a Growth Yearly
+// subscription (`tool.billing_interval === 'year'`) — that's the one paid
+// tier that buys "no competitor ads on your own listing," so this component
+// itself stays unconditional. Renders nothing if there's no promo candidate
+// (pool exhausted — no placeholder clutter).
 //
 // Name sits where the "Featured" label used to be — it's the thing worth
 // reading first at a glance — with the full-width rotating description

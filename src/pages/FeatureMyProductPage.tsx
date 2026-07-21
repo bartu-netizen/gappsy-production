@@ -34,24 +34,39 @@ const JSON_LD = [
     '@type': 'Service',
     '@id': `${CANONICAL_BASE}/#service`,
     name: 'Gappsy Featured Listing',
-    serviceType: 'Software directory featured placement',
-    description: 'Editorially reviewed, priority-placed software listing across category pages, comparison pages, alternative pages, search, and the homepage on the Gappsy software directory.',
+    serviceType: 'Software directory listing claim and featured placement',
+    description: 'Claim and verify your software listing on the Gappsy directory for a one-time fee, then optionally upgrade to Growth for priority placement across category pages, comparison pages, alternative pages, search, and the homepage.',
     provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' },
     areaServed: 'Worldwide',
     audience: { '@type': 'Audience', audienceType: 'SaaS founders and software marketing teams' },
-    offers: {
-      '@type': 'Offer',
-      price: '37',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: `${CANONICAL_BASE}/`,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: '37',
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Claim & Verify',
+        price: '29',
         priceCurrency: 'USD',
-        unitText: 'MONTH',
+        availability: 'https://schema.org/InStock',
+        url: `${CANONICAL_BASE}/`,
       },
-    },
+      {
+        '@type': 'Offer',
+        name: 'Growth (Monthly)',
+        price: '89',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: `${CANONICAL_BASE}/`,
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: '89', priceCurrency: 'USD', unitText: 'MONTH' },
+      },
+      {
+        '@type': 'Offer',
+        name: 'Growth (Yearly)',
+        price: '890',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: `${CANONICAL_BASE}/`,
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: '890', priceCurrency: 'USD', unitText: 'YEAR' },
+      },
+    ],
   },
 ];
 
@@ -59,8 +74,8 @@ export default function FeatureMyProductPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <EntitySEOTags
-        title="Feature My Product — Software Directory Listing & Promotion | Gappsy"
-        description="Feature your software on Gappsy's software directory. Get in front of buyers actively comparing tools — on category pages, comparison pages, search, and more. $37/mo, cancel anytime."
+        title="Feature My Product — Claim Your Software Listing | Gappsy"
+        description="Claim your software listing on Gappsy's software directory for a one-time $29 fee, then optionally upgrade to Growth for featured placement in front of buyers actively comparing tools. Cancel anytime."
         path="/feature-my-product"
         breadcrumbs={[{ name: 'Feature My Product', path: '/feature-my-product' }]}
         jsonLd={JSON_LD}
@@ -81,19 +96,20 @@ export default function FeatureMyProductPage() {
                 Featured Listings
               </span>
               <h1 className="mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-[#0B1221] leading-[1.1]">
-                Feature your software where buyers are already comparing products.
+                Claim your listing, then feature it where buyers are already comparing products.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
-                Gappsy is a software directory built around buyer intent. A featured listing puts your
-                product in front of people actively researching and comparing tools like yours — on
-                category pages, comparison pages, search, and more.
+                Start with a one-time $29 claim to verify ownership and unlock self-serve editing. When
+                you're ready, upgrade to Growth for priority placement across category pages, comparison
+                pages, search, and more — Yearly adds a produced video review, a newsletter feature, and
+                an ad-free listing.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/feature-my-product/onboarding"
                   className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
-                  Get featured — $37/mo
+                  Claim your listing — $29
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <a
@@ -103,7 +119,7 @@ export default function FeatureMyProductPage() {
                   See placements
                 </a>
               </div>
-              <p className="mt-4 text-sm text-slate-400">No contracts. Cancel anytime.</p>
+              <p className="mt-4 text-sm text-slate-400">One-time claim fee. Growth is optional, cancel anytime.</p>
             </ScrollReveal>
 
             <ScrollReveal delayMs={120}>
@@ -149,14 +165,14 @@ export default function FeatureMyProductPage() {
                     Put your software in front of buyers comparing tools right now.
                   </h2>
                   <p className="mt-4 text-lg text-slate-300 max-w-xl mx-auto">
-                    Featured listings start at $37/month. No contracts, cancel anytime.
+                    Claim your listing for a one-time $29 fee, then upgrade to Growth whenever you're ready. No contracts.
                   </p>
                   <div className="mt-8">
                     <Link
                       to="/feature-my-product/onboarding"
                       className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-xl text-[15px] font-semibold text-[#0B1221] bg-white hover:bg-slate-100 transition-colors active:scale-[0.99]"
                     >
-                      Get featured — $37/mo
+                      Claim your listing — $29
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                   </div>
@@ -173,7 +189,7 @@ export default function FeatureMyProductPage() {
           to="/feature-my-product/onboarding"
           className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] active:scale-[0.99] transition-transform"
         >
-          Get featured — $37/mo
+          Claim your listing — $29
         </Link>
       </div>
 

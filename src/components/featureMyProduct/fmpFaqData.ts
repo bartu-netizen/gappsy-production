@@ -13,16 +13,20 @@ export const FMP_FAQS: FmpFaqItem[] = [
     answer: 'Feature My Product is for SaaS founders, indie hackers, and marketing teams who want their software in front of people actively comparing tools — not just browsing. If your product has a real website and clear pricing, it qualifies.',
   },
   {
-    question: 'What is a featured listing?',
-    answer: 'A featured listing is a verified, editorially reviewed profile of your software with priority placement across Gappsy — in comparisons, categories, search, and more — instead of sitting in the standard review queue.',
+    question: 'What is Claim & Verify?',
+    answer: 'Claim & Verify is a one-time $29 fee to prove you own a listing. It unlocks a verified badge, self-serve editing of your listing, and the ability to reply to reviews — it does not include featured placement.',
   },
   {
-    question: 'Where does my software appear?',
+    question: 'What is Growth?',
+    answer: 'Growth is an optional upgrade on top of a claimed listing — priority placement across category, comparison, alternative, and search surfaces on Gappsy. It\'s billed monthly or yearly; Yearly additionally includes a produced video review posted on our socials, a featured spot in the Gappsy newsletter, and removes competitor ads from your own listing.',
+  },
+  {
+    question: 'Where does my software appear on Growth?',
     answer: 'Your listing appears on your own tool page, relevant category pages, comparison pages against competitors, alternative-page recommendations, internal search, related-software suggestions, and the homepage spotlight rotation.',
   },
   {
     question: 'How much does it cost?',
-    answer: '$37/month during launch pricing (normally $67/month). There are no setup fees and no long-term contract.',
+    answer: 'Claim & Verify is a one-time $29 fee, required first. Growth is optional afterward: $89/month, or $890/year — Yearly includes three extra benefits Monthly doesn\'t.',
   },
   {
     question: 'How quickly does it go live?',
@@ -30,11 +34,11 @@ export const FMP_FAQS: FmpFaqItem[] = [
   },
   {
     question: 'Can I cancel?',
-    answer: 'Yes, anytime. There\'s no contract and no cancellation fee. Your listing stays featured until the end of the billing period you\'ve already paid for.',
+    answer: 'Growth can be cancelled anytime — there\'s no contract or cancellation fee, and it stays active until the end of the billing period you\'ve already paid for. Claim & Verify is a one-time payment, so there\'s nothing recurring to cancel.',
   },
   {
     question: 'How does billing work?',
-    answer: 'You\'re billed monthly in advance, and your card is charged automatically each month until you cancel — there\'s nothing to renew manually.',
+    answer: 'Claim & Verify is charged once, with no recurring charge. Growth is billed in advance — monthly or yearly, your choice — and your card is charged automatically at the start of each period until you cancel.',
   },
   {
     question: 'Do you guarantee traffic?',

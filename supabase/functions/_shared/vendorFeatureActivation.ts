@@ -30,6 +30,8 @@ export interface VendorCheckoutMetadata {
   matched_tool_id?: string;
   discovered_tool_id?: string;
   contact_email: string;
+  product?: "claim" | "growth";
+  billing_interval?: "one_time" | "month" | "year";
 }
 
 // Creates the crawl_jobs row for a newly-approved candidate, mirroring
@@ -69,9 +71,15 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
   const matchedToolId = metadata.matched_tool_id || null;
   const discoveredToolId = metadata.discovered_tool_id || null;
   const contactEmail = metadata.contact_email || session.customer_details?.email || "";
+  // Pre-migration in-flight checkouts (started before the claim/growth
+  // split shipped) carry no product/billing_interval metadata at all — a
+  // recurring session with no product tag is the old single-tier product,
+  // i.e. today's "growth".
+  const product: "claim" | "growth" = metadata.product === "claim" ? "claim" : "growth";
+  const billingInterval: "one_time" | "month" | "year" = metadata.billing_interval || "month";
 
   console.log("[vendorFeatureActivation] checkout.session.completed", {
-    sessionId: session.id, onboardingSessionId, matchedToolId, discoveredToolId,
+    sessionId: session.id, onboardingSessionId, matchedToolId, discoveredToolId, product, billingInterval,
   });
 
   const subscriptionId = typeof session.subscription === "string" ? session.subscription : session.subscription?.id;
@@ -87,6 +95,11 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
     }
   }
 
+  // Claim is a one-time payment with no ongoing period — it never expires
+  // on its own (only a refund/chargeback would undo it, handled like any
+  // other charge.refunded event elsewhere in stripe-webhook).
+  const isClaim = product === "claim";
+
   const { data: vendorSub, error: vendorSubError } = await supabase
     .from("vendor_feature_subscriptions")
     .update({
@@ -94,8 +107,8 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
       stripe_subscription_id: subscriptionId || null,
       stripe_customer_id: typeof session.customer === "string" ? session.customer : session.customer?.id || null,
       stripe_price_id: priceId,
-      current_period_end: currentPeriodEnd,
-      featured_until: currentPeriodEnd,
+      current_period_end: isClaim ? null : currentPeriodEnd,
+      featured_until: isClaim ? null : currentPeriodEnd,
       updated_at: new Date().toISOString(),
     })
     .eq("stripe_checkout_session_id", session.id)
@@ -108,10 +121,14 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
   }
 
   if (matchedToolId) {
-    await supabase
-      .from("tools")
-      .update({ featured: true, featured_until: currentPeriodEnd, vendor_subscription_id: vendorSub.id })
-      .eq("id", matchedToolId);
+    if (isClaim) {
+      await supabase.from("tools").update({ claim_paid_at: new Date().toISOString(), vendor_subscription_id: vendorSub.id }).eq("id", matchedToolId);
+    } else {
+      await supabase
+        .from("tools")
+        .update({ featured: true, featured_until: currentPeriodEnd, billing_interval: billingInterval, vendor_subscription_id: vendorSub.id })
+        .eq("id", matchedToolId);
+    }
   }
 
   if (discoveredToolId) {
@@ -127,18 +144,23 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
     }
   }
 
-  const ownershipToken = generateSecureToken();
-  // Bare token — vendor-ownership-verify/index.ts builds the exact expected
-  // string per method (meta tag content, DNS TXT value, file body).
-  const verificationTarget = generateSecureToken(16);
-  await supabase.from("vendor_ownership_tokens").insert({
-    token: ownershipToken,
-    onboarding_session_id: onboardingSessionId,
-    vendor_subscription_id: vendorSub.id,
-    tool_id: matchedToolId,
-    contact_email: contactEmail,
-    verification_target: verificationTarget,
-  });
+  // Ownership verification only needs to happen once — Growth is gated
+  // behind an already-active claim, so a token already exists by the time
+  // a Growth checkout completes. Only mint one on claim activation.
+  if (isClaim) {
+    const ownershipToken = generateSecureToken();
+    // Bare token — vendor-ownership-verify/index.ts builds the exact expected
+    // string per method (meta tag content, DNS TXT value, file body).
+    const verificationTarget = generateSecureToken(16);
+    await supabase.from("vendor_ownership_tokens").insert({
+      token: ownershipToken,
+      onboarding_session_id: onboardingSessionId,
+      vendor_subscription_id: vendorSub.id,
+      tool_id: matchedToolId,
+      contact_email: contactEmail,
+      verification_target: verificationTarget,
+    });
+  }
 
   if (onboardingSessionId) {
     await supabase
@@ -148,13 +170,15 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
     await supabase.from("vendor_funnel_events").insert({
       onboarding_session_id: onboardingSessionId,
       event_name: "checkout_completed",
-      metadata: { stripe_checkout_session_id: session.id },
+      metadata: { stripe_checkout_session_id: session.id, product, billing_interval: billingInterval },
     });
   }
 }
 
 // customer.subscription.updated/deleted — keeps featured_until / tools.featured
 // in sync with the subscription's actual lifecycle (renewal, past_due, cancel).
+// Only Growth is ever a real Stripe Subscription (Claim is mode: "payment",
+// so Stripe never fires this event for it) — no product branching needed.
 export async function handleVendorSubscriptionChange(supabase: SupabaseClient, subscription: Stripe.Subscription) {
   const metadata = (subscription.metadata || {}) as Partial<VendorCheckoutMetadata>;
   if (metadata.funnel_type !== "feature_my_product") return;
@@ -162,6 +186,7 @@ export async function handleVendorSubscriptionChange(supabase: SupabaseClient, s
   const status = subscription.status;
   const mapped = status === "active" ? "active" : status === "past_due" ? "past_due" : status === "canceled" || status === "unpaid" ? "canceled" : "active";
   const currentPeriodEnd = new Date(subscription.current_period_end * 1000).toISOString();
+  const billingInterval: "one_time" | "month" | "year" = metadata.billing_interval || "month";
 
   const { data: vendorSub } = await supabase
     .from("vendor_feature_subscriptions")
@@ -179,7 +204,11 @@ export async function handleVendorSubscriptionChange(supabase: SupabaseClient, s
   if (vendorSub?.tool_id) {
     await supabase
       .from("tools")
-      .update({ featured: mapped === "active", featured_until: mapped === "active" ? currentPeriodEnd : null })
+      .update({
+        featured: mapped === "active",
+        featured_until: mapped === "active" ? currentPeriodEnd : null,
+        billing_interval: mapped === "active" ? billingInterval : null,
+      })
       .eq("id", vendorSub.tool_id);
   }
 }

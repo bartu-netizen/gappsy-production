@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { X, ShieldCheck } from 'lucide-react';
 
 interface OnboardingShellProps {
-  step: number; // 1-4, or 0 to hide the progress dots (success/cancelled/error states)
+  step: number; // 1-5, or 0 to hide the progress dots (success/cancelled/error states)
   onBack?: () => void;
   children: React.ReactNode;
 }
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 // The "focused checkout shell" — deliberately NOT SoftwareHeader/FooterWrapper.
 // Fixed 100dvh, no document-level scroll: header/footer are shrink-0, only
