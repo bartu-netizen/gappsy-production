@@ -53,25 +53,25 @@ function StepLayout({
 }) {
   return (
     <>
-      <div className="flex-1 flex flex-col justify-center w-full max-w-md mx-auto px-5 sm:px-6 py-4 sm:py-6">
-        {eyebrow && <p className="text-[13px] font-semibold text-[#4F47E6] mb-1">{eyebrow}</p>}
-        <h1 className="text-xl sm:text-[26px] font-bold tracking-tight text-[#0B1221] leading-tight">{title}</h1>
-        {subtitle && <p className="mt-1.5 text-[14px] sm:text-[15px] text-slate-500 leading-snug">{subtitle}</p>}
-        {children && <div className="mt-4">{children}</div>}
+      <div className="flex-1 flex flex-col justify-center w-full max-w-xl mx-auto px-5 sm:px-10 py-4 sm:py-6">
+        {eyebrow && <p className="text-sm font-semibold text-[#4F47E6] mb-1.5">{eyebrow}</p>}
+        <h1 className="text-2xl sm:text-[32px] font-bold tracking-tight text-[#0B1221] leading-tight">{title}</h1>
+        {subtitle && <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug">{subtitle}</p>}
+        {children && <div className="mt-5">{children}</div>}
       </div>
-      <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-5 sm:px-6 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
-        <div className="w-full max-w-md mx-auto">
+      <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-[#f1f3f5] px-5 sm:px-10 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+        <div className="w-full max-w-xl mx-auto">
           <button
             type="button"
             onClick={onCta}
             disabled={ctaDisabled || ctaLoading}
-            className="w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
+            className="w-full flex items-center justify-center gap-1.5 px-6 py-4 rounded-xl text-base font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
           >
             {ctaLoading ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : null}
             {ctaLabel}
           </button>
           {secondaryAction}
-          {footnote && <p className="mt-2 text-center text-xs text-slate-400">{footnote}</p>}
+          {footnote && <p className="mt-2 text-center text-[13px] text-slate-400">{footnote}</p>}
         </div>
       </div>
     </>
@@ -302,7 +302,7 @@ export default function FeatureMyProductOnboardingPage() {
       />
       <OnboardingShell step={stepIndex} onBack={showBack ? goBack : undefined}>
         {errorMessage && (
-          <div className="max-w-md w-full mx-auto px-5 sm:px-6 pt-4">
+          <div className="max-w-xl w-full mx-auto px-5 sm:px-10 pt-4">
             <div className="flex items-start gap-2 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
               <span>{errorMessage}</span>
@@ -357,13 +357,13 @@ export default function FeatureMyProductOnboardingPage() {
             onCta={handleConfirmExisting}
           >
             <div className="rounded-2xl border border-[#eef0f3] p-4 flex items-start gap-3">
-              <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center text-sm font-bold text-slate-400 shrink-0">{tool.name.charAt(0)}</div>
+              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-base font-bold text-slate-400 shrink-0">{tool.name.charAt(0)}</div>
               <div className="min-w-0">
-                {tool.category && <p className="text-xs font-medium text-slate-400">{tool.category}</p>}
-                <p className="text-[14px] text-slate-600 leading-relaxed line-clamp-3">{tool.short_description}</p>
+                {tool.category && <p className="text-[13px] font-medium text-slate-400">{tool.category}</p>}
+                <p className="text-[15px] text-slate-600 leading-relaxed line-clamp-3">{tool.short_description}</p>
               </div>
             </div>
-            <button type="button" onClick={() => setStep('url')} className="mt-3 text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors">
+            <button type="button" onClick={() => setStep('url')} className="mt-3 text-[15px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
               This is not my product
             </button>
           </StepLayout>
@@ -379,25 +379,25 @@ export default function FeatureMyProductOnboardingPage() {
             ctaLoading={loading}
             ctaDisabled={!prefillName.trim() || !prefillWebsite.trim()}
           >
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               <div>
-                <label htmlFor="fmp-name" className="block text-xs font-medium text-slate-500 mb-1">Product name</label>
+                <label htmlFor="fmp-name" className="block text-[13px] font-medium text-slate-500 mb-1">Product name</label>
                 <input
                   id="fmp-name"
                   type="text"
                   value={prefillName}
                   onChange={(e) => setPrefillName(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <div>
-                <label htmlFor="fmp-website" className="block text-xs font-medium text-slate-500 mb-1">Canonical website</label>
+                <label htmlFor="fmp-website" className="block text-[13px] font-medium text-slate-500 mb-1">Canonical website</label>
                 <input
                   id="fmp-website"
                   type="text"
                   value={prefillWebsite}
                   onChange={(e) => setPrefillWebsite(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
             </div>
@@ -414,26 +414,26 @@ export default function FeatureMyProductOnboardingPage() {
             ctaLoading={loading}
             ctaDisabled={!email.trim() || !ownershipConfirmed}
           >
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               <div>
-                <label htmlFor="fmp-email" className="block text-xs font-medium text-slate-500 mb-1">Business email</label>
+                <label htmlFor="fmp-email" className="block text-[13px] font-medium text-slate-500 mb-1">Business email</label>
                 <input
                   id="fmp-email"
                   type="email"
                   autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <div>
-                <label htmlFor="fmp-contact-name" className="block text-xs font-medium text-slate-500 mb-1">Your name (optional)</label>
+                <label htmlFor="fmp-contact-name" className="block text-[13px] font-medium text-slate-500 mb-1">Your name (optional)</label>
                 <input
                   id="fmp-contact-name"
                   type="text"
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-200 px-4 text-[15px] text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
               <label className="flex items-start gap-2.5 pt-1 cursor-pointer">
@@ -443,7 +443,7 @@ export default function FeatureMyProductOnboardingPage() {
                   onChange={(e) => setOwnershipConfirmed(e.target.checked)}
                   className="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#4F47E6] focus:ring-[#4F47E6]/30"
                 />
-                <span className="text-[13.5px] text-slate-500 leading-snug">I confirm this is my product, or I'm authorized to promote it on Gappsy.</span>
+                <span className="text-sm text-slate-500 leading-snug">I confirm this is my product, or I'm authorized to promote it on Gappsy.</span>
               </label>
             </div>
           </StepLayout>
@@ -463,15 +463,16 @@ export default function FeatureMyProductOnboardingPage() {
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-            <p className="text-[13px] text-slate-400 mb-3">Takes about 2 minutes. Here's what you get:</p>
-            <ul className="space-y-2">
+            <p className="text-sm text-slate-400 mb-3">Takes about 2 minutes. Here's what you get:</p>
+            <ul className="space-y-2.5">
               {[
                 ['Verified badge', 'on your listing'],
                 ['Self-serve editing', 'of your listing'],
                 ['Reply to reviews', 'from your dashboard'],
+                ['A link to your site', 'from your Gappsy listing'],
               ].map(([bold, rest]) => (
-                <li key={bold} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
-                  <Check className="w-3.5 h-3.5 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+                <li key={bold} className="flex items-start gap-2 text-[15px] leading-snug text-slate-600">
+                  <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                   <span><span className="font-semibold text-[#0B1221]">{bold}</span> {rest}</span>
                 </li>
               ))}
@@ -480,13 +481,13 @@ export default function FeatureMyProductOnboardingPage() {
         )}
 
         {step === 'growth_upsell' && (
-          <div className="flex-1 w-full max-w-3xl mx-auto px-5 sm:px-6 py-6 sm:py-10">
-            <div className="text-center mb-6 sm:mb-8">
-              <p className="text-[13px] font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
-              <h1 className="text-xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">
+          <div className="flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
+            <div className="text-center mb-5 sm:mb-7">
+              <p className="text-sm font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
+              <h1 className="text-2xl sm:text-[34px] font-bold tracking-tight text-[#0B1221] leading-tight">
                 Your listing is claimed. Ready to get seen?
               </h1>
-              <p className="mt-2 text-[14px] sm:text-[15px] text-slate-500 leading-snug max-w-lg mx-auto">
+              <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug max-w-xl lg:max-w-none mx-auto lg:whitespace-nowrap">
                 Growth puts your product in front of buyers who are already comparing tools like yours.
               </p>
             </div>
@@ -497,28 +498,28 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             )}
 
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-8 items-stretch">
               {/* Yearly first — the recommended plan should be the one visible
                   without scrolling once these stack on mobile. */}
-              <div className="relative order-1 rounded-2xl border-2 border-[#4F47E6] bg-white p-5 sm:p-6 shadow-[0_16px_40px_rgba(79,71,230,0.16)] flex flex-col">
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10.5px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full whitespace-nowrap">
+              <div className="relative order-1 rounded-2xl border-2 border-[#4F47E6] bg-white p-5 sm:p-8 shadow-[0_16px_40px_rgba(79,71,230,0.16)] flex flex-col">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full whitespace-nowrap">
                   Best value — save $369/year
                 </span>
-                <h3 className="text-sm font-semibold text-[#4F47E6] mt-1">Yearly</h3>
+                <h3 className="text-base font-semibold text-[#4F47E6] mt-1">Yearly</h3>
                 <div className="mt-2 flex items-end gap-1.5">
-                  <span className="text-3xl font-bold text-[#0B1221]">$699</span>
-                  <span className="text-sm text-slate-400 mb-0.5">/year</span>
+                  <span className="text-4xl font-bold text-[#0B1221]">$699</span>
+                  <span className="text-base text-slate-400 mb-1">/year</span>
                 </div>
-                <p className="mt-1 text-xs text-slate-400">Works out to ~$58/mo, billed yearly</p>
+                <p className="mt-1 text-[13px] text-slate-400">Works out to ~$58/mo, billed yearly</p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {GROWTH_MONTHLY_FEATURES.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-600">
+                    <li key={item} className="flex items-start gap-2 text-[14.5px] leading-snug text-slate-600">
                       <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
                   {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-700 font-medium">
+                    <li key={item} className="flex items-start gap-2 text-[14.5px] leading-snug text-slate-700 font-medium">
                       <Sparkles className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                       {item}
                     </li>
@@ -528,32 +529,32 @@ export default function FeatureMyProductOnboardingPage() {
                   type="button"
                   onClick={() => handleGrowthCheckout('year')}
                   disabled={checkingOutInterval !== null}
-                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl text-[14.5px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
+                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-4 rounded-xl text-base font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
                 >
                   {checkingOutInterval === 'year' && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
                   Continue with Yearly
                 </button>
               </div>
 
-              <div className="order-2 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col">
-                <h3 className="text-sm font-semibold text-slate-500">Monthly</h3>
+              <div className="order-2 rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 flex flex-col">
+                <h3 className="text-base font-semibold text-slate-500">Monthly</h3>
                 <div className="mt-2 flex items-end gap-1.5">
-                  <span className="text-3xl font-bold text-[#0B1221]">$89</span>
-                  <span className="text-sm text-slate-400 mb-0.5">/month</span>
+                  <span className="text-4xl font-bold text-[#0B1221]">$89</span>
+                  <span className="text-base text-slate-400 mb-1">/month</span>
                 </div>
-                <p className="mt-1 text-xs text-slate-400">Cancel anytime</p>
+                <p className="mt-1 text-[13px] text-slate-400">Cancel anytime</p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {GROWTH_MONTHLY_FEATURES.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-600">
+                    <li key={item} className="flex items-start gap-2 text-[14.5px] leading-snug text-slate-600">
                       <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
                   {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-300">
+                    <li key={item} className="flex items-start gap-2 text-[14.5px] leading-snug text-slate-300">
                       <Sparkles className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" aria-hidden="true" />
                       {item}
-                      <span className="text-[10.5px] font-medium text-slate-400 whitespace-nowrap">(Yearly only)</span>
+                      <span className="text-[11px] font-medium text-slate-400 whitespace-nowrap">(Yearly only)</span>
                     </li>
                   ))}
                 </ul>
@@ -561,7 +562,7 @@ export default function FeatureMyProductOnboardingPage() {
                   type="button"
                   onClick={() => handleGrowthCheckout('month')}
                   disabled={checkingOutInterval !== null}
-                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl text-[14.5px] font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="mt-6 w-full flex items-center justify-center gap-1.5 px-5 py-4 rounded-xl text-base font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
                   {checkingOutInterval === 'month' && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
                   Continue with Monthly
@@ -569,12 +570,12 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             </div>
 
-            <p className="mt-5 text-center text-xs text-slate-400">Billed via Stripe. Cancel anytime.</p>
+            <p className="mt-5 text-center text-[13px] text-slate-400">Billed via Stripe. Cancel anytime.</p>
 
             <button
               type="button"
               onClick={handleSkipGrowth}
-              className="mt-4 w-full text-center text-[13.5px] font-semibold text-red-500 hover:text-red-600 underline underline-offset-2 decoration-red-200 hover:decoration-red-300 transition-colors"
+              className="mt-4 w-full text-center text-sm font-semibold text-red-500 hover:text-red-600 underline underline-offset-2 decoration-red-200 hover:decoration-red-300 transition-colors"
             >
               No thanks — skip Growth and stay unfeatured for now
             </button>

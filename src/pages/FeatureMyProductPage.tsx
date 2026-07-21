@@ -78,9 +78,12 @@ export default function FeatureMyProductPage() {
                 Claim your listing — or add it if it's not there yet.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
-                Enter your product's website and we'll tell you which applies. Either way, a one-time $29
-                fee gets you a verified badge, self-serve editing, and the ability to reply to reviews.
-                No recurring charge.
+                A verified badge, self-serve editing, the ability to reply to reviews, and a link back
+                to your site from gappsy.com — all for a one-time $29 fee. No subscription.
+              </p>
+              <p className="mt-3 text-[15px] text-slate-400 max-w-xl">
+                Not sure if your product's already listed? Just enter your website below — we'll match it
+                to an existing listing, or help you add a new one.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
@@ -97,7 +100,7 @@ export default function FeatureMyProductPage() {
                   See how it works
                 </a>
               </div>
-              <p className="mt-4 text-sm text-slate-400">One-time fee. No recurring charge.</p>
+              <p className="mt-4 text-sm text-slate-400">Billed once via Stripe. Takes about 2 minutes.</p>
             </ScrollReveal>
 
             <ScrollReveal delayMs={120}>
