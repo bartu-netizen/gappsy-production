@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, ArrowUpLeft } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
+import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
 
 type WizardStep =
@@ -585,6 +586,20 @@ export default function FeatureMyProductOnboardingPage() {
             >
               No thanks — skip Growth and stay unfeatured for now
             </button>
+
+            <AskGappsyBubble
+              page="growth_upsell"
+              chatTitle="Ask Gappsy about Growth"
+              chatSubtitle="Real answers — ask us anything before you decide"
+              placeholder="Ask anything about Growth..."
+              triggerLabel="Any questions?"
+              nudgeText="Any questions? Not sure this is right for you? Ask here and get answers right away."
+              suggestedQuestions={[
+                'What do I get with Yearly vs Monthly?',
+                'What happens if I cancel later?',
+                'Is this worth it for a new listing?',
+              ]}
+            />
           </div>
         )}
 
