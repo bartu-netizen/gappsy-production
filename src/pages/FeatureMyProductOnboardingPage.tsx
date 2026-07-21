@@ -472,13 +472,13 @@ export default function FeatureMyProductOnboardingPage() {
         )}
 
         {step === 'growth_upsell' && (
-          <div className="flex-1 w-full max-w-2xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
+          <div className="flex-1 w-full max-w-3xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
             <div className="text-center mb-5 sm:mb-7">
               <p className="text-sm font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
-              <h1 className="text-2xl sm:text-[34px] font-bold tracking-tight text-[#0B1221] leading-tight">
+              <h1 className="text-2xl sm:text-[32px] font-bold tracking-tight text-[#0B1221] leading-tight lg:whitespace-nowrap">
                 Your listing is claimed. Ready to get seen?
               </h1>
-              <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug max-w-xl mx-auto">
+              <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug max-w-xl lg:max-w-none mx-auto lg:whitespace-nowrap">
                 Growth puts your product in front of buyers who are already comparing tools like yours.
               </p>
             </div>
@@ -489,12 +489,16 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             )}
 
-            <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div className="max-w-xl mx-auto rounded-2xl border border-slate-200 bg-white overflow-hidden">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
                     <th className="w-auto" />
                     <th className="w-[92px] sm:w-28 px-2 py-4 align-bottom">
+                      {/* Fixed-height wrapper (matching the real badge's
+                          wrapper below) so "Monthly" and "Yearly" land on
+                          the exact same line regardless of text metrics. */}
+                      <div className="h-5" aria-hidden="true" />
                       <p className="text-[13px] font-semibold text-slate-500">Monthly</p>
                       <div className="mt-1 flex items-end justify-center gap-0.5">
                         <span className="text-2xl sm:text-[28px] font-bold text-[#0B1221]">$89</span>
@@ -502,16 +506,18 @@ export default function FeatureMyProductOnboardingPage() {
                       </div>
                       <p className="mt-0.5 text-[10.5px] text-slate-400">Cancel anytime</p>
                     </th>
-                    <th className="w-[92px] sm:w-28 px-2 py-4 align-bottom bg-[#EEF0FE]/70 relative">
-                      <span className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full whitespace-nowrap">
-                        Best value
-                      </span>
-                      <p className="mt-3 text-[13px] font-semibold text-[#4F47E6]">Yearly</p>
+                    <th className="w-[92px] sm:w-28 px-2 py-4 align-bottom bg-[#EEF0FE]/70">
+                      <div className="h-5 flex items-center justify-center">
+                        <span className="inline-block bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full whitespace-nowrap leading-none">
+                          Best value
+                        </span>
+                      </div>
+                      <p className="text-[13px] font-semibold text-[#4F47E6]">Yearly</p>
                       <div className="mt-1 flex items-end justify-center gap-0.5">
                         <span className="text-2xl sm:text-[28px] font-bold text-[#0B1221]">$699</span>
                         <span className="text-[11px] text-slate-400 mb-1">/yr</span>
                       </div>
-                      <p className="mt-0.5 text-[10.5px] text-slate-400">Save $369/yr</p>
+                      <p className="mt-0.5 text-[10.5px] text-slate-400">~$58/mo billed yearly</p>
                     </th>
                   </tr>
                 </thead>
