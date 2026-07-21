@@ -7,6 +7,7 @@ interface FeaturedTool {
   name: string;
   logo: string | null;
   short_description?: string | null;
+  billing_interval?: string | null;
 }
 
 interface StickyMobileToolBarProps {
@@ -54,7 +55,7 @@ export default function StickyMobileToolBar({ featuredPromo }: StickyMobileToolB
           )}
         </div>
         <div className="absolute top-1.5 right-1.5 scale-90 origin-top-right">
-          <FeaturedBadge />
+          <FeaturedBadge growth={Boolean(featuredPromo.billing_interval)} />
         </div>
       </Link>
     </div>

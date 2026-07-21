@@ -12,6 +12,11 @@ export interface FeaturedTool {
   pricing_model: string | null;
   starting_price: string | null;
   is_open_source?: boolean;
+  // Only ever set by a real Growth activation (see vendorFeatureActivation.ts
+  // / the admin manual grant) — null for tools.featured=true via editorial
+  // marking alone, which is how the badge tells a real paying Growth
+  // customer apart from an editor's pick.
+  billing_interval?: string | null;
 }
 
 // The actual fulfillment surface for Feature My Product's "your software
@@ -38,7 +43,7 @@ export function useFeaturedToolPool(excludeSlug: string | string[], count: numbe
     let cancelled = false;
     let query = supabase
       .from('tools')
-      .select('slug, name, logo, short_description, pricing_model, starting_price, is_open_source')
+      .select('slug, name, logo, short_description, pricing_model, starting_price, is_open_source, billing_interval')
       .eq('featured', true)
       .eq('status', 'published');
     for (const slug of excludeSlugs) {
@@ -89,11 +94,20 @@ function WantYourProductHereLink({ className = '' }: { className?: string }) {
   );
 }
 
-export function FeaturedBadge({ large = false }: { large?: boolean }) {
+// A real paying Growth customer gets a distinct gold/amber "Growth" badge
+// instead of the generic indigo "Featured" one — otherwise an editorially
+// marked tool (tools.featured=true with no billing_interval, no money
+// changing hands) reads identically to a customer who's actually paying
+// for placement, which undersells what Growth buys.
+export function FeaturedBadge({ large = false, growth = false }: { large?: boolean; growth?: boolean }) {
   return (
-    <span className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white bg-[#4F47E6] rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'}`}>
+    <span
+      className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'} ${
+        growth ? 'bg-gradient-to-r from-amber-500 to-amber-600' : 'bg-[#4F47E6]'
+      }`}
+    >
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
-      Featured
+      {growth ? 'Growth' : 'Featured'}
     </span>
   );
 }
@@ -117,7 +131,7 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
           <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{tool.name.charAt(0)}</div>
         )}
         <div className="min-w-0 flex-1">
-          <FeaturedBadge />
+          <FeaturedBadge growth={Boolean(tool.billing_interval)} />
           <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-[#4F47E6] transition-colors">{tool.name}</p>
         </div>
         <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
@@ -170,7 +184,7 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
           )}
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <FeaturedBadge large />
+              <FeaturedBadge large growth={Boolean(tool.billing_interval)} />
             </div>
             <p className="font-bold text-[#0B1221] text-[15px]">{tool.name}</p>
           </div>

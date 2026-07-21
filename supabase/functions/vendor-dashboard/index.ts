@@ -44,6 +44,19 @@ function pickWhitelisted(input: Record<string, unknown>): Record<string, unknown
   return out;
 }
 
+// deno-lint-ignore no-explicit-any
+async function hasActiveGrowth(supabase: any, toolId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from("vendor_feature_subscriptions")
+    .select("status")
+    .eq("tool_id", toolId)
+    .eq("product", "growth")
+    .eq("status", "active")
+    .limit(1)
+    .maybeSingle();
+  return Boolean(data);
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
 
@@ -52,7 +65,7 @@ Deno.serve(async (req: Request) => {
     const session = await requireVendorSession(req, supabase);
 
     if (req.method === "GET") {
-      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, growthResult] = await Promise.all([
+      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, growthResult, comparisonRequestsResult] = await Promise.all([
         supabase.from("tools").select(
           `id, slug, name, logo, website, short_description, long_description, pricing_model, starting_price,
            youtube_url, founded_year, company_size, headquarters, languages, best_for, target_audience,
@@ -70,6 +83,7 @@ Deno.serve(async (req: Request) => {
         // subscription row happens to be newest.
         supabase.from("vendor_feature_subscriptions").select("status, created_at").eq("tool_id", session.toolId).eq("product", "claim").order("created_at", { ascending: false }).limit(1).maybeSingle(),
         supabase.from("vendor_feature_subscriptions").select("status, billing_interval, current_period_end, featured_until, stripe_customer_id, canceled_at").eq("tool_id", session.toolId).eq("product", "growth").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        supabase.from("vendor_comparison_requests").select("id, status, admin_notes, created_at, requested_tool:tools!vendor_comparison_requests_requested_tool_id_fkey(slug, name, logo)").eq("tool_id", session.toolId).order("created_at", { ascending: false }),
       ]);
 
       if (toolResult.error) return jsonResponse({ ok: false, error: "Failed to load listing" }, 500);
@@ -105,6 +119,7 @@ Deno.serve(async (req: Request) => {
         claimSubscription: claimResult.data || null,
         growthSubscription: growthResult.data || null,
         analytics,
+        comparisonRequests: comparisonRequestsResult.data || [],
       });
     }
 
@@ -173,15 +188,7 @@ Deno.serve(async (req: Request) => {
         // suppressing legitimate criticism) instead of disappearing forever.
         // Growth-exclusive: Claim & Verify includes replying to reviews, but
         // not removing/hiding them.
-        const { data: growthSub } = await supabase
-          .from("vendor_feature_subscriptions")
-          .select("status")
-          .eq("tool_id", session.toolId)
-          .eq("product", "growth")
-          .eq("status", "active")
-          .limit(1)
-          .maybeSingle();
-        if (!growthSub) {
+        if (!(await hasActiveGrowth(supabase, session.toolId))) {
           return jsonResponse({ ok: false, error: "Removing or restoring reviews is a Growth feature — upgrade to remove reviews from your listing." }, 403);
         }
 
@@ -192,6 +199,42 @@ Deno.serve(async (req: Request) => {
         const { data, error } = await supabase.from("tool_user_reviews").update({ status: newStatus }).eq("id", reviewId).select().single();
         if (error) return jsonResponse({ ok: false, error: error.message }, 500);
         return jsonResponse({ ok: true, review: data });
+      }
+
+      if (action === "request_comparison") {
+        // Growth-exclusive: request to be paired against a specific
+        // competitor. Only queues the request — the actual tool_comparisons
+        // row is still hand-created by an admin via the existing editor
+        // (including its open-source-pair guard), never auto-created here.
+        if (!(await hasActiveGrowth(supabase, session.toolId))) {
+          return jsonResponse({ ok: false, error: "Requesting a comparison is a Growth feature." }, 403);
+        }
+        const requestedToolSlug = typeof payload.requested_tool_slug === "string" ? payload.requested_tool_slug : null;
+        if (!requestedToolSlug) return jsonResponse({ ok: false, error: "requested_tool_slug is required" }, 400);
+
+        const { data: requestedTool } = await supabase.from("tools").select("id, status").eq("slug", requestedToolSlug).maybeSingle();
+        if (!requestedTool || requestedTool.status !== "published") {
+          return jsonResponse({ ok: false, error: "That tool couldn't be found" }, 404);
+        }
+        const requestedToolId = requestedTool.id;
+        if (requestedToolId === session.toolId) return jsonResponse({ ok: false, error: "Cannot request a comparison against your own listing" }, 400);
+
+        const { data: existing } = await supabase
+          .from("vendor_comparison_requests")
+          .select("id")
+          .eq("tool_id", session.toolId)
+          .eq("requested_tool_id", requestedToolId)
+          .eq("status", "pending")
+          .maybeSingle();
+        if (existing) return jsonResponse({ ok: false, error: "You already have a pending request for this comparison" }, 409);
+
+        const { data, error } = await supabase
+          .from("vendor_comparison_requests")
+          .insert({ tool_id: session.toolId, requested_tool_id: requestedToolId })
+          .select("id, status, admin_notes, created_at, requested_tool:tools!vendor_comparison_requests_requested_tool_id_fkey(slug, name, logo)")
+          .single();
+        if (error) return jsonResponse({ ok: false, error: error.message }, 500);
+        return jsonResponse({ ok: true, request: data });
       }
 
       if (action === "create_billing_portal_session") {

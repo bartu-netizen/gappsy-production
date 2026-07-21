@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
   MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard } from '../lib/vendorDashboardApi';
 import EntitySEOTags from '../components/EntitySEOTags';
 import { useNoindex } from '../components/NoindexMeta';
+import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
 
 interface ToolRow {
   id: string; slug: string; name: string; logo: string | null; website: string | null;
@@ -32,12 +34,17 @@ interface GrowthSubscriptionRow {
   featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null;
 }
 interface AnalyticsData { views_total: number; views_30d: number; clicks_total: number; clicks_30d: number }
+interface ComparisonRequestRow {
+  id: string; status: string; admin_notes: string | null; created_at: string;
+  requested_tool: { slug: string; name: string; logo: string | null } | null;
+}
 
-type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics';
+type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics' | 'comparisons';
 
 const TABS: { key: Tab; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
   { key: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { key: 'comparisons', label: 'Comparisons', icon: ArrowLeftRight },
   { key: 'listing', label: 'Listing', icon: FileText },
   { key: 'content', label: 'Features & FAQs', icon: FileText },
   { key: 'reviews', label: 'Reviews', icon: MessageSquare },
@@ -60,6 +67,7 @@ export default function VendorDashboardPage() {
   const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
   const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [comparisonRequests, setComparisonRequests] = useState<ComparisonRequestRow[]>([]);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -78,6 +86,7 @@ export default function VendorDashboardPage() {
       setClaimSubscription(res.claimSubscription);
       setGrowthSubscription(res.growthSubscription);
       setAnalytics(res.analytics);
+      setComparisonRequests(res.comparisonRequests || []);
       setLoading(false);
     }).catch(() => {
       setLoadError('Failed to load your dashboard');
@@ -139,7 +148,7 @@ export default function VendorDashboardPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             <nav className="lg:w-56 shrink-0">
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-                {TABS.filter(({ key }) => key !== 'analytics' || analytics).map(({ key, label, icon: Icon }) => (
+                {TABS.filter(({ key }) => (key !== 'analytics' && key !== 'comparisons') || growthSubscription?.status === 'active').map(({ key, label, icon: Icon }) => (
                   <button
                     key={key}
                     type="button"
@@ -158,6 +167,9 @@ export default function VendorDashboardPage() {
             <div className="flex-1 min-w-0">
               {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} />}
               {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
+              {tab === 'comparisons' && (
+                <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
+              )}
               {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
               {tab === 'content' && (
                 <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
@@ -278,6 +290,91 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
         <AnalyticsStat icon={BarChart3} label="Page views (all-time)" value={analytics.views_total} />
         <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (all-time)" value={analytics.clicks_total} />
       </div>
+    </div>
+  );
+}
+
+function ComparisonRequestsTab({
+  tool, requests, onRequests,
+}: {
+  tool: ToolRow; requests: ComparisonRequestRow[]; onRequests: (v: ComparisonRequestRow[]) => void;
+}) {
+  const [selectedTool, setSelectedTool] = useState<ToolOption | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    if (!selectedTool) return;
+    setSubmitting(true);
+    setError(null);
+    const res = await vendorDashboard.requestComparison(selectedTool.slug);
+    setSubmitting(false);
+    if (res.ok) {
+      onRequests([res.request, ...requests]);
+      setSelectedTool(null);
+    } else {
+      setError(res.error || 'Failed to submit request');
+    }
+  }
+
+  const statusStyles: Record<string, string> = {
+    pending: 'bg-amber-50 text-amber-700',
+    approved: 'bg-emerald-50 text-emerald-700',
+    rejected: 'bg-slate-100 text-slate-500',
+  };
+  const statusIcons: Record<string, typeof Clock> = { pending: Clock, approved: CheckCircle2, rejected: XCircle };
+
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Request a comparison</p>
+        <p className="text-[13px] text-slate-500 mt-1 mb-4">
+          A Growth perk — ask us to build a head-to-head comparison between {tool.name} and a specific competitor. We review every request before publishing.
+        </p>
+        <div className="flex items-end gap-2 flex-wrap">
+          <div className="flex-1 min-w-[220px]">
+            <ToolSelectCombobox label="Competitor" value={selectedTool} onChange={setSelectedTool} excludeSlug={tool.slug} compact />
+          </div>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!selectedTool || submitting}
+            className="h-10 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50"
+          >
+            {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowLeftRight className="w-4 h-4" />}
+            Request
+          </button>
+        </div>
+        {error && <p className="text-[13px] text-rose-600 mt-2">{error}</p>}
+      </Card>
+
+      {requests.length > 0 && (
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221] mb-3">Your requests</p>
+          <div className="space-y-2">
+            {requests.map((r) => {
+              const StatusIcon = statusIcons[r.status] || Clock;
+              return (
+                <div key={r.id} className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 px-3.5 py-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    {r.requested_tool?.logo ? (
+                      <img src={r.requested_tool.logo} alt="" className="w-7 h-7 rounded-lg object-contain border border-slate-100 shrink-0" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">
+                        {(r.requested_tool?.name || '?').charAt(0)}
+                      </div>
+                    )}
+                    <p className="text-sm font-medium text-[#0B1221] truncate">{tool.name} vs {r.requested_tool?.name || 'Unknown'}</p>
+                  </div>
+                  <span className={`shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold capitalize ${statusStyles[r.status] || 'bg-slate-100 text-slate-500'}`}>
+                    <StatusIcon className="w-3 h-3" /> {r.status}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

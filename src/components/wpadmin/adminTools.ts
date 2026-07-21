@@ -429,6 +429,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'UserCog',
   },
   {
+    id: 'vendor-comparison-requests',
+    label: 'Comparison Requests',
+    description: 'Growth vendors\' requests to be compared against a specific competitor',
+    href: '/wp-admin/vendor-comparison-requests',
+    keywords: ['vendor', 'comparison', 'growth', 'compare', 'request'],
+    group: 'Content',
+    scopes: ['software'],
+    iconName: 'GitCompare',
+  },
+  {
     id: 'tool-analytics',
     label: 'Tool Analytics',
     description: 'Page views and outbound "Visit Website" clicks per tool, with country/IP breakdown',

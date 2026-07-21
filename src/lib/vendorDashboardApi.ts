@@ -31,6 +31,7 @@ export const vendorDashboard = {
   removeReview: (reviewId: string) => callVendorFunction('vendor-dashboard', { action: 'remove_review', review_id: reviewId }),
   restoreReview: (reviewId: string) => callVendorFunction('vendor-dashboard', { action: 'restore_review', review_id: reviewId }),
   openBillingPortal: (returnUrl: string) => callVendorFunction('vendor-dashboard', { action: 'create_billing_portal_session', return_url: returnUrl }),
+  requestComparison: (requestedToolSlug: string) => callVendorFunction('vendor-dashboard', { action: 'request_comparison', requested_tool_slug: requestedToolSlug }),
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
