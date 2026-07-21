@@ -28,6 +28,7 @@ const LazyLoad: React.FC<LazyLoadProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [Component, setComponent] = useState<ComponentType<any> | null>(null);
+  const [failed, setFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,16 +57,36 @@ const LazyLoad: React.FC<LazyLoadProps> = ({
   }, [rootMargin, isVisible]);
 
   useEffect(() => {
-    if (isVisible && !Component) {
-      component().then((mod) => {
-        setComponent(() => mod.default);
-      });
+    if (isVisible && !Component && !failed) {
+      component()
+        .then((mod) => {
+          setComponent(() => mod.default);
+        })
+        .catch(() => {
+          setFailed(true);
+        });
     }
-  }, [isVisible, Component, component]);
+  }, [isVisible, Component, failed, component]);
 
   return (
     <div ref={containerRef} id={id} className={className}>
-      {Component ? <Component {...componentProps} /> : placeholder}
+      {Component ? (
+        <Component {...componentProps} />
+      ) : failed ? (
+        // A stale deployed chunk hash (common right after a new release) or a
+        // transient network blip is the usual cause of a failed dynamic
+        // import — reloading re-fetches the current build's asset manifest
+        // instead of leaving this section silently blank forever.
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="text-sm text-slate-400 hover:text-slate-600 underline underline-offset-2"
+        >
+          Couldn't load this section — tap to refresh
+        </button>
+      ) : (
+        placeholder
+      )}
     </div>
   );
 };
