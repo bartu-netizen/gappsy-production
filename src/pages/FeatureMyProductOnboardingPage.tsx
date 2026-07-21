@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus } from 'lucide-react';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, ArrowUpLeft } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
@@ -506,7 +506,7 @@ export default function FeatureMyProductOnboardingPage() {
                       </div>
                       <p className="mt-0.5 text-[10.5px] text-slate-400">Cancel anytime</p>
                     </th>
-                    <th className="w-[92px] sm:w-28 px-2 py-4 align-bottom bg-[#EEF0FE]/70">
+                    <th className="w-[92px] sm:w-28 px-2 py-4 align-bottom bg-[#EEF0FE]/70 border-t-2 border-l-2 border-r-2 border-[#4F47E6]">
                       <div className="h-5 flex items-center justify-center">
                         <span className="inline-block bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full whitespace-nowrap leading-none">
                           Best value
@@ -517,29 +517,32 @@ export default function FeatureMyProductOnboardingPage() {
                         <span className="text-2xl sm:text-[28px] font-bold text-[#0B1221]">$699</span>
                         <span className="text-[11px] text-slate-400 mb-1">/yr</span>
                       </div>
-                      <p className="mt-0.5 text-[10.5px] text-slate-400">~$58/mo billed yearly</p>
+                      <p className="mt-1 flex items-center justify-center gap-1 text-[10.5px] font-semibold text-[#4F47E6]">
+                        <ArrowUpLeft className="w-3 h-3 shrink-0" aria-hidden="true" />
+                        ≈4 months free vs. monthly
+                      </p>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {GROWTH_MONTHLY_FEATURES.map((item, i) => (
-                    <tr key={item} className={i % 2 === 0 ? 'bg-slate-50/60' : undefined}>
+                  {GROWTH_MONTHLY_FEATURES.map((item) => (
+                    <tr key={item}>
                       <td className="py-2.5 pl-4 pr-2 text-[13px] leading-snug text-slate-600">{item}</td>
                       <td className="py-2.5 text-center">
                         <Check className="w-4 h-4 text-[#4F47E6] inline-block" aria-hidden="true" />
                       </td>
-                      <td className="py-2.5 text-center bg-[#EEF0FE]/70">
+                      <td className="py-2.5 text-center bg-[#EEF0FE]/70 border-l-2 border-r-2 border-[#4F47E6]">
                         <Check className="w-4 h-4 text-[#4F47E6] inline-block" aria-hidden="true" />
                       </td>
                     </tr>
                   ))}
-                  {GROWTH_YEARLY_ONLY_FEATURES.map((item, i) => (
-                    <tr key={item} className={(GROWTH_MONTHLY_FEATURES.length + i) % 2 === 0 ? 'bg-slate-50/60' : undefined}>
+                  {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
+                    <tr key={item}>
                       <td className="py-2.5 pl-4 pr-2 text-[13px] leading-snug text-slate-600">{item}</td>
                       <td className="py-2.5 text-center">
                         <Minus className="w-3.5 h-3.5 text-slate-300 inline-block" aria-hidden="true" />
                       </td>
-                      <td className="py-2.5 text-center bg-[#EEF0FE]/70">
+                      <td className="py-2.5 text-center bg-[#EEF0FE]/70 border-l-2 border-r-2 border-[#4F47E6]">
                         <Check className="w-4 h-4 text-[#4F47E6] inline-block" aria-hidden="true" />
                       </td>
                     </tr>
@@ -558,14 +561,14 @@ export default function FeatureMyProductOnboardingPage() {
                         {checkingOutInterval === 'month' ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : 'Continue'}
                       </button>
                     </td>
-                    <td className="p-2 align-top bg-[#EEF0FE]/70">
+                    <td className="p-2 align-top bg-[#EEF0FE]/70 border-l-2 border-r-2 border-b-2 border-[#4F47E6]">
                       <button
                         type="button"
                         onClick={() => handleGrowthCheckout('year')}
                         disabled={checkingOutInterval !== null}
                         className="w-full flex items-center justify-center px-2 py-2.5 rounded-lg text-[12.5px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
                       >
-                        {checkingOutInterval === 'year' ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : 'Continue'}
+                        {checkingOutInterval === 'year' ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : 'Get Yearly'}
                       </button>
                     </td>
                   </tr>
