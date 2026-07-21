@@ -94,7 +94,6 @@ export default function FeatureMyProductOnboardingPage() {
 
   const [email, setEmail] = useState('');
   const [contactName, setContactName] = useState('');
-  const [ownershipConfirmed, setOwnershipConfirmed] = useState(false);
 
   // Which card's button is mid-checkout — two independent pricing cards
   // (Monthly / Yearly) instead of one shared toggle, so each has its own
@@ -232,10 +231,10 @@ export default function FeatureMyProductOnboardingPage() {
 
   // ── Step 3: contact ─────────────────────────────────────────────────────
   async function handleContactSubmit() {
-    if (!sessionId || !email.trim() || !ownershipConfirmed || loading) return;
+    if (!sessionId || !email.trim() || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.submitContact(sessionId, email.trim(), contactName.trim(), ownershipConfirmed);
+    const res = await vendorOnboarding.submitContact(sessionId, email.trim(), contactName.trim(), true);
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Please check your email address and try again.');
@@ -412,7 +411,7 @@ export default function FeatureMyProductOnboardingPage() {
             ctaLabel="Continue"
             onCta={handleContactSubmit}
             ctaLoading={loading}
-            ctaDisabled={!email.trim() || !ownershipConfirmed}
+            ctaDisabled={!email.trim()}
           >
             <div className="space-y-3.5">
               <div>
@@ -436,15 +435,6 @@ export default function FeatureMyProductOnboardingPage() {
                   className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
-              <label className="flex items-start gap-2.5 pt-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={ownershipConfirmed}
-                  onChange={(e) => setOwnershipConfirmed(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-[#4F47E6] focus:ring-[#4F47E6]/30"
-                />
-                <span className="text-sm text-slate-500 leading-snug">I confirm this is my product, or I'm authorized to promote it on Gappsy.</span>
-              </label>
             </div>
           </StepLayout>
         )}
