@@ -240,6 +240,20 @@ export function generateToolStaticBodyHTML({ tool, categories = [], tags = [], p
       </ul>`
     : '';
 
+  // extendedContent.comparisons (from tool_comparison_links) was already
+  // fetched and merged but never rendered here — every /compare/:slug page
+  // this tool is actually involved in had zero prerendered inbound links
+  // from its own tool page, reachable only via sitemap.xml. Filtering to
+  // real /compare/ hrefs only (not every tool has a dedicated comparison
+  // page yet — some rows fall back to a category page link instead).
+  const realComparisonLinks = (extendedContent?.comparisons || []).filter((c) => c.href?.startsWith('/compare/'));
+  const comparisonsHTML = realComparisonLinks.length
+    ? `<h2 style="font-size:1.5rem;font-weight:700;margin-top:2rem;margin-bottom:1rem;color:#111827;">Comparisons</h2>
+      <ul style="list-style:disc;padding-left:1.5rem;">
+        ${realComparisonLinks.slice(0, 10).map((c) => `<li><a href="${c.href}/" style="color:#4F46E5;">${escapeHtml(c.label)}</a></li>`).join('\n        ')}
+      </ul>`
+    : '';
+
   const categoryLinkHTML = primaryCategory
     ? `<a href="/tool-categories/${primaryCategory.slug}/" style="color:#4F46E5;">${escapeHtml(primaryCategory.name)}</a> · `
     : '';
@@ -262,6 +276,7 @@ export function generateToolStaticBodyHTML({ tool, categories = [], tags = [], p
       ${pricingHTML}
       ${reviewsHTML}
       ${faqHTML}
+      ${comparisonsHTML}
       ${relatedHTML}
       <noscript>
         <p style="background:#FEF3C7;border:1px solid #F59E0B;padding:1rem;border-radius:0.5rem;margin-top:2rem;">

@@ -6,6 +6,7 @@ import { prerenderTools } from './scripts/prerender-tools.js';
 import { prerenderCategories } from './scripts/prerender-categories.js';
 import { prerenderComparisons } from './scripts/prerender-comparisons.js';
 import { prerenderGroupComparisons } from './scripts/prerender-group-comparisons.js';
+import { prerenderCompareHub } from './scripts/prerender-compare-hub.js';
 
 /**
  * Vite plugin that automatically runs prerender after build
@@ -83,6 +84,18 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Group comparison prerender completed successfully - All published group comparisons have crawlable HTML\n');
+
+        // /compare hub: every individual comparison page above had ZERO
+        // prerendered inbound links from anywhere on the site (not the
+        // homepage, not tool pages, not category pages) — reachable only
+        // via sitemap.xml. This gives all of them a real crawlable link,
+        // reusing the summaries already produced above (no new DB query).
+        console.log('\n🔄 Running /compare hub prerender...\n');
+        await prerenderCompareHub({
+          pairwise: comparisonResult.comparisonsSummary,
+          group: groupComparisonResult.groupComparisonsSummary,
+        });
+        console.log('✅ /compare hub prerender completed successfully\n');
 
         // Prerender "/" LAST. dist/index.html doubles as the pristine SPA
         // shell every step above reads as its injection template (state/tool/

@@ -71,6 +71,16 @@ const ALLOWED_PATTERNS = [
   /^\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
 ];
 
+// Google uses <lastmod> to prioritize re-crawling — a value that's always
+// "today" (the build date) on every URL regardless of whether that page's
+// content actually changed teaches Google to distrust the signal on this
+// domain. Real timestamps let Google tell "just built" apart from "content
+// changed yesterday" for actual re-crawl prioritization.
+function toDateOnly(isoString) {
+  if (!isoString) return TODAY;
+  return isoString.split('T')[0];
+}
+
 async function fetchPublishedToolSlugs() {
   try {
     const env = loadEnv('production', path.join(__dirname, '..'), '');
@@ -84,21 +94,21 @@ async function fetchPublishedToolSlugs() {
     // PostgREST caps a single response at 1000 rows — paginate so the tool
     // count can grow past that without silently dropping URLs from the sitemap.
     const PAGE_SIZE = 1000;
-    const slugs = [];
+    const rows = [];
     for (let page = 0; ; page++) {
       const { data, error } = await supabase
         .from('tools')
-        .select('slug')
+        .select('slug, updated_at')
         .eq('status', 'published')
         .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
       if (error) {
         console.warn(`⚠️  Failed to fetch tool slugs for sitemap: ${error.message}`);
-        return slugs;
+        return rows;
       }
-      slugs.push(...(data || []).map((t) => t.slug));
+      rows.push(...(data || []));
       if (!data || data.length < PAGE_SIZE) break;
     }
-    return slugs;
+    return rows.map((t) => ({ slug: t.slug, lastmod: toDateOnly(t.updated_at) }));
   } catch (err) {
     console.warn(`⚠️  Error fetching tool slugs for sitemap: ${err.message}`);
     return [];
@@ -115,12 +125,12 @@ async function fetchPublishedCategorySlugs() {
       return [];
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_categories').select('slug').eq('status', 'published');
+    const { data, error } = await supabase.from('tool_categories').select('slug, updated_at').eq('status', 'published');
     if (error) {
       console.warn(`⚠️  Failed to fetch category slugs for sitemap: ${error.message}`);
       return [];
     }
-    return (data || []).map((c) => c.slug);
+    return (data || []).map((c) => ({ slug: c.slug, lastmod: toDateOnly(c.updated_at) }));
   } catch (err) {
     console.warn(`⚠️  Error fetching category slugs for sitemap: ${err.message}`);
     return [];
@@ -154,12 +164,12 @@ async function fetchPublishedComparisonSlugs() {
       return [];
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_comparisons').select('slug').eq('status', 'published');
+    const { data, error } = await supabase.from('tool_comparisons').select('slug, updated_at').eq('status', 'published');
     if (error) {
       console.warn(`⚠️  Failed to fetch comparison slugs for sitemap: ${error.message}`);
       return [];
     }
-    return (data || []).map((c) => c.slug);
+    return (data || []).map((c) => ({ slug: c.slug, lastmod: toDateOnly(c.updated_at) }));
   } catch (err) {
     console.warn(`⚠️  Error fetching comparison slugs for sitemap: ${err.message}`);
     return [];
@@ -178,12 +188,12 @@ async function fetchPublishedGroupComparisonSlugs() {
       return [];
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase.from('tool_group_comparisons').select('slug').eq('status', 'published');
+    const { data, error } = await supabase.from('tool_group_comparisons').select('slug, updated_at').eq('status', 'published');
     if (error) {
       console.warn(`⚠️  Failed to fetch group comparison slugs for sitemap: ${error.message}`);
       return [];
     }
-    return (data || []).map((r) => r.slug);
+    return (data || []).map((r) => ({ slug: r.slug, lastmod: toDateOnly(r.updated_at) }));
   } catch (err) {
     console.warn(`⚠️  Error fetching group comparison slugs for sitemap: ${err.message}`);
     return [];
@@ -207,56 +217,56 @@ async function generateSitemap() {
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
 
-  const toolSlugs = await fetchPublishedToolSlugs();
-  toolSlugs.forEach((slug) => {
+  const toolRows = await fetchPublishedToolSlugs();
+  toolRows.forEach(({ slug, lastmod }) => {
     const url = `/tools/${slug}/`;
     assertAllowed(url);
     paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
+    urls.push(generateUrlEntry(url, lastmod, '0.7', 'weekly'));
   });
-  console.log(`Tool URLs included: ${toolSlugs.length}`);
+  console.log(`Tool URLs included: ${toolRows.length}`);
 
   const hubUrl = '/tool-categories/';
   assertAllowed(hubUrl);
   paths.push(hubUrl);
   urls.push(generateUrlEntry(hubUrl, TODAY, '0.7', 'weekly'));
 
-  const categorySlugs = await fetchPublishedCategorySlugs();
-  categorySlugs.forEach((slug) => {
+  const categoryRows = await fetchPublishedCategorySlugs();
+  categoryRows.forEach(({ slug, lastmod }) => {
     const url = `/tool-categories/${slug}/`;
     assertAllowed(url);
     paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.6', 'weekly'));
+    urls.push(generateUrlEntry(url, lastmod, '0.6', 'weekly'));
   });
-  console.log(`Category URLs included: ${categorySlugs.length} (+ 1 hub)`);
+  console.log(`Category URLs included: ${categoryRows.length} (+ 1 hub)`);
 
   const compareHubUrl = '/compare/';
   assertAllowed(compareHubUrl);
   paths.push(compareHubUrl);
   urls.push(generateUrlEntry(compareHubUrl, TODAY, '0.6', 'weekly'));
 
-  const comparisonSlugs = await fetchPublishedComparisonSlugs();
-  comparisonSlugs.forEach((slug) => {
+  const comparisonRows = await fetchPublishedComparisonSlugs();
+  comparisonRows.forEach(({ slug, lastmod }) => {
     const url = `/compare/${slug}/`;
     assertAllowed(url);
     paths.push(url);
     // High-intent, long-form editorial content — matches tool-page priority (0.7),
     // above the /compare/ hub itself and generic category pages (both 0.6).
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
+    urls.push(generateUrlEntry(url, lastmod, '0.7', 'weekly'));
   });
-  console.log(`Comparison URLs included: ${comparisonSlugs.length} (+ 1 hub)`);
+  console.log(`Comparison URLs included: ${comparisonRows.length} (+ 1 hub)`);
 
   // No separate hub URL — group comparisons are listed on the same /compare
   // hub as pairwise comparisons (see ComparePage.tsx's "3+ Tool Comparisons"
   // section), so only their individual detail-page URLs need sitemap entries.
-  const groupComparisonSlugs = await fetchPublishedGroupComparisonSlugs();
-  groupComparisonSlugs.forEach((slug) => {
+  const groupComparisonRows = await fetchPublishedGroupComparisonSlugs();
+  groupComparisonRows.forEach(({ slug, lastmod }) => {
     const url = `/compare/${slug}/`;
     assertAllowed(url);
     paths.push(url);
-    urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
+    urls.push(generateUrlEntry(url, lastmod, '0.7', 'weekly'));
   });
-  console.log(`Group comparison URLs included: ${groupComparisonSlugs.length}`);
+  console.log(`Group comparison URLs included: ${groupComparisonRows.length}`);
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

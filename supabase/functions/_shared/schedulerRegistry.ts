@@ -311,6 +311,88 @@ async function staleSourceRetryHandler(ctx: SchedulerJobContext): Promise<Record
   return { retried, recovered, batch_size: batchSize };
 }
 
+const CANONICAL_DOMAIN = "gappsy.com";
+const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+const INDEXNOW_BATCH_SIZE = 1000;
+
+// Notifies Bing/Yandex/Seznam/Naver (IndexNow-participating engines —
+// Google does not consume IndexNow) about tools/categories/comparisons
+// that are new or changed since the last successful submission, so those
+// engines don't have to wait for their own crawl scheduler to revisit the
+// sitemap. Watermark-based (indexnow_settings.last_submitted_at) rather
+// than resubmitting the whole catalog every run, same "only the delta"
+// shape as completenessRescanHandler above.
+async function indexnowSubmitHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase } = ctx;
+  const { data: settings, error: settingsError } = await supabase
+    .from("indexnow_settings")
+    .select("api_key, last_submitted_at")
+    .eq("id", true)
+    .maybeSingle();
+  if (settingsError) throw new Error(`Failed to load indexnow_settings: ${settingsError.message}`);
+  if (!settings?.api_key) return { skipped: true, reason: "no IndexNow key configured" };
+
+  const since = settings.last_submitted_at;
+  const runStartedAt = new Date().toISOString();
+
+  const buildQuery = (table: string, extra?: (q: any) => any) => {
+    let q = supabase.from(table).select("slug, updated_at").eq("status", "published");
+    if (extra) q = extra(q);
+    if (since) q = q.gt("updated_at", since);
+    return q;
+  };
+
+  const [toolsResult, categoriesResult, comparisonsResult, groupComparisonsResult] = await Promise.all([
+    buildQuery("tools"),
+    buildQuery("tool_categories"),
+    buildQuery("tool_comparisons"),
+    buildQuery("tool_group_comparisons"),
+  ]);
+  for (const [label, result] of [
+    ["tools", toolsResult], ["tool_categories", categoriesResult],
+    ["tool_comparisons", comparisonsResult], ["tool_group_comparisons", groupComparisonsResult],
+  ] as const) {
+    if (result.error) throw new Error(`Failed to load ${label} for IndexNow: ${result.error.message}`);
+  }
+
+  const urls = [
+    ...((toolsResult.data || []) as any[]).map((t) => `https://${CANONICAL_DOMAIN}/tools/${t.slug}/`),
+    ...((categoriesResult.data || []) as any[]).map((c) => `https://${CANONICAL_DOMAIN}/tool-categories/${c.slug}/`),
+    ...((comparisonsResult.data || []) as any[]).map((c) => `https://${CANONICAL_DOMAIN}/compare/${c.slug}/`),
+    ...((groupComparisonsResult.data || []) as any[]).map((c) => `https://${CANONICAL_DOMAIN}/compare/${c.slug}/`),
+  ];
+
+  if (urls.length === 0) return { submitted: 0, reason: "nothing changed since last submission" };
+
+  let submitted = 0;
+  for (let i = 0; i < urls.length; i += INDEXNOW_BATCH_SIZE) {
+    const batch = urls.slice(i, i + INDEXNOW_BATCH_SIZE);
+    const res = await fetch(INDEXNOW_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: CANONICAL_DOMAIN,
+        key: settings.api_key,
+        keyLocation: `https://${CANONICAL_DOMAIN}/${settings.api_key}.txt`,
+        urlList: batch,
+      }),
+    });
+    // IndexNow returns 200 (or 202) on success; anything else means this
+    // batch didn't register, so don't advance the watermark for it — the
+    // next run will retry the same delta rather than silently dropping it.
+    if (!res.ok) throw new Error(`IndexNow submission failed (batch ${i / INDEXNOW_BATCH_SIZE}): ${res.status} ${await res.text().catch(() => "")}`);
+    submitted += batch.length;
+  }
+
+  const { error: updateError } = await supabase
+    .from("indexnow_settings")
+    .update({ last_submitted_at: runStartedAt, updated_at: runStartedAt })
+    .eq("id", true);
+  if (updateError) throw new Error(`Failed to update indexnow_settings watermark: ${updateError.message}`);
+
+  return { submitted, since: since || "beginning (first run)" };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
@@ -319,6 +401,7 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   completeness_rescan: completenessRescanHandler,
   change_detection_scan: changeDetectionScanHandler,
   stale_source_retry: staleSourceRetryHandler,
+  indexnow_submit: indexnowSubmitHandler,
 };
 
 export class UnknownJobTypeError extends Error {
