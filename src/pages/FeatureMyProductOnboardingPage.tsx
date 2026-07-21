@@ -447,23 +447,27 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'claim' && (
           <StepLayout
             eyebrow="Claim & Verify"
-            title="$29 one-time — no recurring charge"
-            subtitle="Prove you own this listing to unlock self-serve editing. This does not include featured placement — that's an optional upgrade on the next screen."
+            title="One-time $29 fee"
             ctaLabel="Continue to secure checkout"
             onCta={handleClaimCheckout}
             ctaLoading={loading}
-            footnote="Billed once via Stripe. No subscription, no recurring charge."
+            footnote="Billed once via Stripe. No subscription — no card kept on file."
           >
             {cancelledNotice && (
               <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700">
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
+            <p className="text-[13px] text-slate-400 mb-3">Takes about 2 minutes. Here's what you get:</p>
             <ul className="space-y-2">
-              {['Verified badge on your listing', 'Self-serve editing of your listing', 'Reply to reviews from your dashboard'].map((item) => (
-                <li key={item} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
+              {[
+                ['Verified badge', 'on your listing'],
+                ['Self-serve editing', 'of your listing'],
+                ['Reply to reviews', 'from your dashboard'],
+              ].map(([bold, rest]) => (
+                <li key={bold} className="flex items-start gap-1.5 text-[13px] leading-snug text-slate-600">
                   <Check className="w-3.5 h-3.5 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
-                  {item}
+                  <span><span className="font-semibold text-[#0B1221]">{bold}</span> {rest}</span>
                 </li>
               ))}
             </ul>
