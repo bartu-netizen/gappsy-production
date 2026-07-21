@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { prerenderHomepage } from './scripts/prerender-homepage.js';
 import { prerender } from './scripts/prerender.js';
 import { prerenderTools } from './scripts/prerender-tools.js';
+import { prerenderToolsHub } from './scripts/prerender-tools-hub.js';
 import { prerenderCategories } from './scripts/prerender-categories.js';
 import { prerenderComparisons } from './scripts/prerender-comparisons.js';
 import { prerenderGroupComparisons } from './scripts/prerender-group-comparisons.js';
@@ -46,6 +47,14 @@ function prerenderPlugin() {
         }
 
         console.log('✅ Tool prerender completed successfully - All published tools have crawlable HTML\n');
+
+        // /tools hub: had ZERO prerendered HTML at all (the directory index
+        // itself, not the individual tool pages above) — crawlers that
+        // don't execute JS saw an empty SPA shell with no links to any
+        // tool. Reuses the summary the step above already produced.
+        console.log('\n🔄 Running /tools hub prerender...\n');
+        await prerenderToolsHub({ tools: toolResult.toolsSummary });
+        console.log('✅ /tools hub prerender completed successfully\n');
 
         // Extend the same prerender step to the categories hub + every
         // published category page. Same failure path, same plugin — tool

@@ -62,6 +62,7 @@ const ALLOWED_PATTERNS = [
   /^\/editorial-policy\/$/,
   /^\/terms\/$/,
   /^\/privacy\/$/,
+  /^\/tools\/$/,
   /^\/tools\/[a-z0-9-]+\/$/,
   /^\/tool-categories\/$/,
   /^\/tool-categories\/[a-z0-9-]+\/$/,
@@ -216,6 +217,11 @@ async function generateSitemap() {
     paths.push(url);
     urls.push(generateUrlEntry(url, TODAY, '0.7', 'weekly'));
   });
+
+  const toolsHubUrl = '/tools/';
+  assertAllowed(toolsHubUrl);
+  paths.push(toolsHubUrl);
+  urls.push(generateUrlEntry(toolsHubUrl, TODAY, '0.8', 'daily'));
 
   const toolRows = await fetchPublishedToolSlugs();
   toolRows.forEach(({ slug, lastmod }) => {

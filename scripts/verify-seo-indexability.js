@@ -73,6 +73,7 @@ else {
     /^https:\/\/gappsy\.com\/editorial-policy\/$/,
     /^https:\/\/gappsy\.com\/terms\/$/,
     /^https:\/\/gappsy\.com\/privacy\/$/,
+    /^https:\/\/gappsy\.com\/tools\/$/,
     /^https:\/\/gappsy\.com\/tools\/[a-z0-9-]+\/$/,
     /^https:\/\/gappsy\.com\/tool-categories\/$/,
     /^https:\/\/gappsy\.com\/tool-categories\/[a-z0-9-]+\/$/,
