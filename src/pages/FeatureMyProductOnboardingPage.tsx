@@ -493,7 +493,7 @@ export default function FeatureMyProductOnboardingPage() {
                   without scrolling once these stack on mobile. */}
               <div className="relative order-1 rounded-2xl border-2 border-[#4F47E6] bg-white p-5 sm:p-6 shadow-[0_16px_40px_rgba(79,71,230,0.16)] flex flex-col">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10.5px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full whitespace-nowrap">
-                  Best value — 2 months free
+                  Best value — save $178/year
                 </span>
                 <h3 className="text-sm font-semibold text-[#4F47E6] mt-1">Yearly</h3>
                 <div className="mt-2 flex items-end gap-1.5">
@@ -565,9 +565,9 @@ export default function FeatureMyProductOnboardingPage() {
             <button
               type="button"
               onClick={handleSkipGrowth}
-              className="mt-3 w-full text-center text-[13.5px] font-medium text-slate-400 hover:text-slate-600 transition-colors"
+              className="mt-4 w-full text-center text-[13.5px] font-semibold text-red-500 hover:text-red-600 underline underline-offset-2 decoration-red-200 hover:decoration-red-300 transition-colors"
             >
-              Not now — I'll upgrade later from my dashboard
+              No thanks — skip Growth and stay unfeatured for now
             </button>
           </div>
         )}
