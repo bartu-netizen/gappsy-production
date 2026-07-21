@@ -168,7 +168,14 @@ Deno.serve(async (req: Request) => {
     const rawQuery = typeof payload.query === "string" ? payload.query.trim() : "";
     if (!sessionId || !rawQuery) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
     const query = rawQuery.slice(0, MAX_QUERY_LENGTH);
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null;
+    // Real geo (city/country) comes from the Netlify relay's context.geo
+    // (netlify/edge-functions/smart-search-relay.js) when the request goes
+    // through it — direct calls (e.g. local dev) just get the raw IP with
+    // no geo, same graceful fallback as tool_page_views/track-event.
+    const ip = typeof payload.ip === "string" ? payload.ip : req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null;
+    const city = typeof payload.city === "string" ? payload.city : null;
+    const countryCode = typeof payload.country_code === "string" ? payload.country_code : null;
+    const countryName = typeof payload.country_name === "string" ? payload.country_name : null;
     const requestedMode = payload.mode === "category" || payload.mode === "category-tools" ? payload.mode : "general";
     const categorySlugParam = typeof payload.category_slug === "string" ? payload.category_slug : null;
     // category-tools with no category_slug can't do anything scoped — fall
@@ -261,7 +268,7 @@ Rules:
         console.error("[smart-search-route] OpenAI error (category-tools):", openaiResponse.status);
       }
 
-      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip }).then(() => {});
+      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
       return jsonResponse({ ok: true, path, type: resultType, ...buildReply(resultType, resultNames, query) });
     }
 
@@ -348,7 +355,7 @@ Never invent a slug that isn't in one of the lists above.`;
     if (!openaiResponse.ok) {
       const errText = await openaiResponse.text().catch(() => "");
       console.error("[smart-search-route] OpenAI error:", openaiResponse.status, errText);
-      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: "fallback", result_path: fallbackPath, ip_address: ip }).then(() => {});
+      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: "fallback", result_path: fallbackPath, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
       const fallbackReply = buildReply("fallback", [], query);
       return jsonResponse({ ok: true, path: fallbackPath, type: "fallback", ...fallbackReply });
     }
@@ -442,7 +449,7 @@ Never invent a slug that isn't in one of the lists above.`;
       }
     }
 
-    supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip }).then(() => {});
+    supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
 
     const { message, buttonLabel } = buildReply(resultType, resultNames, query);
     return jsonResponse({ ok: true, path, type: resultType, message, buttonLabel });

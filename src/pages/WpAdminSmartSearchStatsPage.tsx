@@ -6,6 +6,10 @@ import { adminApiFetch, getErrorMessage } from '../lib/adminApiFetch';
 interface FallbackQuery {
   query: string;
   created_at: string;
+  ip_address: string | null;
+  city: string | null;
+  country_code: string | null;
+  country_name: string | null;
 }
 
 interface RecentQuery {
@@ -13,6 +17,17 @@ interface RecentQuery {
   result_type: string;
   result_path: string;
   created_at: string;
+  ip_address: string | null;
+  city: string | null;
+  country_code: string | null;
+  country_name: string | null;
+}
+
+function formatLocation(row: { city: string | null; country_name: string | null; country_code: string | null }): string {
+  if (row.city && row.country_code) return `${row.city}, ${row.country_code}`;
+  if (row.country_name) return row.country_name;
+  if (row.country_code) return row.country_code;
+  return '—';
 }
 
 interface StatsResponse {
@@ -62,7 +77,7 @@ export default function WpAdminSmartSearchStatsPage() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [tab, setTab] = useState<'fallback' | 'all'>('fallback');
+  const [tab, setTab] = useState<'fallback' | 'all'>('all');
 
   const fetchStats = useCallback(async () => {
     setLoading(true);
@@ -128,17 +143,17 @@ export default function WpAdminSmartSearchStatsPage() {
               <div className="flex border-b border-slate-100">
                 <button
                   type="button"
-                  onClick={() => setTab('fallback')}
-                  className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors ${tab === 'fallback' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-500 hover:bg-slate-50'}`}
-                >
-                  Fallback queries (content gaps)
-                </button>
-                <button
-                  type="button"
                   onClick={() => setTab('all')}
                   className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors ${tab === 'all' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-500 hover:bg-slate-50'}`}
                 >
                   All recent queries
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTab('fallback')}
+                  className={`flex-1 px-4 py-2.5 text-sm font-medium transition-colors ${tab === 'fallback' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-500 hover:bg-slate-50'}`}
+                >
+                  Fallback queries (content gaps)
                 </button>
               </div>
 
@@ -151,6 +166,8 @@ export default function WpAdminSmartSearchStatsPage() {
                       <thead>
                         <tr className="text-left text-slate-400 border-b border-slate-100">
                           <th className="px-4 py-2 font-semibold">Query</th>
+                          <th className="px-4 py-2 font-semibold">Location</th>
+                          <th className="px-4 py-2 font-semibold">IP</th>
                           <th className="px-4 py-2 font-semibold">When</th>
                         </tr>
                       </thead>
@@ -158,6 +175,8 @@ export default function WpAdminSmartSearchStatsPage() {
                         {stats.recent_fallback_queries.map((q, i) => (
                           <tr key={i} className="border-b border-slate-50 last:border-0">
                             <td className="px-4 py-2 text-slate-700">{q.query}</td>
+                            <td className="px-4 py-2 text-slate-500 whitespace-nowrap">{formatLocation(q)}</td>
+                            <td className="px-4 py-2 text-slate-400 font-mono">{q.ip_address || '—'}</td>
                             <td className="px-4 py-2 whitespace-nowrap text-slate-500">{new Date(q.created_at).toLocaleString()}</td>
                           </tr>
                         ))}
@@ -175,6 +194,8 @@ export default function WpAdminSmartSearchStatsPage() {
                         <th className="px-4 py-2 font-semibold">Query</th>
                         <th className="px-4 py-2 font-semibold">Sent to</th>
                         <th className="px-4 py-2 font-semibold">Path</th>
+                        <th className="px-4 py-2 font-semibold">Location</th>
+                        <th className="px-4 py-2 font-semibold">IP</th>
                         <th className="px-4 py-2 font-semibold">When</th>
                       </tr>
                     </thead>
@@ -184,6 +205,8 @@ export default function WpAdminSmartSearchStatsPage() {
                           <td className="px-4 py-2 text-slate-700">{q.query}</td>
                           <td className="px-4 py-2 text-slate-500">{TYPE_LABELS[q.result_type] || q.result_type}</td>
                           <td className="px-4 py-2 text-slate-400 font-mono truncate max-w-[220px]">{q.result_path}</td>
+                          <td className="px-4 py-2 text-slate-500 whitespace-nowrap">{formatLocation(q)}</td>
+                          <td className="px-4 py-2 text-slate-400 font-mono">{q.ip_address || '—'}</td>
                           <td className="px-4 py-2 whitespace-nowrap text-slate-500">{new Date(q.created_at).toLocaleString()}</td>
                         </tr>
                       ))}

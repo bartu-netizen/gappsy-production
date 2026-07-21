@@ -53,13 +53,13 @@ Deno.serve(async (req: Request) => {
     const [recentFallbackRes, recentAllRes] = await Promise.all([
       supabase
         .from("smart_search_logs")
-        .select("query, created_at")
+        .select("query, created_at, ip_address, city, country_code, country_name")
         .eq("result_type", "fallback")
         .order("created_at", { ascending: false })
         .limit(50),
       supabase
         .from("smart_search_logs")
-        .select("query, result_type, result_path, created_at")
+        .select("query, result_type, result_path, created_at, ip_address, city, country_code, country_name")
         .order("created_at", { ascending: false })
         .limit(50),
     ]);

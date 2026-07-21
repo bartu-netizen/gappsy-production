@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Send, Loader2, AlertCircle } from 'lucide-react';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 const SESSION_STORAGE_KEY = 'smart_search_session_id';
 
 const DEFAULT_EXAMPLE_QUERIES = [
@@ -91,9 +89,12 @@ export default function SmartSearchBox({
     setExchanges((prev) => [...prev, { query: trimmed, status: 'loading' }]);
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/smart-search-route`, {
+      // Routed through a Netlify Edge Function relay (not straight to
+      // Supabase) so the query gets tagged with real city/country from
+      // Netlify's free context.geo — see smart-search-relay.js.
+      const res = await fetch('/api/smart-search', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session_id: sessionIdRef.current, query: trimmed, mode, ...(categorySlug ? { category_slug: categorySlug } : {}) }),
       });
       const data = await res.json().catch(() => null);
