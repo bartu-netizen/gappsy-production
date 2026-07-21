@@ -22,4 +22,6 @@ export const RECENTLY_FEATURED_TOOLS: RecentlyFeaturedTool[] = [
   { slug: 'notion', name: 'Notion', logo: 'https://www.google.com/s2/favicons?domain=www.notion.com&sz=256', tagline: 'One workspace for notes, docs, and projects' },
   { slug: 'miro', name: 'Miro', logo: 'https://www.google.com/s2/favicons?domain=miro.com&sz=256', tagline: 'Visual whiteboard for team collaboration' },
   { slug: 'webflow', name: 'Webflow', logo: 'https://www.google.com/s2/favicons?domain=webflow.com&sz=256', tagline: 'Design and launch sites without writing code' },
+  { slug: 'succefy', name: 'Succefy', logo: 'https://www.google.com/s2/favicons?domain=succefy.com&sz=256', tagline: 'AI resume, tracker, and interview coach in one' },
+  { slug: 'altheo', name: 'Altheo', logo: 'https://www.google.com/s2/favicons?domain=altheo.ai&sz=256', tagline: 'Your AI marketing department, from SEO to content' },
 ];

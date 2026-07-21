@@ -4,7 +4,7 @@ import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
 import ScrollReveal from '../components/featureMyProduct/ScrollReveal';
-import PlacementMockup from '../components/featureMyProduct/PlacementMockups';
+import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
 import TrustSection from '../components/featureMyProduct/TrustSection';
 import WhyFeatureSection from '../components/featureMyProduct/WhyFeatureSection';
 import BenefitsSection from '../components/featureMyProduct/BenefitsSection';
@@ -82,8 +82,8 @@ export default function FeatureMyProductPage() {
                 to your site from gappsy.com — all for a one-time $29 fee. No subscription.
               </p>
               <p className="mt-3 text-[15px] text-slate-400 max-w-xl">
-                Not sure if your product's already listed? Just enter your website below — we'll match it
-                to an existing listing, or help you add a new one.
+                Not sure if your product's already listed? Click "Claim or list your product" below and
+                enter your website — we'll match it to an existing listing, or help you add a new one.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
@@ -109,15 +109,19 @@ export default function FeatureMyProductPage() {
                   className="absolute -inset-8 -z-10 rounded-[40px] bg-[#4F47E6]/10 blur-2xl"
                   aria-hidden="true"
                 />
-                <div className="drop-shadow-[0_30px_60px_rgba(79,71,230,0.15)]">
-                  <PlacementMockup type="toolPage" />
-                </div>
-                <div className="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-2 rounded-2xl bg-white border border-[#eef0f3] shadow-[0_12px_28px_rgba(15,23,42,0.10)] px-4 py-3">
-                  <span className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xs font-bold shrink-0">✓</span>
-                  <div>
-                    <div className="text-[13px] font-semibold text-[#0B1221] leading-none">Verified badge</div>
-                    <div className="text-[11px] text-slate-400 mt-1">ownership confirmed</div>
-                  </div>
+                <div className="rounded-2xl border border-[#eef0f3] bg-white shadow-[0_30px_60px_rgba(79,71,230,0.15)] overflow-hidden">
+                  <AskGappsyChat
+                    page="feature_my_product"
+                    title="Ask Gappsy about Feature My Product"
+                    subtitle="Real answers — ask us anything before you claim"
+                    placeholder="Ask anything about claiming or listing your product..."
+                    suggestedQuestions={[
+                      'Is my product already listed?',
+                      'What do I get for $29?',
+                      'How does ownership verification work?',
+                    ]}
+                    threadMaxHeightClass="max-h-[320px]"
+                  />
                 </div>
               </div>
             </ScrollReveal>

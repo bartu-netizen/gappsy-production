@@ -30,6 +30,14 @@ interface AskGappsyChatProps {
    * assistant in all of these tools' real data at once instead of one. */
   toolSlugs?: string[];
   toolNames?: string[];
+  /** Non-tool page context (currently only 'feature_my_product') — routes
+   * the edge function to a static system prompt instead of DB-grounded
+   * tool data. Ignored when toolSlug/toolSlugs is set. */
+  page?: string;
+  /** Header title/subtitle overrides for non-tool contexts — default
+   * copy below assumes a tool-page/compare/homepage audience. */
+  title?: string;
+  subtitle?: string;
   suggestedQuestions: string[];
   placeholder?: string;
   /** Caps the message-thread height so the surrounding layout (inline hero
@@ -50,7 +58,7 @@ function joinNames(names: string[]): string {
 // streaming response (plain UTF-8 text chunks, not raw OpenAI SSE — the
 // edge function already unwraps that) so this component just reads the
 // stream and appends, no SSE parsing needed here.
-export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]' }: AskGappsyChatProps) {
+export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, page, title, subtitle, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]' }: AskGappsyChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -81,7 +89,13 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
         body: JSON.stringify({
           session_id: sessionIdRef.current,
-          ...(toolSlugs && toolSlugs.length > 0 ? { tool_slugs: toolSlugs } : { tool_slug: toolSlug }),
+          ...(toolSlugs && toolSlugs.length > 0
+            ? { tool_slugs: toolSlugs }
+            : toolSlug
+              ? { tool_slug: toolSlug }
+              : page
+                ? { page }
+                : {}),
           messages: nextMessages,
         }),
       });
@@ -139,9 +153,9 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
         </div>
         <div className="min-w-0">
           <p className="font-bold text-[#0B1221] text-sm leading-tight">
-            Ask Gappsy{toolNames && toolNames.length > 0 ? ` about ${joinNames(toolNames)}` : toolName ? ` about ${toolName}` : ''}
+            {title || `Ask Gappsy${toolNames && toolNames.length > 0 ? ` about ${joinNames(toolNames)}` : toolName ? ` about ${toolName}` : ''}`}
           </p>
-          <p className="text-[11.5px] text-slate-400 leading-tight">AI answers, grounded in real listing data</p>
+          <p className="text-[11.5px] text-slate-400 leading-tight">{subtitle || 'AI answers, grounded in real listing data'}</p>
         </div>
       </div>
 

@@ -7,7 +7,7 @@ import ScrollReveal from './ScrollReveal';
 // crawled logo (tools.logo), not every well-known slug does (e.g. Canva and
 // Figma's logo crawl was blocked, so they're deliberately excluded from this
 // specific strip even though they're published elsewhere on the site).
-const LISTED_SLUGS = ['notion', 'slack', 'stripe', 'hubspot', 'zoom', 'asana', 'airtable', 'github', 'shopify', 'zapier'];
+const LISTED_SLUGS = ['notion', 'slack', 'stripe', 'hubspot', 'zoom', 'asana', 'airtable', 'github', 'shopify'];
 
 interface ListedTool {
   slug: string;
@@ -43,7 +43,7 @@ function LogoTile({ tool }: { tool: ListedTool }) {
   const showLogo = tool.logo && !failed;
 
   return (
-    <div className="flex items-center gap-2.5 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-200">
+    <div className="flex items-center gap-2.5">
       {showLogo ? (
         <img
           src={tool.logo!}
