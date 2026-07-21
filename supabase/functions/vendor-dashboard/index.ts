@@ -171,6 +171,20 @@ Deno.serve(async (req: Request) => {
         // 'rejected' rather than deleting the row, so a removed review still
         // shows up in the admin moderation queue (oversight against a vendor
         // suppressing legitimate criticism) instead of disappearing forever.
+        // Growth-exclusive: Claim & Verify includes replying to reviews, but
+        // not removing/hiding them.
+        const { data: growthSub } = await supabase
+          .from("vendor_feature_subscriptions")
+          .select("status")
+          .eq("tool_id", session.toolId)
+          .eq("product", "growth")
+          .eq("status", "active")
+          .limit(1)
+          .maybeSingle();
+        if (!growthSub) {
+          return jsonResponse({ ok: false, error: "Removing or restoring reviews is a Growth feature — upgrade to remove reviews from your listing." }, 403);
+        }
+
         if (review.status !== "approved" && review.status !== "rejected") {
           return jsonResponse({ ok: false, error: "Only published reviews can be removed/restored" }, 400);
         }

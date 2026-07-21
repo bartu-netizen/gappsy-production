@@ -162,7 +162,9 @@ export default function VendorDashboardPage() {
               {tab === 'content' && (
                 <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
               )}
-              {tab === 'reviews' && <ReviewsTab reviews={reviews} onReviews={setReviews} />}
+              {tab === 'reviews' && (
+                <ReviewsTab reviews={reviews} onReviews={setReviews} isGrowthActive={growthSubscription?.status === 'active'} toolWebsite={tool.website} />
+              )}
               {tab === 'billing' && (
                 <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} />
               )}
@@ -581,20 +583,38 @@ function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) 
   );
 }
 
-function ReviewsTab({ reviews, onReviews }: { reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void }) {
+function ReviewsTab({
+  reviews, onReviews, isGrowthActive, toolWebsite,
+}: {
+  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isGrowthActive: boolean; toolWebsite: string | null;
+}) {
   if (reviews.length === 0) {
     return <Card><p className="text-sm text-slate-500 text-center py-6">No reviews yet.</p></Card>;
   }
   return (
     <div className="space-y-4">
+      {!isGrowthActive && (
+        <div className="rounded-2xl bg-[#EEF0FE]/60 border border-[#E0E3FC] px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+          <p className="text-[13px] text-slate-600">
+            <span className="font-semibold text-[#0B1221]">Reply to reviews is included in Claim & Verify.</span>{' '}
+            Removing or hiding a review from your page is a Growth feature.
+          </p>
+          <Link
+            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            className="shrink-0 text-[13px] font-semibold text-[#4F47E6] hover:text-[#4338CA]"
+          >
+            Upgrade to Growth
+          </Link>
+        </div>
+      )}
       {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} />
+        <ReviewCard key={review.id} review={review} isGrowthActive={isGrowthActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} />
       ))}
     </div>
   );
 }
 
-function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void }) {
+function ReviewCard({ review, onUpdate, isGrowthActive }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isGrowthActive: boolean }) {
   const [responseText, setResponseText] = useState(review.vendor_response || '');
   const [busy, setBusy] = useState(false);
 
@@ -630,7 +650,7 @@ function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: Rev
           {review.title && <p className="text-sm font-medium text-[#0B1221] mt-1.5">{review.title}</p>}
           <p className="text-sm text-slate-600 mt-1 leading-relaxed">{review.body}</p>
         </div>
-        {!isPending && (
+        {!isPending && isGrowthActive && (
           <button
             type="button"
             onClick={toggleVisibility}
@@ -643,6 +663,15 @@ function ReviewCard({ review, onUpdate }: { review: ReviewRow; onUpdate: (r: Rev
             {isRemoved ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
             {isRemoved ? 'Restore' : 'Remove'}
           </button>
+        )}
+        {!isPending && !isGrowthActive && (
+          <span
+            title="Upgrade to Growth to remove or restore reviews"
+            className="shrink-0 inline-flex items-center gap-1 text-[12px] font-medium px-2.5 py-1.5 rounded-lg text-slate-300 cursor-not-allowed"
+          >
+            <EyeOff className="w-3.5 h-3.5" />
+            Remove
+          </span>
         )}
       </div>
 

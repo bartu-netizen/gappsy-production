@@ -22,6 +22,7 @@ const GROWTH_MONTHLY_FEATURES = [
   'Priority ranking ahead of unfeatured listings',
   'Listing analytics — views and click-throughs, right in your dashboard',
   'Priority placement in AI/LLM answer engines (ChatGPT, Perplexity, Claude)',
+  'Remove or hide reviews from your listing, not just reply to them',
 ];
 const GROWTH_YEARLY_ONLY_FEATURES = [
   'A produced video review, posted on our socials',
