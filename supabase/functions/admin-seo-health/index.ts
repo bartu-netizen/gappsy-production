@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
+import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 // Fleet-wide SEO rollup across every PUBLISHED tool — the fields that
 // actually reach a search engine or an LLM crawler. Every count here is a
@@ -60,9 +61,9 @@ Deno.serve(async (req: Request) => {
     const [screenshots, faqs, alternatives] = toolIds.length === 0
       ? [{ data: [] }, { data: [] }, { data: [] }]
       : await Promise.all([
-          supabase.from("tool_screenshots").select("tool_id").in("tool_id", toolIds),
-          supabase.from("tool_faqs").select("tool_id").in("tool_id", toolIds),
-          supabase.from("tool_alternatives").select("tool_id").in("tool_id", toolIds),
+          fetchInChunks(toolIds, (chunk) => supabase.from("tool_screenshots").select("tool_id").in("tool_id", chunk)),
+          fetchInChunks(toolIds, (chunk) => supabase.from("tool_faqs").select("tool_id").in("tool_id", chunk)),
+          fetchInChunks(toolIds, (chunk) => supabase.from("tool_alternatives").select("tool_id").in("tool_id", chunk)),
         ]);
 
     const screenshotCounts = countBy(screenshots.data || []);

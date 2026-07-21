@@ -689,29 +689,27 @@ Deno.serve(async (req: Request) => {
       const rangeFrom = (page - 1) * perPage;
       const rangeTo = rangeFrom + perPage - 1;
 
-      let toolIdsInCategory: string[] | null = null;
-      if (categoryFilter) {
-        const { data: links, error: linksError } = await supabase
-          .from("tool_category_links")
-          .select("tool_id")
-          .eq("category_id", categoryFilter);
-        if (linksError) return jsonResponse({ ok: false, error: linksError.message }, 500);
-        toolIdsInCategory = (links || []).map((l: { tool_id: string }) => l.tool_id);
-        if (toolIdsInCategory.length === 0) {
-          return jsonResponse({ ok: true, data: [], total: 0, page, per_page: perPage });
-        }
-      }
-
-      let query = supabase.from("tools").select("*", { count: "exact" });
+      // Filtering by category used to pre-fetch every tool_id in that
+      // category and pass it to .in("id", ids) — some categories hold 300+
+      // tools, and a several-hundred-UUID .in() list can produce a URL long
+      // enough to trip an HTTP/2 protocol error before it reaches Postgres
+      // (the same bug that broke /wp-admin/tool-analytics and
+      // /wp-admin/tool-comparisons). An inner-joined embed filters via
+      // category_id server-side instead, so no giant id list is ever built.
+      let query = supabase.from("tools").select(categoryFilter ? "*, tool_category_links!inner(category_id)" : "*", { count: "exact" });
       if (statusFilter && statusFilter !== "all") query = query.eq("status", statusFilter);
       if (sourceFilter === "imported") query = query.neq("source", "manual");
       else if (sourceFilter && sourceFilter !== "all") query = query.eq("source", sourceFilter);
       if (q) query = query.or(`name.ilike.%${q}%,slug.ilike.%${q}%`);
-      if (toolIdsInCategory) query = query.in("id", toolIdsInCategory);
+      if (categoryFilter) query = query.eq("tool_category_links.category_id", categoryFilter);
       query = query.order(sortColumn, { ascending: sortAscending }).range(rangeFrom, rangeTo);
 
-      const { data: tools, error, count } = await query;
+      const { data: rawTools, error, count } = await query;
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
+      // Strip the join-only embed field back off — callers below expect a
+      // plain tools row shape, same as before this filter changed.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const tools = (rawTools || []).map(({ tool_category_links: _drop, ...rest }: any) => rest);
 
       const toolIds = (tools || []).map((t: { id: string }) => t.id);
       const [categoriesMap, relations] = await Promise.all([

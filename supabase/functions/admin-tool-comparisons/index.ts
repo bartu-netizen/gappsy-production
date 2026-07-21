@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
+import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -42,7 +43,9 @@ async function resolveCanonicalPair(supabase: any, idX: string, idY: string) {
 async function attachTools(supabase: any, comparisons: { tool_a_id: string; tool_b_id: string }[]) {
   const toolIds = [...new Set(comparisons.flatMap((c) => [c.tool_a_id, c.tool_b_id]))];
   if (toolIds.length === 0) return new Map();
-  const { data, error } = await supabase.from("tools").select("id, slug, name, logo, status").in("id", toolIds);
+  const { data, error } = await fetchInChunks(toolIds, (chunk) =>
+    supabase.from("tools").select("id, slug, name, logo, status").in("id", chunk)
+  );
   if (error) throw new Error(`Failed to load tools: ${error.message}`);
   const map = new Map<string, unknown>();
   for (const t of data || []) map.set(t.id, t);

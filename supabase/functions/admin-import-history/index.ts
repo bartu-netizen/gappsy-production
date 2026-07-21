@@ -74,22 +74,16 @@ Deno.serve(async (req: Request) => {
       const rangeFrom = (page - 1) * perPage;
       const rangeTo = rangeFrom + perPage - 1;
 
-      let toolIdsForSearch: string[] | null = null;
-      if (q) {
-        const { data: matches, error: matchError } = await supabase
-          .from("tools")
-          .select("id")
-          .or(`name.ilike.%${q}%,slug.ilike.%${q}%`);
-        if (matchError) return jsonResponse({ ok: false, error: matchError.message }, 500);
-        toolIdsForSearch = (matches || []).map((t: { id: string }) => t.id);
-        if (toolIdsForSearch.length === 0) {
-          return jsonResponse({ ok: true, data: [], total: 0, page, per_page: perPage });
-        }
-      }
-
-      let query = supabase.from("tool_import_history").select("*, tools(id, slug, name, logo, status)", { count: "exact" });
+      // A broad search term could match hundreds of tools — pre-fetching
+      // those ids for a .in("tool_id", ids) filter risks the same
+      // URL-length class of bug that broke tool-analytics/tool-comparisons.
+      // An inner-joined embed filters server-side instead, so no id list is
+      // ever built.
+      let query = supabase
+        .from("tool_import_history")
+        .select(q ? "*, tools!inner(id, slug, name, logo, status)" : "*, tools(id, slug, name, logo, status)", { count: "exact" });
       if (statusFilter && statusFilter !== "all") query = query.eq("status", statusFilter);
-      if (toolIdsForSearch) query = query.in("tool_id", toolIdsForSearch);
+      if (q) query = query.or(`name.ilike.%${q}%,slug.ilike.%${q}%`, { referencedTable: "tools" });
       query = query.order(sortColumn, { ascending: sortAscending }).range(rangeFrom, rangeTo);
 
       const { data, error, count } = await query;

@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
+import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -52,11 +53,13 @@ async function resolveCanonicalMembers(supabase: any, members: MemberInput[]) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function attachMembers(supabase: any, groupComparisonIds: string[]) {
   if (groupComparisonIds.length === 0) return new Map();
-  const { data, error } = await supabase
-    .from("tool_group_comparison_members")
-    .select("group_comparison_id, sort_order, best_for, tools(id, slug, name, logo, status)")
-    .in("group_comparison_id", groupComparisonIds)
-    .order("sort_order", { ascending: true });
+  const { data, error } = await fetchInChunks(groupComparisonIds, (chunk) =>
+    supabase
+      .from("tool_group_comparison_members")
+      .select("group_comparison_id, sort_order, best_for, tools(id, slug, name, logo, status)")
+      .in("group_comparison_id", chunk)
+      .order("sort_order", { ascending: true })
+  );
   if (error) throw new Error(`Failed to load group comparison members: ${error.message}`);
   const map = new Map<string, unknown[]>();
   for (const row of data || []) {

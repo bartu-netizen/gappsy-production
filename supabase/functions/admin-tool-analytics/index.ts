@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
+import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 // Read-only analytics surface for /wp-admin/tool-analytics, backed by
 // tool_page_views / tool_outbound_clicks (see 20260716020000) and the
@@ -47,10 +48,9 @@ Deno.serve(async (req: Request) => {
       const toolIds = (summary || []).map((row: { tool_id: string }) => row.tool_id);
       if (toolIds.length === 0) return jsonResponse({ ok: true, tools: [] });
 
-      const { data: tools, error: toolsError } = await supabase
-        .from("tools")
-        .select("id, slug, name, logo")
-        .in("id", toolIds);
+      const { data: tools, error: toolsError } = await fetchInChunks(toolIds, (chunk) =>
+        supabase.from("tools").select("id, slug, name, logo").in("id", chunk)
+      );
       if (toolsError) return jsonResponse({ ok: false, error: toolsError.message }, 500);
 
       const toolById = new Map((tools || []).map((t) => [t.id, t]));

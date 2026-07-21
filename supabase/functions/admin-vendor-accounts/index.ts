@@ -2,6 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 import { writeAuditLog } from "../_shared/adminAuth.ts";
+import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 // Admin visibility + manual test tooling for the vendor account system
 // (tools.owner_user_id, see 20260716010000_20260716_vendor_dashboard.sql).
@@ -36,7 +37,9 @@ Deno.serve(async (req: Request) => {
 
       const toolIds = (owned || []).map((t) => t.id as string);
       const { data: growthRows } = toolIds.length > 0
-        ? await supabase.from("vendor_feature_subscriptions").select("tool_id, status, billing_interval, featured_until").in("tool_id", toolIds).eq("product", "growth")
+        ? await fetchInChunks(toolIds, (chunk) =>
+          supabase.from("vendor_feature_subscriptions").select("tool_id, status, billing_interval, featured_until").in("tool_id", chunk).eq("product", "growth")
+        )
         : { data: [] as { tool_id: string; status: string; billing_interval: string; featured_until: string | null }[] };
       const growthByToolId = new Map((growthRows || []).map((r) => [r.tool_id, r]));
 
