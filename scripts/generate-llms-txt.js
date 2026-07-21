@@ -39,7 +39,7 @@ async function fetchTools(supabase) {
   for (let page = 0; ; page++) {
     const { data, error } = await supabase
       .from('tools')
-      .select('slug, name, llm_readable_summary, short_description')
+      .select('slug, name, llm_readable_summary, short_description, featured')
       .eq('status', 'published')
       .order('name', { ascending: true })
       .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
@@ -128,6 +128,26 @@ async function generateLlmsTxt() {
 
   if (tools.length > 0) {
     lines.push('## Tools');
+    lines.push('');
+
+    // Growth-subscribed tools (tools.featured) get their own, earlier
+    // section — genuine priority placement for AI/LLM answer engines that
+    // weight earlier content more heavily, not just a cosmetic label. The
+    // full alphabetical list below still includes them too, so nothing is
+    // ever omitted from the complete index.
+    const featuredTools = tools.filter((t) => t.featured);
+    if (featuredTools.length > 0) {
+      lines.push('### Recommended tools');
+      lines.push('');
+      for (const t of featuredTools) {
+        const summary = t.llm_readable_summary || t.short_description;
+        const desc = summary ? `: ${mdEscape(truncate(summary, 200))}` : '';
+        lines.push(`- [${mdEscape(t.name)}](${CANONICAL_DOMAIN}/tools/${t.slug}/)${desc}`);
+      }
+      lines.push('');
+    }
+
+    lines.push('### All tools');
     lines.push('');
     for (const t of tools) {
       const summary = t.llm_readable_summary || t.short_description;

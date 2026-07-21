@@ -30,11 +30,14 @@ const CLAIM_PRICE_LOOKUP_KEY = "feature_my_product_claim_v1";
 const CLAIM_PRICE_AMOUNT_CENTS = 2900; // $29 one-time
 const GROWTH_PRICE_LOOKUP_KEYS: Record<"month" | "year", string> = {
   month: "feature_my_product_growth_monthly_v1",
-  year: "feature_my_product_growth_yearly_v1",
+  // Bumped to v2 alongside the $890 -> $699 price drop — Stripe Prices are
+  // immutable, so reusing the v1 lookup key would keep resolving to the old
+  // $890 Price object (if one was ever created) instead of a new one.
+  year: "feature_my_product_growth_yearly_v2",
 };
 const GROWTH_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
   month: 8900, // $89/mo
-  year: 89000, // $890/yr (~2 months free vs. paying monthly)
+  year: 69900, // $699/yr (~35% off vs. paying monthly for 12 months)
 };
 const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "pending_verification"];
 const RATE_LIMIT_PER_HOUR = 20;

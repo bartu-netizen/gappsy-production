@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
-  MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet,
+  MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard } from '../lib/vendorDashboardApi';
@@ -31,11 +31,13 @@ interface GrowthSubscriptionRow {
   status: string; billing_interval: string | null; current_period_end: string | null;
   featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null;
 }
+interface AnalyticsData { views_total: number; views_30d: number; clicks_total: number; clicks_30d: number }
 
-type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing';
+type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics';
 
 const TABS: { key: Tab; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { key: 'analytics', label: 'Analytics', icon: BarChart3 },
   { key: 'listing', label: 'Listing', icon: FileText },
   { key: 'content', label: 'Features & FAQs', icon: FileText },
   { key: 'reviews', label: 'Reviews', icon: MessageSquare },
@@ -57,6 +59,7 @@ export default function VendorDashboardPage() {
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
   const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
   const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -74,6 +77,7 @@ export default function VendorDashboardPage() {
       setReviews(res.reviews);
       setClaimSubscription(res.claimSubscription);
       setGrowthSubscription(res.growthSubscription);
+      setAnalytics(res.analytics);
       setLoading(false);
     }).catch(() => {
       setLoadError('Failed to load your dashboard');
@@ -135,7 +139,7 @@ export default function VendorDashboardPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             <nav className="lg:w-56 shrink-0">
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-                {TABS.map(({ key, label, icon: Icon }) => (
+                {TABS.filter(({ key }) => key !== 'analytics' || analytics).map(({ key, label, icon: Icon }) => (
                   <button
                     key={key}
                     type="button"
@@ -153,6 +157,7 @@ export default function VendorDashboardPage() {
 
             <div className="flex-1 min-w-0">
               {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} />}
+              {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
               {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
               {tab === 'content' && (
                 <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
@@ -242,6 +247,35 @@ function OverviewTab({ tool, growthSubscription, reviews }: { tool: ToolRow; gro
           </div>
         </Card>
       )}
+    </div>
+  );
+}
+
+function AnalyticsStat({ icon: Icon, label, value }: { icon: typeof BarChart3; label: string; value: number }) {
+  return (
+    <Card>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-8 h-8 rounded-lg bg-[#EEF0FE] flex items-center justify-center shrink-0"><Icon className="w-4 h-4 text-[#4F47E6]" /></div>
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
+      </div>
+      <p className="text-2xl font-bold text-[#0B1221]">{value.toLocaleString()}</p>
+    </Card>
+  );
+}
+
+function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Listing analytics</p>
+        <p className="text-[13px] text-slate-500 mt-1">A Growth perk — how many people see and click through to your listing.</p>
+      </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <AnalyticsStat icon={BarChart3} label="Page views (last 30 days)" value={analytics.views_30d} />
+        <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (last 30 days)" value={analytics.clicks_30d} />
+        <AnalyticsStat icon={BarChart3} label="Page views (all-time)" value={analytics.views_total} />
+        <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (all-time)" value={analytics.clicks_total} />
+      </div>
     </div>
   );
 }

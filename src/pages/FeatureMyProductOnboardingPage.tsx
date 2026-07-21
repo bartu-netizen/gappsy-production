@@ -20,11 +20,16 @@ const STEP_INDEX: Record<string, number> = {
 const GROWTH_MONTHLY_FEATURES = [
   'Featured placement across category, comparison, and search',
   'Priority ranking ahead of unfeatured listings',
+  'Listing analytics — views and click-throughs, right in your dashboard',
+  'Priority placement in AI/LLM answer engines (ChatGPT, Perplexity, Claude)',
 ];
 const GROWTH_YEARLY_ONLY_FEATURES = [
   'A produced video review, posted on our socials',
   'A featured spot in the Gappsy newsletter',
   'No competitor ads shown on your own listing',
+  'Faster editorial review of listing updates',
+  'Priority support',
+  'Early access to new placement types',
 ];
 
 interface ToolSummary { id: string; name: string; slug: string; logo: string | null; short_description: string | null; category: string | null }
@@ -497,14 +502,14 @@ export default function FeatureMyProductOnboardingPage() {
                   without scrolling once these stack on mobile. */}
               <div className="relative order-1 rounded-2xl border-2 border-[#4F47E6] bg-white p-5 sm:p-6 shadow-[0_16px_40px_rgba(79,71,230,0.16)] flex flex-col">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4F47E6] text-white text-[10.5px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full whitespace-nowrap">
-                  Best value — save $178/year
+                  Best value — save $369/year
                 </span>
                 <h3 className="text-sm font-semibold text-[#4F47E6] mt-1">Yearly</h3>
                 <div className="mt-2 flex items-end gap-1.5">
-                  <span className="text-3xl font-bold text-[#0B1221]">$890</span>
+                  <span className="text-3xl font-bold text-[#0B1221]">$699</span>
                   <span className="text-sm text-slate-400 mb-0.5">/year</span>
                 </div>
-                <p className="mt-1 text-xs text-slate-400">Works out to ~$74/mo, billed yearly</p>
+                <p className="mt-1 text-xs text-slate-400">Works out to ~$58/mo, billed yearly</p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {GROWTH_MONTHLY_FEATURES.map((item) => (
                     <li key={item} className="flex items-start gap-1.5 text-[13.5px] leading-snug text-slate-600">
