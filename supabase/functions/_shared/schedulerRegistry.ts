@@ -16,7 +16,7 @@ import { computeCompleteness } from "./toolCompleteness.ts";
 import { attachToolCategories, fetchCompletenessRelations, buildCompletenessInput, computeQualityScore } from "./toolCompletenessRelations.ts";
 import type { PageType } from "./changeDetection.ts";
 import { processDueCheck } from "./changeDetectionRunner.ts";
-import { validateCrawlUrl, resolvesToPublicAddress, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
+import { validateCrawlUrl, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
 import { callCrawlerGateway, GatewayError } from "./crawlGatewayClient.ts";
 import { extractContactEmails } from "./emailExtraction.ts";
 
@@ -404,14 +404,45 @@ const EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE = 4;
 // tool that has exhausted its retries) is ever marked terminally 'failed'.
 const EMAIL_DISCOVERY_MAX_ATTEMPTS = 3;
 
+// callCrawlerGateway's own patience (GATEWAY_TIMEOUT_MS, 120s) is shared
+// with the sibling discovery/crawl pipeline and is NOT safe to rely on
+// here: a single slow/unresponsive site waiting out that full 120s (times
+// up to 2 passes per tool) can outlast this whole tick's execution
+// allowance on its own, between the between-tools budget check in
+// emailDiscoveryScanHandler (which only fires BEFORE starting a new tool,
+// not during one already in flight). This is exactly what silently
+// stalled the job for 6 hours on 2026-07-22 — every tick got killed
+// mid-crawl by the platform before it could even reach that check again.
+// Racing against a much shorter timeout here means the handler always
+// moves on within a bounded time, regardless of how unresponsive any one
+// site is; the abandoned network call is simply left to resolve/reject on
+// its own afterwards and ignored.
+const PER_CALL_TIMEOUT_MS = 20_000;
+
+// Rejects (not resolves) on timeout, same as crawlForEmails's own race
+// above — a timeout is a TRANSIENT condition (the DNS resolver was just
+// slow this once), so it must flow into the existing retry path, never
+// get treated as "this domain permanently doesn't resolve."
+function withTimeout<T>(promise: Promise<T>, ms: number, timeoutMessage: string): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new GatewayError("local_timeout", timeoutMessage)), ms)),
+  ]);
+}
+
 async function crawlForEmails(url: string, maxPages: number, maxDepth: number) {
-  const gatewayResult = await callCrawlerGateway({
-    request_id: crypto.randomUUID(),
-    url,
-    max_pages: maxPages,
-    max_depth: maxDepth,
-    max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
-  });
+  const gatewayResult = await Promise.race([
+    callCrawlerGateway({
+      request_id: crypto.randomUUID(),
+      url,
+      max_pages: maxPages,
+      max_depth: maxDepth,
+      max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
+    }),
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new GatewayError("local_timeout", `Crawl of ${url} exceeded this job's own ${PER_CALL_TIMEOUT_MS}ms budget`)), PER_CALL_TIMEOUT_MS)
+    ),
+  ]);
   if (!gatewayResult.ok || !gatewayResult.data) {
     throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
   }
@@ -439,21 +470,58 @@ async function crawlForEmails(url: string, maxPages: number, maxDepth: number) {
 // shares the same 512MB/1CPU Crawl4AI container as crawl_queue_drain
 // (already ticking independently every 120s), so this job deliberately
 // avoids adding any concurrent load of its own on top of that.
+// Each tool can cost up to two sequential gateway calls (homepage + the
+// /contact fallback), each patient up to callCrawlerGateway's own
+// GATEWAY_TIMEOUT_MS (120s) — a handful of slow/unresponsive sites in one
+// batch can push a tick's total wall-clock time well past what an edge
+// function invocation is actually allowed to run for. This happened for
+// real: every tick from ~06:22 to ~12:24 on 2026-07-22 was killed
+// mid-run by the platform (scheduled_job_runs stuck at status='running',
+// completed_at never set), silently stalling the whole backlog for six
+// hours. A self-imposed wall-clock budget makes each tick finish cleanly
+// well inside that ceiling regardless of how slow individual crawls are —
+// remaining tools in the batch just stay pending for the next tick.
+// Tightened alongside PER_CALL_TIMEOUT_MS above: worst case is now this
+// budget PLUS one tool's two capped passes (2 x 20s = 40s) before the
+// handler can actually return, so a lower number here leaves real margin
+// under the platform's own execution ceiling instead of running right up
+// against it.
+const EMAIL_DISCOVERY_TICK_BUDGET_MS = 30_000;
+
+// Absolute last line of defense: even with the per-call (20s) and DNS
+// (5s) timeouts above plus the between-tools budget check, this job
+// still stalled for real on 2026-07-22 — repeated fix attempts kept
+// finding one more untimed-out operation. Rather than keep chasing
+// individual hang points with no direct log access to confirm which one
+// is left, the ENTIRE batch loop is now raced against one hard wall-clock
+// deadline: whichever finishes first wins, and the counters (mutated
+// incrementally as each tool completes, in the enclosing scope) reflect
+// real progress either way. If the deadline wins, whatever's still
+// in-flight is simply abandoned — the handler returns, scheduler-tick's
+// response goes out, and the platform recycles the invocation, which is
+// far better than the function hanging until forcibly killed uncleanly.
+const EMAIL_DISCOVERY_HARD_DEADLINE_MS = 45_000;
+
 async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
   const { supabase, config } = ctx;
   const batchSize = typeof config.batch_size === "number" && config.batch_size > 0
     ? Math.min(config.batch_size, 20)
     : EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE;
+  const tickStartedAt = Date.now();
 
-  const { data: tools, error } = await supabase
-    .from("tools")
-    .select("id, slug, website, email_discovery_attempts")
-    .eq("status", "published")
-    .eq("is_open_source", false)
-    .is("email_discovery_status", null)
-    .not("website", "is", null)
-    .order("id", { ascending: true })
-    .limit(batchSize);
+  const { data: tools, error } = await withTimeout(
+    supabase
+      .from("tools")
+      .select("id, slug, website, email_discovery_attempts")
+      .eq("status", "published")
+      .eq("is_open_source", false)
+      .is("email_discovery_status", null)
+      .not("website", "is", null)
+      .order("id", { ascending: true })
+      .limit(batchSize),
+    10_000,
+    "Selecting the batch of tools itself exceeded 10s"
+  );
   if (error) throw new Error(`Failed to select tools for email discovery: ${error.message}`);
   if (!tools || tools.length === 0) return { processed: 0, emails_found: 0, done: 0, failed: 0, retried: 0 };
 
@@ -461,8 +529,14 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
   let doneCount = 0;
   let failed = 0;
   let retried = 0;
+  let stoppedEarly = false;
 
+  async function runBatch() {
   for (const tool of tools as any[]) {
+    if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
+      stoppedEarly = true;
+      break; // out of budget for this tick — the rest stay pending for the next one
+    }
     const nowIso = new Date().toISOString();
     const markTerminal = (status: "done" | "failed") =>
       supabase.from("tools").update({ email_discovery_status: status, email_discovery_checked_at: nowIso }).eq("id", tool.id);
@@ -473,15 +547,31 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
       failed++;
       continue;
     }
-    const dnsCheck = await resolvesToPublicAddress(urlCheck.hostname!);
-    if (!dnsCheck.ok) {
-      await markTerminal("failed"); // permanent — domain doesn't resolve
-      failed++;
-      continue;
-    }
+
+    // No client-side DNS/SSRF pre-check here (deliberately, unlike the
+    // sibling discovery pipeline): crawler-gateway/server.js's own
+    // resolvesToPublicAddress already re-validates this independently,
+    // server-side, before it ever crawls anything.
+    //
+    // Actual confirmed root cause of the real multi-hour stall on
+    // 2026-07-22 (isolated via a standalone diagnostic function invoked
+    // directly, bypassing the scheduler entirely): the edge function was
+    // being killed with WORKER_RESOURCE_LIMIT ("not enough compute
+    // resources") — NOT a JS-level hang at all, which is why every
+    // Promise.race/timeout fix here had no effect; the whole isolate was
+    // being terminated by the platform's own resource governor. Crawling
+    // CRAWL_LIMITS.MAX_PAGES (15) full pages of raw HTML per tool — sized
+    // for the sibling discovery pipeline's much richer draft-creation
+    // needs — was too much data/memory for what this job actually needs
+    // (just finding emails). A 3-page, depth-1 crawl was verified directly
+    // (curl against the diagnostic function) to complete cleanly in
+    // ~5s with zero resource errors; kept small here for both passes.
+    const SAFE_MAX_PAGES = 3;
+    const SAFE_MAX_DEPTH = 1;
 
     try {
-      const primary = await crawlForEmails(urlCheck.normalizedUrl!, CRAWL_LIMITS.MAX_PAGES, CRAWL_LIMITS.MAX_DEPTH);
+
+      const primary = await crawlForEmails(urlCheck.normalizedUrl!, SAFE_MAX_PAGES, SAFE_MAX_DEPTH);
 
       // Always run the /contact pass too, even when the homepage pass
       // already found an email — a site commonly publishes DIFFERENT
@@ -491,7 +581,7 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
       let contactPass: typeof primary = [];
       try {
         const origin = new URL(urlCheck.normalizedUrl!).origin;
-        contactPass = await crawlForEmails(`${origin}/contact`, 5, 1);
+        contactPass = await crawlForEmails(`${origin}/contact`, SAFE_MAX_PAGES, SAFE_MAX_DEPTH);
       } catch {
         // Best-effort only — /contact may not exist on this site at all;
         // that's not a failure of the overall attempt, just an empty pass.
@@ -525,8 +615,14 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
       }
     }
   }
+  }
 
-  return { processed: tools.length, emails_found: emailsFound, done: doneCount, failed, retried };
+  await Promise.race([
+    runBatch(),
+    new Promise<void>((resolve) => setTimeout(() => { stoppedEarly = true; resolve(); }, EMAIL_DISCOVERY_HARD_DEADLINE_MS)),
+  ]);
+
+  return { processed: doneCount + failed + retried, emails_found: emailsFound, done: doneCount, failed, retried, stopped_early: stoppedEarly };
 }
 
 const REGISTRY: Record<string, SchedulerJobHandler> = {
