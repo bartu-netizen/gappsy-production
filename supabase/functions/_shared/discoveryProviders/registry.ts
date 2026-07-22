@@ -11,6 +11,7 @@ import { pypiProvider } from "./pypiProvider.ts";
 import { vscodeMarketplaceProvider } from "./vscodeMarketplaceProvider.ts";
 import { wordpressPluginProvider } from "./wordpressPluginProvider.ts";
 import { githubTopicsProvider } from "./githubTopicsProvider.ts";
+import { saashubProvider } from "./saashubProvider.ts";
 import { makeStubProvider } from "./stubProvider.ts";
 import { DiscoveryProvider, ProviderNotImplementedError } from "./types.ts";
 
@@ -24,10 +25,10 @@ const PROVIDERS: Record<string, DiscoveryProvider> = {
   vscode_marketplace: vscodeMarketplaceProvider,
   wordpress_plugins: wordpressPluginProvider,
   github_topics: githubTopicsProvider,
+  saashub: saashubProvider,
   peerlist: makeStubProvider("peerlist", "Peerlist", SCRAPER_STUB_REASON),
   futuretools: makeStubProvider("futuretools", "FutureTools", SCRAPER_STUB_REASON),
   alternativeto: makeStubProvider("alternativeto", "AlternativeTo", SCRAPER_STUB_REASON),
-  saashub: makeStubProvider("saashub", "SaaSHub", SCRAPER_STUB_REASON),
   // Deliberately deferred, not "not yet built" — verified (July 2026) that
   // neither has an appropriate public discovery mechanism:
   chrome_web_store: makeStubProvider(
