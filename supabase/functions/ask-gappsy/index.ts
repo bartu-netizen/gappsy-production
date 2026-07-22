@@ -32,6 +32,19 @@ const RATE_LIMIT_WINDOW_MINUTES = 5;
 const RATE_LIMIT_MAX_MESSAGES = 20;
 const MAX_HISTORY_MESSAGES = 12;
 
+// Appended to every system prompt below. Answers were rendering as one
+// dense wall of plain text (whitespace-pre-wrap on the frontend, no
+// markdown parsing) — this asks the model for structure the frontend's
+// lightweight markdown renderer (bold, bullet lists, short paragraphs)
+// actually has something to work with, instead of copy-pasted-looking prose.
+const RESPONSE_FORMATTING_INSTRUCTIONS = `
+
+Formatting your answer:
+- Prefer short paragraphs (1-3 sentences) over long ones.
+- Use a "- " bullet list whenever you're listing 2 or more things (features, steps, pros/cons, plan differences) — never comma-cram a list into one sentence.
+- Use **bold** for the specific thing being asked about: tool/plan names, prices, and key terms — not whole sentences.
+- Never use raw markdown headings (#), tables, or code blocks — this renders in a small chat bubble, not a document.`;
+
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
 }
@@ -147,7 +160,7 @@ Disclosure rule: if you mention that ${tool.name} is a Featured/sponsored Gappsy
 
 If the visitor asks whether a different tool might suit them better, recommend from the Alternatives list above when it's genuinely relevant, and only link to gappsy.com/tool-categories or a real /compare/ page from the list above — never fabricate a comparison page or competitor detail you don't actually know. Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text.`;
 
-  return { prompt, toolName: tool.name };
+  return { prompt: prompt + RESPONSE_FORMATTING_INSTRUCTIONS, toolName: tool.name };
 }
 
 // Trimmed sibling of buildToolSystemPrompt for /compare pages — pulls the
@@ -229,7 +242,7 @@ Disclosure rule: if a tool above is marked as a Featured/sponsored Gappsy listin
 Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text. When comparing, be specific about which tool wins on which dimension rather than giving a vague "it depends."`;
 
   // deno-lint-ignore no-explicit-any
-  return { prompt, toolNames: names, toolIds: orderedTools.map((t: any) => t.id) };
+  return { prompt: prompt + RESPONSE_FORMATTING_INSTRUCTIONS, toolNames: names, toolIds: orderedTools.map((t: any) => t.id) };
 }
 
 // deno-lint-ignore no-explicit-any
@@ -269,7 +282,7 @@ Catalog (name, page, description, pricing; [Featured/sponsored listing] tag show
 ${catalog}
 
 Dedicated head-to-head comparison pages that actually exist on Gappsy (only ever link one of these — never invent a /compare/ URL that isn't in this list, and never claim one exists for a pair not listed here):
-${comparisonPages}`;
+${comparisonPages}${RESPONSE_FORMATTING_INSTRUCTIONS}`;
 }
 
 // Static sibling of buildDirectorySystemPrompt for the Feature My Product
@@ -294,7 +307,7 @@ If asked about "featured placement", "Growth", or paid promotion beyond Claim & 
 ## What this page is not for
 It is not a place to browse or search the software directory. If someone wants to find or compare tools rather than claim/list their own, point them to gappsy.com/tools or gappsy.com/tool-categories instead.
 
-Keep answers concise and conversational, a few sentences at a time. If someone seems ready to act, point them to the "Claim or list your product — $29" button on this page.`;
+Keep answers concise and conversational, a few sentences at a time. If someone seems ready to act, point them to the "Claim or list your product — $29" button on this page.${RESPONSE_FORMATTING_INSTRUCTIONS}`;
 }
 
 // Sibling of buildFeatureMyProductSystemPrompt for the growth_upsell step
@@ -334,7 +347,7 @@ Both are real recurring Stripe subscriptions, manageable from the vendor's own d
 ## What this step is not for
 It's not for browsing the software directory. If someone wants to find or compare OTHER tools (not their own upgrade decision), point them to gappsy.com/tools or gappsy.com/tool-categories.
 
-Keep answers concise and conversational, a few sentences at a time. If comparing Monthly vs. Yearly, be direct about Yearly being the better value for anyone planning to stay featured longer than about 8 months. If someone seems ready to act, point them to the "Get Yearly" or "Continue" button on this page.`;
+Keep answers concise and conversational, a few sentences at a time. If comparing Monthly vs. Yearly, be direct about Yearly being the better value for anyone planning to stay featured longer than about 8 months. If someone seems ready to act, point them to the "Get Yearly" or "Continue" button on this page.${RESPONSE_FORMATTING_INSTRUCTIONS}`;
 }
 
 async function checkRateLimit(

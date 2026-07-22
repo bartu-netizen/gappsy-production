@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Sparkles, Send, Loader2, AlertCircle } from 'lucide-react';
+import ChatMarkdown from './ChatMarkdown';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -180,11 +181,15 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed whitespace-pre-wrap ${
-                  m.role === 'user' ? 'bg-[#4F47E6] text-white' : 'bg-slate-50 text-[#0B1221]'
+                className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed ${
+                  m.role === 'user' ? 'bg-[#4F47E6] text-white whitespace-pre-wrap' : 'bg-slate-50 text-[#0B1221]'
                 }`}
               >
-                {m.content || (streaming && i === messages.length - 1 ? <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" /> : '')}
+                {m.content ? (
+                  m.role === 'assistant' ? <ChatMarkdown content={m.content} /> : m.content
+                ) : (
+                  streaming && i === messages.length - 1 ? <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" /> : ''
+                )}
               </div>
             </div>
           ))}
