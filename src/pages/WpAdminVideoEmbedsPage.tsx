@@ -1,8 +1,43 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Play, Trash2, Pencil, Eye, EyeOff, Plus, X, MousePointerClick, Layers, Clock } from 'lucide-react';
+import { Play, Trash2, Pencil, Eye, EyeOff, Plus, X, MousePointerClick, Layers, Clock, Wand2 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { adminApiFetch, getErrorMessage } from '../lib/adminApiFetch';
 import { extractYouTubeId, isYouTubeShortsUrl } from '../utils/youtube';
+import { supabase } from '../lib/supabase';
+
+// Given a /compare/<slug> page path, finds the tool(s) that comparison is
+// about (checking group comparisons first, since a 3+ tool comparison is
+// the main use case, then pairwise) and returns each tool's own page path —
+// e.g. so a 3-tool comparison video's admin can auto-fill the 3 individual
+// tool pages instead of typing them by hand. Returns [] for anything that
+// isn't a recognized /compare/ page (including a genuinely unknown slug).
+async function findComparisonToolPaths(pagePath: string): Promise<string[]> {
+  const match = pagePath.trim().toLowerCase().match(/^\/compare\/([^/]+)\/?$/);
+  if (!match) return [];
+  const slug = match[1];
+
+  const { data: group } = await supabase
+    .from('tool_group_comparisons')
+    .select('tool_group_comparison_members(tools(slug))')
+    .eq('slug', slug)
+    .maybeSingle();
+  if (group) {
+    const members = (group.tool_group_comparison_members || []) as unknown as { tools: { slug: string } | null }[];
+    return members.filter((m) => m.tools).map((m) => `/tools/${m.tools!.slug}/`);
+  }
+
+  const { data: pair } = await supabase
+    .from('tool_comparisons')
+    .select('tool_a:tools!tool_comparisons_tool_a_id_fkey(slug), tool_b:tools!tool_comparisons_tool_b_id_fkey(slug)')
+    .eq('slug', slug)
+    .maybeSingle();
+  if (pair) {
+    const row = pair as unknown as { tool_a: { slug: string } | null; tool_b: { slug: string } | null };
+    return [row.tool_a?.slug, row.tool_b?.slug].filter((s): s is string => Boolean(s)).map((s) => `/tools/${s}/`);
+  }
+
+  return [];
+}
 
 interface VideoTarget {
   id: string;
@@ -59,6 +94,7 @@ export default function WpAdminVideoEmbedsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [actingId, setActingId] = useState<string | null>(null);
   const [newTargetPath, setNewTargetPath] = useState<Record<string, string>>({});
+  const [detecting, setDetecting] = useState(false);
 
   const fetchEmbeds = useCallback(async () => {
     setLoading(true);
@@ -84,6 +120,24 @@ export default function WpAdminVideoEmbedsPage() {
   function openEdit(embed: VideoEmbedRow) {
     setForm({ id: embed.id, page_path: embed.page_path, extra_page_paths: '', youtube_url: embed.youtube_url, title: embed.title });
     setFormOpen(true);
+  }
+
+  const isComparePath = /^\/compare\/[^/]+\/?$/.test(form.page_path.trim().toLowerCase());
+
+  async function handleDetectToolPaths() {
+    setDetecting(true);
+    setError(null);
+    const found = await findComparisonToolPaths(form.page_path);
+    setDetecting(false);
+    if (found.length === 0) {
+      setError("Couldn't find a comparison matching that page — check the slug, or add the tool pages manually below.");
+      return;
+    }
+    setForm((f) => {
+      const existing = new Set(f.extra_page_paths.split('\n').map((p) => p.trim()).filter(Boolean));
+      const merged = [...existing, ...found.filter((p) => !existing.has(p))];
+      return { ...f, extra_page_paths: merged.join('\n') };
+    });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -223,9 +277,21 @@ export default function WpAdminVideoEmbedsPage() {
             </div>
             {!form.id && (
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5 block">
-                  Also show on these pages (one per line, optional)
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-400 block">
+                    Also show on these pages (one per line, optional)
+                  </label>
+                  {isComparePath && (
+                    <button
+                      type="button"
+                      onClick={handleDetectToolPaths}
+                      disabled={detecting}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 hover:text-indigo-700 disabled:opacity-40 shrink-0"
+                    >
+                      <Wand2 className="w-3.5 h-3.5" /> {detecting ? 'Detecting…' : 'Detect tool pages from this comparison'}
+                    </button>
+                  )}
+                </div>
                 <textarea
                   value={form.extra_page_paths}
                   onChange={(e) => setForm((f) => ({ ...f, extra_page_paths: e.target.value }))}
@@ -234,7 +300,7 @@ export default function WpAdminVideoEmbedsPage() {
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
                 />
                 <p className="text-[11px] text-slate-400 mt-1">
-                  E.g. a 3-tool comparison video: the webpage URL above is the comparison page, and add each of the 3 tools' own pages here so the same video plays on all 4.
+                  E.g. a 3-tool comparison video: the webpage URL above is the comparison page — click "Detect tool pages" once you've typed it in, or add each tool's own page here by hand.
                 </p>
               </div>
             )}
