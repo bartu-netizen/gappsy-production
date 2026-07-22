@@ -166,6 +166,21 @@ function normalizeListCleanListStatusPayload(raw: unknown, requestedListId: stri
 
   const source = (obj.data && typeof obj.data === "object") ? (obj.data as Record<string, unknown>) : obj;
 
+  // The real API response nests counts under data.analytics.summary
+  // (e.g. { analytics: { summary: { total: "198", clean: { count: 75 },
+  // dirty: { count: 37 }, unknown: { count: 86 } } } }) — confirmed via a
+  // direct raw-response probe on 2026-07-22 after tool_contact_emails rows
+  // kept ending up "failed" with listclean_external_status always null.
+  // Neither this shape nor a download URL for the actual per-email results
+  // is present at data.clean_count/data.clean/etc, which is all the code
+  // below originally checked — so isComplete/hasAnyCount detection was
+  // silently always false via those fields alone.
+  const analyticsSummary = ((source.analytics as Record<string, unknown> | undefined)?.summary ?? {}) as Record<string, unknown>;
+  const summaryCount = (bucket: unknown): number | undefined => {
+    if (bucket && typeof bucket === "object") return toOptionalNumber((bucket as Record<string, unknown>).count);
+    return toOptionalNumber(bucket);
+  };
+
   const id = source.id ?? source.list_id;
   if (id === null || id === undefined) {
     throw new Error(
@@ -203,10 +218,10 @@ function normalizeListCleanListStatusPayload(raw: unknown, requestedListId: stri
     id: numId,
     name: (source.name ?? source.list_name ?? source.filename) as string | undefined,
     filename,
-    email_count: toOptionalNumber(source.email_count ?? source.total_count ?? source.total ?? source.total_emails),
-    clean_count: toOptionalNumber(source.clean_count ?? source.valid_count ?? source.clean),
-    dirty_count: toOptionalNumber(source.dirty_count ?? source.invalid_count ?? source.dirty),
-    unknown_count: toOptionalNumber(source.unknown_count ?? source.unknown),
+    email_count: toOptionalNumber(source.email_count ?? source.total_count ?? source.total ?? source.total_emails) ?? summaryCount(analyticsSummary.total),
+    clean_count: toOptionalNumber(source.clean_count ?? source.valid_count) ?? summaryCount(source.clean) ?? summaryCount(analyticsSummary.clean),
+    dirty_count: toOptionalNumber(source.dirty_count ?? source.invalid_count) ?? summaryCount(source.dirty) ?? summaryCount(analyticsSummary.dirty),
+    unknown_count: toOptionalNumber(source.unknown_count) ?? summaryCount(source.unknown) ?? summaryCount(analyticsSummary.unknown),
     status: (source.status ?? source.state ?? source.processing_status ?? source.list_status) as string | undefined,
     created_at: (source.created_at ?? source.created) as string | undefined,
     updated_at: (source.updated_at ?? source.updated) as string | undefined,
