@@ -415,6 +415,61 @@ export async function getCampaignLeadStats(campaignId: string): Promise<Smartlea
   return extractCampaignStats(response);
 }
 
+export interface SmartleadLead {
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  company_name?: string;
+  website?: string;
+  phone_number?: string;
+  custom_fields?: Record<string, unknown>;
+}
+
+export interface AddLeadsResult {
+  ok: boolean;
+  upload_count?: number;
+  total_leads?: number;
+  duplicate_count?: number;
+  invalid_email_count?: number;
+  already_added_to_campaign?: number;
+  invalid_emails?: string[];
+  raw: unknown;
+}
+
+// Never previously defined here despite being imported elsewhere
+// (smartlead-sync-eligible-contacts) — that import was dead code, always
+// throwing at module load. Matches Smartlead's actual documented "Add
+// Leads to Campaign" endpoint: POST /campaigns/{id}/leads with
+// { lead_list, settings }.
+export async function addLeadsToCampaign(campaignId: string, leads: SmartleadLead[]): Promise<AddLeadsResult> {
+  const response = await apiPost(`/campaigns/${campaignId}/leads`, {
+    lead_list: leads,
+    settings: {
+      ignore_global_block_list: false,
+      ignore_unsubscribe_list: false,
+      ignore_community_bounce_list: false,
+      ignore_duplicate_leads_in_other_campaign: false,
+    },
+  });
+
+  logResponseShape(`addLeadsToCampaign(${campaignId})`, response);
+
+  if (!isObject(response)) {
+    return { ok: false, raw: response };
+  }
+
+  return {
+    ok: response.ok === true || response.success === true || typeof safeGet(response, "upload_count") === "number",
+    upload_count: firstNumber(safeGet(response, "upload_count")),
+    total_leads: firstNumber(safeGet(response, "total_leads")),
+    duplicate_count: firstNumber(safeGet(response, "duplicate_count")),
+    invalid_email_count: firstNumber(safeGet(response, "invalid_email_count")),
+    already_added_to_campaign: firstNumber(safeGet(response, "already_added_to_campaign")),
+    invalid_emails: Array.isArray(safeGet(response, "invalid_emails")) ? (safeGet(response, "invalid_emails") as string[]) : undefined,
+    raw: response,
+  };
+}
+
 export async function startCampaign(campaignId: string): Promise<boolean> {
   const response = await apiPost(`/campaigns/${campaignId}/status`, { status: "START" });
   if (!isObject(response)) return false;

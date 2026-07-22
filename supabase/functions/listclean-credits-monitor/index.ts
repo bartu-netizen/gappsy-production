@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { listcleanGetCredits } from "../_shared/listcleanClient.ts";
-import { sendEmailViaSmtp } from "../_shared/smtp.ts";
+import { sendEmail } from "../_shared/emailClient.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL");
 const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -99,17 +99,11 @@ Timestamp: ${new Date().toISOString()}
     `.trim();
   }
 
-  try {
-    await sendEmailViaSmtp({
-      to: recipient,
-      subject,
-      text: body,
-    });
-    return true;
-  } catch (err) {
-    console.error("[listclean-credits-monitor] Email send failed:", err);
-    return false;
+  const result = await sendEmail({ to: recipient, subject, text: body });
+  if (!result.success) {
+    console.error("[listclean-credits-monitor] Email send failed:", result.error);
   }
+  return result.success;
 }
 
 async function updateMonitorState(updates: Partial<MonitorState>): Promise<void> {

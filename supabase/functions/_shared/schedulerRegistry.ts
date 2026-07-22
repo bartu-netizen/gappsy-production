@@ -19,6 +19,7 @@ import { processDueCheck } from "./changeDetectionRunner.ts";
 import { validateCrawlUrl, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
 import { callCrawlerGateway, GatewayError } from "./crawlGatewayClient.ts";
 import { extractContactEmails } from "./emailExtraction.ts";
+import { listcleanVerifyBatch, listcleanGetList, listcleanDownloadListJson, mapListCleanStatusToInternal } from "./listcleanClient.ts";
 
 export interface SchedulerJobContext {
   supabase: SupabaseClient;
@@ -625,6 +626,175 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
   return { processed: doneCount + failed + retried, emails_found: emailsFound, done: doneCount, failed, retried, stopped_early: stoppedEarly };
 }
 
+// Both ListClean handlers below call already-deployed, already-working
+// edge functions over HTTP (service-role Bearer token — both accept that
+// as an internal-call credential) rather than importing their logic
+// directly, deliberately: other-agencies-listclean-process-queue in
+// particular is large, already tested, and not worth re-risking via a
+// refactor just to satisfy this registry's usual "import the shared
+// function" convention. This mirrors what a never-actually-scheduled
+// pg_cron job (trigger_queue_worker_http, migration 20260308193208) was
+// already meant to do — this is that missing piece, just on the modern
+// scheduler instead of a bare pg_cron entry.
+async function listcleanCreditsCheckHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const res = await fetch(`${ctx.supabaseUrl}/functions/v1/listclean-credits-monitor`, { method: "POST" });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`listclean-credits-monitor returned ${res.status}: ${JSON.stringify(body)}`);
+  return body;
+}
+
+// other-agencies-listclean-process-queue processes up to 3000 due emails
+// per call, in batches of 1000, SYNCHRONOUSLY polling ListClean
+// (pollListCleanCompletion) for up to ~60s per batch — a large first-ever
+// backlog (this has never run on a schedule before) could take several
+// minutes end to end. A client-side abort here only stops THIS scheduler
+// tick from waiting; the invoked function keeps running server-side to
+// completion regardless (it never checks the request's AbortSignal), so
+// timing out client-side is safe — the next tick's own fresh SELECT will
+// simply find a smaller backlog either way.
+const LISTCLEAN_QUEUE_DRAIN_TIMEOUT_MS = 90_000;
+
+async function listcleanQueueDrainHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), LISTCLEAN_QUEUE_DRAIN_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${ctx.supabaseUrl}/functions/v1/other-agencies-listclean-process-queue`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${serviceRoleKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+      signal: controller.signal,
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(`other-agencies-listclean-process-queue returned ${res.status}: ${JSON.stringify(body)}`);
+    return body;
+  } catch (err) {
+    if (err instanceof Error && err.name === "AbortError") {
+      return { ok: true, note: `Still running server-side past this tick's ${LISTCLEAN_QUEUE_DRAIN_TIMEOUT_MS}ms wait — expected for a large backlog, will show up as progress next tick.` };
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+const TOOL_LISTCLEAN_MAX_ATTEMPTS = 3;
+const TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT = 200;
+
+// Same clean/dirty/retry vocabulary as the agencies pipeline
+// (other-agencies-listclean-process-queue), applied to tool_contact_emails
+// (software-tool vendor outreach) instead of other_agency_emails. Two
+// phases each tick, submit-then-check-later rather than the agencies
+// pipeline's synchronous submit->poll->download-in-one-call: ListClean
+// batch verification isn't instant, and blocking on pollListCleanCompletion
+// for a real backlog risks exactly the kind of long-synchronous-call
+// resource exhaustion already hit (and fixed) in email_discovery_scan
+// today. A non-blocking listcleanGetList check per pending batch, once
+// per tick, is far cheaper and just as correct — an incomplete batch is
+// simply checked again next tick instead of blocked on in this one.
+async function toolEmailListcleanScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const submitBatchSize = typeof config.submit_batch_size === "number" && config.submit_batch_size > 0
+    ? Math.min(config.submit_batch_size, 1000)
+    : TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT;
+
+  let downloaded = 0, valid = 0, invalid = 0, retried = 0, failed = 0;
+
+  // Phase 1: check any batches already submitted for completion, and
+  // apply results for the ones that are ready.
+  const { data: submittedRows, error: submittedError } = await supabase
+    .from("tool_contact_emails")
+    .select("id, email, listclean_list_id, listclean_attempt_count")
+    .eq("listclean_status", "submitted")
+    .not("listclean_list_id", "is", null)
+    .limit(2000);
+  if (submittedError) throw new Error(`Failed to select submitted tool_contact_emails: ${submittedError.message}`);
+
+  const rowsByListId = new Map<number, typeof submittedRows>();
+  for (const row of (submittedRows || []) as any[]) {
+    const list = rowsByListId.get(row.listclean_list_id) || [];
+    list.push(row);
+    rowsByListId.set(row.listclean_list_id, list);
+  }
+
+  for (const [listId, rows] of rowsByListId.entries()) {
+    let status;
+    try {
+      status = await listcleanGetList(listId);
+    } catch {
+      continue; // transient — try again next tick
+    }
+    const statusStr = (status.status ?? "").toLowerCase();
+    const hasAnyCount = typeof status.clean_count === "number" || typeof status.dirty_count === "number" || typeof status.unknown_count === "number";
+    const isComplete = ["completed", "ready", "complete", "done"].includes(statusStr) || hasAnyCount;
+    if (!isComplete) continue; // not ready yet
+
+    let resultMap: Map<string, { status: string }>;
+    try {
+      const [cleanResults, dirtyResults] = await Promise.all([
+        listcleanDownloadListJson(listId, "clean").catch(() => []),
+        listcleanDownloadListJson(listId, "dirty").catch(() => []),
+      ]);
+      resultMap = new Map();
+      for (const r of dirtyResults) resultMap.set(r.email.toLowerCase(), r);
+      for (const r of cleanResults) resultMap.set(r.email.toLowerCase(), r); // clean takes priority on conflict, matching the agencies pipeline
+    } catch {
+      continue; // download failed — try again next tick rather than lose the batch
+    }
+
+    const nowIso = new Date().toISOString();
+    for (const row of rows as any[]) {
+      const result = resultMap.get(String(row.email).toLowerCase());
+      const attempts = (row.listclean_attempt_count || 0) + 1;
+      const externalStatus = result?.status ?? null;
+      // No result at all for this email in either bucket reads the same as
+      // ListClean's own "unknown" — retry it rather than assume invalid.
+      const mapped = result ? mapListCleanStatusToInternal(result.status) : "retry";
+
+      if (mapped === "valid") {
+        await supabase.from("tool_contact_emails").update({ listclean_status: "valid", listclean_external_status: externalStatus, listclean_checked_at: nowIso }).eq("id", row.id);
+        valid++;
+      } else if (mapped === "invalid") {
+        await supabase.from("tool_contact_emails").update({ listclean_status: "invalid", listclean_external_status: externalStatus, listclean_checked_at: nowIso }).eq("id", row.id);
+        invalid++;
+      } else if (attempts >= TOOL_LISTCLEAN_MAX_ATTEMPTS) {
+        await supabase.from("tool_contact_emails").update({ listclean_status: "failed", listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        failed++;
+      } else {
+        // Back to NULL (not "retry") so the same submit-phase query below
+        // picks it up again next tick — attempts is the only thing that
+        // actually advances.
+        await supabase.from("tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        retried++;
+      }
+      downloaded++;
+    }
+  }
+
+  // Phase 2: submit a fresh batch of never-tried or reset-for-retry emails.
+  const { data: pending, error: pendingError } = await supabase
+    .from("tool_contact_emails")
+    .select("id, email")
+    .is("listclean_status", null)
+    .limit(submitBatchSize);
+  if (pendingError) throw new Error(`Failed to select pending tool_contact_emails: ${pendingError.message}`);
+
+  let submitted = 0;
+  if (pending && pending.length > 0) {
+    const emails = [...new Set(pending.map((p: any) => p.email))];
+    const batchResult = await listcleanVerifyBatch(emails);
+    const nowIso = new Date().toISOString();
+    const { error: updateError } = await supabase
+      .from("tool_contact_emails")
+      .update({ listclean_status: "submitted", listclean_list_id: batchResult.list_id, listclean_submitted_at: nowIso })
+      .in("id", pending.map((p: any) => p.id));
+    if (updateError) throw new Error(`Submitted to ListClean but failed to record list_id: ${updateError.message}`);
+    submitted = pending.length;
+  }
+
+  return { downloaded, valid, invalid, retried, failed, submitted };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
@@ -635,6 +805,9 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   stale_source_retry: staleSourceRetryHandler,
   indexnow_submit: indexnowSubmitHandler,
   email_discovery_scan: emailDiscoveryScanHandler,
+  listclean_credits_check: listcleanCreditsCheckHandler,
+  listclean_queue_drain: listcleanQueueDrainHandler,
+  tool_email_listclean_scan: toolEmailListcleanScanHandler,
 };
 
 export class UnknownJobTypeError extends Error {

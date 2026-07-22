@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
-import { Mail, Download, ExternalLink, FileSpreadsheet } from 'lucide-react';
+import { Mail, Download, ExternalLink, FileSpreadsheet, Send, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { adminApiFetch, getErrorMessage } from '../lib/adminApiFetch';
 
@@ -8,9 +8,14 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 interface ToolRef { id: string; slug: string; name: string; website: string | null }
-interface EmailRow { tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef; profile_url: string }
+interface EmailRow {
+  tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef; profile_url: string;
+  listclean_status: string | null; listclean_external_status: string | null;
+  smartlead_campaign_id: string | null; smartlead_synced_at: string | null;
+}
 interface Progress { eligible_total: number; done: number; failed: number; pending: number }
-interface Response { ok: boolean; progress: Progress; emails: EmailRow[]; total_emails: number; error?: string }
+interface ListcleanSummary { valid: number; invalid: number; pending: number; failed: number; synced_to_smartlead: number }
+interface Response { ok: boolean; progress: Progress; listclean: ListcleanSummary; emails: EmailRow[]; total_emails: number; error?: string }
 
 function exportFilename(ext: string): string {
   return `software-tool-scraped-emails-${new Date().toISOString().slice(0, 10)}.${ext}`;
@@ -26,6 +31,9 @@ export default function WpAdminToolContactEmailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [campaignId, setCampaignId] = useState('');
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -88,6 +96,24 @@ export default function WpAdminToolContactEmailsPage() {
     XLSX.writeFile(workbook, exportFilename('xlsx'));
   }
 
+  async function handleSyncToSmartlead() {
+    if (!campaignId.trim()) return;
+    setSyncing(true);
+    setSyncResult(null);
+    setError(null);
+    const result = await adminApiFetch<{ ok: boolean; synced?: number; note?: string; error?: string }>('admin-tool-contact-emails', {
+      method: 'POST',
+      body: { action: 'sync_to_smartlead', campaign_id: campaignId.trim() },
+    });
+    if (result.ok && result.data?.ok) {
+      setSyncResult(result.data.note || `Sent ${result.data.synced ?? 0} clean email${result.data.synced === 1 ? '' : 's'} to Smartlead campaign ${campaignId.trim()}.`);
+      fetchData();
+    } else {
+      setError(result.data?.error || (result.error ? getErrorMessage(result.error) : 'Failed to sync to Smartlead'));
+    }
+    setSyncing(false);
+  }
+
   const progress = data?.progress;
   const pct = progress && progress.eligible_total > 0 ? Math.round(((progress.done + progress.failed) / progress.eligible_total) * 100) : 0;
 
@@ -147,6 +173,44 @@ export default function WpAdminToolContactEmailsPage() {
               </p>
             </div>
 
+            <div className="bg-white border border-slate-200 rounded-xl p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-2">
+                ListClean verification &mdash; runs automatically every 5 minutes
+              </p>
+              <div className="flex items-center gap-4 text-xs text-slate-600 mb-4">
+                <span className="inline-flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> {data.listclean.valid} clean</span>
+                <span className="inline-flex items-center gap-1"><XCircle className="w-3.5 h-3.5 text-rose-400" /> {data.listclean.invalid} dirty</span>
+                <span className="inline-flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-slate-300" /> {data.listclean.pending} pending</span>
+                {data.listclean.failed > 0 && <span className="text-slate-400">{data.listclean.failed} gave up</span>}
+                <span className="ml-auto font-medium text-[#0B1221]">{data.listclean.synced_to_smartlead} already sent to Smartlead</span>
+              </div>
+
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-2">
+                Send clean emails to a Smartlead campaign
+              </p>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={campaignId}
+                  onChange={(e) => setCampaignId(e.target.value)}
+                  placeholder="Smartlead campaign ID"
+                  className="flex-1 px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleSyncToSmartlead}
+                  disabled={syncing || !campaignId.trim() || data.listclean.valid === 0}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shrink-0"
+                >
+                  <Send className="w-3.5 h-3.5" /> {syncing ? 'Sending…' : 'Send to Smartlead'}
+                </button>
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1.5">
+                Only sends emails ListClean marked clean (valid) and not already sent — safe to click again later as more emails clear verification.
+              </p>
+              {syncResult && <p className="text-[12.5px] text-emerald-600 mt-2">{syncResult}</p>}
+            </div>
+
             {data.emails.length === 0 ? (
               <p className="text-sm text-slate-400 bg-white border border-slate-200 rounded-xl p-8 text-center">
                 No emails found yet &mdash; check back once the scan has processed more tools.
@@ -162,6 +226,7 @@ export default function WpAdminToolContactEmailsPage() {
                         <th className="px-4 py-2 font-semibold">Email</th>
                         <th className="px-4 py-2 font-semibold">Found on</th>
                         <th className="px-4 py-2 font-semibold">Discovered</th>
+                        <th className="px-4 py-2 font-semibold">ListClean</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -184,6 +249,17 @@ export default function WpAdminToolContactEmailsPage() {
                             ) : '—'}
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap text-slate-500">{new Date(row.discovered_at).toLocaleDateString()}</td>
+                          <td className="px-4 py-2 whitespace-nowrap">
+                            {row.listclean_status === 'valid' ? (
+                              <span className="inline-flex items-center gap-1 text-emerald-600"><CheckCircle2 className="w-3.5 h-3.5" /> clean</span>
+                            ) : row.listclean_status === 'invalid' ? (
+                              <span className="inline-flex items-center gap-1 text-rose-500"><XCircle className="w-3.5 h-3.5" /> dirty</span>
+                            ) : row.listclean_status === 'failed' ? (
+                              <span className="inline-flex items-center gap-1 text-rose-400"><XCircle className="w-3.5 h-3.5" /> gave up</span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-slate-300"><Clock className="w-3.5 h-3.5" /> {row.listclean_status === 'submitted' ? 'checking' : 'pending'}</span>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
