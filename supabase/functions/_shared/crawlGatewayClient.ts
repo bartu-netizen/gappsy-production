@@ -58,7 +58,15 @@ export class GatewayError extends Error {
   }
 }
 
-export async function callCrawlerGateway(req: GatewayCrawlRequest): Promise<GatewayCrawlResponse> {
+// `timeoutMs` lets a caller with its own, tighter patience (e.g. the email
+// discovery scan's PER_CALL_TIMEOUT_MS) actually cancel the underlying
+// fetch instead of racing a separate JS-level timer on top of this
+// function's own default 120s abort — the previous approach left the real
+// network request running server-side for up to 120s after the caller had
+// already "moved on", piling up concurrent load against the same small
+// (512MB/1CPU) gateway container and contributing to real
+// WORKER_RESOURCE_LIMIT kills of the calling edge function itself.
+export async function callCrawlerGateway(req: GatewayCrawlRequest, timeoutMs: number = GATEWAY_TIMEOUT_MS): Promise<GatewayCrawlResponse> {
   const gatewayUrl = Deno.env.get("CRAWLER_GATEWAY_URL");
   const gatewaySecret = Deno.env.get("CRAWLER_GATEWAY_SECRET");
   if (!gatewayUrl || !gatewaySecret) {
@@ -70,7 +78,7 @@ export async function callCrawlerGateway(req: GatewayCrawlRequest): Promise<Gate
   const signature = await hmacSign(gatewaySecret, `${timestamp}.${req.request_id}.${body}`);
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), GATEWAY_TIMEOUT_MS);
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const res = await fetch(`${gatewayUrl}/crawl`, {

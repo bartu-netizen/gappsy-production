@@ -420,10 +420,10 @@ const EMAIL_DISCOVERY_MAX_ATTEMPTS = 3;
 // its own afterwards and ignored.
 const PER_CALL_TIMEOUT_MS = 20_000;
 
-// Rejects (not resolves) on timeout, same as crawlForEmails's own race
-// above — a timeout is a TRANSIENT condition (the DNS resolver was just
-// slow this once), so it must flow into the existing retry path, never
-// get treated as "this domain permanently doesn't resolve."
+// Rejects (not resolves) on timeout — a timeout is a TRANSIENT condition
+// (the DNS resolver was just slow this once), so it must flow into the
+// existing retry path, never get treated as "this domain permanently
+// doesn't resolve."
 function withTimeout<T>(promise: Promise<T>, ms: number, timeoutMessage: string): Promise<T> {
   return Promise.race([
     promise,
@@ -431,19 +431,21 @@ function withTimeout<T>(promise: Promise<T>, ms: number, timeoutMessage: string)
   ]);
 }
 
+// Passes PER_CALL_TIMEOUT_MS straight into callCrawlerGateway as its real
+// AbortController deadline (rather than racing a separate JS timer on top
+// of the gateway client's own 120s abort) — see the comment on
+// callCrawlerGateway's timeoutMs param for why: a merely-abandoned promise
+// left the actual network request alive server-side for up to 100s longer
+// than this job had already "moved on" for, stacking concurrent load on
+// the shared crawler-gateway container across ticks.
 async function crawlForEmails(url: string, maxPages: number, maxDepth: number) {
-  const gatewayResult = await Promise.race([
-    callCrawlerGateway({
-      request_id: crypto.randomUUID(),
-      url,
-      max_pages: maxPages,
-      max_depth: maxDepth,
-      max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
-    }),
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new GatewayError("local_timeout", `Crawl of ${url} exceeded this job's own ${PER_CALL_TIMEOUT_MS}ms budget`)), PER_CALL_TIMEOUT_MS)
-    ),
-  ]);
+  const gatewayResult = await callCrawlerGateway({
+    request_id: crypto.randomUUID(),
+    url,
+    max_pages: maxPages,
+    max_depth: maxDepth,
+    max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
+  }, PER_CALL_TIMEOUT_MS);
   if (!gatewayResult.ok || !gatewayResult.data) {
     throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
   }
