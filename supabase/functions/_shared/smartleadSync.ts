@@ -28,7 +28,10 @@ export async function syncValidEmailsToSmartlead(
   const emailTable = source === "discovered" ? "discovered_tool_contact_emails" : "tool_contact_emails";
   const idColumn = source === "discovered" ? "discovered_tool_id" : "tool_id";
   const entityTable = source === "discovered" ? "discovered_tools" : "tools";
-  const entitySelect = source === "discovered" ? "id, slug, name, official_website" : "id, slug, name, website";
+  // short_description/pricing_model are sent as custom_fields so Smartlead
+  // sequences can reference {{short_description}} / {{pricing_model}} for
+  // a more personalized opening line, not just the tool's name/website.
+  const entitySelect = source === "discovered" ? "id, slug, name, official_website, short_description" : "id, slug, name, website, short_description, pricing_model";
   const websiteField = source === "discovered" ? "official_website" : "website";
   const profileUrlFor = (slug: string | undefined) => (source === "discovered" ? null : slug ? `https://gappsy.com/tools/${slug}/` : null);
 
@@ -61,6 +64,8 @@ export async function syncValidEmailsToSmartlead(
         [idColumn]: r[idColumn],
         tool_slug: entity?.slug || null,
         profile_url: profileUrlFor(entity?.slug),
+        short_description: entity?.short_description || null,
+        pricing_model: entity?.pricing_model || null,
         source: emailTable,
       },
     };
