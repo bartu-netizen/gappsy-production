@@ -825,7 +825,7 @@ async function discoveredToolEmailScanHandler(ctx: SchedulerJobContext): Promise
 }
 
 const DISCOVERED_TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT = 200;
-const DISCOVERED_TOOL_LISTCLEAN_MAX_ATTEMPTS = 3;
+const DISCOVERED_TOOL_LISTCLEAN_MAX_ATTEMPTS = 5;
 
 // Sibling to toolEmailListcleanScanHandler below — identical two-phase
 // (check-then-submit) design and vocabulary, sourced from
@@ -897,17 +897,19 @@ async function discoveredToolEmailListcleanScanHandler(ctx: SchedulerJobContext)
         await supabase.from("discovered_tool_contact_emails").update({ listclean_status: "failed", listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
         failed++;
       } else {
-        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso, listclean_next_retry_at: listcleanNextRetryAt(attempts) }).eq("id", row.id);
         retried++;
       }
       downloaded++;
     }
   }
 
+  const nowIsoForSubmit = new Date().toISOString();
   const { data: pending, error: pendingError } = await supabase
     .from("discovered_tool_contact_emails")
     .select("id, email")
     .is("listclean_status", null)
+    .or(`listclean_next_retry_at.is.null,listclean_next_retry_at.lte.${nowIsoForSubmit}`)
     .limit(submitBatchSize);
   if (pendingError) throw new Error(`Failed to select pending discovered_tool_contact_emails: ${pendingError.message}`);
 
@@ -979,7 +981,21 @@ async function listcleanQueueDrainHandler(ctx: SchedulerJobContext): Promise<Rec
   }
 }
 
-const TOOL_LISTCLEAN_MAX_ATTEMPTS = 3;
+// Staggered backoff for "unknown" retries — an unknown result almost
+// always just repeats itself if resubmitted a few minutes later (nothing
+// about the target mailserver changed that fast); real delay gives
+// conditions an actual chance to change between attempts. Index i is the
+// wait before attempt i+2 (e.g. delays[0]=8h is the wait before the 2nd
+// attempt, after the 1st came back unknown). One more entry than
+// (MAX_ATTEMPTS - 1) is harmless — extra entries are simply unused.
+const LISTCLEAN_RETRY_DELAY_HOURS = [8, 16, 40, 72];
+
+function listcleanNextRetryAt(attempts: number): string {
+  const hours = LISTCLEAN_RETRY_DELAY_HOURS[attempts - 1] ?? LISTCLEAN_RETRY_DELAY_HOURS[LISTCLEAN_RETRY_DELAY_HOURS.length - 1];
+  return new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
+}
+
+const TOOL_LISTCLEAN_MAX_ATTEMPTS = 5;
 const TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT = 200;
 
 // Same clean/dirty/retry vocabulary as the agencies pipeline
@@ -1065,20 +1081,23 @@ async function toolEmailListcleanScanHandler(ctx: SchedulerJobContext): Promise<
         failed++;
       } else {
         // Back to NULL (not "retry") so the same submit-phase query below
-        // picks it up again next tick — attempts is the only thing that
-        // actually advances.
-        await supabase.from("tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        // picks it up again — but not until listclean_next_retry_at has
+        // passed (staggered backoff, see LISTCLEAN_RETRY_DELAY_HOURS).
+        await supabase.from("tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso, listclean_next_retry_at: listcleanNextRetryAt(attempts) }).eq("id", row.id);
         retried++;
       }
       downloaded++;
     }
   }
 
-  // Phase 2: submit a fresh batch of never-tried or reset-for-retry emails.
+  // Phase 2: submit a fresh batch of never-tried or reset-for-retry emails
+  // whose backoff window (if any) has actually elapsed.
+  const nowIsoForSubmit = new Date().toISOString();
   const { data: pending, error: pendingError } = await supabase
     .from("tool_contact_emails")
     .select("id, email")
     .is("listclean_status", null)
+    .or(`listclean_next_retry_at.is.null,listclean_next_retry_at.lte.${nowIsoForSubmit}`)
     .limit(submitBatchSize);
   if (pendingError) throw new Error(`Failed to select pending tool_contact_emails: ${pendingError.message}`);
 
