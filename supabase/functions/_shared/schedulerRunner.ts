@@ -145,6 +145,7 @@ export interface TickSummary {
 // the only thing that has actually stopped the recurring crash.
 const HEAVY_JOB_TYPES = new Set([
   "email_discovery_scan",
+  "discovered_tool_email_scan",
   "change_detection_scan",
   "stale_source_retry",
   "listclean_queue_drain",

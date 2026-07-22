@@ -5,15 +5,22 @@ import { writeAuditLog } from "../_shared/adminAuth.ts";
 import { fetchInChunks } from "../_shared/dbChunking.ts";
 import { addLeadsToCampaign, type SmartleadLead } from "../_shared/smartleadClient.ts";
 
-// Visibility + CSV export for the emails the email_discovery_scan scheduled
-// job (see _shared/schedulerRegistry.ts) finds by crawling each paid tool's
-// own website, PLUS the ListClean verification status
-// (tool_email_listclean_scan) each one has been assigned. GET returns
-// progress + the full list; GET ?format=csv / ?format=listclean return
-// export variants of the same rows. POST action=sync_to_smartlead pushes
-// every still-unsynced listclean_status='valid' email into a given
-// Smartlead campaign — never anything ListClean marked invalid, and never
-// a duplicate push for an already-synced row.
+// Visibility + CSV export + Smartlead sync for scraped tool contact
+// emails, covering TWO distinct sources selected via ?source=
+// (GET) / payload.source (POST):
+//   - "listed" (default): tool_contact_emails / tools — paid tools
+//     already published on Gappsy (email_discovery_scan).
+//   - "discovered": discovered_tool_contact_emails / discovered_tools —
+//     Discovery Engine candidates not yet promoted to a real listing
+//     (discovered_tool_email_scan). These are meant for a SEPARATE
+//     Smartlead campaign ("not yet listed" outreach) — never the same
+//     campaign as the listed-tools one, since the whole point is a
+//     different pitch (join Gappsy vs. upgrade your existing listing).
+// PLUS the ListClean verification status each row has been assigned.
+// POST action=sync_to_smartlead pushes every still-unsynced
+// listclean_status='valid' email for the given source into a given
+// Smartlead campaign — never anything ListClean marked invalid, and
+// never a duplicate push for an already-synced row.
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 function jsonResponse(body: unknown, status = 200) {
@@ -31,6 +38,12 @@ function escCsv(v: string): string {
   return `"${(v || "").replace(/"/g, '""')}"`;
 }
 
+type Source = "listed" | "discovered";
+
+function resolveSource(value: unknown): Source {
+  return value === "discovered" ? "discovered" : "listed";
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
 
@@ -45,39 +58,47 @@ Deno.serve(async (req: Request) => {
       const payload = await req.json();
       if (payload.action !== "sync_to_smartlead") return jsonResponse({ ok: false, error: "Unknown action" }, 400);
 
+      const source = resolveSource(payload.source);
       const campaignId = typeof payload.campaign_id === "string" ? payload.campaign_id.trim() : "";
       if (!campaignId) return jsonResponse({ ok: false, error: "campaign_id is required" }, 400);
+
+      const emailTable = source === "discovered" ? "discovered_tool_contact_emails" : "tool_contact_emails";
+      const idColumn = source === "discovered" ? "discovered_tool_id" : "tool_id";
+      const entityTable = source === "discovered" ? "discovered_tools" : "tools";
+      const entitySelect = source === "discovered" ? "id, slug, name, official_website" : "id, slug, name, website";
+      const websiteField = source === "discovered" ? "official_website" : "website";
+      const profileUrlFor = (slug: string | undefined) => (source === "discovered" ? null : slug ? `https://gappsy.com/tools/${slug}/` : null);
 
       // Only ListClean-verified-deliverable emails, never already synced —
       // this is the one gate between "scraped" and "a real cold email goes
       // out", so it deliberately never widens beyond listclean_status='valid'.
       const { data: eligible, error: eligibleError } = await supabase
-        .from("tool_contact_emails")
-        .select("id, tool_id, email")
+        .from(emailTable)
+        .select(`id, ${idColumn}, email`)
         .eq("listclean_status", "valid")
         .is("smartlead_synced_at", null)
         .limit(2000);
       if (eligibleError) return jsonResponse({ ok: false, error: eligibleError.message }, 500);
       if (!eligible || eligible.length === 0) return jsonResponse({ ok: true, synced: 0, note: "No clean, unsynced emails to send." });
 
-      const toolIds = [...new Set(eligible.map((r) => r.tool_id))];
-      const { data: tools, error: toolsError } = await fetchInChunks(toolIds, (chunk) =>
-        supabase.from("tools").select("id, slug, name, website").in("id", chunk)
+      const entityIds = [...new Set((eligible as any[]).map((r) => r[idColumn]))];
+      const { data: entities, error: entitiesError } = await fetchInChunks(entityIds, (chunk) =>
+        supabase.from(entityTable).select(entitySelect).in("id", chunk)
       );
-      if (toolsError) return jsonResponse({ ok: false, error: toolsError.message }, 500);
-      const toolById = new Map((tools || []).map((t) => [t.id, t]));
+      if (entitiesError) return jsonResponse({ ok: false, error: entitiesError.message }, 500);
+      const entityById = new Map((entities || []).map((t: any) => [t.id, t]));
 
-      const leads: SmartleadLead[] = eligible.map((r) => {
-        const tool = toolById.get(r.tool_id);
+      const leads: SmartleadLead[] = (eligible as any[]).map((r) => {
+        const entity = entityById.get(r[idColumn]) as any;
         return {
           email: r.email,
-          company_name: tool?.name || undefined,
-          website: tool?.website || undefined,
+          company_name: entity?.name || undefined,
+          website: entity?.[websiteField] || undefined,
           custom_fields: {
-            tool_id: r.tool_id,
-            tool_slug: tool?.slug || null,
-            profile_url: tool?.slug ? `https://gappsy.com/tools/${tool.slug}/` : null,
-            source: "tool_contact_emails",
+            [idColumn]: r[idColumn],
+            tool_slug: entity?.slug || null,
+            profile_url: profileUrlFor(entity?.slug),
+            source: emailTable,
           },
         };
       });
@@ -87,14 +108,15 @@ Deno.serve(async (req: Request) => {
 
       const nowIso = new Date().toISOString();
       const { error: updateError } = await supabase
-        .from("tool_contact_emails")
+        .from(emailTable)
         .update({ smartlead_campaign_id: campaignId, smartlead_synced_at: nowIso })
-        .in("id", eligible.map((r) => r.id));
+        .in("id", (eligible as any[]).map((r) => r.id));
       if (updateError) return jsonResponse({ ok: false, error: `Sent to Smartlead but failed to record sync state: ${updateError.message}` }, 500);
 
       await writeAuditLog({
         actor_session_type: "session_token", actor_email: session.email || undefined,
-        action: "tool_emails_synced_to_smartlead", target_table: "tool_contact_emails", status: "success",
+        action: source === "discovered" ? "discovered_tool_emails_synced_to_smartlead" : "tool_emails_synced_to_smartlead",
+        target_table: emailTable, status: "success",
       });
 
       return jsonResponse({ ok: true, synced: eligible.length, campaign_id: campaignId, smartlead_response: result });
@@ -104,16 +126,23 @@ Deno.serve(async (req: Request) => {
 
     const url = new URL(req.url);
     const format = url.searchParams.get("format");
+    const source = resolveSource(url.searchParams.get("source"));
+
+    const emailTable = source === "discovered" ? "discovered_tool_contact_emails" : "tool_contact_emails";
+    const idColumn = source === "discovered" ? "discovered_tool_id" : "tool_id";
+    const entityTable = source === "discovered" ? "discovered_tools" : "tools";
+    const entitySelect = source === "discovered" ? "id, slug, name, official_website" : "id, slug, name, website";
+    const websiteField = source === "discovered" ? "official_website" : "website";
+
+    const progressQuery = source === "discovered"
+      ? supabase.from("discovered_tools").select("email_discovery_status").eq("status", "validated")
+      : supabase.from("tools").select("email_discovery_status").eq("status", "published").eq("is_open_source", false);
 
     const [progressRes, emailsRes] = await Promise.all([
+      progressQuery,
       supabase
-        .from("tools")
-        .select("email_discovery_status", { count: "exact", head: false })
-        .eq("status", "published")
-        .eq("is_open_source", false),
-      supabase
-        .from("tool_contact_emails")
-        .select("tool_id, email, source_url, discovered_at, listclean_status, listclean_external_status, smartlead_campaign_id, smartlead_synced_at")
+        .from(emailTable)
+        .select(`${idColumn}, email, source_url, discovered_at, listclean_status, listclean_external_status, smartlead_campaign_id, smartlead_synced_at`)
         .order("discovered_at", { ascending: false }),
     ]);
     if (progressRes.error) return jsonResponse({ ok: false, error: progressRes.error.message }, 500);
@@ -127,22 +156,18 @@ Deno.serve(async (req: Request) => {
       pending: eligibleRows.filter((r) => r.email_discovery_status === null).length,
     };
 
-    const emailRows = (emailsRes.data || []) as {
-      tool_id: string; email: string; source_url: string | null; discovered_at: string;
-      listclean_status: string | null; listclean_external_status: string | null;
-      smartlead_campaign_id: string | null; smartlead_synced_at: string | null;
-    }[];
-    const toolIds = [...new Set(emailRows.map((r) => r.tool_id))];
-    const { data: tools, error: toolsError } = await fetchInChunks(toolIds, (chunk) =>
-      supabase.from("tools").select("id, slug, name, website").in("id", chunk)
+    const emailRows = (emailsRes.data || []) as any[];
+    const entityIds = [...new Set(emailRows.map((r) => r[idColumn]))];
+    const { data: entities, error: entitiesError } = await fetchInChunks(entityIds, (chunk) =>
+      supabase.from(entityTable).select(entitySelect).in("id", chunk)
     );
-    if (toolsError) return jsonResponse({ ok: false, error: toolsError.message }, 500);
-    const toolById = new Map((tools || []).map((t) => [t.id, t]));
+    if (entitiesError) return jsonResponse({ ok: false, error: entitiesError.message }, 500);
+    const entityById = new Map((entities || []).map((t: any) => [t.id, t]));
 
     const enriched = emailRows
-      .map((r) => ({ ...r, tool: toolById.get(r.tool_id) || null }))
+      .map((r) => ({ ...r, tool: entityById.get(r[idColumn]) || null }))
       .filter((r) => r.tool)
-      .map((r) => ({ ...r, profile_url: `https://gappsy.com/tools/${r.tool!.slug}/` }));
+      .map((r) => ({ ...r, tool_id: r[idColumn], profile_url: source === "discovered" ? null : `https://gappsy.com/tools/${r.tool!.slug}/` }));
 
     const listcleanSummary = {
       valid: emailRows.filter((r) => r.listclean_status === "valid").length,
@@ -155,26 +180,25 @@ Deno.serve(async (req: Request) => {
     if (format === "csv") {
       const header = ["tool_name", "tool_slug", "profile_url", "tool_website", "email", "listclean_status", "source_url", "discovered_at"].map(escCsv).join(",");
       const lines = enriched.map((r) =>
-        [r.tool!.name, r.tool!.slug, r.profile_url, r.tool!.website || "", r.email, r.listclean_status || "", r.source_url || "", r.discovered_at].map((v) => escCsv(String(v))).join(",")
+        [r.tool!.name, r.tool!.slug, r.profile_url || "", r.tool![websiteField] || "", r.email, r.listclean_status || "", r.source_url || "", r.discovered_at].map((v) => escCsv(String(v))).join(",")
       );
       const today = new Date().toISOString().slice(0, 10);
-      return csvResponse([header, ...lines].join("\n"), `tool-contact-emails-${today}.csv`);
+      return csvResponse([header, ...lines].join("\n"), `${source}-tool-contact-emails-${today}.csv`);
     }
 
     // Same shape/convention as other-agencies-export-listclean-csv (email +
     // email_normalized first, then reference columns for manual re-matching
-    // after cleaning) — one row per email, profile_url on every row so a
-    // cleaned result can be traced straight back to the tool's page.
+    // after cleaning) — one row per email.
     if (format === "listclean") {
       const header = ["email", "email_normalized", "tool_id", "tool_slug", "profile_url"].map(escCsv).join(",");
       const lines = enriched.map((r) =>
-        [r.email, r.email, r.tool_id, r.tool!.slug, r.profile_url].map((v) => escCsv(String(v))).join(",")
+        [r.email, r.email, r.tool_id, r.tool!.slug, r.profile_url || ""].map((v) => escCsv(String(v))).join(",")
       );
       const today = new Date().toISOString().slice(0, 10);
-      return csvResponse([header, ...lines].join("\n"), `tool-emails-listclean-${today}.csv`);
+      return csvResponse([header, ...lines].join("\n"), `${source}-tool-emails-listclean-${today}.csv`);
     }
 
-    return jsonResponse({ ok: true, progress, listclean: listcleanSummary, emails: enriched, total_emails: enriched.length });
+    return jsonResponse({ ok: true, source, progress, listclean: listcleanSummary, emails: enriched, total_emails: enriched.length });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     if (errorMessage.includes("session") || errorMessage.includes("token") || errorMessage.includes("Missing admin")) {

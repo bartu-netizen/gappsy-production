@@ -664,6 +664,236 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
   return { processed: doneCount + failed + retried, emails_found: emailsFound, done: doneCount, failed, retried, stopped_early: stoppedEarly };
 }
 
+// Standing business rule (never time-boxed to one build): open-source /
+// GitHub-native candidates never get scraped or emailed for any outreach
+// campaign — they have no business model that would make them pay for a
+// Gappsy listing. github_topics and github_awesome_lists are GitHub-native
+// by construction; npm_registry and pypi are developer package registries
+// (overwhelmingly free/open-source libraries, not commercial products).
+const DISCOVERY_OSS_PROVIDER_KEYS = ["github_topics", "github_awesome_lists", "npm_registry", "pypi"];
+
+// Second email-scraping pipeline, sibling to emailDiscoveryScanHandler
+// above: same crawler-gateway approach, same safety envelope (bounded
+// pages/depth, per-tick budget, hard deadline — all of which were
+// hard-won fixes for real WORKER_RESOURCE_LIMIT crashes on this exact
+// crawl pattern), just sourced from discovered_tools (Discovery Engine
+// candidates not yet promoted to a real tools-table listing) instead of
+// the published tools table.
+async function discoveredToolEmailScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const batchSize = typeof config.batch_size === "number" && config.batch_size > 0
+    ? Math.min(config.batch_size, 20)
+    : EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE;
+  const tickStartedAt = Date.now();
+
+  const { data: excludedProviders, error: providerError } = await supabase
+    .from("discovery_providers")
+    .select("id")
+    .in("key", DISCOVERY_OSS_PROVIDER_KEYS);
+  if (providerError) throw new Error(`Failed to load excluded discovery providers: ${providerError.message}`);
+  const excludedProviderIds = ((excludedProviders || []) as any[]).map((p) => p.id);
+
+  let candidatesQuery = supabase
+    .from("discovered_tools")
+    .select("id, slug, official_website, email_discovery_attempts")
+    .eq("status", "validated")
+    .is("email_discovery_status", null)
+    .not("official_website", "is", null)
+    .order("id", { ascending: true })
+    .limit(batchSize);
+  if (excludedProviderIds.length > 0) {
+    candidatesQuery = candidatesQuery.not("provider_id", "in", `(${excludedProviderIds.join(",")})`);
+  }
+
+  const { data: candidates, error } = await withTimeout(candidatesQuery, 10_000, "Selecting the batch of discovered_tools itself exceeded 10s");
+  if (error) throw new Error(`Failed to select discovered_tools for email discovery: ${error.message}`);
+  if (!candidates || candidates.length === 0) return { processed: 0, emails_found: 0, done: 0, failed: 0, retried: 0 };
+
+  let emailsFound = 0;
+  let doneCount = 0;
+  let failed = 0;
+  let retried = 0;
+  let stoppedEarly = false;
+
+  async function runBatch() {
+  for (const candidate of candidates as any[]) {
+    if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
+      stoppedEarly = true;
+      break;
+    }
+    const nowIso = new Date().toISOString();
+    const markTerminal = (status: "done" | "failed") =>
+      supabase.from("discovered_tools").update({ email_discovery_status: status, email_discovery_checked_at: nowIso }).eq("id", candidate.id);
+
+    // Defensive catch-all beyond the provider filter above — some
+    // non-GitHub-provider candidates could still legitimately point their
+    // official_website straight at a github.com repo.
+    if (/(^|\.)github\.com$/i.test(new URL(candidate.official_website, "https://x").hostname || "")) {
+      await markTerminal("failed");
+      failed++;
+      continue;
+    }
+
+    const urlCheck = validateCrawlUrl(candidate.official_website);
+    if (!urlCheck.ok) {
+      await markTerminal("failed");
+      failed++;
+      continue;
+    }
+
+    const SAFE_MAX_PAGES = 3;
+    const SAFE_MAX_DEPTH = 1;
+
+    try {
+      const primary = await crawlForEmails(urlCheck.normalizedUrl!, SAFE_MAX_PAGES, SAFE_MAX_DEPTH);
+
+      let contactPass: typeof primary = [];
+      try {
+        const origin = new URL(urlCheck.normalizedUrl!).origin;
+        contactPass = await crawlForEmails(`${origin}/contact`, SAFE_MAX_PAGES, SAFE_MAX_DEPTH);
+      } catch {
+        // Best-effort only — /contact may not exist at all.
+      }
+
+      const byEmail = new Map(primary.map((d) => [d.email, d]));
+      for (const d of contactPass) if (!byEmail.has(d.email)) byEmail.set(d.email, d);
+      const discovered = [...byEmail.values()];
+
+      if (discovered.length > 0) {
+        const rows = discovered.map((d) => ({ discovered_tool_id: candidate.id, email: d.email, source_url: d.source_url, discovered_at: nowIso }));
+        const { error: upsertError } = await supabase
+          .from("discovered_tool_contact_emails")
+          .upsert(rows, { onConflict: "discovered_tool_id,email", ignoreDuplicates: true });
+        if (upsertError) throw new Error(upsertError.message);
+        emailsFound += discovered.length;
+      }
+
+      await markTerminal("done");
+      doneCount++;
+    } catch {
+      const attempts = (candidate.email_discovery_attempts || 0) + 1;
+      if (attempts >= EMAIL_DISCOVERY_MAX_ATTEMPTS) {
+        await markTerminal("failed");
+        failed++;
+      } else {
+        await supabase.from("discovered_tools").update({ email_discovery_attempts: attempts }).eq("id", candidate.id);
+        retried++;
+      }
+    }
+  }
+  }
+
+  await Promise.race([
+    runBatch(),
+    new Promise<void>((resolve) => setTimeout(() => { stoppedEarly = true; resolve(); }, EMAIL_DISCOVERY_HARD_DEADLINE_MS)),
+  ]);
+
+  return { processed: doneCount + failed + retried, emails_found: emailsFound, done: doneCount, failed, retried, stopped_early: stoppedEarly };
+}
+
+const DISCOVERED_TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT = 200;
+const DISCOVERED_TOOL_LISTCLEAN_MAX_ATTEMPTS = 3;
+
+// Sibling to toolEmailListcleanScanHandler below — identical two-phase
+// (check-then-submit) design and vocabulary, sourced from
+// discovered_tool_contact_emails instead of tool_contact_emails.
+async function discoveredToolEmailListcleanScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const submitBatchSize = typeof config.submit_batch_size === "number" && config.submit_batch_size > 0
+    ? Math.min(config.submit_batch_size, 1000)
+    : DISCOVERED_TOOL_LISTCLEAN_SUBMIT_BATCH_DEFAULT;
+
+  let downloaded = 0, valid = 0, invalid = 0, retried = 0, failed = 0;
+
+  const { data: submittedRows, error: submittedError } = await supabase
+    .from("discovered_tool_contact_emails")
+    .select("id, email, listclean_list_id, listclean_attempt_count")
+    .eq("listclean_status", "submitted")
+    .not("listclean_list_id", "is", null)
+    .limit(2000);
+  if (submittedError) throw new Error(`Failed to select submitted discovered_tool_contact_emails: ${submittedError.message}`);
+
+  const rowsByListId = new Map<number, typeof submittedRows>();
+  for (const row of (submittedRows || []) as any[]) {
+    const list = rowsByListId.get(row.listclean_list_id) || [];
+    list.push(row);
+    rowsByListId.set(row.listclean_list_id, list);
+  }
+
+  for (const [listId, rows] of rowsByListId.entries()) {
+    let status;
+    try {
+      status = await listcleanGetList(listId);
+    } catch {
+      continue;
+    }
+    const statusStr = (status.status ?? "").toLowerCase();
+    const hasAnyCount = typeof status.clean_count === "number" || typeof status.dirty_count === "number" || typeof status.unknown_count === "number";
+    const isComplete = ["completed", "ready", "complete", "done"].includes(statusStr) || hasAnyCount;
+    if (!isComplete) continue;
+
+    let resultMap: Map<string, { status: string }>;
+    try {
+      const [cleanResults, dirtyResults, unknownResults] = await Promise.all([
+        listcleanDownloadListJson(listId, "clean").catch(() => []),
+        listcleanDownloadListJson(listId, "dirty").catch(() => []),
+        listcleanDownloadListJson(listId, "unknown").catch(() => []),
+      ]);
+      resultMap = new Map();
+      for (const r of unknownResults) resultMap.set(r.email.toLowerCase(), r);
+      for (const r of dirtyResults) resultMap.set(r.email.toLowerCase(), r);
+      for (const r of cleanResults) resultMap.set(r.email.toLowerCase(), r);
+    } catch {
+      continue;
+    }
+
+    const nowIso = new Date().toISOString();
+    for (const row of rows as any[]) {
+      const result = resultMap.get(String(row.email).toLowerCase());
+      const attempts = (row.listclean_attempt_count || 0) + 1;
+      const externalStatus = result?.status ?? null;
+      const mapped = result ? mapListCleanStatusToInternal(result.status) : "retry";
+
+      if (mapped === "valid") {
+        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: "valid", listclean_external_status: externalStatus, listclean_checked_at: nowIso }).eq("id", row.id);
+        valid++;
+      } else if (mapped === "invalid") {
+        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: "invalid", listclean_external_status: externalStatus, listclean_checked_at: nowIso }).eq("id", row.id);
+        invalid++;
+      } else if (attempts >= DISCOVERED_TOOL_LISTCLEAN_MAX_ATTEMPTS) {
+        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: "failed", listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        failed++;
+      } else {
+        await supabase.from("discovered_tool_contact_emails").update({ listclean_status: null, listclean_external_status: externalStatus, listclean_attempt_count: attempts, listclean_checked_at: nowIso }).eq("id", row.id);
+        retried++;
+      }
+      downloaded++;
+    }
+  }
+
+  const { data: pending, error: pendingError } = await supabase
+    .from("discovered_tool_contact_emails")
+    .select("id, email")
+    .is("listclean_status", null)
+    .limit(submitBatchSize);
+  if (pendingError) throw new Error(`Failed to select pending discovered_tool_contact_emails: ${pendingError.message}`);
+
+  let submitted = 0;
+  if (pending && pending.length > 0) {
+    const emails = [...new Set(pending.map((p: any) => p.email))];
+    const batchResult = await listcleanVerifyBatch(emails);
+    const nowIso = new Date().toISOString();
+    const { error: updateError } = await supabase
+      .from("discovered_tool_contact_emails")
+      .update({ listclean_status: "submitted", listclean_list_id: batchResult.list_id, listclean_submitted_at: nowIso })
+      .in("id", pending.map((p: any) => p.id));
+    if (updateError) throw new Error(`Submitted to ListClean but failed to record list_id: ${updateError.message}`);
+    submitted = pending.length;
+  }
+
+  return { downloaded, valid, invalid, retried, failed, submitted };
+}
+
 // Both ListClean handlers below call already-deployed, already-working
 // edge functions over HTTP (service-role Bearer token — both accept that
 // as an internal-call credential) rather than importing their logic
@@ -845,9 +1075,11 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   stale_source_retry: staleSourceRetryHandler,
   indexnow_submit: indexnowSubmitHandler,
   email_discovery_scan: emailDiscoveryScanHandler,
+  discovered_tool_email_scan: discoveredToolEmailScanHandler,
   listclean_credits_check: listcleanCreditsCheckHandler,
   listclean_queue_drain: listcleanQueueDrainHandler,
   tool_email_listclean_scan: toolEmailListcleanScanHandler,
+  discovered_tool_email_listclean_scan: discoveredToolEmailListcleanScanHandler,
 };
 
 export class UnknownJobTypeError extends Error {

@@ -7,9 +7,11 @@ import { adminApiFetch, getErrorMessage } from '../lib/adminApiFetch';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
-interface ToolRef { id: string; slug: string; name: string; website: string | null }
+type Source = 'listed' | 'discovered';
+
+interface ToolRef { id: string; slug: string; name: string; website: string | null; official_website?: string | null }
 interface EmailRow {
-  tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef; profile_url: string;
+  tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef; profile_url: string | null;
   listclean_status: string | null; listclean_external_status: string | null;
   smartlead_campaign_id: string | null; smartlead_synced_at: string | null;
 }
@@ -17,8 +19,9 @@ interface Progress { eligible_total: number; done: number; failed: number; pendi
 interface ListcleanSummary { valid: number; invalid: number; pending: number; failed: number; synced_to_smartlead: number }
 interface Response { ok: boolean; progress: Progress; listclean: ListcleanSummary; emails: EmailRow[]; total_emails: number; error?: string }
 
-function exportFilename(ext: string): string {
-  return `software-tool-scraped-emails-${new Date().toISOString().slice(0, 10)}.${ext}`;
+function exportFilename(source: Source, ext: string): string {
+  const label = source === 'discovered' ? 'not-yet-listed-tool-scraped-emails' : 'software-tool-scraped-emails';
+  return `${label}-${new Date().toISOString().slice(0, 10)}.${ext}`;
 }
 
 // Read-only view of what the email_discovery_scan scheduled job finds by
@@ -27,18 +30,21 @@ function exportFilename(ext: string): string {
 // automatically in the background every 5 minutes — this page is for
 // tracking progress and pulling a CSV for outreach, not triggering anything.
 export default function WpAdminToolContactEmailsPage() {
+  const [source, setSource] = useState<Source>('listed');
   const [data, setData] = useState<Response | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
-  const [campaignId, setCampaignId] = useState('');
+  const [campaignIds, setCampaignIds] = useState<Record<Source, string>>({ listed: '', discovered: '' });
   const [syncing, setSyncing] = useState(false);
   const [syncResult, setSyncResult] = useState<string | null>(null);
+  const campaignId = campaignIds[source];
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (forSource: Source) => {
     setLoading(true);
     setError(null);
-    const result = await adminApiFetch<Response>('admin-tool-contact-emails');
+    setSyncResult(null);
+    const result = await adminApiFetch<Response>(`admin-tool-contact-emails?source=${forSource}`);
     if (result.ok && result.data?.ok) {
       setData(result.data);
     } else {
@@ -48,14 +54,14 @@ export default function WpAdminToolContactEmailsPage() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchData(source);
+  }, [fetchData, source]);
 
   async function handleExportCsv(format: 'csv' | 'listclean') {
     setExporting(true);
     try {
       const token = localStorage.getItem('gappsy_admin_token');
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-tool-contact-emails?format=${format}`, {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-tool-contact-emails?format=${format}&source=${source}`, {
         headers: {
           Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
           ...(token ? { 'x-admin-token': token } : {}),
@@ -67,7 +73,7 @@ export default function WpAdminToolContactEmailsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = format === 'listclean' ? `tool-emails-listclean-${new Date().toISOString().slice(0, 10)}.csv` : exportFilename('csv');
+      a.download = format === 'listclean' ? `${source}-tool-emails-listclean-${new Date().toISOString().slice(0, 10)}.csv` : exportFilename(source, 'csv');
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
@@ -84,8 +90,8 @@ export default function WpAdminToolContactEmailsPage() {
     const rows = data.emails.map((r) => ({
       tool_name: r.tool.name,
       tool_slug: r.tool.slug,
-      profile_url: r.profile_url,
-      tool_website: r.tool.website || '',
+      profile_url: r.profile_url || '',
+      tool_website: r.tool.website || r.tool.official_website || '',
       email: r.email,
       source_url: r.source_url || '',
       discovered_at: r.discovered_at,
@@ -93,7 +99,7 @@ export default function WpAdminToolContactEmailsPage() {
     const sheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, sheet, 'Emails');
-    XLSX.writeFile(workbook, exportFilename('xlsx'));
+    XLSX.writeFile(workbook, exportFilename(source, 'xlsx'));
   }
 
   async function handleSyncToSmartlead() {
@@ -103,11 +109,11 @@ export default function WpAdminToolContactEmailsPage() {
     setError(null);
     const result = await adminApiFetch<{ ok: boolean; synced?: number; note?: string; error?: string }>('admin-tool-contact-emails', {
       method: 'POST',
-      body: { action: 'sync_to_smartlead', campaign_id: campaignId.trim() },
+      body: { action: 'sync_to_smartlead', campaign_id: campaignId.trim(), source },
     });
     if (result.ok && result.data?.ok) {
       setSyncResult(result.data.note || `Sent ${result.data.synced ?? 0} clean email${result.data.synced === 1 ? '' : 's'} to Smartlead campaign ${campaignId.trim()}.`);
-      fetchData();
+      fetchData(source);
     } else {
       setError(result.data?.error || (result.error ? getErrorMessage(result.error) : 'Failed to sync to Smartlead'));
     }
@@ -118,8 +124,29 @@ export default function WpAdminToolContactEmailsPage() {
   const pct = progress && progress.eligible_total > 0 ? Math.round(((progress.done + progress.failed) / progress.eligible_total) * 100) : 0;
 
   return (
-    <WpAdminLayout title="Software Tool Scraped Emails" subtitle="Real emails found on each paid tool's own website, for vendor outreach">
+    <WpAdminLayout title="Software Tool Scraped Emails" subtitle="Real emails found on each tool's own website, for vendor outreach">
       <div className="p-6 max-w-5xl mx-auto space-y-5">
+        <div role="tablist" aria-label="Email source" className="inline-flex p-1 bg-slate-100 rounded-lg">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={source === 'listed'}
+            onClick={() => setSource('listed')}
+            className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-colors ${source === 'listed' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            Listed on Gappsy
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={source === 'discovered'}
+            onClick={() => setSource('discovered')}
+            className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-colors ${source === 'discovered' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            Not Yet Listed
+          </button>
+        </div>
+
         {error && <p className="text-sm text-rose-600 bg-rose-50 border border-rose-100 rounded-lg px-4 py-2.5">{error}</p>}
 
         {loading ? (
@@ -129,7 +156,7 @@ export default function WpAdminToolContactEmailsPage() {
             <div className="bg-white border border-slate-200 rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
-                  Scan progress &mdash; {progress!.done + progress!.failed} / {progress!.eligible_total} paid tools checked ({pct}%)
+                  Scan progress &mdash; {progress!.done + progress!.failed} / {progress!.eligible_total} {source === 'discovered' ? 'not-yet-listed candidates' : 'paid tools'} checked ({pct}%)
                 </p>
                 <div className="flex items-center gap-3">
                   <button
@@ -192,8 +219,8 @@ export default function WpAdminToolContactEmailsPage() {
                 <input
                   type="text"
                   value={campaignId}
-                  onChange={(e) => setCampaignId(e.target.value)}
-                  placeholder="Smartlead campaign ID"
+                  onChange={(e) => setCampaignIds((prev) => ({ ...prev, [source]: e.target.value }))}
+                  placeholder={source === 'discovered' ? 'Smartlead campaign ID (Not Yet Listed outreach)' : 'Smartlead campaign ID (Software Tool Listed On Gappsy)'}
                   className="flex-1 px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
                 <button
@@ -234,9 +261,15 @@ export default function WpAdminToolContactEmailsPage() {
                         <tr key={`${row.tool_id}-${row.email}-${i}`} className="border-b border-slate-50 last:border-0">
                           <td className="px-4 py-2 text-slate-700 font-medium">{row.tool.name}</td>
                           <td className="px-4 py-2 text-slate-400">
-                            <a href={row.profile_url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 inline-flex items-center gap-1">
-                              Profile <ExternalLink className="w-3 h-3 shrink-0" />
-                            </a>
+                            {row.profile_url ? (
+                              <a href={row.profile_url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 inline-flex items-center gap-1">
+                                Profile <ExternalLink className="w-3 h-3 shrink-0" />
+                              </a>
+                            ) : (row.tool.official_website || row.tool.website) ? (
+                              <a href={row.tool.official_website || row.tool.website!} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 inline-flex items-center gap-1">
+                                Website <ExternalLink className="w-3 h-3 shrink-0" />
+                              </a>
+                            ) : '—'}
                           </td>
                           <td className="px-4 py-2 text-slate-600 font-mono flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5 text-slate-300 shrink-0" /> {row.email}
