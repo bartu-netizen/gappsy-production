@@ -473,7 +473,7 @@ export default function FeatureMyProductOnboardingPage() {
         )}
 
         {step === 'growth_upsell' && (
-          <div className="flex-1 w-full max-w-3xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
+          <div className="flex-1 w-full max-w-4xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
             <div className="text-center mb-5 sm:mb-7">
               <p className="text-sm font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
               <h1 className="text-2xl sm:text-[32px] font-bold tracking-tight text-[#0B1221] leading-tight lg:whitespace-nowrap">
@@ -490,7 +490,7 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             )}
 
-            <div className="max-w-xl mx-auto rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div className="w-full rounded-2xl border border-slate-200 bg-white overflow-hidden">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
