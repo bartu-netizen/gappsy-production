@@ -27,6 +27,7 @@ import { validateCrawlUrl, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
 import { callCrawlerGateway, GatewayError } from "./crawlGatewayClient.ts";
 import { extractContactEmails } from "./emailExtraction.ts";
 import { listcleanVerifyBatch, listcleanGetList, listcleanDownloadListJson, mapListCleanStatusToInternal } from "./listcleanClient.ts";
+import { syncValidEmailsToSmartlead } from "./smartleadSync.ts";
 
 export interface SchedulerJobContext {
   supabase: SupabaseClient;
@@ -1065,6 +1066,32 @@ async function toolEmailListcleanScanHandler(ctx: SchedulerJobContext): Promise<
   return { downloaded, valid, invalid, retried, failed, submitted };
 }
 
+// Auto-sends every still-unsynced listclean_status='valid' email into a
+// fixed Smartlead campaign — config.campaign_id, one job per source/
+// campaign pair, since "listed" and "not-yet-listed" tools deliberately
+// go to two different campaigns with two different pitches. Reuses the
+// exact same logic the admin page's manual "Send to Smartlead" button
+// calls (_shared/smartleadSync.ts) — this just means nobody has to click
+// it anymore. Still respects the same gate: only ListClean-verified-clean
+// emails, never already-synced ones.
+async function toolEmailSmartleadSyncHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const campaignId = typeof config.campaign_id === "string" ? config.campaign_id.trim() : "";
+  if (!campaignId) return { skipped: true, reason: "no campaign_id configured" };
+  const result = await syncValidEmailsToSmartlead(supabase, "listed", campaignId);
+  if (!result.ok) throw new Error(result.error || "Smartlead sync failed");
+  return { synced: result.synced, campaign_id: campaignId };
+}
+
+async function discoveredToolEmailSmartleadSyncHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const campaignId = typeof config.campaign_id === "string" ? config.campaign_id.trim() : "";
+  if (!campaignId) return { skipped: true, reason: "no campaign_id configured" };
+  const result = await syncValidEmailsToSmartlead(supabase, "discovered", campaignId);
+  if (!result.ok) throw new Error(result.error || "Smartlead sync failed");
+  return { synced: result.synced, campaign_id: campaignId };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
@@ -1080,6 +1107,8 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   listclean_queue_drain: listcleanQueueDrainHandler,
   tool_email_listclean_scan: toolEmailListcleanScanHandler,
   discovered_tool_email_listclean_scan: discoveredToolEmailListcleanScanHandler,
+  tool_email_smartlead_sync: toolEmailSmartleadSyncHandler,
+  discovered_tool_email_smartlead_sync: discoveredToolEmailSmartleadSyncHandler,
 };
 
 export class UnknownJobTypeError extends Error {
