@@ -32,6 +32,19 @@ export const vendorDashboard = {
   restoreReview: (reviewId: string) => callVendorFunction('vendor-dashboard', { action: 'restore_review', review_id: reviewId }),
   openBillingPortal: (returnUrl: string) => callVendorFunction('vendor-dashboard', { action: 'create_billing_portal_session', return_url: returnUrl }),
   requestComparison: (requestedToolSlug: string) => callVendorFunction('vendor-dashboard', { action: 'request_comparison', requested_tool_slug: requestedToolSlug }),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- response shape mirrors callVendorFunction's
+  uploadLogo: async (file: File): Promise<any> => {
+    const token = await currentAccessToken();
+    if (!token) return { ok: false, error: 'Not signed in' };
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/vendor-tool-media`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+    return res.json().catch(() => ({ ok: false, error: 'Invalid response' }));
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

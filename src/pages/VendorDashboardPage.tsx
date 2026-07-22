@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
   MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
-  ArrowLeftRight, Clock, CheckCircle2, XCircle,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard } from '../lib/vendorDashboardApi';
@@ -165,7 +165,7 @@ export default function VendorDashboardPage() {
             </nav>
 
             <div className="flex-1 min-w-0">
-              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} />}
+              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} />}
               {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
               {tab === 'comparisons' && (
                 <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
@@ -192,7 +192,69 @@ function Card({ children }: { children: React.ReactNode }) {
   return <div className="bg-white border border-[#eef0f3] rounded-2xl p-5 sm:p-6 shadow-[0_4px_16px_rgba(15,23,42,0.04)]">{children}</div>;
 }
 
-function OverviewTab({ tool, growthSubscription, reviews }: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[] }) {
+const LOGO_ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml'];
+const LOGO_MAX_SIZE = 5 * 1024 * 1024;
+
+// Lets the vendor add/replace their own tool's logo directly from the
+// dashboard (vendor-tool-media edge function — resolves the tool from the
+// caller's own session, never from anything sent by the client). Client-
+// side checks mirror the server's so a bad file gets instant feedback
+// instead of a round-trip.
+function LogoUploader({ tool, onLogoUpdated }: { tool: ToolRow; onLogoUpdated: (logo: string) => void }) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inputId = 'vendor-logo-upload-input';
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allow re-selecting the same file later
+    if (!file) return;
+
+    if (!LOGO_ALLOWED_TYPES.includes(file.type)) {
+      setError('Invalid file type. Use PNG, JPG, WebP, or SVG.');
+      return;
+    }
+    if (file.size > LOGO_MAX_SIZE) {
+      setError('File too large — maximum size is 5MB.');
+      return;
+    }
+
+    setError(null);
+    setUploading(true);
+    const res = await vendorDashboard.uploadLogo(file);
+    setUploading(false);
+    if (res.ok) {
+      onLogoUpdated(res.url);
+    } else {
+      setError(res.error || 'Failed to upload logo');
+    }
+  }
+
+  return (
+    <div className="shrink-0">
+      <label htmlFor={inputId} className="relative group block w-14 h-14 rounded-2xl cursor-pointer">
+        {tool.logo ? (
+          <img src={tool.logo} alt={tool.name} className="w-14 h-14 rounded-2xl object-contain border border-slate-100 bg-white" />
+        ) : (
+          <div className="w-14 h-14 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-xl">{tool.name.charAt(0)}</div>
+        )}
+        <span className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+          {uploading ? (
+            <Loader2 className="w-5 h-5 text-white animate-spin" />
+          ) : (
+            <Camera className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+          )}
+        </span>
+        <input id={inputId} type="file" accept={LOGO_ALLOWED_TYPES.join(',')} onChange={handleFileChange} disabled={uploading} className="sr-only" />
+      </label>
+      {error && <p className="text-[11px] text-rose-600 mt-1 max-w-[8rem]">{error}</p>}
+    </div>
+  );
+}
+
+function OverviewTab({
+  tool, growthSubscription, reviews, onLogoUpdated,
+}: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void }) {
   const pendingCount = reviews.filter((r) => r.status === 'pending').length;
   const publishedCount = reviews.filter((r) => r.status === 'approved').length;
   const isActive = growthSubscription?.status === 'active';
@@ -201,11 +263,7 @@ function OverviewTab({ tool, growthSubscription, reviews }: { tool: ToolRow; gro
     <div className="space-y-5">
       <Card>
         <div className="flex items-start gap-4">
-          {tool.logo ? (
-            <img src={tool.logo} alt={tool.name} className="w-14 h-14 rounded-2xl object-contain border border-slate-100 bg-white shrink-0" />
-          ) : (
-            <div className="w-14 h-14 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-xl shrink-0">{tool.name.charAt(0)}</div>
-          )}
+          <LogoUploader tool={tool} onLogoUpdated={onLogoUpdated} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-lg font-bold text-[#0B1221] truncate">{tool.name}</h1>
