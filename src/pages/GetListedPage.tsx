@@ -11,12 +11,17 @@ import { US_STATES } from '../lib/usStates';
 // state's own page — see StatePageTemplate.tsx's SubmitAgencyModal). This
 // page's only job is asking "which one" and, for agencies, "which state,"
 // then handing off — it owns no submission logic itself.
-type Step = 'choose' | 'state';
+//
+// Full-viewport, no-scroll split screen by design (explicit ask): software
+// on the left, agencies on the right, each panel filling exactly half the
+// screen on desktop and half the height on mobile — everything visible at
+// once, nothing to scroll past.
+type AgencyStep = 'pick' | 'state';
 
 export default function GetListedPage() {
   useNoindex();
   const navigate = useNavigate();
-  const [step, setStep] = useState<Step>('choose');
+  const [agencyStep, setAgencyStep] = useState<AgencyStep>('pick');
   const [query, setQuery] = useState('');
 
   const filteredStates = useMemo(() => {
@@ -32,113 +37,129 @@ export default function GetListedPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A1735] flex flex-col relative overflow-hidden">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-60"
-        style={{ background: 'radial-gradient(60% 50% at 50% 0%, rgba(79,71,230,0.2), transparent)' }}
-        aria-hidden="true"
-      />
-
-      <header className="flex items-center justify-center pt-6 lg:pt-8 pb-2 relative">
+    <div className="h-[100dvh] w-full overflow-hidden bg-[#05070F] flex flex-col">
+      <header className="shrink-0 h-12 sm:h-14 flex items-center justify-center relative z-10">
         <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
-          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-9 lg:h-10 w-auto" />
+          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 sm:h-7 w-auto opacity-90" />
         </Link>
       </header>
 
-      <main className="flex-1 flex items-start justify-center px-4 pt-4 lg:pt-6 pb-10 relative">
-        <div className="w-full max-w-md">
-          {step === 'choose' ? (
-            <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)]">
-              <h1 className="text-xl font-bold text-[#0B1221] tracking-tight text-center">What would you like to list?</h1>
-              <p className="text-[13px] text-slate-500 mt-1.5 mb-6 text-center leading-relaxed">
-                We'll take you straight to the right place.
-              </p>
-
-              <div className="space-y-3">
-                <Link
-                  to="/feature-my-product"
-                  className="group flex items-center gap-3.5 w-full rounded-2xl border border-slate-200 hover:border-[#0A1735] p-4 text-left transition-colors"
-                >
-                  <div className="w-11 h-11 shrink-0 rounded-xl bg-[#EEF0FE] flex items-center justify-center">
-                    <Package className="w-5 h-5 text-[#0A1735]" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-[#0B1221]">Software Tool</p>
-                    <p className="text-[12.5px] text-slate-500 leading-snug">Feature your SaaS or software product</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#0A1735] group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true" />
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setStep('state')}
-                  className="group flex items-center gap-3.5 w-full rounded-2xl border border-slate-200 hover:border-[#0A1735] p-4 text-left transition-colors"
-                >
-                  <div className="w-11 h-11 shrink-0 rounded-xl bg-[#EEF0FE] flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-[#0A1735]" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-[#0B1221]">Marketing Agency</p>
-                    <p className="text-[12.5px] text-slate-500 leading-snug">Get featured in your state's Top 25</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#0A1735] group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true" />
-                </button>
-              </div>
+      <main className="flex-1 min-h-0 flex flex-col lg:flex-row relative">
+        {/* Software Tool — left / top half */}
+        <Link
+          to="/feature-my-product"
+          className="group relative flex-1 min-h-0 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 transition-colors"
+          style={{ background: 'radial-gradient(120% 100% at 30% 20%, #1B2A5E 0%, #0A1735 55%, #060B1F 100%)' }}
+        >
+          <div
+            className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(124,110,255,0.25), transparent)' }}
+            aria-hidden="true"
+          />
+          <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-sm">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-105 group-hover:bg-white/15 transition-all duration-300">
+              <Package className="w-7 h-7 sm:w-8 sm:h-8 text-white" aria-hidden="true" />
             </div>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">Software Tool</h2>
+            <p className="text-[13px] sm:text-sm text-white/50 mt-2 leading-relaxed">
+              Feature your SaaS or software product to buyers already comparing tools like yours.
+            </p>
+            <span className="mt-5 sm:mt-6 inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-semibold text-white bg-white/10 group-hover:bg-white/20 rounded-full px-4 py-2 transition-colors">
+              Get started
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+            </span>
+          </div>
+        </Link>
+
+        {/* Marketing Agency — right / bottom half */}
+        <div
+          className="relative flex-1 min-h-0 flex items-center justify-center overflow-hidden"
+          style={{ background: 'radial-gradient(120% 100% at 70% 20%, #3A2A6E 0%, #241547 55%, #0F0A1F 100%)' }}
+        >
+          {agencyStep === 'pick' ? (
+            <button
+              type="button"
+              onClick={() => setAgencyStep('state')}
+              className="group relative w-full h-full flex items-center justify-center"
+            >
+              <div
+                className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ background: 'radial-gradient(60% 60% at 70% 30%, rgba(200,110,255,0.22), transparent)' }}
+                aria-hidden="true"
+              />
+              <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-sm">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-105 group-hover:bg-white/15 transition-all duration-300">
+                  <Building2 className="w-7 h-7 sm:w-8 sm:h-8 text-white" aria-hidden="true" />
+                </div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">Marketing Agency</h2>
+                <p className="text-[13px] sm:text-sm text-white/50 mt-2 leading-relaxed">
+                  Get featured in your state's Top 25 agencies, seen by local businesses ready to hire.
+                </p>
+                <span className="mt-5 sm:mt-6 inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-semibold text-white bg-white/10 group-hover:bg-white/20 rounded-full px-4 py-2 transition-colors">
+                  Choose your state
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+                </span>
+              </div>
+            </button>
           ) : (
-            <div className="bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)] animate-slideDown">
+            <div className="relative z-10 w-full h-full flex flex-col px-5 sm:px-8 py-4 sm:py-6">
               <button
                 type="button"
-                onClick={() => setStep('choose')}
-                className="inline-flex items-center gap-1 text-[12.5px] font-medium text-slate-400 hover:text-slate-600 transition-colors mb-3"
+                onClick={() => setAgencyStep('pick')}
+                className="shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-white/50 hover:text-white/80 transition-colors mb-2 sm:mb-3 self-start"
               >
                 <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
                 Back
               </button>
 
-              <h1 className="text-xl font-bold text-[#0B1221] tracking-tight text-center">Which state?</h1>
-              <p className="text-[13px] text-slate-500 mt-1.5 mb-5 text-center leading-relaxed">
-                We'll open the Top 25 submission form for that state.
-              </p>
+              <div className="flex-1 min-h-0 flex flex-col items-center pt-3 sm:pt-6">
+                <h2 className="shrink-0 text-base sm:text-lg font-bold text-white tracking-tight text-center mb-3">Which state?</h2>
 
-              <div className="relative mb-3">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search states…"
-                  autoFocus
-                  className="w-full h-11 rounded-xl border border-slate-200 pl-10 pr-3 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A1735]/15 focus:border-[#0A1735]/40 transition-shadow"
-                />
-              </div>
+                <div className="shrink-0 relative max-w-xs w-full">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/40 z-10" aria-hidden="true" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Type your state…"
+                    autoFocus
+                    className="relative w-full h-10 rounded-lg bg-white/10 border border-white/15 pl-9 pr-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 transition-shadow"
+                  />
 
-              <div className="max-h-[320px] overflow-y-auto -mx-1 px-1 space-y-1">
-                {filteredStates.length === 0 ? (
-                  <p className="text-center text-[13px] text-slate-400 py-6">No states match "{query}"</p>
-                ) : (
-                  filteredStates.map((state) => (
-                    <button
-                      key={state.slug}
-                      type="button"
-                      onClick={() => goToState(state.slug)}
-                      className="group flex items-center gap-3 w-full rounded-xl px-3 py-2.5 text-left hover:bg-slate-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 shrink-0 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <MapPin className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
-                      </div>
-                      <span className="flex-1 text-sm font-medium text-[#0B1221]">{state.name}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-[#0A1735] group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true" />
-                    </button>
-                  ))
-                )}
+                  {/* Results float as a self-contained overlay (its own bounded
+                      scroll, like a native <select>) — never grows the page,
+                      never pushes layout, so the split screen itself never scrolls. */}
+                  {query.trim() && (
+                    <div className="absolute left-0 right-0 top-full mt-1.5 max-h-36 sm:max-h-52 overflow-y-auto rounded-lg bg-[#1a1030] border border-white/15 shadow-2xl z-20">
+                      {filteredStates.length === 0 ? (
+                        <p className="text-center text-[12.5px] text-white/40 py-4">No states match "{query}"</p>
+                      ) : (
+                        filteredStates.map((state) => (
+                          <button
+                            key={state.slug}
+                            type="button"
+                            onClick={() => goToState(state.slug)}
+                            className="group/state w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/10 transition-colors"
+                          >
+                            <MapPin className="w-3 h-3 shrink-0 text-white/30" aria-hidden="true" />
+                            <span className="flex-1 min-w-0 text-[12.5px] font-medium text-white/85 truncate">{state.name}</span>
+                            <ArrowRight className="w-3 h-3 shrink-0 text-white/0 group-hover/state:text-white/50 group-hover/state:translate-x-0.5 transition-all" aria-hidden="true" />
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <p className="shrink-0 text-[11.5px] text-white/30 mt-3">Start typing to find your state</p>
               </div>
             </div>
           )}
+        </div>
 
-          <p className="text-center mt-6">
-            <Link to="/" className="text-[13px] text-white/50 hover:text-white/80 transition-colors">← Back to Gappsy</Link>
-          </p>
+        {/* Center divider badge — desktop only, straddles the seam between panels */}
+        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#05070F] border border-white/15 items-center justify-center pointer-events-none">
+          <span className="text-[11px] font-bold text-white/40 uppercase tracking-wide">or</span>
         </div>
       </main>
     </div>
