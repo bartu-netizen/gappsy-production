@@ -131,24 +131,65 @@ export async function executeScheduledJob(
 export interface TickSummary {
   claimed: number;
   results: ExecuteResult[];
+  released: number;
 }
 
-// The every-minute sweep: claim every due job in one atomic call, then run
-// them all concurrently (they're independent job_types with their own
-// internal concurrency controls, e.g. crawl_queue_drain already self-limits
-// via crawl_settings — there's no shared budget to protect across
-// scheduled_jobs the way there is across crawl_jobs).
+// Network/crawl/API-heavy job types that have been directly observed
+// crashing the WHOLE isolate (WORKER_RESOURCE_LIMIT-style) when more than
+// one of them executes in the same edge function invocation — even
+// sequentially, even with per-job wall-clock budgets already in place (see
+// the 2026-07-22 incident: email_discovery_scan + change_detection_scan
+// kept getting claimed and killed together, repeatedly, after both fixes
+// were deployed). Running them ONE PER TICK, with any extras released back
+// for the next minute's tick (a genuinely separate invocation/isolate), is
+// the only thing that has actually stopped the recurring crash.
+const HEAVY_JOB_TYPES = new Set([
+  "email_discovery_scan",
+  "change_detection_scan",
+  "stale_source_retry",
+  "listclean_queue_drain",
+]);
+
+// Every-minute sweep: claim every due job in one atomic call. At most ONE
+// heavy job type (see HEAVY_JOB_TYPES) actually runs this tick — any
+// others are released immediately (claim given up, next_run_at left due)
+// so the next cron tick, a separate invocation, picks them up instead of
+// stacking their resource use inside this one. Non-heavy jobs always run
+// alongside the single heavy job, same as before.
 export async function tickScheduler(supabase: SupabaseClient, supabaseUrl: string, anonKey: string): Promise<TickSummary> {
   const workerId = `tick-${crypto.randomUUID()}`;
   const { data: claimed, error: claimError } = await supabase.rpc("claim_scheduled_jobs", { p_worker_id: workerId });
   if (claimError) throw new Error(`Failed to claim scheduled jobs: ${claimError.message}`);
-  if (!claimed || claimed.length === 0) return { claimed: 0, results: [] };
+  if (!claimed || claimed.length === 0) return { claimed: 0, results: [], released: 0 };
 
-  const results = await Promise.allSettled(
-    (claimed as any[]).map((job) => executeScheduledJob(supabase, supabaseUrl, anonKey, job, "cron")),
-  );
-  return {
-    claimed: claimed.length,
-    results: results.filter((r): r is PromiseFulfilledResult<ExecuteResult> => r.status === "fulfilled").map((r) => r.value),
-  };
+  let heavyBudgetUsed = false;
+  const toRun: any[] = [];
+  const toRelease: any[] = [];
+  for (const job of claimed as any[]) {
+    if (HEAVY_JOB_TYPES.has(job.job_type as string)) {
+      if (heavyBudgetUsed) { toRelease.push(job); continue; }
+      heavyBudgetUsed = true;
+    }
+    toRun.push(job);
+  }
+
+  if (toRelease.length > 0) {
+    await supabase.from("scheduled_jobs")
+      .update({ worker_id: null, lease_expires_at: null, heartbeat_at: null })
+      .in("id", toRelease.map((j) => j.id))
+      .eq("worker_id", workerId); // only release rows this same tick actually claimed, never someone else's
+  }
+
+  const results: ExecuteResult[] = [];
+  for (const job of toRun) {
+    try {
+      results.push(await executeScheduledJob(supabase, supabaseUrl, anonKey, job, "cron"));
+    } catch {
+      // executeScheduledJob already records failure state on the job row
+      // itself before it would ever throw past that point — a throw here
+      // only happens on something even earlier (e.g. the scheduled_job_runs
+      // insert itself failing), and must never abort the rest of the batch.
+    }
+  }
+  return { claimed: claimed.length, results, released: toRelease.length };
 }

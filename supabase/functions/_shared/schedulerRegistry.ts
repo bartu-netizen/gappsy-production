@@ -241,17 +241,35 @@ async function loadChangeDetectionRules(supabase: SupabaseClient): Promise<Map<s
 // pattern as crawl_queue_drain — existing Plesk websites and crawler
 // limits stay protected since this never exceeds one bounded batch per
 // tick, independent of crawl_queue_drain's own concurrency cap.
+// Unlike email_discovery_scan, this handler previously had no overall
+// wall-clock budget at all — just a sequential loop over up to
+// DEFAULT_CHANGE_SCAN_BATCH_SIZE (50) items, each with its own bounded
+// fetch (fetchPageSafely's own 15s timeout). A batch containing several
+// genuinely slow/unresponsive sites could legitimately run for minutes in
+// one invocation with nothing to stop it — a real contributor to the
+// 2026-07-22 stuck-job incidents (change_detection_scan was one of the
+// jobs found stuck alongside email_discovery_scan). Same fix as that job:
+// a between-item budget check so the handler always returns well inside
+// the platform's own execution ceiling, leaving whatever's left for the
+// next tick instead of risking the whole invocation getting killed mid-run.
+const CHANGE_SCAN_TICK_BUDGET_MS = 40_000;
+
 async function changeDetectionScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
   const { supabase, config } = ctx;
   const batchSize = typeof config.batch_size === "number" && config.batch_size > 0 ? Math.min(config.batch_size, 500) : DEFAULT_CHANGE_SCAN_BATCH_SIZE;
   const checkIntervalHours = typeof config.check_interval_hours === "number" && config.check_interval_hours > 0 ? config.check_interval_hours : DEFAULT_CHECK_INTERVAL_HOURS;
+  const tickStartedAt = Date.now();
 
   const rules = await loadChangeDetectionRules(supabase);
   const { data: due, error } = await supabase.rpc("select_due_change_checks", { p_batch_size: batchSize, p_check_interval_hours: checkIntervalHours });
   if (error) throw new Error(`Failed to select due change checks: ${error.message}`);
 
-  let checked = 0, changed = 0, unavailable = 0, recrawlsQueued = 0, recrawlsSkipped = 0;
+  let checked = 0, changed = 0, unavailable = 0, recrawlsQueued = 0, recrawlsSkipped = 0, stoppedEarly = false;
   for (const row of (due || []) as any[]) {
+    if (Date.now() - tickStartedAt > CHANGE_SCAN_TICK_BUDGET_MS) {
+      stoppedEarly = true;
+      break; // out of budget for this tick — the rest stay due for the next one
+    }
     const rule = rules.get(row.page_type as string);
     if (!rule) continue; // page_type disabled after this row was selected -- skip, don't guess
     const outcome = await processDueCheck(
@@ -272,7 +290,7 @@ async function changeDetectionScanHandler(ctx: SchedulerJobContext): Promise<Rec
     else if (outcome.recrawlSkippedReason) recrawlsSkipped++;
   }
 
-  return { checked, changed, unavailable, recrawls_queued: recrawlsQueued, recrawls_skipped: recrawlsSkipped, batch_size: batchSize };
+  return { checked, changed, unavailable, recrawls_queued: recrawlsQueued, recrawls_skipped: recrawlsSkipped, batch_size: batchSize, stopped_early: stoppedEarly };
 }
 
 // Stale/dead source retry (Phase 5). The backed-off set from
@@ -293,8 +311,13 @@ async function staleSourceRetryHandler(ctx: SchedulerJobContext): Promise<Record
   const { data: stale, error } = await supabase.rpc("select_stale_change_checks", { p_batch_size: batchSize, p_backoff_hours: backoffHours });
   if (error) throw new Error(`Failed to select stale change checks: ${error.message}`);
 
-  let retried = 0, recovered = 0;
+  const tickStartedAt = Date.now();
+  let retried = 0, recovered = 0, stoppedEarly = false;
   for (const row of (stale || []) as any[]) {
+    if (Date.now() - tickStartedAt > CHANGE_SCAN_TICK_BUDGET_MS) {
+      stoppedEarly = true;
+      break; // out of budget for this tick — same bounded-batch pattern as changeDetectionScanHandler
+    }
     const rule = rules.get(row.page_type as string);
     if (!rule) continue;
     const outcome = await processDueCheck(
@@ -312,7 +335,7 @@ async function staleSourceRetryHandler(ctx: SchedulerJobContext): Promise<Record
     if (outcome.severity !== "unavailable") recovered++;
   }
 
-  return { retried, recovered, batch_size: batchSize };
+  return { retried, recovered, batch_size: batchSize, stopped_early: stoppedEarly };
 }
 
 const CANONICAL_DOMAIN = "gappsy.com";
