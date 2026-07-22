@@ -877,66 +877,6 @@ export interface ListCleanDownloadOptions {
   filename?: string;
 }
 
-async function findOfficialResultUrls(
-  listId: number | string,
-  rawListDetailsResponse: unknown
-): Promise<{
-  cleanUrl?: string;
-  dirtyUrl?: string;
-  unknownUrl?: string;
-}> {
-  console.log(`[ListClean] === Searching for official result URLs in list details response ===`);
-
-  const obj = rawListDetailsResponse as Record<string, unknown>;
-
-  const urls: { cleanUrl?: string; dirtyUrl?: string; unknownUrl?: string } = {};
-
-  const searchForUrlsByType = (container: unknown, depth: number = 0) => {
-    if (depth > 5) return;
-    if (!container || typeof container !== "object") return;
-
-    const cont = container as Record<string, unknown>;
-    const lowerKeys = Object.keys(cont).map(k => k.toLowerCase());
-
-    for (const [originalKey, value] of Object.entries(cont)) {
-      const lowerKey = originalKey.toLowerCase();
-      if (typeof value === "string" && value.includes("http")) {
-        if (lowerKey.includes("clean") || lowerKey.includes("valid")) {
-          if (!urls.cleanUrl) {
-            console.log(`[ListClean] Found CLEAN URL at key "${originalKey}": ${value.substring(0, 100)}...`);
-            urls.cleanUrl = value;
-          }
-        }
-        if (lowerKey.includes("dirty") || lowerKey.includes("invalid") || lowerKey.includes("bounce")) {
-          if (!urls.dirtyUrl) {
-            console.log(`[ListClean] Found DIRTY URL at key "${originalKey}": ${value.substring(0, 100)}...`);
-            urls.dirtyUrl = value;
-          }
-        }
-        if (lowerKey.includes("unknown") || lowerKey.includes("risky")) {
-          if (!urls.unknownUrl) {
-            console.log(`[ListClean] Found UNKNOWN URL at key "${originalKey}": ${value.substring(0, 100)}...`);
-            urls.unknownUrl = value;
-          }
-        }
-      }
-      if (value && typeof value === "object") {
-        searchForUrlsByType(value, depth + 1);
-      }
-    }
-  };
-
-  searchForUrlsByType(obj);
-
-  console.log(`[ListClean] URLs found:`, {
-    cleanUrl: urls.cleanUrl ? urls.cleanUrl.substring(0, 80) + "..." : "NOT FOUND",
-    dirtyUrl: urls.dirtyUrl ? urls.dirtyUrl.substring(0, 80) + "..." : "NOT FOUND",
-    unknownUrl: urls.unknownUrl ? urls.unknownUrl.substring(0, 80) + "..." : "NOT FOUND",
-  });
-
-  return urls;
-}
-
 export async function listcleanDownloadListJson(
   listId: number | string,
   type: "clean" | "dirty" | "unknown",
@@ -947,53 +887,18 @@ export async function listcleanDownloadListJson(
 
   console.log(`[ListClean] === Download ${type} results for list ${validatedId} ===`);
 
-  console.log(`[ListClean] Step 1: Fetch official list details`);
-  let listDetailsRaw: unknown;
-  try {
-    const detailsUrl = `${baseUrl}/lists/${validatedId}`;
-    const response = await fetch(detailsUrl, {
-      method: "GET",
-      headers: {
-        "Accept": "application/json",
-        "X-Auth-Token": token,
-        "Authorization": `Bearer ${token}`,
-      },
-    });
-    listDetailsRaw = await parseJsonOrThrow(response, "ListClean get list for downloads", detailsUrl);
-    console.log(`[ListClean] Step 1 complete: List details retrieved`);
-  } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error);
-    console.error(`[ListClean] Step 1 FAILED: Could not fetch list details: ${errorMsg}`);
-    throw error;
-  }
+  // GET /downloads/json/{list_id}/{type} — confirmed directly against
+  // ListClean's real OpenAPI spec (api.listclean.xyz/v1/spec.json) on
+  // 2026-07-22. Previously this guessed that a download URL would be
+  // embedded somewhere in the /lists/{id} details response (there never
+  // was one — that response only ever contains id/name/filename/status/
+  // analytics, confirmed via a raw-response probe), so every single
+  // download call failed and got silently swallowed by the caller's
+  // `.catch(() => [])`, which is why every scraped email eventually ended
+  // up "failed" with listclean_external_status always null.
+  const downloadUrl = `${baseUrl}/downloads/json/${validatedId}/${type}`;
 
-  console.log(`[ListClean] Step 2: Locate official result URLs in list details response`);
-  const officialUrls = await findOfficialResultUrls(validatedId, listDetailsRaw);
-
-  let downloadUrl: string | undefined;
-
-  if (type === "clean") {
-    downloadUrl = officialUrls.cleanUrl;
-  } else if (type === "dirty") {
-    downloadUrl = officialUrls.dirtyUrl;
-  } else if (type === "unknown") {
-    downloadUrl = officialUrls.unknownUrl;
-  }
-
-  if (!downloadUrl) {
-    console.error(`[ListClean] Step 2 FAILED: Official list details response did not contain ${type} result URL`);
-    console.error(`[ListClean] Available URLs:`, officialUrls);
-    const availableKeysLog = JSON.stringify(listDetailsRaw, null, 2).substring(0, 500);
-    console.error(`[ListClean] Response shape (first 500 chars):`, availableKeysLog);
-    throw new Error(
-      `ListClean result retrieval failed: Official list details response did not contain a ${type} result URL. ` +
-      `The API response shape may have changed or the batch may not have completed results for this category.`
-    );
-  }
-
-  console.log(`[ListClean] Step 2 complete: Official ${type} URL located: ${downloadUrl.substring(0, 120)}...`);
-
-  console.log(`[ListClean] Step 3: Download ${type} results from official URL`);
+  console.log(`[ListClean] Step 1: Download ${type} results from ${downloadUrl}`);
   let response = await fetch(downloadUrl, {
     method: "GET",
     headers: {

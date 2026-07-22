@@ -769,11 +769,13 @@ async function toolEmailListcleanScanHandler(ctx: SchedulerJobContext): Promise<
 
     let resultMap: Map<string, { status: string }>;
     try {
-      const [cleanResults, dirtyResults] = await Promise.all([
+      const [cleanResults, dirtyResults, unknownResults] = await Promise.all([
         listcleanDownloadListJson(listId, "clean").catch(() => []),
         listcleanDownloadListJson(listId, "dirty").catch(() => []),
+        listcleanDownloadListJson(listId, "unknown").catch(() => []),
       ]);
       resultMap = new Map();
+      for (const r of unknownResults) resultMap.set(r.email.toLowerCase(), r);
       for (const r of dirtyResults) resultMap.set(r.email.toLowerCase(), r);
       for (const r of cleanResults) resultMap.set(r.email.toLowerCase(), r); // clean takes priority on conflict, matching the agencies pipeline
     } catch {
