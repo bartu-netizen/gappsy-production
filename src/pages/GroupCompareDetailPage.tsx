@@ -25,6 +25,7 @@ import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
+import VideoEmbedSection from '../components/tools/detail/VideoEmbedSection';
 
 interface GroupComparisonMemberRow {
   sort_order: number;
@@ -317,6 +318,8 @@ export default function GroupCompareDetailPage() {
           <div className="min-w-0 space-y-14">
             <div className={hasSidebarPromos ? 'flex flex-col lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start' : ''}>
               <div className="space-y-14 min-w-0">
+                <VideoEmbedSection pagePath={`/compare/${groupComparison.slug}`} />
+
                 {groupComparisonContent && (
                   <section id="verdict" className="scroll-mt-24">
                     <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{groupComparisonContent.verdict}</p>
