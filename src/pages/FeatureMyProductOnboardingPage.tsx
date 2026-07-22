@@ -297,8 +297,8 @@ export default function FeatureMyProductOnboardingPage() {
   return (
     <>
       <EntitySEOTags
-        title="Get Featured on Gappsy — Start Your Listing"
-        description="Claim your Gappsy software listing for a one-time fee, then optionally upgrade to Growth for featured placement, video reviews, and more."
+        title="List Your Product on Gappsy — Get Started"
+        description="List your product on Gappsy for a one-time fee, then optionally upgrade to Growth for featured placement, video reviews, and more."
         path="/feature-my-product/onboarding"
         noindex
       />
@@ -314,8 +314,8 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'url' && (
           <StepLayout
-            eyebrow="Feature My Product"
-            title="Which product would you like to feature?"
+            eyebrow="List Your Product"
+            title="Which product would you like to list?"
             subtitle="Enter your product's website — we'll check if it's already in the Gappsy directory."
             ctaLabel="Continue"
             onCta={handleUrlSubmit}
@@ -444,7 +444,7 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'claim' && (
           <StepLayout
-            eyebrow="Claim & Verify"
+            eyebrow="List Your Product"
             title="One-time $29 fee"
             ctaLabel="Continue to secure checkout"
             onCta={handleClaimCheckout}
@@ -478,7 +478,7 @@ export default function FeatureMyProductOnboardingPage() {
             <div className="text-center mb-5 sm:mb-7">
               <p className="text-sm font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
               <h1 className="text-2xl sm:text-[32px] font-bold tracking-tight text-[#0B1221] leading-tight lg:whitespace-nowrap">
-                Your listing is claimed. Ready to get seen?
+                Your listing is verified. Ready to get seen?
               </h1>
               <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug max-w-xl lg:max-w-none mx-auto lg:whitespace-nowrap">
                 Growth puts your product in front of buyers who are already comparing tools like yours.
@@ -633,7 +633,7 @@ function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: stri
         <Check className="w-6 h-6 text-emerald-500" aria-hidden="true" />
       </div>
       <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">
-        {purchasedGrowth ? 'Your Growth listing is being prepared' : 'Your listing claim is being prepared'}
+        {purchasedGrowth ? 'Your Growth listing is being prepared' : 'Your listing is being prepared'}
       </h1>
       <p className="mt-2 text-[15px] text-slate-500 leading-relaxed">Here's what happens next:</p>
 

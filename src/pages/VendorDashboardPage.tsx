@@ -310,7 +310,7 @@ function OverviewTab({
         <Card>
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
-              <p className="text-sm font-bold text-[#0B1221]">You're on Claim & Verify only</p>
+              <p className="text-sm font-bold text-[#0B1221]">You're on the basic listing plan only</p>
               <p className="text-[13px] text-slate-500 mt-1 max-w-md">
                 Upgrade to Growth for featured placement across category, comparison, and search — Yearly adds a produced video review, a newsletter feature, and an ad-free listing.
               </p>
@@ -795,7 +795,7 @@ function ReviewsTab({
       {!isGrowthActive && (
         <div className="rounded-2xl bg-[#EEF0FE]/60 border border-[#E0E3FC] px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
           <p className="text-[13px] text-slate-600">
-            <span className="font-semibold text-[#0B1221]">Reply to reviews is included in Claim & Verify.</span>{' '}
+            <span className="font-semibold text-[#0B1221]">Reply to reviews is included when you list your product.</span>{' '}
             Removing or hiding a review from your page is a Growth feature.
           </p>
           <Link
@@ -930,9 +930,9 @@ function BillingTab({
         <div className="flex items-center gap-3 mb-1">
           <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
           <div>
-            <p className="text-sm font-bold text-[#0B1221]">Claim & Verify — {toolSlug}</p>
+            <p className="text-sm font-bold text-[#0B1221]">Listing — {toolSlug}</p>
             <p className={`text-[13px] font-medium ${claimSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
-              {claimSubscription?.status === 'active' ? 'Paid — one-time, $29' : claimSubscription ? claimSubscription.status : 'Not claimed yet'}
+              {claimSubscription?.status === 'active' ? 'Paid — one-time, $29' : claimSubscription ? claimSubscription.status : 'Not verified yet'}
             </p>
           </div>
         </div>

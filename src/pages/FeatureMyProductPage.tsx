@@ -32,15 +32,15 @@ const JSON_LD = [
   {
     '@type': 'Service',
     '@id': `${CANONICAL_BASE}/#service`,
-    name: 'Gappsy Claim & Verify',
-    serviceType: 'Software directory listing claim and ownership verification',
-    description: 'Claim your existing listing, or add your product if it isn\'t listed yet, then verify ownership for a one-time fee — get a verified badge, self-serve editing, and the ability to reply to reviews.',
+    name: 'Gappsy Product Listing',
+    serviceType: 'Software directory listing and ownership verification',
+    description: 'List your product on Gappsy\'s software directory for a one-time fee — get a verified badge, self-serve editing, and the ability to reply to reviews. Already listed? We\'ll help you claim it instead.',
     provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' },
     areaServed: 'Worldwide',
     audience: { '@type': 'Audience', audienceType: 'SaaS founders and software marketing teams' },
     offers: {
       '@type': 'Offer',
-      name: 'Claim & Verify',
+      name: 'List Your Product',
       price: '29',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
@@ -53,8 +53,8 @@ export default function FeatureMyProductPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <EntitySEOTags
-        title="Feature My Product — Claim or List Your Product | Gappsy"
-        description="Claim your existing listing on Gappsy's software directory, or add your product if it isn't listed yet — one-time $29 fee. Get a verified badge, self-serve editing, and the ability to reply to reviews."
+        title="List Your Product on Gappsy | Gappsy"
+        description="List your product on Gappsy's software directory — one-time $29 fee. Get a verified badge, self-serve editing, and the ability to reply to reviews. Already listed? We'll help you claim it."
         path="/feature-my-product"
         breadcrumbs={[{ name: 'Feature My Product', path: '/feature-my-product' }]}
         jsonLd={JSON_LD}
@@ -72,25 +72,25 @@ export default function FeatureMyProductPage() {
             <ScrollReveal>
               <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F47E6] bg-[#EEF0FE] rounded-full px-3 py-1.5">
                 <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                Claim & Verify
+                Get Listed
               </span>
               <h1 className="mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-[#0B1221] leading-[1.1]">
-                Claim your listing — or add it if it's not there yet.
+                List your product on Gappsy.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
                 A verified badge, self-serve editing, the ability to reply to reviews, and a link back
                 to your site from gappsy.com — all for a one-time $29 fee. No subscription.
               </p>
               <p className="mt-3 text-[15px] text-slate-400 max-w-xl">
-                Not sure if your product's already listed? Click "Claim or list your product" below and
-                enter your website — we'll match it to an existing listing, or help you add a new one.
+                Already listed? No problem — enter your website below and we'll find your existing
+                listing so you can claim it instead of creating a new one.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/feature-my-product/onboarding"
                   className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
-                  Claim or list your product — $29
+                  List your product — $29
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <a
@@ -112,9 +112,9 @@ export default function FeatureMyProductPage() {
                 <div className="rounded-2xl border border-[#eef0f3] bg-white shadow-[0_30px_60px_rgba(79,71,230,0.15)] overflow-hidden">
                   <AskGappsyChat
                     page="feature_my_product"
-                    title="Ask Gappsy about Feature My Product"
-                    subtitle="Real answers — ask us anything before you claim"
-                    placeholder="Ask anything about claiming or listing your product..."
+                    title="Ask Gappsy about listing your product"
+                    subtitle="Real answers — ask us anything before you list"
+                    placeholder="Ask anything about listing your product..."
                     suggestedQuestions={[
                       'Is my product already listed?',
                       'What do I get for $29?',
@@ -149,14 +149,14 @@ export default function FeatureMyProductPage() {
                     Make sure your listing says what you want it to say.
                   </h2>
                   <p className="mt-4 text-lg text-slate-300 max-w-xl mx-auto">
-                    Claim it, or add it if it's not listed yet — one-time $29 fee, no recurring charge.
+                    List it for a one-time $29 fee, no recurring charge — already listed? We'll help you claim it instead.
                   </p>
                   <div className="mt-8">
                     <Link
                       to="/feature-my-product/onboarding"
                       className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-xl text-[15px] font-semibold text-[#0B1221] bg-white hover:bg-slate-100 transition-colors active:scale-[0.99]"
                     >
-                      Claim or list your product — $29
+                      List your product — $29
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                   </div>
@@ -173,7 +173,7 @@ export default function FeatureMyProductPage() {
           to="/feature-my-product/onboarding"
           className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] active:scale-[0.99] transition-transform"
         >
-          Claim or list your product — $29
+          List your product — $29
         </Link>
       </div>
 

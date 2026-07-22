@@ -10,15 +10,15 @@ export interface FmpFaqItem {
 export const FMP_FAQS: FmpFaqItem[] = [
   {
     question: 'Who is this for?',
-    answer: 'Claim & Verify is for anyone who owns or represents a software product listed on Gappsy and wants control over how it\'s presented — founders, marketing teams, or indie hackers alike.',
+    answer: 'Listing your product is for anyone who owns or represents a software product on Gappsy (or wants to add one that isn\'t listed yet) and wants control over how it\'s presented — founders, marketing teams, or indie hackers alike.',
   },
   {
-    question: 'What is Claim & Verify?',
-    answer: 'Claim & Verify is a one-time $29 fee to prove you own a listing. It unlocks a verified badge, self-serve editing of your listing, and the ability to reply to reviews.',
+    question: 'What do I get for $29?',
+    answer: 'A one-time $29 fee to list your product (or claim it, if it\'s already listed) and verify you own it. It unlocks a verified badge, self-serve editing of your listing, and the ability to reply to reviews.',
   },
   {
     question: 'Does this include featured placement?',
-    answer: 'No — Claim & Verify unlocks ownership and self-serve editing, not placement. It\'s a separate, optional step you can consider once your listing is claimed and verified.',
+    answer: 'No — listing your product unlocks ownership and self-serve editing, not placement. Featured placement is a separate, optional step you can consider once your listing is verified.',
   },
   {
     question: 'How much does it cost?',
@@ -30,11 +30,11 @@ export const FMP_FAQS: FmpFaqItem[] = [
   },
   {
     question: 'Can I cancel?',
-    answer: 'Claim & Verify is a one-time payment — there\'s no subscription, so there\'s nothing recurring to cancel.',
+    answer: 'It\'s a one-time payment — there\'s no subscription, so there\'s nothing recurring to cancel.',
   },
   {
     question: 'How does billing work?',
-    answer: 'You\'re charged once, via Stripe, at the time you complete the claim. No card is kept on file for future charges.',
+    answer: 'You\'re charged once, via Stripe, at the time you complete your listing. No card is kept on file for future charges.',
   },
   {
     question: 'How do you select software?',

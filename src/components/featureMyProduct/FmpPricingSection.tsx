@@ -20,7 +20,7 @@ export default function FmpPricingSection() {
         <ScrollReveal>
           <div className="relative rounded-3xl border-2 border-[#4F47E6] bg-white p-7 sm:p-8 shadow-[0_20px_48px_rgba(79,71,230,0.14)]">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-[#0B1221]">Claim &amp; Verify</h3>
+              <h3 className="text-lg font-semibold text-[#0B1221]">List Your Product</h3>
               <div className="mt-3 flex items-end justify-center gap-2">
                 <span className="text-5xl font-bold text-[#0B1221]">$29</span>
                 <span className="text-base font-medium text-slate-400 mb-1">one-time</span>
@@ -41,7 +41,7 @@ export default function FmpPricingSection() {
               to="/feature-my-product/onboarding"
               className="mt-8 flex items-center justify-center w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
             >
-              Claim or list your product — $29
+              List your product — $29
             </Link>
             <p className="mt-3 text-center text-xs text-slate-400">No setup fees. No contract.</p>
           </div>

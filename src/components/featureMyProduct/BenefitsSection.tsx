@@ -5,7 +5,7 @@ const BENEFITS = [
   { icon: ShieldCheck, title: 'Verified badge', body: 'A visible signal on your listing that ownership has been confirmed, not self-reported.' },
   { icon: PenSquare, title: 'Self-serve editing', body: 'Update your description, pricing, screenshots, and more yourself — no waiting on editorial review for every change.' },
   { icon: MessagesSquare, title: 'Reply to reviews', body: 'Respond directly to reviews on your listing from your own dashboard.' },
-  { icon: Lock, title: 'Locked-in ownership', body: 'Once claimed, only you can manage this listing — nobody else can edit or misrepresent it.' },
+  { icon: Lock, title: 'Locked-in ownership', body: 'Once listed and verified, only you can manage this listing — nobody else can edit or misrepresent it.' },
   { icon: ExternalLink, title: 'A link to your site', body: 'Your listing links straight through to your own website, so buyers who find you on Gappsy can click through directly.' },
 ];
 
@@ -15,7 +15,7 @@ export default function BenefitsSection() {
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">
-            What Claim & Verify gets you
+            What listing your product gets you
           </h2>
           <p className="mt-4 text-lg text-slate-500">
             A one-time fee, ownership confirmed, and control of your own listing.

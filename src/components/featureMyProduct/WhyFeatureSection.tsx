@@ -20,7 +20,7 @@ const REASONS = [
   {
     icon: Lock,
     title: 'Protect your listing',
-    body: 'Claiming locks in ownership, so nobody else can manage or misrepresent your product\'s page.',
+    body: 'Listing and verifying locks in ownership, so nobody else can manage or misrepresent your product\'s page.',
   },
   {
     icon: Ban,
@@ -40,10 +40,10 @@ export default function WhyFeatureSection() {
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">
-            Why claim or list your product
+            Why list your product
           </h2>
           <p className="mt-4 text-lg text-slate-500">
-            If your product's already on Gappsy, its page exists whether you claim it or not — claiming it just means you're the one in control. If it's not listed yet, this is how it gets added.
+            If your product's already on Gappsy, its page exists whether you're in control of it or not — verifying it just means you're the one who can manage it. If it's not listed yet, this is how it gets added.
           </p>
         </ScrollReveal>
 
