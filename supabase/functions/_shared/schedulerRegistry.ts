@@ -397,6 +397,27 @@ async function indexnowSubmitHandler(ctx: SchedulerJobContext): Promise<Record<s
 }
 
 const EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE = 4;
+// A single flaky attempt (gateway hiccup, momentary DNS blip) shouldn't
+// permanently give up on a tool — matches crawl_settings.max_auto_retries'
+// default of 3 for the same class of transient error on the sibling
+// discovery/crawl pipeline. Only a genuinely invalid/unreachable site (or a
+// tool that has exhausted its retries) is ever marked terminally 'failed'.
+const EMAIL_DISCOVERY_MAX_ATTEMPTS = 3;
+
+async function crawlForEmails(url: string, maxPages: number, maxDepth: number) {
+  const gatewayResult = await callCrawlerGateway({
+    request_id: crypto.randomUUID(),
+    url,
+    max_pages: maxPages,
+    max_depth: maxDepth,
+    max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
+  });
+  if (!gatewayResult.ok || !gatewayResult.data) {
+    throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
+  }
+  const raw = gatewayResult.data.raw as { results?: any[] };
+  return extractContactEmails(raw.results || []);
+}
 
 // Vendor outreach: finds real, self-published contact emails (mailto:
 // links + plain-text matches — see emailExtraction.ts, deliberately NOT a
@@ -406,6 +427,13 @@ const EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE = 4;
 // discovery pipeline already uses. Scoped to is_open_source = false only —
 // GitHub/open-source tools are explicitly excluded per the business call
 // behind the is_open_source column (see 20260721235924).
+//
+// Two crawl passes per tool: the homepage (depth 2, up to 15 pages — this
+// alone usually reaches a linked /contact or /about page) and, only when
+// that pass finds nothing, one more pass explicitly seeded at
+// "<origin>/contact" — some sites' contact page isn't within the homepage
+// crawl's own priority ordering, so this is a deliberate second attempt
+// rather than trusting the first pass to have found everything reachable.
 //
 // Runs strictly SEQUENTIALLY (no Promise.all) and in small batches: this
 // shares the same 512MB/1CPU Crawl4AI container as crawl_queue_drain
@@ -419,7 +447,7 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
 
   const { data: tools, error } = await supabase
     .from("tools")
-    .select("id, slug, website")
+    .select("id, slug, website, email_discovery_attempts")
     .eq("status", "published")
     .eq("is_open_source", false)
     .is("email_discovery_status", null)
@@ -427,10 +455,12 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
     .order("id", { ascending: true })
     .limit(batchSize);
   if (error) throw new Error(`Failed to select tools for email discovery: ${error.message}`);
-  if (!tools || tools.length === 0) return { processed: 0, emails_found: 0, failed: 0 };
+  if (!tools || tools.length === 0) return { processed: 0, emails_found: 0, done: 0, failed: 0, retried: 0 };
 
   let emailsFound = 0;
+  let doneCount = 0;
   let failed = 0;
+  let retried = 0;
 
   for (const tool of tools as any[]) {
     const nowIso = new Date().toISOString();
@@ -439,31 +469,37 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
 
     const urlCheck = validateCrawlUrl(tool.website);
     if (!urlCheck.ok) {
-      await markTerminal("failed");
+      await markTerminal("failed"); // permanent — no crawlable URL to retry
       failed++;
       continue;
     }
     const dnsCheck = await resolvesToPublicAddress(urlCheck.hostname!);
     if (!dnsCheck.ok) {
-      await markTerminal("failed");
+      await markTerminal("failed"); // permanent — domain doesn't resolve
       failed++;
       continue;
     }
 
     try {
-      const gatewayResult = await callCrawlerGateway({
-        request_id: crypto.randomUUID(),
-        url: urlCheck.normalizedUrl!,
-        max_pages: CRAWL_LIMITS.MAX_PAGES,
-        max_depth: CRAWL_LIMITS.MAX_DEPTH,
-        max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
-      });
-      if (!gatewayResult.ok || !gatewayResult.data) {
-        throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
+      const primary = await crawlForEmails(urlCheck.normalizedUrl!, CRAWL_LIMITS.MAX_PAGES, CRAWL_LIMITS.MAX_DEPTH);
+
+      // Always run the /contact pass too, even when the homepage pass
+      // already found an email — a site commonly publishes DIFFERENT
+      // addresses on different pages (sales@ on /pricing, support@ on
+      // /support, a named founder@ on /about), and every distinct one is
+      // wanted, not just the first found.
+      let contactPass: typeof primary = [];
+      try {
+        const origin = new URL(urlCheck.normalizedUrl!).origin;
+        contactPass = await crawlForEmails(`${origin}/contact`, 5, 1);
+      } catch {
+        // Best-effort only — /contact may not exist on this site at all;
+        // that's not a failure of the overall attempt, just an empty pass.
       }
 
-      const raw = gatewayResult.data.raw as { results?: any[] };
-      const discovered = extractContactEmails(raw.results || []);
+      const byEmail = new Map(primary.map((d) => [d.email, d]));
+      for (const d of contactPass) if (!byEmail.has(d.email)) byEmail.set(d.email, d);
+      const discovered = [...byEmail.values()];
 
       if (discovered.length > 0) {
         const rows = discovered.map((d) => ({ tool_id: tool.id, email: d.email, source_url: d.source_url, discovered_at: nowIso }));
@@ -474,14 +510,23 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
         emailsFound += discovered.length;
       }
 
-      await markTerminal("done");
+      await markTerminal("done"); // a completed crawl, whether or not it found an email
+      doneCount++;
     } catch {
-      await markTerminal("failed");
-      failed++;
+      const attempts = (tool.email_discovery_attempts || 0) + 1;
+      if (attempts >= EMAIL_DISCOVERY_MAX_ATTEMPTS) {
+        await markTerminal("failed"); // exhausted retries on a transient error — give up
+        failed++;
+      } else {
+        // Leave status NULL so this tool is picked up again in a later
+        // tick — only the attempt counter advances.
+        await supabase.from("tools").update({ email_discovery_attempts: attempts }).eq("id", tool.id);
+        retried++;
+      }
     }
   }
 
-  return { processed: tools.length, emails_found: emailsFound, failed };
+  return { processed: tools.length, emails_found: emailsFound, done: doneCount, failed, retried };
 }
 
 const REGISTRY: Record<string, SchedulerJobHandler> = {
