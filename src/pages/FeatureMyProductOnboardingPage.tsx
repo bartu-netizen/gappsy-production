@@ -22,6 +22,7 @@ const GROWTH_MONTHLY_FEATURES = [
   'Featured placement across category, comparison, and search',
   'Priority ranking ahead of unfeatured listings',
   'Listing analytics — views and click-throughs, right in your dashboard',
+  'See what visitors ask in the chat on your listing, anonymized',
   'Priority placement in AI/LLM answer engines (ChatGPT, Perplexity, Claude)',
   'Remove or hide reviews from your listing, not just reply to them',
 ];
@@ -489,6 +490,10 @@ export default function FeatureMyProductOnboardingPage() {
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
+
+            <p className="text-center text-[12.5px] font-semibold uppercase tracking-wide text-slate-400 mb-2.5">
+              Everything below is extra — on top of what your claimed listing already has
+            </p>
 
             {/* CSS Grid instead of a <table>: every "row" is 3 grid items, so
                 Monthly/Yearly naturally share the exact same row height with

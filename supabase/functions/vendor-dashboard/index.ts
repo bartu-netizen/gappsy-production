@@ -92,13 +92,18 @@ Deno.serve(async (req: Request) => {
       // for a listing with an actually-paid, currently-active Growth
       // subscription, never for Claim-only or a pending/past-due one.
       let analytics = null;
+      let chatQuestions: { content: string; created_at: string }[] = [];
       if (growthResult.data?.status === "active") {
         const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-        const [viewsTotal, views30d, clicksTotal, clicks30d] = await Promise.all([
+        const [viewsTotal, views30d, clicksTotal, clicks30d, chatQuestionsResult] = await Promise.all([
           supabase.from("tool_page_views").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId),
           supabase.from("tool_page_views").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId).gte("created_at", since30d),
           supabase.from("tool_outbound_clicks").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId),
           supabase.from("tool_outbound_clicks").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId).gte("created_at", since30d),
+          // Anonymized by design — never session_id or ip_address, only the
+          // question text and its date. A Growth perk showing genuine buyer
+          // intent/objections asked on this listing's own Ask Gappsy chat.
+          supabase.from("tool_chat_messages").select("content, created_at").eq("tool_id", session.toolId).eq("role", "user").order("created_at", { ascending: false }).limit(200),
         ]);
         analytics = {
           views_total: viewsTotal.count || 0,
@@ -106,6 +111,7 @@ Deno.serve(async (req: Request) => {
           clicks_total: clicksTotal.count || 0,
           clicks_30d: clicks30d.count || 0,
         };
+        chatQuestions = chatQuestionsResult.data || [];
       }
 
       return jsonResponse({
@@ -119,6 +125,7 @@ Deno.serve(async (req: Request) => {
         claimSubscription: claimResult.data || null,
         growthSubscription: growthResult.data || null,
         analytics,
+        chatQuestions,
         comparisonRequests: comparisonRequestsResult.data || [],
       });
     }

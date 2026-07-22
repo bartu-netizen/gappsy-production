@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
   MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
-  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard } from '../lib/vendorDashboardApi';
@@ -38,12 +38,14 @@ interface ComparisonRequestRow {
   id: string; status: string; admin_notes: string | null; created_at: string;
   requested_tool: { slug: string; name: string; logo: string | null } | null;
 }
+interface ChatQuestionRow { content: string; created_at: string }
 
-type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics' | 'comparisons';
+type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics' | 'comparisons' | 'chat_questions';
 
 const TABS: { key: Tab; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
   { key: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { key: 'chat_questions', label: 'Visitor Questions', icon: Sparkles },
   { key: 'comparisons', label: 'Comparisons', icon: ArrowLeftRight },
   { key: 'listing', label: 'Listing', icon: FileText },
   { key: 'content', label: 'Features & FAQs', icon: FileText },
@@ -67,6 +69,7 @@ export default function VendorDashboardPage() {
   const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
   const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [chatQuestions, setChatQuestions] = useState<ChatQuestionRow[]>([]);
   const [comparisonRequests, setComparisonRequests] = useState<ComparisonRequestRow[]>([]);
 
   useEffect(() => {
@@ -86,6 +89,7 @@ export default function VendorDashboardPage() {
       setClaimSubscription(res.claimSubscription);
       setGrowthSubscription(res.growthSubscription);
       setAnalytics(res.analytics);
+      setChatQuestions(res.chatQuestions || []);
       setComparisonRequests(res.comparisonRequests || []);
       setLoading(false);
     }).catch(() => {
@@ -148,7 +152,7 @@ export default function VendorDashboardPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             <nav className="lg:w-56 shrink-0">
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-                {TABS.filter(({ key }) => (key !== 'analytics' && key !== 'comparisons') || growthSubscription?.status === 'active').map(({ key, label, icon: Icon }) => (
+                {TABS.filter(({ key }) => (key !== 'analytics' && key !== 'comparisons' && key !== 'chat_questions') || growthSubscription?.status === 'active').map(({ key, label, icon: Icon }) => (
                   <button
                     key={key}
                     type="button"
@@ -167,6 +171,7 @@ export default function VendorDashboardPage() {
             <div className="flex-1 min-w-0">
               {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} />}
               {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
+              {tab === 'chat_questions' && <ChatQuestionsTab questions={chatQuestions} />}
               {tab === 'comparisons' && (
                 <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
               )}
@@ -348,6 +353,45 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
         <AnalyticsStat icon={BarChart3} label="Page views (all-time)" value={analytics.views_total} />
         <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (all-time)" value={analytics.clicks_total} />
       </div>
+    </div>
+  );
+}
+
+// A Growth perk: what visitors actually ask the Ask Gappsy chat while on
+// this listing's own page — real buyer intent/objections, anonymized by
+// design (the API never returns session_id/ip_address, only the question
+// text and its date — see vendor-dashboard/index.ts).
+function ChatQuestionsTab({ questions }: { questions: { content: string; created_at: string }[] }) {
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Visitor questions</p>
+        <p className="text-[13px] text-slate-500 mt-1">
+          A Growth perk — real questions visitors asked the Ask Gappsy chat while looking at your listing. Anonymized: no name, session, or IP is ever shown, just the question itself.
+        </p>
+      </Card>
+
+      {questions.length === 0 ? (
+        <Card>
+          <p className="text-sm text-slate-400 text-center py-6">No questions yet — they'll show up here as visitors use the chat on your listing.</p>
+        </Card>
+      ) : (
+        <Card>
+          <div className="divide-y divide-slate-100">
+            {questions.map((q, i) => (
+              <div key={i} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#EEF0FE] flex items-center justify-center shrink-0 mt-0.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#4F47E6]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13.5px] text-[#0B1221] leading-snug">{q.content}</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">{new Date(q.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
     </div>
   );
 }
