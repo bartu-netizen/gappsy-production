@@ -231,7 +231,7 @@ export default function YourAgencyProfilePage() {
 
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
       const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
-      const profileUrl = `https://gappsy.com/your-agency/${agencyData.slug ?? agencySlug}`;
+      const profileUrl = `https://www.gappsy.com/your-agency/${agencyData.slug ?? agencySlug}`;
       const fsid = getFsid(false);
 
       const urlParams   = new URLSearchParams(window.location.search);
@@ -925,7 +925,7 @@ export default function YourAgencyProfilePage() {
             ? `See where ${agency.name} is listed on Gappsy across US state directories.`
             : ''
         }
-        canonical={`https://gappsy.com/your-agency/${agencySlug}`}
+        canonical={`https://www.gappsy.com/your-agency/${agencySlug}`}
         noindex={noindexMeta}
       />
 

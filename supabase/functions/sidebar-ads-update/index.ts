@@ -1,6 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
-import { authenticateAdmin, createAuthErrorResponse } from "../_shared/adminAuth.ts";
+import { authenticateAdmin } from "../_shared/adminAuth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,7 +18,7 @@ Deno.serve(async (req: Request) => {
 
   try {
     const auth = await authenticateAdmin(req);
-    if (!auth.success) return createAuthErrorResponse(auth, corsHeaders);
+    if (!auth.ok) return auth.response;
 
     const { ads } = await req.json();
 

@@ -135,7 +135,7 @@ export default function Top25ClaimActivationStep({
       <YourAgencySEO
         title={`Claim Your Top 25 Position in ${stateName} | Gappsy`}
         description={`${agencyName} is currently shown in the Top 25 ${stateName} directory. Claim and activate your position.`}
-        canonical="https://gappsy.com/your-agency"
+        canonical="https://www.gappsy.com/your-agency"
         noindex
       />
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MapPin } from 'lucide-react';
 
 interface FeaturedAgency {
   rank: number;
@@ -40,34 +41,6 @@ function getAgencyInitials(name: string): string {
     .slice(0, 2);
 }
 
-// Same-size (32px), same-shape logo slot as the Recently Featured Tools
-// rail right above this section — falls back to initials on a broken image
-// (onError) or a missing logo URL, instead of leaving an empty box.
-function AgencyLogo({ agency }: { agency: FeaturedAgency }) {
-  const [failed, setFailed] = useState(false);
-  const logoUrl = getAgencyLogoUrl(agency);
-  const showImage = logoUrl && !failed;
-
-  return (
-    <div className="ad-card-logo flex-shrink-0 w-8 h-8 rounded-lg bg-[#EFF6FF] flex items-center justify-center overflow-hidden">
-      {showImage ? (
-        <img
-          src={logoUrl}
-          alt={agency.name}
-          width={32}
-          height={32}
-          loading="lazy"
-          decoding="async"
-          className="w-8 h-8 object-contain"
-          onError={() => setFailed(true)}
-        />
-      ) : (
-        <span className="text-[11px] font-semibold text-[#3B82F6]">{getAgencyInitials(agency.name)}</span>
-      )}
-    </div>
-  );
-}
-
 interface RecentFeaturedAgenciesProps {
   isMobile?: boolean;
 }
@@ -75,6 +48,8 @@ interface RecentFeaturedAgenciesProps {
 export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenciesProps) {
   const [agencies, setAgencies] = useState<FeaturedAgency[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const isDesktop = !isMobile;
 
   useEffect(() => {
     const loadAgencies = async () => {
@@ -124,6 +99,8 @@ export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenc
         >
           <div className="flex gap-4 px-4 pb-2">
             {agencies.map((agency) => {
+              const logoUrl = getAgencyLogoUrl(agency);
+              const initials = getAgencyInitials(agency.name);
               const hasWebsite = !!agency.websiteUrl;
 
               return (
@@ -132,17 +109,48 @@ export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenc
                   href={hasWebsite ? agency.websiteUrl : '#'}
                   target={hasWebsite ? '_blank' : undefined}
                   rel={hasWebsite ? 'noopener noreferrer' : undefined}
-                  className="agency-card bg-white rounded-[14px] p-3 border border-[#eef0f3] hover:shadow-md transition-shadow flex items-center gap-2.5 flex-shrink-0 w-[230px] min-w-[230px] max-w-[230px] snap-start relative"
+                  className="bg-white rounded-[14px] border border-[#eef0f3] hover:shadow-md transition-shadow p-3.5 flex-shrink-0 w-[209px] min-w-[209px] max-w-[209px] md:w-[260px] snap-start relative"
                   style={{ textDecoration: 'none' }}
                   onClick={hasWebsite ? undefined : (e) => e.preventDefault()}
                 >
                   <span className="card-click-arrow">→</span>
-                  <AgencyLogo agency={agency} />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-xs font-bold text-gray-800 leading-tight truncate">{agency.name}</h3>
-                    <p className="text-[10.5px] text-slate-400 leading-tight mb-0.5">New Jersey</p>
-                    <p className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{agency.shortDescription}</p>
+                  <div className="agency-logo-wrapper-strict mb-2">
+                    {logoUrl ? (
+                      <img
+                        src={logoUrl}
+                        alt={agency.name}
+                        className="agencyLogoImg"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    ) : null}
+                    {!logoUrl && (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '24px',
+                          width: '100%',
+                          backgroundColor: '#EFF6FF',
+                          borderRadius: '6px',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          color: '#3B82F6'
+                        }}
+                      >
+                        {initials}
+                      </div>
+                    )}
                   </div>
+                  <h3 className="text-xs font-bold text-gray-800 leading-tight mb-1">{agency.name}</h3>
+                  <p className="text-[11px] text-slate-500 leading-[1.35] flex items-center gap-1 mb-1">
+                    <MapPin className="w-3.5 h-3.5 text-slate-400" /> New Jersey
+                  </p>
+                  <p className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{agency.shortDescription}</p>
                 </a>
               );
             })}
@@ -159,7 +167,7 @@ export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenc
           Recently Featured Agencies
         </h2>
         <Link
-          to="/marketing-agencies/usa"
+          to="/new-jersey"
           style={{
             fontSize: '12px',
             fontWeight: '500',
@@ -189,6 +197,8 @@ export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenc
         }}
       >
         {agencies.map((agency) => {
+          const logoUrl = getAgencyLogoUrl(agency);
+          const initials = getAgencyInitials(agency.name);
           const hasWebsite = !!agency.websiteUrl;
 
           return (
@@ -197,18 +207,56 @@ export function RecentFeaturedAgencies({ isMobile = false }: RecentFeaturedAgenc
               href={hasWebsite ? agency.websiteUrl : '#'}
               target={hasWebsite ? '_blank' : undefined}
               rel={hasWebsite ? 'noopener noreferrer' : undefined}
-              className="agency-card bg-white rounded-[14px] border border-[#eef0f3] hover:shadow-md transition-shadow p-3 flex items-center gap-2.5 relative"
+              className="agency-card bg-white rounded-[14px] border border-[#eef0f3] hover:shadow-md transition-shadow p-3"
               style={{
-                flex: '0 0 240px',
-                textDecoration: 'none'
+                flex: '0 0 210px',
+                textDecoration: 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2px',
+                minHeight: '120px',
+                position: 'relative'
               }}
               onClick={hasWebsite ? undefined : (e) => e.preventDefault()}
             >
               <span className="card-click-arrow">→</span>
-              <AgencyLogo agency={agency} />
-              <div className="flex-1 min-w-0">
-                <h3 className="text-xs font-bold text-gray-800 leading-tight truncate">{agency.name}</h3>
-                <p className="text-[10.5px] text-slate-400 leading-tight mb-0.5">New Jersey</p>
+              <div className="agency-logo-wrapper-strict">
+                {logoUrl ? (
+                  <img
+                    src={logoUrl}
+                    alt={agency.name}
+                    className="agencyLogoImg"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                ) : null}
+                {!logoUrl && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: isDesktop ? '32px' : '24px',
+                      width: '100%',
+                      backgroundColor: '#EFF6FF',
+                      borderRadius: '6px',
+                      fontSize: isDesktop ? '13px' : '11px',
+                      fontWeight: '600',
+                      color: '#3B82F6'
+                    }}
+                  >
+                    {initials}
+                  </div>
+                )}
+              </div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <h3 className="text-xs font-bold text-gray-800 leading-tight mb-0.5">{agency.name}</h3>
+                <p className="text-[11px] text-slate-500 leading-[1.35] flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-slate-400" /> New Jersey
+                </p>
                 <p className="text-[11px] text-gray-600 leading-[1.35] line-clamp-2">{agency.shortDescription}</p>
               </div>
             </a>

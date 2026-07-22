@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-DOMAIN="${TEST_DOMAIN:-https://gappsy.com}"
+DOMAIN="${TEST_DOMAIN:-https://www.gappsy.com}"
 
 echo "=========================================="
 echo "CRAWLER ACCESS VERIFICATION"

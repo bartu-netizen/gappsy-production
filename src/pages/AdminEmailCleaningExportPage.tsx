@@ -2659,7 +2659,7 @@ export default function AdminEmailCleaningExportPage() {
                                     <a href={m.imported_your_agency_url} target="_blank" rel="noopener noreferrer"
                                       className="text-blue-600 hover:underline block truncate"
                                       title={m.imported_your_agency_url}>
-                                      {m.imported_your_agency_url.replace('https://gappsy.com', '')}
+                                      {m.imported_your_agency_url.replace('https://www.gappsy.com', '')}
                                     </a>
                                   </td>
                                   <td className="px-3 py-2.5">
@@ -2677,7 +2677,7 @@ export default function AdminEmailCleaningExportPage() {
                                       <a href={m.lookup_your_agency_url} target="_blank" rel="noopener noreferrer"
                                         className="text-blue-600 hover:underline block truncate"
                                         title={m.lookup_your_agency_url}>
-                                        {m.lookup_your_agency_url.replace('https://gappsy.com', '')}
+                                        {m.lookup_your_agency_url.replace('https://www.gappsy.com', '')}
                                       </a>
                                     ) : (
                                       <span className="text-gray-400 italic">—</span>

@@ -75,7 +75,7 @@ function formatExpiry(iso: string | null): string {
 }
 
 function getFullUrl(token: string): string {
-  return `https://gappsy.com/offer/${token}`;
+  return `https://www.gappsy.com/offer/${token}`;
 }
 
 export default function DiscountTierPushPanel({ agencyId, agencySlug, stateSlug }: Props) {

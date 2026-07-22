@@ -2,21 +2,21 @@
  * Canonical URL Builder
  *
  * Builds deterministic canonical URLs for SEO.
- * Target format: https://gappsy.com/<path>/
+ * Target format: https://www.gappsy.com/<path>/
  *
  * Rules:
  * - Always https://
- * - Always gappsy.com (primary domain)
+ * - Always www.gappsy.com (primary domain)
  * - Always trailing slash at the end of the path
  * - Must match the final URL after redirects
  */
 
-const CANONICAL_DOMAIN = 'https://gappsy.com';
+const CANONICAL_DOMAIN = 'https://www.gappsy.com';
 
 /**
  * Build a canonical URL from a path
  * @param path - The path (with or without leading slash, with or without trailing slash)
- * @returns Canonical URL with trailing slash
+ * @returns Canonical URL with www and trailing slash
  */
 export function buildCanonicalUrl(path: string): string {
   // Remove any leading domain if present

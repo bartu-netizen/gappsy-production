@@ -2030,13 +2030,13 @@ export default function AdminOtherAgenciesImportPage() {
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        value={editAgency?.slug ? `https://gappsy.com/your-agency/${editAgency.slug}` : editAgency?.id ? `https://gappsy.com/your-agency/${editAgency.id}` : 'Slug not generated yet'}
+                        value={editAgency?.slug ? `https://www.gappsy.com/your-agency/${editAgency.slug}` : editAgency?.id ? `https://www.gappsy.com/your-agency/${editAgency.id}` : 'Slug not generated yet'}
                         readOnly
                         className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm"
                       />
                       <button
                         onClick={() => {
-                          const linkText = editAgency?.slug ? `https://gappsy.com/your-agency/${editAgency.slug}` : editAgency?.id ? `https://gappsy.com/your-agency/${editAgency.id}` : null;
+                          const linkText = editAgency?.slug ? `https://www.gappsy.com/your-agency/${editAgency.slug}` : editAgency?.id ? `https://www.gappsy.com/your-agency/${editAgency.id}` : null;
                           if (linkText) {
                             navigator.clipboard.writeText(linkText).catch(() => {});
                           }

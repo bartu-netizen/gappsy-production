@@ -1,313 +1,14 @@
-// The 4 admin-wide view groups (plus 'overview', which is always visible
-// regardless of the selected view — see isToolVisibleInView below). This is
-// a presentation-only classification layered on top of the existing,
-// finer-grained `group` field — it does not replace it, and it changes no
-// route, permission, or component.
-export type AdminScope = 'overview' | 'agency' | 'software' | 'shared';
-
 export interface AdminTool {
   id: string;
   label: string;
   description: string;
   href: string;
   keywords: string[];
-  group: 'Overview' | 'Discovery' | 'Publishing' | 'Software' | 'Taxonomy' | 'Editorial' | 'AI Enrichment' | 'Content' | 'Monetization' | 'Email' | 'Ops';
+  group: 'Content' | 'Monetization' | 'Email' | 'Ops';
   iconName: string;
-  scopes: AdminScope[];
-  badge?: string;
-}
-
-export const ADMIN_VIEWS: { value: AdminScope | 'all'; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'agency', label: 'Agencies' },
-  { value: 'software', label: 'Software' },
-  { value: 'shared', label: 'Shared' },
-];
-
-// 'shared' and 'overview' items are always visible no matter which view is
-// selected — a genuinely cross-cutting module (or the Dashboard) should
-// never disappear just because someone is filtered to "Agencies" or
-// "Software". This is a pure client-side display filter: it never hides a
-// route from direct navigation and is not a substitute for the real
-// server-side admin-session/auth checks every edge function already
-// enforces independently.
-export function isToolVisibleInView(tool: AdminTool, view: AdminScope | 'all'): boolean {
-  if (view === 'all') return true;
-  if (tool.scopes.includes('shared') || tool.scopes.includes('overview')) return true;
-  return tool.scopes.includes(view);
 }
 
 export const ADMIN_TOOLS: AdminTool[] = [
-  {
-    id: 'dashboard',
-    label: 'Dashboard',
-    description: 'Admin home — quick access to every module',
-    href: '/wp-admin/dashboard',
-    keywords: ['dashboard', 'home', 'overview'],
-    group: 'Overview',
-    iconName: 'LayoutDashboard',
-    scopes: ['overview'],
-  },
-  {
-    id: 'discovery-dashboard',
-    label: 'Discovery Dashboard',
-    description: 'Discovery Engine overview — discovered, validated, duplicates, rejected, approved for crawl',
-    href: '/wp-admin/discovery',
-    keywords: ['discovery', 'dashboard', 'overview', 'stats', 'pipeline', 'candidates'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'Compass',
-  },
-  {
-    id: 'discovery-queue',
-    label: 'Discovery Queue',
-    description: 'Every discovered candidate — search, filter, bulk actions, status transitions',
-    href: '/wp-admin/discovery/queue',
-    keywords: ['discovery', 'queue', 'candidates', 'review', 'bulk', 'status'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'ListChecks',
-  },
-  {
-    id: 'discovery-import',
-    label: 'Discover Software',
-    description: 'Manually add a candidate or bulk-import from CSV',
-    href: '/wp-admin/discovery/import',
-    keywords: ['discovery', 'import', 'manual', 'csv', 'add', 'candidate'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'PlusCircle',
-  },
-  {
-    id: 'discovery-import-history',
-    label: 'Import History',
-    description: 'Every discovery import batch — CSV files, row counts, and errors',
-    href: '/wp-admin/discovery/import-history',
-    keywords: ['discovery', 'import', 'history', 'batch', 'csv', 'log'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'History',
-  },
-  {
-    id: 'discovery-duplicates',
-    label: 'Duplicate Manager',
-    description: 'Review candidates flagged as likely duplicates of existing or pending tools',
-    href: '/wp-admin/discovery/duplicates',
-    keywords: ['discovery', 'duplicate', 'dedup', 'merge', 'candidates'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'GitMerge',
-  },
-  {
-    id: 'discovery-validation',
-    label: 'Validation Results',
-    description: 'Reachability, HTTPS, robots.txt, sitemap, and domain-health checks across every candidate',
-    href: '/wp-admin/discovery/validation',
-    keywords: ['discovery', 'validation', 'health', 'robots', 'sitemap', 'https', 'reachability'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'ShieldCheck',
-  },
-  {
-    id: 'discovery-providers',
-    label: 'Providers',
-    description: 'Manage discovery sources — Manual Import, CSV Import, and future providers',
-    href: '/wp-admin/discovery/providers',
-    keywords: ['discovery', 'providers', 'sources', 'manual', 'csv', 'api'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'Plug',
-  },
-  {
-    id: 'crawl-queue',
-    label: 'Crawl Queue',
-    description: 'Every crawl attempt — queued, running, completed, failed, and retried',
-    href: '/wp-admin/discovery/crawl-queue',
-    keywords: ['crawl', 'queue', 'crawl4ai', 'jobs', 'retry', 'cancel'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'Radar',
-  },
-  {
-    id: 'scheduler',
-    label: 'Scheduler',
-    description: 'Central orchestration — cron/interval schedules driving Discovery, Crawl, and cleanup automatically',
-    href: '/wp-admin/scheduler',
-    keywords: ['scheduler', 'cron', 'orchestrator', 'automation', 'jobs', 'interval', 'heartbeat'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'Workflow',
-  },
-  {
-    id: 'editorial-dashboard',
-    label: 'Editorial Dashboard',
-    description: 'Every pipeline stage in one screen — discovery, crawl, drafts, AI, review, publish — plus global search across every status',
-    href: '/wp-admin/editorial',
-    keywords: ['editorial', 'dashboard', 'overview', 'search', 'review', 'queue', 'bottleneck'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'LayoutDashboard',
-  },
-  {
-    id: 'editorial-metrics',
-    label: 'Editor Metrics',
-    description: 'Reviews per day, publish rate, average review time, AI acceptance rate, completeness distribution, bottlenecks',
-    href: '/wp-admin/editorial/metrics',
-    keywords: ['editor', 'metrics', 'analytics', 'throughput', 'reviews', 'acceptance rate', 'bottleneck'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'BarChart2',
-  },
-  {
-    id: 'publishing-rules',
-    label: 'Publishing Rules',
-    description: 'Configure which fields are required before a tool can be marked Ready to Publish',
-    href: '/wp-admin/editorial/publishing-rules',
-    keywords: ['publishing', 'rules', 'requirements', 'gate', 'completeness', 'configurable'],
-    group: 'Discovery',
-    scopes: ['software'],
-    iconName: 'SlidersHorizontal',
-  },
-  {
-    id: 'publishing-dashboard',
-    label: 'Import Dashboard',
-    description: 'Publishing pipeline overview — imports, drafts, ready to publish, published, failed',
-    href: '/wp-admin/publishing',
-    keywords: ['import', 'dashboard', 'overview', 'stats', 'pipeline'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'Gauge',
-  },
-  {
-    id: 'publishing-new-software',
-    label: 'New Software',
-    description: 'Guided wizard for publishing a new tool — URL check, basic info, and a completeness-gated review',
-    href: '/wp-admin/publishing/new',
-    keywords: ['new', 'software', 'wizard', 'publish', 'add', 'import', 'onboard'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'Rocket',
-  },
-  {
-    id: 'publishing-queue',
-    label: 'Publishing Queue',
-    description: 'Every tool moving through the publishing pipeline — draft, needs review, ready to publish, published, archived',
-    href: '/wp-admin/publishing/queue',
-    keywords: ['publishing', 'queue', 'pipeline', 'status', 'review', 'bulk'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'ListChecks',
-  },
-  {
-    id: 'publishing-import-queue',
-    label: 'Import Queue',
-    description: 'Live import jobs — queued, fetching, extracting, review required, ready, published, failed, cancelled',
-    href: '/wp-admin/publishing/import-queue',
-    keywords: ['import', 'queue', 'job', 'jobs', 'pipeline', 'progress', 'retry'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'Workflow',
-  },
-  {
-    id: 'publishing-drafts',
-    label: 'Draft Queue',
-    description: 'Tools still in draft, not yet ready for review',
-    href: '/wp-admin/publishing/drafts',
-    keywords: ['draft', 'queue', 'unfinished', 'wip'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'FileEdit',
-  },
-  {
-    id: 'publishing-published',
-    label: 'Published',
-    description: 'Every tool currently live on the public site',
-    href: '/wp-admin/publishing/published',
-    keywords: ['published', 'live', 'public'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'Globe2',
-  },
-  {
-    id: 'publishing-archive',
-    label: 'Archive',
-    description: 'Tools removed from publication',
-    href: '/wp-admin/publishing/archive',
-    keywords: ['archive', 'archived', 'removed'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'Archive',
-  },
-  {
-    id: 'publishing-imports',
-    label: 'Import History',
-    description: 'Every import attempt from the wizard, bulk import, or API — duration, status, sections, errors',
-    href: '/wp-admin/publishing/imports',
-    keywords: ['import', 'history', 'wizard', 'bulk', 'api', 'log', 'provenance'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'History',
-  },
-  {
-    id: 'seo-health',
-    label: 'SEO Health',
-    description: 'Database-level completeness rollup for published tools — missing meta, schema, screenshots, FAQs, alternatives, sitemap eligibility',
-    href: '/wp-admin/seo-health',
-    keywords: ['seo', 'health', 'meta', 'schema', 'screenshots', 'faq', 'alternatives', 'sitemap', 'tools', 'audit'],
-    group: 'Publishing',
-    scopes: ['software'],
-    iconName: 'BarChart2',
-  },
-  {
-    id: 'add-tool',
-    label: 'Add Tool',
-    description: 'Create a new software tool listing',
-    href: '/wp-admin/tools/new',
-    keywords: ['add', 'new', 'tool', 'create', 'software'],
-    group: 'Software',
-    scopes: ['software'],
-    iconName: 'Wrench',
-  },
-  {
-    id: 'tool-categories',
-    label: 'Categories',
-    description: 'Manage the Tools taxonomy — categories used to filter and organize the directory',
-    href: '/wp-admin/tools/categories',
-    keywords: ['categories', 'taxonomy', 'tools', 'software', 'filter'],
-    group: 'Taxonomy',
-    scopes: ['software'],
-    iconName: 'FolderTree',
-  },
-  {
-    id: 'tool-tags',
-    label: 'Tags',
-    description: 'Manage the Tools free-form tag taxonomy',
-    href: '/wp-admin/tools/tags',
-    keywords: ['tags', 'taxonomy', 'tools', 'software'],
-    group: 'Taxonomy',
-    scopes: ['software'],
-    iconName: 'Tag',
-  },
-  {
-    id: 'tool-comparisons',
-    label: 'Comparisons',
-    description: 'Manage approved tool-vs-tool comparison pages',
-    href: '/wp-admin/tool-comparisons',
-    keywords: ['comparisons', 'compare', 'vs', 'tools', 'software'],
-    group: 'Editorial',
-    scopes: ['software'],
-    iconName: 'GitCompare',
-  },
-  {
-    id: 'tool-comparisons-3',
-    label: '3-Tool Comparisons',
-    description: 'Manage approved 3+ tool group comparison pages',
-    href: '/wp-admin/tool-comparisons-3',
-    keywords: ['comparisons', 'roundups', 'roundup', 'compare', 'vs', 'tools', 'software'],
-    group: 'Editorial',
-    scopes: ['software'],
-    iconName: 'Layers',
-  },
   {
     id: 'top25-editor',
     label: 'Edit Top-25 Pages',
@@ -315,7 +16,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/top25-editor',
     keywords: ['top25', 'state', 'edit', 'agencies', 'spotlight', 'content'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Edit2',
   },
   {
@@ -325,7 +25,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/json-import',
     keywords: ['import', 'json', 'bulk', 'agencies', 'states'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'FileJson',
   },
   {
@@ -335,7 +34,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-import',
     keywords: ['import', 'csv', 'json', 'agencies', 'bulk', 'local', 'other', 'state', 'email'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Upload',
   },
   {
@@ -345,7 +43,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-import-v2',
     keywords: ['import', 'v2', 'csv', 'xlsx', 'agencies', 'bulk', 'local', 'other', 'state', 'email', 'background'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'UploadCloud',
   },
   {
@@ -355,7 +52,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/other-agencies-manager',
     keywords: ['other', 'agencies', 'badges', 'website', 'paid', 'status', 'manager', 'bulk', 'override', 'active'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Building2',
   },
   {
@@ -365,7 +61,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email-cleaning',
     keywords: ['email', 'cleaning', 'validation', 'export', 'import', 'zerobounce', 'neverbounce', 'agencies'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'MailOpen',
   },
   {
@@ -375,7 +70,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/smartlead',
     keywords: ['smartlead', 'sync', 'campaigns', 'outreach', 'agencies', 'contacts', 'engagement', 'leads', 'reply', 'bounce'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Send',
   },
   {
@@ -385,7 +79,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/logo-upload',
     keywords: ['logo', 'image', 'upload', 'agencies'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Image',
   },
   {
@@ -395,58 +88,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-reviews',
     keywords: ['reviews', 'ratings', 'agency', 'submissions'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Star',
-  },
-  {
-    id: 'tool-reviews',
-    label: 'Tool Reviews',
-    description: 'Moderate publicly-submitted tool reviews before they go live',
-    href: '/wp-admin/tool-reviews',
-    keywords: ['reviews', 'ratings', 'tools', 'submissions', 'moderation'],
-    group: 'Content',
-    scopes: ['software'],
-    iconName: 'Star',
-  },
-  {
-    id: 'video-embeds',
-    label: 'Video Embeds',
-    description: 'Place YouTube / Shorts videos on specific pages and track views',
-    href: '/wp-admin/video-embeds',
-    keywords: ['video', 'youtube', 'shorts', 'embed', 'seo'],
-    group: 'Content',
-    scopes: ['software', 'shared'],
-    iconName: 'PlayCircle',
-  },
-  {
-    id: 'vendor-accounts',
-    label: 'Vendor Accounts',
-    description: 'See linked vendor login accounts and manually create one for testing',
-    href: '/wp-admin/vendor-accounts',
-    keywords: ['vendor', 'account', 'login', 'dashboard', 'test', 'claim'],
-    group: 'Content',
-    scopes: ['software'],
-    iconName: 'UserCog',
-  },
-  {
-    id: 'vendor-comparison-requests',
-    label: 'Comparison Requests',
-    description: 'Growth vendors\' requests to be compared against a specific competitor',
-    href: '/wp-admin/vendor-comparison-requests',
-    keywords: ['vendor', 'comparison', 'growth', 'compare', 'request'],
-    group: 'Content',
-    scopes: ['software'],
-    iconName: 'GitCompare',
-  },
-  {
-    id: 'tool-analytics',
-    label: 'Tool Analytics',
-    description: 'Page views and outbound "Visit Website" clicks per tool, with country/IP breakdown',
-    href: '/wp-admin/tool-analytics',
-    keywords: ['analytics', 'clicks', 'views', 'outbound', 'tracking', 'visit website', 'country', 'ip'],
-    group: 'Content',
-    scopes: ['software'],
-    iconName: 'MousePointerClick',
   },
   {
     id: 'agency-reviews-import',
@@ -455,38 +97,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-reviews/import',
     keywords: ['reviews', 'import', 'bulk', 'csv', 'json', 'agency', 'upload', 'uniqueness'],
     group: 'Content',
-    scopes: ['agency'],
     iconName: 'Upload',
-  },
-  {
-    id: 'tools',
-    label: 'All Tools',
-    description: 'Browse, search, and manage every software tool listing',
-    href: '/wp-admin/tools',
-    keywords: ['tools', 'directory', 'entities', 'software', 'all'],
-    group: 'Software',
-    scopes: ['software'],
-    iconName: 'Wrench',
-  },
-  {
-    id: 'media-library',
-    label: 'Media',
-    description: 'Browse, search, and manage every file uploaded through the tool editor — logos, screenshots, and more',
-    href: '/wp-admin/media',
-    keywords: ['media', 'library', 'files', 'images', 'screenshots', 'logos', 'uploads', 'assets'],
-    group: 'Software',
-    scopes: ['software'],
-    iconName: 'Image',
-  },
-  {
-    id: 'vendor-monetization',
-    label: 'Vendor Monetization',
-    description: 'Feature My Product onboarding sessions, subscriptions, and ownership verification',
-    href: '/wp-admin/vendor-monetization',
-    keywords: ['vendor', 'monetization', 'feature my product', 'checkout', 'subscription', 'ownership', 'verification'],
-    group: 'Monetization',
-    scopes: ['software'],
-    iconName: 'Rocket',
   },
   {
     id: 'sidebar-ads',
@@ -495,28 +106,7 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/sidebar-ads',
     keywords: ['ads', 'sidebar', 'homepage', 'advertising', 'banners'],
     group: 'Monetization',
-    scopes: ['shared'],
     iconName: 'LayoutGrid',
-  },
-  {
-    id: 'smart-search-stats',
-    label: 'Smart Search',
-    description: 'Homepage AI search: fallback rate and what visitors actually typed',
-    href: '/wp-admin/smart-search-stats',
-    keywords: ['search', 'smart search', 'ai', 'homepage', 'analytics', 'fallback', 'content gaps'],
-    group: 'Content',
-    scopes: ['shared'],
-    iconName: 'BarChart2',
-  },
-  {
-    id: 'tool-contact-emails',
-    label: 'Software Tool Scraped Emails',
-    description: 'Real emails found on each paid tool\'s own website, for vendor outreach',
-    href: '/wp-admin/tool-contact-emails',
-    keywords: ['email', 'contact', 'outreach', 'vendor', 'smartlead', 'crawl', 'discovery', 'scraped', 'scraper'],
-    group: 'Monetization',
-    scopes: ['software'],
-    iconName: 'Mail',
   },
   {
     id: 'stripe',
@@ -525,7 +115,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/revenue',
     keywords: ['stripe', 'revenue', 'orders', 'payments', 'subscriptions', 'billing'],
     group: 'Monetization',
-    scopes: ['agency'],
     iconName: 'CreditCard',
   },
   {
@@ -535,7 +124,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/revenue-health',
     keywords: ['revenue', 'health', 'slots', 'inventory', 'audit', 'self-test', 'availability', 'locked', 'sold'],
     group: 'Monetization',
-    scopes: ['agency'],
     iconName: 'Activity',
   },
   {
@@ -545,7 +133,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/thank-you-page',
     keywords: ['thank-you', 'payment', 'order', 'complete', 'preview', 'test', 'qa', 'validation', 'post-payment', 'editor'],
     group: 'Monetization',
-    scopes: ['agency'],
     iconName: 'CheckCircle',
   },
   {
@@ -555,7 +142,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/customer-suppression',
     keywords: ['suppression', 'paid', 'customer', 'do not contact', 'smartlead', 'exclude', 'opt out', 'blocked', 'agency'],
     group: 'Email',
-    scopes: ['agency'],
     iconName: 'ShieldOff',
   },
   {
@@ -565,7 +151,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/overview',
     keywords: ['email', 'marketing', 'dashboard', 'kpi', 'overview', 'campaigns', 'automations', 'smtp', 'audience', 'segments', 'templates', 'logs'],
     group: 'Email',
-    scopes: ['shared'],
     iconName: 'Mail',
   },
   {
@@ -575,7 +160,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/smartlead/inbox',
     keywords: ['smartlead', 'inbox', 'crm', 'conversations', 'replies', 'cold outreach', 'leads', 'agency'],
     group: 'Email',
-    scopes: ['agency'],
     iconName: 'Inbox',
   },
   {
@@ -585,7 +169,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/contact-inbox',
     keywords: ['contact', 'inbox', 'messages', 'form', 'submissions', 'reply', 'smtp', 'crm'],
     group: 'Email',
-    scopes: ['shared'],
     iconName: 'MessageSquare',
   },
   {
@@ -595,7 +178,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email/agency-lookup',
     keywords: ['email', 'lookup', 'agency', 'reply', 'smartlead', 'your-agency', 'url', 'copy', 'manual'],
     group: 'Email',
-    scopes: ['agency'],
     iconName: 'UserSearch',
   },
   {
@@ -605,7 +187,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/submissions',
     keywords: ['submissions', 'leads', 'forms', 'funnel', 'tracking', 'get matched', 'spotlight', 'availability'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Inbox',
   },
   {
@@ -615,7 +196,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/funnels',
     keywords: ['funnel', 'analytics', 'conversion', 'sessions', 'events', 'steps', 'drop-off', 'tracking', 'your agency', 'demo'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'TrendingUp',
   },
   {
@@ -625,7 +205,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/product-funnel',
     keywords: ['product', 'funnel', 'intelligence', 'hot', 'unpaid', 'your agency', 'replay', 'availability', 'manage', 'activation', 'checkout', 'discount'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Flame',
   },
   {
@@ -635,7 +214,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/analytics/agency-funnel',
     keywords: ['agency', 'funnel', 'analytics', 'conversion', 'drop-off', 'engagement', 'your agency', 'scroll', 'time', 'search', 'direct'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Target',
   },
   {
@@ -645,7 +223,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/activity-feed',
     keywords: ['activity', 'feed', 'live', 'realtime', 'events', 'stream', 'timeline', 'agency', 'intent', 'signals'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Activity',
   },
   {
@@ -655,7 +232,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/intent-center',
     keywords: ['intent', 'hot', 'score', 'activity', 'replay', 'availability', 'checkout', 'follow-up', 'signals', 'priority'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Flame',
   },
   {
@@ -665,7 +241,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/manage-removals',
     keywords: ['manage', 'removals', 'hidden', 'self-removed', 'removal_pending', 'recovery', 'remove intent', 'listing', 'owner', 'funnel'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'EyeOff',
   },
   {
@@ -675,7 +250,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/availability-analytics',
     keywords: ['availability', 'analytics', 'leaderboard', 'agencies', 'requests', 'clicks', 'stats', 'trends'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'BarChart2',
   },
   {
@@ -685,7 +259,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/email-notifications',
     keywords: ['email', 'notifications', 'alerts', 'forms', 'submissions', 'smtp', 'recipients', 'notify'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Bell',
   },
   {
@@ -695,7 +268,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-email-automations',
     keywords: ['agency', 'email', 'automations', 'availability', 'leads', 'digest', 'paid', 'unpaid'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Zap',
   },
   {
@@ -705,7 +277,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/agency-dedup',
     keywords: ['dedup', 'duplicate', 'agency', 'merge', 'repair', 'identity', 'conflict', 'your-agency', 'url', 'email', 'ownership'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'GitMerge',
   },
   {
@@ -715,7 +286,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/content-scanner',
     keywords: ['scan', 'casino', 'slots', 'gambling', 'content', 'keywords'],
     group: 'Ops',
-    scopes: ['shared'],
     iconName: 'AlertTriangle',
   },
   {
@@ -725,7 +295,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/security/audit-log',
     keywords: ['audit', 'log', 'security', 'events', 'history', 'rejected', 'violations'],
     group: 'Ops',
-    scopes: ['shared'],
     iconName: 'Shield',
   },
   {
@@ -735,7 +304,6 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/settings',
     keywords: ['settings', 'secrets', 'config', 'api keys', 'security'],
     group: 'Ops',
-    scopes: ['shared'],
     iconName: 'Settings',
   },
   {
@@ -745,103 +313,8 @@ export const ADMIN_TOOLS: AdminTool[] = [
     href: '/wp-admin/claim-links',
     keywords: ['claim', 'links', 'token', 'your agency', 'outreach', 'campaign', 'deep link'],
     group: 'Ops',
-    scopes: ['agency'],
     iconName: 'Link2',
-  },
-  {
-    id: 'ai-enrichment-dashboard',
-    label: 'AI Dashboard',
-    description: 'AI Enrichment Engine overview — batches, jobs, and review status',
-    href: '/wp-admin/ai-enrichment',
-    keywords: ['ai', 'enrichment', 'dashboard', 'claude', 'batch', 'overview'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-queue',
-    label: 'AI Queue',
-    description: 'Select Tool Drafts and export a Claude Code batch package',
-    href: '/wp-admin/ai-enrichment/queue',
-    keywords: ['ai', 'enrichment', 'queue', 'batch', 'export', 'claude code'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-needs-review',
-    label: 'Needs Review',
-    description: 'Enrichment jobs with AI suggestions awaiting approve/reject/edit',
-    href: '/wp-admin/ai-enrichment/needs-review',
-    keywords: ['ai', 'enrichment', 'review', 'suggestions', 'pending'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-completed',
-    label: 'Completed',
-    description: 'Enrichment jobs whose approved fields have been applied',
-    href: '/wp-admin/ai-enrichment/completed',
-    keywords: ['ai', 'enrichment', 'completed', 'applied'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-failed',
-    label: 'Failed',
-    description: 'Enrichment jobs and batches that failed export/import/apply',
-    href: '/wp-admin/ai-enrichment/failed',
-    keywords: ['ai', 'enrichment', 'failed', 'errors'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-history',
-    label: 'Generation History',
-    description: 'Every enrichment job across every tool, including regenerations',
-    href: '/wp-admin/ai-enrichment/history',
-    keywords: ['ai', 'enrichment', 'history', 'generations', 'regenerate'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-prompts',
-    label: 'Prompt Versions',
-    description: 'Versioned enrichment prompt templates — create new versions, never overwrite',
-    href: '/wp-admin/ai-enrichment/prompts',
-    keywords: ['ai', 'enrichment', 'prompt', 'versions', 'template'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
-  },
-  {
-    id: 'ai-enrichment-settings',
-    label: 'Model Settings',
-    description: 'Enrichment provider, confidence threshold, and batch size limits',
-    href: '/wp-admin/ai-enrichment/settings',
-    keywords: ['ai', 'enrichment', 'settings', 'provider', 'model', 'confidence', 'threshold'],
-    group: 'AI Enrichment',
-    scopes: ['software'],
-    iconName: 'Zap',
   },
 ];
 
-export const TOOL_GROUPS = ['Overview', 'Discovery', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'AI Enrichment', 'Content', 'Monetization', 'Email', 'Ops'] as const;
-
-// For a deep-linked detail/editor page that isn't itself a sidebar item
-// (e.g. /wp-admin/tools/:id/edit, only ever reached by clicking through
-// from "All Tools") — finds the most specific registered route that's an
-// ancestor of the given pathname and returns its primary scope, so the
-// view switcher can auto-reveal the right section on direct navigation.
-// Returns null when nothing matches; callers should treat that as "show
-// everything" (view 'all') rather than guessing.
-export function inferScopeForPath(pathname: string): AdminScope | null {
-  const candidates = ADMIN_TOOLS
-    .filter((t) => pathname === t.href || pathname.startsWith(`${t.href}/`))
-    .sort((a, b) => b.href.length - a.href.length);
-  return candidates[0]?.scopes[0] ?? null;
-}
+export const TOOL_GROUPS = ['Content', 'Monetization', 'Email', 'Ops'] as const;

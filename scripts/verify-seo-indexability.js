@@ -45,7 +45,7 @@ if (fs.existsSync(distDir)) {
     }
     const canonMatch = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
     if (!canonMatch) fail(`State page ${dir} missing canonical link`);
-    else if (!canonMatch[1].startsWith('https://gappsy.com/')) {
+    else if (!canonMatch[1].startsWith('https://www.gappsy.com/')) {
       fail(`State page ${dir} canonical not on canonical domain: ${canonMatch[1]}`);
     }
     if (/gappsy\.bolt\.host/.test(html)) {
@@ -60,26 +60,19 @@ if (!sitemap) fail('Missing public/sitemap.xml');
 else {
   const locs = Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)).map((m) => m[1]);
   const allowed = [
-    /^https:\/\/gappsy\.com\/$/,
-    /^https:\/\/gappsy\.com\/marketing-agencies\/$/,
-    /^https:\/\/gappsy\.com\/marketing-agencies\/usa\/$/,
-    /^https:\/\/gappsy\.com\/marketing-agencies-in-[a-z-]+-united-states\/$/,
-    /^https:\/\/gappsy\.com\/your-agency$/,
-    /^https:\/\/gappsy\.com\/appbuilder\/$/,
-    /^https:\/\/gappsy\.com\/analytics\/$/,
-    /^https:\/\/gappsy\.com\/proof\/$/,
-    /^https:\/\/gappsy\.com\/about\/$/,
-    /^https:\/\/gappsy\.com\/contact\/$/,
-    /^https:\/\/gappsy\.com\/editorial-policy\/$/,
-    /^https:\/\/gappsy\.com\/terms\/$/,
-    /^https:\/\/gappsy\.com\/privacy\/$/,
-    /^https:\/\/gappsy\.com\/tools\/$/,
-    /^https:\/\/gappsy\.com\/tools\/[a-z0-9-]+\/$/,
-    /^https:\/\/gappsy\.com\/tool-categories\/$/,
-    /^https:\/\/gappsy\.com\/tool-categories\/[a-z0-9-]+\/$/,
-    /^https:\/\/gappsy\.com\/compare\/$/,
-    // Matches both pairwise ("a-vs-b") and group ("a-vs-b-vs-c") comparisons.
-    /^https:\/\/gappsy\.com\/compare\/[a-z0-9-]+-vs-[a-z0-9-]+\/$/,
+    /^https:\/\/www\.gappsy\.com\/$/,
+    /^https:\/\/www\.gappsy\.com\/marketing-agencies\/$/,
+    /^https:\/\/www\.gappsy\.com\/marketing-agencies\/usa\/$/,
+    /^https:\/\/www\.gappsy\.com\/marketing-agencies-in-[a-z-]+-united-states\/$/,
+    /^https:\/\/www\.gappsy\.com\/your-agency$/,
+    /^https:\/\/www\.gappsy\.com\/appbuilder\/$/,
+    /^https:\/\/www\.gappsy\.com\/analytics\/$/,
+    /^https:\/\/www\.gappsy\.com\/proof\/$/,
+    /^https:\/\/www\.gappsy\.com\/about\/$/,
+    /^https:\/\/www\.gappsy\.com\/contact\/$/,
+    /^https:\/\/www\.gappsy\.com\/editorial-policy\/$/,
+    /^https:\/\/www\.gappsy\.com\/terms\/$/,
+    /^https:\/\/www\.gappsy\.com\/privacy\/$/,
   ];
   for (const loc of locs) {
     if (!allowed.some((re) => re.test(loc))) {

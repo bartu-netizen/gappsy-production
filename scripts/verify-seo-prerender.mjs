@@ -7,7 +7,7 @@ const distDir = join(__dirname, '..', 'dist');
 
 const CHECKS = {
   TITLE: /<title>[^<]{10,}<\/title>/i,
-  CANONICAL: /<link[^>]+rel=["']canonical["'][^>]+href=["']https:\/\/gappsy\.com\/marketing-agencies-in-[a-z0-9-]+-united-states\/["']/i,
+  CANONICAL: /<link[^>]+rel=["']canonical["'][^>]+href=["']https:\/\/www\.gappsy\.com\/marketing-agencies-in-[a-z0-9-]+-united-states\/["']/i,
   ROBOTS_INDEX: /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*index[^"']*["']/i,
   NO_NOINDEX: /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex[^"']*["']/i,
   H1: /<h1[^>]*>/i,

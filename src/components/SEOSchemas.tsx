@@ -29,7 +29,7 @@ function SEOSchemas({
   seoDescription
 }: SEOSchemasProps) {
   useEffect(() => {
-    const baseUrl = 'https://gappsy.com';
+    const baseUrl = 'https://www.gappsy.com';
     const pageUrl = `${baseUrl}/marketing-agencies-in-${stateSlug}-united-states/`;
     const currentYear = new Date().getFullYear();
 

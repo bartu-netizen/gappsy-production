@@ -240,7 +240,7 @@ export default function YourAgencySearchPage() {
     });
 
     const url = agency.agency_slug ? `/your-agency/${agency.agency_slug}` : `/your-agency/${agency.agency_id}`;
-    const profileUrl = `https://gappsy.com${url}`;
+    const profileUrl = `https://www.gappsy.com${url}`;
     const fsid = getFsid();
 
     const listings = agency.states || agency.listings || [];
@@ -336,7 +336,7 @@ export default function YourAgencySearchPage() {
       <YourAgencySEO
         title="Find your agency listing | Gappsy"
         description="Search and see where your agency is listed across our Top-25 marketing agency pages in every US state. Updated daily."
-        canonical="https://gappsy.com/your-agency"
+        canonical="https://www.gappsy.com/your-agency"
         noindex={false}
       />
 

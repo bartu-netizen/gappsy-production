@@ -13,7 +13,7 @@ import nodemailer from "nodemailer";
  * - SMTP_INTERNAL_EMAIL: Default internal email for testing
  */
 
-const ALLOWED_ORIGIN = "https://gappsy.com";
+const ALLOWED_ORIGIN = "https://www.gappsy.com";
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
   const corsHeaders = {

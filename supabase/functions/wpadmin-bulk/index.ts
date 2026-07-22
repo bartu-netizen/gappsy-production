@@ -1,7 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { authenticateAdmin, createAuthErrorResponse, writeAuditLog } from "../_shared/adminAuth.ts";
-import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -210,9 +209,10 @@ async function fetchRowsByTable(
 
   await Promise.all(
     Array.from(byTable.entries()).map(async ([table, ids]) => {
-      const { data, error } = await fetchInChunks(ids, (chunk) =>
-        supabase.from(table).select("*").in("id", chunk)
-      );
+      const { data, error } = await supabase
+        .from(table)
+        .select("*")
+        .in("id", ids);
       if (!error && data) {
         for (const row of data) {
           results.push({ table, row: row as Record<string, unknown> });
@@ -306,28 +306,19 @@ Deno.serve(async (req: Request) => {
       const errors: string[] = [];
       let totalDeleted = 0;
 
-      // A single .in("id", tableIds) update can carry up to 500 UUIDs inlined
-      // into the request — the same URL-length class that broke
-      // tool-analytics/tool-comparisons — so each table's ids are chunked
-      // into parallel sub-updates rather than one giant call.
-      const CHUNK_SIZE = 100;
       await Promise.all(
-        Array.from(byTable.entries()).flatMap(([table, tableIds]) => {
-          const chunks: string[][] = [];
-          for (let i = 0; i < tableIds.length; i += CHUNK_SIZE) chunks.push(tableIds.slice(i, i + CHUNK_SIZE));
-          return chunks.map(async (chunk) => {
-            const { error, count } = await supabase
-              .from(table)
-              .update({ deleted_at: now, deleted_by: deletedBy })
-              .in("id", chunk)
-              .select("id", { count: "exact", head: true });
+        Array.from(byTable.entries()).map(async ([table, tableIds]) => {
+          const { error, count } = await supabase
+            .from(table)
+            .update({ deleted_at: now, deleted_by: deletedBy })
+            .in("id", tableIds)
+            .select("id", { count: "exact", head: true });
 
-            if (error) {
-              errors.push(`${table}: ${error.message}`);
-            } else {
-              totalDeleted += count ?? chunk.length;
-            }
-          });
+          if (error) {
+            errors.push(`${table}: ${error.message}`);
+          } else {
+            totalDeleted += count ?? tableIds.length;
+          }
         })
       );
 

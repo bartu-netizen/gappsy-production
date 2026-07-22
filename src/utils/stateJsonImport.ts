@@ -233,7 +233,7 @@ export async function importStateToDatabase(
     } else {
       // Fallback: generate from state_slug (but log warning)
       canonicalUrl = `/marketing-agencies-in-${stateSlug}-united-states/`;
-      fullCanonicalUrl = `https://gappsy.com${canonicalUrl}`;
+      fullCanonicalUrl = `https://www.gappsy.com${canonicalUrl}`;
       console.warn(`[import] No canonical_url in JSON for ${stateSlug}. Using generated: ${canonicalUrl}`);
     }
 

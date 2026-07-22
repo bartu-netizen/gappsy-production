@@ -21,7 +21,7 @@ export default function YourAgencyNotFoundPage() {
       <YourAgencySEO
         title="Agency not found | Gappsy"
         description="We didn't find your agency in our directory. Submit your agency to get listed across our Top-25 state pages."
-        canonical="https://gappsy.com/your-agency/not-found"
+        canonical="https://www.gappsy.com/your-agency/not-found"
         noindex={true}
       />
 

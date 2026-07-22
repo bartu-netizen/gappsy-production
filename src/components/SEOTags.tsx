@@ -232,12 +232,12 @@ function SEOTags({
     // 1. Organization schema (sitewide)
     graphItems.push({
       "@type": "Organization",
-      "@id": "https://gappsy.com/#organization",
+      "@id": "https://www.gappsy.com/#organization",
       "name": "Gappsy",
-      "url": "https://gappsy.com",
+      "url": "https://www.gappsy.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://gappsy.com/Gappsy-logo-.webp"
+        "url": "https://www.gappsy.com/Gappsy-logo-.webp"
       },
       "description": "Top marketing agency directory featuring curated rankings and comprehensive listings across the United States.",
       "sameAs": [
@@ -248,11 +248,11 @@ function SEOTags({
     // 2. WebSite schema
     graphItems.push({
       "@type": "WebSite",
-      "@id": "https://gappsy.com/#website",
-      "url": "https://gappsy.com",
+      "@id": "https://www.gappsy.com/#website",
+      "url": "https://www.gappsy.com",
       "name": "Gappsy",
       "publisher": {
-        "@id": "https://gappsy.com/#organization"
+        "@id": "https://www.gappsy.com/#organization"
       }
     });
 
@@ -264,10 +264,10 @@ function SEOTags({
       "name": normalizedTitle,
       "description": description,
       "isPartOf": {
-        "@id": "https://gappsy.com/#website"
+        "@id": "https://www.gappsy.com/#website"
       },
       "about": {
-        "@id": "https://gappsy.com/#organization"
+        "@id": "https://www.gappsy.com/#organization"
       },
       "dateModified": dateModified || new Date().toISOString()
     });
@@ -287,19 +287,19 @@ function SEOTags({
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://gappsy.com/"
+            "item": "https://www.gappsy.com/"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Marketing Agencies",
-            "item": "https://gappsy.com/marketing-agencies/"
+            "item": "https://www.gappsy.com/marketing-agencies/"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "United States",
-            "item": "https://gappsy.com/marketing-agencies/usa/"
+            "item": "https://www.gappsy.com/marketing-agencies/usa/"
           },
           {
             "@type": "ListItem",

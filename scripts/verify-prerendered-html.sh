@@ -112,7 +112,7 @@ for state in "${TEST_STATES[@]}"; do
   echo ""
   echo "4. Canonical URL:"
   CANONICAL=$(grep 'rel="canonical"' "$HTML_FILE")
-  if echo "$CANONICAL" | grep -q "https://gappsy.com/marketing-agencies-in-$state-united-states/\""; then
+  if echo "$CANONICAL" | grep -q "https://www.gappsy.com/marketing-agencies-in-$state-united-states/\""; then
     echo -e "   ${GREEN}✓${NC} Has trailing slash"
   else
     echo -e "   ${RED}✗${NC} $CANONICAL"

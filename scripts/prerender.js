@@ -279,7 +279,7 @@ function dedupeFaqs(faqs) {
 // UNIFIED SCHEMA GENERATION - Single @graph with ALL schemas
 // This prevents duplication and ensures clean, consolidated structured data
 function generateUnifiedSchema(agencies, faqs, stateName, stateSlug, seoData) {
-  const DOMAIN = 'https://gappsy.com';
+  const DOMAIN = 'https://www.gappsy.com';
   const canonicalUrl = `${DOMAIN}/marketing-agencies-in-${stateSlug}-united-states/`;
   const currentYear = new Date().getFullYear();
 
@@ -678,10 +678,7 @@ function injectSEOTags(baseHtml, seoData, stateName, stateSlug, fullData) {
   const staticBodyHTML = generateStaticBodyHTML(stateName, stateSlug, fullData);
   const rootDivRegex = /(<div id="root"><\/div>)/;
   if (rootDivRegex.test(modifiedHtml)) {
-    // Use a replacer function, not a string: a string replacement interprets
-    // $1/$2/... as backreferences, which silently corrupts any staticBodyHTML
-    // content containing a literal "$1"-style sequence (e.g. "$10.99" pricing).
-    modifiedHtml = modifiedHtml.replace(rootDivRegex, () => `<div id="root">${staticBodyHTML}</div>`);
+    modifiedHtml = modifiedHtml.replace(rootDivRegex, `<div id="root">${staticBodyHTML}</div>`);
   } else {
     console.warn('⚠️  Could not find <div id="root"></div> in base HTML');
   }
@@ -878,7 +875,7 @@ ${statesSummary.map(s => `- ${s.stateName} (${s.stateSlug}): ${s.agencies} agenc
 
   console.log(`\n✅ Deploy marker written to dist/__prerendered.txt`);
   console.log(`   Timestamp: ${buildTimestamp}`);
-  console.log(`   Verify at: https://gappsy.com/__prerendered.txt`);
+  console.log(`   Verify at: https://www.gappsy.com/__prerendered.txt`);
 
   if (errorCount > 0 && failOnError) {
     throw new Error(`Prerender failed for ${errorCount} states. Build cannot continue.`);

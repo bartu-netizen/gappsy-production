@@ -21,17 +21,3 @@ dist-ssr
 *.sln
 *.sw?
 .env
-
-# Local Netlify folder
-.netlify
-
-# Supabase CLI local cache/metadata (contains pooler connection strings, project refs)
-supabase/.temp/
-
-# Group-comparison marathon intermediate working data (large, fully regeneratable
-# from the DB + 2-generate-triples-v2.mjs + 3-select-wave2.mjs — not needed once
-# the src/data/groupComparisonContent/*.ts files and DB rows exist).
-scripts/group-comparisons/candidate-triples-v2.json
-scripts/group-comparisons/marathon-batches/
-scripts/group-comparisons/marathon-content-bundles.json
-scripts/group-comparisons/marathon-tools-*.json

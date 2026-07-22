@@ -29,7 +29,7 @@ export default function AdminProductionHTMLFetcherPage() {
   const [customUrl, setCustomUrl] = useState('');
 
   const fetchProductionHTML = async (urlPath: string): Promise<FetchResult> => {
-    const fullUrl = `https://gappsy.com${urlPath}`;
+    const fullUrl = `https://www.gappsy.com${urlPath}`;
 
     try {
       const response = await fetch(fullUrl, {

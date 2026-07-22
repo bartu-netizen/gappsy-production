@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import FooterWrapper from '../components/FooterWrapper';
 
 export default function EditorialPolicyPage() {
@@ -25,28 +24,22 @@ export default function EditorialPolicyPage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
-      <div style={{ backgroundColor: '#0A1735', padding: '48px 24px 56px' }}>
+      <div style={{ flex: 1, padding: '96px 24px' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <Link to="/" aria-label="Gappsy home" style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <img
-              src="/logos/Gappsy-logo-white.webp"
-              alt="Gappsy"
-              style={{ height: '32px', width: 'auto', marginBottom: '32px' }}
-            />
-          </Link>
+          <img
+            src="/logos/Gappsy Logo 4A5DFF transparent background.png"
+            alt="Gappsy"
+            style={{ height: '32px', width: 'auto', marginBottom: '40px' }}
+          />
 
-          <h1 style={{ fontSize: '40px', fontWeight: 700, color: '#ffffff', marginBottom: '12px', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: '40px', fontWeight: 700, color: '#0F172A', marginBottom: '16px', lineHeight: 1.2 }}>
             Gappsy Editorial Policy
           </h1>
 
-          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>
+          <p style={{ color: '#64748B', fontSize: '15px', marginBottom: '40px' }}>
             <span id="last-updated"></span>
           </p>
-        </div>
-      </div>
 
-      <div style={{ flex: 1, padding: '56px 24px 96px' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
             <section style={{ marginBottom: '48px' }}>
               <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#0F172A', marginBottom: '16px', marginTop: '32px' }}>

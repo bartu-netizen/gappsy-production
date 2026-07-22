@@ -1,7 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { authenticateAdmin, createAuthErrorResponse } from "../_shared/adminAuth.ts";
-import { fetchInChunks } from "../_shared/dbChunking.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -96,28 +95,22 @@ Deno.serve(async (req: Request) => {
 
     const [agenciesRes, top25ByIdRes, top25BySlotKeyRes, eventsRes, confidenceRes] = await Promise.all([
       uuidIds.length
-        ? fetchInChunks(uuidIds, (chunk) =>
-          supabase
-            .from("other_agencies")
-            .select("id, name, slug, state_name, state_slug, location, is_active, paid_override, website_url")
-            .in("id", chunk)
-        )
+        ? supabase
+          .from("other_agencies")
+          .select("id, name, slug, state_name, state_slug, location, is_active, paid_override, website_url")
+          .in("id", uuidIds)
         : Promise.resolve({ data: [] as Record<string, unknown>[], error: null }),
       uuidIds.length
-        ? fetchInChunks(uuidIds, (chunk) =>
-          supabase
-            .from("top25_slots")
-            .select("id, agency_id, agency_name, state_slug, rank, website")
-            .in("id", chunk)
-        )
+        ? supabase
+          .from("top25_slots")
+          .select("id, agency_id, agency_name, state_slug, rank, website")
+          .in("id", uuidIds)
         : Promise.resolve({ data: [] as Record<string, unknown>[], error: null }),
       slotKeyIds.length
-        ? fetchInChunks(slotKeyIds, (chunk) =>
-          supabase
-            .from("top25_slots")
-            .select("id, agency_id, agency_name, state_slug, rank, website")
-            .or(chunk.map(parseSlotKeyPredicate).filter(Boolean).join(","))
-        )
+        ? supabase
+          .from("top25_slots")
+          .select("id, agency_id, agency_name, state_slug, rank, website")
+          .or(slotKeyIds.map(parseSlotKeyPredicate).filter(Boolean).join(","))
         : Promise.resolve({ data: [] as Record<string, unknown>[], error: null }),
       loadRecentEvents(supabase, agencyIds),
       loadConfidenceCounts(supabase, agencyIds),
@@ -156,12 +149,10 @@ Deno.serve(async (req: Request) => {
     }
     const linkedToFetch = Array.from(linkedAgencyIds).filter((id) => !agencyMap.has(id));
     if (linkedToFetch.length) {
-      const { data: linkedRows } = await fetchInChunks(linkedToFetch, (chunk) =>
-        supabase
-          .from("other_agencies")
-          .select("id, name, slug, state_name, state_slug, location, is_active, paid_override, website_url")
-          .in("id", chunk)
-      );
+      const { data: linkedRows } = await supabase
+        .from("other_agencies")
+        .select("id, name, slug, state_name, state_slug, location, is_active, paid_override, website_url")
+        .in("id", linkedToFetch);
       if (Array.isArray(linkedRows)) {
         for (const a of linkedRows as Record<string, unknown>[]) {
           if (a?.id) agencyMap.set(String(a.id), a);
@@ -298,14 +289,12 @@ async function loadRecentEvents(
   const ms1h = now - 60 * 60_000;
 
   try {
-    const { data, error } = await fetchInChunks(agencyIds, (chunk) =>
-      supabase
-        .from("funnel_sessions")
-        .select("agency_id, funnel_name, created_at, last_event_name, last_event_at, deepest_step")
-        .in("agency_id", chunk)
-        .gte("last_event_at", iso24h)
-        .limit(5000)
-    );
+    const { data, error } = await supabase
+      .from("funnel_sessions")
+      .select("agency_id, funnel_name, created_at, last_event_name, last_event_at, deepest_step")
+      .in("agency_id", agencyIds)
+      .gte("last_event_at", iso24h)
+      .limit(5000);
 
     if (!error && Array.isArray(data)) {
       for (const row of data as Record<string, unknown>[]) {
@@ -352,30 +341,19 @@ async function loadRecentEvents(
   }
 
   try {
-    const { data, error } = await fetchInChunks(agencyIds, (chunk) =>
-      supabase
-        .from("agency_availability_requests")
-        .select("id, agency_id, target_agency_id, created_at")
-        .or(
-          `agency_id.in.(${chunk.join(",")}),target_agency_id.in.(${chunk.join(",")})`,
-        )
-        .eq("is_demo", false)
-        .is("deleted_at", null)
-        .gte("created_at", iso24h)
-        .limit(2000)
-    );
+    const { data, error } = await supabase
+      .from("agency_availability_requests")
+      .select("agency_id, target_agency_id, created_at")
+      .or(
+        `agency_id.in.(${agencyIds.join(",")}),target_agency_id.in.(${agencyIds.join(",")})`,
+      )
+      .eq("is_demo", false)
+      .is("deleted_at", null)
+      .gte("created_at", iso24h)
+      .limit(2000);
 
-    // A row whose agency_id and target_agency_id fall into two different
-    // id chunks matches both chunks' OR clause and would otherwise be
-    // double-counted once results are merged across chunks.
-    const seenRowIds = new Set<string>();
     if (!error && Array.isArray(data)) {
       for (const row of data as Record<string, unknown>[]) {
-        const rowId = String(row.id || "");
-        if (rowId) {
-          if (seenRowIds.has(rowId)) continue;
-          seenRowIds.add(rowId);
-        }
         const aid = String(row.target_agency_id || row.agency_id || "");
         if (!aid) continue;
         const agg = out.get(aid) || defaultEvents();
@@ -419,13 +397,11 @@ async function loadConfidenceCounts(
   if (!agencyIds.length) return out;
 
   try {
-    const { data, error } = await fetchInChunks(agencyIds, (chunk) =>
-      supabase
-        .from("funnel_sessions")
-        .select("agency_id, intent_level, confidence_score, is_scanner_flagged")
-        .in("agency_id", chunk)
-        .limit(10000)
-    );
+    const { data, error } = await supabase
+      .from("funnel_sessions")
+      .select("agency_id, intent_level, confidence_score, is_scanner_flagged")
+      .in("agency_id", agencyIds)
+      .limit(10000);
 
     if (!error && Array.isArray(data)) {
       for (const row of data as Record<string, unknown>[]) {

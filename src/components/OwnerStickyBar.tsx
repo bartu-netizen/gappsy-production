@@ -120,7 +120,7 @@ export default function OwnerStickyBar({
         button: (
           <button
             onClick={handleGoToState}
-            className="bg-[#151f34] text-white hover:opacity-90 active:scale-[0.99] rounded-xl px-5 py-2 text-sm font-semibold transition-all duration-200 focus:outline-none"
+            className="bg-[#151f34] text-white hover:opacity-90 active:scale-[0.99] rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 focus:outline-none"
           >
             Go to my state page
           </button>
@@ -146,7 +146,7 @@ export default function OwnerStickyBar({
         button: (
           <button
             onClick={handleScrollToListing}
-            className="bg-[#151f34] text-white hover:opacity-90 active:scale-[0.99] rounded-xl px-5 py-2 text-sm font-semibold transition-all duration-200 shadow-md focus:outline-none"
+            className="bg-[#151f34] text-white hover:opacity-90 active:scale-[0.99] rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 shadow-md focus:outline-none"
           >
             Scroll to my listing
           </button>
@@ -180,7 +180,7 @@ export default function OwnerStickyBar({
         <div className="flex flex-col items-center gap-1">
           <button
             onClick={onStep4Activate}
-            className="bg-[#151f34] text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-xl font-semibold hover:bg-[#1e2d4a] transition-colors shadow-sm text-center whitespace-nowrap overflow-hidden"
+            className="bg-[#151f34] text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-full font-semibold hover:bg-[#1e2d4a] transition-colors shadow-sm text-center whitespace-nowrap overflow-hidden"
             style={{
               fontSize: 'clamp(0.8rem, 3vw, 0.875rem)',
               lineHeight: 1,

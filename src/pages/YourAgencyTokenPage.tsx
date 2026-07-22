@@ -94,7 +94,7 @@ export default function YourAgencyTokenPage() {
       <YourAgencySEO
         title={pageTitle}
         description={agency ? `See where ${agency.name} is featured on Gappsy.` : ''}
-        canonical={token ? `https://gappsy.com/your-agency/t/${token}` : 'https://gappsy.com/your-agency'}
+        canonical={token ? `https://www.gappsy.com/your-agency/t/${token}` : 'https://www.gappsy.com/your-agency'}
         noindex={noindexMeta}
       />
 
