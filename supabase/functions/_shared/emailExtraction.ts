@@ -21,6 +21,17 @@ export interface DiscoveredEmail {
 
 const EMAIL_RE = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
 
+// Real contact emails are essentially always near a page's header/footer or
+// an explicit contact section — never require scanning the full body.
+// Directly confirmed on 2026-07-22 that running the email regex over full,
+// un-bounded cleaned_html + markdown for multiple pages in the same
+// invocation (homepage pass + /contact fallback pass) reliably tipped an
+// otherwise-healthy edge function invocation into WORKER_RESOURCE_LIMIT —
+// a single pass of ~400KB combined text alone already took over a full
+// second to regex-match, wildly slow for its size. Bounding the input
+// per page removes that cost with no realistic loss of real addresses.
+const MAX_TEXT_LENGTH_PER_PAGE = 60_000;
+
 // Filenames/asset paths that happen to contain "@" (e.g. logo@2x.png),
 // tracking/analytics domains, and obvious placeholder addresses — none of
 // these are a real point of contact, so they're dropped rather than stored.
@@ -63,7 +74,9 @@ function extractFromPage(page: Crawl4aiPageResultForEmails): string[] {
     if (address) found.add(address);
   }
 
-  const text = `${page.cleaned_html || page.html || ""}\n${getMarkdown(page)}`;
+  const bodyText = (page.cleaned_html || page.html || "").slice(0, MAX_TEXT_LENGTH_PER_PAGE);
+  const markdownText = getMarkdown(page).slice(0, MAX_TEXT_LENGTH_PER_PAGE);
+  const text = `${bodyText}\n${markdownText}`;
   const matches = text.match(EMAIL_RE) || [];
   for (const m of matches) found.add(m.trim());
 

@@ -8,12 +8,19 @@
 // deno-lint-ignore-file no-explicit-any
 /* eslint-disable @typescript-eslint/no-explicit-any -- untyped Supabase rows throughout this file */
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2.57.4";
-import { drainCrawlQueue } from "./crawlRunner.ts";
-import { runProvider } from "./discoveryProviderRunner.ts";
-import { getProvider } from "./discoveryProviders/registry.ts";
-import { ProviderNotImplementedError } from "./discoveryProviders/types.ts";
-import { computeCompleteness } from "./toolCompleteness.ts";
-import { attachToolCategories, fetchCompletenessRelations, buildCompletenessInput, computeQualityScore } from "./toolCompletenessRelations.ts";
+// NOTE: crawlRunner.ts, discoveryProviderRunner.ts, discoveryProviders/*
+// and toolCompletenessRelations.ts are deliberately imported LAZILY
+// (dynamic `await import(...)` inside the one handler that needs each),
+// not statically here. This file is the scheduler-tick/admin-scheduler
+// entrypoint's module graph root — every job type's dependencies used to
+// load eagerly on EVERY invocation regardless of which single job type was
+// actually due that tick. That fixed startup cost, stacked on top of even
+// one real crawl's response buffering, was directly confirmed (via a
+// side-by-side diagnostic function with a minimal import graph) to be
+// what tipped email_discovery_scan into WORKER_RESOURCE_LIMIT on
+// 2026-07-22 — the crawl itself was never the problem. Keep new heavy,
+// single-handler-only dependencies lazy the same way; only import
+// statically here what's small or shared across multiple handlers.
 import type { PageType } from "./changeDetection.ts";
 import { processDueCheck } from "./changeDetectionRunner.ts";
 import { validateCrawlUrl, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
@@ -44,6 +51,9 @@ const SCHEDULE_FREQUENCY_MS: Record<string, number> = {
 // from here.
 async function discoveryRefreshHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
   const { supabase } = ctx;
+  const { getProvider } = await import("./discoveryProviders/registry.ts");
+  const { ProviderNotImplementedError } = await import("./discoveryProviders/types.ts");
+  const { runProvider } = await import("./discoveryProviderRunner.ts");
   const { data: providers, error } = await supabase
     .from("discovery_providers")
     .select("id, key, enabled, implemented, config, rate_limit_per_run, schedule_frequency, last_cursor")
@@ -94,6 +104,7 @@ async function discoveryRefreshHandler(ctx: SchedulerJobContext): Promise<Record
 // EdgeRuntime.waitUntil after a discovery approve/bulk-approve call, or the
 // manual "Process Queue" button.
 async function crawlQueueDrainHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { drainCrawlQueue } = await import("./crawlRunner.ts");
   const summary = await drainCrawlQueue(ctx.supabase, ctx.supabaseUrl, ctx.anonKey);
   return { processed: summary.processed };
 }
@@ -172,6 +183,8 @@ async function enrichmentStuckSweepHandler(ctx: SchedulerJobContext): Promise<Re
 // failure never risks touching unrelated tool columns.
 async function completenessRescanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
   const { supabase, config } = ctx;
+  const { computeCompleteness } = await import("./toolCompleteness.ts");
+  const { attachToolCategories, fetchCompletenessRelations, buildCompletenessInput, computeQualityScore } = await import("./toolCompletenessRelations.ts");
   const batchSize = typeof config.batch_size === "number" && config.batch_size > 0 ? Math.min(config.batch_size, 1000) : 200;
 
   const { data: dirtyRows, error: dirtyError } = await supabase.rpc("get_dirty_tools_for_scoring", { p_limit: batchSize });

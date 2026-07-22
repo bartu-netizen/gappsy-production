@@ -248,7 +248,7 @@ export default function WpAdminToolContactEmailsPage() {
                               </a>
                             ) : '—'}
                           </td>
-                          <td className="px-4 py-2 whitespace-nowrap text-slate-500">{new Date(row.discovered_at).toLocaleDateString()}</td>
+                          <td className="px-4 py-2 whitespace-nowrap text-slate-500">{new Date(row.discovered_at).toLocaleString()}</td>
                           <td className="px-4 py-2 whitespace-nowrap">
                             {row.listclean_status === 'valid' ? (
                               <span className="inline-flex items-center gap-1 text-emerald-600"><CheckCircle2 className="w-3.5 h-3.5" /> clean</span>
