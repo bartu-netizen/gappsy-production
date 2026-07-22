@@ -16,6 +16,9 @@ import { computeCompleteness } from "./toolCompleteness.ts";
 import { attachToolCategories, fetchCompletenessRelations, buildCompletenessInput, computeQualityScore } from "./toolCompletenessRelations.ts";
 import type { PageType } from "./changeDetection.ts";
 import { processDueCheck } from "./changeDetectionRunner.ts";
+import { validateCrawlUrl, resolvesToPublicAddress, CRAWL_LIMITS } from "./crawlUrlSafety.ts";
+import { callCrawlerGateway, GatewayError } from "./crawlGatewayClient.ts";
+import { extractContactEmails } from "./emailExtraction.ts";
 
 export interface SchedulerJobContext {
   supabase: SupabaseClient;
@@ -393,6 +396,94 @@ async function indexnowSubmitHandler(ctx: SchedulerJobContext): Promise<Record<s
   return { submitted, since: since || "beginning (first run)" };
 }
 
+const EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE = 4;
+
+// Vendor outreach: finds real, self-published contact emails (mailto:
+// links + plain-text matches — see emailExtraction.ts, deliberately NOT a
+// info@/hello@/support@ pattern-guesser, which produces false positives on
+// catch-all domains and low reply-rates on outreach) for paid tools, by
+// crawling each tool's own website through the same Crawl4AI gateway the
+// discovery pipeline already uses. Scoped to is_open_source = false only —
+// GitHub/open-source tools are explicitly excluded per the business call
+// behind the is_open_source column (see 20260721235924).
+//
+// Runs strictly SEQUENTIALLY (no Promise.all) and in small batches: this
+// shares the same 512MB/1CPU Crawl4AI container as crawl_queue_drain
+// (already ticking independently every 120s), so this job deliberately
+// avoids adding any concurrent load of its own on top of that.
+async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const batchSize = typeof config.batch_size === "number" && config.batch_size > 0
+    ? Math.min(config.batch_size, 20)
+    : EMAIL_DISCOVERY_DEFAULT_BATCH_SIZE;
+
+  const { data: tools, error } = await supabase
+    .from("tools")
+    .select("id, slug, website")
+    .eq("status", "published")
+    .eq("is_open_source", false)
+    .is("email_discovery_status", null)
+    .not("website", "is", null)
+    .order("id", { ascending: true })
+    .limit(batchSize);
+  if (error) throw new Error(`Failed to select tools for email discovery: ${error.message}`);
+  if (!tools || tools.length === 0) return { processed: 0, emails_found: 0, failed: 0 };
+
+  let emailsFound = 0;
+  let failed = 0;
+
+  for (const tool of tools as any[]) {
+    const nowIso = new Date().toISOString();
+    const markTerminal = (status: "done" | "failed") =>
+      supabase.from("tools").update({ email_discovery_status: status, email_discovery_checked_at: nowIso }).eq("id", tool.id);
+
+    const urlCheck = validateCrawlUrl(tool.website);
+    if (!urlCheck.ok) {
+      await markTerminal("failed");
+      failed++;
+      continue;
+    }
+    const dnsCheck = await resolvesToPublicAddress(urlCheck.hostname!);
+    if (!dnsCheck.ok) {
+      await markTerminal("failed");
+      failed++;
+      continue;
+    }
+
+    try {
+      const gatewayResult = await callCrawlerGateway({
+        request_id: crypto.randomUUID(),
+        url: urlCheck.normalizedUrl!,
+        max_pages: CRAWL_LIMITS.MAX_PAGES,
+        max_depth: CRAWL_LIMITS.MAX_DEPTH,
+        max_duration_ms: CRAWL_LIMITS.MAX_DURATION_MS,
+      });
+      if (!gatewayResult.ok || !gatewayResult.data) {
+        throw new GatewayError(gatewayResult.error_code || "gateway_error", gatewayResult.error || "Gateway returned an unsuccessful result.");
+      }
+
+      const raw = gatewayResult.data.raw as { results?: any[] };
+      const discovered = extractContactEmails(raw.results || []);
+
+      if (discovered.length > 0) {
+        const rows = discovered.map((d) => ({ tool_id: tool.id, email: d.email, source_url: d.source_url, discovered_at: nowIso }));
+        const { error: upsertError } = await supabase
+          .from("tool_contact_emails")
+          .upsert(rows, { onConflict: "tool_id,email", ignoreDuplicates: true });
+        if (upsertError) throw new Error(upsertError.message);
+        emailsFound += discovered.length;
+      }
+
+      await markTerminal("done");
+    } catch {
+      await markTerminal("failed");
+      failed++;
+    }
+  }
+
+  return { processed: tools.length, emails_found: emailsFound, failed };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
@@ -402,6 +493,7 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   change_detection_scan: changeDetectionScanHandler,
   stale_source_retry: staleSourceRetryHandler,
   indexnow_submit: indexnowSubmitHandler,
+  email_discovery_scan: emailDiscoveryScanHandler,
 };
 
 export class UnknownJobTypeError extends Error {

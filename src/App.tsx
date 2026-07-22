@@ -103,6 +103,7 @@ const WpAdminToolReviewsPage = lazy(() => import("./pages/WpAdminToolReviewsPage
 const WpAdminVideoEmbedsPage = lazy(() => import("./pages/WpAdminVideoEmbedsPage"));
 const WpAdminVendorAccountsPage = lazy(() => import("./pages/WpAdminVendorAccountsPage"));
 const WpAdminVendorComparisonRequestsPage = lazy(() => import("./pages/WpAdminVendorComparisonRequestsPage"));
+const WpAdminToolContactEmailsPage = lazy(() => import("./pages/WpAdminToolContactEmailsPage"));
 const WpAdminToolAnalyticsPage = lazy(() => import("./pages/WpAdminToolAnalyticsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
@@ -237,6 +238,7 @@ export default function App() {
         <Route path="/wp-admin/video-embeds" element={<AdminRoute><WpAdminVideoEmbedsPage /></AdminRoute>} />
         <Route path="/wp-admin/vendor-accounts" element={<AdminRoute><WpAdminVendorAccountsPage /></AdminRoute>} />
         <Route path="/wp-admin/vendor-comparison-requests" element={<AdminRoute><WpAdminVendorComparisonRequestsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-contact-emails" element={<AdminRoute><WpAdminToolContactEmailsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-analytics" element={<AdminRoute><WpAdminToolAnalyticsPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/import" element={<AdminRoute><AdminAgencyReviewsImportPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/new" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
