@@ -1,0 +1,585 @@
+[
+  {
+    "tool_id": "2d8087e6-e022-4b9c-9760-d491836887d8",
+    "slug": "ant-media-server",
+    "name": "Ant Media Server",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, ultra-low-latency streaming server with WebRTC, SRT, RTMP, and HLS support, plus a paid Enterprise tier.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Ant Media Server: open-source WebRTC streaming engine with ~0.5s latency, SRT/RTMP/HLS support, and a free Community Edition.",
+      "features": [
+        { "title": "Ultra-low latency WebRTC", "description": "Delivers WebRTC streaming with latency as low as roughly 0.5 seconds for real-time interactive video." },
+        { "title": "Multi-protocol streaming", "description": "Supports WebRTC, SRT, RTMP, RTSP, HLS, and CMAF (including Low-Latency HLS) for ingest and playback." },
+        { "title": "Adaptive bitrate & transcoding", "description": "Transcodes incoming streams into multiple bitrates for adaptive playback across varying network conditions." },
+        { "title": "Cloud-native scaling", "description": "Deploys via Docker, Kubernetes, or marketplace images on AWS, Azure, and GCP with auto-scaling support." },
+        { "title": "Stream recording", "description": "Records live streams for on-demand playback." },
+        { "title": "Dual licensing", "description": "Available as a free, open-source Community Edition or a paid Enterprise Edition with additional features and support." }
+      ],
+      "pros": [
+        "Free, open-source Community Edition with no licensing cost",
+        "Sub-second WebRTC latency suitable for real-time interaction",
+        "Broad protocol support (WebRTC, SRT, RTMP, RTSP, HLS, CMAF) in one server",
+        "Flexible deployment via Docker, Kubernetes, and major cloud marketplaces"
+      ],
+      "cons": [
+        "Advanced features and dedicated support require the paid Enterprise Edition",
+        "Enterprise pricing is not published and requires contacting sales",
+        "Self-managed deployment requires server and infrastructure expertise"
+      ],
+      "faqs": [
+        { "question": "Is Ant Media Server free?", "answer": "Yes, the Community Edition is free and open-source. A paid Enterprise Edition adds advanced features and dedicated support." },
+        { "question": "What streaming protocols does Ant Media Server support?", "answer": "It supports WebRTC, SRT, RTMP, RTSP, HLS, and CMAF, including Low-Latency HLS." },
+        { "question": "How low is the streaming latency?", "answer": "WebRTC streaming can achieve latency as low as roughly 0.5 seconds." },
+        { "question": "Can Ant Media Server run in the cloud?", "answer": "Yes, it supports Docker, Kubernetes, and marketplace images for AWS, Azure, and GCP with auto-scaling." }
+      ],
+      "use_cases": [
+        { "title": "Live interactive streaming", "description": "Ultra-low latency WebRTC suits real-time interaction use cases such as telehealth, live auctions, and live shopping.", "audience": "Businesses building interactive live-video applications" },
+        { "title": "Large-scale broadcast streaming", "description": "Multi-protocol support and cloud auto-scaling suit high-viewer-count events like media entertainment and esports broadcasts.", "audience": "Media and gaming/esports companies" },
+        { "title": "Self-hosted streaming infrastructure", "description": "The free Community Edition lets developers self-host a full streaming engine without licensing fees.", "audience": "Developers and engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Open-source streaming engine", "WebRTC, RTMP, SRT, HLS support", "Self-hosted deployment"] },
+        { "plan_name": "Enterprise Edition", "price": "Custom (contact sales)", "billing_cycle": null, "features": ["Advanced features beyond Community Edition", "Dedicated support", "Cloud marketplace images"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Ant Media Server?", "level": 2, "paragraphs": [
+          "Ant Media Server is an open-source streaming engine built for ultra-low-latency video delivery, supporting WebRTC (with latency as low as about 0.5 seconds), SRT, RTMP, RTSP, HLS, and CMAF.",
+          "It offers adaptive bitrate transcoding, stream recording, and cloud-native deployment through Docker, Kubernetes, and marketplace images on AWS, Azure, and GCP. The project is dual-licensed with a free, open-source Community Edition and a paid Enterprise Edition that adds advanced features and dedicated support."
+        ]},
+        { "id": "who-its-for", "heading": "Who Ant Media Server is for", "level": 2, "paragraphs": [
+          "Ant Media Server suits developers and teams building real-time interactive streaming applications for telehealth, e-learning, live auctions, live shopping, gaming/esports, and general media entertainment, ranging from self-hosted small deployments to large-scale cloud-scaled events."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "abc2721a-0a2c-4cbe-a939-ce3315e4592a",
+    "slug": "srs",
+    "name": "SRS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SRS is a free, open-source real-time video server supporting RTMP, WebRTC, HLS, SRT, and MPEG-DASH streaming protocols.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "SRS (Simple Realtime Server): free open-source live streaming server with RTMP, WebRTC, HLS, SRT, and Kubernetes-ready deployment.",
+      "features": [
+        { "title": "Multi-protocol streaming", "description": "Supports RTMP, WebRTC, HLS, HTTP-FLV, SRT, MPEG-DASH, and GB28181 for ingest and delivery." },
+        { "title": "Coroutine-based architecture", "description": "Built on coroutine technology to avoid the complexity of async callback-based code." },
+        { "title": "Cloud-native deployment", "description": "Ships with Docker images and supports Kubernetes for containerized deployment." },
+        { "title": "High-performance real-time delivery", "description": "Designed as a high-efficiency, low-latency server for live video." },
+        { "title": "Telemetry and monitoring", "description": "Includes telemetry capabilities for monitoring server and stream health." }
+      ],
+      "pros": [
+        "Free and fully open source",
+        "Supports a wide range of streaming protocols in a single server",
+        "Cloud-native design with Docker and Kubernetes support",
+        "Actively maintained community project"
+      ],
+      "cons": [
+        "Requires self-hosting and server administration knowledge",
+        "No official managed/hosted-cloud offering from the core project itself"
+      ],
+      "faqs": [
+        { "question": "Is SRS free to use?", "answer": "Yes, SRS is open-source and free." },
+        { "question": "What protocols does SRS support?", "answer": "RTMP, WebRTC, HLS, HTTP-FLV, SRT, MPEG-DASH, and GB28181." },
+        { "question": "Can SRS run in Docker or Kubernetes?", "answer": "Yes, SRS provides Docker images and supports Kubernetes deployment." },
+        { "question": "What is Oryx?", "answer": "Oryx is a related, out-of-the-box video solution offered by the OSSRS project alongside SRS." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted live streaming server", "description": "Run a free RTMP/WebRTC/HLS streaming server on your own infrastructure.", "audience": "Developers building streaming platforms" },
+        { "title": "Cloud-native media delivery", "description": "Deploy SRS via Docker or Kubernetes for scalable real-time video delivery.", "audience": "DevOps and platform engineering teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is SRS?", "level": 2, "paragraphs": [
+          "SRS (Simple Realtime Server) is a free, open-source, high-efficiency real-time video server. It supports a broad set of streaming protocols including RTMP, WebRTC, HLS, HTTP-FLV, SRT, MPEG-DASH, and GB28181.",
+          "The server is built on coroutine technology to simplify concurrent stream handling, and it is designed for cloud-native deployment with Docker images and Kubernetes support."
+        ]},
+        { "id": "who-its-for", "heading": "Who SRS is for", "level": 2, "paragraphs": [
+          "SRS suits developers and organizations that want to self-host a live streaming or WebRTC application server without licensing costs, particularly those deploying in containerized or Kubernetes environments."
+        ]}
+      ],
+      "tags": ["open-source", "self-hosted", "api"]
+    }
+  },
+  {
+    "tool_id": "ba63a23f-3cf0-4180-a7bf-2561af98bb09",
+    "slug": "obs-studio",
+    "name": "OBS Studio",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OBS Studio is free, open-source software for live streaming and video recording with scene composition and plugin support.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OBS Studio: free open-source recording and live streaming software with scene mixing, audio filters, and Lua/Python plugins.",
+      "features": [
+        { "title": "Multi-source scene composition", "description": "Combines webcams, window/screen captures, images, browser sources, and capture cards into unified scenes." },
+        { "title": "Unlimited scenes and transitions", "description": "Create unlimited scenes with customizable transitions between them." },
+        { "title": "Audio mixer with filters", "description": "Professional-grade audio mixer with filters such as noise suppression and VST plugin support." },
+        { "title": "Studio Mode", "description": "Preview a scene before pushing it live." },
+        { "title": "Multiview", "description": "Monitor up to eight scenes simultaneously." },
+        { "title": "Configurable hotkeys", "description": "Assign shortcuts for scene switching, recording, and audio muting." },
+        { "title": "Plugin and scripting support", "description": "Extend functionality through native plugins or Lua and Python scripts." }
+      ],
+      "pros": [
+        "Completely free with no licensing fees",
+        "Cross-platform on Windows, macOS, and Linux",
+        "Extensible through plugins and Lua/Python scripting",
+        "Large, active open-source community"
+      ],
+      "cons": [
+        "Steeper learning curve for advanced scene and audio setups",
+        "No built-in cloud hosting — must be paired with a separate streaming platform"
+      ],
+      "faqs": [
+        { "question": "Is OBS Studio free?", "answer": "Yes, it is completely free and open source." },
+        { "question": "What platforms does OBS Studio support?", "answer": "Windows 10/11, macOS 12.0+, and Linux." },
+        { "question": "Can OBS Studio be extended with plugins?", "answer": "Yes, it supports native plugins as well as Lua and Python scripting." },
+        { "question": "Does OBS Studio support multiple scenes?", "answer": "Yes, users can create unlimited scenes with customizable transitions." }
+      ],
+      "use_cases": [
+        { "title": "Live streaming", "description": "Combine multiple video and audio sources into scenes and broadcast to streaming platforms.", "audience": "Streamers and content creators" },
+        { "title": "Screen and webcam recording", "description": "Record tutorials, gameplay, or presentations locally using scene-based capture.", "audience": "Educators and video producers" },
+        { "title": "Multi-scene broadcast production", "description": "Studio Mode and Multiview support multi-scene live production workflows.", "audience": "Broadcasters and production teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is OBS Studio?", "level": 2, "paragraphs": [
+          "OBS Studio is free and open-source software for video recording and live streaming. It lets users capture and mix webcams, screen/window captures, images, browser sources, and capture cards into scenes.",
+          "It includes an audio mixer with filters, unlimited scenes with customizable transitions, Studio Mode for previewing before going live, Multiview for monitoring multiple scenes, and extensibility through native plugins and Lua/Python scripting."
+        ]},
+        { "id": "who-its-for", "heading": "Who OBS Studio is for", "level": 2, "paragraphs": [
+          "OBS Studio serves content creators, streamers, and broadcasters at all skill levels — from hobbyists recording tutorials to professional production teams running multi-scene live broadcasts."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "0b8a01cb-eaf5-4307-9fc0-f73aa6bf0bec",
+    "slug": "kdenlive",
+    "name": "Kdenlive",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Kdenlive is a free, open-source non-linear video editor from the KDE community for Linux, Windows, macOS, and BSD.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Kdenlive: free open-source non-linear video editor with multi-track timelines, proxy editing, and keyframeable effects.",
+      "features": [
+        { "title": "Unlimited multi-track editing", "description": "Unlimited video and audio tracks that can be hidden or muted individually." },
+        { "title": "Broad format support", "description": "Handles almost any audio and video format via FFmpeg." },
+        { "title": "Built-in title editor", "description": "2D title editor with animation and typewriter effects, plus Glaxnimate integration for SVG vector animation." },
+        { "title": "Effects and filters", "description": "Dozens of artistic, blur, color-correction, and audio effects, most of which can be keyframed with multiple curve types." },
+        { "title": "Multi-cam editing", "description": "Simultaneous playback and editing of multiple camera angles." },
+        { "title": "Audio/video scopes", "description": "Histogram, waveform, vectorscope, and RGB parade monitoring tools." },
+        { "title": "Proxy editing", "description": "Automatically creates low-resolution proxy copies for smoother editing performance." },
+        { "title": "Automatic subtitle generation", "description": "Generates captions automatically using VOSK and Whisper speech models." }
+      ],
+      "pros": [
+        "Completely free and open source, with no paid tier",
+        "Cross-platform: Linux, Windows, macOS, and BSD",
+        "Deep feature set including proxy editing, multi-cam, and keyframeable effects",
+        "Automatic subtitle generation via VOSK and Whisper",
+        "Backed by the long-established KDE community"
+      ],
+      "cons": [
+        "Occasional stability issues reported by users of a community-maintained open-source project",
+        "No official paid support tier for businesses"
+      ],
+      "faqs": [
+        { "question": "Is Kdenlive free?", "answer": "Yes, Kdenlive is completely free and open source." },
+        { "question": "What platforms does Kdenlive support?", "answer": "Linux, Windows, macOS, and BSD." },
+        { "question": "Does Kdenlive support automatic subtitles?", "answer": "Yes, it can generate captions automatically using VOSK and Whisper speech-recognition models." },
+        { "question": "Does Kdenlive support proxy editing?", "answer": "Yes, it can automatically create low-resolution proxy copies of footage to improve editing performance." }
+      ],
+      "use_cases": [
+        { "title": "Multi-track video editing", "description": "Unlimited video and audio tracks with keyframeable effects for complex edits.", "audience": "Independent filmmakers and video editors" },
+        { "title": "Multi-camera production editing", "description": "Multi-cam mode allows editing footage from several camera angles simultaneously.", "audience": "Event and documentary editors" },
+        { "title": "Captioned content creation", "description": "Automatic subtitle generation via VOSK/Whisper speeds up caption workflows.", "audience": "Content creators producing accessible video" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Kdenlive?", "level": 2, "paragraphs": [
+          "Kdenlive (KDE Non-Linear Video Editor) is a free, open-source, non-linear video editor developed by the KDE community for Linux, Windows, macOS, and BSD.",
+          "It supports unlimited video and audio tracks, broad format compatibility via FFmpeg, a built-in title editor, dozens of keyframeable effects, multi-cam editing, proxy editing, audio/video scopes, and automatic subtitle generation using VOSK and Whisper."
+        ]},
+        { "id": "who-its-for", "heading": "Who Kdenlive is for", "level": 2, "paragraphs": [
+          "Kdenlive serves video editors from hobbyists to professionals who want a full-featured, no-cost editor with proxy editing, multi-cam support, and automatic captioning, backed by an active open-source community."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "57934454-9221-47e3-87a7-83d5b080c4a6",
+    "slug": "shotcut",
+    "name": "Shotcut",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Shotcut is a free, open-source, cross-platform video editor built on FFmpeg with a multitrack timeline and GPU-accelerated filters.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Shotcut: free open-source video editor with 80+ filters, hardware-accelerated encoding, and native FFmpeg format support.",
+      "features": [
+        { "title": "Native FFmpeg format support", "description": "Handles hundreds of audio and video formats via FFmpeg without requiring file conversion." },
+        { "title": "80+ video filters", "description": "Includes filters such as Gaussian blur, color grading, 3D LUT, motion tracker, noise reduction, sharpen, and stabilize." },
+        { "title": "Audio filters and VST/LV2 plugins", "description": "Compressor, equalizers, reverb, and other audio filters, plus support for VST2 and LV2 plugins." },
+        { "title": "Multitrack timeline with keyframes", "description": "Timeline with thumbnails, waveforms, keyframeable filter parameters, and easing functions." },
+        { "title": "Speed ramping and motion tracking", "description": "Supports speed ramping, clip reversal, freeze frame, and object motion tracking." },
+        { "title": "Hardware-accelerated performance", "description": "GPU-based OpenGL image processing and hardware-accelerated encoding/decoding." },
+        { "title": "Video and audio scopes", "description": "Histogram, RGB parade, waveform, vectorscope, loudness, and spectrum analyzer monitoring." }
+      ],
+      "pros": [
+        "Completely free and open source",
+        "Native FFmpeg support for hundreds of formats without conversion",
+        "Large filter library (80+ video filters) plus VST2/LV2 audio plugin support",
+        "Hardware-accelerated encoding, decoding, and GPU-based image processing",
+        "Cross-platform: Windows, Mac, and Linux"
+      ],
+      "cons": [
+        "Interface can feel less polished than commercial paid editors",
+        "No official paid support tier"
+      ],
+      "faqs": [
+        { "question": "Is Shotcut free?", "answer": "Yes, Shotcut is free, open source, and cross-platform." },
+        { "question": "What formats does Shotcut support?", "answer": "Hundreds of audio and video formats via native FFmpeg integration, without needing to convert files first." },
+        { "question": "Does Shotcut support hardware acceleration?", "answer": "Yes, it supports hardware-accelerated encoding and decoding along with GPU-based OpenGL image processing." },
+        { "question": "Can Shotcut use third-party plugins?", "answer": "Yes, it supports VST2 and LV2 audio plugins in addition to its built-in filters." }
+      ],
+      "use_cases": [
+        { "title": "Multi-format video editing", "description": "Native FFmpeg support lets editors work with diverse formats and resolutions in one timeline.", "audience": "Video editors handling mixed-format footage" },
+        { "title": "Broadcast-quality color grading", "description": "3D LUT support and video scopes enable precise color correction workflows.", "audience": "Colorists and post-production editors" },
+        { "title": "Fast, hardware-accelerated editing", "description": "GPU-based processing and hardware encoding speed up editing and export.", "audience": "Editors working with 4K footage" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Shotcut?", "level": 2, "paragraphs": [
+          "Shotcut is a free, open-source, cross-platform video editor built on FFmpeg, supporting hundreds of audio and video formats natively without requiring conversion.",
+          "It offers a multitrack timeline with keyframeable filters and easing functions, over 80 video filters, audio filters with VST2/LV2 plugin support, hardware-accelerated encoding/decoding, GPU-based image processing, and a full set of video and audio scopes."
+        ]},
+        { "id": "who-its-for", "heading": "Who Shotcut is for", "level": 2, "paragraphs": [
+          "Shotcut suits both amateur and professional video editors who need a capable, no-cost editor with broad format support, up to 4K resolution, and hardware-accelerated performance."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "541442eb-549b-42a3-a8f8-d423bdb42a14",
+    "slug": "openshot",
+    "name": "OpenShot",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OpenShot is a free, open-source video editor for Linux, Mac, and Windows with unlimited tracks and keyframe animation.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OpenShot: free open-source video editor with unlimited tracks, 3D animated titles, and support for 70+ languages.",
+      "features": [
+        { "title": "Unlimited tracks", "description": "Supports an unlimited number of video and audio tracks in a project." },
+        { "title": "Trimming and slicing", "description": "Core clip trimming and slicing tools for assembling a timeline." },
+        { "title": "Animation and keyframes", "description": "Keyframe-based animation support for clip properties." },
+        { "title": "Video effects", "description": "Includes effects such as background removal, color adjustment, and brightness control." },
+        { "title": "Title templates and 3D effects", "description": "Title editing with templates and 3D animated effects." },
+        { "title": "Time manipulation", "description": "Slow motion, speed adjustment, and clip reversal." },
+        { "title": "Audio waveform visualization", "description": "Displays audio waveforms on the timeline for precise editing." },
+        { "title": "70+ language support", "description": "The application interface is available in more than 70 languages." }
+      ],
+      "pros": [
+        "Completely free and open source (GPLv3)",
+        "Cross-platform: Linux, Mac, and Windows",
+        "Unlimited video and audio tracks",
+        "Interface available in 70+ languages",
+        "Beginner-friendly while including 3D titles and keyframe animation"
+      ],
+      "cons": [
+        "No official paid support tier",
+        "Fewer advanced professional-grade scopes/monitoring tools than some competitors"
+      ],
+      "faqs": [
+        { "question": "Is OpenShot free?", "answer": "Yes, OpenShot is completely free and open-source software licensed under GPLv3." },
+        { "question": "What platforms does OpenShot support?", "answer": "Linux, Mac, and Windows." },
+        { "question": "Does OpenShot support multiple languages?", "answer": "Yes, its interface is available in more than 70 languages." },
+        { "question": "Can OpenShot create animated titles?", "answer": "Yes, it includes title templates and 3D animated effects." }
+      ],
+      "use_cases": [
+        { "title": "Beginner video editing", "description": "An easy-to-learn interface with unlimited tracks suits first-time video editors.", "audience": "Hobbyists and beginner content creators" },
+        { "title": "Animated title and effects work", "description": "3D animated titles and keyframe animation support creative title sequences.", "audience": "Creators producing titles and intros" },
+        { "title": "Multilingual editing workflows", "description": "Support for 70+ interface languages helps non-English-speaking editors.", "audience": "International video editors" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is OpenShot?", "level": 2, "paragraphs": [
+          "OpenShot is a free, open-source video editor licensed under the GNU General Public License v3, available for Linux, Mac, and Windows.",
+          "It offers unlimited video and audio tracks, trimming and slicing, keyframe animation, video effects like background removal and color adjustment, title templates with 3D animated effects, time manipulation (slow motion, speed changes, reversing), audio waveform visualization, and an interface translated into more than 70 languages."
+        ]},
+        { "id": "who-its-for", "heading": "Who OpenShot is for", "level": 2, "paragraphs": [
+          "OpenShot is designed to be easy to learn while remaining capable, making it suitable for both beginners and more advanced editors who want a free, no-limits video editor."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac", "templates"]
+    }
+  },
+  {
+    "tool_id": "76721f82-dab0-44d8-9e79-1d3b6df99f76",
+    "slug": "olive-video-editor",
+    "name": "Olive Video Editor",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Olive is a free, open-source, cross-platform non-linear video editor currently in active alpha development.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Olive Video Editor: free open-source non-linear editor for Windows, macOS, and Linux, currently in alpha development.",
+      "features": [
+        { "title": "Non-linear editing", "description": "Cross-platform non-linear video editing built in C++ with Qt and OpenGL." },
+        { "title": "Hardware acceleration", "description": "Uses OpenGL for hardware-accelerated video processing." },
+        { "title": "VST plugin support", "description": "Supports VST audio plugins for extended audio processing." },
+        { "title": "Open development", "description": "Actively developed on GitHub with public issue tracking, pull requests, and a Patreon-funded roadmap." }
+      ],
+      "pros": [
+        "Completely free and open source",
+        "Cross-platform: Windows, macOS, and Linux",
+        "Hardware-accelerated OpenGL rendering",
+        "Actively developed with public roadmap and community funding"
+      ],
+      "cons": [
+        "Alpha software that the developers describe as highly unstable",
+        "Not recommended for production work",
+        "Feature set and stability lag behind more mature open-source editors"
+      ],
+      "faqs": [
+        { "question": "Is Olive Video Editor free?", "answer": "Yes, it is free and open source." },
+        { "question": "Is Olive stable enough for production use?", "answer": "No, the project describes itself as alpha software that is highly unstable, and recommends using it at your own risk." },
+        { "question": "What platforms does Olive support?", "answer": "Windows, macOS, and Linux." },
+        { "question": "Is Olive still being developed?", "answer": "Yes, it has active commits, open pull requests, and issue tracking on GitHub, supported in part by Patreon funding." }
+      ],
+      "use_cases": [
+        { "title": "Experimental video editing", "description": "Alpha-stage non-linear editing for users comfortable testing unstable software.", "audience": "Open-source enthusiasts and early testers" },
+        { "title": "Open-source editor development", "description": "Public GitHub repository with active issues and pull requests invites community contributions.", "audience": "Developers wanting to contribute to a video editor" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Olive Video Editor?", "level": 2, "paragraphs": [
+          "Olive is a free, open-source, cross-platform non-linear video editor built in C++ with Qt and OpenGL, supporting Windows, macOS, and Linux with hardware-accelerated rendering and VST plugin support.",
+          "The project describes its current releases as alpha software that is highly unstable and recommends use at your own risk. Development remains active on GitHub, with ongoing commits, pull requests, and issue tracking, partly supported through Patreon."
+        ]},
+        { "id": "who-its-for", "heading": "Who Olive Video Editor is for", "level": 2, "paragraphs": [
+          "Olive currently suits open-source enthusiasts and early testers willing to experiment with alpha-stage software, rather than editors needing a stable, production-ready tool."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "588dad8e-446f-42e3-8554-3bef2ef37a9a",
+    "slug": "pitivi",
+    "name": "Pitivi",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Pitivi is a free, open-source video editor for GNU/Linux with a clean interface, distributed primarily via Flatpak.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Pitivi: free open-source video editor for GNU/Linux with auto-alignment, waveforms, and object tracking, via Flatpak.",
+      "features": [
+        { "title": "Auto alignment and precise waveforms", "description": "Automatically aligns clips and displays precise audio waveforms for editing." },
+        { "title": "Object tracking and beat detection", "description": "Tracks objects in footage and detects audio beats to assist editing." },
+        { "title": "Media library clip tagging", "description": "Tags clips in the media library for easier organization." },
+        { "title": "Flatpak distribution", "description": "Distributed as a distro-agnostic Flatpak package via Flathub, in addition to distro repositories and source builds." }
+      ],
+      "pros": [
+        "Completely free with a clean, intuitive interface",
+        "Actively developed with regular releases",
+        "Distro-agnostic Flatpak packaging simplifies installation",
+        "Built on GStreamer/GNOME infrastructure with an open community"
+      ],
+      "cons": [
+        "Linux-only — no official Windows or macOS builds",
+        "Smaller feature set and community than larger editors like Kdenlive or Shotcut"
+      ],
+      "faqs": [
+        { "question": "Is Pitivi free?", "answer": "Yes, Pitivi is free and open source; the project also accepts optional donations." },
+        { "question": "What platforms does Pitivi support?", "answer": "GNU/Linux, distributed primarily via Flatpak on Flathub, as well as some distro repositories." },
+        { "question": "Does Pitivi run on Windows or macOS?", "answer": "No, official support is limited to GNU/Linux." },
+        { "question": "Does Pitivi support object tracking?", "answer": "Yes, recent releases added object tracking and beat detection." }
+      ],
+      "use_cases": [
+        { "title": "Linux desktop video editing", "description": "A native, GNOME-integrated video editor for Linux users.", "audience": "Linux desktop users and filmmakers" },
+        { "title": "Beat-synced editing", "description": "Beat detection and object tracking help align cuts to audio and motion.", "audience": "Music video and social content editors" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Pitivi?", "level": 2, "paragraphs": [
+          "Pitivi is a free, open-source video editor for GNU/Linux, built on GStreamer and GNOME infrastructure, distributed mainly as a distro-agnostic Flatpak package via Flathub.",
+          "Recent releases have added auto alignment and precise waveforms, object tracking, beat detection, and media library clip tagging."
+        ]},
+        { "id": "who-its-for", "heading": "Who Pitivi is for", "level": 2, "paragraphs": [
+          "Pitivi is aimed at Linux users and aspiring filmmakers who want a free, clean video editor they can own and improve, without needing Windows or macOS support."
+        ]}
+      ],
+      "tags": ["open-source"]
+    }
+  },
+  {
+    "tool_id": "5193cb21-ed1a-4efa-8952-c3400dfcbad7",
+    "slug": "handbrake",
+    "name": "HandBrake",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "HandBrake is a free, open-source video transcoder for converting video to modern codecs like H.264, H.265, and AV1.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "HandBrake: free open-source video transcoder supporting H.264, H.265, AV1, device presets, and batch encode queueing.",
+      "features": [
+        { "title": "Broad codec support", "description": "Encodes video with AV1, H.265, H.264, MPEG-4, MPEG-2, VP8, and VP9, into MP4, MKV, or WebM containers." },
+        { "title": "Hardware-accelerated encoding", "description": "Optional hardware-accelerated video encoding to speed up transcoding." },
+        { "title": "Built-in device presets", "description": "Presets optimized for specific devices plus universal profiles for standard and high-quality conversion." },
+        { "title": "Batch scanning and queueing", "description": "Scans and queues multiple files for batch encoding." },
+        { "title": "Subtitle and chapter support", "description": "Supports VobSub, Closed Captions (CEA-608), SSA, and SRT subtitles along with chapter markers." },
+        { "title": "Audio pass-through and encoding", "description": "Encodes to AAC/HE-AAC, MP3, FLAC, AC3, E-AC3, Opus, and Vorbis, or passes through AC-3, DTS, DTS-HD, and TrueHD tracks." },
+        { "title": "Video filters", "description": "Includes deinterlacing, denoise, detelecine, deblock, grayscale, cropping, and scaling filters." },
+        { "title": "HDR pass-through", "description": "Preserves HDR metadata during conversion." }
+      ],
+      "pros": [
+        "Completely free, volunteer-built open-source software",
+        "Cross-platform: Windows, Mac, and Linux",
+        "Wide codec and container support, including AV1 and H.265",
+        "Batch scanning and encode queueing for processing many files at once",
+        "Hardware-accelerated encoding for faster transcodes"
+      ],
+      "cons": [
+        "Cannot process copy-protected DVD or Blu-ray sources",
+        "No official paid support tier",
+        "Limited to MP4, MKV, and WebM output containers"
+      ],
+      "faqs": [
+        { "question": "Is HandBrake free?", "answer": "Yes, HandBrake is a free, open-source tool built by volunteers." },
+        { "question": "What video codecs does HandBrake support?", "answer": "AV1, H.265, H.264, MPEG-4, MPEG-2, VP8, and VP9, output to MP4, MKV, or WebM." },
+        { "question": "Can HandBrake convert copy-protected discs?", "answer": "No, it can only process DVD or Blu-ray sources that do not contain copy protection." },
+        { "question": "Does HandBrake support batch conversion?", "answer": "Yes, it supports batch scanning and an encode queue for processing multiple files." },
+        { "question": "What platforms does HandBrake run on?", "answer": "Windows, Mac, and Linux." }
+      ],
+      "use_cases": [
+        { "title": "Video format conversion", "description": "Convert video files into modern, widely supported codecs and containers.", "audience": "Anyone needing to re-encode video for compatibility" },
+        { "title": "Batch transcoding", "description": "Queue and encode many video files at once with device-optimized presets.", "audience": "Users managing large media libraries" },
+        { "title": "Device-optimized encoding", "description": "Built-in device presets simplify preparing video for specific devices.", "audience": "Users preparing video for phones, tablets, or media players" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is HandBrake?", "level": 2, "paragraphs": [
+          "HandBrake is a free, open-source video transcoder built by volunteers, for converting video from nearly any format into modern, widely supported codecs such as AV1, H.265, H.264, VP8, and VP9, output as MP4, MKV, or WebM.",
+          "It includes hardware-accelerated encoding, built-in device presets, batch scanning and an encode queue, subtitle and chapter support, audio pass-through and encoding options, HDR pass-through, and a set of video filters including deinterlacing, denoise, and cropping."
+        ]},
+        { "id": "who-its-for", "heading": "Who HandBrake is for", "level": 2, "paragraphs": [
+          "HandBrake serves anyone who needs to transcode video into modern, compatible formats — from casual users converting personal video to professionals batch-processing media libraries — at no cost."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "0feb9ecc-7812-47e0-afb1-c05d828a05c3",
+    "slug": "audacity",
+    "name": "Audacity",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Audacity is free, open-source multi-track audio recording and editing software for Windows, macOS, and Linux.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Audacity: free open-source multi-track audio editor with noise reduction, VST3/Nyquist plugins, and multi-format export.",
+      "features": [
+        { "title": "Multi-track editing", "description": "Record and edit multiple audio tracks in a single project." },
+        { "title": "VST3 and Nyquist plugin support", "description": "Extend functionality with VST3 and Nyquist plugins." },
+        { "title": "Built-in audio effects", "description": "Includes effects such as noise reduction, compressor, and pitch/speed changing." },
+        { "title": "Vocal removal", "description": "Includes a vocal removal effect for isolating instrumental tracks." },
+        { "title": "Broad format import/export", "description": "Imports and exports formats including WAV, MP3, FLAC, and Ogg." },
+        { "title": "Optional cloud companion (audio.com)", "description": "Audio.com offers optional cloud saving, project collaboration, and sharing alongside the desktop app." }
+      ],
+      "pros": [
+        "Completely free and open source under GPLv3",
+        "Cross-platform: Windows, macOS, and Linux",
+        "Multi-track editing with a wide range of built-in effects",
+        "Extensible via VST3 and Nyquist plugins",
+        "Long-established, widely used project"
+      ],
+      "cons": [
+        "Interface is more utilitarian than some modern commercial DAWs",
+        "Optional audio.com cloud features are a separate companion service, not the core desktop app"
+      ],
+      "faqs": [
+        { "question": "Is Audacity free?", "answer": "Yes, Audacity has always been and remains free for everyone, licensed under GPLv3." },
+        { "question": "What platforms does Audacity support?", "answer": "Windows, macOS, and Linux." },
+        { "question": "Does Audacity support plugins?", "answer": "Yes, it supports VST3 and Nyquist plugins." },
+        { "question": "What formats can Audacity import and export?", "answer": "Formats including WAV, MP3, FLAC, and Ogg." },
+        { "question": "What is audio.com?", "answer": "Audio.com is an optional companion online service offering cloud saving, project collaboration, and sharing alongside Audacity." }
+      ],
+      "use_cases": [
+        { "title": "Podcast recording and editing", "description": "Multi-track recording and editing with noise reduction and compression effects.", "audience": "Podcasters" },
+        { "title": "Music editing and mastering", "description": "Pitch/speed changing, vocal removal, and plugin support for music production tasks.", "audience": "Musicians and hobbyist producers" },
+        { "title": "General audio cleanup", "description": "Noise reduction and editing tools for cleaning up recordings.", "audience": "Anyone needing quick audio editing" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Audacity?", "level": 2, "paragraphs": [
+          "Audacity is free, open-source, multi-track audio recording and editing software licensed under GPLv3, available for Windows, macOS, and Linux.",
+          "It includes effects such as noise reduction, a compressor, pitch/speed changing, and vocal removal, supports VST3 and Nyquist plugins, and imports/exports formats including WAV, MP3, FLAC, and Ogg. An optional companion service, audio.com, adds cloud saving, collaboration, and sharing."
+        ]},
+        { "id": "who-its-for", "heading": "Who Audacity is for", "level": 2, "paragraphs": [
+          "Audacity serves musicians, podcasters, and anyone needing a free, cross-platform tool for recording, editing, and cleaning up audio."
+        ]}
+      ],
+      "tags": ["open-source", "windows", "mac"]
+    }
+  }
+]

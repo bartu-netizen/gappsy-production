@@ -15,7 +15,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     statusCode: 200,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "https://www.gappsy.com",
+      "Access-Control-Allow-Origin": "https://gappsy.com",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "content-type, x-admin-secret",
     },

@@ -1,0 +1,614 @@
+[
+  {
+    "tool_id": "5e72088e-b35d-4326-9a4b-87a7536c4484",
+    "slug": "filebrowser",
+    "name": "FileBrowser",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, self-hosted web file manager you install on your own server via a single binary or Docker image.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "FileBrowser is a free, open-source web file manager: install it on your server and browse, upload, edit and manage files from any browser.",
+      "features": [
+        {"title": "Web-based file browsing", "description": "Point FileBrowser at a directory path and access, upload, delete, preview, and edit files through a browser-based interface."},
+        {"title": "User management", "description": "Create multiple user accounts with their own login and permission scopes for the files they can access."},
+        {"title": "File editing", "description": "Edit text and code files directly in the browser without downloading them first."},
+        {"title": "Custom commands", "description": "Configure and run custom shell commands against files from within the interface."},
+        {"title": "Docker deployment", "description": "Official Docker images make it possible to run FileBrowser as a container alongside other self-hosted services."}
+      ],
+      "pros": [
+        "Free and open source under the Apache-2.0 license",
+        "Ships as a single binary or Docker image, simple to self-host",
+        "Sleek, easy-to-use web interface for basic file management",
+        "Active security and bug-fix support despite feature freeze"
+      ],
+      "cons": [
+        "Project is officially in maintenance-only mode: no new features are being added by the maintainer",
+        "Feature pull requests are reviewed case-by-case and may not be merged",
+        "No official managed/cloud hosting option — you must run and maintain the server yourself"
+      ],
+      "faqs": [
+        {"question": "Is FileBrowser free?", "answer": "Yes, FileBrowser is free, open-source software licensed under Apache-2.0. There is no paid tier."},
+        {"question": "Is FileBrowser still maintained?", "answer": "Yes, but it is in maintenance-only mode: the maintainer fixes bugs and security issues but is not actively adding new features."},
+        {"question": "How do I install FileBrowser?", "answer": "FileBrowser ships as a single self-contained binary and also has official Docker images, so it can be installed on your own server or run as a container."},
+        {"question": "Does FileBrowser support multiple users?", "answer": "Yes, it includes a user management system with individual logins and permission scopes."}
+      ],
+      "use_cases": [
+        {"title": "Personal cloud storage", "description": "Turn a home server or VPS into a private, self-hosted alternative to consumer cloud storage for accessing and managing files from a browser.", "audience": "Self-hosters and homelab users"},
+        {"title": "Team file sharing on internal infrastructure", "description": "Give a small team browser-based access to shared files stored on internal servers without relying on third-party storage providers.", "audience": "Small IT teams"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is FileBrowser?",
+          "level": 2,
+          "paragraphs": [
+            "FileBrowser is an open-source web file manager. You install it on a server, point it at a directory, and it provides a browser-based interface for uploading, previewing, editing, and organizing files.",
+            "It ships as a single self-contained binary and has official Docker images, so it can be self-hosted without additional server infrastructure beyond the machine running it. The project is currently in maintenance-only mode: its creator continues to fix bugs and security issues but is not building new features."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who FileBrowser is for",
+          "level": 2,
+          "paragraphs": [
+            "FileBrowser suits self-hosters and small teams who want a lightweight, no-cost web interface for managing files on their own servers, rather than relying on a third-party cloud storage provider."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app"]
+    }
+  },
+  {
+    "tool_id": "7f20a0c9-52f8-4c2c-8723-46040d797c2b",
+    "slug": "minio",
+    "name": "MinIO",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "S3-compatible object storage system, now shipped as MinIO AIStor with a free single-node tier and paid Enterprise tiers.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "MinIO AIStor is S3-compatible object storage for AI and data lakehouse workloads, with a free single-node tier and custom-priced Enterprise plans.",
+      "features": [
+        {"title": "S3-compatible API", "description": "Provides a native S3 API surface so existing S3 tooling and SDKs work against self-hosted MinIO deployments."},
+        {"title": "Data protection", "description": "Supports encryption, versioning, immutability, replication, and lifecycle management for stored objects."},
+        {"title": "AI and analytics integration", "description": "Designed to work with data lakehouse formats like Apache Iceberg and AI frameworks such as PyTorch."},
+        {"title": "Free single-node deployment", "description": "The Free tier offers a full-featured, single-node deployment architecture with community Slack and documentation support."},
+        {"title": "Enterprise multi-node architecture", "description": "Enterprise Lite and Enterprise tiers add multi-node scalable architecture with SUBNET health diagnostics and security reporting."},
+        {"title": "Enterprise support SLAs", "description": "The top Enterprise tier includes 24/7/365 support with a sub-4-hour response SLA and dedicated onboarding."}
+      ],
+      "pros": [
+        "S3-compatible, so it integrates with a wide range of existing S3 tooling",
+        "Free single-node tier is fully featured for development and small deployments",
+        "Scales from single-node to exabyte-class multi-node Enterprise deployments",
+        "Self-hostable across edge, on-premises, and cloud environments"
+      ],
+      "cons": [
+        "The original open-source Community Edition repository (minio/minio) was archived by MinIO in 2026 and is no longer maintained, with future development moved to the commercial AIStor product",
+        "Enterprise and Enterprise Lite pricing is not publicly listed and requires contacting sales",
+        "External identity provider logins (LDAP/OIDC) were removed from the legacy open-source edition and are now only available in AIStor",
+        "Multi-node deployments require a paid Enterprise tier"
+      ],
+      "faqs": [
+        {"question": "Is MinIO still open source?", "answer": "MinIO's original open-source Community Edition GitHub repository (minio/minio) was archived and marked no longer maintained in 2026. Current development is focused on the commercial MinIO AIStor product, which still offers a free tier."},
+        {"question": "How much does MinIO AIStor cost?", "answer": "AIStor has a Free tier for single-node deployments. Enterprise Lite (under 400 TiB usable storage) and Enterprise tiers require contacting MinIO for custom pricing."},
+        {"question": "Is MinIO S3-compatible?", "answer": "Yes, MinIO exposes a native S3-compatible API."},
+        {"question": "Can I self-host MinIO?", "answer": "Yes, MinIO AIStor is designed to be self-hosted across edge, on-premises, and cloud environments."}
+      ],
+      "use_cases": [
+        {"title": "AI and data lakehouse storage", "description": "Store and serve large volumes of unstructured data for AI training, analytics, and Apache Iceberg-based data lakehouse workloads.", "audience": "Data engineering and AI infrastructure teams"},
+        {"title": "Self-hosted S3-compatible storage", "description": "Run an S3-compatible object store on your own infrastructure instead of using a public cloud storage provider.", "audience": "Platform and DevOps teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Full-featured single-node deployment architecture", "Community Slack and documentation support"]},
+        {"plan_name": "Enterprise Lite", "price": "Custom", "billing_cycle": null, "features": ["Multi-node scalable architecture", "Below 400 TiB usable storage", "Lite SUBNET subscription with health diagnostics and security reporting", "Optional engineer support add-on with under-5-day response SLA"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Multi-node architecture at scale", "Dedicated virtual onboarding", "Enterprise SUBNET subscription with team governance", "24/7/365 support with under-4-hour response SLA"]}
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is MinIO?",
+          "level": 2,
+          "paragraphs": [
+            "MinIO is an S3-compatible object storage system built for self-hosted deployment across edge, on-premises, and cloud environments. It is now positioned by its maker as MinIO AIStor, targeting AI, analytics, and data lakehouse workloads with support for formats such as Apache Iceberg.",
+            "MinIO offers a free, full-featured single-node deployment, while multi-node, higher-capacity deployments require a paid Enterprise Lite or Enterprise subscription with custom pricing. Notably, the original community open-source repository was archived in 2026 as the project shifted its primary development focus to the commercial AIStor product line."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who MinIO is for",
+          "level": 2,
+          "paragraphs": [
+            "MinIO suits teams that need S3-compatible object storage they control on their own infrastructure, from individual developers running a free single-node instance to enterprises running multi-node, high-throughput deployments under a paid support contract."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "3be3e9b4-cb50-43f7-9445-28dcf621ad49",
+    "slug": "garage",
+    "name": "Garage",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, self-hosted S3-compatible object storage system built for reliability across geographically distributed, low-resource hardware.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Garage is a free, open-source S3-compatible object storage system designed to run reliably on distributed, low-power hardware.",
+      "features": [
+        {"title": "S3 API compatibility", "description": "Exposes an S3-compatible API, allowing tools such as Nextcloud, Matrix, Mastodon, Rclone, PeerTube, and Cyberduck to use Garage as a storage backend."},
+        {"title": "Multi-zone data replication", "description": "Each chunk of data is replicated across three zones to protect against hardware or site failure."},
+        {"title": "Low resource requirements", "description": "Runs with as little as 1GB of RAM and 16GB of disk space, and supports CPUs over ten years old as well as ARMv7/ARMv8 hardware."},
+        {"title": "Single-binary deployment", "description": "Ships as a self-contained, dependency-free executable that runs across Linux distributions without external services."},
+        {"title": "Wide-area network resilience", "description": "Designed to operate over the internet across multiple datacenters with heterogeneous, non-datacenter-grade hardware."}
+      ],
+      "pros": [
+        "Completely free and open source (AGPL-3.0 license)",
+        "Very low hardware requirements make it viable on old or low-power machines",
+        "S3-compatible API works with many existing self-hosted apps",
+        "Built specifically for resilience across geographically distributed, unreliable networks"
+      ],
+      "cons": [
+        "No managed/hosted cloud offering — deployment and operation are entirely self-managed",
+        "Smaller community and ecosystem than larger object storage projects like MinIO or Ceph",
+        "Documentation and tooling are comparatively lean, reflecting its focus on a lightweight core"
+      ],
+      "faqs": [
+        {"question": "Is Garage free?", "answer": "Yes, Garage is free, open-source software licensed under AGPL-3.0."},
+        {"question": "Is Garage S3-compatible?", "answer": "Yes, Garage implements an S3-compatible API, so it works with tools like Nextcloud, Rclone, and Cyberduck."},
+        {"question": "What hardware does Garage need?", "answer": "Garage is designed to run on minimal hardware, including CPUs more than 10 years old and ARM devices, with as little as 1GB RAM and 16GB of disk space."},
+        {"question": "Who maintains Garage?", "answer": "Garage is developed by Deuxfleurs, a project that has received public funding through European initiatives including NGI POINTER, NLnet/NGI0 Entrust, and the NGI0 Commons Fund."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted object storage for small clusters", "description": "Provide S3-compatible storage for self-hosted applications on modest or repurposed hardware distributed across multiple sites.", "audience": "Self-hosters and small infrastructure teams"},
+        {"title": "Backend storage for federated services", "description": "Serve as the storage backend for federated or open-source platforms such as Nextcloud, Matrix, Mastodon, and PeerTube.", "audience": "Operators of federated/self-hosted platforms"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Garage?",
+          "level": 2,
+          "paragraphs": [
+            "Garage is an open-source, S3-compatible object storage system built to run reliably across distributed infrastructure, including hardware outside traditional datacenters. It replicates each chunk of data across three zones and is designed to tolerate heterogeneous, low-power hardware.",
+            "It ships as a single self-contained binary with minimal resource requirements, and is developed by Deuxfleurs with public funding from European digital infrastructure initiatives."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Garage is for",
+          "level": 2,
+          "paragraphs": [
+            "Garage fits self-hosters and small teams who want S3-compatible object storage that can run on modest, geographically distributed, or older hardware, particularly as a backend for federated open-source applications."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "32f17210-2418-4e31-bedc-836e12407246",
+    "slug": "ceph",
+    "name": "Ceph",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, self-hosted unified storage platform combining object, block, and file storage in a single distributed system.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Ceph is a free, open-source unified storage platform offering S3/Swift-compatible object storage, block devices, and a POSIX file system.",
+      "features": [
+        {"title": "Object storage", "description": "Provides a RESTful gateway with S3- and Swift-compatible APIs, along with user management and multi-site deployment support."},
+        {"title": "Block storage (RBD)", "description": "Offers thin-provisioned block devices with images up to 16 exabytes, snapshots, and copy-on-write cloning."},
+        {"title": "File system (CephFS)", "description": "A POSIX-compliant distributed file system accessible via kernel client or FUSE, with Hadoop integration support."},
+        {"title": "Multisite replication", "description": "Supports disaster recovery through multisite replication for both object and block storage."},
+        {"title": "Community governance", "description": "Developed under the non-profit Ceph Foundation with a large, active open-source community."}
+      ],
+      "pros": [
+        "Free and open source, licensed under LGPL",
+        "Unifies object, block, and file storage in one platform instead of requiring separate systems",
+        "S3- and Swift-compatible object storage API",
+        "Backed by an active community and the non-profit Ceph Foundation"
+      ],
+      "cons": [
+        "No official managed cloud service from the Ceph project itself — deployment and operations are self-managed",
+        "Operating a Ceph cluster reliably at scale requires significant infrastructure and operational expertise",
+        "No published pricing since it is community software rather than a commercial product"
+      ],
+      "faqs": [
+        {"question": "Is Ceph free?", "answer": "Yes, Ceph is free, open-source software licensed under LGPL, developed under the non-profit Ceph Foundation."},
+        {"question": "What kinds of storage does Ceph provide?", "answer": "Ceph provides object storage (S3/Swift-compatible), block storage (RBD), and a POSIX file system (CephFS) from a single unified system."},
+        {"question": "Can Ceph be used as an S3-compatible store?", "answer": "Yes, Ceph's object storage gateway exposes an S3- and Swift-compliant REST API."},
+        {"question": "Does Ceph support disaster recovery?", "answer": "Yes, Ceph supports multisite replication for disaster recovery across both object and block storage."}
+      ],
+      "use_cases": [
+        {"title": "Unified storage backend for private clouds", "description": "Provide object, block, and file storage from a single distributed cluster for private cloud or on-premises infrastructure.", "audience": "Infrastructure and platform engineering teams"},
+        {"title": "S3-compatible storage at scale", "description": "Run a self-hosted, S3-compatible object store for applications that need large-scale, replicated storage without a public cloud provider.", "audience": "Enterprises and service providers"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Ceph?",
+          "level": 2,
+          "paragraphs": [
+            "Ceph is a free, open-source distributed storage platform that unifies object, block, and file storage in one system. Its object storage gateway offers S3- and Swift-compatible APIs, its RBD component provides thin-provisioned block devices with snapshots and cloning, and CephFS offers a POSIX-compliant distributed file system.",
+            "Ceph is developed under the non-profit Ceph Foundation and is licensed under LGPL, making it fully free and self-hostable on your own infrastructure."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Ceph is for",
+          "level": 2,
+          "paragraphs": [
+            "Ceph suits infrastructure and platform teams that need a single, self-hosted storage system to serve object, block, and file storage needs at scale, typically for private clouds or large on-premises deployments."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "cfd96970-81c8-46e6-aaba-767235ac591e",
+    "slug": "seaweedfs",
+    "name": "SeaweedFS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source distributed storage system for billions of files, with S3, Iceberg table, and POSIX filesystem support, plus a paid Enterprise edition.",
+      "pricing_model": "Freemium",
+      "starting_price": "$2/TB per month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "SeaweedFS is a free, open-source distributed storage system for billions of files, with an Enterprise edition priced at $2 per TB per month.",
+      "features": [
+        {"title": "Unified S3, Iceberg, and POSIX access", "description": "Serves S3 objects, Apache Iceberg tables, and POSIX files from a single storage cluster."},
+        {"title": "Point-in-time recovery", "description": "Enterprise edition allows rolling back folders, buckets, or objects to a specific moment in time."},
+        {"title": "Customizable erasure coding", "description": "Tunable erasure coding ratios (e.g., 20+4) reduce storage overhead to roughly 1.2x versus 3x for traditional replication."},
+        {"title": "Self-healing storage", "description": "Automatically detects and removes corrupted data, with automatic erasure-coding shard repair."},
+        {"title": "Kernel mount", "description": "Provides a native Linux filesystem mount with flat memory usage regardless of file count."},
+        {"title": "Admin UI with OIDC", "description": "Includes an administration interface with OIDC identity-provider integration and multi-tenant S3 quality-of-service rate limiting (Enterprise)."}
+      ],
+      "pros": [
+        "Free, open-source core under the Apache-2.0 license with no feature gates for development/testing under 25TB",
+        "Enterprise pricing is transparently published ($2/TB per month or $20/TB per year) rather than requiring a sales quote",
+        "Enterprise features apply via a license key with no migration or architecture change needed",
+        "Handles object, table (Iceberg), and POSIX file storage from one cluster"
+      ],
+      "cons": [
+        "Advanced features like point-in-time recovery, self-healing, and multi-tenancy require a paid Enterprise license",
+        "Free tier is explicitly scoped to development and testing under 25TB",
+        "Self-hosted only — no managed cloud service is offered"
+      ],
+      "faqs": [
+        {"question": "Is SeaweedFS free?", "answer": "The open-source core is free with no feature gates for development and testing under 25TB. Production use of Enterprise features requires a paid license."},
+        {"question": "How much does SeaweedFS Enterprise cost?", "answer": "SeaweedFS Enterprise is priced at $2 per TB per month, or $20 per TB per year."},
+        {"question": "Does SeaweedFS support S3?", "answer": "Yes, SeaweedFS can serve S3-compatible objects, alongside Apache Iceberg tables and POSIX files, from the same cluster."},
+        {"question": "Can I upgrade an existing SeaweedFS cluster to Enterprise?", "answer": "Yes, Enterprise features are enabled by applying a license key to an existing SeaweedFS deployment, without requiring migration or a new architecture."}
+      ],
+      "use_cases": [
+        {"title": "Large-scale file and object storage", "description": "Store and serve billions of files or S3 objects from a self-hosted distributed cluster.", "audience": "Infrastructure teams handling large file volumes"},
+        {"title": "Data lakehouse storage backend", "description": "Serve Apache Iceberg tables alongside object and file storage from a single SeaweedFS cluster for analytics workloads.", "audience": "Data engineering teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Open-source core, no feature gates", "Intended for development and testing under 25TB"]},
+        {"plan_name": "Enterprise", "price": "$2/TB per month or $20/TB per year", "billing_cycle": "monthly", "features": ["Point-in-time recovery", "Self-healing storage with automatic erasure-coding repair", "Admin UI with OIDC integration", "Multi-tenancy with S3 QoS rate limiting"]}
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is SeaweedFS?",
+          "level": 2,
+          "paragraphs": [
+            "SeaweedFS is an open-source distributed storage system built to store and serve billions of files quickly. It can serve S3-compatible objects, Apache Iceberg tables, and POSIX-compliant files from a single cluster.",
+            "The open-source core, licensed under Apache-2.0, has no feature gates for development and testing under 25TB. A separate Enterprise edition, priced at $2 per TB per month (or $20 per TB per year), adds features like point-in-time recovery, self-healing storage, and multi-tenancy via a license key applied to an existing deployment."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who SeaweedFS is for",
+          "level": 2,
+          "paragraphs": [
+            "SeaweedFS suits teams that need to self-host storage for very large numbers of files or objects, from developers testing on the free tier to organizations running production clusters under a paid Enterprise license for advanced data protection features."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "8bdbdb20-3a53-4c65-b774-2c8bcceae403",
+    "slug": "glusterfs",
+    "name": "GlusterFS",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source distributed network filesystem for scalable storage across standard hardware, sponsored by Red Hat.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "GlusterFS is a free, open-source distributed network filesystem for scalable storage on commodity hardware.",
+      "features": [
+        {"title": "Distributed network filesystem", "description": "Aggregates storage from multiple servers into a single scalable network filesystem using standard hardware."},
+        {"title": "Scales on commodity hardware", "description": "Designed to run on standard, non-proprietary servers rather than requiring specialized storage appliances."},
+        {"title": "Suited to bandwidth-intensive workloads", "description": "Used for use cases such as media streaming and data analysis that require high throughput."},
+        {"title": "Active documentation and release process", "description": "Maintains ongoing documentation, a public roadmap, and a defined release schedule."}
+      ],
+      "pros": [
+        "Free and open source, licensed under GPL-2.0",
+        "Runs on standard commodity hardware without proprietary storage appliances",
+        "Long-established project with mature documentation and installation/administration guides",
+        "Development continues with community maintainers after Red Hat's commercial product wind-down"
+      ],
+      "cons": [
+        "Red Hat ended commercial support for its Red Hat Gluster Storage product at the end of 2024",
+        "Development pace has slowed since Red Hat's withdrawal from the commercial side of the project",
+        "No managed cloud offering — GlusterFS is entirely self-hosted and self-managed"
+      ],
+      "faqs": [
+        {"question": "Is GlusterFS free?", "answer": "Yes, GlusterFS is free, open-source software licensed under GPL-2.0."},
+        {"question": "Is GlusterFS still maintained?", "answer": "Yes. Although Red Hat discontinued its commercial Red Hat Gluster Storage product at the end of 2024, the open-source GlusterFS project continues to receive maintainer-driven updates and releases."},
+        {"question": "What is GlusterFS used for?", "answer": "GlusterFS is used to build distributed, scalable network filesystems on commodity hardware, including for bandwidth-intensive workloads like media streaming and data analysis."},
+        {"question": "Who backs GlusterFS?", "answer": "GlusterFS is copyrighted by Red Hat, Inc. and developed as an open-source project with an active community and public GitHub repositories."}
+      ],
+      "use_cases": [
+        {"title": "Scalable storage on commodity servers", "description": "Aggregate standard servers into a distributed filesystem for scalable storage without specialized hardware.", "audience": "Infrastructure and systems administration teams"},
+        {"title": "Bandwidth-intensive workloads", "description": "Support media streaming and large-scale data analysis workloads that require high-throughput distributed storage.", "audience": "Media and data engineering teams"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is GlusterFS?",
+          "level": 2,
+          "paragraphs": [
+            "GlusterFS is a free and open-source scalable network filesystem that aggregates storage from standard commodity servers into a single distributed filesystem. It is commonly used for bandwidth-intensive workloads such as media streaming and data analysis.",
+            "The project is copyrighted by Red Hat, Inc. and licensed under GPL-2.0. Red Hat ended commercial support for its own Red Hat Gluster Storage product at the end of 2024, but the underlying open-source GlusterFS project continues to be maintained by the community."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who GlusterFS is for",
+          "level": 2,
+          "paragraphs": [
+            "GlusterFS fits infrastructure teams that want to build distributed, scalable storage from their own commodity hardware without a commercial support contract, particularly for high-throughput workloads."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "b940250d-ac45-4210-914d-864334dda391",
+    "slug": "openio",
+    "name": "OpenIO",
+    "status": "skip",
+    "skip_reason": "Official website (openio.io / www.openio.io) is unreachable — repeated attempts over both HTTP and HTTPS fail with an SSL/TLS handshake failure. The core product source repository (open-io/oio-sds) also returns 404 via the GitHub API, and the GitHub org's remaining repos show mostly stale activity (2017-2022, with only isolated 2024-2025 touches). Combined with OpenIO having been fully acquired by OVHcloud in 2020, there are not enough current, verifiable facts to enrich this record without risking fabrication.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "38c4934d-5e31-4ebe-b4ec-4ca3760270e4",
+    "slug": "restic",
+    "name": "Restic",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source backup program that encrypts and deduplicates data, backing up to many storage backends from a single executable.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Restic is a free, open-source backup program that only transfers changed data, encrypts backups, and supports many storage backends.",
+      "features": [
+        {"title": "Incremental backups", "description": "Only transfers the parts of files that actually changed since the last backup, reducing bandwidth and storage use."},
+        {"title": "Single executable", "description": "Ships as a single binary requiring no separate server infrastructure to run."},
+        {"title": "Multiple storage backends", "description": "Backs up to a wide range of self-hosted and cloud storage services."},
+        {"title": "Backup verification", "description": "Includes built-in checks to confirm that backups can actually be restored."},
+        {"title": "Cross-platform support", "description": "Runs on Linux, BSD, macOS, and Windows."}
+      ],
+      "pros": [
+        "Completely free and open source under the BSD 2-Clause License",
+        "Efficient incremental backups that only transfer changed data",
+        "Works with many storage backends, both self-hosted and cloud-based",
+        "No server component required — runs as a single executable",
+        "Maintains backward compatibility following Semantic Versioning"
+      ],
+      "cons": [
+        "Command-line only — no official graphical interface",
+        "No managed/hosted service; you must supply and manage your own storage backend",
+        "No commercial support plan offered directly by the project"
+      ],
+      "faqs": [
+        {"question": "Is Restic free?", "answer": "Yes, Restic is completely free and open source, licensed under the BSD 2-Clause License."},
+        {"question": "What platforms does Restic support?", "answer": "Restic runs on Linux, BSD, macOS, and Windows."},
+        {"question": "Does Restic encrypt backups?", "answer": "Yes, Restic uses modern cryptography to secure backup data."},
+        {"question": "Does Restic require a server?", "answer": "No, Restic is a single executable and does not require any dedicated server infrastructure."}
+      ],
+      "use_cases": [
+        {"title": "Encrypted backups to cloud or self-hosted storage", "description": "Back up files with encryption and deduplication to a wide range of storage backends, self-hosted or cloud-based.", "audience": "Developers and system administrators"},
+        {"title": "Cross-platform personal and server backups", "description": "Run the same backup tool consistently across Linux, macOS, BSD, and Windows machines.", "audience": "Individuals and small teams managing mixed-OS environments"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Restic?",
+          "level": 2,
+          "paragraphs": [
+            "Restic is a free, open-source backup program that only transfers the parts of files that have changed since the last backup, minimizing bandwidth and storage overhead. It ships as a single executable and requires no dedicated server infrastructure.",
+            "Backups are encrypted and can be verified to confirm they can actually be restored. Restic supports a wide range of storage backends, both self-hosted and cloud-based, and runs on Linux, BSD, macOS, and Windows."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Restic is for",
+          "level": 2,
+          "paragraphs": [
+            "Restic suits developers and system administrators who want a free, scriptable, cross-platform command-line backup tool that works with many different storage destinations."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "156f6244-fa16-4f23-b785-7b39766ad2f0",
+    "slug": "borgbackup",
+    "name": "BorgBackup",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source deduplicating backup archiver with authenticated encryption and multiple compression algorithms.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "BorgBackup is a free, open-source deduplicating archiver offering space-efficient, encrypted backups for Linux, macOS, and BSD.",
+      "features": [
+        {"title": "Data deduplication", "description": "Provides space-efficient storage of backups by deduplicating data across archives."},
+        {"title": "Authenticated encryption", "description": "Secures backup archives with authenticated encryption to protect data confidentiality and integrity."},
+        {"title": "Multiple compression algorithms", "description": "Supports lz4, zstd, zlib, and lzma compression algorithms for backup archives."},
+        {"title": "FUSE mounting", "description": "Backup archives can be mounted with FUSE and browsed like a regular filesystem."}
+      ],
+      "pros": [
+        "Free and open-source under the BSD license",
+        "Space-efficient deduplication reduces storage costs for repeated backups",
+        "Strong authenticated encryption built in",
+        "Supports several compression algorithms to balance speed and ratio",
+        "Active open-source community on GitHub"
+      ],
+      "cons": [
+        "Command-line only — no official native graphical interface",
+        "No managed/hosted backup service directly from the core project (third-party commercial services are listed separately)",
+        "Requires users to manage their own storage destination"
+      ],
+      "faqs": [
+        {"question": "Is BorgBackup free?", "answer": "Yes, BorgBackup is free, open-source software distributed under the BSD license."},
+        {"question": "What platforms does BorgBackup support?", "answer": "BorgBackup supports Linux, macOS, BSD, and other platforms."},
+        {"question": "Does BorgBackup deduplicate data?", "answer": "Yes, deduplication is a core feature, providing space-efficient storage of backups."},
+        {"question": "Can I browse a BorgBackup archive like a filesystem?", "answer": "Yes, archives can be mounted using FUSE, making backed-up data browsable like a regular filesystem."}
+      ],
+      "use_cases": [
+        {"title": "Space-efficient encrypted backups", "description": "Create deduplicated, encrypted backup archives for servers or workstations to minimize storage usage.", "audience": "System administrators and developers"},
+        {"title": "Cross-platform Unix-like backups", "description": "Run consistent backup workflows across Linux, macOS, and BSD systems.", "audience": "Individuals and teams managing Unix-like infrastructure"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is BorgBackup?",
+          "level": 2,
+          "paragraphs": [
+            "BorgBackup is a free, open-source deduplicating archiver focused on space-efficient, encrypted backup storage. It supports multiple compression algorithms (lz4, zstd, zlib, lzma) and secures archives with authenticated encryption.",
+            "Backup archives can be mounted with FUSE and browsed like a normal filesystem. BorgBackup is distributed under the BSD license and supports Linux, macOS, and BSD."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who BorgBackup is for",
+          "level": 2,
+          "paragraphs": [
+            "BorgBackup suits system administrators and developers who want a free, encrypted, deduplicating backup tool for Unix-like systems, without relying on a commercial backup service."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "mac"]
+    }
+  },
+  {
+    "tool_id": "806a6c41-0dfb-4b12-9209-416dc798214d",
+    "slug": "kopia",
+    "name": "Kopia",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source backup tool that creates encrypted, compressed, and deduplicated backups to cloud or local storage, with both CLI and GUI.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_meta_description": "Kopia is a free, open-source backup tool offering encrypted, compressed, deduplicated backups with both a desktop GUI and command-line interface.",
+      "features": [
+        {"title": "Encrypted, compressed, deduplicated backups", "description": "Creates backups that are encrypted, compressed, and deduplicated to reduce storage size while protecting data."},
+        {"title": "Pluggable encryption and compression", "description": "Supports configurable encryption and compression options for backup repositories."},
+        {"title": "Snapshot and restore", "description": "Creates point-in-time snapshots and supports restoring individual files or full snapshots."},
+        {"title": "Policy-based backup rules", "description": "Lets users define policies controlling how and when backups are taken and retained."},
+        {"title": "Desktop and command-line interfaces", "description": "Provides both a graphical desktop application and a command-line interface for scripting and automation."}
+      ],
+      "pros": [
+        "Free and open source, hosted on GitHub",
+        "Offers both a desktop GUI and a CLI, unlike many backup tools that are CLI-only",
+        "Deduplication and compression reduce storage costs for cloud backup destinations",
+        "Cross-platform support for Windows, macOS, and Linux",
+        "Active community support forum"
+      ],
+      "cons": [
+        "No official managed/hosted backup service — users must supply their own storage destination",
+        "No published enterprise support plan or paid tier"
+      ],
+      "faqs": [
+        {"question": "Is Kopia free?", "answer": "Yes, Kopia is free, open-source backup software."},
+        {"question": "Does Kopia have a graphical interface?", "answer": "Yes, Kopia offers both a desktop GUI application and a command-line interface."},
+        {"question": "What platforms does Kopia support?", "answer": "Kopia supports Windows, macOS, and Linux."},
+        {"question": "Does Kopia deduplicate backups?", "answer": "Yes, Kopia creates encrypted, compressed, and deduplicated backups to reduce storage usage."}
+      ],
+      "use_cases": [
+        {"title": "Encrypted cloud backups", "description": "Back up laptops or servers to cloud storage of your choice with encryption, compression, and deduplication.", "audience": "Individuals and IT administrators"},
+        {"title": "Policy-driven backup management", "description": "Define retention and scheduling policies to automate backups across multiple machines.", "audience": "System administrators managing multiple endpoints"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Kopia?",
+          "level": 2,
+          "paragraphs": [
+            "Kopia is a free, open-source backup tool that creates encrypted, compressed, and deduplicated backups to a cloud or local storage destination of the user's choice. It is designed to scale from individual laptops to large servers.",
+            "Unlike many backup tools that are command-line only, Kopia offers both a desktop graphical application and a CLI, along with policy-based rules for controlling backup behavior and retention."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Kopia is for",
+          "level": 2,
+          "paragraphs": [
+            "Kopia suits individuals and system administrators who want a free backup tool with both a user-friendly GUI and a scriptable CLI, running across Windows, macOS, and Linux."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "windows", "mac"]
+    }
+  }
+]

@@ -1,5 +1,5 @@
 [build]
-command = "npx vite build"
+command = "node scripts/generate-sitemap.js && npx vite build"
 publish = "dist"
 
 [build.environment]
@@ -18,7 +18,7 @@ bundle = true
 minify = true
 
 [build.processing.html]
-pretty_urls = false
+pretty_urls = true
 
 [build.processing.images]
 compress = true
@@ -495,3 +495,11 @@ path = "/your-agency"
 [[edge_functions]]
 function = "crawler-static"
 path = "/your-agency/*"
+
+[[edge_functions]]
+function = "track-event"
+path = "/api/track-event"
+
+[[edge_functions]]
+function = "smart-search-relay"
+path = "/api/smart-search"

@@ -9,7 +9,7 @@ import { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
  * Test connectivity: /wp-admin/api/email-center-upstream-check
  */
 
-const ALLOWED_ORIGIN = "https://www.gappsy.com";
+const ALLOWED_ORIGIN = "https://gappsy.com";
 const BASE_URL = "https://jczdgzhnsyzvbpfqueyy.supabase.co/functions/v1";
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {

@@ -1,0 +1,556 @@
+[
+  {
+    "tool_id": "a088bca4-e021-4feb-af5d-c1d5769b5a38",
+    "slug": "appsignal",
+    "name": "AppSignal",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "AppSignal is an all-in-one APM combining error tracking, performance monitoring, logs, uptime and host monitoring for Ruby, Elixir, Node.js and Python apps.",
+      "pricing_model": "Freemium",
+      "starting_price": "€22/month (or €219/year billed annually)",
+      "founded_year": 2012,
+      "company_size": null,
+      "headquarters": "Amsterdam, Netherlands",
+      "languages": [],
+      "seo_meta_description": "AppSignal is an all-in-one APM combining error tracking, performance monitoring, logs and uptime monitoring for Ruby, Elixir, Node.js and Python apps.",
+      "features": [
+        { "title": "Error tracking", "description": "Full backtraces with deploy correlation to pinpoint when and where errors were introduced." },
+        { "title": "Performance monitoring", "description": "Tracks response times, throughput and slow endpoints across your app." },
+        { "title": "Log management", "description": "Search, filter and stream logs in real time, linked to related errors and traces." },
+        { "title": "Anomaly detection", "description": "Configurable alerts flag unusual performance or error patterns automatically." },
+        { "title": "Uptime and host monitoring", "description": "Tracks host CPU, disk, memory and network alongside external uptime checks." },
+        { "title": "Custom metrics and dashboards", "description": "Build default or custom dashboards from application and infrastructure metrics." },
+        { "title": "Distributed tracing (beta)", "description": "Trace requests across services, connected to related logs and errors." },
+        { "title": "AI coding-agent integration", "description": "An MCP Server lets Claude, Cursor and Zed use production error and trace data to propose fixes." }
+      ],
+      "pros": [
+        "Combines errors, performance, logs, uptime and host metrics in one interface",
+        "Free plan available with no credit card required",
+        "EU-based, GDPR compliant and SOC2 certified",
+        "All features included on every plan with unlimited users and dashboards"
+      ],
+      "cons": [
+        "Distributed tracing is still in beta",
+        "Long-term log storage and HIPAA compliance require paid add-ons (€89/month each)",
+        "Native first-party support limited to Ruby, Elixir, Node.js, JavaScript and Python; other languages need OpenTelemetry"
+      ],
+      "faqs": [
+        { "question": "Does AppSignal have a free plan?", "answer": "Yes, a free plan covering 50,000 requests/month with 5-day retention and no credit card required." },
+        { "question": "What languages does AppSignal support natively?", "answer": "Ruby, Elixir, Node.js, JavaScript and Python, plus any OpenTelemetry-compatible language." },
+        { "question": "Does AppSignal offer a free trial?", "answer": "Yes, a 30-day free trial of paid plans, no credit card required." },
+        { "question": "Where is AppSignal based?", "answer": "Amsterdam, Netherlands; the company was founded in 2012." },
+        { "question": "Does AppSignal work with AI coding assistants?", "answer": "Yes, via an MCP Server that integrates with Claude, Cursor and Zed." }
+      ],
+      "use_cases": [
+        { "title": "Rails and Phoenix monitoring", "description": "Track errors, performance and logs for Ruby on Rails and Elixir Phoenix applications.", "audience": "Ruby and Elixir development teams" },
+        { "title": "Node.js and Python API monitoring", "description": "Monitor throughput, slow endpoints and errors for backend services.", "audience": "Node.js and Python backend teams" },
+        { "title": "AI-assisted incident response", "description": "Use production error and trace context inside AI coding agents to speed up debugging.", "audience": "Teams using AI coding assistants" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "€0", "billing_cycle": "monthly", "features": ["50K requests/month", "1GB logging/month", "5-day data retention"] },
+        { "plan_name": "Paid", "price": "€219/year (€18.25/month billed annually)", "billing_cycle": "annual", "features": ["250K requests/month", "Error tracking, anomaly detection and performance monitoring", "Host and uptime monitoring", "Unlimited users, teams, apps and dashboards"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is AppSignal?", "level": 2, "paragraphs": [
+          "AppSignal is an all-in-one application performance monitoring platform that unifies error tracking, performance monitoring, log management, uptime checks and host metrics in a single dashboard.",
+          "It offers native integrations for Ruby, Elixir, Node.js and Python, plus support for any OpenTelemetry-compatible language, and includes every feature on all paid plans without gating."
+        ]},
+        { "id": "who-its-for", "heading": "Who AppSignal is for", "level": 2, "paragraphs": [
+          "AppSignal suits Ruby, Elixir, Node.js and Python teams that want a single tool for errors, performance and logs instead of stitching together separate monitoring services."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "freemium", "free-plan", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "66aef3e8-fdf4-4871-a16f-ccd3d0ecfe6d",
+    "slug": "scout-apm",
+    "name": "Scout APM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Scout APM (Scout Monitoring) provides code-level performance traces, error monitoring and log management for Ruby, Python, PHP, Elixir and Node.js apps.",
+      "pricing_model": "Free Trial",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Scout APM offers code-level traces, error monitoring and log management for Ruby, Python, PHP, Elixir and Node.js applications in one dashboard.",
+      "features": [
+        { "title": "App Traces", "description": "Shows code-level request visibility to pinpoint exact performance bottlenecks." },
+        { "title": "Error Monitoring", "description": "Error tracking integrated directly with APM performance data." },
+        { "title": "Log Management", "description": "Unified logs with performance context, search and filtering." },
+        { "title": "App Metrics", "description": "Real-time dashboards for response times and throughput." },
+        { "title": "Query Analysis", "description": "Detects slow queries and N+1 database problems automatically." },
+        { "title": "Alerting", "description": "Sends notifications via Slack, PagerDuty, Discord and email." },
+        { "title": "Anomaly Detection", "description": "Automatically flags unusual performance patterns." }
+      ],
+      "pros": [
+        "Combines traces, errors and logs in a single interface",
+        "Quick setup via an npx installer wizard",
+        "Supports multiple frameworks across five languages",
+        "MCP server, CLI and API for AI coding-agent integration"
+      ],
+      "cons": [
+        "Official pricing tiers and starting price are not published on a page we could verify directly",
+        "No stated support for Java, Go or .NET"
+      ],
+      "faqs": [
+        { "question": "What languages does Scout APM support?", "answer": "Ruby, Python, PHP, Elixir and Node.js, across frameworks like Rails, Django, Laravel, Phoenix and Express." },
+        { "question": "Does Scout APM integrate with alerting tools?", "answer": "Yes, Slack, PagerDuty, Discord and email." },
+        { "question": "Can Scout APM connect to AI coding assistants?", "answer": "Yes, via an MCP server, CLI and API for tools like Claude Code and Cursor." },
+        { "question": "Is there a free trial?", "answer": "Yes, Scout APM offers a free trial with setup via a one-line installer command." }
+      ],
+      "use_cases": [
+        { "title": "N+1 query detection", "description": "Identify slow queries and N+1 database problems in Rails or Django apps.", "audience": "Backend engineering teams" },
+        { "title": "Combined incident triage", "description": "Correlate errors, traces and logs in one place during on-call incidents.", "audience": "On-call engineers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Scout APM?", "level": 2, "paragraphs": [
+          "Scout APM (branded Scout Monitoring) is an application performance monitoring tool that gives development teams code-level traces, integrated error monitoring, and log management with minimal configuration.",
+          "It supports Ruby, Python, PHP, Elixir and Node.js frameworks, and includes an MCP server for integrating production performance data with AI coding assistants."
+        ]},
+        { "id": "who-its-for", "heading": "Who Scout APM is for", "level": 2, "paragraphs": [
+          "It's aimed at development teams that want quick-to-set-up, code-level performance visibility without a heavyweight configuration process."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "c326978a-2a64-44b7-a572-f9fb892fc271",
+    "slug": "papertrail",
+    "name": "Papertrail",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Papertrail, by SolarWinds, is a cloud log management service for aggregating, searching and alerting on logs from servers and applications in real time.",
+      "pricing_model": "Freemium",
+      "starting_price": "$7/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Papertrail is SolarWinds' cloud log management service for real-time log aggregation, search and alerting, with a free tier and plans from $7/month.",
+      "features": [
+        { "title": "Real-time log aggregation", "description": "Collects logs from servers and applications into one searchable stream." },
+        { "title": "Live search and filtering", "description": "Search across aggregated logs in real time to troubleshoot issues." },
+        { "title": "Alert integrations", "description": "Notifies external services such as Slack and PagerDuty when logs match saved searches." },
+        { "title": "Volume-based tiered pricing", "description": "Plans scale by monthly log volume and searchable retention window." }
+      ],
+      "pros": [
+        "Simple, transparent volume-based pricing",
+        "Free tier available for low log volumes",
+        "Backed by SolarWinds' established infrastructure",
+        "Alert integrations with common tools like Slack and PagerDuty"
+      ],
+      "cons": [
+        "Free tier retention is limited to 48 hours",
+        "Higher-volume plans can get expensive since price scales with both volume and retention"
+      ],
+      "faqs": [
+        { "question": "Is there a free Papertrail plan?", "answer": "Yes, a free tier covering 50MB/month of logs with 48-hour retention." },
+        { "question": "What's the cheapest paid Papertrail plan?", "answer": "Plans start around $7/month for 1GB of monthly log volume." },
+        { "question": "Who owns Papertrail?", "answer": "Papertrail is owned and operated by SolarWinds." }
+      ],
+      "use_cases": [
+        { "title": "Centralized log search", "description": "Aggregate and search logs from multiple servers and apps in one place.", "audience": "Small engineering teams" },
+        { "title": "Real-time production alerting", "description": "Get notified via Slack or PagerDuty when specific log patterns appear.", "audience": "DevOps and SRE teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["50MB/month log volume", "48-hour retention"] },
+        { "plan_name": "Small", "price": "$7/month", "billing_cycle": "monthly", "features": ["1GB/month log volume"] },
+        { "plan_name": "Medium", "price": "$40/month", "billing_cycle": "monthly", "features": ["10GB/month log volume"] },
+        { "plan_name": "Large", "price": "$230/month", "billing_cycle": "monthly", "features": ["100GB/month log volume"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["500GB-5TB+/month, custom quote"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Papertrail?", "level": 2, "paragraphs": [
+          "Papertrail is a cloud-based log management service, part of SolarWinds, that aggregates logs from servers and applications for real-time search and alerting.",
+          "Pricing scales by monthly log volume and how long logs remain searchable, with a free tier for low-volume use."
+        ]},
+        { "id": "who-its-for", "heading": "Who Papertrail is for", "level": 2, "paragraphs": [
+          "Papertrail suits small to mid-sized engineering teams that need straightforward, real-time log search without standing up their own logging infrastructure."
+        ]}
+      ],
+      "tags": ["web-app", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "61ccc648-9278-4f3b-87f3-026966a4a47f",
+    "slug": "axiom",
+    "name": "Axiom",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Axiom is a fully managed, schema-less log and event data platform built for petabyte-scale observability with usage-based pricing.",
+      "pricing_model": "Freemium",
+      "starting_price": "$25/month + usage",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Axiom is a fully managed observability platform for schema-less, petabyte-scale log and event ingestion, with a free tier and usage-based pricing.",
+      "features": [
+        { "title": "Schema-less ingestion", "description": "Store event data without predefined schemas, using query-time virtual fields for transformations." },
+        { "title": "APL query language", "description": "A piped, sequential query syntax for logs, traces, metrics and events." },
+        { "title": "High-ratio compression", "description": "95%+ compression lets teams retain complete datasets without prohibitive storage costs." },
+        { "title": "Native MCP support", "description": "AI agents can query observability data directly using APL, the same primitives engineers use." },
+        { "title": "Splunk integration", "description": "Run APL queries from within Splunk via a dedicated app." },
+        { "title": "Dashboards, alerts and metrics", "description": "Built-in visualization and alerting on top of ingested data." }
+      ],
+      "pros": [
+        "Permanent free tier with no credit card required",
+        "Single usage-based pricing dial across logs, traces, metrics and events, with no SKU matrix",
+        "Native OpenTelemetry, Vector, Fluent Bit and AWS Kinesis Firehose integrations",
+        "AI agents can query data using the same APL primitives as engineers"
+      ],
+      "cons": [
+        "Enterprise features (SSO, RBAC, audit log, directory sync) are paid add-ons even on the Cloud plan",
+        "Free tier is capped at 25GB storage and 30-day retention"
+      ],
+      "faqs": [
+        { "question": "Does Axiom have a free plan?", "answer": "Yes, a permanent Personal plan with 500GB/month data loading and 30-day retention, no credit card required." },
+        { "question": "How is Axiom priced beyond the free tier?", "answer": "The Axiom Cloud plan charges a $25/month platform fee plus usage-based charges, with automatic volume discounts." },
+        { "question": "Does Axiom support AI agents?", "answer": "Yes, via native MCP support so AI agents can query observability data using APL." },
+        { "question": "Can Axiom integrate with Splunk?", "answer": "Yes, via a dedicated Splunk app for running APL queries." }
+      ],
+      "use_cases": [
+        { "title": "Petabyte-scale log ingestion", "description": "Ingest and query large volumes of log and event data without managing infrastructure.", "audience": "Platform and DevOps teams" },
+        { "title": "AI-agent-driven observability", "description": "Let AI coding or ops agents query production data directly using APL.", "audience": "Teams building AI coding or ops agents" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Personal", "price": "$0", "billing_cycle": "monthly", "features": ["500GB/month data loading", "10 GB-hours query compute", "25GB storage", "30-day retention", "Full APL access"] },
+        { "plan_name": "Axiom Cloud", "price": "$25/month + usage", "billing_cycle": "monthly", "features": ["1TB/month data loading included", "100 GB-hours query compute included", "100GB storage included", "Configurable retention", "Self-serve enterprise add-ons"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Axiom?", "level": 2, "paragraphs": [
+          "Axiom is a fully managed observability platform that ingests logs, traces, metrics and events without requiring a predefined schema, targeting petabyte-scale workloads.",
+          "It uses a single usage-based pricing model across all data types and offers native MCP support so AI agents can query the same data engineers use."
+        ]},
+        { "id": "who-its-for", "heading": "Who Axiom is for", "level": 2, "paragraphs": [
+          "Axiom fits platform and DevOps teams that need high-volume log and event observability without operating self-managed logging infrastructure."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "f6d6eb38-8f44-43cb-b351-fe77b22730dd",
+    "slug": "highlight-io",
+    "name": "Highlight.io",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Highlight.io is an open-source, full-stack monitoring platform combining session replay, error monitoring, logging and tracing for web apps.",
+      "pricing_model": "Freemium",
+      "starting_price": "$50/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Highlight.io is an open-source monitoring platform with session replay, error tracking, logging and tracing, offering a free plan and paid tiers.",
+      "features": [
+        { "title": "Session replay", "description": "Console and network recording with search and privacy controls to review user sessions." },
+        { "title": "Error monitoring", "description": "Custom error grouping and OpenTelemetry-powered alerting." },
+        { "title": "Log search and alerting", "description": "Log search backed by ClickHouse with configurable alerts." },
+        { "title": "Distributed tracing", "description": "Performance tracing built on OpenTelemetry." },
+        { "title": "Customizable dashboards", "description": "Dashboards and APM-style analytics for application performance." },
+        { "title": "Self-hosting", "description": "Docker-based deployment for organizations that want on-premise control." }
+      ],
+      "pros": [
+        "Open source with a self-hosted deployment option",
+        "Free plan covers 500 monthly sessions and up to 15 seats",
+        "SOC 2, HIPAA and ISO certified",
+        "Built on OpenTelemetry, supporting React, Next.js, Angular, Vue.js, Node.js, Rails and Go"
+      ],
+      "cons": [
+        "Pay-as-you-go plan caps included dashboards (3) and projects (2) before usage-based overage applies",
+        "SAML/SSO, RBAC and audit logs are reserved for the top Enterprise tier"
+      ],
+      "faqs": [
+        { "question": "Does Highlight.io have a free plan?", "answer": "Yes, free forever for 500 monthly sessions with up to 15 seats." },
+        { "question": "Is Highlight.io open source?", "answer": "Yes, it's open source with a GitHub repository and a self-hosted deployment option." },
+        { "question": "What frameworks does Highlight.io support?", "answer": "React, Next.js, Angular, Vue.js, Node.js, Rails and Go." },
+        { "question": "Is there a free trial for paid plans?", "answer": "Yes, free trials are available on the Pay-as-you-go and Business plans." }
+      ],
+      "use_cases": [
+        { "title": "Frontend bug debugging", "description": "Use session replay and error grouping to reproduce and fix frontend issues.", "audience": "Frontend engineering teams" },
+        { "title": "Self-hosted observability", "description": "Run Highlight.io on your own infrastructure for compliance-sensitive environments.", "audience": "Enterprises with data residency requirements" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["500 monthly sessions", "AI error grouping", "Up to 15 seats"] },
+        { "plan_name": "Pay-as-you-go", "price": "$50/month", "billing_cycle": "monthly", "features": ["Up to 3 dashboards", "Up to 2 projects", "Up to 15 seats", "7-day retention", "Usage-based overage pricing"] },
+        { "plan_name": "Business", "price": "$800/month", "billing_cycle": "monthly", "features": ["Unlimited dashboards", "Unlimited projects", "Unlimited seats", "Custom retention policies"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["SAML & SSO", "Custom MSAs & SLAs", "RBAC & audit logs"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Highlight.io?", "level": 2, "paragraphs": [
+          "Highlight.io is an open-source, full-stack monitoring platform combining session replay, error monitoring, log search and distributed tracing built on OpenTelemetry.",
+          "It's available as a managed cloud service with a free tier, or self-hosted via Docker for organizations that need on-premise control."
+        ]},
+        { "id": "who-its-for", "heading": "Who Highlight.io is for", "level": 2, "paragraphs": [
+          "It suits web app teams that want session replay, errors, logs and traces in one open-source tool, with the option to self-host for compliance needs."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "freemium", "free-plan", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "f79eaac2-65bc-4cc5-9c8f-74c78142ea6b",
+    "slug": "openreplay",
+    "name": "OpenReplay",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "OpenReplay is an open-source session replay and product analytics platform, self-hostable for free or available as a managed cloud service.",
+      "pricing_model": "Freemium",
+      "starting_price": "$199/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OpenReplay is an open-source session replay and product analytics platform, self-hostable for free or as managed cloud starting at $199/month.",
+      "features": [
+        { "title": "Session replay", "description": "Records sessions with error tracking, network activity and performance metrics." },
+        { "title": "Product analytics", "description": "Funnels, user journey analysis, trends and heatmaps." },
+        { "title": "Co-browsing", "description": "Real-time collaborative browsing with remote control, annotations and video calling." },
+        { "title": "Developer tools", "description": "Built-in debugging capabilities alongside session data." },
+        { "title": "Mobile analytics", "description": "Session and analytics support for mobile applications." },
+        { "title": "Self-hosted deployment", "description": "Open-source self-hosting option in addition to managed cloud." }
+      ],
+      "pros": [
+        "Free, self-hosted open-source option with no vendor lock-in",
+        "Managed cloud is SOC 2 Type II compliant",
+        "Co-browsing with remote control for live user support",
+        "Used by large companies including Amazon, Uber and NVIDIA"
+      ],
+      "cons": [
+        "Fully managed Dedicated plan starts at a relatively high $199/month",
+        "AI agent features are listed as \"coming soon,\" not yet available"
+      ],
+      "faqs": [
+        { "question": "Is OpenReplay free?", "answer": "Yes, the self-hosted open-source version is free to run on your own infrastructure." },
+        { "question": "How much does managed OpenReplay cost?", "answer": "The Dedicated cloud plan starts at $199/month ($0.276/hr)." },
+        { "question": "Does OpenReplay offer a free trial?", "answer": "Yes, a 7-day free trial of the Dedicated plan with no credit card required." },
+        { "question": "Is OpenReplay SOC 2 compliant?", "answer": "Yes, its managed cloud offering is SOC 2 Type II compliant." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted session replay", "description": "Run OpenReplay on your own infrastructure for full data control.", "audience": "Engineering teams with data residency needs" },
+        { "title": "Live co-browsing support", "description": "Join and control a user's live session to resolve issues in real time.", "audience": "Customer support teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open-Source (Self-Hosted)", "price": "Free", "billing_cycle": null, "features": ["Session Replay", "Developer Tools", "Product Analytics", "Co-Browsing", "Spot"] },
+        { "plan_name": "Dedicated (Managed Cloud)", "price": "$199/month ($0.276/hr)", "billing_cycle": "monthly", "features": ["Dedicated VM in separate VPC", "No limits on users/recordings/retention", "SSO", "Custom data retention", "50 region options"] },
+        { "plan_name": "Enterprise (Self-Hosted at Scale)", "price": "Custom", "billing_cycle": null, "features": ["Multi-year volume pricing", "SAML/SCIM provisioning", "Audit logging", "Dedicated support"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is OpenReplay?", "level": 2, "paragraphs": [
+          "OpenReplay is an open-source session replay and product analytics platform that lets teams see how users interact with their apps, including errors, network activity and performance.",
+          "It can be self-hosted for free or run as a fully managed, SOC 2 Type II compliant cloud service starting at $199/month."
+        ]},
+        { "id": "who-its-for", "heading": "Who OpenReplay is for", "level": 2, "paragraphs": [
+          "It suits engineering, product and support teams that want session replay and analytics with the option to self-host for privacy or compliance reasons."
+        ]}
+      ],
+      "tags": ["web-app", "freemium", "free-plan", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "21c299f2-5f17-4888-a6ff-d3d047043f79",
+    "slug": "fullstory",
+    "name": "FullStory",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "FullStory is a digital experience analytics platform combining session replay, product analytics and AI-driven behavioral insights for web and mobile.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Atlanta, United States",
+      "languages": [],
+      "seo_meta_description": "FullStory is an AI-powered digital experience analytics platform with session replay, product analytics and StoryAI insights for web and mobile apps.",
+      "features": [
+        { "title": "Session replay", "description": "Records user interactions for detailed review of individual sessions." },
+        { "title": "Product analytics", "description": "Tracks usage patterns and conversion funnels." },
+        { "title": "Heatmaps", "description": "Visualizes where users click and interact on a page." },
+        { "title": "Mobile analytics", "description": "Monitors app-based user behavior." },
+        { "title": "Guides and surveys", "description": "Delivers in-product guidance and collects user feedback." },
+        { "title": "StoryAI", "description": "AI agents that turn behavioral data into insights teams can query directly." }
+      ],
+      "pros": [
+        "Free forever plan (FullstoryFree) with 30,000 monthly sessions and 12-month retention",
+        "AI-driven insight generation via StoryAI",
+        "Used by large enterprise customers including Adobe, Duolingo and JetBlue",
+        "Offices across multiple regions: Atlanta, London, Sydney and Singapore"
+      ],
+      "cons": [
+        "Paid plan pricing isn't published; you must request a quote and demo",
+        "Founding year is not disclosed on the official site"
+      ],
+      "faqs": [
+        { "question": "Does FullStory have a free plan?", "answer": "Yes, FullstoryFree offers 30,000 monthly sessions and 12 months of retention for up to 10 users, no credit card required." },
+        { "question": "How much do FullStory's paid plans cost?", "answer": "Pricing is custom; you need to request pricing and a demo from FullStory." },
+        { "question": "What is StoryAI?", "answer": "FullStory's AI feature that transforms behavioral data into insights teams can query in natural language." },
+        { "question": "Where is FullStory headquartered?", "answer": "Atlanta, United States, with offices in London, Sydney and Singapore." }
+      ],
+      "use_cases": [
+        { "title": "Conversion funnel diagnosis", "description": "Identify where users encounter friction in signup or checkout flows.", "audience": "Product and UX teams" },
+        { "title": "AI-assisted behavioral analysis", "description": "Use StoryAI to query behavioral data and surface insights at enterprise scale.", "audience": "Enterprise product analytics teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Business", "price": "Custom (contact sales)", "billing_cycle": null, "features": ["Product analytics", "Qualitative insights"] },
+        { "plan_name": "Advanced", "price": "Custom (contact sales)", "billing_cycle": null, "features": ["Trend discovery", "Roadmap planning", "Funnel analysis at scale"] },
+        { "plan_name": "Enterprise", "price": "Custom (contact sales)", "billing_cycle": null, "features": ["Predictive modeling", "Data for GenAI/LLM use"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is FullStory?", "level": 2, "paragraphs": [
+          "FullStory is a digital experience analytics platform that captures real user behavior on web and mobile products, combining session replay, product analytics, heatmaps and in-product guides.",
+          "Its StoryAI agents analyze behavioral data to surface insights teams can query directly, and a free forever plan (FullstoryFree) is available alongside custom-priced paid tiers."
+        ]},
+        { "id": "who-its-for", "heading": "Who FullStory is for", "level": 2, "paragraphs": [
+          "It's built for product, UX and analytics teams at companies ranging from startups on the free plan to large enterprises needing predictive modeling and GenAI data use."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "3e44be36-57f9-4e4f-b5f8-22e6508f69b4",
+    "slug": "mouseflow",
+    "name": "Mouseflow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mouseflow is a behavior analytics platform offering session replay, heatmaps, funnels and form analytics to help teams improve website conversion.",
+      "pricing_model": "Freemium",
+      "starting_price": "$25/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Denmark",
+      "languages": [],
+      "seo_meta_description": "Mouseflow offers session replay, heatmaps, funnels and form analytics with a free forever plan and paid tiers starting at $25/month.",
+      "features": [
+        { "title": "Session replay", "description": "Captures every click, scroll, hesitation and rage click in high-fidelity recordings." },
+        { "title": "Website heatmaps", "description": "Visual representations of where users click and how far they scroll." },
+        { "title": "Friction detection", "description": "Flags moments where users struggle or encounter issues." },
+        { "title": "Conversion funnels", "description": "Shows where users abandon purchase or conversion flows." },
+        { "title": "Journey analytics", "description": "Visualizes user paths across a website." },
+        { "title": "Form analytics", "description": "Reveals why users abandon forms." },
+        { "title": "Mina AI", "description": "Built-in AI that offers real-time guidance on sessions and heatmaps." },
+        { "title": "MCP server", "description": "Lets AI assistants query user behavior data directly." }
+      ],
+      "pros": [
+        "Free forever plan with no credit card required",
+        "100% session recording with no sampling",
+        "Unlimited users included on every pricing tier",
+        "14-day free trial and a 14-day money-back guarantee on annual plans"
+      ],
+      "cons": [
+        "Free plan is limited to 500 sessions/month and 1-month retention",
+        "Multiple projects and funnels require the Advanced or Premium tiers"
+      ],
+      "faqs": [
+        { "question": "Does Mouseflow have a free plan?", "answer": "Yes, free forever for 500 sessions/month with 1-month retention." },
+        { "question": "What's the cheapest paid Mouseflow plan?", "answer": "The Essential plan starts at $25/month." },
+        { "question": "Does Mouseflow offer a free trial?", "answer": "Yes, a 14-day free trial on paid plans with no credit card required." },
+        { "question": "Where is Mouseflow based?", "answer": "Denmark." },
+        { "question": "Does Mouseflow have AI features?", "answer": "Yes, Mina AI provides real-time guidance on sessions and heatmaps." }
+      ],
+      "use_cases": [
+        { "title": "Checkout abandonment analysis", "description": "Use session replay and funnels to diagnose why shoppers abandon checkout.", "audience": "E-commerce conversion teams" },
+        { "title": "UX prioritization", "description": "Use heatmaps and friction detection to prioritize UX fixes.", "audience": "Product and UX teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["500 monthly sessions", "1 website project", "1 conversion funnel", "1 month retention"] },
+        { "plan_name": "Essential", "price": "$25/month", "billing_cycle": "monthly", "features": ["5,000 monthly sessions", "1 website project", "1 conversion funnel", "3 months retention"] },
+        { "plan_name": "Advanced", "price": "$109/month", "billing_cycle": "monthly", "features": ["25,000 monthly sessions", "2 website projects", "5 conversion funnels", "6 months retention"] },
+        { "plan_name": "Premium", "price": "$319/month", "billing_cycle": "monthly", "features": ["100,000 monthly sessions", "5 website projects", "10 conversion funnels", "12 months retention"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom session limits and features"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Mouseflow?", "level": 2, "paragraphs": [
+          "Mouseflow is a behavior analytics platform that records 100% of sessions and combines heatmaps, funnels, journey analytics and form analytics to help teams find friction and improve conversion.",
+          "Mina AI provides real-time guidance on recordings and heatmaps, and a free forever plan is available alongside paid tiers starting at $25/month."
+        ]},
+        { "id": "who-its-for", "heading": "Who Mouseflow is for", "level": 2, "paragraphs": [
+          "It's suited to marketing, product and e-commerce teams that want to understand and fix where users struggle or drop off on their site."
+        ]}
+      ],
+      "tags": ["ai", "web-app", "freemium", "free-plan", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "c3f373eb-198a-458a-b85b-10b325d6c454",
+    "slug": "smartlook",
+    "name": "Smartlook",
+    "status": "skip",
+    "skip_reason": "Smartlook was acquired by Cisco and is being wound down into Splunk Observability Cloud as 'Digital Experience Analytics.' Its own site states End-of-Sale was May 31, 2026 (already passed) and the platform will be fully decommissioned by September 30, 2027 — it is no longer being actively sold as a standalone product under this name, so it doesn't meet the bar for normal enrichment.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "11db7b95-8347-45df-a13b-c3e8b6ea53f7",
+    "slug": "fly-io",
+    "name": "Fly.io",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Fly.io is a developer cloud platform for deploying apps as VMs (Fly Machines) in regions close to users, with usage-based pricing.",
+      "pricing_model": "Paid",
+      "starting_price": null,
+      "founded_year": 2017,
+      "company_size": "50+ employees",
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Fly.io is a developer cloud for deploying apps as VMs near your users worldwide, with usage-based pricing and managed Postgres, storage and networking.",
+      "features": [
+        { "title": "Fly Machines", "description": "Customizable VMs with shared or performance CPU options, deployed in regions close to users." },
+        { "title": "Managed Postgres", "description": "Database hosting with automatic backups." },
+        { "title": "Fly Volumes", "description": "Persistent local storage with volume snapshots." },
+        { "title": "Global networking", "description": "Anycast IP load balancing with custom domains and TLS support." },
+        { "title": "Fly Kubernetes (FKS)", "description": "Managed Kubernetes container orchestration." },
+        { "title": "Extensions", "description": "Third-party add-ons such as Tigris Object Storage and Upstash Redis." }
+      ],
+      "pros": [
+        "Deploys apps as VMs in regions close to end users worldwide",
+        "Usage-based pricing with no complex tiered plans",
+        "Managed Postgres, Kubernetes and storage options built in",
+        "Distributed, remote-first team operating since 2017"
+      ],
+      "cons": [
+        "No published flat starting price; billing depends on machine size, storage and data transfer",
+        "Legacy free allowances (shared-cpu VMs and storage) have been discontinued",
+        "Higher-touch support beyond community tier is a separate paid add-on"
+      ],
+      "faqs": [
+        { "question": "How is Fly.io priced?", "answer": "Usage-based, billed per organization for Machines, storage, snapshots and data transfer." },
+        { "question": "Does Fly.io have a free tier?", "answer": "Previous free allowances (e.g. 3 shared-cpu-1x VMs, 3GB storage) have been discontinued; pricing is now pay-as-you-go." },
+        { "question": "When was Fly.io founded?", "answer": "2017." },
+        { "question": "Does Fly.io offer paid support plans?", "answer": "Yes, a 'Serious Support' plan starting at $29/month gives access to dedicated engineers." }
+      ],
+      "use_cases": [
+        { "title": "Global app deployment", "description": "Deploy containerized apps as VMs in regions near end users to reduce latency.", "audience": "Backend engineering teams" },
+        { "title": "Managed database hosting", "description": "Run managed Postgres alongside application workloads on the same platform.", "audience": "Teams needing integrated databases" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Pay-as-you-go", "price": "Usage-based ($0.0028-$0.3577/hour per Machine)", "billing_cycle": null, "features": ["Started Machines billed hourly", "Stopped Machines $0.15/GB rootfs/month", "Volumes $0.15/GB/month", "Volume Snapshots $0.08/GB/month (first 10GB free)", "Data Transfer $0.02-$0.12/GB"] },
+        { "plan_name": "Serious Support", "price": "$29/month", "billing_cycle": "monthly", "features": ["Access to dedicated engineers"] },
+        { "plan_name": "HIPAA Compliance Package", "price": "$99/month", "billing_cycle": "monthly", "features": ["BAAs and SOC2 documentation for HIPAA workloads"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Fly.io?", "level": 2, "paragraphs": [
+          "Fly.io is a developer-focused cloud platform for deploying applications as VMs (Fly Machines) in regions close to end users, with managed Postgres, persistent storage, global load balancing and Kubernetes support.",
+          "Pricing is entirely usage-based rather than tiered plans, and the company has operated as a distributed, remote-first team since 2017."
+        ]},
+        { "id": "who-its-for", "heading": "Who Fly.io is for", "level": 2, "paragraphs": [
+          "It's aimed at developers and backend teams who want to run apps and databases physically close to their users worldwide without managing traditional cloud infrastructure directly."
+        ]}
+      ],
+      "tags": ["web-app"]
+    }
+  }
+]

@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, ShieldOff, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, GitMerge, Upload, UploadCloud, Building2, MailOpen, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, Bell, Link2 } from 'lucide-react';
+import { ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, ShieldOff, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, GitMerge, GitCompare, Upload, UploadCloud, Building2, MailOpen, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, Bell, Link2, Compass, PlusCircle, ShieldCheck, Plug, PlayCircle, UserCog, MousePointerClick } from 'lucide-react';
 import { AdminTool } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
+  PlayCircle: <PlayCircle className="w-5 h-5" />,
+  UserCog: <UserCog className="w-5 h-5" />,
+  GitCompare: <GitCompare className="w-5 h-5" />,
+  MousePointerClick: <MousePointerClick className="w-5 h-5" />,
   Edit2: <Edit2 className="w-5 h-5" />,
   FileJson: <FileJson className="w-5 h-5" />,
   Image: <Image className="w-5 h-5" />,
@@ -37,6 +41,10 @@ const ICON_MAP: Record<string, JSX.Element> = {
   EyeOff: <EyeOff className="w-5 h-5" />,
   Bell: <Bell className="w-5 h-5" />,
   Link2: <Link2 className="w-5 h-5" />,
+  Compass: <Compass className="w-5 h-5" />,
+  PlusCircle: <PlusCircle className="w-5 h-5" />,
+  ShieldCheck: <ShieldCheck className="w-5 h-5" />,
+  Plug: <Plug className="w-5 h-5" />,
 };
 
 const GROUP_STYLE: Record<string, { icon: string; badge: string }> = {

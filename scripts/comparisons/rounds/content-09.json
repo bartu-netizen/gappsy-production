@@ -1,0 +1,694 @@
+[
+  {
+    "slug": "algolia-vs-meilisearch",
+    "tool_a_id": "1da597ed-cb15-440d-b621-139ce7ffa976",
+    "tool_a_name": "Algolia",
+    "tool_b_id": "7d00f455-f1c1-4f08-8b80-9aa4fcbc5ec0",
+    "tool_b_name": "Meilisearch",
+    "content": {
+      "verdict": "Algolia is a heavily enterprise-proven AI search platform (18,000+ customers, a three-time Gartner Magic Quadrant Leader, and broad compliance certifications) whose more advanced AI ranking features sit behind its pricier Grow Plus and Elevate tiers, while Meilisearch is a fully open-source engine that can be self-hosted for free or run on a published-price Cloud plan, with its most advanced merchandising and personalization features reserved for a custom Enterprise tier. Neither is a strict upgrade over the other — it depends on whether you need Algolia's enterprise track record and integrations or Meilisearch's open-source flexibility.",
+      "bestForToolA": "Teams already operating at scale who need a search vendor with established enterprise credentials (SOC 2 Type 2, ISO 27001, GDPR, CCPA), pre-built integrations with platforms like Shopify, Salesforce, Adobe, and AWS, and are comfortable with usage-based pricing that scales with request and record volume.",
+      "bestForToolB": "Teams that want to self-host their search infrastructure for free, need multimodal search across images, video, and audio alongside full-text and semantic search, or want SDK coverage across 15+ languages plus React, Vue, and Angular integrations without committing to an annual enterprise contract.",
+      "whoNeedsBoth": "Organizations evaluating search vendors as part of a migration or vendor-diversification strategy — for example running Meilisearch self-hosted in a lower environment while keeping Algolia in production for its enterprise SLAs and compliance certifications — should expect to compare both directly rather than treat one as a drop-in default.",
+      "keyDifferences": [
+        {
+          "title": "Open-source availability",
+          "toolA": "Algolia is not offered as an open-source, self-hostable product — its Build plan is free but still runs on Algolia's hosted infrastructure.",
+          "toolB": "Meilisearch is fully open source and self-hostable at no cost, with 58,600+ GitHub stars.",
+          "whyItMatters": "Determines whether a team can run the engine on its own infrastructure or must rely on the vendor's hosted service.",
+          "benefitsWho": "Engineering teams with data residency requirements or a preference for owning their infrastructure."
+        },
+        {
+          "title": "Where advanced AI ranking sits in the pricing tiers",
+          "toolA": "NeuralSearch, AI Synonyms, and AI Ranking are gated behind the pricier Grow Plus plan, not included in the base Grow plan.",
+          "toolB": "Semantic/hybrid search and vector storage for RAG are part of the core product rather than a separate paid tier (advanced merchandising and personalization are reserved for Enterprise).",
+          "whyItMatters": "Budgeting for AI-powered search requires knowing which tier unlocks the features you actually need.",
+          "benefitsWho": "Teams evaluating total cost of ownership before committing to a plan."
+        },
+        {
+          "title": "Compliance and market validation",
+          "toolA": "Holds SOC 2 Type 2, ISO 27001, GDPR, and CCPA certifications, serves 18,000+ customers in 150+ countries, and has been named a Gartner Magic Quadrant Leader for Search and Product Discovery for three consecutive years.",
+          "toolB": "Compliance (SOC 2, SSO SAML) is documented only on the Enterprise tier; broad customer-count and analyst-recognition figures are not documented in Meilisearch's facts.",
+          "whyItMatters": "Compliance-sensitive buyers such as finance, healthcare, or large enterprise often require documented certifications before procurement.",
+          "benefitsWho": "Enterprise buyers and procurement/security teams."
+        },
+        {
+          "title": "Multimodal and federated search",
+          "toolA": "Offers AI search & retrieval, personalization, and generative (RAG) experiences within the search UI, plus an Agent Studio for building AI agents on indexed data.",
+          "toolB": "Adds multimodal search across images, video, and audio, and federated search across multiple data sources, alongside vector storage for RAG.",
+          "whyItMatters": "Determines which non-text content types and cross-source query patterns are supported natively.",
+          "benefitsWho": "Product teams building search across mixed media, such as marketplaces or media libraries."
+        },
+        {
+          "title": "Trial and pricing transparency",
+          "toolA": "Grow and Grow Plus plans require no annual contract and publish per-1,000-request pricing; Elevate requires an annual contract with custom pricing.",
+          "toolB": "Cloud offers a 14-day free trial with no credit card required, with published pay-as-you-go pricing starting at $20/month; Enterprise is custom/quote-only.",
+          "whyItMatters": "Affects how easily a team can budget before committing.",
+          "benefitsWho": "Smaller teams and solo developers evaluating search vendors before committing budget."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Search Capabilities",
+          "rows": [
+            { "feature": "AI / semantic search", "toolA": "available", "toolB": "available", "note": "Algolia's NeuralSearch/AI Ranking require the Grow Plus plan" },
+            { "feature": "Multimodal search (image, video, audio)", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Federated / multi-source search", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Personalization & merchandising", "toolA": "available", "toolB": "limited", "note": "Meilisearch reserves merchandising/personalization for its Enterprise tier" }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            { "feature": "Self-hosted / open-source option", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Free forever tier", "toolA": "available", "toolB": "limited", "note": "Algolia's Build plan is free forever; Meilisearch Cloud offers only a 14-day free trial (self-hosting is free indefinitely)" },
+            { "feature": "Published starting price", "toolA": "not-documented", "toolB": "available", "note": "$20/month Cloud pay-as-you-go" },
+            { "feature": "Enterprise / custom tier", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Compliance & Enterprise Trust",
+          "rows": [
+            { "feature": "SOC 2 certification", "toolA": "available", "toolB": "limited", "note": "Documented only for Meilisearch's Enterprise tier" },
+            { "feature": "ISO 27001 / GDPR / CCPA", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Analyst recognition (e.g. Gartner)", "toolA": "available", "toolB": "not-documented" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Algolia open source?", "answer": "No — Algolia's facts don't describe an open-source or self-hosted option; it's a hosted platform with a free Build plan (10K search requests/month, 1M records, no credit card required)." },
+        { "question": "Is Meilisearch open source?", "answer": "Yes, Meilisearch is fully open source and self-hostable, with 58,600+ GitHub stars." },
+        { "question": "Which one has a free plan?", "answer": "Both offer a way to start for free — Algolia's Build plan is free forever with no credit card, while Meilisearch can be self-hosted for free or trialed on Cloud for 14 days without a credit card." },
+        { "question": "Does either platform support AI/semantic search?", "answer": "Yes — Algolia's NeuralSearch and AI Ranking are available starting on the Grow Plus plan, while Meilisearch includes semantic, hybrid, and vector search for RAG as part of its core feature set." },
+        { "question": "Which has more documented compliance certifications?", "answer": "Algolia documents SOC 2 Type 2, ISO 27001, GDPR, and CCPA certifications plus Gartner Magic Quadrant Leader recognition; Meilisearch documents SOC 2 and SSO SAML only on its Enterprise tier." },
+        { "question": "Does Meilisearch support multimodal search?", "answer": "Yes, Meilisearch supports search across images, video, and audio content in addition to full-text and semantic search; this isn't documented for Algolia." }
+      ]
+    }
+  },
+  {
+    "slug": "meilisearch-vs-typesense",
+    "tool_a_id": "7d00f455-f1c1-4f08-8b80-9aa4fcbc5ec0",
+    "tool_a_name": "Meilisearch",
+    "tool_b_id": "09b08922-47a6-4af9-bab1-b845aa9a15c7",
+    "tool_b_name": "Typesense",
+    "content": {
+      "verdict": "Both are open-source, self-hostable search engines with typo-tolerant and vector/hybrid search, so the decision often comes down to community size and pricing transparency — Meilisearch has a larger open-source community (58,600+ GitHub stars) and a published Cloud starting price, while Typesense has a smaller community (25,000 GitHub stars, by its own account) and Cloud pricing that is usage-based without a published flat starting price.",
+      "bestForToolA": "Teams that want multimodal search across images, video, and audio alongside full-text and semantic search, plus a documented Cloud starting price of $20/month and a 14-day free trial with no credit card.",
+      "bestForToolB": "Teams that need multi-tenant API keys to scope search access per customer or tenant, or want to fully self-host and manage infrastructure themselves without being tied to a specific hosted pricing tier.",
+      "whoNeedsBoth": "Teams building a search proof-of-concept who want to benchmark both open-source engines side by side before choosing a production home should expect to self-host trial instances of each, since both are free and open source to run locally.",
+      "keyDifferences": [
+        {
+          "title": "Community size and ecosystem maturity",
+          "toolA": "58,600+ GitHub stars.",
+          "toolB": "25,000 GitHub stars, explicitly noted in its own cons as smaller than incumbents like Algolia or Elasticsearch.",
+          "whyItMatters": "Community size can correlate with plugin availability, community support responsiveness, and long-term project momentum.",
+          "benefitsWho": "Teams weighing long-term platform risk before standardizing on an open-source search engine."
+        },
+        {
+          "title": "Multimodal search support",
+          "toolA": "Supports multimodal search across images, video, and audio content.",
+          "toolB": "Not documented — Typesense's facts describe keyword, vector, and hybrid text search but no multimodal capability.",
+          "whyItMatters": "Determines whether the engine can index and search non-text media natively.",
+          "benefitsWho": "Teams building search over media libraries or marketplaces with image or video content."
+        },
+        {
+          "title": "Multi-tenant API key scoping",
+          "toolA": "Not documented as a distinct feature.",
+          "toolB": "Offers multi-tenant API keys to scope search access per tenant or customer.",
+          "whyItMatters": "Important for SaaS products that need to isolate search access by customer account.",
+          "benefitsWho": "Multi-tenant SaaS builders."
+        },
+        {
+          "title": "Cloud pricing transparency",
+          "toolA": "Publishes a Cloud starting price of $20/month (pay-as-you-go) with a 14-day free trial, no credit card required.",
+          "toolB": "Typesense Cloud pricing is usage-based with no published flat starting price, per its own cons.",
+          "whyItMatters": "Affects how easily a team can budget before committing.",
+          "benefitsWho": "Smaller teams evaluating hosted options without wanting to request a custom quote."
+        },
+        {
+          "title": "SDK and language coverage",
+          "toolA": "SDKs for 15+ programming languages plus framework integrations for React, Vue, and Angular.",
+          "toolB": "Official SDKs for ten-plus languages including JS, Python, PHP, Ruby, and Go.",
+          "whyItMatters": "Broader SDK coverage reduces integration friction for teams on less common language stacks.",
+          "benefitsWho": "Engineering teams with polyglot stacks."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Search Capabilities",
+          "rows": [
+            { "feature": "Typo tolerance", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Semantic / vector search", "toolA": "available", "toolB": "available" },
+            { "feature": "Multimodal search", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Federated search", "toolA": "available", "toolB": "available" },
+            { "feature": "Multi-tenant API keys", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Faceting, filtering, geo-search", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            { "feature": "Self-hosted / open source", "toolA": "available", "toolB": "available" },
+            { "feature": "Published Cloud starting price", "toolA": "available", "toolB": "not-documented", "note": "Meilisearch publishes $20/month; Typesense Cloud is usage-based with no flat published price" },
+            { "feature": "Free trial (no credit card)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Named Enterprise/custom tier", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "SDKs & Community",
+          "rows": [
+            { "feature": "Language SDK coverage", "toolA": "available", "toolB": "available", "note": "Meilisearch: 15+ languages + React/Vue/Angular; Typesense: ten-plus languages including JS, Python, PHP, Ruby, Go" },
+            { "feature": "GitHub community size", "toolA": "available", "toolB": "available", "note": "Meilisearch: 58.6k+ stars; Typesense: 25k stars" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Are both Meilisearch and Typesense open source?", "answer": "Yes, both are fully open source and can be self-hosted for free." },
+        { "question": "Which has a bigger open-source community?", "answer": "Meilisearch, with 58,600+ GitHub stars compared to Typesense's 25,000 stars." },
+        { "question": "Does either support multimodal (image/video) search?", "answer": "Meilisearch documents multimodal search across images, video, and audio; this isn't documented for Typesense." },
+        { "question": "Which one publishes a flat Cloud starting price?", "answer": "Meilisearch publishes a Cloud starting price of $20/month; Typesense Cloud pricing is usage-based with no published flat starting price." },
+        { "question": "Does Typesense support multi-tenancy?", "answer": "Yes, Typesense offers multi-tenant API keys to scope search access per tenant or customer." },
+        { "question": "What languages have official SDKs?", "answer": "Meilisearch supports 15+ languages plus React, Vue, and Angular integrations; Typesense supports ten-plus languages including JS, Python, PHP, Ruby, and Go." }
+      ]
+    }
+  },
+  {
+    "slug": "appwrite-vs-convex",
+    "tool_a_id": "29a999ee-1d55-4fa7-a5bf-265fba6c2681",
+    "tool_a_name": "Appwrite",
+    "tool_b_id": "fe42bb0d-0769-4be9-8240-7ea8c6d5d159",
+    "tool_b_name": "Convex",
+    "content": {
+      "verdict": "Appwrite and Convex are both freemium backend platforms starting around $25/month, but they solve different problems — Appwrite bundles auth, databases, storage, functions, messaging, realtime, and site hosting into one open-source platform supporting 30+ languages and frameworks, while Convex is a TypeScript-first reactive database and function platform built around end-to-end type safety and built-in AI coding agent integrations. Pricing structure also differs: Appwrite's Pro tier is a flat $25/month, while Convex's Professional tier bills $25 per developer seat per month.",
+      "bestForToolA": "Teams building across multiple languages and frameworks (30+ supported) that want a single open-source platform covering auth, database, storage, serverless functions, messaging, and even site hosting, with named production users like The Times of India, IBM, and American Airlines as reference points.",
+      "bestForToolB": "TypeScript-centric teams that want end-to-end type safety from database to client, reactive real-time data sync, and built-in integrations with AI coding agents like Claude Code and Codex.",
+      "whoNeedsBoth": "Teams running polyglot backend services alongside a TypeScript-heavy real-time frontend feature might use Appwrite for general backend needs like messaging and broad storage while using Convex specifically for a reactive, type-safe data layer in a TypeScript client app.",
+      "keyDifferences": [
+        {
+          "title": "Language and framework breadth vs. TypeScript specialization",
+          "toolA": "Supports 30+ frameworks and languages including React, Next.js, Vue, Flutter, Node.js, Python, PHP, Swift, and Kotlin.",
+          "toolB": "Built specifically around TypeScript, with end-to-end type safety enforced from the database to the client.",
+          "whyItMatters": "Determines whether the backend fits a polyglot team or a TypeScript-only stack.",
+          "benefitsWho": "Teams choosing a backend to match their existing language stack."
+        },
+        {
+          "title": "Per-seat vs. flat pricing on paid tiers",
+          "toolA": "Pro plan is a flat $25/month covering 2TB bandwidth, 150GB storage, and unlimited databases/functions.",
+          "toolB": "Professional plan bills $25 per developer per month (1-20 seats), so costs scale with team size.",
+          "whyItMatters": "Growing engineering teams pay more on Convex's per-seat model as headcount increases, while Appwrite's flat fee doesn't scale with team size.",
+          "benefitsWho": "Teams budgeting for growing engineering headcount."
+        },
+        {
+          "title": "Compliance certifications on lower tiers",
+          "toolA": "SOC-2, HIPAA, and BAA compliance require the custom Enterprise plan.",
+          "toolB": "SOC 2 Type II certification and HIPAA compliance are documented at the platform level, not gated to a specific custom tier.",
+          "whyItMatters": "Affects how early a compliance-sensitive team can adopt the platform without negotiating an enterprise contract.",
+          "benefitsWho": "Startups in regulated industries such as health tech or fintech needing compliance sooner."
+        },
+        {
+          "title": "Product surface area",
+          "toolA": "Bundles Auth, Databases, Storage, Functions, Messaging, Realtime, and Sites (an open-source Vercel-style hosting alternative) in one platform.",
+          "toolB": "Focuses on a reactive database, serverless functions, real-time sync, file storage, plus reusable Convex Components.",
+          "whyItMatters": "Appwrite covers more distinct product categories, like messaging and site hosting, that Convex doesn't document.",
+          "benefitsWho": "Teams wanting to consolidate more infrastructure under a single vendor."
+        },
+        {
+          "title": "Free tier constraints",
+          "toolA": "Free plan projects are paused after 1 week of inactivity and limited to 2 projects.",
+          "toolB": "Free & Starter tier (1-6 developer seats) includes reactive database, file storage, and vector search with pay-as-you-go overage, with no documented inactivity pause.",
+          "whyItMatters": "Determines whether a side project or prototype risks being paused on the free tier.",
+          "benefitsWho": "Solo developers and early-stage prototypes."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Backend Services",
+          "rows": [
+            { "feature": "Authentication", "toolA": "available", "toolB": "available", "note": "Appwrite includes MFA support" },
+            { "feature": "Database", "toolA": "available", "toolB": "available", "note": "Convex's is reactive with real-time sync" },
+            { "feature": "File storage", "toolA": "available", "toolB": "available" },
+            { "feature": "Serverless functions", "toolA": "available", "toolB": "available", "note": "Convex uses Node.js actions" },
+            { "feature": "Messaging", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Site hosting", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Developer Experience",
+          "rows": [
+            { "feature": "End-to-end type safety", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Vector/text search included free", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI coding agent integrations", "toolA": "not-documented", "toolB": "available", "note": "Convex documents Claude Code and Codex integrations" },
+            { "feature": "Open source", "toolA": "available", "toolB": "not-documented", "note": "Convex documents open-source \"Convex Components\" but not the full platform as open source" }
+          ]
+        },
+        {
+          "group": "Pricing & Compliance",
+          "rows": [
+            { "feature": "Free tier available", "toolA": "limited", "toolB": "available", "note": "Appwrite's free tier is capped at 2 projects and paused after 1 week of inactivity" },
+            { "feature": "Flat-rate paid tier", "toolA": "available", "toolB": "limited", "note": "Convex Professional bills per developer seat ($25/dev/month) rather than flat" },
+            { "feature": "SOC 2 / HIPAA compliance", "toolA": "limited", "toolB": "available", "note": "Appwrite requires the custom Enterprise plan; Convex documents this at the Professional tier" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Appwrite open source?", "answer": "Yes, Appwrite is an open-source backend platform." },
+        { "question": "Does Convex support real-time features?", "answer": "Yes, Convex has a reactive database with automatic real-time synchronization across connected clients." },
+        { "question": "How does pricing differ between the two?", "answer": "Appwrite's Pro plan is a flat $25/month; Convex's Professional plan is $25 per developer seat per month, so cost scales with team size." },
+        { "question": "Which platform integrates with AI coding agents?", "answer": "Convex documents built-in integrations for AI coding agents like Claude Code and Codex; this isn't documented for Appwrite." },
+        { "question": "Does Appwrite include messaging and hosting?", "answer": "Yes, Appwrite bundles a messaging service and a Sites feature, an open-source alternative to Vercel, alongside auth, databases, storage, functions, and realtime." },
+        { "question": "Are both HIPAA compliant?", "answer": "Convex documents HIPAA compliance and SOC 2 Type II certification at the platform level; Appwrite requires its custom Enterprise plan for SOC-2, HIPAA, and BAA compliance." }
+      ]
+    }
+  },
+  {
+    "slug": "appwrite-vs-pocketbase",
+    "tool_a_id": "29a999ee-1d55-4fa7-a5bf-265fba6c2681",
+    "tool_a_name": "Appwrite",
+    "tool_b_id": "e6c72275-7cb5-4d25-b407-ad1b09e419ab",
+    "tool_b_name": "PocketBase",
+    "content": {
+      "verdict": "Appwrite and PocketBase are both open-source backends, but they target very different scales — Appwrite is a freemium, multi-service platform (auth, database, storage, functions, messaging, realtime, site hosting) with a paid Pro tier and named enterprise customers, while PocketBase is a completely free, single-executable backend maintained primarily by one creator, with no official managed cloud hosting.",
+      "bestForToolA": "Teams that want a hosted or managed option, need messaging or site-hosting features, plan to scale past a hobby project, or want enterprise compliance (SOC-2, HIPAA, SSO) available via a custom plan.",
+      "bestForToolB": "Developers who want to self-host a single-executable backend with no external dependencies, don't need a managed cloud option, and are comfortable relying on a project maintained primarily by one creator.",
+      "whoNeedsBoth": "A team prototyping quickly with PocketBase for its zero-dependency simplicity, then migrating to Appwrite once they need managed hosting, messaging, or enterprise compliance, would use both at different project stages rather than simultaneously.",
+      "keyDifferences": [
+        {
+          "title": "Managed hosting availability",
+          "toolA": "Offers a hosted Free plan and paid Pro/Enterprise tiers in addition to self-hosting.",
+          "toolB": "Self-hosted only — no official managed cloud hosting is offered on the site.",
+          "whyItMatters": "Determines whether a team must operate its own servers or can rely on the vendor's infrastructure.",
+          "benefitsWho": "Teams without the DevOps capacity to run and maintain their own backend infrastructure."
+        },
+        {
+          "title": "Product scope",
+          "toolA": "Bundles auth, databases, storage, functions, messaging, realtime, and site hosting.",
+          "toolB": "Provides a realtime database, authentication (including OAuth2 for Google, Facebook, GitHub, GitLab), file storage, and an admin dashboard — no dedicated messaging or site-hosting product.",
+          "whyItMatters": "Affects how many separate tools a team needs to stitch together for a complete backend.",
+          "benefitsWho": "Teams wanting a single-vendor solution versus those needing only core data, auth, and storage primitives."
+        },
+        {
+          "title": "Project maintenance model",
+          "toolA": "Cites named production case studies (The Times of India, IBM, American Airlines) as evidence of organizational backing and scale.",
+          "toolB": "Built and maintained primarily by a single creator, which its own cons note may affect long-term support capacity.",
+          "whyItMatters": "Long-term project sustainability and support responsiveness can differ significantly between a company-backed platform and a single-maintainer project.",
+          "benefitsWho": "Teams evaluating vendor risk for production-critical systems."
+        },
+        {
+          "title": "Deployment footprint",
+          "toolA": "Runs as a platform with free and paid hosted tiers and a broader multi-service architecture.",
+          "toolB": "Ships as a single Go executable with no external dependencies to install.",
+          "whyItMatters": "A single-binary deployment is far simpler to run locally or on minimal infrastructure, such as a single VM or edge device.",
+          "benefitsWho": "Solo developers, small projects, and edge or embedded deployments."
+        },
+        {
+          "title": "Pricing",
+          "toolA": "Freemium with Free ($0, 2 projects, paused after 1 week inactivity), Pro ($25/month), and custom Enterprise tiers.",
+          "toolB": "Entirely free — no pricing plans are published since it's self-hosted only.",
+          "whyItMatters": "Affects total cost of ownership at different scales.",
+          "benefitsWho": "Budget-constrained projects versus teams wanting a paid support/SLA relationship."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Backend Services",
+          "rows": [
+            { "feature": "Realtime database", "toolA": "available", "toolB": "available" },
+            { "feature": "Authentication", "toolA": "available", "toolB": "available", "note": "Appwrite includes MFA; PocketBase includes OAuth2 for Google, Facebook, GitHub, GitLab" },
+            { "feature": "File storage", "toolA": "available", "toolB": "available", "note": "PocketBase supports local or S3-compatible storage with thumbnails" },
+            { "feature": "Admin dashboard", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Messaging", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Serverless functions", "toolA": "available", "toolB": "limited", "note": "PocketBase is extended via Go/JS hooks rather than a dedicated function service" },
+            { "feature": "Site hosting", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Deployment & Support",
+          "rows": [
+            { "feature": "Managed cloud hosting", "toolA": "available", "toolB": "unavailable" },
+            { "feature": "Self-hosting", "toolA": "available", "toolB": "available" },
+            { "feature": "Single-executable deployment", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Official SDKs", "toolA": "available", "toolB": "available", "note": "Appwrite: 30+ frameworks/languages; PocketBase: JS/TypeScript and Dart" }
+          ]
+        },
+        {
+          "group": "Pricing",
+          "rows": [
+            { "feature": "Free tier", "toolA": "limited", "toolB": "available", "note": "Appwrite's free tier caps at 2 projects and pauses after 1 week of inactivity; PocketBase is fully free" },
+            { "feature": "Paid managed tier", "toolA": "available", "toolB": "unavailable" },
+            { "feature": "Enterprise compliance (SOC-2, HIPAA, SSO)", "toolA": "available", "toolB": "not-documented" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is PocketBase free?", "answer": "Yes, PocketBase is open source and free to self-host." },
+        { "question": "Does Appwrite offer a free plan?", "answer": "Yes, but the Free plan is limited to 2 projects and projects are paused after 1 week of inactivity." },
+        { "question": "Can PocketBase be run in a managed cloud?", "answer": "No — PocketBase is self-hosted only, with no official managed cloud hosting offered." },
+        { "question": "What language is PocketBase built in?", "answer": "PocketBase is built with Go and distributed as a single executable." },
+        { "question": "Does PocketBase support OAuth login?", "answer": "Yes, it supports OAuth2 sign-in with Google, Facebook, GitHub, and GitLab in addition to email/password." },
+        { "question": "Which platform has messaging built in?", "answer": "Appwrite includes a dedicated messaging service; this isn't documented as a feature of PocketBase." }
+      ]
+    }
+  },
+  {
+    "slug": "turso-vs-xata",
+    "tool_a_id": "8f8c6456-68f6-4f02-bd51-cf48403d7a42",
+    "tool_a_name": "Turso",
+    "tool_b_id": "0dfbc077-2e6f-43bd-beb1-5237a10ecdd5",
+    "tool_b_name": "Xata",
+    "content": {
+      "verdict": "Turso and Xata both offer database branching, but on different engines and pricing models — Turso is a SQLite-based distributed database with flat tiered pricing starting at $4.99/month, built for provisioning per-user or per-agent databases with native vector search, while Xata is vanilla PostgreSQL with copy-on-write branching, priced via hourly pay-as-you-go compute and storage or a free, self-managed Open Source tier.",
+      "bestForToolA": "Teams that want to provision many small SQLite databases per user or per AI agent, need built-in vector search, or want predictable flat-tier pricing starting under $5/month.",
+      "bestForToolB": "Teams already standardized on PostgreSQL who want to clone production-scale databases in seconds for PR previews or AI agent isolation without duplicating storage, and are comfortable with hourly consumption-based billing.",
+      "whoNeedsBoth": "A team running a Postgres-based production application that also builds per-agent SQLite databases for an AI product feature would reasonably use Xata for its Postgres branching and Turso for lightweight per-agent database provisioning, rather than picking one for both use cases.",
+      "keyDifferences": [
+        {
+          "title": "Underlying database engine",
+          "toolA": "Built on SQLite, specifically a Rust-based, cloud-native rewrite.",
+          "toolB": "Runs unmodified upstream PostgreSQL rather than a forked engine.",
+          "whyItMatters": "Determines SQL dialect compatibility and which existing tooling and drivers a team can reuse.",
+          "benefitsWho": "Teams with an existing PostgreSQL or SQLite investment."
+        },
+        {
+          "title": "Pricing structure",
+          "toolA": "Flat, published tiers: Free ($0), Developer ($4.99/month), Scaler ($24.92/month), Pro ($416.58/month), Enterprise (custom).",
+          "toolB": "Pay-as-you-go hourly compute ($0.012/hr) plus storage ($0.28/GB/month), with instance tiers from $9/month to $1,121/month, or a free self-managed Open Source tier forever.",
+          "whyItMatters": "Flat tiers are easier to budget for; consumption-based pricing can scale more precisely with actual usage but is harder to predict.",
+          "benefitsWho": "Budgeting-conscious teams versus teams with highly variable workloads."
+        },
+        {
+          "title": "Branch wake-up speed",
+          "toolA": "Uses copy-on-write branching but doesn't document specific wake-up latency figures.",
+          "toolB": "Documents ~1 second wake-up on the managed Cloud tier (~10 seconds on the free Open Source tier) thanks to instant wake-up design.",
+          "whyItMatters": "Wake-up latency affects developer experience when spinning up ephemeral branches for previews or agents.",
+          "benefitsWho": "Teams relying heavily on ephemeral preview or branch environments."
+        },
+        {
+          "title": "Native vector search",
+          "toolA": "Includes native vector/similarity search built in for RAG and AI workflows.",
+          "toolB": "Not documented as a built-in feature in the facts provided.",
+          "whyItMatters": "Affects whether AI/RAG workloads can be handled without a separate vector database.",
+          "benefitsWho": "Teams building AI features that need embeddings storage alongside primary data."
+        },
+        {
+          "title": "Browser/edge runtime support",
+          "toolA": "Runs via WebAssembly and OPFS for in-browser use.",
+          "toolB": "Not documented as supporting in-browser execution.",
+          "whyItMatters": "Enables client-side or offline-first application architectures.",
+          "benefitsWho": "Teams building local-first or offline-capable apps."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Database Engine & Branching",
+          "rows": [
+            { "feature": "Base engine", "toolA": "available", "toolB": "available", "note": "Turso: SQLite (Rust rewrite); Xata: vanilla PostgreSQL" },
+            { "feature": "Copy-on-write branching", "toolA": "available", "toolB": "available" },
+            { "feature": "Scale-to-zero", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Native vector search", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Turso: 100 databases, 5GB storage, no credit card; Xata: Open Source tier free forever, self-managed" },
+            { "feature": "Published flat-rate paid tier", "toolA": "available", "toolB": "limited", "note": "Xata Cloud is priced hourly plus instance-tier storage, not a simple flat rate" },
+            { "feature": "Enterprise/custom tier", "toolA": "available", "toolB": "available", "note": "Xata's is called BYOC" }
+          ]
+        },
+        {
+          "group": "Platform Capabilities",
+          "rows": [
+            { "feature": "Browser/WASM support", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Multi-region replication/sync", "toolA": "available", "toolB": "available", "note": "Xata's is on Xata Cloud, AWS/GCP" },
+            { "feature": "Read replicas / point-in-time recovery", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Turso based on SQLite or PostgreSQL?", "answer": "Turso is based on SQLite — specifically a Rust-based, cloud-native rewrite of SQLite." },
+        { "question": "Does Xata run standard PostgreSQL?", "answer": "Yes, Xata runs 100% upstream PostgreSQL without significant modifications." },
+        { "question": "What's the cheapest paid plan for each?", "answer": "Turso's cheapest paid plan is the Developer plan at $4.99/month; Xata Cloud instance tiers start around $9/month plus hourly compute and storage charges." },
+        { "question": "Does Turso have a free plan?", "answer": "Yes, including 100 databases and 5GB storage with no credit card required." },
+        { "question": "Is Xata free to use?", "answer": "Yes, the Open Source tier is free forever for self-managed deployments." },
+        { "question": "Does Turso support vector search?", "answer": "Yes, native vector/similarity search is built in for AI and RAG workflows; this isn't documented for Xata." }
+      ]
+    }
+  },
+  {
+    "slug": "turso-vs-upstash",
+    "tool_a_id": "8f8c6456-68f6-4f02-bd51-cf48403d7a42",
+    "tool_a_name": "Turso",
+    "tool_b_id": "72cd024d-3900-490c-976d-ace69724ddbb",
+    "tool_b_name": "Upstash",
+    "content": {
+      "verdict": "Turso and Upstash are both serverless, edge-friendly data platforms, but they store different kinds of data — Turso is a distributed SQLite database with copy-on-write branching for per-user or per-agent provisioning, while Upstash is a serverless Redis, vector, and messaging platform (via QStash) billed per request. Choosing between them depends on whether the workload needs a relational SQLite database or a key-value/cache/queue layer.",
+      "bestForToolA": "Teams that need a relational, SQLite-compatible database per user or per AI agent, with built-in vector search and branching, and want flat tiered pricing starting at $4.99/month.",
+      "bestForToolB": "Teams that need a serverless Redis cache/store, a vector database, and asynchronous message queuing (QStash) from edge runtimes like Vercel Edge, Cloudflare Workers, or Fastly Edge, with pay-per-request pricing that scales to zero.",
+      "whoNeedsBoth": "An edge application that needs both a per-tenant relational database (Turso) and a serverless cache/queue layer for session data and background jobs (Upstash) would reasonably run both rather than substituting one for the other, since they serve different data-storage roles.",
+      "keyDifferences": [
+        {
+          "title": "Data model",
+          "toolA": "Relational, SQLite-compatible database with concurrent writes and copy-on-write branching.",
+          "toolB": "Key-value Redis store plus a separate vector database and QStash messaging/queueing product.",
+          "whyItMatters": "Determines whether the workload needs relational queries and branching, or key-value/cache/queue semantics.",
+          "benefitsWho": "Backend teams choosing the right data layer for their access patterns."
+        },
+        {
+          "title": "Messaging and async job processing",
+          "toolA": "Not documented as a feature.",
+          "toolB": "Includes QStash for message queuing and asynchronous job processing.",
+          "whyItMatters": "Removes the need for a separate queueing service for background jobs.",
+          "benefitsWho": "Teams building serverless functions that need reliable async task execution."
+        },
+        {
+          "title": "Database branching",
+          "toolA": "Offers copy-on-write database branching for fast environment creation and per-tenant/per-agent provisioning.",
+          "toolB": "Not documented as a feature.",
+          "whyItMatters": "Branching simplifies spinning up isolated environments for previews, tenants, or AI agents.",
+          "benefitsWho": "Teams building multi-tenant SaaS or per-agent AI provisioning."
+        },
+        {
+          "title": "Entry-level pricing",
+          "toolA": "Developer plan starts at $4.99/month with unlimited databases, 9GB storage, 2.5B rows read/month.",
+          "toolB": "Fixed 250MB plan starts at $10/month, or pay-as-you-go at $0.2 per 100K commands; production features like uptime SLA and multi-zone HA require a +$200/month Prod Pack add-on.",
+          "whyItMatters": "Affects entry cost and where production-grade reliability features sit in the pricing structure.",
+          "benefitsWho": "Cost-sensitive teams scoping their initial budget."
+        },
+        {
+          "title": "Headquarters transparency",
+          "toolA": "Headquarters not documented.",
+          "toolB": "Headquartered in California, United States.",
+          "whyItMatters": "Some procurement processes require documented company location for vendor risk assessment.",
+          "benefitsWho": "Enterprise procurement and security reviewers."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Data & Storage Model",
+          "rows": [
+            { "feature": "Relational/SQLite database", "toolA": "available", "toolB": "unavailable" },
+            { "feature": "Key-value/Redis store", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Vector database", "toolA": "available", "toolB": "available" },
+            { "feature": "Message queue / async jobs", "toolA": "not-documented", "toolB": "available", "note": "Upstash's QStash" },
+            { "feature": "Database branching", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Turso: 100 databases, 5GB storage, no credit card; Upstash: 256MB, 10GB bandwidth, 500K commands/month" },
+            { "feature": "Entry paid plan price", "toolA": "available", "toolB": "available", "note": "Turso $4.99/month; Upstash $10/month fixed or pay-as-you-go" },
+            { "feature": "Production HA/SLA", "toolA": "not-documented", "toolB": "limited", "note": "Requires Upstash's +$200/month Prod Pack add-on" },
+            { "feature": "Enterprise/custom tier", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Platform & Reach",
+          "rows": [
+            { "feature": "Edge runtime support", "toolA": "available", "toolB": "available", "note": "Turso via browser WASM/OPFS; Upstash via Vercel Edge, Cloudflare Workers, Fastly Edge" },
+            { "feature": "Multi-region replication", "toolA": "available", "toolB": "available" },
+            { "feature": "Headquarters documented", "toolA": "not-documented", "toolB": "available", "note": "Upstash: California, US" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Turso or Upstash offer a free tier?", "answer": "Both do — Turso's free tier includes 100 databases and 5GB storage with no credit card required; Upstash's free tier includes 256MB storage and 500K commands/month at $0." },
+        { "question": "What kind of database is Turso?", "answer": "Turso is a SQLite-based distributed database with native vector search and copy-on-write branching." },
+        { "question": "What products does Upstash offer?", "answer": "Redis, Vector, QStash, Workflow, and Search." },
+        { "question": "Where is Upstash based?", "answer": "Upstash is founded and based in California." },
+        { "question": "Does Turso support database branching?", "answer": "Yes, Turso offers copy-on-write branching for fast environment creation; this isn't documented for Upstash." },
+        { "question": "Do production features cost extra on Upstash?", "answer": "Yes, production features like uptime SLA and multi-zone high availability require the +$200/month Prod Pack add-on." }
+      ]
+    }
+  },
+  {
+    "slug": "tidb-cloud-vs-yugabytedb",
+    "tool_a_id": "992455d6-9786-48b9-a8ac-bca905448c06",
+    "tool_a_name": "TiDB Cloud",
+    "tool_b_id": "78eada95-da81-4cfa-9a33-f04a9d8c15e0",
+    "tool_b_name": "YugabyteDB",
+    "content": {
+      "verdict": "TiDB Cloud and YugabyteDB are both distributed SQL databases with free entry points and vector search support for AI workloads, but they differ in SQL compatibility and pricing model — TiDB Cloud is MySQL-compatible with a genuinely free Starter allowance and pay-as-you-go Request Unit pricing, while YugabyteDB is PostgreSQL-compatible with a free open-source download plus a managed Aeon service starting at $125/vCPU/month.",
+      "bestForToolA": "Teams on a MySQL-compatible stack who want unified transactional, analytical, and vector search (HTAP) in one engine, with a genuinely free Starter tier (25GiB row + 25GiB column storage, 250M Request Units/month) before pay-as-you-go charges apply.",
+      "bestForToolB": "Teams migrating existing PostgreSQL applications who need multi-region high availability and disaster recovery built in, and are comfortable with vCPU-based managed pricing starting at $125/vCPU/month, or running the open-source version themselves for free.",
+      "whoNeedsBoth": "An organization running separate MySQL-based and PostgreSQL-based application teams evaluating a move to distributed SQL would likely pilot both — TiDB Cloud for MySQL-compatible workloads and YugabyteDB for PostgreSQL-compatible ones — rather than force one engine's dialect onto the other team.",
+      "keyDifferences": [
+        {
+          "title": "SQL dialect compatibility",
+          "toolA": "MySQL-compatible SQL, with integrations for LangChain, LlamaIndex, and MCP.",
+          "toolB": "Full PostgreSQL compatibility, including stored procedures, triggers, and extensions from the PostgreSQL ecosystem.",
+          "whyItMatters": "Determines migration effort for teams with an existing MySQL versus PostgreSQL codebase.",
+          "benefitsWho": "Teams migrating an existing relational application to a distributed database."
+        },
+        {
+          "title": "Entry-level pricing model",
+          "toolA": "Starter plan includes a genuine free monthly allowance (25GiB row storage, 25GiB column storage, 250M Request Units) before usage-based charges.",
+          "toolB": "Aeon Standard plan starts at $125/vCPU/month; a free-tier Aeon account is available to get started, and the open-source version can be self-hosted for free.",
+          "whyItMatters": "Affects how much a team can build and test before incurring meaningful cost.",
+          "benefitsWho": "Early-stage teams and prototypes evaluating distributed databases."
+        },
+        {
+          "title": "Founding year",
+          "toolA": "Founded 2015.",
+          "toolB": "Founded 2016.",
+          "whyItMatters": "Company maturity and track record can factor into vendor risk assessment, though both are close in age.",
+          "benefitsWho": "Procurement teams assessing vendor stability."
+        },
+        {
+          "title": "Workload unification",
+          "toolA": "Unified HTAP engine combining transactional, analytical, and native vector query capabilities in one system, with dedicated Request Unit-based workload isolation.",
+          "toolB": "Emphasizes multi-region high availability, automatic sharding/scaling, and multi-model support across relational, document, and graph-style workloads.",
+          "whyItMatters": "Determines whether the priority is combining transactional and analytical workloads in one engine, or geographic resilience and data-model flexibility.",
+          "benefitsWho": "Teams choosing based on whether their primary need is analytics-alongside-transactions or multi-region resilience."
+        },
+        {
+          "title": "Add-on pricing for enterprise security/DR",
+          "toolA": "Essential and Premium tiers are labeled \"(Preview)\" and may still change; Premium starts at $1,800/month.",
+          "toolB": "Enterprise Security and Business Continuity/DR are separate Aeon add-ons at $25/vCPU/month each on top of base compute pricing.",
+          "whyItMatters": "Affects total cost once enterprise security or DR features are added.",
+          "benefitsWho": "Teams budgeting for production-grade security and DR requirements."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "SQL Compatibility & Workloads",
+          "rows": [
+            { "feature": "SQL dialect", "toolA": "available", "toolB": "available", "note": "TiDB: MySQL-compatible; YugabyteDB: PostgreSQL-compatible" },
+            { "feature": "Native vector search", "toolA": "available", "toolB": "available", "note": "YugabyteDB's is described as vector indexing for RAG/GenAI" },
+            { "feature": "HTAP (unified transactional + analytical)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Multi-model (document/graph)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier/allowance", "toolA": "available", "toolB": "available", "note": "TiDB: Starter with 25GiB+25GiB storage and 250M RU/month free; YugabyteDB: free-tier Aeon account plus free open-source download" },
+            { "feature": "Published managed starting price", "toolA": "available", "toolB": "available", "note": "TiDB: $0/month + pay-as-you-go; YugabyteDB: $125/vCPU/month Standard" },
+            { "feature": "Enterprise custom tier", "toolA": "not-documented", "toolB": "available", "note": "TiDB's highest documented named tier is Dedicated, not a separate Enterprise tier" }
+          ]
+        },
+        {
+          "group": "Availability & Scaling",
+          "rows": [
+            { "feature": "Multi-cloud support (AWS/GCP/Azure)", "toolA": "available", "toolB": "available" },
+            { "feature": "Multi-region high availability/DR", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Elastic/scale-to-zero autoscaling", "toolA": "available", "toolB": "not-documented" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is TiDB Cloud free to start?", "answer": "Yes, the Starter plan includes a free monthly allowance of storage and Request Units before pay-as-you-go charges apply." },
+        { "question": "Is YugabyteDB open source?", "answer": "Yes, the open-source version is free to download and self-host." },
+        { "question": "Which is MySQL-compatible and which is PostgreSQL-compatible?", "answer": "TiDB Cloud uses MySQL-compatible SQL; YugabyteDB is PostgreSQL-compatible." },
+        { "question": "Does either support vector search?", "answer": "Yes — TiDB Cloud has native vector search integrated into its HTAP engine, and YugabyteDB offers vector indexing for RAG and GenAI applications." },
+        { "question": "How much does YugabyteDB Aeon cost?", "answer": "The Standard plan starts at $125/vCPU/month and Professional at $167/vCPU/month; Enterprise pricing is custom." },
+        { "question": "When were these companies founded?", "answer": "TiDB Cloud's underlying database was founded in 2015; YugabyteDB was founded in 2016." }
+      ]
+    }
+  },
+  {
+    "slug": "influxdb-cloud-vs-timescale",
+    "tool_a_id": "c8ef1e9c-3e2d-43bd-b790-a687f3d10cd5",
+    "tool_a_name": "InfluxDB Cloud",
+    "tool_b_id": "5979f62c-c68a-4875-ab66-878b6d196231",
+    "tool_b_name": "Timescale",
+    "content": {
+      "verdict": "InfluxDB Cloud and Timescale both handle time-series workloads but from different foundations — InfluxDB Cloud is a purpose-built time-series engine with Parquet-based storage and a 400+-plugin Telegraf ecosystem for data collection, while Timescale is a PostgreSQL extension (recently rebranded to Tiger Data / Tiger Cloud) offering full SQL compatibility and 200+ time-series-specific SQL functions. Neither publishes a simple flat entry price for its top-tier managed offering: InfluxDB Cloud Serverless is metered across multiple usage dimensions, while Timescale's Tiger Cloud publishes a $30/month Performance plan starting price but bills hourly on consumption.",
+      "bestForToolA": "Teams that need very high-throughput ingest of millions of points per second from external sensors or devices, want to use the Telegraf ecosystem (400+ plugins) for data collection, or want a choice between open-source Core, self-managed Enterprise, or fully managed Cloud deployments.",
+      "bestForToolB": "Teams already using PostgreSQL who want to keep standard SQL, drivers, and tooling while adding time-series-specific functions, automatic compression, and tiered hot/cold storage, with a published Performance plan starting at $30/month.",
+      "whoNeedsBoth": "A platform ingesting both raw sensor telemetry, well suited to InfluxDB's high-speed ingest and Telegraf plugins, and needing to run standard SQL analytics and joins against that data alongside other PostgreSQL-resident application data might use InfluxDB Cloud for ingest and Timescale for the Postgres-integrated analytical layer.",
+      "keyDifferences": [
+        {
+          "title": "SQL/PostgreSQL compatibility",
+          "toolA": "Not documented as PostgreSQL-based; uses its own query approach with Parquet-based file storage.",
+          "toolB": "Full PostgreSQL compatibility via SQL, standard drivers, and the Postgres ecosystem.",
+          "whyItMatters": "Determines whether existing Postgres tooling, ORMs, and drivers work unmodified.",
+          "benefitsWho": "Teams standardized on PostgreSQL wanting to avoid a separate query language and ecosystem."
+        },
+        {
+          "title": "Data collection ecosystem",
+          "toolA": "400+ Telegraf plugins available for collecting data from external sources.",
+          "toolB": "Ingests from Kafka/S3 and replicates into Iceberg for lakehouse architectures, but no equivalent plugin-collector ecosystem is documented.",
+          "whyItMatters": "Affects how easily raw data from diverse sources, such as sensors, apps, or logs, can be piped in without custom integration work.",
+          "benefitsWho": "IoT and infrastructure-monitoring teams collecting from many heterogeneous sources."
+        },
+        {
+          "title": "Published pricing entry point",
+          "toolA": "No flat starting price documented — Cloud Serverless is billed across multiple metered dimensions (data in, queries, storage, data out).",
+          "toolB": "Tiger Cloud Performance plan starts at a published $30/month.",
+          "whyItMatters": "A published flat starting price is easier to budget against than a purely metered model.",
+          "benefitsWho": "Teams wanting cost predictability before committing."
+        },
+        {
+          "title": "Branding stability",
+          "toolA": "No rebrand noted in the facts.",
+          "toolB": "The company and cloud product recently rebranded from Timescale to Tiger Data / Tiger Cloud, which its own cons note can cause naming confusion.",
+          "whyItMatters": "Recent rebrands can create confusion when searching for documentation, support, or billing history under the old name.",
+          "benefitsWho": "Existing customers and new evaluators searching for current product names and documentation."
+        },
+        {
+          "title": "Headquarters transparency",
+          "toolA": "Headquartered in San Francisco, California, US.",
+          "toolB": "Headquarters not documented.",
+          "whyItMatters": "Documented company location matters for some vendor-risk and procurement processes.",
+          "benefitsWho": "Enterprise security and procurement reviewers."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Time-Series Capabilities",
+          "rows": [
+            { "feature": "High-speed ingest", "toolA": "available", "toolB": "not-documented", "note": "InfluxDB documents millions of points/sec; no equivalent figure documented for Timescale" },
+            { "feature": "Time-series-specific SQL functions", "toolA": "not-documented", "toolB": "available", "note": "Timescale documents 200+ functions" },
+            { "feature": "Compression/downsampling", "toolA": "available", "toolB": "available", "note": "InfluxDB: Parquet-based; Timescale: row-columnar hybrid plus tiered storage" },
+            { "feature": "Vector/hybrid search", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Ecosystem & Compatibility",
+          "rows": [
+            { "feature": "PostgreSQL compatibility", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Telegraf/plugin data collection", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Client libraries", "toolA": "available", "toolB": "available", "note": "InfluxDB: Python, JavaScript, Go, C#, Java; Timescale: standard PostgreSQL drivers" }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            { "feature": "Free/open-source self-hosted option", "toolA": "available", "toolB": "available", "note": "InfluxDB 3 Core; open-source TimescaleDB extension" },
+            { "feature": "Published managed starting price", "toolA": "not-documented", "toolB": "available", "note": "Timescale's Tiger Cloud Performance plan is $30/month" },
+            { "feature": "Enterprise/custom tier", "toolA": "available", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is there a free version of InfluxDB?", "answer": "Yes, InfluxDB 3 Core is open source and free to self-host." },
+        { "question": "Is TimescaleDB open source?", "answer": "Yes, the TimescaleDB PostgreSQL extension is available as an open-source offering that can be self-hosted." },
+        { "question": "Did Timescale change its name?", "answer": "The open-source TimescaleDB extension is still available, but the company and its managed cloud service now operate under the Tiger Data / Tiger Cloud brand." },
+        { "question": "What does InfluxDB Cloud pricing look like?", "answer": "Cloud Serverless is billed on a usage basis: $0.0025/MB written, $0.012/100 queries, $0.002/GB-hour storage, and $0.09/GB data out, with $250 in free credit to start." },
+        { "question": "What does Tiger Cloud pricing look like?", "answer": "Tiger Cloud uses hourly consumption-based billing, with published Performance and Scale plans starting at $30/month and $36/month respectively, plus a custom-priced Enterprise tier." },
+        { "question": "What client libraries does InfluxDB support?", "answer": "Python, JavaScript, Go, C#, and Java are listed as supported client libraries." }
+      ]
+    }
+  }
+]

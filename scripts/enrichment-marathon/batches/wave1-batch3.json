@@ -1,0 +1,292 @@
+[
+  {
+    "tool_id": "ae78ea6a-31f8-4642-9dd7-797047244d47",
+    "slug": "1password-secrets-automation",
+    "name": "1Password Secrets Automation",
+    "enrichment": {
+      "short_description": "1Password's toolkit for automating secure secrets access in apps, CI/CD pipelines, and infrastructure, via Service Accounts, self-hosted Connect servers, a CLI, and SDKs — included with a 1Password Business subscription.",
+      "pricing_model": "Included with 1Password Business subscription",
+      "starting_price": "$8.99/user/month (1Password Business, billed annually)",
+      "founded_year": 2005,
+      "company_size": "1,001-5,000 employees",
+      "headquarters": "Toronto, Canada",
+      "languages": ["English"],
+      "seo_title": "1Password Secrets Automation: Features & Pricing",
+      "seo_meta_description": "How 1Password Secrets Automation works: Service Accounts, Connect servers, CLI, and SDKs for automating secrets in CI/CD and infrastructure.",
+      "llm_readable_summary": "1Password Secrets Automation is a set of developer tools from 1Password (founded 2005, headquartered in Toronto, Canada) for giving applications, scripts, and infrastructure secure, non-human access to secrets stored in 1Password vaults. It offers two deployment models: Service Accounts, which are simple, non-personal, rate-limited credentials suited to CI/CD pipelines and scripts (up to 100 per organization); and Connect, a self-hosted server (deployable via Docker or Kubernetes) that caches secrets locally in the user's own infrastructure, allowing unlimited re-requests after the first fetch, lower latency, and no rate limits. Access is available through the 1Password CLI, a REST API (Connect only), and official SDKs for Go, Python, and JavaScript, plus native Kubernetes integration for syncing secrets into clusters. Typical uses include injecting secrets into CI/CD builds, provisioning database credentials for web services, keeping infrastructure credentials separate from personal user accounts, and centralizing human and machine secrets management in one system. Secrets Automation is not sold as a standalone product — it is bundled into a 1Password Business subscription, which starts at $8.99 per user per month billed annually (a smaller Teams Starter Pack is $24.95/month for up to 10 members but is not confirmed to include Secrets Automation). It is aimed at DevOps, platform, backend engineering, and security teams that need to eliminate hardcoded credentials from code and pipelines.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "1Password Secrets Automation extends 1Password's password manager into infrastructure and application code, letting servers, scripts, and CI/CD jobs fetch secrets from 1Password vaults instead of hardcoding credentials or environment variables.",
+          "It's built around two non-personal access methods — Service Accounts and Connect servers — plus a CLI, REST API, and SDKs that developers use to wire secrets retrieval into their existing tooling."
+        ] },
+        { "id": "service-accounts-vs-connect", "heading": "Service Accounts vs. Connect Servers", "level": 2, "paragraphs": [
+          "Service Accounts are lightweight, non-personal credentials (up to 100 per organization) that authenticate the 1Password CLI without tying access to an individual team member. They have low setup overhead and are well suited to shared environments and test pipelines, but operate under rate limits.",
+          "Connect servers are self-hosted (via Docker or Kubernetes) and cache secrets locally after the first fetch, which removes rate limits, reduces latency, and keeps requests entirely inside the user's own infrastructure — at the cost of having to run and maintain that server."
+        ] },
+        { "id": "integrations-and-sdks", "heading": "CLI, SDKs, and Kubernetes Integration", "level": 2, "paragraphs": [
+          "Developers can pull secrets via the 1Password CLI, a REST API (available with Connect), or official SDK libraries for Go, Python, and JavaScript for embedding secrets access directly in application code.",
+          "A native Kubernetes integration syncs 1Password secrets into clusters, and both Service Accounts and Connect are designed to plug into common CI/CD pipelines for automatic secret injection during builds and deployments."
+        ] },
+        { "id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Secrets Automation is not a separate paid product — it's included with a 1Password Business subscription, which starts at $8.99 per user per month when billed annually and adds SSO, vault-sharing permissions, and usage reporting on top of core password-manager features.",
+          "A smaller Teams Starter Pack ($24.95/month for up to 10 members) covers basic team password sharing and developer tool access, though 1Password's own documentation does not specify whether it includes Secrets Automation features."
+        ] }
+      ],
+      "features": [
+        { "title": "Service Accounts", "description": "Non-personal, scoped credentials for CI/CD and scripts, with up to 100 accounts per organization and usage audit reports." },
+        { "title": "Connect server", "description": "Self-hosted REST API server that caches secrets locally, enabling unlimited re-requests after the initial fetch." },
+        { "title": "1Password CLI", "description": "Command-line access to vault items for scripting and terminal-based workflows." },
+        { "title": "SDKs (Go, Python, JavaScript)", "description": "Libraries for embedding secrets retrieval directly into application code." },
+        { "title": "Kubernetes integration", "description": "Native syncing of 1Password secrets into Kubernetes clusters." },
+        { "title": "Usage/audit reporting", "description": "Visibility into which items a given service account or Connect token has accessed." }
+      ],
+      "pros": [
+        "Two deployment models let teams trade off setup effort against rate limits and latency",
+        "Bundled into an existing 1Password Business subscription rather than sold separately",
+        "Native Kubernetes and CI/CD-friendly tooling",
+        "Centralizes both human and machine secrets in one system"
+      ],
+      "cons": [
+        "Service Accounts are rate-limited, pushing high-volume use cases toward self-hosting Connect",
+        "Connect requires standing up and maintaining your own server infrastructure",
+        "Requires a 1Password Business (or higher) plan — not available on free/personal accounts"
+      ],
+      "faqs": [
+        { "question": "Is 1Password Secrets Automation a separate paid product?", "answer": "No. It's included with a 1Password Business subscription, which starts at $8.99 per user per month billed annually." },
+        { "question": "What's the difference between Service Accounts and Connect?", "answer": "Service Accounts are simple, rate-limited, non-personal credentials ideal for CI/CD and scripts. Connect is a self-hosted server that caches secrets after the first fetch, giving unlimited subsequent requests, lower latency, and no rate limits in exchange for running your own infrastructure." },
+        { "question": "Does it integrate with Kubernetes?", "answer": "Yes, via the Connect server and a native Kubernetes integration for syncing secrets into clusters." },
+        { "question": "Which languages have official SDKs?", "answer": "Go, Python, and JavaScript, alongside the 1Password CLI and the Connect REST API." }
+      ],
+      "use_cases": [
+        { "title": "CI/CD secret injection", "description": "Automatically inject credentials into build and deployment pipelines without hardcoding them.", "audience": "DevOps/platform teams" },
+        { "title": "Automated service provisioning", "description": "Provision database credentials and other secrets for web services on demand.", "audience": "Backend engineering teams" },
+        { "title": "Kubernetes secret sync", "description": "Sync vault secrets into Kubernetes clusters via Connect.", "audience": "Infrastructure/SRE teams" },
+        { "title": "Separating infra credentials from personal accounts", "description": "Keep infrastructure and application secrets on non-personal Service Accounts rather than individual logins.", "audience": "Security teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Teams Starter Pack", "price": "$24.95", "billing_cycle": "per month, billed annually (includes 10 members)", "features": ["Password sharing", "Security alerts", "Role-based permissions", "Developer tools access"] },
+        { "plan_name": "Business", "price": "$8.99", "billing_cycle": "per user/month, billed annually", "features": ["Everything in Teams Starter Pack", "SSO (Okta, Entra ID, OneLogin, Duo)", "Vault sharing with granular permissions", "Watchtower usage reporting", "Secrets Automation (Service Accounts / Connect)"] }
+      ],
+      "tags": ["api", "self-hosted", "free-trial"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "dfb290e4-e468-49f6-8a3d-bb8dbcae59cf",
+    "slug": "acp-admin",
+    "name": "ACP Admin",
+    "enrichment": {
+      "short_description": "A purpose-built web platform (also known as CSA Admin) for managing Community Supported Agriculture (CSA/ACP) organizations — members, deliveries, billing, and communications — used to coordinate 140,000+ baskets a year.",
+      "pricing_model": "Usage-based (revenue share)",
+      "starting_price": "1% of annual invoiced amount (capped at 2,400 CHF/EUR per year)",
+      "founded_year": 2014,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "French", "German", "Italian", "Dutch"],
+      "seo_title": "ACP Admin (CSA Admin): CSA Management Software",
+      "seo_meta_description": "ACP Admin manages CSA members, deliveries, billing, and communications. In use since 2014, coordinating 140,000+ baskets a year.",
+      "llm_readable_summary": "ACP Admin — published under the project name CSA Admin at csa-admin.org — is a web-based management platform built specifically for Community Supported Agriculture (CSA, or \"ACP\" in French-speaking Switzerland) organizations. It was created by developer Thibaud Guillaume-Gentil, originally to run the CSA \"Rage de Vert,\" and has been in use since 2014. It now serves associations, cooperatives, businesses, and individuals running CSA-style direct farm-to-consumer distribution across Switzerland, Germany, and the Netherlands, together managing over 140,000 baskets annually. Core functionality covers member registration and waiting lists, flexible delivery scheduling (including variable frequencies and absences), automated invoicing with QR-bill and SEPA Direct Debit support and EBICS payment reconciliation, subscription renewal and cancellation workflows, personalized member email communications and newsletters, an online shop for supplementary products with stock management, basket/harvest content tracking, and member fieldwork participation tracking. The platform is GDPR/nLPD-compliant and available in English, French, German, Italian, and Dutch. Pricing is unusual for SaaS: instead of a flat subscription, organizations pay 1% of the amount invoiced through the platform per year, capped at 2,400 CHF/EUR annually, with hosting, security updates, and support included and no setup fee. The source code is published on GitHub under the O'Saasy license (source-available rather than a standard open-source license). It targets CSA operators and cooperatives specifically rather than general-purpose CRM or e-commerce users.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "ACP Admin (published under the name CSA Admin) is software built exclusively for Community Supported Agriculture organizations — the model where members subscribe in advance to receive regular baskets of produce directly from a farm or cooperative.",
+          "It has been in production use since 2014, created by developer Thibaud Guillaume-Gentil, and today coordinates the administration of more than 140,000 baskets a year across organizations in Switzerland, Germany, and the Netherlands."
+        ] },
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "The platform handles the full membership lifecycle: registration, waiting lists, flexible delivery schedules that account for variable frequencies and member absences, and structured renewal or cancellation workflows (including bidding-based renewals).",
+          "Beyond membership, it includes an online shop for supplementary products with stock/inventory management, tools for tracking basket contents and harvest value, and features for organizing member participation in fieldwork and preparation activities."
+        ] },
+        { "id": "billing-and-payments", "heading": "Billing and Payments", "level": 2, "paragraphs": [
+          "Invoicing is automated, generating QR-bill invoices and supporting SEPA Direct Debit and EBICS-based payment reconciliation, which reduces manual bookkeeping for organizations handling hundreds of recurring member payments.",
+          "Personalized email communications and newsletters are built in for keeping members informed about deliveries, renewals, and organizational updates."
+        ] },
+        { "id": "pricing-model", "heading": "Pricing Model", "level": 2, "paragraphs": [
+          "Rather than a flat per-seat subscription, ACP Admin charges 1% of the total amount invoiced through the platform each year, capped at 2,400 CHF/EUR annually — so cost scales with an organization's size and revenue rather than user count.",
+          "Hosting, security updates, and support are included in that fee, and there is no separate setup cost."
+        ] },
+        { "id": "source-availability", "heading": "Source Code and License", "level": 2, "paragraphs": [
+          "The codebase is published on GitHub and described as \"source-available\" under the O'Saasy license — code can be reviewed and contributions accepted, though this differs from a standard permissive open-source license."
+        ] }
+      ],
+      "features": [
+        { "title": "Member & waiting-list management", "description": "Registration, subscription tracking, and waiting lists for CSA members." },
+        { "title": "Flexible delivery scheduling", "description": "Supports variable delivery frequencies and member absence handling." },
+        { "title": "Automated QR-bill invoicing", "description": "Generates QR-bill invoices with SEPA Direct Debit and EBICS payment reconciliation." },
+        { "title": "Renewal & cancellation workflows", "description": "Structured annual renewal process, including bidding-based renewals." },
+        { "title": "Online shop & stock management", "description": "Sell supplementary products alongside baskets with built-in inventory tracking." },
+        { "title": "Member email communications", "description": "Personalized newsletters and communications sent directly to members." },
+        { "title": "Fieldwork participation tracking", "description": "Tracks member involvement in farm fieldwork and preparation activities." }
+      ],
+      "pros": [
+        "Purpose-built for CSA/ACP operations rather than a generic CRM adapted to the use case",
+        "Hosting, support, and security updates bundled into the pricing with no setup fee",
+        "Proven at scale — used to coordinate 140,000+ baskets annually across multiple countries",
+        "Multilingual (English, French, German, Italian, Dutch) for cross-border European use",
+        "Source code publicly available on GitHub"
+      ],
+      "cons": [
+        "Revenue-share pricing (1% of invoiced amount) can be harder to budget for than a flat subscription, especially for larger CSAs",
+        "Licensed as source-available (O'Saasy), not a standard open-source license",
+        "Narrow focus on CSA/direct farm distribution means it isn't a fit for other retail or subscription-box models"
+      ],
+      "faqs": [
+        { "question": "What is ACP Admin used for?", "answer": "Managing the day-to-day operations of Community Supported Agriculture (CSA/ACP) organizations: member subscriptions, delivery scheduling, invoicing, and communications." },
+        { "question": "How much does ACP Admin cost?", "answer": "1% of the amount invoiced through the platform per year, capped at 2,400 CHF/EUR annually, with hosting, support, and updates included and no setup fee." },
+        { "question": "Is the source code available?", "answer": "Yes, it's published on GitHub under the O'Saasy license." },
+        { "question": "Which countries is it used in?", "answer": "CSA organizations in Switzerland, Germany, and the Netherlands use the platform, among others." }
+      ],
+      "use_cases": [
+        { "title": "Running an established CSA farm's admin", "description": "Managing members, deliveries, and billing for an existing farm-to-consumer subscription program.", "audience": "Farmers / CSA operators" },
+        { "title": "Launching a new CSA cooperative", "description": "Setting up membership, delivery, and payment workflows for a newly formed cooperative.", "audience": "New agricultural cooperatives" },
+        { "title": "Coordinating multi-site basket distribution", "description": "Managing basket content, value tracking, and logistics across multiple distribution points.", "audience": "Larger CSA networks" }
+      ],
+      "pricing_plans": [],
+      "tags": ["web-app"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "f0485685-77e9-44e2-bfce-dffbe3d4b29f",
+    "slug": "activepieces",
+    "name": "activepieces",
+    "enrichment": {
+      "short_description": "Open-source, AI-first automation platform for building no-code workflows and AI agents, with 700+ integrations, positioned as an alternative to Zapier and Make.",
+      "pricing_model": "Freemium (usage-based) plus a free open-source self-hosted edition",
+      "starting_price": "Free (10 active flows); $5 per active flow/month after that",
+      "founded_year": 2022,
+      "company_size": null,
+      "headquarters": "San Francisco, CA",
+      "languages": ["English"],
+      "seo_title": "Activepieces: Open-Source No-Code Automation & AI Agents",
+      "seo_meta_description": "Activepieces is an open-source, AI-first automation platform with 700+ integrations, no-code workflows, and AI agents. Free tier available.",
+      "llm_readable_summary": "Activepieces is an open-source, AI-first automation platform that lets teams build no-code workflows and AI agents to connect apps and automate business processes, positioning itself as an alternative to Zapier and Make. Founded in 2022 and backed by Y Combinator (W2023 batch), the company is based in San Francisco. Its drag-and-drop builder connects 700+ integrations, including Gmail, Slack, HubSpot, OpenAI, and Notion, and it offers AI agents that can autonomously carry out multi-step tasks with optional human approval steps, alongside unlimited MCP (Model Context Protocol) servers and unlimited tables for structured data. It's used by companies including PostHog, Red Bull, Rakuten, DocuSign, and Roblox. Activepieces is MIT-licensed and available as a fully free, self-hosted Community Edition on GitHub, requiring technical setup but including core automation features. Its hosted Standard plan is free for up to 10 active flows with unlimited workflow runs, then charges $5 per active flow per month with no run limits. An Ultimate plan adds enterprise governance — team/personal project separation, piece access controls, custom RBAC, SSO, and audit logs — via a custom annual contract. It targets automation use across sales, support, marketing, finance, HR, IT, operations, engineering, and data teams, appealing especially to teams that want both a generous free/self-hosted option and modern AI-agent building blocks in one platform.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Activepieces is a no-code, AI-first automation platform for building workflows ('flows') that connect apps and services, plus AI agents that can carry out multi-step tasks autonomously with optional human approval.",
+          "Founded in 2022 and part of Y Combinator's W2023 batch, the company is based in San Francisco and is used by teams at companies including PostHog, Red Bull, Rakuten, DocuSign, and Roblox."
+        ] },
+        { "id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "A drag-and-drop builder connects 700+ integrations spanning email, CRM, communication, and AI tools such as Gmail, Slack, HubSpot, OpenAI, and Notion, letting non-developers assemble multi-step automations without writing code.",
+          "The platform includes unlimited MCP (Model Context Protocol) servers and unlimited tables for structured data on every hosted plan, alongside its core AI agent capability."
+        ] },
+        { "id": "ai-agents", "heading": "AI Agents", "level": 2, "paragraphs": [
+          "Beyond linear if-this-then-that automations, Activepieces offers AI agents that can handle tasks autonomously, with the option to require human approval before an agent takes a given action — aimed at teams that want AI in the loop without losing oversight."
+        ] },
+        { "id": "open-source-and-self-hosting", "heading": "Open Source and Self-Hosting", "level": 2, "paragraphs": [
+          "Activepieces is MIT-licensed, with its Community Edition available for free, self-hosted deployment from its GitHub repository. This gives technical teams full control over data and infrastructure, though it requires the skills to deploy and maintain it themselves, and includes only the core feature set (not the hosted plans' enterprise governance tools)."
+        ] },
+        { "id": "pricing", "heading": "Pricing", "level": 2, "paragraphs": [
+          "The hosted Standard plan is free for up to 10 active flows with unlimited runs, then charges $5 per active flow per month with no cap on execution volume ('run millions, pay the same').",
+          "An Ultimate plan, sold on a custom annual contract, adds enterprise governance: separate team and personal projects, piece access controls, global connections, custom RBAC, SSO, and audit logs."
+        ] }
+      ],
+      "features": [
+        { "title": "No-code workflow builder", "description": "Drag-and-drop interface for assembling multi-step automations without writing code." },
+        { "title": "700+ integrations", "description": "Connects apps including Gmail, Slack, HubSpot, OpenAI, and Notion." },
+        { "title": "AI agents", "description": "Agents that autonomously handle tasks, with optional human-approval steps." },
+        { "title": "Unlimited MCP servers", "description": "Model Context Protocol servers included without limits on hosted plans." },
+        { "title": "Unlimited tables", "description": "Built-in structured data tables for use within automations." },
+        { "title": "Enterprise governance (Ultimate plan)", "description": "SSO, custom RBAC, piece access controls, and audit logs for larger organizations." },
+        { "title": "Self-hosted Community Edition", "description": "MIT-licensed, free, self-hosted deployment of the core platform." }
+      ],
+      "pros": [
+        "Generous free tier: 10 active flows with unlimited runs",
+        "Fully free, MIT-licensed self-hosted Community Edition",
+        "Large integration library (700+) including modern AI tools",
+        "Built-in AI agent capability, not just linear automations",
+        "Per-flow (not per-run) pricing means high-volume automations don't get penalized"
+      ],
+      "cons": [
+        "Per-active-flow pricing can add up for teams running many distinct workflows",
+        "Enterprise security/governance features require the custom-priced Ultimate plan",
+        "Self-hosting the Community Edition requires technical setup and maintenance"
+      ],
+      "faqs": [
+        { "question": "Is Activepieces free?", "answer": "Yes — the hosted Standard plan is free for up to 10 active flows with unlimited runs, and there's also a fully free, self-hosted, open-source Community Edition." },
+        { "question": "Is Activepieces open source?", "answer": "Yes, it's MIT-licensed with source code available on GitHub." },
+        { "question": "What's the difference between the Standard and Ultimate plans?", "answer": "Standard is pay-per-active-flow ($5/flow/month after the first 10 free) with core AI and automation features. Ultimate is a custom-priced annual contract that adds enterprise governance: SSO, custom RBAC, piece access controls, and audit logs." },
+        { "question": "Can Activepieces build AI agents, not just automations?", "answer": "Yes, it offers AI agents that can autonomously carry out multi-step tasks, with an option to require human approval." }
+      ],
+      "use_cases": [
+        { "title": "Sales operations automation", "description": "Automate lead routing and CRM syncing across sales tools.", "audience": "Sales teams" },
+        { "title": "Support ticket automation", "description": "Route and respond to support tickets automatically across channels.", "audience": "Support teams" },
+        { "title": "Internal IT/ops workflows", "description": "Automate recurring internal processes across IT and operations tooling.", "audience": "IT/Ops teams" },
+        { "title": "Building AI agents", "description": "Create AI agents that autonomously execute tasks with optional human approval.", "audience": "Product/engineering teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Standard", "price": "Free, then $5 per active flow", "billing_cycle": "per month (usage-based)", "features": ["10 free active flows", "Unlimited runs", "AI agents", "Unlimited MCP servers", "Unlimited tables", "Community support"] },
+        { "plan_name": "Ultimate", "price": "Custom", "billing_cycle": "annual contract", "features": ["Team & personal projects", "Piece access controls", "Global connections", "Custom RBAC", "SSO", "Audit logs"] },
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": "self-hosted", "features": ["MIT licensed", "Core automation features", "Requires self-managed deployment"] }
+      ],
+      "tags": ["ai", "no-code", "api", "web-app", "freemium", "free-plan", "self-hosted", "open-source"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "c90b471e-f0b7-403c-972f-49e1d0871d55",
+    "slug": "activitywatch",
+    "name": "ActivityWatch",
+    "enrichment": {
+      "short_description": "Free, open-source, privacy-first time-tracking app that automatically logs which apps and websites you use, storing all data locally on your own device with no cloud sync required.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "ActivityWatch: Free, Open-Source Time Tracking",
+      "seo_meta_description": "ActivityWatch automatically tracks app and website usage, storing data locally. Free, open-source, no premium tiers or ads.",
+      "llm_readable_summary": "ActivityWatch is a free, open-source application that automatically tracks how users spend time on their computers and phones, logging active applications, window titles, and (via browser extensions) websites visited. It was created by brothers Erik Bjäreholt and Johan Bjäreholt, who continue to maintain it, built because they wanted this kind of tool and it didn't exist yet; it's now maintained with community contributions. The software is licensed under MPL-2.0 and explicitly has 'no premium tiers, no usage limits, and no ads' — it is entirely free rather than freemium. Its defining feature is a privacy-first, local-first architecture: all tracked time data is stored on the user's own device and, according to the project, is never sent to any server, giving users full control over their data. Core capabilities include automatic tracking of active applications and window titles, category rules for organizing activity into groups, an activity timeline and dashboard for visualization, browser extensions for Chrome and Firefox that track website visits, and editor plugins for tracking coding time. Cross-device synchronization is listed as in development rather than fully mature. ActivityWatch runs on Windows, macOS, Linux, and Android (no official iOS app was found). It appeals to individuals who want personal productivity or digital-wellbeing insight, and to developers or privacy-conscious users and freelancers who want time-tracking data that never leaves their own machine.",
+      "long_form_blocks": [
+        { "id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "ActivityWatch is a free, open-source app that automatically tracks how you spend time on your devices — which applications you use, which windows are active, and (with browser extensions) which websites you visit — without requiring any manual logging.",
+          "It was built by brothers Erik Bjäreholt and Johan Bjäreholt, who created it because a tool like it 'should exist' but didn't, and it continues to be developed by volunteers and community contributors."
+        ] },
+        { "id": "how-it-works", "heading": "How It Works", "level": 2, "paragraphs": [
+          "The core app automatically tracks active applications and window titles in the background, and lets users define category rules so raw activity data can be grouped into meaningful buckets for review.",
+          "Browser extensions for Chrome and Firefox extend tracking to website visits, and editor plugins are available for logging coding time directly, with all results viewable in an activity timeline and dashboard."
+        ] },
+        { "id": "privacy-and-data", "heading": "Privacy and Local-First Data", "level": 2, "paragraphs": [
+          "ActivityWatch's central design principle is that data stays local: all tracked time data is stored on the user's own device and is never sent to any server, according to the project. This distinguishes it from cloud-based time trackers and gives users full control over their own activity data.",
+          "Cross-device synchronization is listed as a feature still in development, meaning users running ActivityWatch on multiple machines don't yet get a fully mature way to merge that data automatically."
+        ] },
+        { "id": "platforms-and-cost", "heading": "Platforms and Cost", "level": 2, "paragraphs": [
+          "The app is available for Windows, macOS, Linux, and Android. It is released under the MPL-2.0 open-source license and is entirely free, with the project explicitly stating there are 'no premium tiers, no usage limits, and no ads.'"
+        ] }
+      ],
+      "features": [
+        { "title": "Automatic app & window tracking", "description": "Logs active applications and window titles in the background without manual input." },
+        { "title": "Browser extensions", "description": "Chrome and Firefox extensions extend tracking to website visits." },
+        { "title": "Editor plugins", "description": "Plugins for tracking time spent coding directly in supported editors." },
+        { "title": "Local-first storage", "description": "All data is stored on-device and never sent to a server." },
+        { "title": "Category rules", "description": "Group raw activity data into custom categories for easier review." },
+        { "title": "Activity dashboard", "description": "Local timeline and dashboard for visualizing tracked time." }
+      ],
+      "pros": [
+        "Completely free with no premium tiers, usage limits, or ads",
+        "Strong privacy model — data never leaves the user's device",
+        "Open source (MPL-2.0) and extensible",
+        "Cross-platform: Windows, macOS, Linux, and Android"
+      ],
+      "cons": [
+        "No official iOS app",
+        "Cross-device data synchronization is still in development",
+        "As a volunteer-maintained project, support and integrations depend on community contribution rather than a commercial team"
+      ],
+      "faqs": [
+        { "question": "Is ActivityWatch really free?", "answer": "Yes. It's fully free and open source, with no premium tiers, usage limits, or ads." },
+        { "question": "Where is my tracked data stored?", "answer": "Locally on your own device. According to the project, it is never sent to any server." },
+        { "question": "Does ActivityWatch track website visits?", "answer": "Yes, via its Chrome and Firefox browser extensions." },
+        { "question": "What platforms does it support?", "answer": "Windows, macOS, Linux, and Android; no official iOS app is available." }
+      ],
+      "use_cases": [
+        { "title": "Personal productivity tracking", "description": "Understand where your time actually goes across apps and websites.", "audience": "Individuals" },
+        { "title": "Developer time tracking", "description": "Track time spent coding directly from your editor via plugins.", "audience": "Developers" },
+        { "title": "Digital wellbeing awareness", "description": "Build awareness of screen time and app usage habits.", "audience": "General users" },
+        { "title": "Privacy-conscious time tracking", "description": "Track time without sending any data to a third-party server.", "audience": "Privacy-focused users / freelancers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["free-plan", "open-source", "self-hosted", "mac", "windows", "android", "web-app", "api"],
+      "publish": true
+    }
+  }
+]

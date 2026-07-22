@@ -1,0 +1,513 @@
+[
+  {
+    "tool_id": "2cf05821-b645-4a5c-9cb3-a492d371211f",
+    "slug": "ray",
+    "name": "Ray",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Ray is an open-source distributed computing framework for scaling Python and AI/ML workloads from a laptop to thousands of GPUs.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Ray: open-source distributed computing framework for scaling Python, model training, batch inference, and LLM workloads.",
+      "features": [
+        { "title": "Distributed Python execution", "description": "Scale native Python code across a cluster without rewriting it for distributed systems." },
+        { "title": "Ray Train", "description": "Run distributed training for deep learning, time series, and traditional ML models across GPU clusters." },
+        { "title": "Ray Serve", "description": "Deploy models for online serving with independent scaling and fractional GPU/CPU resource allocation." },
+        { "title": "Ray Data", "description": "Process structured and unstructured data, including images, video, and audio, for batch and offline inference." },
+        { "title": "Ray RLlib", "description": "Build and run reinforcement learning workloads with a library designed for production use." },
+        { "title": "LLM workflow support", "description": "Dedicated capabilities for large language model inference, fine-tuning, and generative AI pipelines." }
+      ],
+      "pros": [
+        "Free and open source with an active community (34.8k+ GitHub stars, 1,000+ contributors)",
+        "Scales the same Python code from a laptop to thousands of GPUs without a major rewrite",
+        "Covers most of the ML lifecycle (data processing, training, tuning, serving) in one framework",
+        "Framework-agnostic and compatible with multiple ML libraries"
+      ],
+      "cons": [
+        "Steep learning curve for teams new to distributed systems concepts",
+        "A fully managed hosted platform (Anyscale) is a separate commercial product, not part of core Ray",
+        "Debugging distributed workloads can be more complex than debugging single-machine scripts"
+      ],
+      "faqs": [
+        { "question": "Is Ray free to use?", "answer": "Yes, Ray is open source and free to use. Anyscale, built by Ray's creators, offers a separate commercial managed platform for teams that want a hosted service." },
+        { "question": "Who maintains Ray?", "answer": "Ray is developed and maintained primarily by Anyscale, Inc., alongside open-source contributors." },
+        { "question": "What can Ray be used for?", "answer": "Ray supports distributed Python execution, model training, batch inference, model serving, and reinforcement learning, including workflows for large language models." },
+        { "question": "Does Ray require a GPU cluster to run?", "answer": "No, Ray can run on a single laptop, but it is designed to scale across heterogeneous CPU/GPU clusters when needed." }
+      ],
+      "use_cases": [
+        { "title": "Distributed model training", "description": "Teams train foundation models, time series models, and traditional ML models across GPU clusters using Ray Train.", "audience": "ML engineers" },
+        { "title": "LLM inference and fine-tuning", "description": "Ray provides dedicated capabilities for large language model inference, fine-tuning, and generative AI workflows.", "audience": "AI/LLM engineers" },
+        { "title": "Batch and online inference at scale", "description": "Ray Data and Ray Serve let teams run offline batch inference and deploy models with independent, fractional resource scaling.", "audience": "MLOps teams" },
+        { "title": "Reinforcement learning research", "description": "Ray RLlib provides a library for building and running production reinforcement learning workloads.", "audience": "RL researchers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Ray?",
+          "level": 2,
+          "paragraphs": [
+            "Ray is an open-source distributed computing framework, described by its maintainers as \"the AI compute engine,\" that lets teams scale Python-based machine learning and AI workloads from a single laptop to clusters of thousands of GPUs.",
+            "The framework includes libraries for distributed training (Ray Train), model serving (Ray Serve), batch data processing (Ray Data), hyperparameter tuning, and reinforcement learning (Ray RLlib), covering much of the ML lifecycle within a single ecosystem. It is developed and maintained primarily by Anyscale, Inc., which also offers a separate commercial managed platform for Ray."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Ray is for",
+          "level": 2,
+          "paragraphs": [
+            "Ray is built for ML engineers, data scientists, and infrastructure teams who need to scale Python code, train or serve models across GPU clusters, or run large-scale batch inference and reinforcement learning workloads without re-architecting for distributed systems."
+          ]
+        }
+      ],
+      "tags": ["open-source", "self-hosted", "api", "ai", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "b86f2d2c-9242-4ac1-8381-48bac80db6dd",
+    "slug": "label-studio",
+    "name": "Label Studio",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Label Studio is an open-source data labeling and AI evaluation platform for computer vision, NLP, audio, and LLM workflows.",
+      "pricing_model": "Freemium",
+      "starting_price": "$99/user/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Label Studio: open-source data labeling platform for computer vision, NLP, audio, and LLM/RLHF evaluation workflows.",
+      "features": [
+        { "title": "Multi-modal labeling", "description": "Annotate images, video, audio, text, documents, and time-series data in one configurable interface." },
+        { "title": "AI evaluation tools", "description": "Review and score LLM outputs, RAG responses, and agentic traces for AI evaluation workflows." },
+        { "title": "ML-assisted labeling", "description": "Speed up annotation using model predictions and active learning." },
+        { "title": "API and Python SDK", "description": "Automate labeling workflows and integrate with external ML pipelines programmatically." },
+        { "title": "Webhook integrations", "description": "Connect labeling events to downstream systems and ML pipelines." },
+        { "title": "Role-based access and quality workflows", "description": "Enterprise plan adds RBAC, quality controls, and analytics for larger annotation teams." }
+      ],
+      "pros": [
+        "Free, open-source Community Edition installable via pip, Docker, or Homebrew",
+        "Supports a wide range of data types and task types in one tool",
+        "Used by companies including Cloudflare, NVIDIA, Meta, IBM, and Intel, per the company",
+        "Extensible with an API, Python SDK, and webhooks"
+      ],
+      "cons": [
+        "Enterprise-only features (SSO, advanced quality workflows, LLM-as-a-judge) require the paid Enterprise plan",
+        "Starter Cloud plan is capped at 12 users",
+        "Enterprise pricing is only available by contacting sales"
+      ],
+      "faqs": [
+        { "question": "Is Label Studio free?", "answer": "Yes, the Community Edition is free and open source. Paid Starter Cloud and Enterprise plans add hosting and additional enterprise features." },
+        { "question": "What is the difference between Community and Enterprise editions?", "answer": "Enterprise adds features such as SSO, advanced quality workflows, LLM-as-a-judge evaluation, and dedicated support on top of the open-source core." },
+        { "question": "Can I self-host Label Studio?", "answer": "Yes, the Community Edition can be self-hosted via Docker, pip, or by building from source." },
+        { "question": "Who develops Label Studio?", "answer": "Label Studio is developed by HumanSignal, Inc." }
+      ],
+      "use_cases": [
+        { "title": "Computer vision annotation", "description": "Teams label images and video for classification, object detection, and segmentation.", "audience": "Computer vision teams" },
+        { "title": "LLM and RAG evaluation", "description": "Teams review and score LLM outputs, RAG responses, and agent traces as part of AI evaluation workflows.", "audience": "AI/ML evaluation teams" },
+        { "title": "NLP and document labeling", "description": "Teams perform OCR, named entity recognition, and sentiment annotation on text and documents.", "audience": "NLP engineers" },
+        { "title": "RLHF fine-tuning", "description": "Teams collect human feedback to fine-tune models through reinforcement learning from human feedback.", "audience": "ML researchers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": null, "features": ["Open source", "Self-hosted via Docker or pip", "Core multi-modal labeling toolkit"] },
+        { "plan_name": "Starter Cloud", "price": "$99/user/month", "billing_cycle": "monthly", "features": ["Fully hosted service", "Up to 12 users", "Multi-modal labeling platform", "Role-based access control", "Quality workflows"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["SSO (SAML/LDAP)", "SOC2 and HIPAA compliant cloud or on-prem", "LLM-as-a-judge", "Auto-labeling and bulk labeling", "Dedicated customer success manager"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Label Studio?",
+          "level": 2,
+          "paragraphs": [
+            "Label Studio is an open-source platform for data labeling, AI evaluation, and human-in-the-loop workflows, built and maintained by HumanSignal, Inc.",
+            "It supports computer vision, NLP, audio, time-series, and multi-modal annotation tasks, plus newer AI evaluation capabilities such as LLM evaluation, RAG assessment, agentic trace review, and RLHF fine-tuning. The Community Edition is free and self-hostable, while Starter Cloud and Enterprise plans add hosting, collaboration, and compliance features."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Label Studio is for",
+          "level": 2,
+          "paragraphs": [
+            "Label Studio is built for data teams, ML engineers, and AI researchers who need to build labeled training datasets or evaluate model and agent outputs, whether they prefer a self-hosted open-source deployment or a hosted cloud plan."
+          ]
+        }
+      ],
+      "tags": ["open-source", "self-hosted", "api", "ai", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "e0e7ab65-6f45-469f-a81e-a24f104a32d1",
+    "slug": "argilla",
+    "name": "Argilla",
+    "status": "skip",
+    "skip_reason": "Project is in maintenance mode after joining Hugging Face: the official GitHub README states maintainers are no longer adding new features, are only committing to bug fixes and patches, and are actively seeking new maintainers. This is too close to discontinued/unmaintained status for durable editorial content.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "0d4608fd-3411-46e9-b7bd-86e6765d726c",
+    "slug": "cvat",
+    "name": "CVAT",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "CVAT is an open-source (MIT) and cloud computer vision annotation tool for building image, video, and 3D training datasets.",
+      "pricing_model": "Freemium",
+      "starting_price": "$33/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "CVAT: open-source MIT-licensed computer vision annotation tool for images, video, and 3D data, with a paid CVAT Online cloud option.",
+      "features": [
+        { "title": "Image annotation", "description": "Draw bounding boxes, pixel-level masks, polygons, keypoints, and skeletons on images." },
+        { "title": "Video annotation", "description": "Track objects and skeleton graphs across video frames." },
+        { "title": "3D point cloud annotation", "description": "Detect, classify, and track objects in 3D point cloud sequences." },
+        { "title": "Broad format support", "description": "Import and export to 20+ formats, including COCO, YOLO, Pascal VOC, KITTI, and Cityscapes." },
+        { "title": "Cloud storage integration", "description": "Connect directly to S3, Azure Blob Storage, and Google Cloud Storage for data import." },
+        { "title": "Project management and QA", "description": "Manage projects with role-based access, validation stages, and progress monitoring." }
+      ],
+      "pros": [
+        "Free, MIT-licensed, self-hostable Community Edition",
+        "Supports images, video, and 3D point cloud annotation in one tool",
+        "Broad export format support (20+ formats) for common computer vision frameworks",
+        "Optional managed annotation service with human annotators for larger projects"
+      ],
+      "cons": [
+        "Free CVAT Online cloud tier is capped at 1 project and 3 tasks",
+        "Enterprise self-hosted plan starts at $12,000 per year",
+        "Higher usage limits and AI-assisted annotation features require paid Solo, Team, or Enterprise tiers"
+      ],
+      "faqs": [
+        { "question": "Is CVAT free?", "answer": "Yes, CVAT Community Edition is free, open source (MIT license), and self-hostable. CVAT Online adds paid Free, Solo, Team, and Enterprise cloud tiers." },
+        { "question": "What license does CVAT use?", "answer": "The CVAT Community Edition is released under the MIT License." },
+        { "question": "Can CVAT handle video and 3D data?", "answer": "Yes, CVAT supports image, video (with object tracking), and 3D point cloud annotation." },
+        { "question": "Does CVAT offer managed annotation services?", "answer": "Yes, CVAT offers managed annotation services with a network of annotators for larger labeling projects." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted annotation", "description": "Teams that need full data control deploy the open-source CVAT Community Edition on their own infrastructure.", "audience": "Privacy-sensitive engineering teams" },
+        { "title": "Cloud-based team labeling", "description": "Small teams use CVAT Online's Solo or Team plans for hosted annotation without managing infrastructure.", "audience": "Small computer vision teams" },
+        { "title": "Enterprise annotation programs", "description": "Larger organizations use CVAT Enterprise for self-hosted deployment with SSO, RBAC, and dedicated support.", "audience": "Enterprise ML teams" },
+        { "title": "Outsourced labeling", "description": "Teams needing extra annotation capacity use CVAT's managed annotation service with a large annotator network.", "audience": "Teams needing extra annotation capacity" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free (CVAT Online)", "price": "$0", "billing_cycle": null, "features": ["1 project, 3 tasks", "1 GB internal storage", "1 cloud storage connection", "API access", "Community support"] },
+        { "plan_name": "Solo", "price": "$33/month ($23/month billed annually)", "billing_cycle": "monthly", "features": ["Up to 10 projects", "250 tasks", "25 GB storage", "3 cloud storage connections", "10,000 AI agent calls/month"] },
+        { "plan_name": "Team", "price": "$33/user/month ($23/user/month billed annually, min. 2 users)", "billing_cycle": "monthly", "features": ["SSO", "Role-based access", "Audit logs", "50,000 AI agent calls/month", "Scales up to 50 users"] },
+        { "plan_name": "Enterprise", "price": "Starting at $12,000/year", "billing_cycle": "annual", "features": ["Self-hosted infrastructure", "Customizable for organizations of any size", "Enhanced security and compliance"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is CVAT?",
+          "level": 2,
+          "paragraphs": [
+            "CVAT (Computer Vision Annotation Tool) is a platform for building image, video, and 3D point cloud datasets for computer vision AI. The Community Edition is open source under the MIT License and can be self-hosted, with copyright held by Intel Corporation and CVAT.ai Corporation.",
+            "Alongside the free self-hosted edition, CVAT.ai offers CVAT Online, a hosted cloud product with Free, Solo, and Team pricing tiers, plus a self-hosted CVAT Enterprise plan with SSO, RBAC, and dedicated support."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who CVAT is for",
+          "level": 2,
+          "paragraphs": [
+            "CVAT is built for computer vision engineers and data teams that need to annotate images, video, or 3D point clouds, ranging from individual developers self-hosting the free Community Edition to enterprises using CVAT Online or CVAT Enterprise with compliance and support requirements."
+          ]
+        }
+      ],
+      "tags": ["open-source", "self-hosted", "api", "ai", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "5ff2b0e8-8acc-497e-9c48-da9f2af462a8",
+    "slug": "labelbox",
+    "name": "Labelbox",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Labelbox provides data annotation, RL environments, and human feedback infrastructure for training and evaluating AI models.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Labelbox: data annotation, RL environments, and human feedback platform for training and evaluating AI models and agents.",
+      "features": [
+        { "title": "Horizon", "description": "Generate RL environments and preference signals for post-training and evaluation across reasoning, tool use, and computer use." },
+        { "title": "Terra", "description": "Collect full-stack robotics data, including video, trajectories, and multimodal annotations." },
+        { "title": "Alignerr", "description": "Access a network of subject-matter experts for human grounding and feedback signals." },
+        { "title": "Recursion", "description": "An RL platform for enterprises to build, evaluate, and deploy specialist AI agents." },
+        { "title": "Free tier", "description": "Includes 500 free Labelbox Units (LBU) per month to get started without a sales conversation." }
+      ],
+      "pros": [
+        "Free tier available to start without a sales conversation",
+        "Used by a large share of leading frontier AI labs, per the company",
+        "Broad expert network for human feedback and grounding via Alignerr",
+        "Covers data annotation, RL environments, and agent evaluation on one platform"
+      ],
+      "cons": [
+        "Usage-based billing (Labelbox Units) makes total cost harder to predict upfront",
+        "Enterprise pricing and advanced features require contacting sales",
+        "Official pricing tiers beyond the free plan are not fully published on the public site"
+      ],
+      "faqs": [
+        { "question": "Is Labelbox free?", "answer": "Labelbox offers a free tier that includes 500 free Labelbox Units (LBU) per month; usage beyond that and Enterprise features require a paid plan." },
+        { "question": "What is a Labelbox Unit (LBU)?", "answer": "An LBU is Labelbox's normalized billing unit; how quickly it is consumed varies by product (Catalog, Annotate, Model)." },
+        { "question": "What is Labelbox used for?", "answer": "Labelbox provides data annotation, RL environments (Horizon), robotics data (Terra), human feedback (Alignerr), and an RL platform for AI agents (Recursion)." },
+        { "question": "Who uses Labelbox?", "answer": "Labelbox states it partners with frontier AI research labs and enterprises building production AI agents." }
+      ],
+      "use_cases": [
+        { "title": "RL post-training and evaluation", "description": "Teams use Horizon to generate RL environments and preference signals for model post-training.", "audience": "Frontier AI research teams" },
+        { "title": "Robotics data collection", "description": "Teams collect video, trajectory, and multimodal annotations for robotics models via Terra.", "audience": "Robotics ML teams" },
+        { "title": "Human feedback and grounding", "description": "Teams access Labelbox's expert network (Alignerr) for human grounding signals.", "audience": "AI training teams" },
+        { "title": "Specialist agent development", "description": "Enterprises use Recursion to build, evaluate, and deploy specialist AI agents on internal workflows.", "audience": "Enterprise AI teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "monthly", "features": ["500 free Labelbox Units (LBU) included each month"] },
+        { "plan_name": "Starter", "price": "Usage-based (billed per Labelbox Unit)", "billing_cycle": "monthly", "features": ["Pay based on LBU consumption across Catalog, Annotate, and Model"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom contract via account team", "Enterprise support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Labelbox?",
+          "level": 2,
+          "paragraphs": [
+            "Labelbox describes itself as an RL data engine for AI teams, providing data, environments, and evaluation infrastructure for AI development. It includes Horizon for RL environments and preference signals, Terra for robotics data, Alignerr for access to human experts, and Recursion, an RL platform for building specialist AI agents.",
+            "The platform offers a free tier with 500 Labelbox Units (LBU) per month, usage-based billing on paid tiers, and custom Enterprise pricing for larger organizations."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Labelbox is for",
+          "level": 2,
+          "paragraphs": [
+            "Labelbox targets frontier AI research labs and enterprises building production-grade AI agents, offering both self-serve tooling for smaller teams and enterprise contracts for larger data, RL, and evaluation programs."
+          ]
+        }
+      ],
+      "tags": ["api", "ai", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "53a0cb41-3c1b-499b-a369-31d2bb36357e",
+    "slug": "superannotate",
+    "name": "SuperAnnotate",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "SuperAnnotate is an enterprise data annotation and AI evaluation platform combining human expert labeling with AI training workflows.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": 2018,
+      "company_size": null,
+      "headquarters": "Silicon Valley, California, USA",
+      "languages": [],
+      "seo_meta_description": "SuperAnnotate: enterprise data annotation and AI evaluation platform with custom UI, multimodal support, and expert annotation teams.",
+      "features": [
+        { "title": "Custom annotation UI", "description": "Build tailored annotation interfaces for specific labeling needs." },
+        { "title": "Multimodal support", "description": "Handle image, video, audio, text, and combined data types." },
+        { "title": "AI workflow support", "description": "Supports RLHF, supervised fine-tuning (SFT), RAG, agent evaluation, and LLM assessment workflows." },
+        { "title": "Multi-layer QA", "description": "Run multi-layer annotation workflows with expert review cycles." },
+        { "title": "Expert talent network", "description": "Access professionally managed annotation teams for larger labeling programs." },
+        { "title": "Enterprise integrations", "description": "Connects with Databricks, NVIDIA, GCP, Snowflake, AWS, and IBM." }
+      ],
+      "pros": [
+        "Founded in 2018 with an established enterprise customer base",
+        "SOC 2 Type II and ISO/IEC 27001:2022 compliant infrastructure",
+        "Supports a wide range of AI training and evaluation workflows (RLHF, SFT, RAG, agent evaluation)",
+        "Managed annotation talent network available alongside self-serve tooling"
+      ],
+      "cons": [
+        "No public pricing; requires booking a demo or signing in to view plans",
+        "Positioned toward enterprise customers rather than individual or small-team self-serve use",
+        "Company size not publicly disclosed"
+      ],
+      "faqs": [
+        { "question": "Is SuperAnnotate pricing public?", "answer": "No, SuperAnnotate does not publish pricing on its site; you need to book a demo or sign in for pricing details." },
+        { "question": "When was SuperAnnotate founded?", "answer": "SuperAnnotate was founded in 2018." },
+        { "question": "Where is SuperAnnotate headquartered?", "answer": "SuperAnnotate is headquartered in Silicon Valley, California, USA." },
+        { "question": "What compliance certifications does SuperAnnotate have?", "answer": "SuperAnnotate states it maintains SOC 2 Type II and ISO/IEC 27001:2022 compliance." }
+      ],
+      "use_cases": [
+        { "title": "Enterprise dataset creation", "description": "Enterprises build custom-labeled datasets for training and fine-tuning AI models.", "audience": "Enterprise ML teams" },
+        { "title": "LLM and agent evaluation", "description": "Teams use SuperAnnotate for RLHF, SFT, RAG, and agent evaluation workflows.", "audience": "AI/LLM teams" },
+        { "title": "Multimodal annotation", "description": "Teams annotate image, video, audio, and text data through a custom-built UI.", "audience": "Computer vision and NLP teams" },
+        { "title": "Regulated-industry annotation", "description": "Organizations in healthcare, insurance, and autonomous driving use SuperAnnotate under SOC 2/ISO compliance.", "audience": "Regulated industry teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is SuperAnnotate?",
+          "level": 2,
+          "paragraphs": [
+            "SuperAnnotate is a data annotation and AI evaluation platform, founded in 2018 and headquartered in Silicon Valley, California, that combines human expertise with AI development workflows.",
+            "The platform offers a custom annotation UI builder, multimodal data support, multi-layer QA workflows, and an expert annotation talent network, alongside integrations with enterprise data platforms such as Databricks, AWS, GCP, and Snowflake."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who SuperAnnotate is for",
+          "level": 2,
+          "paragraphs": [
+            "SuperAnnotate is built for enterprise organizations and foundation model developers building and evaluating LLMs, agents, and multimodal AI systems, including regulated industries such as healthcare, insurance, and autonomous driving."
+          ]
+        }
+      ],
+      "tags": ["ai", "api", "web-app"]
+    }
+  },
+  {
+    "tool_id": "ee1d5a2e-e303-4d50-b144-230cf5daeaf1",
+    "slug": "roboflow",
+    "name": "Roboflow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Roboflow is a computer vision platform for annotating, training, and deploying visual AI models used by over 1 million engineers.",
+      "pricing_model": "Freemium",
+      "starting_price": "$79/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Roboflow: computer vision platform for annotating, training, and deploying object detection and image classification models.",
+      "features": [
+        { "title": "AI-assisted annotation", "description": "Label images faster with AI-assisted annotation tools." },
+        { "title": "Hosted training", "description": "Train computer vision models using hosted GPU infrastructure." },
+        { "title": "Workflows", "description": "Build computer vision pipelines and applications using a low-code interface." },
+        { "title": "Flexible deployment", "description": "Run models on-device, at the edge, in a VPC, or via a hosted API." },
+        { "title": "Roboflow Universe", "description": "Browse open-source datasets and pre-trained models shared by the community." },
+        { "title": "Open-source libraries", "description": "Maintains open-source libraries including Supervision, Inference, and Autodistill." }
+      ],
+      "pros": [
+        "Free Public plan includes $60/month in credits with no credit card required",
+        "Used by more than 1 million engineers and over 16,000 organizations, per the company",
+        "Covers the full workflow from annotation to training to deployment in one platform",
+        "SOC 2 Type 2 compliant with HIPAA-supporting infrastructure and BAAs available"
+      ],
+      "cons": [
+        "Core plan is limited to 3 users, with extra seats billed at $29/user/month",
+        "Enterprise features (RBAC, priority GPU access, model monitoring) require custom Enterprise pricing",
+        "Credit-based billing on paid plans can complicate cost forecasting"
+      ],
+      "faqs": [
+        { "question": "Is Roboflow free?", "answer": "Yes, Roboflow has a free Public plan with $60/month in credits and no credit card required. Paid Core and Enterprise plans add private data, more credits, and enterprise features." },
+        { "question": "How much does Roboflow Core cost?", "answer": "The Core plan costs $79/month billed annually or $99/month billed monthly." },
+        { "question": "Can I add more users to the Core plan?", "answer": "Yes, up to 10 additional seats can be added at $29/user/month." },
+        { "question": "Does Roboflow offer open-source tools?", "answer": "Yes, Roboflow maintains open-source libraries including Supervision, Inference, and Autodistill." }
+      ],
+      "use_cases": [
+        { "title": "Model annotation and training", "description": "Teams label images and train computer vision models using Roboflow's hosted GPU infrastructure.", "audience": "Computer vision engineers" },
+        { "title": "Edge and API deployment", "description": "Teams deploy trained models to edge devices, VPCs, or via a hosted API.", "audience": "MLOps and deployment teams" },
+        { "title": "Low-code CV pipelines", "description": "Teams build computer vision pipelines without extensive coding using the Workflows builder.", "audience": "Developers and non-ML engineers" },
+        { "title": "Open dataset discovery", "description": "Developers use Roboflow Universe to find open-source datasets and pre-trained models.", "audience": "ML researchers and hobbyists" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Public (Free)", "price": "$0/month", "billing_cycle": "monthly", "features": ["$60/month in credits", "2 users", "Community support", "Cloud deployment"] },
+        { "plan_name": "Core", "price": "$79/month (annual) / $99/month (monthly)", "billing_cycle": "monthly", "features": ["3 users", "Private data and models", "Training analytics", "Model evaluation", "Concurrent training"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Edge deployment licensing", "Priority GPU access", "RBAC", "Model monitoring", "Advanced governance"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Roboflow?",
+          "level": 2,
+          "paragraphs": [
+            "Roboflow is a computer vision platform that helps developers and enterprises annotate, train, and deploy visual AI applications, spanning video, images, and real-time streams.",
+            "The platform includes Annotate for AI-assisted labeling, Train for hosted GPU model training, Workflows for low-code pipeline building, and Deploy for running models on-device, at the edge, in a VPC, or via API, alongside the open-source Roboflow Universe dataset hub."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Roboflow is for",
+          "level": 2,
+          "paragraphs": [
+            "Roboflow serves developers, machine learning engineers, and enterprises building computer vision applications across industries such as aerospace, automotive, healthcare, manufacturing, logistics, retail, and robotics."
+          ]
+        }
+      ],
+      "tags": ["open-source", "api", "ai", "freemium", "free-plan", "web-app"]
+    }
+  },
+  {
+    "tool_id": "3ae68e89-7cc4-46ca-b15d-3b10568de023",
+    "slug": "ultralytics",
+    "name": "Ultralytics",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Ultralytics develops YOLO, an open-source computer vision library, plus a cloud platform for annotation, training, and deployment.",
+      "pricing_model": "Freemium",
+      "starting_price": "$29/seat/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Ultralytics: open-source YOLO computer vision library plus a cloud platform for annotation, training, and model deployment.",
+      "features": [
+        { "title": "YOLO model family", "description": "Native support for YOLOv5, YOLOv8, YOLO11, and YOLO26 for detection, segmentation, classification, and pose estimation." },
+        { "title": "Smart annotation", "description": "Annotation tools including SAM-powered mask generation, plus bounding boxes, polygons, and keypoints." },
+        { "title": "Cloud training", "description": "Cloud-accelerated model training with access to 22+ GPU configurations." },
+        { "title": "Broad export support", "description": "Export trained models to 19+ formats, including ONNX, TensorRT, and CoreML." },
+        { "title": "Global deployment", "description": "Deploy models across 43 global regions with auto-scaling." },
+        { "title": "Dual licensing", "description": "AGPL-3.0 open-source license, with a separate Enterprise License for proprietary commercial use." }
+      ],
+      "pros": [
+        "Widely adopted open-source library (131.6k+ GitHub stars, 301M+ downloads, per the company)",
+        "Free plan includes annotation, cloud training, and deployment capabilities",
+        "Broad export format support for many deployment targets",
+        "Enterprise License available for proprietary/commercial use without AGPL obligations"
+      ],
+      "cons": [
+        "AGPL-3.0 license requires open-sourcing derivative works unless an Enterprise License is purchased",
+        "Free plan team size is limited to 1 member",
+        "Enterprise pricing is custom and quote-only"
+      ],
+      "faqs": [
+        { "question": "Is Ultralytics YOLO free?", "answer": "Yes, the YOLO library is open source under the AGPL-3.0 license. An Enterprise License is available for proprietary commercial use." },
+        { "question": "What does the Ultralytics platform Free plan include?", "answer": "The Free plan includes annotation, cloud training, and deployment, with 100 GB storage, up to 100 models, and $25 in one-time credits." },
+        { "question": "How much does the Pro plan cost?", "answer": "The Pro plan costs $29/seat/month and supports up to 5 team members with more storage and GPU options." },
+        { "question": "What YOLO model versions does Ultralytics support?", "answer": "Ultralytics natively supports YOLOv5, YOLOv8, YOLO11, and YOLO26." }
+      ],
+      "use_cases": [
+        { "title": "Open-source model development", "description": "Developers train and deploy YOLO models locally under the AGPL-3.0 license.", "audience": "Open-source computer vision developers" },
+        { "title": "Cloud-based annotation and training", "description": "Teams use the Ultralytics platform for smart, SAM-powered annotation and GPU-accelerated cloud training.", "audience": "ML teams without local GPU infrastructure" },
+        { "title": "Enterprise commercial deployment", "description": "Companies use the Enterprise License to embed YOLO in proprietary products without AGPL obligations.", "audience": "Commercial product teams" },
+        { "title": "Multi-format model deployment", "description": "Teams export trained models to formats like ONNX, TensorRT, and CoreML for varied deployment targets.", "audience": "MLOps and deployment engineers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0/month", "billing_cycle": "monthly", "features": ["$25 one-time credits", "100 GB storage", "100 models", "3 concurrent cloud trainings", "1 team member", "AGPL-3.0 license"] },
+        { "plan_name": "Pro", "price": "$29/seat/month", "billing_cycle": "monthly", "features": ["$30/seat/month in credits", "500 GB storage", "500 models", "10 concurrent cloud trainings", "Up to 5 team members", "Cloud storage integrations (GCS, S3, Azure)"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Unlimited storage, models, and deployments", "On-premise deployment", "SSO/SAML", "Custom RBAC roles", "ISO 27001 and SOC 2 compliance"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Ultralytics?",
+          "level": 2,
+          "paragraphs": [
+            "Ultralytics develops YOLO (You Only Look Once), an open-source computer vision library, and an end-to-end platform unifying annotation, model training, and deployment.",
+            "The YOLO library is released under the AGPL-3.0 license, with an Enterprise License available for organizations that want to use YOLO in proprietary products without AGPL's open-source obligations. The Ultralytics platform adds a Free plan and a paid Pro plan for cloud-based annotation, training, and deployment."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Ultralytics is for",
+          "level": 2,
+          "paragraphs": [
+            "Ultralytics serves developers who want a free, open-source YOLO library for local use, as well as teams and enterprises across manufacturing, healthcare, automotive, agriculture, retail, and logistics that need cloud-based training, deployment, or a commercial license."
+          ]
+        }
+      ],
+      "tags": ["open-source", "self-hosted", "api", "ai", "freemium", "free-plan"]
+    }
+  }
+]

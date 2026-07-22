@@ -14,7 +14,7 @@ const NOINDEX_HEADERS = {
 
 function isCrawlerUA(uaRaw) {
   const ua = (uaRaw || "").toLowerCase();
-  return /(googlebot|google-inspectiontool|bingbot|slurp|duckduckbot|baiduspider|yandexbot|applebot|petalbot|semrushbot|ahrefsbot|mj12bot)/i.test(
+  return /(googlebot|google-inspectiontool|bingbot|slurp|duckduckbot|baiduspider|yandexbot|applebot|petalbot|semrushbot|ahrefsbot|mj12bot|gptbot|chatgpt-user|claudebot|claude-web|anthropic-ai|perplexitybot|ccbot|google-extended)/i.test(
     ua
   );
 }

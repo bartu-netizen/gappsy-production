@@ -1,0 +1,654 @@
+[
+  {
+    "tool_id": "2fb7e2c0-a5af-47c6-b92d-1e035732d406",
+    "slug": "quassel-irc",
+    "name": "Quassel IRC",
+    "enrichment": {
+      "short_description": "A cross-platform, distributed IRC client that splits into a core and client so you stay connected and pick up history anywhere.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2008,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Quassel IRC is an open-source IRC client built around a core-and-client architecture: a lightweight core process stays connected to IRC networks around the clock, while one or more graphical clients attach to and detach from that core at will. It's conceptually similar to running a text client inside a terminal multiplexer, but with a full Qt-based graphical interface instead.",
+            "Because the core keeps running independently of any client, users can close their laptop, switch to a phone, or open a second window on another machine and pick up exactly where they left off, with backlog and channel state preserved on the core."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Quassel suits IRC users who want a persistent presence on multiple channels without running a separate bouncer and client, and who prefer a native desktop or mobile app over a browser-based interface. It's commonly self-hosted on a small VPS or home server as the always-on core, with the GUI client running locally on whatever device is in use."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Core/client split", "description": "A persistent core stays connected to IRC servers while GUI clients attach and detach independently." },
+        { "title": "Cross-platform clients", "description": "Native clients are available for Linux, Windows, macOS, and Android." },
+        { "title": "Backlog sync", "description": "Chat history is stored on the core and synchronized to any client that connects, so nothing is missed while offline." },
+        { "title": "IRCv3 support", "description": "Supports modern IRCv3 capabilities alongside classic IRC formatting and features." },
+        { "title": "Multiple network connections", "description": "Connect to and manage many IRC networks and channels simultaneously from one core." }
+      ],
+      "pros": [
+        "Always-on core means you never miss channel history",
+        "Native, full-featured GUI rather than a web wrapper",
+        "Free, open source (GPL), and self-hosted",
+        "Mobile client available for Android"
+      ],
+      "cons": [
+        "Requires you to run and maintain a separate core process/server",
+        "No official iOS client",
+        "Interface is more IRC-power-user oriented than beginner friendly"
+      ],
+      "faqs": [
+        { "question": "Is Quassel IRC free?", "answer": "Yes. Quassel is free and open-source software released under the GPL license." },
+        { "question": "Do I need to self-host the core?", "answer": "Yes, the core is a separate process you run (typically on a server you control) that your clients connect to." },
+        { "question": "Does Quassel work on mobile?", "answer": "There is a native Android client; there is no official first-party iOS client." },
+        { "question": "What platforms are supported?", "answer": "Official clients are available for Linux, Windows, macOS, and Android." }
+      ],
+      "use_cases": [
+        { "title": "Always-connected IRC presence", "description": "Run the core on a VPS so you stay connected to your networks and never lose channel backlog, then attach a client whenever you're online.", "audience": "IRC users and community members" },
+        { "title": "Multi-device chat continuity", "description": "Switch between a desktop client at work and an Android client on the go while staying on the same channels with shared history.", "audience": "Developers and open-source contributors" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac", "android"],
+      "seo_meta_description": "Quassel IRC is a free, open-source, cross-platform IRC client with a persistent core so you never lose channel history."
+    }
+  },
+  {
+    "tool_id": "979bd91f-de34-4fc6-a7cd-59bb08136756",
+    "slug": "robust-irc",
+    "name": "Robust IRC",
+    "enrichment": {
+      "short_description": "An open-source, self-hostable IRC network implementation in Go that eliminates netsplits using the Raft consensus algorithm.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2014,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "RobustIRC is an open-source reimplementation of the server side of IRC, designed to remove the connectivity disruptions ('netsplits') that traditional multi-server IRC networks are prone to. It uses the Raft consensus algorithm across a cluster of servers so that node maintenance, restarts, and brief outages happen transparently to connected users.",
+            "Rather than replacing IRC clients, RobustIRC tunnels standard IRC traffic through its own RobustSession protocol via a bridge, so existing clients such as WeeChat or irssi continue to work unchanged. The project implements RFC 2812 compatibility at the bridge layer.",
+            "The software is actively developed on GitHub and is the technology behind the hackint IRC network used by parts of the European hacker/CCC community."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "RobustIRC is aimed at organizations or communities running their own IRC network who want server upgrades and node failures to be invisible to users, rather than individuals looking for a simple personal IRC client or bouncer."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Netsplit-free architecture", "description": "Uses the Raft consensus algorithm across a server cluster so users don't get disconnected during node maintenance or failures." },
+        { "title": "Client bridge", "description": "A bridge component lets existing IRC clients like WeeChat and irssi connect without modification." },
+        { "title": "Transparent server rollout", "description": "New server versions can be rolled out to the cluster without users noticing a connectivity interruption." },
+        { "title": "RFC 2812 compatibility", "description": "Implements the standard IRC protocol at the bridge layer for compatibility with existing tooling." }
+      ],
+      "pros": [
+        "Removes netsplits, a long-standing pain point of traditional IRC networks",
+        "Free, open source, written in Go",
+        "Proven in production on the hackint network",
+        "Works with existing IRC clients via its bridge"
+      ],
+      "cons": [
+        "Aimed at operators running a whole network, not individual end users",
+        "Requires running and understanding a Raft-based server cluster",
+        "Smaller community and documentation base than mainstream IRCds"
+      ],
+      "faqs": [
+        { "question": "Is RobustIRC a replacement for my IRC client?", "answer": "No. RobustIRC replaces the server side of an IRC network; you continue to use standard clients like WeeChat or irssi through its bridge." },
+        { "question": "Is RobustIRC free?", "answer": "Yes, it is open-source software available on GitHub at no cost." },
+        { "question": "Who uses RobustIRC in production?", "answer": "The hackint IRC network, used by parts of the European hacker community, runs on RobustIRC." },
+        { "question": "How does it avoid netsplits?", "answer": "It runs the network as a Raft consensus cluster, so nodes can be restarted or fail without disconnecting users from the network." }
+      ],
+      "use_cases": [
+        { "title": "Running a resilient community IRC network", "description": "Operate a multi-node IRC network where server maintenance and node failures don't disconnect users.", "audience": "IRC network operators and hacker/tech communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "RobustIRC is a free, open-source IRC network implementation using Raft consensus to eliminate netsplits, used in production by hackint."
+    }
+  },
+  {
+    "tool_id": "e3bc3a20-56e4-4435-a993-1159046d7812",
+    "slug": "the-lounge",
+    "name": "The Lounge",
+    "enrichment": {
+      "short_description": "A self-hosted, always-online web IRC client with push notifications, file uploads, and multi-device sync.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "The Lounge is a self-hosted, modern IRC client that runs as a web application, so a browser is the only client needed. Because the server component stays connected to IRC networks continuously, it doubles as a bouncer, meaning you don't need to run a separate bouncer alongside a traditional client.",
+            "It supports IRCv3 features, link previews, file uploads, and push notifications, and lets multiple people share a single deployment via multi-user support. Chat history and connection state persist across devices, so a session started on desktop can be picked up on a phone or tablet without losing context."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "The Lounge is a good fit for anyone who wants a persistent, always-connected IRC presence accessible from any device with a browser, without installing native software, and for small groups or communities that want to share a self-hosted IRC access point."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Always-online connection", "description": "Runs server-side so you stay connected to IRC channels even when your browser is closed." },
+        { "title": "Push notifications", "description": "Sends browser and mobile push notifications for mentions and messages." },
+        { "title": "File uploads and link previews", "description": "Supports uploading files and shows inline previews for shared links." },
+        { "title": "IRCv3 support", "description": "Implements modern IRCv3 protocol capabilities." },
+        { "title": "Multi-user support", "description": "A single self-hosted instance can serve multiple user accounts." },
+        { "title": "Responsive web UI", "description": "Works across desktop, tablet, and smartphone browsers with a responsive layout." }
+      ],
+      "pros": [
+        "No native client needed; works entirely from a browser",
+        "Free and open source under the MIT license",
+        "Acts as both bouncer and client in one deployment",
+        "Multi-user support makes it easy to share among a small group"
+      ],
+      "cons": [
+        "Requires self-hosting on infrastructure you manage (Node.js runtime)",
+        "You are responsible for uptime and security of your own instance",
+        "No official hosted/managed offering"
+      ],
+      "faqs": [
+        { "question": "Is The Lounge free?", "answer": "Yes, The Lounge is free, open-source software licensed under the MIT license." },
+        { "question": "Do I need a separate IRC bouncer?", "answer": "No, The Lounge's server component stays connected to IRC on your behalf, functioning as its own bouncer." },
+        { "question": "What do I need to run it?", "answer": "A server with Node.js where you can run and expose the web application." },
+        { "question": "Can multiple people use one instance?", "answer": "Yes, The Lounge supports multiple user accounts on a single deployment." }
+      ],
+      "use_cases": [
+        { "title": "Personal always-on IRC access", "description": "Self-host an instance to stay connected to IRC channels from any browser without running a desktop client.", "audience": "Individual IRC users and developers" },
+        { "title": "Shared community access point", "description": "Deploy one instance for a small group or team to give everyone browser-based IRC access with their own account.", "audience": "Small teams and open-source communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "The Lounge is a free, self-hosted web IRC client with push notifications, file uploads, and always-online connectivity."
+    }
+  },
+  {
+    "tool_id": "0a4646d4-397c-4756-8f0b-985b9dce7a8e",
+    "slug": "unrealircd",
+    "name": "UnrealIRCd",
+    "enrichment": {
+      "short_description": "A free, open-source IRC server with IRCv3 support, TLS, anti-flood/anti-spam tools, and a JSON-RPC API, in development since 1999.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1999,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "UnrealIRCd is an open-source IRC server (IRCd) that has been developed since 1999. It provides full IRCv3 protocol support, TLS/SSL encryption, hostname cloaking, and built-in anti-flood and anti-spam systems, along with GeoIP-based features and remote configuration includes.",
+            "Beyond core IRC serving, UnrealIRCd exposes a JSON-RPC API and supports webhooks, and it can be paired with a separate web administration panel for managing the server without editing configuration files directly. Its module system allows operators and third-party developers to extend server behavior in C."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "UnrealIRCd is built for people and organizations who want to run their own IRC network or server rather than connect as clients to an existing one — from small community networks to larger public IRC services."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "IRCv3 protocol support", "description": "Implements modern IRCv3 capabilities alongside classic IRC." },
+        { "title": "TLS/SSL and cloaking", "description": "Supports encrypted connections and hostname cloaking to protect user privacy." },
+        { "title": "Anti-flood and anti-spam", "description": "Built-in systems to throttle abusive connections and filter spam, including a spamfilter engine." },
+        { "title": "GeoIP support", "description": "Can apply rules and restrictions based on connecting clients' geographic location." },
+        { "title": "JSON-RPC API and webhooks", "description": "Exposes a JSON-RPC interface and webhook support for integrating with external tools and bots." },
+        { "title": "Module system", "description": "Extensible via C modules, with published module API documentation for third-party development." }
+      ],
+      "pros": [
+        "Free and fully open source with over two decades of active development",
+        "Runs on Linux, macOS, and Windows",
+        "Rich built-in anti-abuse tooling (flood/spam/GeoIP)",
+        "Modular architecture with an API for automation and bots"
+      ],
+      "cons": [
+        "Configuration and operation require IRC server administration knowledge",
+        "Web admin panel is a separate companion project, not bundled by default",
+        "Maintained largely by volunteers, funded by donations"
+      ],
+      "faqs": [
+        { "question": "Is UnrealIRCd free?", "answer": "Yes, UnrealIRCd is completely free and open source, maintained by volunteers and supported through donations." },
+        { "question": "What platforms does it run on?", "answer": "UnrealIRCd runs on Linux, macOS, and Windows." },
+        { "question": "Does UnrealIRCd have an API?", "answer": "Yes, it provides a JSON-RPC API and webhook support for integrations." },
+        { "question": "Can I extend UnrealIRCd's functionality?", "answer": "Yes, through its C module system, documented via a published module API." }
+      ],
+      "use_cases": [
+        { "title": "Running a public or community IRC network", "description": "Self-host an IRC server with modern protocol support and built-in abuse protection for a public or private community.", "audience": "IRC network operators" },
+        { "title": "Automating IRC network operations", "description": "Use the JSON-RPC API and webhooks to integrate bots, moderation tools, or monitoring with the IRC server.", "audience": "Developers building IRC bots and integrations" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api", "windows", "mac"],
+      "seo_meta_description": "UnrealIRCd is a free, open-source IRC server with IRCv3 support, TLS, anti-spam tools, and a JSON-RPC API for Linux, macOS, and Windows."
+    }
+  },
+  {
+    "tool_id": "ee6c8b88-f000-4f14-8c23-19ab2bda304c",
+    "slug": "weechat",
+    "name": "Weechat",
+    "enrichment": {
+      "short_description": "A fast, extensible terminal-based chat client for IRC with scripting in eight languages and remote access from browsers or mobile.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2003,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "WeeChat (Wee Enhanced Environment for Chat) is a free, open-source chat client that has been in development since 2003. It's designed to be fast and lightweight, running in a terminal with support for multiple IRC servers, IPv6, SASL authentication, a nicklist, DCC, and 256-color display with customizable, splittable windows.",
+            "A built-in script manager supports extensions written in eight scripting languages, and WeeChat's relay protocol lets you connect to a running WeeChat instance remotely from a web browser, smartphone app, GUI client, Emacs, or even another WeeChat session — similar in spirit to a bouncer."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "WeeChat suits power users and developers comfortable in a terminal who want a highly scriptable, low-resource IRC client, often run persistently inside a terminal multiplexer (like screen or tmux) on a remote server and accessed from multiple devices via its relay protocol."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-server IRC support", "description": "Connect to and manage many IRC servers simultaneously, with proxy support and IPv6." },
+        { "title": "Scripting in 8 languages", "description": "Built-in script manager supports extensions in Python, Perl, Ruby, Lua, Tcl, Scheme, JavaScript, and PHP." },
+        { "title": "Remote relay access", "description": "Connect to a running WeeChat instance from a browser, smartphone, GUI client, or another WeeChat via its relay protocol." },
+        { "title": "Customizable terminal UI", "description": "Horizontal/vertical window splits, smart filtering, customizable bars, and 256-color support." },
+        { "title": "SASL authentication", "description": "Supports SASL for secure authentication to IRC networks." }
+      ],
+      "pros": [
+        "Free and open source, actively developed since 2003",
+        "Extremely lightweight and fast, ideal for always-on server sessions",
+        "Highly scriptable and customizable",
+        "Remote access via relay means it can double as a bouncer"
+      ],
+      "cons": [
+        "Terminal-based interface has a learning curve for non-CLI users",
+        "No official native GUI client for desktop; relies on relay clients for a graphical experience",
+        "Scripting/plugin power comes with more setup than plug-and-play chat apps"
+      ],
+      "faqs": [
+        { "question": "Is WeeChat free?", "answer": "Yes, WeeChat is free and open-source software." },
+        { "question": "Can I use WeeChat on mobile?", "answer": "Yes, via relay clients that connect to a running WeeChat instance, including Android apps." },
+        { "question": "What scripting languages does it support?", "answer": "WeeChat's script manager supports Python, Perl, Ruby, Lua, Tcl, Scheme, JavaScript, and PHP." },
+        { "question": "Does WeeChat work like a bouncer?", "answer": "When run persistently on a server, its relay protocol lets other clients connect remotely, giving bouncer-like always-on behavior." }
+      ],
+      "use_cases": [
+        { "title": "Persistent server-side IRC session", "description": "Run WeeChat inside a terminal multiplexer on a remote server to stay connected to IRC around the clock.", "audience": "Developers and sysadmins" },
+        { "title": "Scripted automation and bots", "description": "Write scripts in a supported language to automate notifications, filtering, or custom IRC behavior.", "audience": "Power users and script developers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "android"],
+      "seo_meta_description": "WeeChat is a free, open-source, terminal-based IRC client with scripting in eight languages and remote relay access."
+    }
+  },
+  {
+    "tool_id": "1f9434f4-e927-45b2-a88a-bd4e32807373",
+    "slug": "znc",
+    "name": "ZNC",
+    "enrichment": {
+      "short_description": "A free, open-source IRC bouncer that stays connected to IRC networks so any client can disconnect and reconnect without losing history.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "ZNC is an advanced IRC bouncer, in development since 2004, that sits between an IRC network and one or more IRC clients. It stays connected to IRC even while a user is offline, buffering channel activity so that reconnecting later replays what was missed, including retaining nickname and operator status.",
+            "ZNC supports multiple users and multiple simultaneous client connections to the same account, SSL/TLS encryption, IPv6, and transparent DCC bouncing. It's written in C++ and extensible through dynamically loaded modules written in C++, Perl, Python, or Tcl."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "ZNC is aimed at IRC users who want to pair their existing client of choice (irssi, WeeChat, HexChat, etc.) with an always-connected bouncer, rather than replacing the client itself — useful for individuals or small groups self-hosting shared bouncer access."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Always-connected buffering", "description": "Stays connected to IRC while you're offline and replays missed activity when you reconnect." },
+        { "title": "Multi-client, multi-user support", "description": "Multiple clients can connect to the same account simultaneously, and a single ZNC instance can host multiple users." },
+        { "title": "Encrypted connections", "description": "Supports SSL/TLS for both the listening port and connections to IRC servers." },
+        { "title": "Module system", "description": "Extend functionality with dynamically loaded modules in C++, Perl, Python, or Tcl." },
+        { "title": "Per-channel playback buffer", "description": "Retains channel history per channel so clients can catch up after reconnecting." },
+        { "title": "Transparent DCC bouncing", "description": "Bounces DCC file transfer connections through the bouncer transparently." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "Works with any standard IRC client rather than requiring a specific one",
+        "Mature project with two decades of development",
+        "Extensible via modules in multiple languages"
+      ],
+      "cons": [
+        "Requires self-hosting and server administration to run",
+        "No built-in graphical client; you still need a separate IRC client",
+        "Configuration is done via config files/CLI, which has a learning curve"
+      ],
+      "faqs": [
+        { "question": "Is ZNC free?", "answer": "Yes, ZNC is free, open-source software licensed under Apache 2.0." },
+        { "question": "Do I still need an IRC client with ZNC?", "answer": "Yes, ZNC is a bouncer that sits between your IRC client and the IRC network; it does not replace your client." },
+        { "question": "Can multiple people share one ZNC install?", "answer": "Yes, ZNC supports multiple user accounts on a single instance." },
+        { "question": "What languages can I write ZNC modules in?", "answer": "C++, Perl, Python, or Tcl." }
+      ],
+      "use_cases": [
+        { "title": "Always-on IRC bouncer", "description": "Self-host ZNC so your IRC presence stays connected and you can catch up on channel history whenever you reconnect with your client.", "audience": "IRC users who want a persistent connection" },
+        { "title": "Shared bouncer for a small community", "description": "Run one ZNC instance with multiple user accounts to give a small group persistent IRC access.", "audience": "Small teams and open-source communities" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "ZNC is a free, open-source IRC bouncer that keeps you connected to IRC and buffers activity for any client to catch up later."
+    }
+  },
+  {
+    "tool_id": "5208a8e5-fcd9-4333-a413-ca2e73058d97",
+    "slug": "asterisk",
+    "name": "Asterisk",
+    "enrichment": {
+      "short_description": "A free, open-source framework for building PBX and communications applications, sponsored by Sangoma since 1999.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1999,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Asterisk is an open-source framework for building telephony and communications applications, created in 1999 by Mark Spencer and released under the GPLv2 license. It provides the building blocks for a software PBX: call routing, voicemail, conferencing, IVR, and interoperability with both legacy telephony hardware and VoIP/SIP endpoints.",
+            "Development is sponsored by Sangoma, which also produces the FreePBX web GUI for managing Asterisk and commercial products such as PBXact built on top of the open-source core. Asterisk itself remains free to download, run, and modify."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Asterisk is aimed at developers, integrators, and telecom-savvy administrators who want to build or run a custom phone system or communications application from the ground up, rather than a plug-and-play office phone solution — it's frequently deployed underneath GUI tools like FreePBX for less technical administration."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Call routing and dialplan", "description": "A flexible dialplan engine controls how calls are routed, transferred, and handled." },
+        { "title": "SIP and legacy telephony support", "description": "Interoperates with VoIP/SIP endpoints as well as traditional telephony hardware via interface cards." },
+        { "title": "Voicemail and IVR", "description": "Built-in voicemail system and tools for building interactive voice response menus." },
+        { "title": "Conferencing", "description": "Supports multi-party audio conferencing." },
+        { "title": "Extensible module architecture", "description": "Core functionality can be extended and customized through modules and APIs." }
+      ],
+      "pros": [
+        "Free and open source under GPLv2",
+        "Extremely flexible for building custom telephony applications",
+        "Backed by an active project sponsored by Sangoma and a large community",
+        "Works with both legacy telephony hardware and modern VoIP"
+      ],
+      "cons": [
+        "Raw Asterisk requires significant telephony and Linux expertise to configure",
+        "No built-in graphical administration interface (typically paired with FreePBX for that)",
+        "Commercial modules and support are sold separately by Sangoma"
+      ],
+      "faqs": [
+        { "question": "Is Asterisk free?", "answer": "Yes, Asterisk is open-source software released under the GPLv2 license and free to download and use." },
+        { "question": "Who maintains Asterisk?", "answer": "Development is sponsored by Sangoma Technologies." },
+        { "question": "Do I need FreePBX to use Asterisk?", "answer": "No, FreePBX is an optional web GUI for managing Asterisk; Asterisk can be configured directly via its dialplan and config files." },
+        { "question": "What can Asterisk be used for?", "answer": "Building PBX systems, call routing applications, voicemail, conferencing, and other telephony/communications applications." }
+      ],
+      "use_cases": [
+        { "title": "Building a custom business phone system", "description": "Use Asterisk as the core engine for a self-hosted PBX with custom call routing, voicemail, and conferencing.", "audience": "Telecom integrators and IT administrators" },
+        { "title": "Developing communications applications", "description": "Build custom voice applications, IVR systems, or call center tooling on top of the Asterisk framework.", "audience": "Developers building telephony software" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Asterisk is a free, open-source framework for building PBX and telephony applications, sponsored by Sangoma since 1999."
+    }
+  },
+  {
+    "tool_id": "a1e7307b-a3f8-4883-8420-6b25b0764ca6",
+    "slug": "flexisip",
+    "name": "Flexisip",
+    "enrichment": {
+      "short_description": "A modular, open-source SIP server suite from Belledonne Communications for self-hosted voice, video, and messaging services.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Grenoble, France",
+      "languages": ["English", "French"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Flexisip is a complete, modular SIP server suite built by Belledonne Communications, the France-based makers of the Linphone softphone. It provides the server-side infrastructure for unified communications over SIP, including a proxy for call routing and media relay, a push notification gateway for mobile clients, a presence server, a conference server for group calls and chat, and a SIP/PSTN bridge for connecting to traditional phone networks.",
+            "Flexisip is dual-licensed: it's available under the GNU AGPLv3 open-source license, or under a proprietary license for organizations that want to keep their modifications closed-source. Belledonne Communications also sells support contracts and deployment services around it."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Flexisip is aimed at organizations that want to self-host a full SIP-based communications backend — voice, video, presence, and messaging — often alongside Linphone clients, ranging from small deployments on devices like a Raspberry Pi to larger production infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "SIP proxy and media relay", "description": "Routes calls and relays media between SIP endpoints." },
+        { "title": "Push notification gateway", "description": "Delivers push notifications to mobile SIP clients to wake them for incoming calls and messages." },
+        { "title": "Presence server", "description": "Tracks and distributes user online/status information." },
+        { "title": "Conference server", "description": "Handles group audio/video calls and group chat." },
+        { "title": "SIP/PSTN bridge", "description": "Connects the SIP network to traditional phone (PSTN) infrastructure." },
+        { "title": "Account management (FlexiAPI)", "description": "Provides an API-driven account management layer for provisioning users." }
+      ],
+      "pros": [
+        "Open-source AGPLv3 option available at no cost",
+        "Complete suite covering proxy, presence, conferencing, and push notifications in one project",
+        "Runs on small hardware like a Raspberry Pi as well as production servers",
+        "Backed by Belledonne Communications, an established SIP/VoIP vendor"
+      ],
+      "cons": [
+        "AGPLv3 requires sharing modifications if you distribute a modified version, unless you buy the proprietary license",
+        "Setting up a full SIP communications stack requires telephony expertise",
+        "Support contracts and the proprietary license are paid add-ons"
+      ],
+      "faqs": [
+        { "question": "Is Flexisip open source?", "answer": "Yes, it's available under the GNU AGPLv3 license, with a paid proprietary license also offered for closed-source use." },
+        { "question": "Who makes Flexisip?", "answer": "Belledonne Communications, a Grenoble, France-based company also known for the Linphone softphone." },
+        { "question": "What can Flexisip be deployed on?", "answer": "It runs on Linux and can be deployed on small embedded devices like a Raspberry Pi as well as standard servers." },
+        { "question": "Does Flexisip include a phone client?", "answer": "No, Flexisip is server-side infrastructure; it's typically paired with SIP clients such as Linphone." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted unified communications backend", "description": "Deploy Flexisip to run your own voice, video, presence, and messaging infrastructure over SIP.", "audience": "IT teams building private communications systems" },
+        { "title": "SIP-to-PSTN bridging", "description": "Use the SIP/PSTN bridge to connect a SIP-based deployment to traditional telephone lines.", "audience": "Organizations integrating VoIP with legacy phone systems" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source (AGPLv3)", "price": "Free", "billing_cycle": "N/A", "features": ["Full Flexisip source code", "Self-managed deployment", "Community support"] },
+        { "plan_name": "Proprietary License + Support", "price": "Custom", "billing_cycle": "Contract", "features": ["Closed-source modification rights", "Vendor support contract", "Deployment services from Belledonne Communications"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Flexisip is an open-source SIP server suite from Belledonne Communications for self-hosted voice, video, and messaging."
+    }
+  },
+  {
+    "tool_id": "2a33553b-3246-4484-92da-a333ec40b5e4",
+    "slug": "freepbx",
+    "name": "Freepbx",
+    "enrichment": {
+      "short_description": "A free, open-source, web-based GUI from Sangoma for managing and configuring an Asterisk phone system.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FreePBX is an open-source, web-based graphical interface for configuring and managing an Asterisk-based phone system. It lets administrators set up extensions, trunks, call routing, IVR menus, voicemail, and more without editing Asterisk's dialplan and configuration files by hand.",
+            "The core FreePBX software is free to download and use, updated frequently by a community maintained under Sangoma's sponsorship. Sangoma also sells optional commercial modules — such as advanced call recording or queue reporting — and bundles or licenses that add support and extra functionality on top of the free base."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FreePBX is aimed at businesses and IT administrators who want the flexibility of Asterisk as a phone system but prefer a graphical interface over hand-editing Asterisk configuration, ranging from small offices to larger deployments that add commercial modules for extra capability."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Web-based Asterisk administration", "description": "Configure extensions, trunks, and call routing through a browser instead of editing config files." },
+        { "title": "IVR and voicemail management", "description": "Build interactive voice response menus and manage voicemail through the GUI." },
+        { "title": "Commercial module marketplace", "description": "Optional paid modules extend the free base with features like call recording and reporting." },
+        { "title": "Distribution/appliance option", "description": "A ready-to-install FreePBX distribution bundles Asterisk and the GUI for simpler deployment." },
+        { "title": "Frequent updates", "description": "The open-source base is updated regularly to track Asterisk changes and compatibility." }
+      ],
+      "pros": [
+        "Free, open-source base software",
+        "Removes the need to hand-edit Asterisk configuration files",
+        "Large, active user community and long track record",
+        "Commercial modules available for teams that need extra features or support"
+      ],
+      "cons": [
+        "Advanced features require paid commercial modules or licenses",
+        "Long-term licenses require purchasing support renewal to keep receiving updates",
+        "Still requires Asterisk/telephony knowledge for non-trivial deployments"
+      ],
+      "faqs": [
+        { "question": "Is FreePBX free?", "answer": "The base FreePBX software is free and open source; some advanced features are sold as optional commercial modules." },
+        { "question": "Do I need Asterisk separately?", "answer": "FreePBX is a GUI layer on top of Asterisk; the FreePBX distribution bundles both together for convenience." },
+        { "question": "Who develops FreePBX?", "answer": "It's maintained under the sponsorship of Sangoma Technologies." },
+        { "question": "What are commercial modules?", "answer": "Optional paid add-ons — such as advanced call recording or queue reporting — that extend the free FreePBX base." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted business phone system", "description": "Deploy FreePBX with Asterisk to run a full-featured office phone system managed through a web GUI.", "audience": "Small and mid-sized business IT teams" },
+        { "title": "Managed telephony for clients", "description": "IT service providers deploy FreePBX instances for clients, optionally adding commercial modules for advanced features.", "audience": "Managed service providers and telecom integrators" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "FreePBX Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Web-based Asterisk administration", "Core telephony features", "Community support"] },
+        { "plan_name": "Commercial Modules", "price": "Varies", "billing_cycle": "One-time or annual license", "features": ["Advanced call recording", "Queue and reporting tools", "Vendor support options"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium"],
+      "seo_meta_description": "FreePBX is a free, open-source web GUI for managing Asterisk phone systems, with optional paid commercial modules from Sangoma."
+    }
+  },
+  {
+    "tool_id": "359edbcb-cdb7-4e0e-96ec-f81303289aa2",
+    "slug": "freeswitch",
+    "name": "FreeSWITCH",
+    "enrichment": {
+      "short_description": "An open-source communications framework for building voice, video, and messaging infrastructure, sponsored by SignalWire.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2006,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FreeSWITCH is an open-source communications framework, originally announced in January 2006 by Anthony Minessale II, Brian West, and Michael Jerris, that gives developers direct control over SIP signaling, RTP media, codecs, and call routing to build custom telephony and real-time communications infrastructure.",
+            "Its modular architecture lets you load only the components you need and extend it with custom modules, including support for scalable audio/video conferencing. FreeSWITCH is free and open source; SignalWire, founded by its core developers, sponsors and maintains the project and additionally offers a commercially licensed 'FreeSWITCH Advantage' distribution with scheduled releases and security updates, along with paid cloud APIs and select commercially licensed codec modules (such as G.729A and AMD)."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FreeSWITCH is aimed at developers and telecom engineers building custom voice, video, or messaging platforms who need low-level control over media and signaling, rather than administrators looking for a plug-and-play office phone system with a graphical UI."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "SIP and RTP control", "description": "Direct management of SIP signaling, RTP media, codecs, and dialplan routing logic." },
+        { "title": "Modular architecture", "description": "Load only the modules you need and build custom extensions on the core." },
+        { "title": "Scalable conferencing", "description": "Supports multi-party audio and video conferences." },
+        { "title": "APIs for integration", "description": "Provides APIs that can be used to integrate transcription, automation, and other services." },
+        { "title": "Commercially licensed codec modules", "description": "Optional paid modules such as G.729A and AMD (answering machine detection) are available for purchase per instance." }
+      ],
+      "pros": [
+        "Free and open source core framework",
+        "Fine-grained control over media and signaling for custom telephony builds",
+        "Backed by SignalWire, founded by the project's original developers",
+        "Widely deployed in large-scale telephony infrastructure"
+      ],
+      "cons": [
+        "Requires significant telephony/SIP expertise to deploy and configure",
+        "No built-in graphical administration interface out of the box",
+        "Some codec modules and the supported 'Advantage' distribution require a paid license"
+      ],
+      "faqs": [
+        { "question": "Is FreeSWITCH free?", "answer": "Yes, the core FreeSWITCH framework is free and open source, licensed under the Mozilla Public License." },
+        { "question": "Who maintains FreeSWITCH?", "answer": "SignalWire, a company founded by FreeSWITCH's original core developers, sponsors and maintains the project." },
+        { "question": "Are there paid options?", "answer": "Yes, SignalWire offers a commercially licensed 'FreeSWITCH Advantage' distribution, some commercially licensed codec modules, and paid cloud APIs, in addition to the free open-source core." },
+        { "question": "What is FreeSWITCH typically used to build?", "answer": "Custom voice, video, and messaging systems, including PBX platforms, conferencing, and carrier-grade telephony infrastructure." }
+      ],
+      "use_cases": [
+        { "title": "Building custom telephony platforms", "description": "Use FreeSWITCH's low-level SIP/RTP control to build a bespoke voice or video communications system.", "audience": "Telecom developers and engineers" },
+        { "title": "Carrier and enterprise-scale voice infrastructure", "description": "Deploy FreeSWITCH as the media/signaling core of large-scale telephony infrastructure, optionally on the supported Advantage distribution.", "audience": "Enterprises and telecom carriers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source Core", "price": "Free", "billing_cycle": "N/A", "features": ["Full FreeSWITCH source code", "Community support", "Modular SIP/RTP framework"] },
+        { "plan_name": "FreeSWITCH Advantage", "price": "Custom", "billing_cycle": "Subscription", "features": ["Commercially supported distribution", "Scheduled releases and security updates", "Vendor support from SignalWire"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"],
+      "seo_meta_description": "FreeSWITCH is an open-source communications framework for building voice, video, and messaging systems, sponsored by SignalWire."
+    }
+  }
+]

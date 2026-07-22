@@ -1,13 +1,12 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
+import { authenticateAdmin, createAuthErrorResponse } from "../_shared/adminAuth.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey, x-admin-secret, x-admin-token",
 };
-
-const ADMIN_PASSWORD = Deno.env.get("SIDEBAR_ADS_ADMIN_PASSWORD") || "gappsy-ads-2024";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -31,30 +30,17 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
+    const auth = await authenticateAdmin(req);
+    if (!auth.success) return createAuthErrorResponse(auth, corsHeaders);
+
     const formData = await req.formData();
-    const password = formData.get("password")?.toString();
     const file = formData.get("file") as File;
 
     console.log("Upload request received", {
-      hasPassword: !!password,
       hasFile: !!file,
       fileType: file?.type,
       fileSize: file?.size,
     });
-
-    if (!password || password !== ADMIN_PASSWORD) {
-      console.error("Unauthorized: Invalid password");
-      return new Response(
-        JSON.stringify({ error: "Unauthorized: Invalid password" }),
-        {
-          status: 401,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
 
     if (!file) {
       console.error("No file provided");

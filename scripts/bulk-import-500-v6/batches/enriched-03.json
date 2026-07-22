@@ -1,0 +1,663 @@
+[
+  {
+    "tool_id": "2315b74d-957e-4a28-a863-32fc0da75242",
+    "slug": "fredy",
+    "name": "Fredy",
+    "enrichment": {
+      "short_description": "Self-hosted crawler that watches German real estate sites like ImmoScout24 and Immowelt, alerting you the moment a matching listing appears.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Fredy is an open-source, self-hosted application that automates apartment and house hunting on German real estate platforms. Instead of manually refreshing sites like ImmoScout24, Immowelt, Immonet, eBay Kleinanzeigen, and WG-Gesucht, Fredy runs on a schedule, scrapes new listings, removes duplicates that appear across multiple portals, and sends the results straight to you.",
+            "The project is maintained by Christian Kellner (orangecoding) and is distributed under the Apache 2.0 license. It ships as a Docker image or can be run directly with Node.js, and includes a web-based UI for configuring search queries and notification channels."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Fredy is built for anyone searching for a flat, house, or shared apartment in Germany who is tired of manually checking multiple listing sites every day, and who is comfortable self-hosting a small Docker service."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-platform scraping", "description": "Continuously checks ImmoScout24, Immowelt, Immonet, eBay Kleinanzeigen, and WG-Gesucht for new listings that match your saved search criteria." },
+        { "title": "Deduplication", "description": "Filters out the same listing when it appears on more than one platform, so you only get notified once." },
+        { "title": "Multi-channel notifications", "description": "Sends new results via Slack, Telegram, email, Discord, or ntfy." },
+        { "title": "Web-based configuration UI", "description": "Manage saved searches, notification providers, and run intervals through a browser interface rather than editing config files." },
+        { "title": "Docker-first deployment", "description": "Ships as a Docker image for quick self-hosting, with a Node.js option for manual installs." },
+        { "title": "Built-in MCP server", "description": "Recent versions expose an MCP server so AI assistants can query saved searches and results programmatically." }
+      ],
+      "pros": [
+        "Free and fully open source",
+        "Covers most of the major German real estate portals in one place",
+        "Flexible notification options (Slack, Telegram, Discord, email, ntfy)",
+        "Self-hosted, so your search criteria and results stay on your own server",
+        "Active development with recent releases"
+      ],
+      "cons": [
+        "Focused specifically on the German real estate market, not useful elsewhere",
+        "Requires comfort with Docker or Node.js to self-host",
+        "Scraping-based approach can break if a source site changes its layout"
+      ],
+      "faqs": [
+        { "question": "Is Fredy free to use?", "answer": "Yes. Fredy is open-source software released under the Apache 2.0 license and is free to self-host." },
+        { "question": "Which real estate sites does Fredy support?", "answer": "ImmoScout24, Immowelt, Immonet, eBay Kleinanzeigen, and WG-Gesucht, among others listed in its documentation." },
+        { "question": "Does Fredy work outside Germany?", "answer": "Fredy's built-in scrapers target German real estate platforms; it is not designed for real estate sites in other countries." },
+        { "question": "How do I get notified of new listings?", "answer": "You configure one or more notification providers (Slack, Telegram, email, Discord, or ntfy) in Fredy's web UI, and it pushes new matches there." }
+      ],
+      "use_cases": [
+        { "title": "Apartment hunting", "description": "Automatically track new rental listings across several German portals without manually refreshing each site.", "audience": "Individuals and families searching for a home in Germany" },
+        { "title": "Shared flat search", "description": "Monitor WG-Gesucht for new room listings that match budget and location criteria.", "audience": "Students and young professionals looking for shared housing" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Fredy is a free, self-hosted crawler that scans German real estate sites and alerts you to new listings via Slack, Telegram, or email."
+    }
+  },
+  {
+    "tool_id": "c5d35463-736d-427c-b730-eb483d33b643",
+    "slug": "homebutler",
+    "name": "HomeButler",
+    "enrichment": {
+      "short_description": "Single-binary CLI, TUI, and web dashboard for monitoring, backing up, and self-healing homelab servers and Docker containers.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "HomeButler is a single Go binary for managing a homelab from the command line, a terminal dashboard, a web UI, or an AI agent — with no daemon, database, or always-on service required. It monitors server health (CPU, memory, disk, uptime), manages Docker containers, detects crash loops, verifies that backups can actually be restored, and can trigger Wake-on-LAN across multiple remote servers over SSH.",
+            "The project also ships a built-in MCP server, so tools like Claude Desktop can query and manage a homelab through structured JSON commands rather than raw shell access. HomeButler is released under the MIT license and is developed on GitHub by Higangssh."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "HomeButler targets homelab operators and self-hosters who run several servers or Docker containers and want a lightweight way to check status, catch problems early, and verify backups actually work — from a terminal, a script, or an AI assistant."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "System monitoring", "description": "Tracks CPU, memory, disk usage, and uptime across one or more remote servers over SSH." },
+        { "title": "Docker container management", "description": "Lists containers, detects restarts, and captures logs for troubleshooting." },
+        { "title": "One-command app installs", "description": "Deploys popular self-hosted apps such as Uptime Kuma, Jellyfin, and Pi-hole with a single command." },
+        { "title": "Crash and flapping detection", "description": "Automatically flags containers or services that are restarting in a loop and surfaces log analysis." },
+        { "title": "Backup restore drills", "description": "Runs a 'backup drill' that tests whether a backup can actually be restored in an isolated environment, not just that a backup file exists." },
+        { "title": "MCP server for AI agents", "description": "Exposes homelab data and actions to AI tools like Claude Desktop through the Model Context Protocol, without giving the AI raw shell access." },
+        { "title": "Web dashboard", "description": "Embedded browser interface for real-time monitoring alongside the CLI and TUI." }
+      ],
+      "pros": [
+        "Single binary with zero external dependencies to install",
+        "No daemon, database, or always-on service required",
+        "Usable from CLI, TUI, web dashboard, or AI agent",
+        "Free and open source under MIT",
+        "Backup restore verification goes beyond simple backup existence checks"
+      ],
+      "cons": [
+        "macOS and Linux only, no native Windows build",
+        "Young project with a smaller community than established monitoring tools",
+        "Aimed at technically comfortable homelab users, not turnkey for beginners"
+      ],
+      "faqs": [
+        { "question": "Is HomeButler free?", "answer": "Yes, HomeButler is open source under the MIT license with no paid tier." },
+        { "question": "Does HomeButler require a database or background service?", "answer": "No. It runs as a single Go binary and does not require a daemon or database." },
+        { "question": "Can I use HomeButler with AI assistants?", "answer": "Yes, it includes a built-in MCP server so AI tools such as Claude Desktop can query and manage your homelab through structured commands." },
+        { "question": "How do I install HomeButler?", "answer": "It's available via Homebrew, a one-line curl install script, npm, or by building from source with Go." }
+      ],
+      "use_cases": [
+        { "title": "Homelab health monitoring", "description": "Keep track of CPU, memory, disk, and container health across several self-hosted servers from one place.", "audience": "Homelab operators running multiple physical or virtual servers" },
+        { "title": "Backup restore verification", "description": "Run scheduled restore drills to confirm backups are actually usable before a real failure happens.", "audience": "Self-hosters who rely on their own backup strategy" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "ai", "api"],
+      "seo_meta_description": "HomeButler is a free, self-hosted binary that monitors, backs up, and self-heals your homelab from the CLI, web dashboard, or an AI agent."
+    }
+  },
+  {
+    "tool_id": "508967b9-da79-458e-ad83-e0c334e50a8c",
+    "slug": "kibitzr",
+    "name": "Kibitzr",
+    "enrichment": {
+      "short_description": "Self-hosted Python bot that checks web pages, commands, or feeds for changes and notifies you through Slack, email, or custom scripts.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Kibitzr is a self-hosted \"personal web assistant\" that automates recurring monitoring tasks, such as checking whether a page has changed, a build has finished, or a new software release is out. Tasks are defined in YAML configuration files and can pull content from web pages, run shell or SSH commands, or parse HTML with CSS or XPath selectors.",
+            "The project is written in Python, uses Selenium for scenarios that need a real browser, and is released under the MIT license. It is installable via pip and is designed to run continuously on a small server, including behind a firewall."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Kibitzr suits developers and technically comfortable users who want to monitor web pages, commands, or feeds on their own infrastructure instead of handing credentials to a third-party monitoring SaaS."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "YAML task configuration", "description": "Define what to check, how often, and what to do on change using plain YAML files." },
+        { "title": "Web page monitoring", "description": "Fetches pages via HTTP or a headless browser and extracts content with CSS selectors or XPath." },
+        { "title": "Command and script triggers", "description": "Runs shell, SSH, or custom Python/Bash scripts as part of a monitoring task." },
+        { "title": "Slack and email notifications", "description": "Sends alerts through Slack or MailGun-based email when a watched value changes." },
+        { "title": "Browser automation", "description": "Uses Selenium for pages that require JavaScript rendering or interaction to check." },
+        { "title": "Plugin extensibility", "description": "Supports custom Python plugins for use cases beyond the built-in transports and notifiers." }
+      ],
+      "pros": [
+        "Free, open-source, and self-hosted",
+        "Flexible triggers beyond simple page diffing (commands, SSH, scripts)",
+        "Lightweight enough to run on minimal cloud or home server infrastructure",
+        "Cross-platform (Windows, Linux, macOS)"
+      ],
+      "cons": [
+        "Configuration is YAML/file-based rather than a graphical UI",
+        "Requires Python familiarity to extend or troubleshoot",
+        "Smaller community compared to modern uptime/change-detection SaaS tools"
+      ],
+      "faqs": [
+        { "question": "Is Kibitzr free?", "answer": "Yes, Kibitzr is MIT-licensed open-source software with no cost." },
+        { "question": "How do I install Kibitzr?", "answer": "It can be installed via pip and configured through YAML files." },
+        { "question": "Can Kibitzr monitor pages that require JavaScript?", "answer": "Yes, it can use Selenium for browser-based scenarios where content is rendered client-side." },
+        { "question": "Where does Kibitzr send notifications?", "answer": "Built-in support includes Slack and MailGun-based email, plus custom scripts for other destinations." }
+      ],
+      "use_cases": [
+        { "title": "Release and build monitoring", "description": "Watch a page or feed for a new software release or a finished CI build and get notified automatically.", "audience": "Developers tracking dependencies or CI pipelines" },
+        { "title": "Price or availability tracking", "description": "Check a product or listing page on a schedule and alert when the tracked value changes.", "audience": "Self-hosters who want change alerts without a third-party service" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Kibitzr is a free, self-hosted Python bot that monitors web pages and commands for changes and sends alerts to Slack or email."
+    }
+  },
+  {
+    "tool_id": "a78ce366-8967-4df1-b706-40b8958bb998",
+    "slug": "mylar3",
+    "name": "Mylar3",
+    "enrichment": {
+      "short_description": "Automated comic book manager that watches for new issues and downloads them as CBR/CBZ via NZB or torrent clients.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Mylar3 is the Python 3 successor to the original Mylar comic book downloader. It lets you build a watchlist of comic series, tracks upcoming issues and pull lists weeks in advance, and automatically grabs, sorts, renames, and tags new issues as CBR or CBZ files once they're available through your NZB or torrent client.",
+            "It integrates with download clients such as SABnzbd and NZBGet, tags files automatically via ComicTagger, and can scan an existing library to find missing issues. Mylar3 is open source under the GPL-3.0 license and runs on Windows, Linux, macOS, and Raspberry Pi, with an official Docker image available through LinuxServer.io."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Mylar3 is aimed at comic book collectors who already run a self-hosted download stack (SABnzbd, NZBGet, or torrent clients) and want the same kind of automated, watchlist-driven management that tools like Sonarr or Radarr provide for TV and movies."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Series watchlisting", "description": "Monitor comic series for new issues, updated metadata, and story arcs." },
+        { "title": "Pull-list tracking", "description": "Tracks upcoming releases up to four weeks ahead so downloads are ready close to release." },
+        { "title": "Download client integration", "description": "Works with SABnzbd, NZBGet, and torrent clients, plus multiple newznab indexers." },
+        { "title": "Automatic metadata tagging", "description": "Uses ComicTagger to tag downloaded issues with series, issue number, and other metadata." },
+        { "title": "Failed download handling", "description": "Automatically retries or grabs an alternate copy when a download fails." },
+        { "title": "Library scanning", "description": "Scans an existing collection to identify and fill in missing issues." }
+      ],
+      "pros": [
+        "Free and open source under GPL-3.0",
+        "Fits naturally alongside an existing self-hosted media/download stack",
+        "Handles trade paperbacks and graphic novels in addition to single issues",
+        "Multi-platform, with an official Docker image",
+        "Actively maintained with regular releases"
+      ],
+      "cons": [
+        "Requires configuring external indexers and download clients to be useful",
+        "Comic-specific; not a general-purpose media manager",
+        "Setup and troubleshooting assume familiarity with the NZB/torrent ecosystem"
+      ],
+      "faqs": [
+        { "question": "Is Mylar3 free?", "answer": "Yes, Mylar3 is open-source software released under the GPL-3.0 license." },
+        { "question": "What download clients does Mylar3 support?", "answer": "SABnzbd and NZBGet for NZB downloads, plus torrent clients, alongside newznab-compatible indexers." },
+        { "question": "Does Mylar3 tag downloaded comics?", "answer": "Yes, it uses ComicTagger to automatically apply metadata such as series and issue number." },
+        { "question": "Can Mylar3 run in Docker?", "answer": "Yes, an official image is maintained by LinuxServer.io, alongside native installs for Windows, Linux, macOS, and Raspberry Pi." }
+      ],
+      "use_cases": [
+        { "title": "Automated comic collecting", "description": "Watch ongoing series and automatically download new issues as they become available.", "audience": "Comic book collectors running a self-hosted download stack" },
+        { "title": "Library gap-filling", "description": "Scan an existing digital comic library and grab missing issues automatically.", "audience": "Users migrating or consolidating an existing comic collection" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows"],
+      "seo_meta_description": "Mylar3 is a free, open-source comic book manager that watches series and automatically downloads new CBR/CBZ issues."
+    }
+  },
+  {
+    "tool_id": "06494ee1-ad30-4cee-bd7c-a25eb468d7da",
+    "slug": "antville",
+    "name": "Antville",
+    "enrichment": {
+      "short_description": "Open-source weblog hosting platform built on the Helma Object Publisher, running continuously since 2001.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2001,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Antville is a weblog hosting system written in server-side JavaScript on top of the Helma Object Publisher, an open-source Java-based application server. Antville.org itself has hosted a network of user blogs since 2001, and the underlying code is published on GitHub so it can be self-hosted independently of the antville.org instance.",
+            "Individual sites on the network let users publish posts, accept comments, and see activity from other blogs in the same community. Because the platform predates most modern CMS tooling, it reflects an earlier generation of blogging software architecture built around Helma rather than a typical LAMP or Node.js stack."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Antville is relevant to bloggers who already use the antville.org hosted network, and to developers interested in Helma-based, self-hostable open-source weblog software with a long operating history."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Hosted blog network", "description": "Create a personal weblog on antville.org with a few clicks, joining a network of other member sites." },
+        { "title": "Comment system", "description": "Readers can comment on posts, with moderation controls for site owners." },
+        { "title": "Community activity feed", "description": "Surfaces recent posts and activity from across the network of hosted sites." },
+        { "title": "Self-hostable codebase", "description": "The Antville and Helma source code is published on GitHub, so the platform can be run independently of antville.org." },
+        { "title": "Open-source Helma runtime", "description": "Runs on Helma Object Publisher, a scriptable Java-based web application server that Antville forks and extends." }
+      ],
+      "pros": [
+        "Very long operating history for a self-hosted blogging platform",
+        "Fully open-source codebase available on GitHub",
+        "Free hosted option available on antville.org",
+        "Simple site creation for non-technical bloggers on the hosted network"
+      ],
+      "cons": [
+        "Built on Helma, a Java-based stack that is uncommon in current web development",
+        "Community and documentation skew toward German-speaking users",
+        "Feature set and interface are dated compared to modern CMS platforms"
+      ],
+      "faqs": [
+        { "question": "Is Antville free?", "answer": "Yes, hosting a site on antville.org is free, and the underlying code is open source." },
+        { "question": "Can I self-host Antville instead of using antville.org?", "answer": "Yes, the Antville and Helma source code is published on GitHub for independent self-hosting." },
+        { "question": "What technology does Antville run on?", "answer": "It's written in server-side JavaScript on top of Helma Object Publisher, a Java-based application server." }
+      ],
+      "use_cases": [
+        { "title": "Personal blogging", "description": "Start a weblog on the antville.org network without setting up hosting or a database.", "audience": "Individual bloggers, especially in German-speaking communities" },
+        { "title": "Self-hosted Helma deployment", "description": "Run the open-source Antville/Helma codebase on your own server for full control.", "audience": "Developers interested in Helma-based application hosting" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Antville is a free, open-source weblog hosting platform built on Helma Object Publisher, running since 2001."
+    }
+  },
+  {
+    "tool_id": "0bc21b7f-dfe2-4c44-a7ad-9cac54962d52",
+    "slug": "ech0",
+    "name": "Ech0",
+    "enrichment": {
+      "short_description": "Lightweight self-hosted publishing platform for short posts and links, with ActivityPub federation and a sub-15MB memory footprint.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "Chinese"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Ech0 is a self-hosted, federated publishing platform built for quickly sharing short-form thoughts, notes, and links rather than long-form articles. It's designed to be minimal by default: a single SQLite file for storage, a small Docker image, and reported memory usage under 15MB, making it easy to run on modest hardware.",
+            "The platform supports the ActivityPub protocol, so posts can federate into the wider fediverse alongside tools like Mastodon. It includes an online Markdown editor with live preview and one-click export or backup via web, TUI, or CLI. Ech0 is developed by lin-snow and released under the AGPL-3.0 license."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Ech0 fits people who want a lightweight, self-hosted alternative to microblogging services for sharing short notes and links, without ads, tracking, or subscriptions, and who value being reachable from the fediverse via ActivityPub."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Minimal resource footprint", "description": "Runs with reported memory usage under 15MB and a Docker image under 50MB." },
+        { "title": "Single-file SQLite storage", "description": "Stores all data in one SQLite file, simplifying backup and migration." },
+        { "title": "ActivityPub federation", "description": "Publishes posts so they can be followed and interacted with from other fediverse platforms." },
+        { "title": "Markdown editor with live preview", "description": "Write posts in Markdown with a plugin-friendly online editor." },
+        { "title": "One-click Docker deployment", "description": "Get a running instance with a single Docker command." },
+        { "title": "Export and backup tooling", "description": "Export or back up content through the web UI, a TUI, or the CLI." }
+      ],
+      "pros": [
+        "Extremely lightweight compared to full-featured CMS platforms",
+        "Fast to self-host with a single Docker command",
+        "Federates into the fediverse via ActivityPub",
+        "No ads, tracking, or subscription lock-in",
+        "Fully open source under AGPL-3.0"
+      ],
+      "cons": [
+        "Young project with a smaller community than established microblogging tools",
+        "Intentionally minimal feature set, not a full-featured blog CMS",
+        "Documentation and community discussion are primarily in Chinese"
+      ],
+      "faqs": [
+        { "question": "Is Ech0 free?", "answer": "Yes, Ech0 is open-source software released under the AGPL-3.0 license." },
+        { "question": "Does Ech0 support the fediverse?", "answer": "Yes, it supports ActivityPub, allowing posts to federate with platforms like Mastodon." },
+        { "question": "How much data does Ech0 require to run?", "answer": "It's designed to be lightweight, with reported memory usage under 15MB and a single SQLite file for storage." },
+        { "question": "How do I install Ech0?", "answer": "The project provides a single Docker command for deployment, described in its GitHub README." }
+      ],
+      "use_cases": [
+        { "title": "Personal microblogging", "description": "Share short notes, thoughts, and links from your own server instead of a third-party platform.", "audience": "Individuals who want a self-hosted, fediverse-connected alternative to microblogging apps" },
+        { "title": "Lightweight self-hosting", "description": "Run a publishing platform on low-resource hardware such as a small VPS or single-board computer.", "audience": "Self-hosters with limited server resources" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api"],
+      "seo_meta_description": "Ech0 is a free, open-source, lightweight self-hosted publishing platform with ActivityPub federation for sharing short posts."
+    }
+  },
+  {
+    "tool_id": "4e5010c0-47f6-477a-b108-d4572881cb9c",
+    "slug": "flatpress",
+    "name": "FlatPress",
+    "enrichment": {
+      "short_description": "Databaseless PHP blogging platform that stores every post as a flat file, with themes, plugins, and comment spam protection.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2006,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FlatPress is a blogging platform that stores posts, comments, and settings as flat files instead of using a database, so a full site can be backed up or moved by simply copying its files. It has been in active development since 2006 and is released under the GNU GPLv2 license, with source code maintained on GitHub under flatpressblog/flatpress.",
+            "The platform supports themes built with the Smarty templating engine, a plugin and widget system for extending functionality, and built-in comment moderation with spam protection."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FlatPress suits independent bloggers and site owners who want a simple, self-managed blog without setting up or maintaining a database, particularly on hosts with limited resources."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "No database required", "description": "All content is stored as files, simplifying setup, backup, and hosting requirements." },
+        { "title": "Plugin and widget system", "description": "Extend functionality through plugins and add widgets to the sidebar or other theme areas." },
+        { "title": "Smarty-based theming", "description": "Customize the site's appearance using themes built on the Smarty template engine." },
+        { "title": "Comment moderation and spam protection", "description": "Built-in tools for managing comments and filtering spam." },
+        { "title": "Simple file-based backup", "description": "Because there's no database, backing up a site is as simple as copying its files." }
+      ],
+      "pros": [
+        "No database to install, configure, or maintain",
+        "Mature, stable codebase with development ongoing since 2006",
+        "Easy to back up and migrate by copying files",
+        "Free and open source under GPLv2",
+        "Lightweight enough for modest shared hosting"
+      ],
+      "cons": [
+        "Smaller plugin and theme ecosystem than WordPress",
+        "Flat-file storage can become slower at very large post volumes",
+        "Admin interface feels dated compared to modern CMS platforms"
+      ],
+      "faqs": [
+        { "question": "Is FlatPress free?", "answer": "Yes, FlatPress is open-source software released under the GNU GPLv2 license." },
+        { "question": "Does FlatPress need a database?", "answer": "No, it stores all content as flat files instead of using a database." },
+        { "question": "Can I extend FlatPress with plugins?", "answer": "Yes, it has a plugin and widget system for adding functionality." },
+        { "question": "How do I back up a FlatPress site?", "answer": "Since everything is stored as files, backing up is a matter of copying the site's files and folders." }
+      ],
+      "use_cases": [
+        { "title": "Simple personal blogging", "description": "Run a blog without setting up or maintaining a database.", "audience": "Independent bloggers on shared or low-resource hosting" },
+        { "title": "Portable, easy-to-migrate sites", "description": "Move or back up a site by copying its file directory rather than exporting a database.", "audience": "Site owners who want simple hosting migrations" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "templates"],
+      "seo_meta_description": "FlatPress is a free, open-source PHP blogging platform that stores posts as flat files instead of a database."
+    }
+  },
+  {
+    "tool_id": "c23263cf-333f-4561-ac68-e421277a1f58",
+    "slug": "htmly",
+    "name": "HTMLy",
+    "enrichment": {
+      "short_description": "Databaseless PHP blogging platform and flat-file CMS with fast content indexing, scheduled posts, and two-factor authentication.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "HTMLy is an open-source, databaseless PHP blogging platform and flat-file CMS. It uses its own indexing approach to organize content by date, type, category, tag, or author, aiming to stay fast even on shared hosting with modest resources. The project is developed by Danpros and maintained on GitHub as danpros/htmly.",
+            "It includes archives, categories, tags, and full-text search, along with scheduled posts, custom fields, a sitemap and menu editor, and two-factor authentication for the admin login. Themes are downloaded and installed separately from the HTMLy site."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "HTMLy is aimed at bloggers and site owners who want a fast, low-resource blogging platform without database administration, especially on shared or minimal hosting."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Flat-file, no-database architecture", "description": "Stores and indexes posts as files, avoiding database setup and maintenance entirely." },
+        { "title": "Custom fast indexing", "description": "Uses its own algorithm to keep content lookups by date, category, tag, or author performant as a site grows." },
+        { "title": "Scheduled posts and custom fields", "description": "Queue posts for future publication and attach custom metadata fields to content." },
+        { "title": "Two-factor authentication", "description": "Adds 2FA to the admin login for extra account security." },
+        { "title": "Menu editor and sitemap generation", "description": "Manage site navigation and generate a sitemap from the admin panel." },
+        { "title": "One-click updates", "description": "Update the platform from within the admin interface." }
+      ],
+      "pros": [
+        "No database to install or maintain",
+        "Free and open source",
+        "Built-in 2FA for admin login security",
+        "Lightweight enough for shared hosting with minimal PHP requirements",
+        "Full-text search and tag/category organization out of the box"
+      ],
+      "cons": [
+        "Requires several specific PHP extensions (Mbstring, XML, INTL, GD, ZIP)",
+        "Smaller theme and plugin ecosystem than WordPress",
+        "Themes must be downloaded and installed manually rather than through an in-app marketplace"
+      ],
+      "faqs": [
+        { "question": "Is HTMLy free?", "answer": "Yes, HTMLy is free and open source; its source code is available on GitHub." },
+        { "question": "Does HTMLy require a database?", "answer": "No, it's a flat-file CMS that stores and indexes content as files." },
+        { "question": "What are HTMLy's server requirements?", "answer": "PHP 7.2 or later with the Mbstring, XML, INTL, GD, and ZIP extensions (ZIP is needed for backup functionality)." },
+        { "question": "Does HTMLy support two-factor authentication?", "answer": "Yes, it includes built-in 2FA for the admin login." }
+      ],
+      "use_cases": [
+        { "title": "Lightweight blogging on shared hosting", "description": "Run a fast blog without needing database access or administration.", "audience": "Bloggers on budget or shared hosting plans" },
+        { "title": "Large content archives", "description": "Organize and search thousands of posts by date, category, tag, or author without a database backend.", "audience": "Publishers with a large existing archive of posts" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "templates"],
+      "seo_meta_description": "HTMLy is a free, open-source, databaseless PHP blogging platform and flat-file CMS with search, tags, and 2FA."
+    }
+  },
+  {
+    "tool_id": "207eb58f-a5bd-46b7-ad43-c35ea9d0fecf",
+    "slug": "mataroa",
+    "name": "Mataroa",
+    "enrichment": {
+      "short_description": "Minimalist Markdown blogging platform with no ads or tracking, offering a free tier and a low-cost premium plan for custom domains.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2020,
+      "company_size": "1 (solo maintainer)",
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Mataroa is a deliberately stripped-down blogging platform, described by its creator as a 'naked blogging platform, for minimalists.' Posts are written in Markdown and published on a mataroa.blog subdomain or a connected custom domain, with no ads, cookies, or tracking. Signup doesn't require an email address, and users can export all of their data at any time.",
+            "The platform has been running since 2020 and is currently maintained by a single developer. It's 100% open source under the AGPL license, with self-hosting and deployment documentation available on GitHub, and generates revenue through an optional $9/year premium plan, part of which funds carbon removal."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Mataroa is built for writers who want a distraction-free, minimal publishing tool and are put off by ad-heavy or feature-bloated blogging platforms. It also appeals to developers who want to self-host or fork a simple, open-source blogging codebase."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Markdown writing", "description": "Write posts in Markdown with support for code highlighting, tables, and footnotes." },
+        { "title": "Custom domains (premium)", "description": "Connect your own domain instead of using a mataroa.blog subdomain." },
+        { "title": "Post-by-email (premium)", "description": "Publish new posts by sending an email, without opening the web editor." },
+        { "title": "RSS and email newsletters", "description": "Readers can subscribe via RSS or receive new posts by email." },
+        { "title": "Full data export", "description": "Export all posts and data at any time for portability or self-hosting elsewhere." },
+        { "title": "API access", "description": "Interact with the platform programmatically through Mataroa's API." },
+        { "title": "No ads, cookies, or tracking", "description": "The platform runs without advertising, cookies, or analytics tracking on reader-facing pages." }
+      ],
+      "pros": [
+        "Genuinely minimal, distraction-free writing and reading experience",
+        "No ads, cookies, or tracking",
+        "No email required to sign up",
+        "Full data export and self-hosting option available",
+        "Low-cost premium plan at $9/year"
+      ],
+      "cons": [
+        "Maintained by a single developer, a noted sustainability risk",
+        "Free tier lacks custom domain and post-by-email support",
+        "Intentionally minimal features compared to full-featured blogging platforms"
+      ],
+      "faqs": [
+        { "question": "Is Mataroa free?", "answer": "Yes, there is a free tier with core blogging features; a $9/year premium plan adds custom domains and post-by-email." },
+        { "question": "Do I need an email address to sign up?", "answer": "No, Mataroa does not require an email address to create an account." },
+        { "question": "Can I self-host Mataroa?", "answer": "Yes, the platform is 100% open source under the AGPL license with deployment documentation on GitHub." },
+        { "question": "Can I export my content?", "answer": "Yes, full data export is supported at any time." }
+      ],
+      "use_cases": [
+        { "title": "Minimalist personal blogging", "description": "Publish Markdown posts without dealing with themes, plugins, or tracking scripts.", "audience": "Writers who want a distraction-free publishing tool" },
+        { "title": "Self-hosted blog platform", "description": "Fork or deploy the open-source codebase to run a custom instance.", "audience": "Developers who want to self-host or build on Mataroa's codebase" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "Free", "billing_cycle": null, "features": ["Markdown blog on a mataroa.blog subdomain", "RSS feed", "No ads, cookies, or tracking", "Full data export"] },
+        { "plan_name": "Premium", "price": "$9", "billing_cycle": "Yearly", "features": ["Custom domain support", "Post-by-email publishing", "All free-tier features", "Supports the platform and CO2 removal funding"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "api", "web-app"],
+      "seo_meta_description": "Mataroa is a minimalist, ad-free Markdown blogging platform with a free tier and a $9/year premium plan for custom domains."
+    }
+  },
+  {
+    "tool_id": "eba0f7e5-197a-4285-93b2-3fcbd9da16ba",
+    "slug": "pluxml",
+    "name": "PluXml",
+    "enrichment": {
+      "short_description": "French-origin, database-free CMS that stores content as XML files, with multi-user permissions and support for 11 languages.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["French", "English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "PluXml is a lightweight content management system that stores every page, post, and setting as XML files instead of relying on a database. Because there's no database, a full site can be copied, backed up, or moved between servers — even via a USB drive — by copying its files.",
+            "The platform supports static pages, categories, tags, article archives, comment management, and a media manager for images and documents, with five permission levels for multi-user setups. It's released under the GNU General Public License, requires PHP 7.2+ with the GD library, and runs on Apache, Nginx, or Lighttpd. PluXml ships with support for 11 languages."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "PluXml is aimed at individuals, families, and small businesses who want a straightforward website or blog without managing a database, as well as multi-author sites that need simple, role-based permissions."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "XML-based storage", "description": "Stores content as XML files rather than in a database, simplifying backup and portability." },
+        { "title": "Multi-user permission levels", "description": "Supports five distinct permission levels for managing multiple authors and editors." },
+        { "title": "Static pages, categories, and tags", "description": "Organize content with static pages, categories, tags, and chronological archives." },
+        { "title": "Media manager", "description": "Upload and manage images and documents through a built-in media library." },
+        { "title": "RSS feeds", "description": "Generates RSS feeds for articles, comments, and categories." },
+        { "title": "Responsive theming and plugins", "description": "Themes support mobile devices, and functionality can be extended through plugins." },
+        { "title": "URL rewriting", "description": "Supports clean, rewritten URLs for pages and posts." }
+      ],
+      "pros": [
+        "No database required, simplifying hosting and backups",
+        "Granular multi-user permissions with five access levels",
+        "Ships with support for 11 languages",
+        "Free and open source under the GPL",
+        "Lightweight PHP-only server requirements"
+      ],
+      "cons": [
+        "Smaller English-language community and documentation than mainstream CMS platforms",
+        "XML file storage may not scale as well as a database for very large sites",
+        "Smaller plugin and theme ecosystem than WordPress"
+      ],
+      "faqs": [
+        { "question": "Is PluXml free?", "answer": "Yes, PluXml is open-source software released under the GNU General Public License." },
+        { "question": "Does PluXml need a database?", "answer": "No, all content is stored as XML files instead of a database." },
+        { "question": "What are PluXml's server requirements?", "answer": "PHP 7.2 or later with the GD image library, running on Apache, Nginx, or Lighttpd." },
+        { "question": "Does PluXml support multiple languages?", "answer": "Yes, it ships with support for 11 languages, and originates from a French-speaking development community." }
+      ],
+      "use_cases": [
+        { "title": "Simple personal or family websites", "description": "Build a straightforward website without database setup or technical maintenance.", "audience": "Individuals, families, and hobbyists" },
+        { "title": "Multi-author small business sites", "description": "Run a site with several contributors using role-based permission levels.", "audience": "Small businesses and teams with multiple content editors" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "templates"],
+      "seo_meta_description": "PluXml is a free, open-source, database-free CMS that stores content as XML files and supports 11 languages."
+    }
+  }
+]

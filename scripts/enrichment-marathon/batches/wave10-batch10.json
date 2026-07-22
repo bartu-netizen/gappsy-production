@@ -1,0 +1,599 @@
+[
+{
+"tool_id": "f79bb617-e492-4f3f-b2e0-6a6ffd43dc71",
+"slug": "gitguardian",
+"name": "GitGuardian",
+"enrichment": {
+"short_description": "GitGuardian is a code security platform that detects hardcoded secrets, manages non-human identities, and monitors public and private repositories, CI/CD pipelines, and developer endpoints for exposed credentials.",
+"pricing_model": "Freemium",
+"starting_price": "Free (paid plans are quote-based)",
+"founded_year": 2017,
+"company_size": "150-200 employees",
+"headquarters": "Paris, France",
+"languages": ["English", "French"],
+"seo_title": "GitGuardian Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "GitGuardian review 2026: secrets detection, non-human identity governance, pricing tiers, features, pros and cons, and top alternatives compared.",
+"llm_readable_summary": "GitGuardian is a code and application security company built around a single, urgent problem: developers accidentally commit passwords, API keys, database credentials, and other secrets into source code, and those leaks are routinely exploited by attackers within minutes of exposure. The company was founded in Paris in 2017 by Eric Fourrier and Jeremy Thomas, who were working as a data scientist and software engineer and began by building a system that scanned GitHub's public commit stream in real time, flagging exposed credentials before they could be abused. That original public-monitoring engine became the technical core of the company and remains one of its most distinctive capabilities: GitGuardian continuously watches public GitHub activity for leaked secrets belonging to its customers, a feature few competitors replicate at the same scale. From that starting point, GitGuardian expanded into a broader internal-facing platform for organizations, covering private repositories, continuous integration and deployment pipelines, container images, messaging apps like Slack and Teams, and, more recently, developer laptops themselves through its Developer Endpoint Protection capability built into the ggshield command-line tool. The company has raised roughly 118 million dollars across five funding rounds, most recently a 50 million dollar Series C in February 2026, with investors including Insight Partners, Quadrille Capital, Eurazeo, Sapphire Ventures, and La French Tech among others. Earlier backers include Balderton Capital and Bpifrance. This funding trajectory places GitGuardian among the more established players in the DevSecOps and application security space, alongside its transition from a narrowly focused secrets-detection tool into a wider non-human identity, or NHI, security platform. Technically, GitGuardian's detection engine combines regular-expression pattern matching, entropy analysis, and specific and generic detectors for more than 450 (and by some counts over 550) distinct types of secrets, spanning cloud provider keys (AWS, Azure, GCP), database connection strings, private SSH and TLS keys, and vendor-specific tokens for services such as Stripe, Slack, and Twilio. Findings can be exported in SARIF format for direct integration with GitHub Advanced Security's code-scanning alerts, and the platform ships native integrations for GitHub, GitLab, Bitbucket, and Azure DevOps, plus pre-commit and pre-push git hooks so secrets can be blocked before they ever leave a developer's machine. Beyond detection, GitGuardian's NHI Governance module inventories non-human identities such as service accounts, API keys, and machine credentials, tracks their permissions and usage patterns, and recommends remediation and rotation workflows to centralize their lifecycle management, an increasingly important concern as organizations run more automated pipelines and AI agents that hold their own credentials. Honeytokens are another differentiated feature: GitGuardian generates decoy credentials that customers plant across their codebase, cloud storage, or developer endpoints, and if an attacker or infostealer malware ever attempts to use one, GitGuardian fires an instant, attributed alert well before real damage occurs. GitGuardian's pricing follows a per-developer-seat freemium model. The free Starter tier covers up to 25 developers with unlimited real-time scanning, up to 500 historical secret detections, git hooks, basic specific and generic detectors, and 10,000 API calls per month, with no credit card required. The Business (formerly Teams) tier, aimed at organizations of 26 to 200 developers, adds remediation playbooks, support for up to 20 teams, roughly 12 GB of repository scanning, custom regex detectors, SAML single sign-on, 100,000 API calls per month, and ticket-based support; pricing is quote-based rather than published. The Enterprise tier, for 200 or more developers, layers on Public Secrets Monitoring (the original public-GitHub watch capability extended to enterprise scale), NHI Governance with honeytokens, self-hosted deployment options, unlimited teams and API calls, unlimited custom detectors, push-to-vault workflows, and a dedicated support channel; this tier is also fully custom-quoted. GitGuardian's target audience skews toward security and platform engineering teams inside mid-size to large software organizations, particularly in regulated or security-conscious industries such as financial services, cloud infrastructure, and enterprise software, where a single leaked credential can trigger a costly breach. Publicly referenced customers include Snowflake, ING, BASF, and DigitalOcean, and the company states its tools are used by more than 600,000 developers worldwide. In the competitive landscape, GitGuardian sits alongside the open-source secret scanner Gitleaks and TruffleHog, GitHub's own built-in secret scanning and push protection (part of GitHub Advanced Security), and newer entrants such as Aikido Security, Spectral, and Legit Security. GitGuardian differentiates itself from the open-source tools primarily through its hosted dashboard, public-monitoring network effect, incident workflow and remediation tooling, honeytoken deception technology, and the newer NHI governance and endpoint protection layers, which position it less as a point scanner and more as a full non-human identity security platform. As AI-assisted coding tools proliferate and generate more code (and more accidental secrets) at higher velocity, GitGuardian has also begun shipping agent skills aimed at detecting and remediating secrets introduced by AI coding assistants, signaling where the company sees its next growth vector. Overall, GitGuardian's combination of real-time public monitoring, deep enterprise integrations, and an expanding non-human identity governance suite has made it one of the more recognized and well-funded vendors in the secrets management and code security category as of 2026.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"GitGuardian is a Paris-based code security company founded in 2017 by Eric Fourrier and Jeremy Thomas, built around detecting hardcoded secrets such as API keys, passwords, and tokens in source code before attackers can exploit them.",
+"The platform grew from a real-time public GitHub monitoring engine into a full non-human identity security suite covering private repositories, CI/CD pipelines, container images, chat tools, and developer workstations."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"GitGuardian detects more than 450 types of secrets using a combination of regex pattern matching, entropy analysis, and specific and generic detectors, with SARIF output for GitHub Advanced Security integration.",
+"NHI Governance and honeytoken deception technology extend the platform beyond detection into non-human identity inventory, credential rotation, and attacker attribution."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"GitGuardian offers a free tier for up to 25 developers, with Business and Enterprise tiers priced on a custom, quote basis depending on developer count, deployment model, and feature requirements.",
+"Enterprise customers can also opt for self-hosted deployment, unlimited API calls, and a dedicated support channel."
+]}
+],
+"features": [
+{"title": "Public Secrets Monitoring", "description": "Continuously scans public GitHub activity in real time for exposed customer secrets, the original capability the company was founded on."},
+{"title": "ggshield CLI", "description": "Command-line tool that runs secret detection locally via pre-commit and pre-push git hooks, plus Developer Endpoint Protection for scanning developer machines."},
+{"title": "450+ secret detectors", "description": "Specific and generic detectors covering cloud keys, database credentials, private keys, and vendor tokens, combined with entropy analysis."},
+{"title": "NHI Governance", "description": "Inventories non-human identities such as service accounts and API keys, tracks permissions and usage, and recommends prioritized remediation."},
+{"title": "Honeytokens", "description": "Decoy credentials planted across code and endpoints that trigger instant, attributed alerts if an attacker attempts to use them."},
+{"title": "CI/CD and SCM integrations", "description": "Native support for GitHub, GitLab, Bitbucket, and Azure DevOps, with SARIF export into GitHub Advanced Security's code-scanning alerts."},
+{"title": "Remediation playbooks", "description": "Guided workflows to help teams revoke, rotate, and remediate exposed credentials quickly."},
+{"title": "Self-hosted deployment", "description": "Enterprise customers can run GitGuardian on their own infrastructure for data residency or compliance requirements."}
+],
+"pros": [
+"Real-time public GitHub monitoring gives an early-warning capability few competitors offer",
+"Broad detector library covering 450+ secret types with low false-positive tuning options",
+"NHI governance and honeytokens extend value beyond simple scanning into ongoing identity security",
+"Strong integration coverage across major source control and CI/CD platforms",
+"Free tier is genuinely usable for small teams up to 25 developers"
+],
+"cons": [
+"Business and Enterprise pricing is not publicly published, requiring a sales conversation to get a quote",
+"Historical detections are capped at 500 on the free plan, limiting visibility into older leaks",
+"Advanced features like NHI Governance and self-hosted deployment are Enterprise-only",
+"Can generate alert volume that requires tuning to avoid fatigue in large codebases",
+"Open-source alternatives like Gitleaks and TruffleHog offer core scanning for free indefinitely"
+],
+"faqs": [
+{"question": "Is GitGuardian free to use?", "answer": "Yes, GitGuardian offers a free Starter plan for up to 25 developers with unlimited real-time scanning and up to 500 historical detections, no credit card required."},
+{"question": "Who founded GitGuardian?", "answer": "GitGuardian was founded in 2017 in Paris, France, by Eric Fourrier and Jeremy Thomas."},
+{"question": "How much has GitGuardian raised in funding?", "answer": "GitGuardian has raised approximately 118 million dollars across five rounds, including a 50 million dollar Series C in February 2026 led by investors such as Insight Partners and Eurazeo."},
+{"question": "What is NHI Governance in GitGuardian?", "answer": "NHI Governance is GitGuardian's module for inventorying non-human identities like service accounts and API keys, tracking their permissions and usage, and guiding credential rotation and remediation."},
+{"question": "What are the main alternatives to GitGuardian?", "answer": "Common alternatives include the open-source scanners Gitleaks and TruffleHog, GitHub's built-in secret scanning and push protection, and vendors like Aikido Security, Spectral, and Legit Security."},
+{"question": "Does GitGuardian support self-hosted deployment?", "answer": "Yes, self-hosted deployment is available on the Enterprise plan for organizations with data residency or compliance requirements."}
+],
+"use_cases": [
+{"title": "Preventing secret leaks in CI/CD pipelines", "description": "Security teams integrate GitGuardian into build pipelines to block deployments that contain hardcoded credentials before they reach production.", "audience": "DevSecOps and platform engineering teams"},
+{"title": "Monitoring for public exposure", "description": "Organizations use Public Secrets Monitoring to get alerted the moment an employee or contractor accidentally pushes a company secret to a public repository.", "audience": "Security operations teams at mid-size to large enterprises"},
+{"title": "Non-human identity lifecycle management", "description": "Enterprises use NHI Governance and honeytokens to inventory service accounts and API keys, rotate stale credentials, and detect attacker use of decoy credentials.", "audience": "Cloud security and identity teams in regulated industries"}
+],
+"pricing_plans": [
+{"plan_name": "Starter (Free)", "price": "$0", "billing_cycle": "N/A", "features": ["Up to 25 developers", "Unlimited real-time scanning", "Up to 500 historical detections", "Git hooks for developer workstations", "10,000 API calls per month", "Self-service support"]},
+{"plan_name": "Business", "price": "Custom quote", "billing_cycle": "Annual (typical)", "features": ["26-200 developers", "Remediation playbooks", "Up to 20 teams", "Custom regex detectors", "SAML SSO", "100,000 API calls per month"]},
+{"plan_name": "Enterprise", "price": "Custom quote", "billing_cycle": "Annual (typical)", "features": ["200+ developers", "Public Secrets Monitoring", "NHI Governance with honeytokens", "Self-hosted deployment option", "Unlimited teams and API calls", "Dedicated support channel"]}
+],
+"tags": ["api", "web-app", "freemium", "free-plan", "self-hosted"],
+"publish": true
+}
+},
+{
+"tool_id": "0db8e4b7-3129-43e3-bd36-cff6d52f51bc",
+"slug": "gitleaks",
+"name": "Gitleaks",
+"enrichment": {
+"short_description": "Gitleaks is a free, open-source command-line tool that scans git repositories, files, and directories to detect hardcoded secrets such as API keys, passwords, and tokens using regex and entropy analysis.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": 2018,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Gitleaks Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Gitleaks review 2026: the open-source git secret scanner covering features, setup, licensing, GitHub stars, and alternatives like TruffleHog and GitGuardian.",
+"llm_readable_summary": "Gitleaks is a free and open-source secret detection tool built to find passwords, API keys, tokens, and other hardcoded credentials inside git repositories, plain files, and directories. It was created by Zachary (Zach) Rice as a side project in 2018 and released under the permissive MIT license, with copyright attributed to Rice since 2019. Written in Go and distributed as a single static binary, Gitleaks became popular precisely because it required no server, no account, and no external dependency: developers could drop the binary into a pre-commit hook, a continuous integration job, or a one-off audit script and get immediate results. Over time it grew into one of the most widely used open-source secret scanners in the world, accumulating in the range of 17,000 to over 25,000 GitHub stars depending on when the count is taken, tens of millions of cumulative downloads across Docker Hub, Homebrew, and direct binary distribution, and adoption inside countless open-source projects' own CI pipelines as a baseline secret-scanning step. Functionally, Gitleaks runs regex-based pattern matching and Shannon entropy analysis against git history, working directory files, and piped stdin content, and it ships with a large set of built-in detection rules covering more than 160 secret types, including AWS access keys, GitHub personal access tokens, private SSH keys, and common database connection string formats, with new rules added by community contribution over time. Because it can walk the full commit history of a repository rather than only the current working tree, Gitleaks is particularly useful for catching secrets that were committed at some point in the past and later removed from the latest commit but still remain retrievable in git history, a common and dangerous blind spot. Output can be produced in SARIF format, which allows results to flow directly into GitHub's code-scanning alerts and other tools that consume the SARIF standard, and Gitleaks integrates cleanly into pre-commit frameworks, generic CI systems, and container-based scanning workflows via its official Docker image. As a pure open-source project rather than a company, Gitleaks has no headquarters, no funding rounds, no pricing tiers, and no formal company size; it has always been free to use, self-host, and modify under the MIT license, and it competes on trust, simplicity, and community rule coverage rather than on a commercial feature roadmap. That community-driven model has, however, come under strain more recently. Zach Rice joined the security company Truffle Security (maker of the competing tool TruffleHog) in 2023, and his personal focus shifted toward that project; development velocity on Gitleaks slowed as a result, and Rice has publicly acknowledged that he no longer has full operational control over the Gitleaks GitHub repository and project name in the way he once did. In March 2026, Rice announced a new successor project called Betterleaks, sponsored by the commercial security vendor Aikido Security, positioning it as a more accurate rewrite that uses parallelized git scanning and byte-pair-encoding tokenization-based detection, with reported recall improvements (around 98.6 percent versus roughly 70.4 percent for Gitleaks's traditional entropy-based approach on the same benchmark). This transition has introduced some uncertainty into the Gitleaks project's long-term maintenance trajectory, even as the existing tool remains widely deployed and functional for most standard secret-scanning use cases. In terms of target audience, Gitleaks is aimed squarely at individual developers, open-source maintainers, and engineering teams who want a zero-cost, self-hosted, script-friendly secret scanner they can drop directly into existing git workflows without signing up for any hosted service or sending code to a third party. It is a natural fit for organizations with strict data residency requirements, cost-sensitive open-source projects, or teams that already run their own CI infrastructure and simply need a reliable scanning step. Where Gitleaks does not compete is in the areas that commercial platforms like GitGuardian have built out: it has no centralized dashboard, no built-in incident management or remediation workflow, no public-repository monitoring network, no honeytoken deception features, and no managed support. Teams that need those capabilities, or that want secret validity checking (confirming whether a detected credential is still live and exploitable), typically pair Gitleaks with a commercial tool or migrate to one as they scale. Direct alternatives and competitors include TruffleHog (also open source, with both a free CLI and a commercial cloud offering, and now more closely tied to Rice's own focus), GitGuardian's commercial platform and its free ggshield CLI, Yelp's detect-secrets, and the emerging Betterleaks project. Within the broader DevSecOps and application security tooling landscape, Gitleaks occupies the role of the default, no-cost baseline secret scanner that many organizations start with before graduating to a fuller commercial platform, and it remains, as of 2026, one of the most cited and most forked open-source projects in the secrets-detection category even as its founder's attention and the project's governance model are in transition.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Gitleaks is a free, open-source secret scanner created by Zach Rice in 2018 and released under the MIT license, distributed as a single Go binary that scans git repositories, files, and directories for hardcoded credentials.",
+"It has grown into one of the most widely adopted secret-scanning tools on GitHub, though its founder's attention shifted after joining Truffle Security in 2023, leading to the announcement of a successor project called Betterleaks in 2026."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Gitleaks combines regex pattern matching and entropy analysis to detect over 160 secret types, and it can scan full git commit history rather than only the current working tree.",
+"SARIF output integrates directly with GitHub code-scanning alerts, and the tool ships as a Docker image and native binaries for pre-commit hooks and CI pipelines."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Gitleaks is completely free and open source under the MIT license, with no paid tiers, subscriptions, or hosted dashboard offered by the original project.",
+"Organizations needing a hosted dashboard, remediation workflows, or support typically pair Gitleaks with or migrate to a commercial platform."
+]}
+],
+"features": [
+{"title": "Full git history scanning", "description": "Scans the entire commit history of a repository, not just the latest state, to catch secrets that were committed and later removed."},
+{"title": "160+ built-in detectors", "description": "Regex and entropy-based rules covering AWS keys, GitHub tokens, private SSH keys, database connection strings, and more."},
+{"title": "Single Go binary", "description": "Ships as a self-contained static binary with no server or account required, simplifying installation across platforms."},
+{"title": "Pre-commit hook support", "description": "Integrates with pre-commit frameworks to block secrets from ever being committed locally."},
+{"title": "SARIF output", "description": "Produces SARIF-format results that plug directly into GitHub Advanced Security code-scanning alerts."},
+{"title": "Docker image", "description": "Official Docker image with over 16 million pulls simplifies use in CI/CD pipelines and containerized workflows."},
+{"title": "Custom rule configuration", "description": "Supports custom TOML-based rule configuration for organization-specific secret patterns."},
+{"title": "Stdin scanning", "description": "Can scan arbitrary piped input, not just files, for flexible use in scripts and other tooling."}
+],
+"pros": [
+"Completely free and open source under the permissive MIT license",
+"No account, server, or data sharing required; runs entirely locally or in your own CI",
+"Full git history scanning catches secrets removed from the current commit but still present in history",
+"Large, well-established rule set with strong community adoption and SARIF/GitHub integration",
+"Lightweight single binary that is easy to install and script"
+],
+"cons": [
+"No hosted dashboard, incident management, or remediation workflow out of the box",
+"Development pace has slowed since founder Zach Rice shifted focus to Truffle Security in 2023",
+"Project governance is in transition, with the founder announcing reduced control over the repository and a successor project, Betterleaks, in 2026",
+"No secret validity checking to confirm whether a detected credential is still active",
+"No official commercial support or SLA for enterprise users"
+],
+"faqs": [
+{"question": "Is Gitleaks free?", "answer": "Yes, Gitleaks is completely free and open source under the MIT license, with no paid tiers."},
+{"question": "Who created Gitleaks?", "answer": "Gitleaks was created by Zachary (Zach) Rice as a side project in 2018."},
+{"question": "Can Gitleaks scan git history, not just the latest commit?", "answer": "Yes, Gitleaks scans the full commit history of a repository, which helps detect secrets that were committed in the past and later removed."},
+{"question": "What is Betterleaks and how does it relate to Gitleaks?", "answer": "Betterleaks is a successor project launched by Gitleaks creator Zach Rice in March 2026, sponsored by Aikido Security, built as a more accurate rewrite using parallelized scanning and BPE tokenization-based detection."},
+{"question": "How is Gitleaks different from GitGuardian?", "answer": "Gitleaks is a free, self-hosted command-line scanner with no dashboard or hosted service, while GitGuardian is a commercial platform with a free tier that adds hosted monitoring, incident workflows, NHI governance, and public repository monitoring."},
+{"question": "Does Gitleaks integrate with GitHub's code scanning?", "answer": "Yes, Gitleaks can output results in SARIF format, which integrates directly with GitHub Advanced Security's code-scanning alerts."}
+],
+"use_cases": [
+{"title": "CI pipeline secret scanning", "description": "Developers add Gitleaks as a CI step to automatically fail builds when hardcoded secrets are detected in new commits.", "audience": "Individual developers and small engineering teams"},
+{"title": "Pre-commit protection", "description": "Teams wire Gitleaks into pre-commit hooks so secrets are caught and blocked before they are ever committed locally.", "audience": "Open-source maintainers and cost-sensitive teams"},
+{"title": "Historical repository audits", "description": "Security-conscious teams run Gitleaks against a repository's full git history to find secrets that were leaked and later removed but remain retrievable.", "audience": "Security engineers auditing legacy codebases"}
+],
+"pricing_plans": [
+{"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Unlimited scanning", "Full git history support", "160+ built-in detectors", "SARIF output", "Docker image and native binaries", "MIT license, self-hosted"]}
+],
+"tags": ["open-source", "self-hosted", "api", "free-plan"],
+"publish": true
+}
+},
+{
+"tool_id": "d4ff1377-e0f5-4af0-9e80-71487c351c04",
+"slug": "gladly",
+"name": "Gladly",
+"enrichment": {
+"short_description": "Gladly is a customer service platform built around a single, lifelong customer timeline instead of ticket queues, combining voice, chat, email, and SMS with an AI automation layer called Sidekick.",
+"pricing_model": "Subscription",
+"starting_price": "$180 per agent per month (billed annually, 10-agent minimum)",
+"founded_year": 2014,
+"company_size": "220-240 employees",
+"headquarters": "San Francisco, California, United States",
+"languages": ["English"],
+"seo_title": "Gladly Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Gladly review 2026: the people-centered customer service platform's features, Sidekick AI, Hero and Superhero pricing, pros, cons, and top alternatives.",
+"llm_readable_summary": "Gladly is a customer service software platform founded in 2014 in San Francisco by Michael Wolfe, Joseph Ansanelli, and Dirk Kessler, a founding team with prior experience building and selling enterprise software companies. The company's core premise is a deliberate departure from the ticket-based model that dominates the customer support category. Where tools like Zendesk or Freshdesk organize work around discrete tickets or cases, Gladly organizes work around a single, continuous timeline for each customer, one that persists across every channel, voice, email, chat, SMS, and social messaging, and across every interaction that customer has ever had with a brand. The pitch to customer service leaders is that this 'people, not tickets' architecture lets agents see full context instantly, avoid asking customers to repeat themselves, and treat support as a relationship-building opportunity rather than a queue to clear. Gladly has raised a total of roughly 208 million dollars in venture funding from investors including Greylock Partners, New Enterprise Associates, GGV Capital, and AXA Venture Partners (AVP), which led a 40 million dollar round intended to fund the buildout of the company's AI-powered unified customer service platform. A separate, earlier round brought in 55 million dollars specifically earmarked for platform innovation. The company has grown to roughly 220 to 240 employees as of 2026 and reports annual recurring revenue in the tens of millions of dollars, positioning it as a mid-size, well-capitalized independent player rather than the largest name in its category. A major turning point in Gladly's product strategy came with its acquisition of Thankful, a generative AI and no-code automation company, which the two companies had already been partnering on since 2020 to power personalized service at scale for shared customers. That acquisition became the foundation for Gladly Sidekick, announced in July 2023, an AI and automation platform that sits alongside Gladly's original agent-facing product (now referred to as Gladly Hero) to handle common, repetitive customer inquiries such as order status questions and return requests without human involvement, freeing human agents to focus on conversations that genuinely require empathy, judgment, or complex problem-solving. Together, Hero and Sidekick represent Gladly's two-sided approach to AI in customer service: augmenting the human agent experience on one side, and deflecting or fully automating routine volume on the other. Gladly's customer base skews toward consumer-facing retail, e-commerce, and direct-to-consumer brands that see customer service as a driver of loyalty and lifetime value rather than a pure cost center; publicly referenced customers and partners include Crate & Barrel, JOANN, Bombas, Breeze Airways, and MaryRuth Organics. This focus differentiates Gladly from broader horizontal platforms like Zendesk, Salesforce Service Cloud, or Intercom, which serve a much wider range of industries including B2B software, and from newer AI-first customer support startups that lack Gladly's decade of experience with the unified-timeline data model. On pricing, Gladly does not publish a self-serve rate card and does not offer a free plan or public free trial for its core enterprise platform; prospective customers must go through sales. Third-party pricing research consistently places the entry-level Hero plan at around 180 dollars per agent per month, billed annually, with a minimum commitment of 10 agents, while a higher Superhero tier runs approximately 210 dollars per user per month with a 45-user minimum, reflecting Gladly's focus on mid-market and enterprise customers rather than small businesses. Voice and SMS usage, including call minutes, IVR usage, and international calling, are typically billed separately on top of the base per-agent price, and final contract pricing varies considerably based on channel mix and contract size. Separately, Gladly also offers a self-serve, usage-based small-business option distributed through the Shopify App Store, aimed at smaller e-commerce merchants; that plan includes a 30-day free trial followed by usage-based pricing of roughly 1.50 dollars per AI resolution, 0.25 dollars per AI assist, and 120 dollars per agent seat per month, all governed by a spend cap the merchant sets, which is a materially different and more accessible pricing structure than the core enterprise product. In the competitive landscape, Gladly is most often evaluated against Zendesk, Intercom, Kustomer, Salesforce Service Cloud, and Freshdesk, as well as against dedicated AI customer service automation vendors. Its key differentiators are the ticketless, timeline-based data model; the tight product integration between Hero (human-agent workspace) and Sidekick (AI automation), both born from the same underlying customer conversation data; and a go-to-market focus on brands that treat customer service as a revenue and loyalty lever rather than a support cost to be minimized. The trade-offs customers weigh against those strengths are Gladly's lack of a free tier, its relatively high per-agent price point compared to some horizontal help desk tools, and minimum seat commitments that put it out of reach for very small teams, all of which position Gladly primarily as a platform for growth-stage to enterprise consumer brands with dedicated, well-resourced customer service organizations.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Gladly is a customer service platform founded in 2014 in San Francisco by Michael Wolfe, Joseph Ansanelli, and Dirk Kessler, built around a single continuous customer timeline instead of ticket queues.",
+"The company has raised roughly 208 million dollars in funding and grew significantly after acquiring the AI automation company Thankful, which became the foundation of Gladly Sidekick."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Gladly's unified timeline gives agents full cross-channel context for every customer across voice, email, chat, SMS, and social messaging in one continuous view.",
+"Gladly Sidekick, born from the Thankful acquisition, adds generative AI and no-code automation to resolve common inquiries like returns and order status without human agents."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Gladly's core Hero plan starts at approximately 180 dollars per agent per month billed annually with a 10-agent minimum, while the Superhero tier runs around 210 dollars per user per month with a 45-user minimum.",
+"A separate, usage-based small-business plan is available through the Shopify App Store with a 30-day free trial and per-resolution AI pricing."
+]}
+],
+"features": [
+{"title": "Unified customer timeline", "description": "Every interaction a customer has ever had across channels lives on one continuous timeline instead of separate tickets."},
+{"title": "Gladly Hero", "description": "The core agent workspace where human agents handle voice, chat, email, and SMS conversations with full customer context."},
+{"title": "Gladly Sidekick", "description": "AI and no-code automation platform, built from the Thankful acquisition, that resolves routine inquiries like returns and order status without a human agent."},
+{"title": "Omnichannel voice and messaging", "description": "Native support for phone, chat, email, SMS, and social messaging within a single interface."},
+{"title": "Agent matching and routing", "description": "Routes conversations to the agent best suited to the customer or issue, rather than a generic queue."},
+{"title": "Customer profile and lifetime value view", "description": "Surfaces order history, past conversations, and customer value directly in the agent view."},
+{"title": "Self-service and automation", "description": "Sidekick can fully resolve common requests without human involvement, reducing overall contact volume."},
+{"title": "Reporting and analytics", "description": "Dashboards for tracking agent performance, resolution rates, and customer experience metrics."}
+],
+"pros": [
+"Ticketless, timeline-based model gives agents full customer context without repeat explanations",
+"Tight integration between human-agent (Hero) and AI automation (Sidekick) products",
+"Strong reputation among consumer and e-commerce brands that prioritize service as a loyalty driver",
+"Well-funded with roughly 208 million dollars raised, supporting continued AI investment",
+"Usage-based small-business option available through Shopify for smaller merchants"
+],
+"cons": [
+"No free plan and no publicly available free trial for the core enterprise platform",
+"Relatively high per-agent pricing, starting around 180 dollars per agent per month",
+"Minimum seat commitments (10 agents on Hero, 45 on Superhero) exclude very small teams",
+"Voice and SMS usage are often billed separately on top of the base subscription",
+"Pricing is not fully transparent and requires a sales conversation for most customers"
+],
+"faqs": [
+{"question": "How much does Gladly cost?", "answer": "Gladly's Hero plan typically starts around 180 dollars per agent per month billed annually with a 10-agent minimum, while the Superhero tier is about 210 dollars per user per month with a 45-user minimum; a separate usage-based small-business plan exists via the Shopify App Store."},
+{"question": "Who founded Gladly?", "answer": "Gladly was founded in 2014 in San Francisco by Michael Wolfe, Joseph Ansanelli, and Dirk Kessler."},
+{"question": "What is Gladly Sidekick?", "answer": "Gladly Sidekick is Gladly's generative AI and no-code automation platform, built from its acquisition of Thankful, that resolves common customer inquiries like returns and order status without a human agent."},
+{"question": "Does Gladly offer a free trial?", "answer": "Gladly's core enterprise platform does not publicly advertise a free trial; the small-business plan on Shopify offers a 30-day free trial before usage-based billing begins."},
+{"question": "What makes Gladly different from Zendesk or Intercom?", "answer": "Gladly is built around a single, continuous customer timeline across all channels rather than discrete tickets, which it argues gives agents better context and turns service into a relationship-building function."},
+{"question": "How much funding has Gladly raised?", "answer": "Gladly has raised approximately 208 million dollars from investors including Greylock Partners, New Enterprise Associates, GGV Capital, and AXA Venture Partners."}
+],
+"use_cases": [
+{"title": "Consumer brand customer service", "description": "Retail and e-commerce brands use Gladly to unify voice, chat, email, and SMS support into one agent workspace with full customer history.", "audience": "Customer service leaders at consumer and e-commerce brands"},
+{"title": "AI-driven contact deflection", "description": "Companies use Gladly Sidekick to automatically resolve high-volume, routine requests like order status and returns without agent involvement.", "audience": "Support operations teams managing high contact volume"},
+{"title": "Small merchant support automation", "description": "Smaller e-commerce merchants use Gladly's Shopify app for usage-based AI resolutions and agent seats without a large enterprise contract.", "audience": "Small to mid-size Shopify merchants"}
+],
+"pricing_plans": [
+{"plan_name": "Hero", "price": "$180/agent/month", "billing_cycle": "Annual, 10-agent minimum", "features": ["Unified customer timeline", "Omnichannel voice, chat, email, SMS", "Agent routing and matching", "Reporting and analytics"]},
+{"plan_name": "Superhero", "price": "$210/user/month", "billing_cycle": "Annual, 45-user minimum", "features": ["Everything in Hero", "Expanded enterprise features and support", "Higher usage and integration limits"]},
+{"plan_name": "Small Business (Shopify)", "price": "$120/agent seat/month + usage", "billing_cycle": "Monthly, usage-based with spend cap", "features": ["30-day free trial", "$1.50 per AI resolution", "$0.25 per AI assist", "Configurable spend cap"]}
+],
+"tags": ["web-app", "api", "ai"],
+"publish": true
+}
+},
+{
+"tool_id": "82491f2c-b6b1-4919-82ea-838eafd86db9",
+"slug": "gladys",
+"name": "Gladys",
+"enrichment": {
+"short_description": "Gladys Assistant is a free, open-source, privacy-first home automation platform that runs on a Raspberry Pi or Docker host and connects thousands of smart home devices without sending data to third-party clouds.",
+"pricing_model": "Freemium",
+"starting_price": "Free (self-hosted); Gladys Plus from EUR 5.83/month",
+"founded_year": 2013,
+"company_size": "1-10 employees",
+"headquarters": "France",
+"languages": ["English", "French"],
+"seo_title": "Gladys Assistant Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Gladys Assistant review 2026: the open-source, privacy-first home automation platform's features, self-hosting, Gladys Plus pricing, and alternatives.",
+"llm_readable_summary": "Gladys Assistant is an open-source, privacy-first home automation platform that began in 2013 as a student side project. Its founder, Pierre-Gilles Leymarie, was an engineering student experimenting with a Raspberry Pi in his apartment when he started building what would become Gladys, and he has remained the project's lead and CEO as it grew from a hobby build into a small, sustainable software business. Unlike most consumer smart home platforms, which route device data and voice commands through the vendor's cloud servers, Gladys was designed around the opposite principle: home automation logic and device data stay local to the user's own hardware by default, with the software self-hosted on a Raspberry Pi, a NAS, a mini PC, or any Docker-capable machine on the user's home network. This privacy-first architecture has become the project's core identity and differentiator as concerns about smart home vendors collecting and monetizing behavioral data have grown industry-wide. The software itself is fully open source, published on GitHub under the GladysAssistant organization, and can be installed with a single Docker command; there is no subscription requirement, no feature paywall on the core automation engine, and no credit card needed to run it. Gladys supports a broad range of open, non-proprietary protocols including Zigbee, Z-Wave, Matter, and MQTT, alongside dozens of dedicated integrations for popular smart home brands and services such as Shelly, Sonos, Tuya, Netatmo, and RTSP-based IP cameras, letting users mix and match hardware from many manufacturers inside one automation layer. The platform includes a scenario and automation engine for building rules like turning on lights at sunset or adjusting heating based on occupancy, dashboards for visualizing sensor data such as temperature and energy usage over time, and, in more recent versions, integration with AI language models so users can converse with their home setup in natural language rather than only through fixed automation rules. Gladys received a notable form of external validation when Raspberry Pi itself added the Gladys disk image to the official Raspberry Pi Imager tool, making it a one-click install option directly from Raspberry Pi's own installation utility, a distribution channel typically reserved for widely trusted community operating system images. As a business, Gladys operates on a lean, low-headcount model, with public estimates placing the team at roughly 5 to 10 people, and revenue figures reported in community interviews in the low single-digit millions of dollars, funded primarily through its optional premium subscription rather than venture capital, in keeping with the bootstrap ethos common among privacy-focused open-source projects. That premium offering, called Gladys Plus, is what monetizes the otherwise-free platform: it does not gate the core home automation engine but instead unlocks convenience and advanced features that are difficult or costly to self-host securely, most notably encrypted remote access to the user's home automation instance from outside the home network without manually configuring port forwarding or renewing TLS certificates. Gladys Plus is offered in two tiers. The Lite tier, priced at roughly 5.83 euros per month (or 69.99 euros billed annually), includes end-to-end encrypted remote access, Google Home and Amazon Alexa voice assistant integration, open REST API access, and support for family accounts. The Plus tier, at roughly 8.33 euros per month (or 99.99 euros billed annually), adds daily encrypted backups, remote camera streaming, access to open-weight AI models for conversational home control, integration with Enedis (the French electricity distribution operator) for detailed power usage tracking, and support for the Model Context Protocol (MCP), enabling AI agents and assistants to interact with the Gladys instance in a structured way. Both premium tiers include a one-month free trial with no credit card required and can be cancelled at any time without a long-term commitment. Gladys's target audience is technically inclined homeowners and hobbyists who value data ownership and vendor independence over the convenience of a fully cloud-managed system, as well as users in regions like France where the deep Enedis energy-monitoring integration is especially relevant. This audience differs somewhat from the mass-market users of Amazon Alexa or Google Home, and the project instead competes most directly with other open-source, self-hosted home automation platforms, chiefly Home Assistant, which is significantly larger in community size and integration count, along with Jeedom, Domoticz, and openHAB. Gladys differentiates itself within that self-hosted category through a particular emphasis on ease of setup for less technical users, a polished user interface relative to some of its more DIY-feeling open-source peers, and its privacy-by-default framing as the central marketing and product message rather than an afterthought. Overall, Gladys occupies a niche but durable position in the smart home space: it is not trying to out-integrate Home Assistant on raw device count, but instead offers a smaller, French-founded, security-and-privacy-oriented alternative for users who specifically want to avoid sending their home data to Amazon, Google, or other big-tech smart home ecosystems.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Gladys Assistant is an open-source, privacy-first home automation platform founded in 2013 by Pierre-Gilles Leymarie, initially built as a student side project on a Raspberry Pi.",
+"The core software is free, self-hosted, and keeps home automation data on the user's own hardware rather than a vendor's cloud, distinguishing it from mainstream smart home platforms."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Gladys supports open protocols like Zigbee, Matter, and MQTT alongside dozens of dedicated device integrations, plus a scenario engine for building automation rules.",
+"Gladys Plus, the optional premium subscription, adds encrypted remote access, daily backups, camera streaming, AI model integration, and Model Context Protocol support."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"The core platform is free and open source, self-hosted with a single Docker command and no subscription required.",
+"Gladys Plus is offered in Lite (about 5.83 euros per month) and Plus (about 8.33 euros per month) tiers, each with a one-month free trial and no long-term commitment."
+]}
+],
+"features": [
+{"title": "Self-hosted, privacy-first core", "description": "Runs entirely on the user's own Raspberry Pi, NAS, or Docker host, keeping home data off third-party clouds by default."},
+{"title": "Open protocol support", "description": "Native support for Zigbee, Z-Wave, Matter, and MQTT alongside dedicated integrations for brands like Shelly, Sonos, and Tuya."},
+{"title": "Automation and scenario engine", "description": "Build rules and scenarios that react to time, presence, or sensor data across connected devices."},
+{"title": "Encrypted remote access (Gladys Plus)", "description": "End-to-end encrypted access to the home instance from outside the home network without manual port forwarding."},
+{"title": "AI conversational control", "description": "Open-weight AI model integration lets users talk to their home setup in natural language."},
+{"title": "MCP server support", "description": "Model Context Protocol integration allows AI agents to interact with the Gladys instance in a structured way."},
+{"title": "Energy monitoring", "description": "Enedis integration provides detailed electricity usage tracking for users in France."},
+{"title": "Official Raspberry Pi Imager listing", "description": "Gladys is available as a one-click install image directly inside the official Raspberry Pi Imager tool."}
+],
+"pros": [
+"Core platform is fully free, open source, and self-hosted with no vendor lock-in",
+"Strong privacy-first design keeps home data on the user's own hardware",
+"Supports a wide range of open protocols and third-party device integrations",
+"Official listing in the Raspberry Pi Imager tool simplifies installation",
+"Gladys Plus is affordable relative to typical smart home cloud subscriptions"
+],
+"cons": [
+"Smaller integration library and community than the dominant open-source competitor, Home Assistant",
+"Requires self-hosting hardware and some technical comfort to set up and maintain",
+"Encrypted remote access and camera streaming require the paid Gladys Plus subscription",
+"Some features, like Enedis energy tracking, are most useful to users based in France",
+"Small team size (roughly 5 to 10 people) limits pace of feature development compared to larger projects"
+],
+"faqs": [
+{"question": "Is Gladys Assistant free?", "answer": "Yes, the core Gladys Assistant platform is free and open source, self-hosted on your own Raspberry Pi, NAS, or Docker host with no subscription required."},
+{"question": "Who created Gladys Assistant?", "answer": "Gladys Assistant was created in 2013 by Pierre-Gilles Leymarie as a student side project on a Raspberry Pi in France."},
+{"question": "What does Gladys Plus add?", "answer": "Gladys Plus is an optional paid subscription that adds encrypted remote access, daily encrypted backups, remote camera streaming, AI model integration, and Enedis electricity monitoring, offered in Lite and Plus tiers."},
+{"question": "How is Gladys different from Home Assistant?", "answer": "Both are open-source, self-hosted home automation platforms, but Gladys focuses more heavily on ease of setup and privacy-first messaging, while Home Assistant has a larger community and broader integration library."},
+{"question": "Does Gladys Assistant require an internet connection?", "answer": "The core automation engine runs locally on your own hardware and does not require sending data to a third-party cloud; remote access outside the home network is available through the optional Gladys Plus subscription."},
+{"question": "What protocols does Gladys Assistant support?", "answer": "Gladys supports open protocols including Zigbee, Z-Wave, Matter, and MQTT, plus dedicated integrations for brands like Shelly, Sonos, Tuya, and RTSP cameras."}
+],
+"use_cases": [
+{"title": "Privacy-conscious smart home setup", "description": "Homeowners who do not want their automation data sent to Amazon, Google, or other cloud vendors self-host Gladys on a Raspberry Pi to keep control local.", "audience": "Privacy-conscious homeowners and hobbyists"},
+{"title": "Multi-brand device integration", "description": "Users with devices from many different smart home brands use Gladys to unify Zigbee, MQTT, and vendor-specific integrations into one automation layer.", "audience": "Smart home enthusiasts with mixed-brand device setups"},
+{"title": "Remote home monitoring and energy tracking", "description": "Gladys Plus subscribers use encrypted remote access and Enedis integration to monitor cameras and electricity usage while away from home.", "audience": "Gladys Plus subscribers, primarily in France"}
+],
+"pricing_plans": [
+{"plan_name": "Free / Self-Hosted", "price": "Free", "billing_cycle": "N/A", "features": ["Full home automation engine", "Zigbee, Matter, MQTT and third-party integrations", "Scenario and automation builder", "Self-hosted on Raspberry Pi, NAS, or Docker"]},
+{"plan_name": "Gladys Plus Lite", "price": "EUR 5.83/month (EUR 69.99/year)", "billing_cycle": "Monthly or annual", "features": ["End-to-end encrypted remote access", "Google Home and Amazon Alexa integration", "Open REST API access", "Family accounts", "1-month free trial"]},
+{"plan_name": "Gladys Plus", "price": "EUR 8.33/month (EUR 99.99/year)", "billing_cycle": "Monthly or annual", "features": ["Everything in Lite", "Daily encrypted backups", "Remote camera streaming", "Open-weight AI model integration", "Enedis electricity monitoring", "MCP server support"]}
+],
+"tags": ["open-source", "self-hosted", "freemium", "free-plan", "ai"],
+"publish": true
+}
+},
+{
+"tool_id": "32c09a08-ca8d-4425-b7ea-3b78968f97a4",
+"slug": "glassbox",
+"name": "Glassbox",
+"enrichment": {
+"short_description": "Glassbox is an enterprise digital experience analytics platform offering session replay, customer journey analytics, and AI-powered fraud and struggle detection, built primarily for regulated industries like banking and insurance.",
+"pricing_model": "Custom",
+"starting_price": "Contact for pricing",
+"founded_year": 2010,
+"company_size": "200-300 employees",
+"headquarters": "Petah Tikva, Israel",
+"languages": ["English"],
+"seo_title": "Glassbox Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Glassbox review 2026: enterprise session replay and customer analytics for regulated industries, pricing, features, pros, cons, and top alternatives.",
+"llm_readable_summary": "Glassbox is an Israeli digital experience analytics company founded in 2010 by Yoav Schreiber, Yaron Gueta, and Hanan Blumstein, headquartered in Petah Tikva, Israel, with additional offices historically maintained in London and New York. The company builds what it calls customer intelligence software: technology that automatically captures a complete, video-like replay of every user session on a website or mobile app, alongside the underlying technical events (network calls, errors, page loads) happening behind the scenes, so that product, customer experience, and support teams can see exactly what a real user encountered, without needing to guess from aggregate analytics dashboards or ask the user to reproduce a bug. Rather than pursuing a broad, horizontal customer-experience market, Glassbox positioned itself early around highly regulated industries where session-level visibility carries outsized value: financial services, insurance, government, telecom, airlines, and utilities. The company states that roughly 60 percent of the largest United States-based banks use its platform, and it counts global enterprises such as Air Canada and Marriott Hotels among its referenced customers, giving Glassbox a strong reputation specifically within banking, insurance, and other compliance-heavy verticals rather than as a general-purpose product analytics tool for startups. Glassbox's funding and corporate history is more eventful than most companies in its category. The company raised approximately 32.5 million dollars by October 2018, with backing from investors including Updata Partners, who took board seats as part of their investment. In April 2020, Glassbox raised a 40 million dollar Series C round explicitly earmarked to expand its digital-experience analytics capabilities. The company then went public in June 2021 on the Tel Aviv Stock Exchange, raising roughly 100 million dollars in its IPO at an implied valuation of about 500 million dollars, a notable milestone as one of the relatively few customer-analytics companies to pursue a public listing on that exchange rather than Nasdaq or NYSE. That public chapter did not last: in 2024, Glassbox was acquired and taken private again by the private equity firm Alicorn, returning the company to private ownership after roughly three years as a publicly traded entity. As of 2026, employee-count estimates for Glassbox range from around 200 to just under 300 people across various data sources, consistent with a mid-size enterprise software vendor. On the product side, Glassbox's centerpiece capability is Session Replay, which automatically records and reconstructs 100 percent of user interactions and technical events across both web and mobile app sessions, rather than relying on sampling. Layered on top of raw replay, the platform includes customer journey mapping to visualize how users move (or fail to move) through key funnels such as loan applications or account signups, heatmaps for visualizing where users click and where they hesitate, and struggle and friction detection to automatically flag sessions where users encountered errors, rage-clicked, or abandoned a process partway through. A more recent addition, the Glassbox Insights Assistant (GIA), applies AI to automatically summarize sessions and let analysts search across large volumes of recorded sessions using natural language rather than manually reviewing individual replays, addressing one of the classic scaling problems of session-replay tools: the sheer volume of recorded video becomes unusable without AI-assisted summarization and search. Given its regulated-industry focus, Glassbox also emphasizes fraud detection and anomaly identification, using machine learning to flag abnormal or irregular session activity in real time and giving fraud and security teams precise, replayable evidence of what happened during a suspicious session, a capability with particular resonance in banking and insurance where session-level forensic evidence can matter for both security investigations and regulatory compliance. Glassbox does not publish a self-serve pricing page or offer a free tier; all pricing is custom and quote-based, reflecting its enterprise, contract-driven sales motion. Third-party pricing benchmarks and industry estimates for comparable regulated-industry analytics platforms suggest costs in the range of roughly 3,000 to 12,000 dollars per month depending on traffic volume, feature set, and deployment requirements, though Glassbox itself does not confirm exact figures publicly, and actual enterprise contracts, especially for large banks, are likely to be negotiated well above self-service SaaS pricing norms. In the competitive landscape, Glassbox is most frequently compared to Contentsquare, FullStory, Quantum Metric, Decibel, and Medallia, all of which offer some combination of session replay, digital experience analytics, and customer journey insight. Glassbox differentiates itself from these more horizontally focused competitors through its dedicated emphasis on regulated, compliance-sensitive industries, deep session-level fraud and security detection capabilities, and a customer base and go-to-market motion built specifically around banks, insurers, telecoms, and government agencies rather than e-commerce or general SaaS product teams, which tend to be the primary audience for competitors like FullStory or Contentsquare. This regulated-industry specialization is both Glassbox's core differentiator and the primary lens through which its roadmap, pricing, and customer references should be understood.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Glassbox is an Israeli digital experience analytics company founded in 2010 by Yoav Schreiber, Yaron Gueta, and Hanan Blumstein, focused on session replay and customer intelligence for regulated industries like banking and insurance.",
+"The company went public on the Tel Aviv Stock Exchange in 2021 before being acquired and taken private again by private equity firm Alicorn in 2024."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Glassbox's Session Replay captures 100 percent of user interactions and technical events across web and mobile, reconstructed as a video-like replay rather than relying on sampling.",
+"The Glassbox Insights Assistant applies AI to summarize sessions and let analysts search recorded sessions in natural language, alongside fraud detection and struggle analytics."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Glassbox does not offer a free tier or self-serve pricing; all plans are custom-quoted for enterprise customers.",
+"Industry estimates place comparable enterprise session-replay contracts in the range of roughly 3,000 to 12,000 dollars per month depending on scale and features."
+]}
+],
+"features": [
+{"title": "Session Replay", "description": "Captures 100 percent of user interactions and technical events across web and mobile, reconstructed as a video-like replay."},
+{"title": "Customer journey mapping", "description": "Visualizes how users move through key funnels like loan applications or account signups, highlighting drop-off points."},
+{"title": "Heatmaps", "description": "Shows where users click, scroll, and hesitate across pages and app screens."},
+{"title": "Struggle and friction detection", "description": "Automatically flags sessions with errors, rage-clicks, or abandonment for faster triage."},
+{"title": "Glassbox Insights Assistant (GIA)", "description": "AI-powered assistant that summarizes sessions and enables natural-language search across recorded sessions."},
+{"title": "Fraud and anomaly detection", "description": "Machine learning identifies abnormal or irregular session activity in real time for security and fraud teams."},
+{"title": "Mobile app monitoring", "description": "SDKs capture technical events and user interactions inside native mobile apps, not just web."},
+{"title": "Compliance-oriented data capture", "description": "Built with data masking and regulatory considerations relevant to banking, insurance, and government customers."}
+],
+"pros": [
+"Captures 100 percent of sessions rather than a sampled subset, giving complete visibility",
+"Strong specialization and reputation in regulated industries like banking and insurance",
+"AI-powered Insights Assistant addresses the scale problem of manually reviewing session replays",
+"Real-time fraud and anomaly detection adds security value beyond typical UX analytics",
+"Established company with over a decade of operating history and enterprise customers like Air Canada and Marriott"
+],
+"cons": [
+"No free tier or transparent self-serve pricing; enterprise sales cycle required",
+"Estimated costs (roughly 3,000 to 12,000 dollars per month) put it out of reach for smaller companies",
+"Primarily built for large, regulated enterprises rather than startups or SMBs",
+"Ownership changes (IPO in 2021, taken private by Alicorn in 2024) introduce some uncertainty around long-term strategy",
+"Competes with well-funded, faster-moving digital experience platforms like Contentsquare and FullStory"
+],
+"faqs": [
+{"question": "How much does Glassbox cost?", "answer": "Glassbox does not publish pricing; it uses a custom, quote-based enterprise sales model, with industry estimates suggesting costs roughly in the 3,000 to 12,000 dollar per month range depending on scale."},
+{"question": "Who founded Glassbox?", "answer": "Glassbox was founded in 2010 in Israel by Yoav Schreiber, Yaron Gueta, and Hanan Blumstein."},
+{"question": "What industries does Glassbox focus on?", "answer": "Glassbox focuses heavily on regulated industries including financial services, insurance, government, telecom, airlines, and utilities, and states roughly 60 percent of the largest US banks use its platform."},
+{"question": "Is Glassbox a public company?", "answer": "Glassbox went public on the Tel Aviv Stock Exchange in June 2021 but was acquired and taken private again by private equity firm Alicorn in 2024."},
+{"question": "What is the Glassbox Insights Assistant?", "answer": "The Glassbox Insights Assistant (GIA) is an AI feature that automatically summarizes recorded sessions and lets analysts search across sessions using natural language."},
+{"question": "What are the main alternatives to Glassbox?", "answer": "Common alternatives include Contentsquare, FullStory, Quantum Metric, Decibel, and Medallia, though Glassbox differentiates itself through its regulated-industry focus and fraud detection capabilities."}
+],
+"use_cases": [
+{"title": "Banking application troubleshooting", "description": "Banks use Glassbox Session Replay to see exactly how customers interact with online loan or account applications and identify where they struggle or abandon the process.", "audience": "Digital banking and financial services teams"},
+{"title": "Fraud investigation", "description": "Security and fraud teams use Glassbox's anomaly detection and precise session replays to investigate suspicious account activity in real time.", "audience": "Fraud and security teams at banks and insurers"},
+{"title": "Customer experience optimization", "description": "Large enterprises use journey mapping and heatmaps to identify and fix friction points across web and mobile customer journeys.", "audience": "Digital experience and product teams at regulated enterprises"}
+],
+"pricing_plans": [
+{"plan_name": "Enterprise", "price": "Custom quote", "billing_cycle": "Annual contract (typical)", "features": ["Session Replay across web and mobile", "Customer journey mapping and heatmaps", "Glassbox Insights Assistant (AI)", "Fraud and anomaly detection", "Compliance-oriented data handling"]}
+],
+"tags": ["web-app", "api", "ai", "ios", "android"],
+"publish": true
+}
+},
+{
+"tool_id": "b17dc713-2772-438d-a1a1-bbb8b11b6afc",
+"slug": "glean",
+"name": "Glean",
+"enrichment": {
+"short_description": "Glean is an enterprise AI search and work assistant platform that connects to over 100 workplace apps to help employees find information and get AI-generated answers grounded in company knowledge, permissions, and context.",
+"pricing_model": "Usage-based",
+"starting_price": "Contact for pricing (est. $45-50/user/month + AI add-on, 100-user minimum)",
+"founded_year": 2019,
+"company_size": "1,600+ employees",
+"headquarters": "Palo Alto, California, United States",
+"languages": ["English"],
+"seo_title": "Glean Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Glean review 2026: enterprise AI search and work assistant features, funding history, pricing, connectors, pros, cons, and alternatives compared.",
+"llm_readable_summary": "Glean is an enterprise artificial intelligence company founded in 2019 in Palo Alto, California, by Arvind Jain along with co-founders Vishwanath T R, Tony Gentilcore, and Piyush Prahladka. Jain's background gives Glean's founding story particular credibility in the enterprise search space: before starting Glean, he spent over a decade at Google leading engineering teams across Search, Maps, and YouTube, and he later co-founded the enterprise storage company Rubrik, which itself became a multibillion-dollar business and later went public. That combination of deep search infrastructure expertise and prior startup success helped Glean raise capital quickly and from top-tier investors from its earliest rounds. Glean's core product addresses a problem familiar to anyone who has worked at a mid-size or large company: institutional knowledge is scattered across dozens of disconnected systems, including Slack, Confluence, Google Drive, Notion, Salesforce, Jira, GitHub, Zendesk, and many more, and traditional enterprise search tools built on simple keyword indexing struggle to surface the right answer, let alone respect the complex permission structures that govern who can see what. Glean built a unified enterprise search and, increasingly, an AI work assistant layer on top of these systems, using over 100 pre-built connectors to index content across a company's software stack while preserving each source system's underlying access permissions, so an employee's search results and AI-generated answers only ever reflect documents and data they are already authorized to see. Beyond search, Glean has expanded into a broader 'work AI' platform: Glean Assistant lets employees ask natural-language questions and get synthesized answers grounded in company-specific context rather than generic internet knowledge, and the company reports that assistant usage patterns rival the query frequency of a conventional search engine, with users querying the tool an average of roughly five times a day. In mid-2024, Glean launched Glean Apps and Glean APIs, opening the platform so companies can build custom generative AI agents and applications securely on top of Glean's existing permissioned index, moving the company from a search product toward a broader enterprise AI agent platform. Glean has also built a deep integration with Databricks, allowing users to query Databricks' AI/BI Genie using natural language directly inside Glean, effectively letting Glean serve as a single conversational interface across both unstructured company knowledge and structured enterprise data warehouses. Glean's funding trajectory has been unusually fast and large even by well-funded AI-startup standards. The company raised a 15 million dollar Series A in March 2019 co-led by Kleiner Perkins and Lightspeed Venture Partners, a 40 million dollar Series B in March 2021 led by General Catalyst, a 100 million dollar Series C in May 2022 led by Sequoia Capital that pushed its valuation past 1 billion dollars and made it a unicorn, a Series D of over 200 million dollars in February 2024 at a 2.2 billion dollar valuation, a Series E of over 260 million dollars in September 2024 co-led by Altimeter Capital and DST Global that lifted the valuation to 4.6 billion dollars, and most recently a 150 million dollar Series F in June 2025 led by Wellington Management that valued the company at 7.2 billion dollars. In total, Glean has raised approximately 765 million dollars, and by late 2025 the company reported reaching roughly 200 million dollars in annual recurring revenue, up from about 100 million dollars only nine months earlier, an unusually steep growth curve that reflects the intense enterprise demand for AI-grounded, permission-aware search and assistant tools since the broader generative AI wave began. As of 2026, Glean employs more than 1,600 people, a scale that places it among the larger AI-native enterprise software companies. On the customer side, Glean has moved well past early-adopter status, with more than 200 enterprise customers as of late 2024, including well-known reference names such as Duolingo, Amplitude, Instacart, Databricks, Plaid, Vanta, Canva, Confluent, and T-Mobile, spanning technology, fintech, and consumer companies. Glean's pricing is not publicly published in a simple rate card; based on industry and buyer-side research, the company appears to use a hybrid model combining per-user seat licensing, estimated around 45 to 50 dollars per user per month as a base, plus an additional AI usage add-on of roughly 15 dollars per user per month, layered with consumption-based 'FlexCredits' for premium AI features, and enterprise contracts commonly carry a minimum of around 100 seats, translating to annual contracts starting around 60,000 dollars and scaling to 240,000 dollars or more for large deployments, with total cost of ownership, once implementation, integrations, and infrastructure are included, often falling in the 350,000 to 480,000 dollar range for mid-to-large enterprise rollouts. Glean's target audience is therefore squarely mid-market to large enterprises with substantial, fragmented software stacks and the budget to invest in a dedicated enterprise AI search layer, rather than small businesses or individual users. In the competitive landscape, Glean is most frequently compared to Microsoft Copilot and Microsoft Search (given Microsoft's dominant position in enterprise productivity software), Coveo, Elastic Enterprise Search, Guru, Moveworks, and a growing wave of newer enterprise AI assistant and agent platforms. Glean differentiates itself through the breadth and depth of its 100-plus connector library, its permission-aware indexing architecture built from the ground up for enterprise access control rather than retrofitted onto a general search engine, and its more recent pivot toward a full agent-building platform via Glean Apps and APIs, positioning the company not just as a search tool but as foundational AI infrastructure for how employees interact with all of a company's collective knowledge and systems.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Glean is an enterprise AI search and work assistant platform founded in 2019 in Palo Alto by Arvind Jain, former Google search engineering leader and Rubrik co-founder, alongside Vishwanath T R, Tony Gentilcore, and Piyush Prahladka.",
+"The company connects to over 100 workplace applications and became a unicorn in 2022, reaching a 7.2 billion dollar valuation after a 150 million dollar Series F in June 2025."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Glean indexes content across an organization's software stack while preserving each source system's native permissions, so search and AI answers only reflect what a given user is authorized to see.",
+"Glean Assistant provides natural-language answers grounded in company context, while Glean Apps and APIs let organizations build custom AI agents on top of the permissioned index."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Glean does not publish list pricing; industry estimates suggest a hybrid model of roughly 45 to 50 dollars per user per month plus an AI usage add-on, with a typical 100-seat enterprise minimum.",
+"Total cost of ownership for mid-to-large deployments, including implementation and infrastructure, is commonly estimated in the 350,000 to 480,000 dollar annual range."
+]}
+],
+"features": [
+{"title": "100+ pre-built connectors", "description": "Native integrations with Slack, Confluence, Google Drive, Salesforce, Jira, GitHub, Zendesk, and dozens of other workplace tools."},
+{"title": "Permission-aware indexing", "description": "Search results and AI answers respect each source system's original access permissions, so users only see what they are authorized to view."},
+{"title": "Glean Assistant", "description": "Conversational AI assistant that answers natural-language questions grounded in company-specific knowledge and context."},
+{"title": "Glean Apps and APIs", "description": "Platform for building custom generative AI agents and applications securely on top of Glean's permissioned enterprise index."},
+{"title": "Databricks AI/BI Genie integration", "description": "Lets users query structured data in Databricks using natural language directly inside Glean."},
+{"title": "Enterprise-grade search relevance", "description": "Ranking built on Google-search-derived expertise from founder Arvind Jain's background leading Google Search engineering."},
+{"title": "Knowledge management features", "description": "Surfaces experts, answers, and trending topics across the organization, not just documents."},
+{"title": "Security and compliance controls", "description": "Enterprise-grade data governance designed for large, regulated organizations deploying AI at scale."}
+],
+"pros": [
+"Deep, permission-aware connector library covering 100+ enterprise applications",
+"Founding team's background at Google Search and Rubrik brings strong technical credibility",
+"Rapid growth to roughly 200 million dollars in annual recurring revenue reflects strong market validation",
+"Glean Apps and APIs extend the platform beyond search into a full enterprise AI agent builder",
+"Well-capitalized with roughly 765 million dollars raised, supporting continued R&D investment"
+],
+"cons": [
+"Pricing is not transparent and typically requires enterprise sales engagement",
+"Total cost of ownership can run into the hundreds of thousands of dollars annually for larger deployments",
+"Typical 100-seat minimum puts it out of reach for small and mid-size businesses",
+"Faces direct competition from Microsoft Copilot, which has natural distribution advantages inside Microsoft 365 shops",
+"Implementation and integration complexity can add significant upfront cost and time"
+],
+"faqs": [
+{"question": "How much does Glean cost?", "answer": "Glean does not publish list pricing; industry estimates suggest a hybrid model of roughly 45 to 50 dollars per user per month plus an AI add-on of about 15 dollars per user per month, typically with a 100-seat enterprise minimum."},
+{"question": "Who founded Glean?", "answer": "Glean was founded in 2019 in Palo Alto, California, by Arvind Jain, along with Vishwanath T R, Tony Gentilcore, and Piyush Prahladka. Arvind Jain previously co-founded Rubrik and led engineering teams at Google Search."},
+{"question": "What is Glean's current valuation?", "answer": "Glean was valued at 7.2 billion dollars following a 150 million dollar Series F round led by Wellington Management in June 2025."},
+{"question": "How does Glean handle data permissions?", "answer": "Glean indexes content from connected apps while preserving each source system's native access permissions, so a user's search results and AI answers only reflect content they are already authorized to see."},
+{"question": "What are Glean's main competitors?", "answer": "Glean competes with Microsoft Copilot and Microsoft Search, Coveo, Elastic Enterprise Search, Guru, and Moveworks, among other enterprise AI search and assistant platforms."},
+{"question": "Does Glean offer an API for building custom AI agents?", "answer": "Yes, Glean Apps and Glean APIs, launched in mid-2024, let organizations build custom generative AI agents and applications on top of Glean's permissioned enterprise index."}
+],
+"use_cases": [
+{"title": "Enterprise knowledge search", "description": "Employees use Glean to search across dozens of disconnected workplace tools from a single interface and get relevant, permission-respecting results.", "audience": "Employees at mid-size to large enterprises"},
+{"title": "AI-assisted answers grounded in company data", "description": "Teams use Glean Assistant to get natural-language answers synthesized from internal documents, wikis, and tickets instead of manually searching multiple systems.", "audience": "Knowledge workers across support, sales, and engineering teams"},
+{"title": "Custom AI agent development", "description": "Enterprises use Glean Apps and APIs to build custom AI agents that securely leverage the company's permissioned knowledge index.", "audience": "Enterprise IT and platform engineering teams"}
+],
+"pricing_plans": [
+{"plan_name": "Enterprise", "price": "Custom quote (est. $45-50/user/month base)", "billing_cycle": "Annual, typical 100-user minimum", "features": ["100+ app connectors", "Permission-aware search and indexing", "Glean Assistant", "Enterprise security and governance"]},
+{"plan_name": "Enterprise + AI Add-on", "price": "Custom quote (+ est. $15/user/month)", "billing_cycle": "Annual", "features": ["Everything in Enterprise", "Glean Assistant AI usage", "FlexCredits for premium AI features", "Glean Apps and APIs access"]}
+],
+"tags": ["web-app", "api", "ai"],
+"publish": true
+}
+},
+{
+"tool_id": "cd77df40-1f67-4666-a14d-e6d3b6245dbf",
+"slug": "glide",
+"name": "Glide",
+"enrichment": {
+"short_description": "Glide is a no-code platform that turns spreadsheets and other data sources into custom web and mobile business apps, with AI tools to generate app layouts, automate workflows, and build agents from plain-language descriptions.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2018,
+"company_size": "60-110 employees",
+"headquarters": "San Francisco, California, United States",
+"languages": ["English"],
+"seo_title": "Glide Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Glide review 2026: the no-code app builder's AI features, Free, Business, and Enterprise pricing, key features, pros, cons, and top alternatives.",
+"llm_readable_summary": "Glide is a no-code application development platform that lets people turn spreadsheets and other business data into functioning web and mobile apps without writing code. The company was founded in 2018 and went through Y Combinator's Winter 2019 batch, co-founded by David Siegel (who serves as CEO), Jason Smith, and Mark Probst. Glide's original insight was simple but powerful: most internal business tools people actually need, such as employee directories, inventory trackers, approval workflows, and field service checklists, already exist conceptually as a spreadsheet, so rather than requiring users to learn an unfamiliar app-building paradigm, Glide let them point at a Google Sheet, Airtable base, or Excel file and automatically generate a usable, mobile-friendly app on top of it, syncing data back and forth in real time. Over time, Glide built out its own native data layer, Glide Tables, which removes the row and update limitations that come with using an external spreadsheet as the backend and is now positioned as the recommended data source for serious apps built on the platform. Glide has raised a total of approximately 23.75 million dollars, most notably a 20 million dollar Series A in 2022, from investors including Y Combinator, First Round Capital, SV Angel, and Benchmark; this is a comparatively modest funding total relative to some other no-code platforms, suggesting a company that has prioritized capital efficiency and reaching profitability over aggressive VC-fueled scaling. Company size estimates for 2026 range from roughly 60 to 110 employees depending on the data source, consistent with a lean, product-focused team. Glide's headquarters is generally listed in the San Francisco Bay Area, with some more recent sources pointing to Tiburon, California. Product-wise, Glide has invested heavily in AI over the past two years, releasing what it calls Glide AI or the Glide Agent, a feature that lets users describe an app in plain language and have Glide automatically generate an initial layout, screen structure, and underlying data schema, using multiple large language models under the hood (reported integrations include GPT-4o, Gemini, and Claude models) with schema inference and native Glide Tables integration improved substantially through 2025 and into 2026. Beyond app generation, Glide's AI capabilities extend into data processing and workflow automation: users can turn unstructured audio, images, and text into structured data, such as transcribing calls, summarizing contracts, flagging deadlines, or extracting product details from photos, and can build smarter workflows that prioritize urgent support tickets, predict stock shortages, draft personalized customer updates, or flag anomalies in financial reports. Glide states that data entered by users is protected under an agreement with its AI subprocessor and is not used to further train underlying AI models, an important assurance for business customers handling sensitive internal data. On the data-connectivity side, Glide supports importing from spreadsheets (Google Sheets, Excel, Airtable) as well as native Glide Tables, and its higher tiers extend to dozens of additional external data sources including HubSpot, Stripe, QuickBooks, Salesforce, and PostgreSQL, positioning Glide not just as a spreadsheet-to-app tool but as a broader internal-tools and operations-app platform for connecting a business's existing systems. Glide's pricing follows a freemium, usage-metered structure. The Free plan supports one editor, unlimited draft apps, up to 25,000 rows, Glide Tables only as a data source, more than 40 UI components, and community support, making it usable for individual experimentation or very small internal tools at no cost. The Business plan, marketed as the platform's best-value tier, starts at 199 dollars per month billed annually (with a 20 percent discount for annual billing), includes 30 users (additional users cost 5 dollars each annually), 5,000 monthly updates (additional updates cost 0.02 dollars each), up to 100,000 rows, support for Google Sheets, Airtable, Excel, and Glide Tables as data sources, 500 GB of file storage, 10 editors, unlimited published apps, workflow automation, Call API and Glide API access, and expedited support. The Enterprise plan is fully custom-priced and requires contacting sales; it removes row, user, and update caps, adds access to 100-plus additional data source integrations such as HubSpot, Stripe, QuickBooks, Salesforce, and PostgreSQL, single sign-on, automated data backups, deeper enterprise integrations, a dedicated account manager, and priority support. Glide's core use case and target audience center on internal tooling: operations, HR, and field teams inside small and mid-size businesses building employee directories, inventory and asset trackers, approval and request workflows, field-service checklists, and operational dashboards, typically people who are comfortable with spreadsheets but not with traditional software development. In the competitive no-code landscape, Glide is most frequently compared to Bubble, Adalo, Softr, Google's AppSheet, Airtable's own app-building features, and Retool, with Glide's particular differentiation being its especially strong spreadsheet-to-app on-ramp, mobile-first output, and, more recently, its AI-driven app generation experience that lowers the barrier to a working first draft even further than typical no-code visual builders.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"Glide is a no-code app-building platform founded in 2018 through Y Combinator's Winter 2019 batch by David Siegel, Jason Smith, and Mark Probst, letting users turn spreadsheets into functioning web and mobile apps without code.",
+"The company has raised roughly 23.75 million dollars, a relatively lean funding total, and has expanded its data layer beyond spreadsheets into its own native Glide Tables backend."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"Glide AI (the Glide Agent) generates an app's layout, screens, and data schema from a plain-language description, using multiple large language models under the hood.",
+"Beyond app generation, Glide's AI can extract structured data from audio, images, and text, and power workflow automation like ticket prioritization and stock shortage prediction."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Glide's Free plan supports one editor and up to 25,000 rows using Glide Tables only, while the Business plan starts at 199 dollars per month for 30 users and 100,000 rows.",
+"Enterprise plans are custom-quoted and remove usage caps while adding 100+ integrations, SSO, and a dedicated account manager."
+]}
+],
+"features": [
+{"title": "Glide AI / Glide Agent", "description": "Generates an initial app layout, screen structure, and data schema from a plain-language description of the desired app."},
+{"title": "Glide Tables", "description": "Native data backend that removes the row and update limitations of using an external spreadsheet as an app's data source."},
+{"title": "Spreadsheet-to-app conversion", "description": "Turns Google Sheets, Airtable, and Excel data into a working, mobile-friendly app with real-time two-way sync."},
+{"title": "AI data extraction", "description": "Converts unstructured audio, images, and text into structured data, such as transcribing calls or extracting details from photos."},
+{"title": "Workflow automation", "description": "Automates tasks like prioritizing support tickets, predicting stock shortages, and drafting customer updates."},
+{"title": "40+ UI components", "description": "Library of forms, calendars, charts, and other components for building app interfaces without code."},
+{"title": "Call API and Glide API", "description": "Lets apps call external APIs and exposes Glide's own API for integration with other systems."},
+{"title": "Enterprise integrations", "description": "Higher tiers connect to 100+ external data sources including HubSpot, Stripe, QuickBooks, Salesforce, and PostgreSQL."}
+],
+"pros": [
+"Especially strong on-ramp for turning existing spreadsheets into usable apps quickly",
+"Free plan is genuinely usable for individuals and small internal tools",
+"AI app generation lowers the barrier to a working first draft even for non-technical users",
+"Mobile-first output makes apps usable on phones without separate native development",
+"Data privacy commitment states user data is not used to train underlying AI models"
+],
+"cons": [
+"Business plan pricing scales with both users and monthly updates, which can be hard to predict for growing usage",
+"Free plan is limited to Glide Tables only, not external spreadsheets like Google Sheets",
+"Enterprise-grade integrations (Salesforce, PostgreSQL, SSO) are locked behind custom Enterprise pricing",
+"Relatively modest funding (about 23.75 million dollars) compared to larger no-code competitors like Bubble",
+"Apps are built and hosted within Glide's platform, creating some platform dependency"
+],
+"faqs": [
+{"question": "Is Glide free to use?", "answer": "Yes, Glide offers a Free plan with one editor, unlimited draft apps, and up to 25,000 rows using Glide Tables, though it does not support external spreadsheets like Google Sheets on that tier."},
+{"question": "Who founded Glide?", "answer": "Glide was founded in 2018 by David Siegel, Jason Smith, and Mark Probst, and went through Y Combinator's Winter 2019 batch."},
+{"question": "How much does Glide's Business plan cost?", "answer": "The Business plan starts at 199 dollars per month billed annually, including 30 users, 5,000 monthly updates, up to 100,000 rows, and support for Google Sheets, Airtable, Excel, and Glide Tables."},
+{"question": "What is Glide AI?", "answer": "Glide AI, also called the Glide Agent, lets users describe an app in plain language and automatically generates an initial layout, screen structure, and data schema, using multiple large language models."},
+{"question": "Does Glide use customer data to train its AI models?", "answer": "Glide states that data entered by users is protected under an agreement with its AI subprocessor and is not used to further train the underlying AI models."},
+{"question": "What are the main alternatives to Glide?", "answer": "Common alternatives include Bubble, Adalo, Softr, Google's AppSheet, and Retool, with Glide differentiated by its spreadsheet-to-app on-ramp and AI-driven app generation."}
+],
+"use_cases": [
+{"title": "Internal operations apps", "description": "Operations teams build employee directories, inventory trackers, and approval workflows directly from existing spreadsheets.", "audience": "Operations and HR teams at small and mid-size businesses"},
+{"title": "Field service tools", "description": "Field teams use Glide to build mobile checklists and data-collection apps that sync back to a central spreadsheet or database in real time.", "audience": "Field service and logistics teams"},
+{"title": "Rapid AI-generated prototypes", "description": "Non-technical founders and teams use Glide AI to generate a working app prototype from a plain-language description before refining it manually.", "audience": "Founders and non-technical teams prototyping internal tools"}
+],
+"pricing_plans": [
+{"plan_name": "Free", "price": "$0", "billing_cycle": "N/A", "features": ["1 editor", "Unlimited draft apps", "Up to 25,000 rows", "Glide Tables only", "40+ components", "Community support"]},
+{"plan_name": "Business", "price": "$199/month", "billing_cycle": "Annual (20% discount vs. monthly)", "features": ["30 included users", "5,000 monthly updates", "Up to 100,000 rows", "Google Sheets, Airtable, Excel, Glide Tables", "500GB file storage", "10 editors", "Workflows and API access"]},
+{"plan_name": "Enterprise", "price": "Custom quote", "billing_cycle": "Annual contract", "features": ["Unlimited apps, users, updates, and rows", "100+ data sources including HubSpot, Stripe, Salesforce, PostgreSQL", "Single sign-on", "Data backups", "Dedicated account manager and priority support"]}
+],
+"tags": ["no-code", "web-app", "api", "ai", "freemium", "free-plan", "templates"],
+"publish": true
+}
+},
+{
+"tool_id": "640ab266-6f1b-43d9-85ea-0a53ef4f7d1b",
+"slug": "glitchtip",
+"name": "GlitchTip",
+"enrichment": {
+"short_description": "GlitchTip is an open-source, Sentry-API-compatible error tracking and application monitoring platform, available as a self-hosted deployment or an affordable hosted cloud service.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2019,
+"company_size": "1-10 employees",
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "GlitchTip Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "GlitchTip review 2026: the open-source, Sentry-compatible error tracker's features, self-hosting, hosted pricing tiers, pros, cons, and alternatives.",
+"llm_readable_summary": "GlitchTip is an open-source error tracking and application monitoring platform built as a lighter, fully open alternative to Sentry, the widely used error-monitoring tool. It was created by David Burke, a software engineer and founder of Burke Software and Consulting, a small consulting studio that builds and supports open-source software. GlitchTip's origin story is directly tied to a licensing decision made by Sentry itself: as Sentry moved away from permissive open-source licenses (Apache 2.0, MIT, and BSD 3-Clause) across its repositories toward more restrictive, source-available licensing intended to prevent competitors from offering Sentry as a commercial hosted service, a gap opened up for a genuinely open-source, community-controlled alternative that could still speak the same protocol. GlitchTip was built to fill exactly that gap: it reached its 1.0 release in July 2020 and is released under the permissive MIT license, meaning it can be freely viewed, modified, self-hosted, and even commercially resold without the restrictions that later versions of Sentry's own source-available license impose. The single most important technical decision behind GlitchTip is API compatibility with Sentry's SDK ecosystem. Because Sentry's client libraries are installed in an enormous number of applications across nearly every programming language and framework, GlitchTip was designed so that those same official Sentry SDKs can be pointed at a GlitchTip server instead of Sentry's own infrastructure, with no code changes required on the application side, only a change to the configured endpoint (DSN). This makes migration a low-friction, drop-in replacement rather than a rewrite, which has been central to GlitchTip's adoption among teams that already use Sentry's SDKs but want to self-host or reduce cost. Architecturally, GlitchTip is built on Django for its backend, with a relatively simple deployment footprint compared to self-hosted Sentry: GlitchTip requires only four core components, a backend service, background workers, Redis, and PostgreSQL, whereas a full self-hosted Sentry deployment historically requires more than a dozen components, including Kafka, ClickHouse, Zookeeper, Redis, and multiple specialized backend services. This dramatically lower operational complexity means GlitchTip can run comfortably on minimal hardware, reportedly as little as 1 GB of RAM and a single CPU core, making it practical to self-host on a small virtual private server rather than requiring a dedicated Kubernetes cluster, which is often the realistic baseline for running Sentry's full self-hosted stack at any scale. As an organization, GlitchTip explicitly describes itself as being built and funded entirely by its users, with no venture capital investment, operating under the umbrella of Burke Software and Consulting rather than as a large, separately staffed company; team size is therefore very small, consistent with a bootstrapped, consulting-funded open-source project rather than a venture-backed startup. This structure shapes GlitchTip's business model directly: rather than monetizing through enterprise licensing restrictions on the self-hosted software, GlitchTip monetizes primarily through a hosted cloud version that runs the exact same open Docker image used for self-hosting, meaning cloud customers are paying for convenience and support rather than for access to different, gated code. GlitchTip's hosted pricing is tiered by monthly event volume. The Free plan allows up to 1,000 events per month with unlimited projects and team members. The Small plan costs 15 dollars per month for up to 100,000 events, adding support access. The Medium plan costs 50 dollars per month for up to 500,000 events, adding priority email and live chat support. The Large plan costs 250 dollars per month for up to 3 million events, adding development support with prioritization and the option to add a Business Associate Agreement (BAA) for US healthcare/HIPAA use cases. GlitchTip also offers an EU-hosted instance for customers with data sovereignty requirements (data hosted in Germany) across all tiers, and discounted plans starting at 5 dollars per month for verified non-profits and open-source projects. Self-hosting remains completely free at any scale, since it is simply running the open MIT-licensed Docker image on infrastructure the user controls. GlitchTip's target audience splits into two overlapping groups: developers and small teams who want Sentry-compatible error tracking without paying Sentry's pricing or dealing with the operational complexity of self-hosting Sentry itself, and organizations with specific self-hosting, data residency, or open-source philosophical requirements who want full control over where error data lives. In the competitive landscape, GlitchTip sits directly against Sentry (both its commercial cloud product and its more complex self-hosted edition), as well as newer, simpler self-hosted alternatives such as Bugsink, along with broader application performance monitoring tools like Rollbar, Highlight.io, and Better Stack that also offer error-tracking features. GlitchTip's core differentiation is the combination of genuine, unrestricted open-source licensing, drop-in Sentry SDK compatibility, and dramatically lower self-hosting complexity, which together make it consistently cited as one of the most practical open-source alternatives to Sentry for teams that value simplicity and licensing freedom over Sentry's larger feature surface and analytics depth.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+"GlitchTip is an open-source, Sentry-API-compatible error tracking platform created by David Burke of Burke Software and Consulting, built in direct response to Sentry's move away from permissive open-source licensing.",
+"Released under the MIT license and reaching its 1.0 milestone in July 2020, GlitchTip lets teams point existing Sentry SDKs at a GlitchTip server with no code changes required."
+]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+"GlitchTip requires only four core components (backend, workers, Redis, and PostgreSQL) compared to the dozen-plus components needed for self-hosted Sentry, and can run on as little as 1 GB of RAM.",
+"The hosted cloud edition runs the identical open-source Docker image used for self-hosting, so cloud customers pay for convenience and support rather than gated features."
+]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+"Self-hosting GlitchTip is completely free at any scale under the MIT license, since it uses the same code as the hosted version.",
+"The hosted cloud plans range from a free tier (1,000 events/month) up to 250 dollars per month for 3 million events, with EU hosting and non-profit discounts available."
+]}
+],
+"features": [
+{"title": "Sentry SDK compatibility", "description": "Existing Sentry client libraries can point to a GlitchTip server with no application code changes, only a DSN endpoint change."},
+{"title": "MIT license", "description": "Fully open-source and unrestricted, unlike Sentry's later source-available licensing for parts of its codebase."},
+{"title": "Lightweight self-hosting", "description": "Requires only backend, workers, Redis, and PostgreSQL, running on as little as 1 GB of RAM and a single CPU core."},
+{"title": "Hosted cloud plans", "description": "Managed hosting tiers from free up to 3 million events per month, running the identical open Docker image used for self-hosting."},
+{"title": "EU data hosting", "description": "Optional EU-based hosting instance in Germany for data sovereignty requirements."},
+{"title": "Unlimited projects and team members", "description": "Even the free hosted tier includes unlimited projects and team members, capped only by monthly event volume."},
+{"title": "HIPAA BAA availability", "description": "Business Associate Agreements available on request for the Large plan, supporting US healthcare use cases."},
+{"title": "Non-profit and open-source discounts", "description": "Discounted hosted plans starting at 5 dollars per month for verified non-profits and open-source projects."}
+],
+"pros": [
+"Genuinely free and open source under the MIT license, with no restricted or gated self-hosted features",
+"Drop-in compatibility with existing Sentry SDKs makes migration low-friction",
+"Far simpler self-hosting footprint than Sentry, running on minimal hardware",
+"Affordable hosted cloud tiers starting free and scaling to 250 dollars per month for 3 million events",
+"User-funded, no-VC model keeps incentives aligned with the self-hosting and open-source community"
+],
+"cons": [
+"Smaller feature set and analytics depth compared to Sentry's full commercial platform",
+"Very small maintaining team (a consulting studio) relative to Sentry's larger engineering organization",
+"Self-hosted deployments still require managing PostgreSQL and Redis infrastructure",
+"Less extensive documentation and third-party ecosystem than the more established Sentry",
+"No headquarters or large formal company backing, which some enterprise buyers may view as a support risk"
+],
+"faqs": [
+{"question": "Is GlitchTip free?", "answer": "Yes, GlitchTip is free and open source under the MIT license for self-hosting at any scale, and the hosted cloud version also offers a free tier for up to 1,000 events per month."},
+{"question": "Who created GlitchTip?", "answer": "GlitchTip was created by David Burke of Burke Software and Consulting, reaching its 1.0 release in July 2020."},
+{"question": "Is GlitchTip compatible with Sentry?", "answer": "Yes, GlitchTip is API-compatible with Sentry's official SDKs, so existing Sentry client libraries can be pointed at a GlitchTip server without code changes."},
+{"question": "How much does GlitchTip's hosted plan cost?", "answer": "GlitchTip's hosted plans range from free (1,000 events per month) to 15 dollars for 100,000 events, 50 dollars for 500,000 events, and 250 dollars per month for up to 3 million events."},
+{"question": "Is GlitchTip easier to self-host than Sentry?", "answer": "Yes, GlitchTip requires only four core components (backend, workers, Redis, and PostgreSQL) and can run on as little as 1 GB of RAM, compared to the dozen-plus components required for a full self-hosted Sentry deployment."},
+{"question": "What are the main alternatives to GlitchTip?", "answer": "The main alternatives are Sentry itself (cloud and self-hosted), along with other error-tracking tools like Bugsink, Rollbar, and Highlight.io."}
+],
+"use_cases": [
+{"title": "Self-hosted error tracking", "description": "Teams that want full control over error data and infrastructure self-host GlitchTip on minimal hardware using its open Docker image.", "audience": "Engineering teams with self-hosting or data residency requirements"},
+{"title": "Cost-effective Sentry replacement", "description": "Teams already using Sentry SDKs switch to GlitchTip's hosted plans to reduce error-tracking costs without changing application code.", "audience": "Cost-conscious startups and small engineering teams"},
+{"title": "EU data sovereignty compliance", "description": "European organizations use GlitchTip's EU-hosted instance in Germany to keep error and performance data within EU borders.", "audience": "European companies with data residency requirements"}
+],
+"pricing_plans": [
+{"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["Full source code under MIT license", "Sentry SDK compatibility", "Unlimited events (self-managed infrastructure)", "Runs on minimal hardware"]},
+{"plan_name": "Hosted Free", "price": "$0", "billing_cycle": "Monthly", "features": ["Up to 1,000 events/month", "Unlimited projects and team members", "Error tracking"]},
+{"plan_name": "Hosted Small", "price": "$15/month", "billing_cycle": "Monthly", "features": ["Up to 100,000 events/month", "Support access"]},
+{"plan_name": "Hosted Medium", "price": "$50/month", "billing_cycle": "Monthly", "features": ["Up to 500,000 events/month", "Priority email and live chat support"]},
+{"plan_name": "Hosted Large", "price": "$250/month", "billing_cycle": "Monthly", "features": ["Up to 3 million events/month", "Prioritized development support", "Optional BAA for HIPAA compliance"]}
+],
+"tags": ["open-source", "self-hosted", "api", "freemium", "free-plan"],
+"publish": true
+}
+}
+]

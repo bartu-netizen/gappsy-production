@@ -1,0 +1,1508 @@
+[
+  {
+    "tool_id": "1dbc0d6c-8ba8-4f49-aeb1-c6dcd71d5cfe",
+    "slug": "openziti",
+    "name": "OpenZiti",
+    "enrichment": {
+      "short_description": "OpenZiti is a free, open-source zero-trust networking platform that lets developers embed secure, identity-based overlay networking directly into applications, making services invisible to unauthorized users.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2017,
+      "company_size": "51-200 employees",
+      "headquarters": "Charlotte, North Carolina, United States",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenZiti Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenZiti review: open-source zero-trust networking overlay with SDKs and tunnelers. See features, self-hosting vs NetFoundry Cloud pricing, and alternatives.",
+      "llm_readable_summary": "OpenZiti is a fully open-source (Apache 2.0) zero-trust networking platform that lets developers and network engineers embed secure, identity-based overlay networking directly into applications and infrastructure. Rather than exposing services on the public internet or a traditional VPN, OpenZiti makes network services invisible by default: every connection from a user, service, device, or workload must be authenticated with cryptographic identity, authorized by policy, and encrypted end-to-end before a network path is even established. The project was created and is primarily sponsored by NetFoundry, a networking company founded in 2017 and headquartered in Charlotte, North Carolina, which also sells a commercial managed cloud service (NetFoundry Cloud for OpenZiti) built on top of the same open-source core. OpenZiti supports two integration models: a zero-code path using lightweight tunnelers/appliances that work with existing applications, and an embedded path using native SDKs (Go, C, Swift, Java/Kotlin, C#, NodeJS) for applications that want the strongest zero-trust guarantees baked in at the code level. Core components include the Ziti controller, edge routers, a policy engine, and a browser-based admin console (ZAC). Because it is self-hostable and Apache 2.0 licensed, OpenZiti itself is entirely free to run; NetFoundry monetizes through a managed cloud offering (with a free trial including up to 10 endpoints and 1 TB of data) and enterprise support contracts, both quoted on request rather than published. Target users are network engineers, platform/security teams, and application developers who need to replace traditional VPNs, firewalls, and bastion hosts with a modern, application-embedded zero-trust architecture \u2014 particularly for remote access, multi-cloud connectivity, IoT/edge device networking, and securing legacy applications without exposing open ports. Its closest comparisons are other zero-trust network access (ZTNA) and secure overlay tools such as Tailscale, Cloudflare Zero Trust/Access, Twingate, and Zscaler Private Access, though OpenZiti differentiates itself by being fully open source, self-hostable end-to-end, and designed to be programmable and embeddable inside applications rather than just a network appliance. It is used in production by NetFoundry's own internal and external systems and by organizations building zero-trust remote access, secure IoT connectivity, and dark/invisible service architectures.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenZiti is an open-source zero-trust networking platform designed to make network services invisible to anyone who has not been explicitly authenticated and authorized. Instead of relying on IP-based network perimeters, VPNs, or firewall rules, OpenZiti establishes a programmable overlay network where every connection is verified by cryptographic identity and policy before any data path is created.",
+            "The project is created and sponsored by NetFoundry, a Charlotte, North Carolina-based networking company founded in 2017. NetFoundry maintains OpenZiti as a fully open-source (Apache 2.0) project while also offering a commercial managed cloud service, NetFoundry Cloud for OpenZiti, for teams that don't want to self-host the control plane."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenZiti supports both a zero-code integration path, using lightweight tunnelers that route existing application traffic through the overlay with no code changes, and a deeper embedded path using native SDKs for languages including Go, C, Java/Kotlin, Swift, C#, and NodeJS, giving developers the strongest zero-trust posture by baking identity and encryption directly into the application.",
+            "The platform includes a policy-driven controller, distributed edge routers for global reach, and a web-based admin console for managing identities, services, and authorization policies, making it suitable for replacing traditional VPNs, bastion hosts, and firewall-based remote access with fully dark, invisible services."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenZiti itself is completely free and open source under the Apache 2.0 license, and can be self-hosted end-to-end with no licensing cost.",
+            "For teams that prefer a managed control plane, NetFoundry offers NetFoundry Cloud for OpenZiti with a free 30-day trial (up to 10 endpoints and 1 TB of data). Paid managed-service and enterprise support pricing is not publicly listed and requires contacting NetFoundry sales directly."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Zero-trust identity-based connectivity",
+          "description": "Every connection is authenticated with cryptographic identity and authorized by policy before any network path is created, eliminating implicit trust based on network location."
+        },
+        {
+          "title": "Embedded SDKs",
+          "description": "Native SDKs for Go, C, Java/Kotlin, Swift, C#, and NodeJS let developers embed zero-trust networking directly into application code."
+        },
+        {
+          "title": "Zero-code tunnelers",
+          "description": "Lightweight tunneling clients let existing applications and devices join the overlay network without any code changes."
+        },
+        {
+          "title": "Dark, invisible services",
+          "description": "Services are hidden by default and only become reachable to a specific identity once it is fully authorized, reducing attack surface compared to exposed IPs or ports."
+        },
+        {
+          "title": "Distributed edge router mesh",
+          "description": "A global mesh of edge routers provides low-latency, resilient overlay connectivity across clouds, data centers, and edge locations."
+        },
+        {
+          "title": "Self-hostable control plane",
+          "description": "The Ziti controller and all core components can be self-hosted, giving organizations full control over their zero-trust network fabric."
+        },
+        {
+          "title": "Web-based admin console (ZAC)",
+          "description": "A browser-based console for managing identities, services, edge routers, and authorization policies."
+        },
+        {
+          "title": "Managed cloud option",
+          "description": "NetFoundry Cloud offers a hosted control plane and managed edge router fleet for teams that don't want to operate OpenZiti infrastructure themselves."
+        }
+      ],
+      "pros": [
+        "Fully open source under Apache 2.0 with no licensing cost for self-hosted use",
+        "Strong zero-trust security model with per-connection identity and policy authorization",
+        "Flexible integration options ranging from zero-code tunnelers to deep SDK embedding",
+        "Backed by NetFoundry, a company with dedicated commercial support and a managed cloud option",
+        "Active open-source community with regular releases and documentation"
+      ],
+      "cons": [
+        "Steeper learning curve than turnkey commercial ZTNA products due to its programmable, DIY nature",
+        "Self-hosting requires operational expertise to run the controller and edge router mesh reliably",
+        "Managed NetFoundry Cloud pricing is not published and requires a sales conversation",
+        "Smaller ecosystem and community size compared to mainstream VPN/ZTNA vendors",
+        "Deep SDK-based zero-trust integration requires development effort, unlike simple network overlays"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenZiti free to use?",
+          "answer": "Yes. OpenZiti is fully open source under the Apache 2.0 license and can be self-hosted at no cost. NetFoundry also offers a paid managed cloud service for teams that prefer not to operate the infrastructure themselves."
+        },
+        {
+          "question": "Who created OpenZiti?",
+          "answer": "OpenZiti was created and is sponsored by NetFoundry, a networking company founded in 2017 and headquartered in Charlotte, North Carolina."
+        },
+        {
+          "question": "How is OpenZiti different from a traditional VPN?",
+          "answer": "Unlike a VPN, which grants broad network access once connected, OpenZiti authenticates and authorizes every individual connection by identity and policy, and keeps services invisible until access is explicitly granted."
+        },
+        {
+          "question": "Can I use OpenZiti without changing my application code?",
+          "answer": "Yes. OpenZiti provides zero-code tunnelers that route existing application traffic through the zero-trust overlay. Developers who want the strongest security posture can also use native SDKs to embed zero-trust connectivity directly into their applications."
+        },
+        {
+          "question": "What is NetFoundry Cloud?",
+          "answer": "NetFoundry Cloud for OpenZiti is a commercial, managed version of the OpenZiti control plane and edge router network, offered by NetFoundry for teams that don't want to self-host the infrastructure."
+        },
+        {
+          "question": "What are the main alternatives to OpenZiti?",
+          "answer": "Common alternatives and comparisons include Tailscale, Cloudflare Zero Trust, Twingate, and Zscaler Private Access, though OpenZiti differentiates itself by being fully open source and embeddable directly into application code."
+        },
+        {
+          "question": "Does OpenZiti support IoT and edge devices?",
+          "answer": "Yes, OpenZiti is commonly used to secure IoT and edge device connectivity by making devices reachable only to authorized identities rather than exposing them on the open network."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Replacing traditional VPN remote access",
+          "description": "Organizations use OpenZiti to give remote employees and contractors identity-based access to internal applications without exposing a broad network perimeter.",
+          "audience": "Network and security engineering teams"
+        },
+        {
+          "title": "Securing multi-cloud and hybrid connectivity",
+          "description": "Teams use OpenZiti's overlay network to connect workloads across multiple clouds and data centers with zero-trust policy enforcement instead of VPN tunnels or firewall rules.",
+          "audience": "Platform and DevOps engineers"
+        },
+        {
+          "title": "Embedding zero-trust access into applications and IoT devices",
+          "description": "Developers use OpenZiti SDKs to build zero-trust connectivity directly into custom applications and IoT/edge devices, making them invisible until authorized.",
+          "audience": "Application developers and IoT product teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "OpenZiti (Self-Hosted)",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full open-source Apache 2.0 platform",
+            "Self-hosted controller and edge routers",
+            "Embedded SDKs and tunnelers",
+            "Community documentation and Discourse support"
+          ]
+        },
+        {
+          "plan_name": "NetFoundry Cloud Trial",
+          "price": "Free for 30 days",
+          "billing_cycle": "Trial",
+          "features": [
+            "Up to 10 endpoints",
+            "Up to 1 TB of data",
+            "Managed control plane and edge router network"
+          ]
+        },
+        {
+          "plan_name": "NetFoundry Cloud (Paid)",
+          "price": "Custom quote",
+          "billing_cycle": "Contact sales",
+          "features": [
+            "Managed OpenZiti control plane",
+            "Usage-based cloud resource costs",
+            "Enterprise support options"
+          ]
+        }
+      ],
+      "tags": [
+        "Zero Trust Networking",
+        "Open Source",
+        "Network Security",
+        "ZTNA",
+        "Overlay Network"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "324cb4c8-ccb6-493d-82c4-2a69fa15670f",
+    "slug": "operational-co",
+    "name": "Operational.co",
+    "enrichment": {
+      "short_description": "Operational.co is an open-source, developer-focused event tracking tool that monitors signups, webhooks, cron jobs, and other critical product events and sends real-time push notifications.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (10,000 events)",
+      "founded_year": 2024,
+      "company_size": "1-10 employees",
+      "headquarters": "Not publicly disclosed",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "Operational.co Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Operational.co review: open-source event tracking with push notifications for signups, webhooks, and cron jobs. See features, self-hosting, and pricing.",
+      "llm_readable_summary": "Operational.co is an open-source event tracking tool built specifically for developers and small tech/SaaS teams who need lightweight visibility into critical backend events without the overhead of a full observability or product analytics platform. Rather than tracking marketing or product analytics metrics, Operational is purpose-built to monitor discrete, important events such as new signups, webhook deliveries, cron job runs, payment events, and errors, then push real-time notifications to a phone or web app when something happens (or fails to happen). Its two standout differentiators are 'action buttons,' which let a user trigger a follow-up workflow (like retrying a webhook) directly from a push notification, and 'contexts,' which group related events together so that, for example, all events tied to a single user session or job run can be viewed as one unit rather than a flat log stream. The product is fully open source under the AGPL-3.0 license and built on a modern stack (Node.js, Express 5, Prisma, MySQL 8, Vue 3, Vite), organized as a monorepo with a hosted SPA, backend, and marketing site. It is genuinely self-hostable, with documented deployment paths including Docker images and one-click deploys to platforms like Render.com, appealing to indie hackers and small engineering teams who want full data ownership. Its GitHub repository has drawn a modest but active community (several hundred stars, an active Discord, and regular releases), with known production users including Swipekit and YouTube Description Extractor. Commercially, Operational.co runs a hosted, freemium-style model: new accounts get 10,000 events at no cost with no credit card required, after which users must add a payment method (billed monthly on the 1st) within a five-day grace period or the account is deactivated; event data is retained for a minimum of one year. Specific paid-tier pricing beyond the free allotment is not publicly itemized on the pricing page. As a small, comparatively new entrant (its GitHub activity and release history point to a 2024-era launch), Operational.co competes less with traditional status-page tools like Atlassian Statuspage, Better Stack, or Instatus (which communicate uptime to end customers) and more with lightweight internal event-monitoring and alerting tools, positioning itself with the tagline 'Track events, without breaking the bank' for cost-conscious developers and SaaS builders.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Operational.co is an open-source event tracking tool aimed at developers and small SaaS teams who need a simple way to monitor important backend events, such as user signups, webhook deliveries, and cron job executions, and get notified the moment something happens or breaks.",
+            "Unlike traditional status page tools that communicate uptime to end customers, Operational is designed to run alongside a team's existing product analytics stack as an internal, developer-facing event and alerting layer, with real-time push notifications delivered to phone or web app."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The platform's signature features are action buttons, which let users trigger follow-up actions like retries directly from a push notification, and contexts, which group related events together (events-within-events) for easier debugging and monitoring of multi-step processes.",
+            "Operational is fully open source under the AGPL-3.0 license and can be self-hosted using Docker or one-click deploys such as Render.com, giving teams full control over their event data, or used as a hosted service for teams that prefer not to manage infrastructure."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Operational.co offers a free tier with 10,000 events and no credit card required to get started, positioning itself as a budget-friendly alternative to enterprise monitoring and status tools.",
+            "Beyond the free allotment, users must add a payment method within a five-day grace period to keep their account active; billing runs monthly on the 1st, though specific paid-tier pricing is not itemized publicly and self-hosting remains free under the open-source license."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Real-time push notifications",
+          "description": "Sends instant push notifications to phone or web app when tracked events occur, such as signups, webhook failures, or cron job runs."
+        },
+        {
+          "title": "Action buttons",
+          "description": "Lets users trigger follow-up workflows, such as retrying a failed webhook, directly from a push notification."
+        },
+        {
+          "title": "Contexts (events-in-events)",
+          "description": "Groups related events together so multi-step processes can be monitored and debugged as a single unit rather than a flat log."
+        },
+        {
+          "title": "Open-source and self-hostable",
+          "description": "Fully open source under AGPL-3.0 with documented self-hosting guides, including Docker images and Render.com deployment."
+        },
+        {
+          "title": "Progressive web app support",
+          "description": "Ships as a PWA with mobile push notification support so teams can monitor events from their phones."
+        },
+        {
+          "title": "API and playground",
+          "description": "Provides an API for sending events plus a playground environment for testing integrations before going live."
+        },
+        {
+          "title": "JSON and image logging",
+          "description": "Supports sending structured JSON logs and image URLs alongside events for richer context."
+        }
+      ],
+      "pros": [
+        "Generous free tier (10,000 events) with no credit card required to start",
+        "Fully open source and genuinely self-hostable via Docker or Render.com",
+        "Purpose-built for developer event tracking rather than generic analytics",
+        "Action buttons and contexts add useful workflow features not found in basic loggers",
+        "Active Discord community and regular release cadence"
+      ],
+      "cons": [
+        "Paid-tier pricing beyond the free allotment is not publicly itemized",
+        "Small company and community relative to established status/monitoring tools",
+        "Not a substitute for customer-facing status pages like Statuspage or Instatus",
+        "Newer product with a smaller track record and fewer integrations than mature competitors",
+        "Headquarters and company size are not publicly disclosed"
+      ],
+      "faqs": [
+        {
+          "question": "What does Operational.co actually do?",
+          "answer": "Operational.co is an open-source event tracking tool that monitors backend events like signups, webhooks, and cron jobs, and sends real-time push notifications when they occur or fail."
+        },
+        {
+          "question": "Is Operational.co a status page tool?",
+          "answer": "No. Unlike Statuspage or Instatus, which communicate uptime to end customers, Operational.co is an internal developer tool for tracking and alerting on backend events."
+        },
+        {
+          "question": "Can Operational.co be self-hosted?",
+          "answer": "Yes. It is fully open source under the AGPL-3.0 license and can be self-hosted via Docker or one-click deployment to platforms like Render.com."
+        },
+        {
+          "question": "How much does Operational.co cost?",
+          "answer": "New accounts get 10,000 events for free with no credit card required. After that, a payment method is required within a five-day grace period; specific paid pricing is not publicly listed."
+        },
+        {
+          "question": "What are action buttons in Operational.co?",
+          "answer": "Action buttons let users trigger a follow-up action, such as retrying a failed webhook, directly from a push notification."
+        },
+        {
+          "question": "Who uses Operational.co in production?",
+          "answer": "Known production users include Swipekit and YouTube Description Extractor, alongside a broader community of indie developers and small SaaS teams."
+        },
+        {
+          "question": "How long is event data retained?",
+          "answer": "Operational.co retains event data for a minimum of one year on the hosted service."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Monitoring webhook deliveries",
+          "description": "Developers use Operational.co to track webhook events and get instant notification (with retry action buttons) when a webhook fails.",
+          "audience": "Backend developers"
+        },
+        {
+          "title": "Tracking cron job health",
+          "description": "Teams monitor scheduled job executions to be alerted immediately if a cron job fails to run or completes with errors.",
+          "audience": "DevOps and infrastructure teams"
+        },
+        {
+          "title": "Watching signup and conversion events",
+          "description": "Indie hackers and small SaaS teams track new user signups and key funnel events in real time without setting up a full analytics stack.",
+          "audience": "Indie developers and small SaaS founders"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0",
+          "billing_cycle": "One-time allotment",
+          "features": [
+            "10,000 events",
+            "No credit card required",
+            "Full platform feature access",
+            "API and playground access"
+          ]
+        },
+        {
+          "plan_name": "Paid (Hosted)",
+          "price": "Custom / not publicly listed",
+          "billing_cycle": "Monthly (billed on the 1st)",
+          "features": [
+            "Events beyond the free allotment",
+            "1-year minimum event retention",
+            "5-day grace period for payment setup"
+          ]
+        },
+        {
+          "plan_name": "Self-Hosted",
+          "price": "Free (open source)",
+          "billing_cycle": "N/A",
+          "features": [
+            "AGPL-3.0 licensed source code",
+            "Docker and Render.com deployment guides",
+            "Full data ownership"
+          ]
+        }
+      ],
+      "tags": [
+        "Event Tracking",
+        "Open Source",
+        "Developer Tools",
+        "Push Notifications",
+        "Monitoring"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "448308da-5605-49bb-9624-815b9f255cf3",
+    "slug": "opinion-stage",
+    "name": "Opinion Stage",
+    "enrichment": {
+      "short_description": "Opinion Stage is an AI-powered platform for creating interactive quizzes, polls, surveys, and forms that drive engagement, lead generation, and audience insights for marketers and publishers.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (25 responses/month); paid plans from $25/month billed yearly",
+      "founded_year": 2011,
+      "company_size": "11-50 employees",
+      "headquarters": "Tel Aviv, Israel",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "Opinion Stage Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Opinion Stage review: AI quiz, poll, and survey maker for marketers. Compare features, pricing plans, and alternatives like Typeform and Outgrow.",
+      "llm_readable_summary": "Opinion Stage is an interactive content creation platform that lets marketers, publishers, and businesses build quizzes, polls, surveys, and forms designed to maximize engagement and capture leads. Founded in 2011 by Assaf Parag and headquartered in Tel Aviv, Israel, the company has grown into an established player in the interactive-content space, with enterprise and media customers including the BBC, Club Med, Tate, RTL, Funke Mediengruppe, Immediate Media, SRF, 20 Minuten, and the Fiesta Bowl. The platform's no-code, drag-and-drop builder lets users start from a blank canvas, generate a quiz or survey with AI, customize a pre-built template, or import existing questions, and get an interactive piece of content live in minutes. Key differentiators include AI-assisted content creation, hundreds of professionally designed templates, skip and branching logic, lead-capture email forms, conversion tracking, drop-off/completion reporting, and native integrations with marketing and CRM tools, along with embeddable widgets for websites and a dedicated WordPress plugin. Opinion Stage follows a freemium pricing model: a permanently free plan supports 25 responses per month and 2 users; Pro plans (from $25/month billed yearly, or $32/month billed monthly for 1,000 responses, scaling to $49/month for 2,500 responses) add more users and response capacity; Business plans (from $79/month billed yearly up through $500/month for 50,000 responses) unlock white-label branding removal, conversion tracking, and drop-off reports; and a custom Enterprise tier offers unlimited responses and users, custom CSS branding, a dedicated customer success manager, and GDPR/legal contract support. The company targets digital marketers, content publishers, media brands, and lead-generation teams who want to turn passive content into interactive, data-capturing experiences. Its main competitors and alternatives include Typeform (known for conversational form UX), Outgrow (stronger for complex calculators and quizzes), SurveyMonkey (broader survey/research focus), Interact, and JotForm, with Opinion Stage differentiating itself through its focus on marketing-oriented interactive content (quizzes and polls specifically engineered for lead generation and virality) rather than general-purpose survey research.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Opinion Stage is an interactive content platform that helps marketers, publishers, and brands create quizzes, polls, surveys, and forms designed to boost engagement and capture leads. Founded in 2011 by Assaf Parag and based in Tel Aviv, Israel, the company has built a customer base that includes major media and consumer brands such as the BBC, Club Med, and Tate.",
+            "The platform is positioned specifically for marketing and audience-engagement use cases rather than academic or research surveys, emphasizing virality, lead capture, and conversion tracking alongside its content creation tools."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Opinion Stage's no-code builder offers multiple starting points: build from scratch, generate content with AI, customize one of hundreds of templates, or import existing questions, letting non-technical marketers launch interactive content quickly.",
+            "Beyond content creation, the platform includes lead-capture forms, skip and branching logic, conversion and drop-off tracking, embeddable widgets, a WordPress plugin, and integrations with common marketing and CRM tools to route captured leads into existing workflows."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Opinion Stage offers a free-forever plan with 25 monthly responses and 2 users, with paid Pro and Business tiers priced by monthly response volume, starting around $25-32/month and scaling up to $500/month for 50,000 responses.",
+            "Annual billing offers roughly a 20% discount over monthly pricing, and a custom Enterprise plan provides unlimited responses and users along with custom branding, legal/GDPR contracts, and a dedicated success manager."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "AI-assisted quiz and survey creation",
+          "description": "Generate a complete quiz, poll, or survey from a prompt using built-in AI, reducing setup time from hours to minutes."
+        },
+        {
+          "title": "No-code drag-and-drop builder",
+          "description": "Build interactive content from scratch, a template, or imported questions without any coding required."
+        },
+        {
+          "title": "Lead-capture forms",
+          "description": "Attach email capture and custom lead forms to quizzes and surveys to convert engagement into marketing leads."
+        },
+        {
+          "title": "Skip and branch logic",
+          "description": "Create personalized, dynamic paths through a quiz or survey based on previous answers."
+        },
+        {
+          "title": "Conversion and drop-off tracking",
+          "description": "Business and higher plans include detailed analytics on completion rates and where respondents abandon content."
+        },
+        {
+          "title": "Hundreds of templates",
+          "description": "A large template library covering quizzes, polls, surveys, and forms across industries speeds up content creation."
+        },
+        {
+          "title": "Embeds and WordPress plugin",
+          "description": "Publish interactive content via embeddable widgets on any website or through a dedicated WordPress plugin."
+        },
+        {
+          "title": "Marketing integrations",
+          "description": "Native integrations connect captured leads and response data to common marketing, email, and CRM platforms."
+        }
+      ],
+      "pros": [
+        "Free-forever plan with no time limit for low-volume use",
+        "AI-assisted creation speeds up building quizzes and surveys",
+        "Strong template library aimed specifically at marketing use cases",
+        "Used by well-known media and consumer brands, indicating enterprise reliability",
+        "Conversion tracking and drop-off reports built for lead-gen optimization"
+      ],
+      "cons": [
+        "Free plan is limited to just 25 responses per month",
+        "Pricing scales quickly with response volume, which can get expensive for high-traffic campaigns",
+        "Branding removal is gated behind Business-tier plans, not available on Pro",
+        "Less suited to rigorous academic or statistical research surveys than tools like SurveyMonkey",
+        "Enterprise pricing is not published and requires a sales conversation"
+      ],
+      "faqs": [
+        {
+          "question": "What is Opinion Stage used for?",
+          "answer": "Opinion Stage is used to create interactive quizzes, polls, surveys, and forms for marketing engagement, lead generation, and audience insights."
+        },
+        {
+          "question": "Does Opinion Stage have a free plan?",
+          "answer": "Yes, Opinion Stage offers a free-forever plan that includes 25 responses per month and 2 users."
+        },
+        {
+          "question": "How much does Opinion Stage cost?",
+          "answer": "Paid plans start around $25-32/month for 1,000 responses and scale up based on monthly response volume, up to $500/month for 50,000 responses, plus a custom Enterprise tier."
+        },
+        {
+          "question": "When was Opinion Stage founded?",
+          "answer": "Opinion Stage was founded in 2011 by Assaf Parag and is headquartered in Tel Aviv, Israel."
+        },
+        {
+          "question": "Can I remove Opinion Stage branding from my content?",
+          "answer": "Branding removal is available starting on Business-tier plans; it is not included on the Free or Pro tiers."
+        },
+        {
+          "question": "What are the main alternatives to Opinion Stage?",
+          "answer": "Common alternatives include Typeform, Outgrow, SurveyMonkey, Interact, and JotForm, each with different strengths in conversational UX, calculators, or research surveys."
+        },
+        {
+          "question": "Does Opinion Stage support AI content generation?",
+          "answer": "Yes, Opinion Stage includes AI tools to generate quizzes and surveys automatically from a prompt or topic."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Lead generation campaigns",
+          "description": "Marketers embed lead-capture quizzes and polls on landing pages to convert website visitors into qualified leads.",
+          "audience": "Digital marketers and growth teams"
+        },
+        {
+          "title": "Audience engagement for publishers",
+          "description": "Media brands and publishers use interactive quizzes and polls to boost time-on-page and reader engagement.",
+          "audience": "Media companies and content publishers"
+        },
+        {
+          "title": "Customer feedback and market research",
+          "description": "Businesses deploy branded surveys to gather customer feedback and inform product or marketing decisions.",
+          "audience": "Product and customer insights teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "25 responses/month",
+            "2 users",
+            "Core quiz, poll, and survey builder",
+            "AI creation"
+          ]
+        },
+        {
+          "plan_name": "Pro",
+          "price": "From $25/month (billed yearly) or $32-49/month billed monthly",
+          "billing_cycle": "Monthly or yearly",
+          "features": [
+            "1,000-2,500 responses/month",
+            "3 users",
+            "Priority chat support and onboarding call"
+          ]
+        },
+        {
+          "plan_name": "Business",
+          "price": "From $79/month (billed yearly) up to $500/month",
+          "billing_cycle": "Monthly or yearly",
+          "features": [
+            "10,000-50,000 responses/month",
+            "5 users",
+            "Branding removal, conversion tracking, drop-off reports"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom",
+          "billing_cycle": "Annual contract",
+          "features": [
+            "Unlimited responses and users",
+            "Custom CSS branding",
+            "Dedicated success manager",
+            "Legal and GDPR contracts"
+          ]
+        }
+      ],
+      "tags": [
+        "Quiz Maker",
+        "Survey Software",
+        "Lead Generation",
+        "Interactive Content",
+        "Marketing Tools"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "acb31b58-aa23-4c6b-b191-585512bf65f6",
+    "slug": "opnform",
+    "name": "OpnForm",
+    "enrichment": {
+      "short_description": "OpnForm is an open-source, no-code form builder offering unlimited forms and responses, positioned as a Typeform and JotForm alternative for individuals, startups, and enterprises.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free; Pro from $25/month",
+      "founded_year": 2023,
+      "company_size": "1-10 employees",
+      "headquarters": "Remote / not publicly disclosed",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpnForm Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpnForm review: open-source form builder with unlimited responses. Compare features, self-hosted vs cloud pricing, and alternatives like Typeform.",
+      "llm_readable_summary": "OpnForm is an open-source, no-code form builder positioned as an alternative to Typeform, JotForm, and Tally, built on Laravel, Vue.js, and TailwindCSS. It was created by developer Julien Nahum, who first built a related Notion-integrated form tool (NotionForms, later rebranded and expanded) that grew to roughly $200k ARR as a largely solo, bootstrapped project before evolving into the standalone OpnForm product, publicly launched around 2023 and later promoted via an AppSumo lifetime-deal campaign. The product's central pitch is a genuinely generous free tier: unlimited forms and unlimited submissions on the hosted cloud plan at no cost, with the only real limitations being OpnForm branding and no custom domain support, a stance most direct competitors don't match since they typically cap monthly responses. OpnForm supports a drag-and-drop builder with multi-step layouts, conditional logic, computed fields, both 'classic' and Typeform-style conversational form styles, and distribution via direct links, embeds, custom domains, Notion integration, and QR codes, alongside native integrations for Slack, Discord, Google Sheets, Zapier, Stripe, webhooks, and a REST API. It reports over 10,000 companies using the platform and more than 3,500 stars on its GitHub repository (OpnForm/OpnForm), with visible customers including Berkeley, the UN, Vanguard, and Zomato. Because the core is licensed AGPL-3.0, OpnForm is also fully self-hostable at no cost via a Community Edition (capped at 2 users, with OIDC SSO and community support), while advanced enterprise capabilities are gated behind a separate Enterprise License for self-hosters, priced at $1,999/year per instance. On the hosted cloud side, pricing runs Free, Pro (roughly $25-29/month, or 15% less billed yearly) which adds branding removal, custom domains, custom SMTP, chat-app notifications, password-protected forms, analytics, and AI form generation; Business (roughly $67-79/month) which adds multi-user roles and permissions, advanced branding, larger file uploads, and priority support; and Enterprise (roughly $220-250/month) which adds SAML/LDAP SSO, audit logs, external storage, white-label hosting, and SLA-backed onboarding. OpnForm targets indie developers, startups, and cost-conscious teams who want Typeform-quality forms without response-based pricing, and it also offers an EU-hosted infrastructure option for organizations with data-residency requirements, competing most directly with Typeform, JotForm, Tally, and other open-source form builders.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpnForm is an open-source, no-code form builder created by developer Julien Nahum as a Typeform and JotForm alternative, built on Laravel, Vue.js, and TailwindCSS. It launched publicly around 2023, growing out of Nahum's earlier bootstrapped Notion-form tool, and has since attracted more than 10,000 companies and over 3,500 GitHub stars.",
+            "The product's core differentiator is its free tier: unlike most form builders that cap monthly responses, OpnForm offers unlimited forms and unlimited submissions for free on its hosted cloud plan, with only branding and custom domains reserved for paid tiers."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The builder supports drag-and-drop form creation, multi-step layouts, conditional logic, computed fields, and both classic and conversational (Typeform-style) form presentation, along with distribution options including direct links, website embeds, Notion pages, custom domains, and QR codes.",
+            "OpnForm integrates natively with Slack, Discord, Google Sheets, Zapier, and Stripe, plus webhooks and a REST API, and enterprise-tier customers get SSO/SAML, audit logs, and white-label hosting for compliance-sensitive deployments."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpnForm's hosted cloud plans run Free (unlimited forms/submissions with OpnForm branding), Pro (around $25-29/month for branding removal and custom domains), Business (around $67-79/month for multi-user roles and advanced branding), and Enterprise (around $220-250/month for SSO and audit logs), with roughly 15% savings on annual billing.",
+            "Because the core is AGPL-3.0 licensed, OpnForm can also be fully self-hosted for free via the Community Edition, with an optional Enterprise License available for self-hosters at $1,999/year per instance to unlock advanced features like SSO and white-labeling."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Unlimited forms and submissions (free tier)",
+          "description": "The free hosted plan includes unlimited forms and unlimited responses, with no per-submission charges on any plan."
+        },
+        {
+          "title": "Drag-and-drop builder with logic",
+          "description": "Build multi-step forms with conditional logic and computed fields using a no-code visual editor."
+        },
+        {
+          "title": "Classic and conversational form styles",
+          "description": "Choose between a traditional single-page form layout or a Typeform-style conversational, one-question-at-a-time flow."
+        },
+        {
+          "title": "AI form generation",
+          "description": "Generate a complete form from a text prompt using built-in AI tools (available on paid tiers)."
+        },
+        {
+          "title": "Native integrations and API",
+          "description": "Connect forms to Slack, Discord, Google Sheets, Zapier, and Stripe, or build custom workflows via webhooks and a REST API."
+        },
+        {
+          "title": "Self-hosting and open-source core",
+          "description": "The AGPL-3.0-licensed Community Edition can be self-hosted for free, giving teams full data control."
+        },
+        {
+          "title": "Enterprise security features",
+          "description": "SAML/LDAP SSO, audit logs, and white-label hosting are available on the top hosted and self-hosted enterprise tiers."
+        },
+        {
+          "title": "Flexible distribution",
+          "description": "Publish forms via direct links, website embeds, Notion integration, custom domains, or QR codes."
+        }
+      ],
+      "pros": [
+        "Genuinely unlimited free tier for forms and submissions, unlike most competitors",
+        "Fully open source and self-hostable at no cost via the Community Edition",
+        "Modern, clean form-builder UX with both classic and conversational styles",
+        "Strong integration coverage including Zapier, Stripe, Slack, and a REST API",
+        "Rapidly growing GitHub community and company adoption since its 2023 launch"
+      ],
+      "cons": [
+        "Small team behind the product, which may limit support responsiveness at scale",
+        "Advanced features (SSO, audit logs, white-labeling) are locked behind higher-cost tiers",
+        "Self-hosted Enterprise License is a separate $1,999/year cost on top of running your own infrastructure",
+        "Less brand recognition and third-party ecosystem than Typeform or JotForm",
+        "Company headquarters and team size are not publicly disclosed"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpnForm really free?",
+          "answer": "Yes, OpnForm's hosted Free plan includes unlimited forms and unlimited submissions at no cost; paid tiers add branding removal, custom domains, and enterprise features."
+        },
+        {
+          "question": "Can OpnForm be self-hosted?",
+          "answer": "Yes. The core product is AGPL-3.0 licensed open source and can be self-hosted for free via the Community Edition, with an optional paid Enterprise License for advanced features."
+        },
+        {
+          "question": "Who created OpnForm?",
+          "answer": "OpnForm was created by developer Julien Nahum, building on his earlier bootstrapped Notion-integrated form tool."
+        },
+        {
+          "question": "What is OpnForm's pricing?",
+          "answer": "OpnForm offers a Free plan, plus paid Pro (around $25-29/month), Business (around $67-79/month), and Enterprise (around $220-250/month) hosted plans, with roughly 15% off on annual billing."
+        },
+        {
+          "question": "What are the main alternatives to OpnForm?",
+          "answer": "OpnForm is commonly compared to Typeform, JotForm, and Tally, differentiating itself with an open-source core and an unlimited free tier."
+        },
+        {
+          "question": "Does OpnForm support integrations like Zapier and Stripe?",
+          "answer": "Yes, OpnForm integrates natively with Slack, Discord, Google Sheets, Zapier, and Stripe, plus webhooks and a REST API for custom workflows."
+        },
+        {
+          "question": "Does OpnForm offer EU-hosted infrastructure?",
+          "answer": "Yes, OpnForm offers an EU-based hosting option in addition to standard cloud hosting and self-hosting, for organizations with data-residency requirements."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Lead and contact forms for startups",
+          "description": "Startups use OpnForm to build free, unlimited-response contact and lead-capture forms without worrying about response caps.",
+          "audience": "Startups and small businesses"
+        },
+        {
+          "title": "Internal data collection with self-hosting",
+          "description": "Engineering teams self-host the open-source Community Edition to collect internal survey or request data with full data control.",
+          "audience": "Engineering and IT teams"
+        },
+        {
+          "title": "Enterprise compliance-sensitive forms",
+          "description": "Larger organizations use the Enterprise plan's SSO, audit logs, and white-labeling to deploy compliant, branded forms at scale.",
+          "audience": "Enterprise operations and compliance teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Unlimited forms and submissions",
+            "Basic file uploads (10MB)",
+            "Form logic and computed fields",
+            "API access",
+            "1 workspace"
+          ]
+        },
+        {
+          "plan_name": "Pro",
+          "price": "~$25-29/month",
+          "billing_cycle": "Monthly or yearly (15% off)",
+          "features": [
+            "Branding removal",
+            "Custom domains and SMTP",
+            "Slack/Discord/Telegram notifications",
+            "Analytics dashboard",
+            "AI form generation"
+          ]
+        },
+        {
+          "plan_name": "Business",
+          "price": "~$67-79/month",
+          "billing_cycle": "Monthly or yearly (15% off)",
+          "features": [
+            "Multi-user roles and permissions",
+            "Advanced branding (CSS/fonts)",
+            "1GB file uploads",
+            "Priority support"
+          ]
+        },
+        {
+          "plan_name": "Enterprise (Cloud)",
+          "price": "~$220-250/month",
+          "billing_cycle": "Monthly or yearly (15% off)",
+          "features": [
+            "SAML/LDAP SSO",
+            "Audit logs",
+            "External storage support",
+            "White-label hosting"
+          ]
+        },
+        {
+          "plan_name": "Community Edition (Self-Hosted)",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Open-source core (AGPL-3.0)",
+            "Up to 2 users",
+            "OIDC SSO",
+            "Community support"
+          ]
+        },
+        {
+          "plan_name": "Enterprise License (Self-Hosted)",
+          "price": "$1,999/year per instance",
+          "billing_cycle": "Annual",
+          "features": [
+            "Branding removal",
+            "Advanced integrations",
+            "Multi-user roles",
+            "SSO and audit logs",
+            "White-labeling"
+          ]
+        }
+      ],
+      "tags": [
+        "Form Builder",
+        "Open Source",
+        "No-Code",
+        "Lead Generation",
+        "Survey Software"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "b1ae7dfe-2d32-4fa8-a867-b76ccb0ebbaf",
+    "slug": "opslevel",
+    "name": "OpsLevel",
+    "enrichment": {
+      "short_description": "OpsLevel is an internal developer portal (IDP) that gives engineering teams a unified software catalog, automated standards and scorecards, and self-service actions to improve engineering maturity.",
+      "pricing_model": "Custom",
+      "starting_price": "Custom (priced per developer)",
+      "founded_year": 2018,
+      "company_size": "51-100 employees",
+      "headquarters": "Toronto, Canada",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpsLevel Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpsLevel review: internal developer portal with software catalog, scorecards, and self-service actions. Compare features, pricing, and alternatives.",
+      "llm_readable_summary": "OpsLevel is an internal developer portal (IDP) that gives engineering organizations a unified, automatically maintained catalog of their services, APIs, and infrastructure, along with tools to enforce engineering standards and let developers self-serve common operational tasks. The company was founded in 2018 by former PagerDuty engineers John Laban and Kenneth Rose and is headquartered in Toronto, Canada. OpsLevel has raised roughly $22.2 million in funding, including a $5 million seed round in 2020 and a $15 million Series A in 2022, from investors including Webb Investment Network, Union Capital, and Vertex Ventures. The platform's core offering is a Software Catalog that automatically discovers and enriches an organization's services using AI-generated descriptions and documentation summaries, paired with Standards and Scorecards that let platform and engineering leadership define checks (security, reliability, ownership, documentation) and track team-by-team compliance over time. OpsLevel also provides Self-Service Actions, templated workflows that let individual developers perform routine tasks (like spinning up a new service or requesting infrastructure) without filing a ticket, and Campaigns, a feature for driving cross-cutting initiatives like migrations or security remediation across many teams at once. The product integrates with 50+ tools including GitHub, GitLab, AWS, Datadog, PagerDuty, New Relic, and Slack/Microsoft Teams, and supports SSO and role-based access control. Notable customers include Okta, Keller Williams, Zapier, Hudl, and Hootsuite. OpsLevel's direct competitors in the internal developer platform / service catalog space are Spotify's open-source Backstage, Cortex, Atlassian Compass, and Port. OpsLevel differentiates itself from open-source Backstage by being a fully managed SaaS product with less setup and maintenance overhead, and from some competitors through its AI-powered catalog enrichment and campaign-driven initiative tracking. Pricing is not publicly listed; OpsLevel uses custom, per-developer pricing with volume discounts across two named tiers, Standard (up to 50 users) and Enterprise (unlimited users, custom integrations, on-premises/single-tenancy deployment options, and dedicated customer success support), both quoted after a sales conversation. The target audience is mid-size to large engineering organizations, particularly platform engineering, SRE, and engineering leadership teams, looking to reduce microservice sprawl, improve service ownership clarity, and raise engineering maturity at scale.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpsLevel is an internal developer portal (IDP) designed to give engineering teams instant visibility into their software ecosystem, automated engineering standards, and self-service workflows. Founded in 2018 by former PagerDuty engineers John Laban and Kenneth Rose and headquartered in Toronto, Canada, OpsLevel has raised approximately $22.2 million in venture funding, including a 2022 Series A led in part by Vertex Ventures.",
+            "The platform is aimed at platform engineering, SRE, and engineering leadership teams at mid-size to large organizations dealing with microservice sprawl, unclear service ownership, and inconsistent engineering practices across teams."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "At the core of OpsLevel is an automatically maintained Software Catalog that uses AI to detect service ownership, generate descriptions, and surface documentation, reducing the manual effort typically required to keep a service catalog up to date.",
+            "Standards and Scorecards let organizations define measurable engineering checks and track team-level compliance, while Self-Service Actions and Campaigns give individual developers templated workflows for common tasks and let leadership drive cross-cutting initiatives like security remediation across the whole engineering org."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpsLevel does not publish fixed pricing; the platform is priced per developer using the portal, with volume discounts available, across two named tiers requiring a custom quote.",
+            "The Standard plan supports up to 50 users with the full catalog, scorecards, and integrations, while the Enterprise plan removes user limits and adds custom integrations, on-premises/single-tenancy options, and dedicated customer success support."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "AI-powered software catalog",
+          "description": "Automatically discovers, enriches, and documents services across the engineering organization using AI-generated summaries and ownership detection."
+        },
+        {
+          "title": "Standards and scorecards",
+          "description": "Define engineering checks for reliability, security, and documentation, and track team-by-team compliance over time."
+        },
+        {
+          "title": "Self-service actions",
+          "description": "Give developers templated workflows to perform common operational tasks without filing a ticket to another team."
+        },
+        {
+          "title": "Campaigns",
+          "description": "Coordinate and track cross-cutting initiatives, such as migrations or security remediation, across many teams simultaneously."
+        },
+        {
+          "title": "50+ integrations",
+          "description": "Connects with GitHub, GitLab, AWS, Datadog, PagerDuty, New Relic, Slack, and Microsoft Teams, among others."
+        },
+        {
+          "title": "Team-specific scorecards and dashboards",
+          "description": "Customizable dashboards give each team visibility into their own service health and standards compliance."
+        },
+        {
+          "title": "SSO and role-based access control",
+          "description": "Enterprise-grade access controls let organizations manage who can view or modify catalog data."
+        }
+      ],
+      "pros": [
+        "AI-powered catalog enrichment reduces manual documentation effort",
+        "Strong integration ecosystem (50+ tools) with major DevOps platforms",
+        "Fully managed SaaS, avoiding the operational overhead of self-hosting Backstage",
+        "Scorecards and campaigns give leadership measurable engineering maturity tracking",
+        "Backed by well-funded team with roots in PagerDuty's engineering culture"
+      ],
+      "cons": [
+        "Pricing is not publicly disclosed and requires a sales conversation",
+        "Per-developer pricing can become costly for large engineering organizations",
+        "Smaller company than some competitors, which may affect long-term roadmap certainty",
+        "Best suited to mid-size and larger orgs; likely overkill for very small engineering teams",
+        "On-premises/single-tenancy deployment is reserved for the Enterprise tier only"
+      ],
+      "faqs": [
+        {
+          "question": "What is OpsLevel used for?",
+          "answer": "OpsLevel is an internal developer portal that gives engineering teams a unified software catalog, automated engineering standards, and self-service workflows to improve engineering maturity."
+        },
+        {
+          "question": "Who founded OpsLevel?",
+          "answer": "OpsLevel was founded in 2018 by former PagerDuty engineers John Laban and Kenneth Rose, and is headquartered in Toronto, Canada."
+        },
+        {
+          "question": "How much does OpsLevel cost?",
+          "answer": "OpsLevel pricing is not publicly listed; it is priced per developer with volume discounts, across Standard and Enterprise tiers requiring a custom quote."
+        },
+        {
+          "question": "What are the main alternatives to OpsLevel?",
+          "answer": "Key alternatives include Spotify's open-source Backstage, Cortex, Atlassian Compass, and Port."
+        },
+        {
+          "question": "Does OpsLevel offer on-premises deployment?",
+          "answer": "Yes, on-premises and single-tenancy deployment options are available on the Enterprise tier."
+        },
+        {
+          "question": "How much funding has OpsLevel raised?",
+          "answer": "OpsLevel has raised approximately $22.2 million, including a $5 million seed round in 2020 and a $15 million Series A in 2022."
+        },
+        {
+          "question": "What integrations does OpsLevel support?",
+          "answer": "OpsLevel integrates with more than 50 tools including GitHub, GitLab, AWS, Datadog, PagerDuty, New Relic, Slack, and Microsoft Teams."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Taming microservice sprawl",
+          "description": "Platform teams use OpsLevel's auto-generated catalog to gain visibility into hundreds of services and their owners across the organization.",
+          "audience": "Platform engineering teams"
+        },
+        {
+          "title": "Enforcing engineering standards at scale",
+          "description": "Engineering leadership uses scorecards to measure and improve reliability, security, and documentation practices across teams.",
+          "audience": "Engineering leaders and SRE managers"
+        },
+        {
+          "title": "Driving org-wide migrations",
+          "description": "Teams use Campaigns to coordinate and track completion of cross-cutting initiatives, like a framework upgrade, across dozens of services.",
+          "audience": "Platform and DevOps engineers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Standard",
+          "price": "Custom quote",
+          "billing_cycle": "Annual (per developer)",
+          "features": [
+            "Up to 50 users",
+            "Unlimited cataloged components",
+            "AI-powered catalog engine",
+            "Team scorecards",
+            "Self-service actions",
+            "Slack/MS Teams integration",
+            "SSO support"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom quote",
+          "billing_cycle": "Annual (per developer)",
+          "features": [
+            "Unlimited users",
+            "Custom integrations",
+            "On-premises and single-tenancy options",
+            "Dedicated Customer Success Manager",
+            "Prioritized support"
+          ]
+        }
+      ],
+      "tags": [
+        "Developer Portal",
+        "Internal Developer Platform",
+        "Software Catalog",
+        "DevOps",
+        "Engineering Tools"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "5de91ee1-beae-41ba-afc9-53772c7393cb",
+    "slug": "optimizely",
+    "name": "Optimizely",
+    "enrichment": {
+      "short_description": "Optimizely is a major digital experience platform combining content management, A/B testing and experimentation, personalization, and commerce tools, formed when Episerver acquired and rebranded around the original Optimizely testing company.",
+      "pricing_model": "Custom",
+      "starting_price": "Custom quote",
+      "founded_year": 2010,
+      "company_size": "1,000-1,700 employees",
+      "headquarters": "San Francisco, California, United States",
+      "languages": [
+        "English",
+        "German",
+        "Swedish",
+        "French",
+        "Spanish",
+        "and other localized editions"
+      ],
+      "seo_title": "Optimizely Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "Optimizely review: enterprise CMS, A/B testing, personalization, and commerce platform. See features, custom pricing, company history, and alternatives.",
+      "llm_readable_summary": "Optimizely is a major enterprise digital experience platform (DXP) that combines content management, A/B testing and experimentation, personalization, commerce, and analytics into a single suite. Its origins trace to two separate companies: Episerver, a content management company founded in 1994 in Stockholm, Sweden by Mikael Runhem, and the original Optimizely, an A/B testing and experimentation company founded in 2010 in San Francisco by Dan Siroker and Pete Koomen (both former Google employees). In September 2018, Episerver was acquired by growth equity firm Insight Partners for approximately $1.16 billion; in October 2020, Insight-backed Episerver acquired Optimizely, and in January 2021 the combined company rebranded entirely under the Optimizely name, retiring the Episerver brand. Optimizely remains a privately held, Insight Partners-backed company today, headquartered in San Francisco, California, with additional major offices and roughly 1,000-1,700 employees globally (estimates vary by data source). The current Optimizely product suite spans a Content Marketing Platform (CMS), Experimentation (server-side and client-side A/B/multivariate testing, feature flagging), Personalization, Commerce, Data Platform, Asset Management, and increasingly AI-driven 'Agentic CMS' and 'Agentic Experimentation' capabilities announced as the company leans into AI-assisted content and testing workflows. Optimizely serves large and mid-market enterprises, particularly marketing, e-commerce, and digital product teams that need to manage content, run structured experiments, and personalize experiences across web and app at scale. The company does not publish self-serve pricing; every plan is individually packaged based on a prospect's specific digital needs, requiring a sales conversation to get a quote, which is typical for enterprise DXP vendors. Its main competitors include Adobe Experience Manager and Adobe Target, Sitecore, Contentful, VWO, AB Tasty, and Salesforce Commerce Cloud, with Optimizely's differentiation resting on its combination of experimentation heritage (from the original Optimizely) with Episerver's enterprise CMS and commerce depth, giving it a broader, more integrated DXP suite than pure-play testing tools while retaining deep experimentation capability that many CMS-first competitors lack.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Optimizely is an enterprise digital experience platform (DXP) that brings together content management, A/B testing and experimentation, personalization, commerce, and analytics under one brand. The company's current form is the result of a 2020 acquisition and 2021 rebrand: Episerver, a Stockholm-founded CMS company dating back to 1994, acquired the original Optimizely (an A/B testing company founded in San Francisco in 2010 by Dan Siroker and Pete Koomen) and adopted its name for the combined business.",
+            "Optimizely has been a privately held portfolio company of growth equity firm Insight Partners since 2018, when Insight acquired Episerver for approximately $1.16 billion. The company is headquartered in San Francisco, California, with a global workforce estimated between roughly 1,000 and 1,700 employees depending on the data source."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Optimizely's product suite spans a Content Marketing Platform / CMS for building and managing digital content, an Experimentation product for server-side and client-side A/B and multivariate testing plus feature flagging, and Personalization tools for tailoring content and offers to individual visitors.",
+            "The platform also includes Commerce, Data Platform, and Asset Management products, and the company has recently introduced AI-driven 'Agentic CMS' and 'Agentic Experimentation' capabilities that use AI agents to assist with content creation and test design and analysis."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "Optimizely does not publish standardized pricing tiers. As the company states, every plan is individually packaged based on a prospect's specific digital needs, requiring a demo request or direct sales conversation to receive a quote.",
+            "This custom-quote model is standard for enterprise DXP vendors and typically reflects factors like traffic volume, number of products bundled (CMS, experimentation, personalization, commerce), and contract length."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Enterprise content management (CMS)",
+          "description": "A full-featured CMS for building, managing, and publishing digital content across web and other channels."
+        },
+        {
+          "title": "A/B and multivariate experimentation",
+          "description": "Server-side and client-side testing tools, inherited from the original Optimizely, for running structured experiments and feature flag rollouts."
+        },
+        {
+          "title": "Personalization",
+          "description": "Tools for tailoring content, offers, and experiences to individual visitors or segments based on behavior and data."
+        },
+        {
+          "title": "Commerce platform",
+          "description": "E-commerce capabilities for managing product catalogs, transactions, and digital storefronts."
+        },
+        {
+          "title": "Data Platform",
+          "description": "A customer data platform for unifying behavioral and profile data to power personalization and targeting."
+        },
+        {
+          "title": "Asset management",
+          "description": "Digital asset management tools for organizing and distributing marketing content and media."
+        },
+        {
+          "title": "Agentic CMS and Experimentation (AI)",
+          "description": "Newer AI-agent-powered capabilities for assisting with content creation, test design, and experiment analysis."
+        }
+      ],
+      "pros": [
+        "Combines CMS, experimentation, personalization, and commerce in one integrated enterprise suite",
+        "Deep experimentation heritage from the original Optimizely A/B testing product",
+        "Backed by Insight Partners, providing financial stability for a large enterprise vendor",
+        "Broad global customer base and mature enterprise support infrastructure",
+        "Actively investing in AI-driven agentic content and experimentation features"
+      ],
+      "cons": [
+        "No published pricing; requires a sales conversation for every quote",
+        "Complex, multi-product suite can be more than smaller organizations need",
+        "Historically confusing branding due to the Episerver-to-Optimizely transition",
+        "Enterprise-oriented pricing and implementation likely out of reach for small businesses",
+        "Feature depth varies across the bundled products, requiring careful evaluation of which modules a team actually needs"
+      ],
+      "faqs": [
+        {
+          "question": "Is Optimizely the same company as Episerver?",
+          "answer": "Yes. Episerver, a CMS company founded in 1994, acquired the original A/B testing company Optimizely in 2020 and rebranded the entire combined business as Optimizely in January 2021."
+        },
+        {
+          "question": "Who owns Optimizely?",
+          "answer": "Optimizely is privately held and has been owned by growth equity firm Insight Partners since 2018, when Insight acquired Episerver for approximately $1.16 billion."
+        },
+        {
+          "question": "How much does Optimizely cost?",
+          "answer": "Optimizely does not publish pricing. Every plan is individually packaged based on a customer's needs and requires a demo or sales conversation to get a quote."
+        },
+        {
+          "question": "What products does Optimizely offer?",
+          "answer": "Optimizely offers a CMS/Content Marketing Platform, Experimentation (A/B/multivariate testing and feature flags), Personalization, Commerce, a Data Platform, and Asset Management, plus newer AI-driven agentic tools."
+        },
+        {
+          "question": "Who founded the original Optimizely?",
+          "answer": "The original Optimizely, an A/B testing company, was founded in 2010 in San Francisco by Dan Siroker and Pete Koomen, both former Google employees."
+        },
+        {
+          "question": "What are Optimizely's main competitors?",
+          "answer": "Key competitors include Adobe Experience Manager, Adobe Target, Sitecore, Contentful, VWO, AB Tasty, and Salesforce Commerce Cloud."
+        },
+        {
+          "question": "Where is Optimizely headquartered?",
+          "answer": "Optimizely is headquartered in San Francisco, California, with additional offices globally and an estimated 1,000-1,700 employees."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Enterprise A/B testing and experimentation",
+          "description": "Product and marketing teams run structured A/B and multivariate tests on websites and apps to optimize conversion rates.",
+          "audience": "Growth and product teams at large enterprises"
+        },
+        {
+          "title": "Personalized content delivery",
+          "description": "Marketing teams use Optimizely's CMS and personalization tools to tailor content and offers to different audience segments.",
+          "audience": "Enterprise marketing teams"
+        },
+        {
+          "title": "Unified e-commerce and content management",
+          "description": "Retail and B2B companies manage product content, storefronts, and campaigns on a single integrated commerce and CMS platform.",
+          "audience": "E-commerce and digital commerce teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Custom Enterprise Plan",
+          "price": "Custom quote",
+          "billing_cycle": "Annual contract",
+          "features": [
+            "CMS / Content Marketing Platform",
+            "Experimentation (A/B and multivariate testing)",
+            "Personalization",
+            "Commerce",
+            "Data Platform",
+            "Asset Management",
+            "Agentic AI capabilities"
+          ]
+        }
+      ],
+      "tags": [
+        "Digital Experience Platform",
+        "A/B Testing",
+        "Content Management System",
+        "Personalization",
+        "Enterprise Software"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "8551a49c-f983-4a46-ad50-c9e06a796573",
+    "slug": "opusclip",
+    "name": "OpusClip",
+    "enrichment": {
+      "short_description": "OpusClip (opus.pro) is an AI-powered video repurposing platform that automatically turns long-form videos into short, social-ready clips optimized for TikTok, YouTube Shorts, and Instagram Reels.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free; paid plans from $15/month",
+      "founded_year": 2022,
+      "company_size": "51-100 employees",
+      "headquarters": "Palo Alto, California, United States",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpusClip Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpusClip review: AI video clipping tool that turns long videos into viral short clips. Compare features, pricing plans ($15+/month), and alternatives.",
+      "llm_readable_summary": "OpusClip is an AI-powered video repurposing platform, operating at opus.pro, that automatically transforms long-form video content (podcasts, webinars, livestreams, YouTube videos) into short, vertical, social-media-ready clips for platforms like TikTok, YouTube Shorts, and Instagram Reels. The company was founded in January 2022 by Young Zhao and Grace Wang and is headquartered in the Palo Alto/Sunnyvale area of California. OpusClip has raised approximately $79 million across five funding rounds, including a $20 million investment from SoftBank Vision Fund 2 in March 2025 that valued the company at roughly $215 million; other investors include DCM Ventures, AIGrant, and Millennium New Horizons. By 2026, the company reports more than 10 million users and over 172 million clips generated, making it one of the most widely used AI video-clipping tools on the market. Its flagship technology, ClipAnything, uses multimodal AI to analyze visual content, audio, and emotional cues in a source video, letting users find and extract specific moments using natural-language prompts, then automatically generates coherent short-form narratives, complete with AI-driven virality scoring to predict which clips are likely to perform well. Additional capabilities include auto-reframing to vertical aspect ratios, AI captions, AI B-roll (image and stock), AI voice-over, speech cleanup, AI video upscaling, and one-click publishing to YouTube Shorts, TikTok, and Instagram. Pricing follows a freemium SaaS model: a Free plan supports local and YouTube video imports (up to 10GB) with a 3-day export window and watermarked captions; the Starter plan ($15/month) adds faster processing, more import sources (Google Drive, Vimeo, Zoom), advanced AI clipping, watermark-free exports, and direct social publishing; the Pro plan ($29/month) adds further advanced capabilities on top of Starter; and a custom Business plan adds SSO, team collaboration, API access, and dedicated support, with all paid plans including SOC 2 Type II compliance. OpusClip's target audience is content creators, podcasters, marketing teams, and media/agency businesses looking to repurpose long-form video into short-form content at scale without manual editing. Its main competitors in the AI video-clipping space include Vizard, Munch, Klap, Descript's clip tools, and Riverside's clip features.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpusClip, operating under the domain opus.pro, is an AI-powered video repurposing platform that automatically converts long-form video into short, vertical clips optimized for TikTok, YouTube Shorts, and Instagram Reels. The company was founded in January 2022 by Young Zhao and Grace Wang and is headquartered in the Palo Alto/Sunnyvale area of California.",
+            "OpusClip has raised approximately $79 million in funding across five rounds, including a $20 million SoftBank Vision Fund 2 investment in March 2025 that valued the company at around $215 million, and by 2026 reports more than 10 million users and over 172 million clips generated."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The platform's flagship feature, ClipAnything, uses multimodal AI to analyze visual elements, audio, and emotional content in a video, letting users find and extract specific moments with natural-language prompts and generate coherent short-form narratives automatically.",
+            "Beyond clip generation, OpusClip includes AI virality scoring to predict clip performance, auto-reframing to vertical formats, AI captions, AI B-roll and voice-over generation, speech cleanup, video upscaling, and one-click publishing directly to YouTube Shorts, TikTok, and Instagram."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpusClip offers a Free plan with basic AI clipping, watermarked captions, and a 3-day export window, alongside paid Starter ($15/month) and Pro ($29/month) plans that unlock faster processing, watermark-free exports, advanced AI clipping, B-roll, voice-over, and direct social publishing.",
+            "A custom Business plan adds SSO, team collaboration, API access, and dedicated support, and all paid tiers include SOC 2 Type II compliance for security-conscious teams."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "ClipAnything AI clip generation",
+          "description": "Multimodal AI analyzes visual, audio, and emotional cues to automatically find and extract the best moments from long-form video using natural-language prompts."
+        },
+        {
+          "title": "AI virality scoring",
+          "description": "Each generated clip receives a predicted performance score to help creators prioritize which clips to publish."
+        },
+        {
+          "title": "Auto-reframing and layouts",
+          "description": "Automatically reframes horizontal video into 9:16 vertical format with dynamic and screenshare-aware layouts."
+        },
+        {
+          "title": "AI captions and text overlays",
+          "description": "Generates accurate, styled captions and text overlays automatically, with watermark-free options on paid plans."
+        },
+        {
+          "title": "AI B-roll and voice-over",
+          "description": "Adds AI-generated image B-roll, stock B-roll, and AI voice-over to enhance clips without manual editing."
+        },
+        {
+          "title": "Multi-platform publishing",
+          "description": "Publish directly to YouTube Shorts, TikTok, and Instagram, with AI-generated titles, descriptions, and hashtags."
+        },
+        {
+          "title": "Broad source support",
+          "description": "Import video from local files, YouTube, Google Drive, Vimeo, Zoom, Rumble, and StreamYard on paid plans."
+        },
+        {
+          "title": "Speech cleanup and upscaling",
+          "description": "AI tools clean up filler words and pauses in speech and upscale video resolution for higher-quality output."
+        }
+      ],
+      "pros": [
+        "Advanced multimodal AI (ClipAnything) finds specific moments via natural-language prompts, not just generic highlights",
+        "Well-funded and rapidly growing, with SoftBank-backed valuation and a large existing user base",
+        "Broad feature set covering clipping, captions, B-roll, voice-over, and publishing in one tool",
+        "Affordable entry-level paid plan ($15/month) compared to some competitors",
+        "SOC 2 Type II compliance on all paid plans for security-conscious teams"
+      ],
+      "cons": [
+        "Free plan has a short 3-day export window and watermarked captions",
+        "Higher-tier features (advanced B-roll, voice-over limits, custom reframing) are gated behind paid plans",
+        "Business/enterprise pricing is not publicly listed and requires contacting sales",
+        "AI-generated clip selection can still require manual review and editing for quality control",
+        "Processing speed on the Free tier is slower than paid tiers"
+      ],
+      "faqs": [
+        {
+          "question": "What does OpusClip do?",
+          "answer": "OpusClip is an AI-powered platform that automatically converts long-form video into short, vertical clips optimized for TikTok, YouTube Shorts, and Instagram Reels."
+        },
+        {
+          "question": "Who founded OpusClip?",
+          "answer": "OpusClip was founded in January 2022 by Young Zhao and Grace Wang, and is headquartered in the Palo Alto/Sunnyvale area of California."
+        },
+        {
+          "question": "How much does OpusClip cost?",
+          "answer": "OpusClip offers a free plan, a Starter plan at $15/month, a Pro plan at $29/month, and a custom-priced Business plan for teams."
+        },
+        {
+          "question": "What is ClipAnything?",
+          "answer": "ClipAnything is OpusClip's core AI feature that uses multimodal AI to analyze visual, audio, and emotional content and let users find specific video moments using natural-language prompts."
+        },
+        {
+          "question": "How much funding has OpusClip raised?",
+          "answer": "OpusClip has raised approximately $79 million across five rounds, including a $20 million SoftBank Vision Fund 2 investment in March 2025 at a roughly $215 million valuation."
+        },
+        {
+          "question": "What are the main alternatives to OpusClip?",
+          "answer": "Common alternatives include Vizard, Munch, Klap, Descript's clipping tools, and Riverside's clip features."
+        },
+        {
+          "question": "Does OpusClip publish directly to social media?",
+          "answer": "Yes, paid plans support one-click publishing to YouTube Shorts, TikTok, and Instagram, along with AI-generated titles, descriptions, and hashtags."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Repurposing podcasts into short clips",
+          "description": "Podcasters use OpusClip to automatically turn long recorded episodes into multiple short, captioned clips for social distribution.",
+          "audience": "Podcasters and audio content creators"
+        },
+        {
+          "title": "Scaling content for marketing teams",
+          "description": "Marketing and media teams repurpose webinars and long-form video content into short-form assets for social campaigns without manual editing.",
+          "audience": "Marketing and media teams"
+        },
+        {
+          "title": "Growing a creator's social following",
+          "description": "Individual content creators use AI virality scoring and auto-publishing to consistently produce and distribute short-form clips across platforms.",
+          "audience": "Individual content creators and influencers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0",
+          "billing_cycle": "N/A",
+          "features": [
+            "Regular-speed AI clipping",
+            "Local video imports (up to 10GB)",
+            "YouTube video support",
+            "Basic AI captions with watermark",
+            "9:16 aspect ratio only",
+            "MP4 export (3-day limit, up to 1080p)"
+          ]
+        },
+        {
+          "plan_name": "Starter",
+          "price": "$15/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Faster processing",
+            "Expanded video sources (Google Drive, Vimeo, Zoom, Rumble, StreamYard)",
+            "Advanced AI clipping and virality scoring",
+            "Watermark-free captions and export",
+            "AI image and stock B-roll (3 clips/month)",
+            "AI voice-over (20/day)",
+            "Direct publishing to YouTube Shorts, TikTok, Instagram"
+          ]
+        },
+        {
+          "plan_name": "Pro",
+          "price": "$29/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "All Starter features",
+            "Additional advanced clipping and editing capabilities"
+          ]
+        },
+        {
+          "plan_name": "Business",
+          "price": "Custom",
+          "billing_cycle": "Contact sales",
+          "features": [
+            "Advanced security (SSO)",
+            "Team collaboration tools",
+            "API access and integrations",
+            "Dedicated support"
+          ]
+        }
+      ],
+      "tags": [
+        "AI Video Editing",
+        "Short-Form Video",
+        "Content Repurposing",
+        "Social Media Tools",
+        "Video Marketing"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "c2a56d2f-1e25-421f-af5c-1494914a3095",
+    "slug": "orangehrm",
+    "name": "OrangeHRM",
+    "enrichment": {
+      "short_description": "OrangeHRM is a widely used HR management system available as a free open-source Starter edition and a paid Advanced edition, covering HR admin, leave, recruitment, performance, and payroll integration.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (open source); Advanced priced per-employee/month, custom quote",
+      "founded_year": 2005,
+      "company_size": "51-200 employees",
+      "headquarters": "Secaucus, New Jersey, United States",
+      "languages": [
+        "English",
+        "and 30+ localized language packs"
+      ],
+      "seo_title": "OrangeHRM Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OrangeHRM review: free open-source HR software plus paid Advanced HRMS. Compare features, PEPM pricing, and alternatives like BambooHR and Zoho People.",
+      "llm_readable_summary": "OrangeHRM is one of the world's most widely deployed HR management systems (HRMS), notable for offering a genuinely free, open-source core alongside a paid enterprise product. Founded in 2005 by Sujee Saparamadu, the company is now headquartered in Secaucus, New Jersey, with a global team (roughly 150-200 employees across offices spanning Asia, North America, and Europe) and origins tracing back to Sri Lanka's open-source software community. OrangeHRM's two-tier model centers on Starter, a completely free, open-source edition that tech-savvy organizations (commonly cited as a sweet spot around 20-50 employees) can self-host and customize, covering HR administration, employee management, PTO/leave management, reporting and analytics, basic performance management, recruitment, time tracking, a mobile app, onboarding/offboarding, an employee request desk, and career development and training modules. The paid Advanced edition builds on the same foundation with enterprise-grade capabilities and modular add-ons (such as deeper payroll integration, advanced performance management, and expanded recruitment tooling), available as either cloud-hosted or on-premises deployment, priced on a per-employee-per-month (PEPM) basis that requires a custom quote from OrangeHRM's sales team; a 30-day free trial is offered for Advanced. This structure makes OrangeHRM particularly attractive to small and mid-sized businesses, especially those with in-house technical capacity who want to avoid vendor lock-in or minimize software spend, while still offering an upgrade path to a fully supported commercial product as the organization grows. As one of the longest-running and most established names in open-source HR software (predating many modern cloud HR SaaS competitors), OrangeHRM competes with both other open-source-adjacent HR tools and mainstream commercial HRMS platforms such as BambooHR, Zoho People, Gusto, and Rippling, differentiating itself primarily through its free self-hosted option, deep customizability, and a track record spanning two decades of continuous development and a large global user base across small businesses, mid-market companies, and organizations in cost-sensitive or highly regulated environments that value self-hosting control.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OrangeHRM is a long-established human resource management system (HRMS) founded in 2005 by Sujee Saparamadu, now headquartered in Secaucus, New Jersey, with a global team spread across Asia, North America, and Europe. It is one of the most widely deployed open-source HR platforms in the world, having built its reputation over two decades before many modern cloud HR SaaS competitors existed.",
+            "The product follows a two-tier model: a completely free, open-source Starter edition suited to smaller, tech-savvy organizations, and a paid Advanced edition with enterprise-grade features, modular add-ons, and both cloud and on-premises deployment options."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "The free Starter edition includes HR administration, employee records management, PTO/leave management, reporting and analytics, performance management, recruitment, time tracking, a mobile app, onboarding/offboarding, an employee request desk, and career development and training tools, covering the core needs of a small-to-mid-size HR function out of the box.",
+            "The paid Advanced edition builds on this foundation with expanded, modular capabilities, letting organizations select and add specific modules such as deeper payroll integration and advanced recruitment or performance tooling as their needs grow, available on a flexible cloud-hosted or on-premises basis."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OrangeHRM Starter is completely free and open source, with no cost for the core HR platform, making it accessible to small businesses and startups willing to self-host.",
+            "OrangeHRM Advanced is priced on a per-employee-per-month (PEPM) basis with a custom quote required from OrangeHRM's sales team, and includes a 30-day free trial for organizations to evaluate premium features like advanced recruitment, performance management, and payroll integration before committing."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "HR administration and employee records",
+          "description": "Centralized management of employee records, organizational structure, and core HR administrative tasks."
+        },
+        {
+          "title": "PTO and leave management",
+          "description": "Configurable leave policies, request workflows, and approval tracking for employee time off."
+        },
+        {
+          "title": "Recruitment and applicant tracking",
+          "description": "Tools for posting jobs, tracking candidates, and managing the hiring pipeline within the same platform."
+        },
+        {
+          "title": "Performance management",
+          "description": "Goal setting, review cycles, and performance tracking tools, with expanded capabilities on the Advanced edition."
+        },
+        {
+          "title": "Time tracking and attendance",
+          "description": "Employee time and attendance tracking integrated with leave and payroll workflows."
+        },
+        {
+          "title": "Onboarding and offboarding workflows",
+          "description": "Structured processes for bringing new employees on board and managing exits."
+        },
+        {
+          "title": "Mobile app access",
+          "description": "A mobile app lets employees and managers access HR functions like leave requests on the go."
+        },
+        {
+          "title": "Open-source self-hosting",
+          "description": "The Starter edition's source code can be self-hosted and customized at no licensing cost."
+        }
+      ],
+      "pros": [
+        "Genuinely free, open-source Starter edition with no artificial feature caps for core HR functions",
+        "Two decades of continuous development and a large, established global user base",
+        "Modular Advanced edition lets organizations pay only for the features they need",
+        "Flexible deployment: cloud-hosted or on-premises for both editions",
+        "Strong fit for cost-sensitive small businesses and organizations needing self-hosting control"
+      ],
+      "cons": [
+        "Advanced edition pricing is not published and requires a custom sales quote",
+        "Self-hosting the free Starter edition requires in-house technical resources to deploy and maintain",
+        "User interface feels dated compared to some newer, venture-backed HR SaaS competitors",
+        "Payroll capabilities depend on integrations/modules rather than being fully native everywhere",
+        "Smaller marketing and brand presence than mainstream competitors like BambooHR or Gusto"
+      ],
+      "faqs": [
+        {
+          "question": "Is OrangeHRM really free?",
+          "answer": "Yes, the Starter edition is completely free and open source, covering core HR administration, leave management, recruitment, and more. The Advanced edition is a paid, per-employee-per-month product."
+        },
+        {
+          "question": "When was OrangeHRM founded?",
+          "answer": "OrangeHRM was founded in 2005 by Sujee Saparamadu and is now headquartered in Secaucus, New Jersey, with a global team."
+        },
+        {
+          "question": "How is OrangeHRM Advanced priced?",
+          "answer": "OrangeHRM Advanced is priced on a per-employee-per-month (PEPM) basis with a custom quote from OrangeHRM's sales team, and includes a 30-day free trial."
+        },
+        {
+          "question": "Can OrangeHRM be self-hosted?",
+          "answer": "Yes, the open-source Starter edition can be self-hosted, and the Advanced edition also offers an on-premises deployment option alongside cloud hosting."
+        },
+        {
+          "question": "What company size is OrangeHRM best suited for?",
+          "answer": "The free Starter edition is popular with organizations around 20-50 employees, while the paid Advanced edition scales to larger mid-market and enterprise organizations."
+        },
+        {
+          "question": "What are the main alternatives to OrangeHRM?",
+          "answer": "Common alternatives include BambooHR, Zoho People, Gusto, and Rippling, though OrangeHRM differentiates itself with a free open-source option."
+        },
+        {
+          "question": "Does OrangeHRM include payroll?",
+          "answer": "OrangeHRM supports payroll through integrations and modules within the Advanced edition rather than as a single universal built-in payroll engine for every region."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Free HR system for small businesses",
+          "description": "Small businesses and startups self-host the free Starter edition to manage core HR functions without software licensing costs.",
+          "audience": "Small business owners and HR administrators"
+        },
+        {
+          "title": "Modular HR scaling for mid-market companies",
+          "description": "Growing companies upgrade to the Advanced edition and add specific modules like performance management and recruitment as their HR needs expand.",
+          "audience": "Mid-market HR teams"
+        },
+        {
+          "title": "Self-hosted HR for regulated or data-sensitive organizations",
+          "description": "Organizations with strict data residency or security requirements self-host OrangeHRM on-premises to keep employee data under their own control.",
+          "audience": "IT and compliance-focused organizations"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Starter (Open Source)",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "HR administration and employee management",
+            "PTO/leave management",
+            "Reporting and analytics",
+            "Performance management",
+            "Recruitment",
+            "Time tracking",
+            "Mobile app",
+            "Onboarding/offboarding",
+            "Request desk",
+            "Career development and training"
+          ]
+        },
+        {
+          "plan_name": "Advanced",
+          "price": "Custom (per-employee-per-month)",
+          "billing_cycle": "Monthly (PEPM), custom quote",
+          "features": [
+            "All Starter features",
+            "Modular add-ons (payroll integration, advanced recruitment, performance management)",
+            "Cloud-hosted or on-premises deployment",
+            "30-day free trial"
+          ]
+        }
+      ],
+      "tags": [
+        "HR Software",
+        "HRMS",
+        "Open Source",
+        "Payroll",
+        "Human Resources"
+      ],
+      "publish": true
+    }
+  }
+]

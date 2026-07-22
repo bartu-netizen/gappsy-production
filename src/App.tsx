@@ -30,6 +30,20 @@ const TermsPage = lazy(() => import("./pages/TermsPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const RefundPage = lazy(() => import("./pages/RefundPage"));
 const AgencyReviewPage = lazy(() => import("./pages/AgencyReviewPage"));
+const ToolsIndexPage = lazy(() => import("./pages/ToolsIndexPage"));
+const ToolDetailPage = lazy(() => import("./pages/ToolDetailPage"));
+const ToolCategoriesIndexPage = lazy(() => import("./pages/ToolCategoriesIndexPage"));
+const ToolCategoryDetailPage = lazy(() => import("./pages/ToolCategoryDetailPage"));
+const ToolTagDetailPage = lazy(() => import("./pages/ToolTagDetailPage"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+const CompareRouterPage = lazy(() => import("./pages/CompareRouterPage"));
+const GetListedPage = lazy(() => import("./pages/GetListedPage"));
+const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
+const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
+const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
+const VendorLoginPage = lazy(() => import("./pages/VendorLoginPage"));
+const VendorClaimPage = lazy(() => import("./pages/VendorClaimPage"));
+const VendorDashboardPage = lazy(() => import("./pages/VendorDashboardPage"));
 const EmailPreferencesPage = lazy(() => import("./pages/EmailPreferencesPage"));
 
 // Your Agency funnel
@@ -79,13 +93,60 @@ const WpAdminEmailNotificationsPage = lazy(() => import("./pages/WpAdminEmailNot
 const WpAdminCustomerSuppressionPage = lazy(() => import("./pages/WpAdminCustomerSuppressionPage"));
 const WpAdminAgencyEmailAutomationsPage = lazy(() => import("./pages/WpAdminAgencyEmailAutomationsPage"));
 const WpAdminAvailabilityAnalyticsPage = lazy(() => import("./pages/WpAdminAvailabilityAnalyticsPage"));
+const WpAdminSmartSearchStatsPage = lazy(() => import("./pages/WpAdminSmartSearchStatsPage"));
 const WpAdminClaimLinksPage = lazy(() => import("./pages/WpAdminClaimLinksPage"));
 const WpAdminIntentCenterPage = lazy(() => import("./pages/WpAdminIntentCenterPage"));
 const WpAdminActivityFeedPage = lazy(() => import("./pages/WpAdminActivityFeedPage"));
 const AdminSidebarAdsPage = lazy(() => import("./pages/AdminSidebarAdsPage"));
 const AdminAgencyReviewsPage = lazy(() => import("./pages/AdminAgencyReviewsPage"));
+const WpAdminToolReviewsPage = lazy(() => import("./pages/WpAdminToolReviewsPage"));
+const WpAdminVideoEmbedsPage = lazy(() => import("./pages/WpAdminVideoEmbedsPage"));
+const WpAdminVendorAccountsPage = lazy(() => import("./pages/WpAdminVendorAccountsPage"));
+const WpAdminVendorComparisonRequestsPage = lazy(() => import("./pages/WpAdminVendorComparisonRequestsPage"));
+const WpAdminToolContactEmailsPage = lazy(() => import("./pages/WpAdminToolContactEmailsPage"));
+const WpAdminToolAnalyticsPage = lazy(() => import("./pages/WpAdminToolAnalyticsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
+const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscoveryDashboardPage"));
+const WpAdminDiscoveryQueuePage = lazy(() => import("./pages/WpAdminDiscoveryQueuePage"));
+const WpAdminVendorMonetizationPage = lazy(() => import("./pages/WpAdminVendorMonetizationPage"));
+const WpAdminCrawlQueuePage = lazy(() => import("./pages/WpAdminCrawlQueuePage"));
+const WpAdminSchedulerPage = lazy(() => import("./pages/WpAdminSchedulerPage"));
+const WpAdminEditorialDashboardPage = lazy(() => import("./pages/WpAdminEditorialDashboardPage"));
+const WpAdminReviewWorkspacePage = lazy(() => import("./pages/WpAdminReviewWorkspacePage"));
+const WpAdminEditorialMetricsPage = lazy(() => import("./pages/WpAdminEditorialMetricsPage"));
+const WpAdminPublishingRulesPage = lazy(() => import("./pages/WpAdminPublishingRulesPage"));
+const WpAdminDiscoveryImportPage = lazy(() => import("./pages/WpAdminDiscoveryImportPage"));
+const WpAdminDiscoveryImportHistoryPage = lazy(() => import("./pages/WpAdminDiscoveryImportHistoryPage"));
+const WpAdminDiscoveryDuplicatesPage = lazy(() => import("./pages/WpAdminDiscoveryDuplicatesPage"));
+const WpAdminDiscoveryValidationPage = lazy(() => import("./pages/WpAdminDiscoveryValidationPage"));
+const WpAdminDiscoveryProvidersPage = lazy(() => import("./pages/WpAdminDiscoveryProvidersPage"));
+const WpAdminCrawlReviewPage = lazy(() => import("./pages/WpAdminCrawlReviewPage"));
+const WpAdminAiEnrichmentDashboardPage = lazy(() => import("./pages/WpAdminAiEnrichmentDashboardPage"));
+const WpAdminAiEnrichmentQueuePage = lazy(() => import("./pages/WpAdminAiEnrichmentQueuePage"));
+const WpAdminAiEnrichmentBatchPage = lazy(() => import("./pages/WpAdminAiEnrichmentBatchPage"));
+const WpAdminAiEnrichmentJobsListPage = lazy(() => import("./pages/WpAdminAiEnrichmentJobsListPage"));
+const WpAdminAiEnrichmentReviewPage = lazy(() => import("./pages/WpAdminAiEnrichmentReviewPage"));
+const WpAdminAiEnrichmentPromptVersionsPage = lazy(() => import("./pages/WpAdminAiEnrichmentPromptVersionsPage"));
+const WpAdminAiEnrichmentSettingsPage = lazy(() => import("./pages/WpAdminAiEnrichmentSettingsPage"));
+const WpAdminToolsPage = lazy(() => import("./pages/WpAdminToolsPage"));
+const WpAdminToolEditorPage = lazy(() => import("./pages/WpAdminToolEditorPage"));
+const WpAdminToolPreviewPage = lazy(() => import("./pages/WpAdminToolPreviewPage"));
+const WpAdminNewSoftwareWizardPage = lazy(() => import("./pages/WpAdminNewSoftwareWizardPage"));
+const WpAdminPublishingQueuePage = lazy(() => import("./pages/WpAdminPublishingQueuePage"));
+const WpAdminImportHistoryPage = lazy(() => import("./pages/WpAdminImportHistoryPage"));
+const WpAdminMediaLibraryPage = lazy(() => import("./pages/WpAdminMediaLibraryPage"));
+const WpAdminSeoHealthPage = lazy(() => import("./pages/WpAdminSeoHealthPage"));
+const WpAdminPublishingDashboardPage = lazy(() => import("./pages/WpAdminPublishingDashboardPage"));
+const WpAdminImportQueuePage = lazy(() => import("./pages/WpAdminImportQueuePage"));
+const WpAdminToolCategoriesPage = lazy(() => import("./pages/WpAdminToolCategoriesPage"));
+const WpAdminToolCategoryEditorPage = lazy(() => import("./pages/WpAdminToolCategoryEditorPage"));
+const WpAdminToolTagsPage = lazy(() => import("./pages/WpAdminToolTagsPage"));
+const WpAdminToolTagEditorPage = lazy(() => import("./pages/WpAdminToolTagEditorPage"));
+const WpAdminToolComparisonsPage = lazy(() => import("./pages/WpAdminToolComparisonsPage"));
+const WpAdminToolComparisonEditorPage = lazy(() => import("./pages/WpAdminToolComparisonEditorPage"));
+const WpAdminToolComparisons3Page = lazy(() => import("./pages/WpAdminToolComparisons3Page"));
+const WpAdminToolComparisons3EditorPage = lazy(() => import("./pages/WpAdminToolComparisons3EditorPage"));
 const AdminBulkStateImport = lazy(() => import("./pages/AdminBulkStateImport"));
 const BulkLogoUploadPage = lazy(() => import("./pages/BulkLogoUploadPage"));
 const WpAdminFunnelAnalyticsPage = lazy(() => import("./pages/WpAdminFunnelAnalyticsPage"));
@@ -123,7 +184,7 @@ const WpAdminAgencyDedupeRepairPage = lazy(() => import("./pages/WpAdminAgencyDe
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-[#4F46E5] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }
@@ -173,9 +234,66 @@ export default function App() {
         <Route path="/wp-admin/revenue" element={<AdminRoute><WpAdminStripePage /></AdminRoute>} />
         <Route path="/wp-admin/sidebar-ads" element={<AdminRoute><AdminSidebarAdsPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews" element={<AdminRoute><AdminAgencyReviewsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-reviews" element={<AdminRoute><WpAdminToolReviewsPage /></AdminRoute>} />
+        <Route path="/wp-admin/video-embeds" element={<AdminRoute><WpAdminVideoEmbedsPage /></AdminRoute>} />
+        <Route path="/wp-admin/vendor-accounts" element={<AdminRoute><WpAdminVendorAccountsPage /></AdminRoute>} />
+        <Route path="/wp-admin/vendor-comparison-requests" element={<AdminRoute><WpAdminVendorComparisonRequestsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-contact-emails" element={<AdminRoute><WpAdminToolContactEmailsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-analytics" element={<AdminRoute><WpAdminToolAnalyticsPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/import" element={<AdminRoute><AdminAgencyReviewsImportPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/new" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/edit/:id" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools" element={<AdminRoute><WpAdminToolsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/new" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories" element={<AdminRoute><WpAdminToolCategoriesPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories/new" element={<AdminRoute><WpAdminToolCategoryEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/categories/:id/edit" element={<AdminRoute><WpAdminToolCategoryEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags" element={<AdminRoute><WpAdminToolTagsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags/new" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/tags/:id/edit" element={<AdminRoute><WpAdminToolTagEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/:id/edit" element={<AdminRoute><WpAdminToolEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tools/:id/preview" element={<AdminRoute><WpAdminToolPreviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery" element={<AdminRoute><WpAdminDiscoveryDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/queue" element={<AdminRoute><WpAdminDiscoveryQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/vendor-monetization" element={<AdminRoute><WpAdminVendorMonetizationPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/import" element={<AdminRoute><WpAdminDiscoveryImportPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/import-history" element={<AdminRoute><WpAdminDiscoveryImportHistoryPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/duplicates" element={<AdminRoute><WpAdminDiscoveryDuplicatesPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/validation" element={<AdminRoute><WpAdminDiscoveryValidationPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/providers" element={<AdminRoute><WpAdminDiscoveryProvidersPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/crawl-queue" element={<AdminRoute><WpAdminCrawlQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/scheduler" element={<AdminRoute><WpAdminSchedulerPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial" element={<AdminRoute><WpAdminEditorialDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/review/:toolId" element={<AdminRoute><WpAdminReviewWorkspacePage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/metrics" element={<AdminRoute><WpAdminEditorialMetricsPage /></AdminRoute>} />
+        <Route path="/wp-admin/editorial/publishing-rules" element={<AdminRoute><WpAdminPublishingRulesPage /></AdminRoute>} />
+        <Route path="/wp-admin/discovery/crawl/:jobId" element={<AdminRoute><WpAdminCrawlReviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment" element={<AdminRoute><WpAdminAiEnrichmentDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/queue" element={<AdminRoute><WpAdminAiEnrichmentQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/batches/:id" element={<AdminRoute><WpAdminAiEnrichmentBatchPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/needs-review" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/completed" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/failed" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/history" element={<AdminRoute><WpAdminAiEnrichmentJobsListPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/jobs/:id" element={<AdminRoute><WpAdminAiEnrichmentReviewPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/prompts" element={<AdminRoute><WpAdminAiEnrichmentPromptVersionsPage /></AdminRoute>} />
+        <Route path="/wp-admin/ai-enrichment/settings" element={<AdminRoute><WpAdminAiEnrichmentSettingsPage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing" element={<AdminRoute><WpAdminPublishingDashboardPage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/new" element={<AdminRoute><WpAdminNewSoftwareWizardPage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/queue" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/import-queue" element={<AdminRoute><WpAdminImportQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/drafts" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/published" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/archive" element={<AdminRoute><WpAdminPublishingQueuePage /></AdminRoute>} />
+        <Route path="/wp-admin/publishing/imports" element={<AdminRoute><WpAdminImportHistoryPage /></AdminRoute>} />
+        <Route path="/wp-admin/media" element={<AdminRoute><WpAdminMediaLibraryPage /></AdminRoute>} />
+        <Route path="/wp-admin/seo-health" element={<AdminRoute><WpAdminSeoHealthPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons" element={<AdminRoute><WpAdminToolComparisonsPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons/new" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons/:id/edit" element={<AdminRoute><WpAdminToolComparisonEditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3" element={<AdminRoute><WpAdminToolComparisons3Page /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3/new" element={<AdminRoute><WpAdminToolComparisons3EditorPage /></AdminRoute>} />
+        <Route path="/wp-admin/tool-comparisons-3/:id/edit" element={<AdminRoute><WpAdminToolComparisons3EditorPage /></AdminRoute>} />
         <Route path="/wp-admin/json-import" element={<AdminRoute><AdminBulkStateImport /></AdminRoute>} />
         <Route path="/wp-admin/logo-upload" element={<AdminRoute><BulkLogoUploadPage /></AdminRoute>} />
         <Route path="/wp-admin/content-scanner" element={<AdminRoute><AdminContentScanPage /></AdminRoute>} />
@@ -193,6 +311,7 @@ export default function App() {
         <Route path="/wp-admin/email-cleaning" element={<AdminRoute><AdminEmailCleaningExportPage /></AdminRoute>} />
         <Route path="/wp-admin/availability-analytics" element={<AdminRoute><WpAdminAvailabilityAnalyticsPage /></AdminRoute>} />
         <Route path="/wp-admin/availability-analytics/agency/:agencyId" element={<AdminRoute><WpAdminAvailabilityAnalyticsPage /></AdminRoute>} />
+        <Route path="/wp-admin/smart-search-stats" element={<AdminRoute><WpAdminSmartSearchStatsPage /></AdminRoute>} />
 
         {/* Email Module — unified /wp-admin/email/* routes */}
         <Route path="/wp-admin/email" element={<Navigate to="/wp-admin/email/overview" replace />} />
@@ -266,6 +385,22 @@ export default function App() {
 
         {/* Agency Review Routes */}
         <Route path="/agency-reviews/:agencySlug" element={<AgencyReviewPage />} />
+        <Route path="/tools" element={<ToolsIndexPage />} />
+        <Route path="/tools/:toolSlug" element={<ToolDetailPage />} />
+        <Route path="/tool-categories" element={<ToolCategoriesIndexPage />} />
+        <Route path="/tool-categories/:categorySlug" element={<ToolCategoryDetailPage />} />
+        <Route path="/tool-tags/:tagSlug" element={<ToolTagDetailPage />} />
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/compare/:comparisonSlug" element={<CompareRouterPage />} />
+        <Route path="/get-listed" element={<GetListedPage />} />
+        <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
+        <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
+        <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
+
+        {/* Vendor account — real Supabase Auth, gated behind a verified ownership token (see vendor-claim-account) */}
+        <Route path="/login" element={<VendorLoginPage />} />
+        <Route path="/vendor/claim" element={<VendorClaimPage />} />
+        <Route path="/vendor/dashboard" element={<VendorDashboardPage />} />
 
         {/* Email Preferences */}
         <Route path="/email-preferences" element={<EmailPreferencesPage />} />

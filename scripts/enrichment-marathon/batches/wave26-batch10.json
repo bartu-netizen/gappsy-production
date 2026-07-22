@@ -1,0 +1,713 @@
+[
+{
+  "tool_id": "af41f8fc-b90f-4d77-80ef-840d3baf8120",
+  "slug": "streamsets",
+  "name": "StreamSets",
+  "enrichment": {
+    "short_description": "StreamSets is an enterprise DataOps and data integration platform for building and monitoring smart, resilient data pipelines across hybrid and multicloud environments; it has been part of IBM since 2024.",
+    "pricing_model": "subscription (custom enterprise quote)",
+    "starting_price": null,
+    "founded_year": 2014,
+    "company_size": null,
+    "headquarters": "San Mateo, California, United States",
+    "languages": ["English"],
+    "seo_title": "StreamSets Review: IBM DataOps Pipeline Platform",
+    "seo_meta_description": "StreamSets is an enterprise data integration and DataOps platform for resilient hybrid-cloud pipelines, now part of IBM. See features and pricing.",
+    "llm_readable_summary": "StreamSets is an enterprise-grade DataOps and data integration platform used to design, deploy, and monitor smart data pipelines across hybrid and multicloud environments. Founded in 2014 in San Francisco by Arvind Prabhakar and Girish Pancha, the company built its reputation on 'smart data pipelines' that automatically detect and adapt to data drift, meaning changes in data structure, schema, or infrastructure, without breaking downstream processes. StreamSets supports batch, change data capture, ETL, ELT, and streaming data patterns from a single unified design canvas, plus a control plane for managing thousands of pipelines at scale, and offers a Python SDK for templating pipelines as code. In December 2023, IBM announced it would acquire StreamSets, along with webMethods, from Software AG for roughly 2.3 billion dollars; the deal closed in July 2024, and StreamSets is now sold and supported as IBM StreamSets, part of IBM's automation, data, and AI portfolio. Pricing is not publicly listed and is quoted directly through IBM sales based on connectors, pipeline volume, and deployment model, whether cloud-hosted or self-managed. StreamSets is best suited for enterprise data engineering teams, data platform architects, and organizations running complex hybrid-cloud data integration across Snowflake, Databricks, Kafka, and legacy systems who need governed, low-code pipeline authoring with drift resilience built in.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is StreamSets",
+        "level": 2,
+        "paragraphs": [
+          "StreamSets is a DataOps platform that lets data engineering teams build, run, and monitor data pipelines that move information between databases, cloud data warehouses, message queues, and applications. It was founded in 2014 by Arvind Prabhakar and Girish Pancha, both veterans of Informatica and Yahoo, with the goal of making data pipelines resilient to constant change rather than brittle scripts that break every time an upstream schema shifts.",
+          "The platform's signature idea is the 'smart data pipeline,' which senses and automatically adapts to data drift, such as new columns, renamed fields, or type changes, instead of failing outright. In 2024, StreamSets became part of IBM after IBM acquired it and webMethods from Software AG in a deal worth about 2.3 billion dollars, and the product is now marketed and sold as IBM StreamSets."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "StreamSets provides a single visual design experience for batch, change data capture, ETL, ELT, and streaming pipeline patterns, along with a centralized control hub for monitoring and governing pipelines running across hybrid and multicloud infrastructure. A Python SDK allows engineers to templatize pipelines and generate hundreds of them programmatically, which is useful for organizations replicating similar pipeline patterns across many source systems, such as multi-tenant SaaS data or franchise/branch reporting."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "StreamSets does not publish self-serve pricing. As an IBM enterprise product, cost is negotiated with IBM sales based on the number of connectors, data volume, number of pipelines, and whether the deployment is cloud-managed or self-hosted. Prospective buyers should expect an enterprise sales cycle rather than a credit-card checkout."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Smart Data Pipelines", "description": "Pipelines automatically sense and adapt to data drift, such as schema or format changes, without manual intervention."},
+      {"title": "Unified Pipeline Designer", "description": "A single visual canvas supports batch, CDC, ETL, ELT, and streaming pipeline patterns."},
+      {"title": "Change Data Capture", "description": "Built-in CDC connectors replicate database changes in near real time to downstream systems."},
+      {"title": "Python SDK", "description": "Pipelines can be templated and generated as code, letting teams scale to hundreds of similar pipelines quickly."},
+      {"title": "Hybrid and Multicloud Execution", "description": "Execution engines can run on-premises or in any major cloud, connecting legacy and modern systems."},
+      {"title": "Centralized Control Hub", "description": "A single pane of glass for monitoring, scheduling, and governing thousands of pipelines."},
+      {"title": "Broad Connector Library", "description": "Prebuilt connectors cover databases, cloud data warehouses, APIs, and message queues like Kafka."},
+      {"title": "Data Lineage and Governance", "description": "Pipeline metadata and lineage tracking help teams meet compliance and audit requirements."}
+    ],
+    "pros": [
+      "Handles data drift automatically instead of breaking on schema changes",
+      "Supports batch, streaming, CDC, ETL, and ELT patterns in one platform",
+      "Flexible hybrid and multicloud deployment options",
+      "Python SDK enables pipeline-as-code at enterprise scale",
+      "Now backed by IBM's resources, support network, and roadmap"
+    ],
+    "cons": [
+      "No public pricing, requiring an enterprise sales conversation",
+      "Steeper learning curve for teams without data engineering experience",
+      "Primarily built for enterprise scale, which can be more than smaller teams need",
+      "Transition into IBM's sales and support processes is still ongoing for some customers",
+      "Smaller community and ecosystem compared to open-source alternatives like Airbyte"
+    ],
+    "faqs": [
+      {"question": "What is StreamSets used for?", "answer": "StreamSets is used to build, run, and monitor data pipelines that move and transform data between databases, cloud warehouses, applications, and streaming systems, with built-in resilience to schema changes."},
+      {"question": "Is StreamSets open source?", "answer": "StreamSets began with open-source roots but is now a commercial enterprise product sold by IBM; it is not a free, community-maintained open-source tool today."},
+      {"question": "Who owns StreamSets now?", "answer": "IBM completed its acquisition of StreamSets, alongside webMethods, from Software AG in July 2024, and the product is now sold as IBM StreamSets."},
+      {"question": "How much does StreamSets cost?", "answer": "StreamSets does not publish pricing. Cost is quoted by IBM sales based on data volume, connectors, number of pipelines, and deployment model."},
+      {"question": "What is a smart data pipeline?", "answer": "A smart data pipeline is StreamSets' term for a pipeline that automatically detects and adapts to data drift, such as new or renamed fields, instead of failing when source data changes."},
+      {"question": "Does StreamSets support real-time streaming?", "answer": "Yes, StreamSets supports streaming and change data capture patterns in addition to traditional batch ETL and ELT processing."},
+      {"question": "Can StreamSets run on-premises?", "answer": "Yes, StreamSets execution engines can be deployed on-premises, in private cloud, or across major public clouds in hybrid configurations."},
+      {"question": "Is StreamSets good for beginners?", "answer": "StreamSets is aimed at data engineers and platform teams; it offers a low-code visual designer but still assumes familiarity with data integration concepts."}
+    ],
+    "use_cases": [
+      {"title": "Enterprise Cloud Data Migration", "description": "Moving large volumes of data from legacy on-premises systems into modern cloud data warehouses like Snowflake or Databricks.", "audience": "Enterprise data engineering teams"},
+      {"title": "Real-Time Change Data Capture", "description": "Replicating database changes in near real time to keep downstream analytics or applications in sync.", "audience": "Data platform architects"},
+      {"title": "Hybrid Multicloud Integration", "description": "Connecting regulated, on-premises systems with multiple public clouds while maintaining governance and lineage.", "audience": "Regulated industries such as finance and healthcare"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Enterprise", "price": "Custom (contact IBM sales)", "billing_cycle": "Annual contract", "features": ["Unified pipeline designer for batch, CDC, ETL, ELT, and streaming", "Smart data pipelines with drift resilience", "Python SDK for pipeline-as-code", "Centralized control hub and governance", "Hybrid and multicloud deployment"]}
+    ],
+    "tags": ["data-integration", "etl-tool", "dataops", "data-pipeline", "ibm", "enterprise-software"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "805aa818-8503-43ab-bc29-2447c8f5ac0c",
+  "slug": "streamyard",
+  "name": "StreamYard",
+  "enrichment": {
+    "short_description": "StreamYard is a browser-based live streaming and video production studio that lets creators, businesses, and podcasters broadcast to multiple platforms at once and record polished video without installing software.",
+    "pricing_model": "freemium/subscription",
+    "starting_price": "Free (paid plans from $35.99/month billed annually)",
+    "founded_year": 2018,
+    "company_size": "51-200 employees",
+    "headquarters": null,
+    "languages": ["English"],
+    "seo_title": "StreamYard Review: Live Streaming Studio Pricing",
+    "seo_meta_description": "StreamYard is a browser-based live streaming and recording studio for multistreaming, webinars, and podcasts. Compare plans, features, and pros and cons.",
+    "llm_readable_summary": "StreamYard is a browser-based live streaming and video production studio that lets users broadcast simultaneously to platforms like YouTube, Facebook, LinkedIn, and X, or record locally for on-demand content, without installing any software. Founded in 2018 by Geige Vandentop and Dan Briggs in Tualatin, Oregon, StreamYard became popular with podcasters, marketers, educators, and businesses running webinars because it combines a backstage green-room area, custom overlays and branding, screen sharing, and multi-guest video calls into a single browser tab. The company was acquired by the virtual events platform Hopin in 2021; after most of Hopin's assets were later sold off, StreamYard was acquired by the Italian technology company Bending Spoons, which also owns Evernote, WeTransfer, and Meetup, in April 2024. StreamYard offers a free plan for individual streamers with StreamYard branding included, plus paid Core and Advanced plans, starting around 35.99 dollars per month billed annually, that add full HD or 4K recording, more multistream destinations, more on-screen participants, and cloud storage; custom Business pricing is available for teams. StreamYard is best suited for solo creators, marketing teams, and small businesses that need reliable, no-download live streaming and webinar production without a dedicated broadcast engineer.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is StreamYard",
+        "level": 2,
+        "paragraphs": [
+          "StreamYard is an in-browser live streaming and recording studio. Users join a private backstage area, add guests by link, arrange camera feeds and overlays, and go live to one or several destinations at once, or record locally and publish later. It was founded in 2018 by Geige Vandentop and Dan Briggs and grew quickly among podcasters, marketers, and educators who wanted professional-looking live shows without learning traditional broadcast software.",
+          "Ownership has changed more than once: Hopin acquired StreamYard in 2021, and after Hopin's core events business was largely wound down, StreamYard was acquired by Bending Spoons, an Italian technology company, in April 2024. StreamYard remains available as a standalone product under its own branding."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "StreamYard supports multistreaming to several destinations at once, on-screen branded overlays and lower thirds, a backstage green room for guests before they go live, screen sharing, and both cloud and local recording. Higher tiers add 4K local recording, more simultaneous participants, custom RTMP destinations, and on-air webinar features such as registration."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "StreamYard's free plan supports single-seat use with a StreamYard watermark and limited storage. The Core and Advanced plans are billed monthly or annually, with a meaningful discount for annual billing, and both are scoped to individual use rather than team seats. Organizations that need multiple seats or admin controls are directed to custom Business pricing."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Multistreaming", "description": "Broadcast live to multiple destinations such as YouTube, Facebook, and LinkedIn simultaneously."},
+      {"title": "On-Screen Branding", "description": "Add logos, overlays, custom backgrounds, and lower-third graphics without a design tool."},
+      {"title": "Backstage Green Room", "description": "Guests join a private staging area to prep before being brought on air."},
+      {"title": "Screen Sharing", "description": "Share a browser tab, application window, or full screen during a live broadcast."},
+      {"title": "Cloud and Local Recording", "description": "Record broadcasts locally in HD or 4K, or store recordings in the cloud depending on plan."},
+      {"title": "AI Clips", "description": "Automatically generate short highlight clips from longer recordings for social sharing."},
+      {"title": "Custom RTMP Destinations", "description": "Stream to any platform that accepts a custom RTMP URL, beyond the built-in integrations."},
+      {"title": "On-Air Webinars", "description": "Advanced plan features support registration-style webinars directly from the studio."}
+    ],
+    "pros": [
+      "Runs entirely in the browser with no download required",
+      "Easy to multistream to several platforms at once",
+      "Professional-looking overlays and branding without design skills",
+      "Generous free plan for people just getting started",
+      "Integrates directly with major platforms like YouTube and Facebook"
+    ],
+    "cons": [
+      "Core and Advanced plans are scoped to individual use, not team seats",
+      "A 2024 pricing restructuring significantly raised costs for many existing subscribers",
+      "Webinar-specific features are gated behind the higher Advanced tier",
+      "On-screen participant counts are capped per plan",
+      "No dedicated mobile app for producing a broadcast, only for viewing"
+    ],
+    "faqs": [
+      {"question": "What is StreamYard used for?", "answer": "StreamYard is used to produce and broadcast live video, such as podcasts, webinars, and interviews, directly from a browser, or to record video for later publishing."},
+      {"question": "Is StreamYard free?", "answer": "Yes, StreamYard has a free plan for individual use with limited streaming, storage, and a StreamYard watermark; paid plans remove the watermark and add more features."},
+      {"question": "Who owns StreamYard now?", "answer": "StreamYard is owned by Bending Spoons, an Italian technology company, which acquired it in April 2024 after it had previously been owned by Hopin."},
+      {"question": "How many people can be on a StreamYard broadcast?", "answer": "On-screen participant limits vary by plan, ranging from 6 on the free plan up to 10 or more on paid plans, with additional backstage participants supported on higher tiers."},
+      {"question": "Can StreamYard stream to YouTube and Facebook at once?", "answer": "Yes, StreamYard supports multistreaming to several destinations simultaneously, including YouTube, Facebook, LinkedIn, and custom RTMP endpoints."},
+      {"question": "Does the StreamYard free plan have a watermark?", "answer": "Yes, broadcasts on the free plan include the StreamYard logo; paid plans remove this watermark."},
+      {"question": "Did StreamYard pricing change recently?", "answer": "Yes, in August 2024 StreamYard restructured pricing, which raised the cost of individual and multi-seat plans significantly compared to prior pricing."},
+      {"question": "Is StreamYard good for podcasts?", "answer": "Yes, StreamYard is widely used for video podcast production because it combines multi-guest calls, recording, and live streaming in one browser-based tool."}
+    ],
+    "use_cases": [
+      {"title": "Live Podcast Production", "description": "Recording and streaming multi-guest video podcasts directly from a browser with minimal setup.", "audience": "Podcasters and content creators"},
+      {"title": "Marketing Webinars", "description": "Running branded webinars and product launches with on-screen overlays and multistreaming to reach audiences on several platforms.", "audience": "Marketing and growth teams"},
+      {"title": "Community and Church Livestreaming", "description": "Broadcasting services or community events to multiple platforms at once without dedicated broadcast equipment.", "audience": "Community organizations and small nonprofits"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Free", "price": "$0/month", "billing_cycle": "N/A", "features": ["Core studio features", "StreamYard watermark", "6 on-screen participants", "2 hours of local recording per month", "1 seat"]},
+      {"plan_name": "Core", "price": "$44.99/month ($35.99/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["Full HD 1080p streaming", "No watermark", "Multistream to 3 destinations", "10 on-screen participants", "Unlimited streaming and recording", "50 hours of cloud storage"]},
+      {"plan_name": "Advanced", "price": "$88.99/month ($68.99/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["Everything in Core", "4K local recordings", "Multistream to 8 destinations", "15 backstage participants", "On-air webinars", "Custom fonts and transcript downloads"]},
+      {"plan_name": "Business", "price": "Custom", "billing_cycle": "Custom", "features": ["Team and organization needs", "Custom seat and support arrangements"]}
+    ],
+    "tags": ["live-streaming", "video-production", "webinar-software", "podcasting", "multistreaming", "content-creation"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "aa13d6c0-d32a-426d-805b-8124f40390e4",
+  "slug": "strikingly",
+  "name": "Strikingly",
+  "enrichment": {
+    "short_description": "Strikingly is a no-code website builder focused on simple, mobile-optimized one-page and multi-page sites, with built-in e-commerce, blogging, and membership tools for small businesses and creators.",
+    "pricing_model": "freemium/subscription",
+    "starting_price": "Free (paid plans from $16/month billed annually)",
+    "founded_year": 2012,
+    "company_size": null,
+    "headquarters": "San Francisco, California, United States",
+    "languages": ["English"],
+    "seo_title": "Strikingly Review: No-Code Website Builder Pricing",
+    "seo_meta_description": "Strikingly is a no-code website builder for one-page sites, e-commerce, and memberships. Compare plans, features, and pros and cons.",
+    "llm_readable_summary": "Strikingly is a no-code website builder that helps individuals and small businesses launch mobile-optimized websites quickly, originally built around simple one-page sites and later expanded to multi-page sites, e-commerce, blogging, and paid memberships. The company was founded in 2012 and is headquartered in San Francisco, California. Strikingly's editor uses a drag-and-drop, template-based approach rather than a freeform canvas, which trades some design flexibility for speed and mobile-friendly defaults. The platform offers a free forever plan that allows unlimited sites on a Strikingly subdomain with a transaction fee on sales, a Pro plan starting around 16 dollars a month billed annually that adds a custom domain, more storage, more pages, memberships, and a lower transaction fee, and a VIP plan starting around 49 dollars a month billed annually that adds more sites, more storage, a larger contact list, multi-language support, and zero transaction fees. Strikingly is best suited for solo entrepreneurs, freelancers, coaches, and small businesses that want a fast, low-maintenance website with light e-commerce or membership needs, rather than large catalogs or highly customized layouts, which are better served by builders like Shopify or Webflow.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is Strikingly",
+        "level": 2,
+        "paragraphs": [
+          "Strikingly is a website builder founded in 2012 that started with a focus on single-page websites for individuals and small projects, then expanded into multi-page sites, online stores, blogging, and paid membership sites. It is headquartered in San Francisco, California.",
+          "The editor is template-driven and mobile-first by default, aimed at people who want to publish a clean, working website quickly without hiring a designer or developer."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "Strikingly includes a drag-and-drop editor, e-commerce with product listings and checkout, paid site memberships and subscriptions, a built-in blog, custom domain connection with free SSL, password protection, custom forms, and on the VIP plan, multi-language sites and a newsletter tool."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "Strikingly offers a free forever plan, a Pro plan starting around 16 dollars a month when billed annually, and a VIP plan starting around 49 dollars a month when billed annually, with monthly billing available at a higher rate. Transaction fees on sales decrease from 5 percent on the free plan to 2 percent on Pro and 0 percent on VIP."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Drag-and-Drop Editor", "description": "Build and rearrange sections visually without writing code."},
+      {"title": "Mobile-Optimized Templates", "description": "Sites are designed to look clean and functional on mobile by default."},
+      {"title": "Built-In E-Commerce", "description": "Sell products directly from your site with product listings and checkout."},
+      {"title": "Site Memberships", "description": "Offer paid or free membership content and gated pages."},
+      {"title": "Custom Domain and Free SSL", "description": "Connect a custom domain with SSL included on paid plans."},
+      {"title": "Blogging", "description": "Publish blog posts alongside your main site pages."},
+      {"title": "Newsletter Tool", "description": "Send email newsletters to site visitors and members on the VIP plan."},
+      {"title": "Multi-Language Sites", "description": "Publish content in multiple languages on the VIP plan."}
+    ],
+    "pros": [
+      "Fast, easy setup for non-technical users",
+      "Strong free plan with unlimited sites",
+      "Mobile-first templates look polished by default",
+      "Built-in e-commerce and membership tools without third-party plugins",
+      "Transaction fees drop as you move to higher-tier plans"
+    ],
+    "cons": [
+      "Less design flexibility than freeform builders like Webflow",
+      "Page counts and site counts are capped per plan",
+      "Free plan includes Strikingly branding and a 5 percent transaction fee",
+      "Newsletter and multi-language features are reserved for the top VIP tier",
+      "Storage and bandwidth are limited on lower-tier plans"
+    ],
+    "faqs": [
+      {"question": "What is Strikingly used for?", "answer": "Strikingly is used to build simple, mobile-friendly websites, including one-page sites, small online stores, and membership sites, without writing code."},
+      {"question": "Is Strikingly free?", "answer": "Yes, Strikingly has a free forever plan that allows unlimited sites on a Strikingly subdomain, with limited storage and a 5 percent transaction fee on sales."},
+      {"question": "Can I sell products on Strikingly?", "answer": "Yes, paid plans support selling multiple products with checkout built into the site, and the free plan supports selling a single product."},
+      {"question": "Does Strikingly charge transaction fees?", "answer": "Yes, on the free plan Strikingly charges a 5 percent transaction fee, which drops to 2 percent on Pro and 0 percent on VIP."},
+      {"question": "How many pages can I have on Strikingly?", "answer": "The Pro plan supports up to 100 pages per site; exact limits vary by plan and site type."},
+      {"question": "Is Strikingly good for e-commerce?", "answer": "Strikingly works well for small stores with a limited product catalog, but larger catalogs are typically better served by dedicated e-commerce platforms."},
+      {"question": "Can I use my own domain on Strikingly?", "answer": "Yes, custom domain connection with free SSL is included starting on the Pro plan."},
+      {"question": "How does Strikingly compare to Wix or Squarespace?", "answer": "Strikingly is more streamlined and mobile-first with fewer design options than Wix or Squarespace, making it faster to launch a simple site but less suited to highly customized layouts."}
+    ],
+    "use_cases": [
+      {"title": "Personal Portfolio or One-Page Site", "description": "Launching a quick personal, resume, or portfolio site without design work.", "audience": "Freelancers and individuals"},
+      {"title": "Small Business Landing Page with Store", "description": "Running a lightweight online store alongside a marketing site for a small product catalog.", "audience": "Small business owners"},
+      {"title": "Membership or Paid-Content Site", "description": "Gating content or community access behind paid or free memberships.", "audience": "Coaches, creators, and educators"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Free", "price": "$0 forever", "billing_cycle": "N/A", "features": ["Unlimited free sites on a Strikingly domain", "500 MB storage per site", "5 GB monthly bandwidth", "Sell a single product", "5% transaction fee"]},
+      {"plan_name": "Pro", "price": "$16/month billed annually", "billing_cycle": "Annual (monthly option available at a higher rate)", "features": ["3 Pro sites plus unlimited free sites", "Custom domain and free SSL", "20 GB storage per site", "Up to 100 pages per site", "Sell up to 300 products", "Site memberships", "2% transaction fee"]},
+      {"plan_name": "VIP", "price": "$49/month billed annually", "billing_cycle": "Annual (monthly option available at a higher rate)", "features": ["5 VIP sites plus all Pro features", "100 GB storage per site", "2,000 active contacts", "Sell up to 500 products", "0% transaction fee", "Multi-language support and newsletter tool"]}
+    ],
+    "tags": ["website-builder", "no-code", "small-business", "ecommerce", "landing-page-builder"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "1c713be1-b714-409c-be08-f7969e107f24",
+  "slug": "string-is",
+  "name": "string.is",
+  "enrichment": {
+    "short_description": "string.is is a free, open-source, privacy-friendly online toolkit that lets developers instantly convert, format, and inspect text strings using around 50 built-in converters, without cookies or tracking.",
+    "pricing_model": "free/open-source",
+    "starting_price": "Free",
+    "founded_year": null,
+    "company_size": null,
+    "headquarters": null,
+    "languages": ["English"],
+    "seo_title": "string.is: Free Online String Converter Toolkit",
+    "seo_meta_description": "string.is is a free, open-source, privacy-friendly toolkit with about 50 converters for encoding, formatting, and inspecting text strings.",
+    "llm_readable_summary": "string.is is a free, open-source, privacy-first web toolkit for developers that offers around 50 converters and formatters for common text and string manipulation tasks, such as encoding and decoding, case conversion, and format inspection. Rather than being a traditional company product, string.is is maintained as an open-source project, with its source code hosted on GitHub under the handle recurser, and is explicitly designed around minimal-dependency, no-tracking principles: the site sets no cookies, applies a strict content security policy, and tries to auto-detect the format of pasted input so it can intelligently suggest conversion options. It runs entirely at string.is in the browser and is confirmed to work across Chrome, Firefox, Safari, and Edge, with no signup or account required to use any tool. Because there is no company behind it in the traditional sense, string.is has no founding year, headquarters, funding, or employee count in the way a SaaS company would; it is best understood as a developer utility maintained as an open-source side project rather than a commercial product. It is best suited for developers, QA engineers, and technical writers who need a fast, trustworthy, ad-free way to convert or inspect strings, such as base64, JSON, case styles, and hashes, without installing a command-line tool or sending sensitive text to an unknown third-party server. There are no pricing plans, subscriptions, or paid tiers; the entire toolkit is free to use indefinitely.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is string.is",
+        "level": 2,
+        "paragraphs": [
+          "string.is is a browser-based, open-source toolkit that bundles roughly 50 string converters and formatters into one page. Users paste in text and the tool attempts to detect its format automatically, then offers relevant conversion or inspection options.",
+          "The project is maintained on GitHub under the handle recurser and is built around explicit privacy commitments: no cookies are set, a strict content security policy is enforced, and dependencies are kept minimal by design."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "The core feature set is the collection of roughly 50 converters and formatters covering common developer needs such as encoding and decoding, case conversion, and format inspection, all accessible from a single web page without an account."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "string.is is completely free to use, with no paid tiers, subscriptions, or account requirements, consistent with its open-source, no-tracking design philosophy."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "About 50 Converters and Formatters", "description": "A broad set of string conversion and formatting tools accessible from one page."},
+      {"title": "Format Auto-Detection", "description": "Attempts to detect the format of pasted input and suggest relevant conversions."},
+      {"title": "No Cookies or Tracking", "description": "The site is built to avoid setting cookies or tracking visitor behavior."},
+      {"title": "Open-Source Codebase", "description": "Source code is publicly available on GitHub for review and contribution."},
+      {"title": "Strict Content Security Policy", "description": "A strict CSP is applied to help protect users while using the tool."},
+      {"title": "Runs Entirely in the Browser", "description": "No installation or server-side account is needed to use the toolkit."},
+      {"title": "Cross-Browser Support", "description": "Confirmed to work on Chrome, Firefox, Safari, and Edge."},
+      {"title": "No Signup Required", "description": "All tools are usable immediately without creating an account."}
+    ],
+    "pros": [
+      "Completely free with no account required",
+      "Privacy-friendly, with no cookies or tracking",
+      "Open-source and auditable on GitHub",
+      "Wide range of converters available in one place",
+      "Lightweight, fast interface"
+    ],
+    "cons": [
+      "No official company or dedicated support channel",
+      "No guaranteed uptime or service level agreement since it is an open-source project",
+      "Limited public documentation of the exact converter list",
+      "No API for programmatic access",
+      "No dedicated mobile app"
+    ],
+    "faqs": [
+      {"question": "What is string.is?", "answer": "string.is is a free, open-source online toolkit that offers around 50 converters and formatters for working with text strings."},
+      {"question": "Is string.is free?", "answer": "Yes, string.is is completely free to use with no paid tiers or subscriptions."},
+      {"question": "Is string.is open source?", "answer": "Yes, its source code is publicly available on GitHub under the handle recurser."},
+      {"question": "Does string.is track or store my data?", "answer": "The site states it does not set cookies and is built around privacy-friendly principles, though users should still avoid pasting highly sensitive data into any third-party web tool."},
+      {"question": "What kinds of conversions can string.is do?", "answer": "It offers roughly 50 converters and formatters covering common developer tasks like encoding, decoding, case conversion, and format inspection."},
+      {"question": "Who maintains string.is?", "answer": "It is maintained as an open-source project by a developer known on GitHub as recurser."},
+      {"question": "Can I self-host string.is?", "answer": "Because the code is open source on GitHub, technically inclined users can review or self-host it, though the primary way to use it is the hosted site at string.is."},
+      {"question": "Is string.is safe to paste sensitive text into?", "answer": "The site emphasizes no cookies and a strict content security policy, but as with any online tool, users should avoid pasting highly sensitive or confidential data."}
+    ],
+    "use_cases": [
+      {"title": "Quick Text Format Conversion", "description": "Converting strings between encodings, cases, or formats during development work.", "audience": "Software developers"},
+      {"title": "Debugging String and Encoding Issues", "description": "Inspecting and converting malformed or encoded strings while troubleshooting.", "audience": "QA engineers and developers"},
+      {"title": "Reference and Teaching Tool", "description": "Demonstrating how different text formats and encodings relate to each other.", "audience": "Technical writers and educators"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Free", "price": "$0", "billing_cycle": "N/A", "features": ["Access to about 50 string converters and formatters", "No account or signup required", "No cookies or tracking", "Open-source codebase"]}
+    ],
+    "tags": ["developer-tools", "string-utilities", "text-conversion", "open-source", "free-tool"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "a42a7c3c-6971-460f-b902-9c4f09a2e764",
+  "slug": "stripe",
+  "name": "Stripe",
+  "enrichment": {
+    "short_description": "Stripe is a financial infrastructure and payments platform that lets businesses accept online and in-person payments, manage subscriptions and billing, and access a broad suite of APIs for fintech, payouts, tax, and fraud prevention.",
+    "pricing_model": "usage-based/pay-as-you-go with custom enterprise pricing",
+    "starting_price": "2.9% + $0.30 per successful card transaction (US)",
+    "founded_year": 2010,
+    "company_size": "8,000+ employees",
+    "headquarters": "South San Francisco, California, United States and Dublin, Ireland (dual headquarters)",
+    "languages": ["English"],
+    "seo_title": "Stripe Review: Payments Platform Pricing and Features",
+    "seo_meta_description": "Stripe is a payments and financial infrastructure platform for online and in-person payments, billing, and fintech APIs. See pricing and features.",
+    "llm_readable_summary": "Stripe is a financial infrastructure and payments platform founded in 2010 by Irish brothers Patrick and John Collison, initially in Palo Alto, California, and now dual-headquartered in South San Francisco, California, and Dublin, Ireland. Stripe provides developer-first APIs and hosted tools that let businesses of any size accept online and in-person payments, run subscription billing, calculate and remit tax, detect fraud, issue cards, and route payouts to sellers on a marketplace. Core payment processing follows a pay-as-you-go pricing model, commonly 2.9 percent plus 30 cents per successful US card transaction, with lower blended rates available for high-volume or enterprise accounts, and additional modular products such as Billing, Tax, Radar, and Connect that carry their own usage-based or flat monthly fees. Stripe has grown into one of the most widely used payment platforms in the world, processing payments for millions of businesses, from individual developers and startups to large public companies, and employs more than 8,000 people globally. It is best known for its extensive documentation, broad currency and payment method support, and modular product suite that lets a company start with basic checkout and later add subscriptions, marketplace payouts, tax automation, or card issuing without switching providers.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is Stripe",
+        "level": 2,
+        "paragraphs": [
+          "Stripe is a payments and financial infrastructure company founded in 2010 by Patrick and John Collison. It provides APIs and hosted products that let businesses accept payments online, in mobile apps, and in person, and has expanded well beyond checkout into billing, tax, fraud prevention, card issuing, and marketplace payouts.",
+          "Stripe is dual-headquartered in South San Francisco, California, and Dublin, Ireland, reflecting its early focus on serving both US and international businesses from the start."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "Stripe's core Payments product supports cards, digital wallets, and many local payment methods across dozens of currencies. Stripe Billing handles subscriptions and invoicing, Connect enables marketplaces and platforms to pay out sellers, Terminal supports in-person card payments, Tax automates sales tax and VAT calculation, and Radar applies machine learning to flag fraudulent transactions."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "Standard online card payments in the US are typically priced at 2.9 percent plus 30 cents per successful transaction, with different rates for in-person payments, international cards, and currency conversion. Additional products like Billing, Tax, and Radar carry their own usage-based or flat monthly fees, and large-volume businesses can negotiate custom enterprise pricing."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Online Payment Processing", "description": "Accept cards, digital wallets, and local payment methods across many countries and currencies."},
+      {"title": "Stripe Billing", "description": "Manage subscriptions, invoicing, and recurring revenue with built-in retry and dunning logic."},
+      {"title": "Stripe Connect", "description": "Route payments and payouts to multiple sellers or providers on a marketplace or platform."},
+      {"title": "Stripe Terminal", "description": "Accept in-person card payments using Stripe-certified hardware."},
+      {"title": "Stripe Tax", "description": "Automatically calculate, collect, and help remit sales tax and VAT."},
+      {"title": "Radar Fraud Prevention", "description": "Machine-learning-based fraud detection built into every transaction."},
+      {"title": "Stripe Issuing", "description": "Create and manage virtual and physical payment cards for employees or customers."},
+      {"title": "Developer APIs and SDKs", "description": "Extensive, well-documented APIs and SDKs across major programming languages."}
+    ],
+    "pros": [
+      "Extremely well documented, developer-first APIs",
+      "Supports a huge range of payment methods and currencies",
+      "Modular products cover most fintech needs on one platform",
+      "Strong built-in fraud prevention through Radar",
+      "Scales from individual developers to large public companies"
+    ],
+    "cons": [
+      "Standard transaction fees can be costly at very high volume compared to negotiated rates",
+      "Several advanced products carry separate monthly or usage-based fees",
+      "Account holds or risk reviews can delay access to funds with limited warning",
+      "Support responsiveness can vary for smaller, non-enterprise accounts",
+      "The breadth of the product suite can be overwhelming for very simple use cases"
+    ],
+    "faqs": [
+      {"question": "What is Stripe used for?", "answer": "Stripe is used to accept online and in-person payments, manage subscriptions and billing, calculate tax, prevent fraud, and route payouts for marketplaces."},
+      {"question": "How much does Stripe charge per transaction?", "answer": "Standard US online card payments are typically 2.9 percent plus 30 cents per successful transaction, with different rates for in-person, international, and currency-converted payments."},
+      {"question": "Is Stripe free to use?", "answer": "There is no monthly fee to start; Stripe primarily charges per successful transaction, with additional products billed separately based on usage."},
+      {"question": "Does Stripe support subscriptions and recurring billing?", "answer": "Yes, Stripe Billing is a dedicated product for managing subscriptions, invoicing, and recurring revenue."},
+      {"question": "Can Stripe process in-person payments?", "answer": "Yes, Stripe Terminal supports in-person card payments using Stripe-certified card readers."},
+      {"question": "What countries does Stripe support?", "answer": "Stripe operates in dozens of countries and supports many currencies and local payment methods, with coverage varying by region."},
+      {"question": "Is Stripe safe and PCI compliant?", "answer": "Yes, Stripe is a PCI Service Provider Level 1 certified payment processor, the highest level of certification in the payments industry."},
+      {"question": "How is Stripe different from PayPal?", "answer": "Stripe is primarily a developer-first API platform for embedding payments directly into a business's own website or app, while PayPal is more focused on a consumer-facing checkout and wallet experience."}
+    ],
+    "use_cases": [
+      {"title": "Online Checkout for E-Commerce", "description": "Accepting card and digital wallet payments directly on a business's own website or app.", "audience": "E-commerce businesses"},
+      {"title": "SaaS Subscription Billing", "description": "Managing recurring subscription plans, upgrades, downgrades, and failed payment recovery.", "audience": "SaaS and subscription businesses"},
+      {"title": "Marketplace and Platform Payouts", "description": "Splitting and routing payments to multiple sellers, freelancers, or service providers on a platform.", "audience": "Marketplaces and platform businesses"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Standard Payments", "price": "2.9% + $0.30 per transaction (US)", "billing_cycle": "Pay as you go", "features": ["Online card and digital wallet payments", "Support for many currencies and local payment methods", "Built-in fraud prevention with Radar", "No monthly fee"]},
+      {"plan_name": "Custom / Enterprise", "price": "Custom (contact sales)", "billing_cycle": "Negotiated", "features": ["Volume-based discounted rates", "Dedicated support", "Access to full product suite including Billing, Connect, Tax, and Issuing"]}
+    ],
+    "tags": ["payments", "payment-processing", "fintech", "saas-billing", "ecommerce", "api-platform"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "3a50e7f9-8dac-4f95-a6a8-044c2a5b961d",
+  "slug": "strongdm",
+  "name": "StrongDM",
+  "enrichment": {
+    "short_description": "StrongDM is a zero-trust privileged access management platform that gives IT and security teams a single control plane to grant, monitor, and revoke just-in-time access to databases, servers, clouds, and web apps; it was acquired by Delinea in March 2026.",
+    "pricing_model": "subscription (per-user, single SKU)",
+    "starting_price": "Contact sales",
+    "founded_year": 2015,
+    "company_size": null,
+    "headquarters": "Burlingame, California, United States",
+    "languages": ["English"],
+    "seo_title": "StrongDM Review: Zero Trust Access Platform Pricing",
+    "seo_meta_description": "StrongDM is a zero-trust privileged access management platform, now part of Delinea. See features, pricing model, and pros and cons.",
+    "llm_readable_summary": "StrongDM is a zero-trust privileged access management, or PAM, platform founded in 2015 and headquartered in Burlingame, California, built to give IT and security teams a single control plane for granting, monitoring, and revoking access to infrastructure such as databases, servers, Kubernetes clusters, clouds, and internal web applications. Rather than issuing standing credentials, StrongDM emphasizes just-in-time access and continuous authorization, meaning access is granted only when needed and can be revoked or re-evaluated in real time, with every session logged and, where relevant, recorded for audit purposes. The company markets a single-SKU, per-user pricing model that bundles all resource types together so customers avoid unpredictable add-on fees, though exact list pricing is not published and is quoted directly by sales. In January 2026, identity security vendor Delinea announced it would acquire StrongDM to combine enterprise PAM with StrongDM's runtime authorization technology, and the acquisition closed on March 5, 2026, folding StrongDM into Delinea's identity security platform. StrongDM is best suited for mid-market and enterprise IT, security, and compliance teams that need centralized, auditable access control across heterogeneous infrastructure, including growing use cases around securing access for AI agents and other non-human identities.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is StrongDM",
+        "level": 2,
+        "paragraphs": [
+          "StrongDM is a privileged access management platform founded in 2015 in Burlingame, California. It gives security and infrastructure teams a single place to grant, observe, and revoke access to databases, servers, clusters, clouds, and internal web applications, replacing a patchwork of VPNs, shared credentials, and bastion hosts.",
+          "In January 2026, Delinea announced an agreement to acquire StrongDM to strengthen its identity security platform with just-in-time runtime authorization; the deal closed on March 5, 2026, and StrongDM now operates as part of Delinea."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "StrongDM centers on just-in-time access, meaning users request and receive time-bound access rather than holding standing credentials, combined with continuous authorization that can revoke access mid-session if policy conditions change. Every session is logged, with full session recording available for audit and compliance needs, and native client support means engineers can use familiar tools like SSH, database clients, or RDP through StrongDM's access layer."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "StrongDM uses a single-SKU, per-user pricing model, meaning one price per user covers access to all supported resource types rather than charging separately by protocol or resource. Exact pricing is not published on the website and requires contacting sales."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Just-in-Time Access", "description": "Grants time-bound access to infrastructure only when needed, instead of standing credentials."},
+      {"title": "Continuous Authorization", "description": "Policy-based controls can re-evaluate and revoke access mid-session as conditions change."},
+      {"title": "Native Tool Integration", "description": "Works with familiar clients like SSH, database tools, and RDP through StrongDM's access layer."},
+      {"title": "Session Recording and Audit Trails", "description": "Full session logging and recording support compliance and forensic review."},
+      {"title": "Single SKU Pricing", "description": "One per-user price covers all supported resource types, avoiding surprise add-on fees."},
+      {"title": "Agentic AI Access Support", "description": "Extends access controls to AI agents and other non-human identities."},
+      {"title": "Vault Integration", "description": "Works alongside existing secrets vaults rather than requiring a full replacement."},
+      {"title": "Centralized Resource Access", "description": "Unifies access to databases, servers, clusters, clouds, and web apps in one control plane."}
+    ],
+    "pros": [
+      "Simple, predictable per-user pricing covers every resource type",
+      "Strong audit trails and session recording for compliance needs",
+      "Reduces standing privileged access through a just-in-time model",
+      "Now backed by Delinea's broader identity security platform",
+      "Works across heterogeneous infrastructure, including cloud, on-premises, and Kubernetes"
+    ],
+    "cons": [
+      "Exact pricing is not published and requires a sales conversation",
+      "Primarily aimed at mid-market and enterprise, more than small teams typically need",
+      "Rollout and integration can require meaningful IT setup time",
+      "Future product direction now depends on Delinea's roadmap following the acquisition",
+      "A client or desktop app is required for full functionality"
+    ],
+    "faqs": [
+      {"question": "What is StrongDM used for?", "answer": "StrongDM is used to centrally grant, monitor, and revoke privileged access to infrastructure such as databases, servers, clusters, clouds, and internal web applications."},
+      {"question": "How much does StrongDM cost?", "answer": "StrongDM uses a single-SKU, per-user pricing model, but exact pricing is not published and must be obtained by contacting sales."},
+      {"question": "Who owns StrongDM now?", "answer": "StrongDM was acquired by identity security vendor Delinea, with the deal closing on March 5, 2026."},
+      {"question": "What is just-in-time access?", "answer": "Just-in-time access grants users access to a resource only for the time it is needed, rather than issuing permanent, standing credentials."},
+      {"question": "Is StrongDM a PAM tool?", "answer": "Yes, StrongDM is a privileged access management, or PAM, platform built around zero-trust and just-in-time access principles."},
+      {"question": "Does StrongDM support cloud and on-premises infrastructure?", "answer": "Yes, StrongDM is designed to unify access across cloud, on-premises, and hybrid infrastructure."},
+      {"question": "What happened in the Delinea acquisition?", "answer": "Delinea announced its intent to acquire StrongDM in January 2026 to combine enterprise PAM with StrongDM's runtime authorization technology, and the deal closed in March 2026."},
+      {"question": "Is StrongDM good for compliance and audit requirements?", "answer": "Yes, its session recording, logging, and continuous authorization features are commonly used to support compliance and audit needs."}
+    ],
+    "use_cases": [
+      {"title": "Securing Access to Production Infrastructure", "description": "Granting engineers time-bound, logged access to production databases and servers instead of standing credentials.", "audience": "Platform and security engineering teams"},
+      {"title": "Compliance-Driven Audit Logging", "description": "Maintaining detailed session records and audit trails to satisfy regulatory requirements.", "audience": "Regulated industries such as finance and healthcare"},
+      {"title": "Managing AI Agent Access", "description": "Extending access controls and continuous authorization to AI agents and other non-human identities.", "audience": "Security teams adopting agentic AI"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "StrongDM Platform", "price": "Custom (contact sales)", "billing_cycle": "Annual contract", "features": ["Single SKU covering all resource types", "Just-in-time access and continuous authorization", "Session recording and audit trails", "Native client and desktop app support", "Agentic AI access support"]}
+    ],
+    "tags": ["privileged-access-management", "zero-trust", "infrastructure-access", "identity-security", "devsecops", "pam"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "002172fd-e41e-488b-88d6-f387f92abea3",
+  "slug": "stump",
+  "name": "Stump",
+  "enrichment": {
+    "short_description": "Stump is a free, open-source, self-hosted server for organizing and reading comics, manga, and digital books, with OPDS support so it works with popular e-reader apps.",
+    "pricing_model": "free/open-source",
+    "starting_price": "Free",
+    "founded_year": null,
+    "company_size": null,
+    "headquarters": null,
+    "languages": ["English"],
+    "seo_title": "Stump Review: Free Self-Hosted Comic and Manga Server",
+    "seo_meta_description": "Stump is a free, open-source, self-hosted server for comics, manga, and digital books with OPDS support. See features and setup details.",
+    "llm_readable_summary": "Stump is a free and open-source, self-hostable media server for comics, manga, and digital books, built with Rust on the backend, using the Axum framework and SeaORM, and React on the frontend, and released under the MIT license. It exposes an OPDS feed so its library can be browsed and read from many third-party e-reader apps on phones, tablets, and e-ink devices, in addition to its own web client. The project is developed in the open on GitHub under stumpapp/stump, has accumulated over 2,600 GitHub stars, and remains in active beta development ahead of a stable 1.0 release. Stump is designed to be lightweight, running comfortably on around 1GB of RAM and working well on low-powered ARM-based devices such as a Raspberry Pi, which has made it popular in home-lab and self-hosting communities alongside comparable tools like Komga. Because Stump is a community open-source project rather than a company, it has no headquarters, funding round, or employee count in the traditional sense; there is no paid tier, subscription, or licensing fee, and users self-host the software on their own hardware or a personal server at no cost beyond the infrastructure they choose to run it on.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is Stump",
+        "level": 2,
+        "paragraphs": [
+          "Stump is a self-hosted server for organizing, browsing, and reading comics, manga, and other digital books. It is built with Rust, using the Axum framework and SeaORM, on the backend, and React on the frontend, and it is released under the MIT license.",
+          "The project is developed in the open on GitHub as stumpapp/stump, has attracted a community of contributors, and is explicitly described by its maintainers as beta software ahead of a stable 1.0 release."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "Stump organizes libraries of comics, manga, and digital books and exposes them through an OPDS feed, letting users read their collection in third-party e-reader apps in addition to Stump's own web interface. It is built to be fast and lightweight, running well even on low-powered hardware such as a Raspberry Pi."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "Stump is completely free and open source under the MIT license. There is no subscription or licensing fee; the only cost is the hardware or hosting infrastructure the user chooses to run it on."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Comic and Manga Library Management", "description": "Organizes and scans a self-hosted library of comics, manga, and digital books."},
+      {"title": "OPDS Feed Support", "description": "Exposes a library through OPDS so it can be read in many third-party e-reader apps."},
+      {"title": "Lightweight Performance", "description": "Runs well on modest hardware, including around 1GB of RAM and low-powered ARM devices."},
+      {"title": "Web-Based Reader", "description": "Includes a responsive web interface for browsing and reading directly in the browser."},
+      {"title": "Self-Hosted Data Ownership", "description": "All library data and files stay on infrastructure the user controls."},
+      {"title": "Raspberry Pi Friendly", "description": "Runs comfortably on small single-board computers commonly used for home labs."},
+      {"title": "Broad Format and Metadata Support", "description": "Aims to support a wide range of comic, manga, and digital book formats and metadata."},
+      {"title": "Active Open-Source Development", "description": "Actively developed in public on GitHub with community contributions."}
+    ],
+    "pros": [
+      "Completely free and open source",
+      "Lightweight and fast, even on low-power hardware",
+      "Full data ownership and privacy through self-hosting",
+      "OPDS support works with many existing e-reader apps",
+      "Active open-source community and development"
+    ],
+    "cons": [
+      "Still in beta and not yet a stable 1.0 release",
+      "Requires self-hosting knowledge, such as server or Docker setup",
+      "No official managed or cloud-hosted option",
+      "Smaller feature set than some longer-established alternatives",
+      "Documentation is still evolving"
+    ],
+    "faqs": [
+      {"question": "What is Stump used for?", "answer": "Stump is used to self-host a personal server for organizing and reading comics, manga, and digital books."},
+      {"question": "Is Stump free?", "answer": "Yes, Stump is completely free and open source under the MIT license."},
+      {"question": "Is Stump open source?", "answer": "Yes, its source code is publicly available on GitHub under stumpapp/stump."},
+      {"question": "What is OPDS and why does it matter?", "answer": "OPDS is an open standard for browsing digital book and comic catalogs, and Stump's OPDS support lets its library be accessed from many third-party e-reader apps."},
+      {"question": "Can Stump run on a Raspberry Pi?", "answer": "Yes, Stump is lightweight enough to run well on low-powered ARM-based devices such as a Raspberry Pi."},
+      {"question": "How does Stump compare to Komga?", "answer": "Stump and Komga are both open-source, self-hosted comic and manga servers; Stump is newer and still in beta, while Komga is a more established alternative in the same space."},
+      {"question": "Is Stump stable for production use?", "answer": "Stump's maintainers describe it as beta software, so users should expect ongoing changes ahead of a stable 1.0 release."},
+      {"question": "Do I need technical skills to install Stump?", "answer": "Yes, since Stump is self-hosted, setting it up typically requires basic familiarity with running a server, Docker, or a home-lab environment."}
+    ],
+    "use_cases": [
+      {"title": "Home-Lab Comic and Manga Library", "description": "Hosting a personal comic and manga collection accessible from home network devices.", "audience": "Self-hosting and home-lab enthusiasts"},
+      {"title": "Family Digital Book Server", "description": "Sharing a digital book and comic library across household devices via OPDS-compatible reader apps.", "audience": "Families and personal media collectors"},
+      {"title": "Privacy-Focused Reading Alternative", "description": "Avoiding cloud reading services by keeping a comic and book library entirely under personal control.", "audience": "Privacy-conscious users"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["MIT-licensed, run on your own hardware", "OPDS feed support", "Web-based reader", "No account, subscription, or licensing fee"]}
+    ],
+    "tags": ["self-hosted", "comic-reader", "manga-server", "open-source", "media-server", "opds"],
+    "publish": true
+  }
+},
+{
+  "tool_id": "2b01301f-20d2-49a2-a9d0-dfcb07a99c20",
+  "slug": "stytch",
+  "name": "Stytch",
+  "enrichment": {
+    "short_description": "Stytch is a developer-first authentication and identity platform offering passwordless login, SSO, and fraud prevention for consumer and B2B apps; it was acquired by Twilio in November 2025.",
+    "pricing_model": "freemium/usage-based",
+    "starting_price": "Free up to 10,000 monthly active users",
+    "founded_year": 2020,
+    "company_size": null,
+    "headquarters": "San Francisco, California, United States",
+    "languages": ["English"],
+    "seo_title": "Stytch Review: Developer Authentication Platform Pricing",
+    "seo_meta_description": "Stytch is a developer-first authentication and identity platform now owned by Twilio. See pricing, features, and passwordless login options.",
+    "llm_readable_summary": "Stytch is a developer-first authentication and identity platform founded in 2020 by Reed McGinley-Stempel and Julianna Lamb, former colleagues at Plaid, and headquartered in San Francisco, California. It provides building blocks for passwordless authentication, such as magic links and one-time passcodes, alongside OAuth, SSO, SCIM provisioning, session management, role-based access control, and device fingerprinting for fraud prevention, aimed at both consumer apps and B2B, multi-tenant SaaS products. Stytch raised roughly 146 million dollars in funding from investors including Thrive Capital, Index Ventures, and Benchmark, reaching a 1 billion dollar valuation after a 90 million dollar Series B in November 2021. In October 2025, Twilio announced it would acquire Stytch, and the deal closed on November 14, 2025, for a purchase price of about 104.1 million dollars, bringing Stytch's identity stack into Twilio's communications and identity platform. Stytch's pricing is usage-based: a Pay as You Go tier is free for up to 10,000 monthly active users and AI agents, with additional SSO or SCIM connections and fraud-prevention fingerprints billed beyond included allotments, while an Enterprise tier offers custom pricing, a 99.99 percent uptime SLA, HIPAA and BAA compliance, and dedicated support. Stytch is best suited for engineering teams building or replacing authentication in consumer and B2B applications, including emerging use cases around authenticating AI agents.",
+    "long_form_blocks": [
+      {
+        "id": "overview",
+        "heading": "What Is Stytch",
+        "level": 2,
+        "paragraphs": [
+          "Stytch is an authentication and identity platform founded in 2020 by Reed McGinley-Stempel and Julianna Lamb, who previously worked together at Plaid. The company set out to give developers modern, API-first building blocks for passwordless login and identity management rather than a rigid, one-size-fits-all auth widget.",
+          "In November 2025, Stytch was acquired by Twilio for about 104.1 million dollars, following a definitive agreement announced in October 2025, bringing its identity infrastructure into Twilio's broader communications and identity platform."
+        ]
+      },
+      {
+        "id": "key-features",
+        "heading": "Key Features",
+        "level": 2,
+        "paragraphs": [
+          "Stytch supports passwordless authentication methods such as magic links and one-time passcodes, alongside OAuth and full SSO or SCIM support for enterprise customers. It offers organization-level multi-tenancy for B2B apps, role-based access control, prebuilt UI components, device fingerprinting for fraud prevention, and machine-to-machine tokens for API-to-API or AI agent authentication."
+        ]
+      },
+      {
+        "id": "pricing",
+        "heading": "Pricing",
+        "level": 2,
+        "paragraphs": [
+          "Stytch's Pay as You Go tier is free for up to 10,000 monthly active users and AI agents, with additional SSO or SCIM connections and fraud-prevention fingerprints billed beyond the included free allotments. The Enterprise tier offers custom pricing with discounted rates, a 99.99 percent uptime SLA, HIPAA and BAA compliance, and migration assistance."
+        ]
+      }
+    ],
+    "features": [
+      {"title": "Passwordless Authentication", "description": "Supports magic links and one-time passcodes instead of traditional passwords."},
+      {"title": "OAuth and SSO Support", "description": "Full OAuth and single sign-on support, including SCIM provisioning for enterprise customers."},
+      {"title": "Prebuilt UI Components", "description": "Ready-made login and authentication UI components to speed up integration."},
+      {"title": "B2B Multi-Tenancy", "description": "Organization-level auth policies built for B2B SaaS apps with multiple tenants."},
+      {"title": "Fraud Prevention", "description": "Device fingerprinting and fraud detection tools to identify suspicious sign-ins."},
+      {"title": "Machine-to-Machine Tokens", "description": "Supports API-to-API and AI agent authentication through M2M tokens."},
+      {"title": "Session and RBAC Management", "description": "Manages sessions and role-based access control across an application."},
+      {"title": "API-First SDKs", "description": "Extensive SDKs and APIs designed for direct integration into custom applications."}
+    ],
+    "pros": [
+      "Strong developer experience and documentation",
+      "Generous free tier covering up to 10,000 monthly active users",
+      "Flexible building blocks instead of a rigid all-in-one auth widget",
+      "Built for both consumer apps and B2B multi-tenant products",
+      "Backed by Twilio's infrastructure and reach following the acquisition"
+    ],
+    "cons": [
+      "Roadmap and pricing may shift as Stytch integrates into Twilio",
+      "Additional SSO or SCIM connections and fraud fingerprints cost extra beyond free allotments",
+      "Enterprise features like HIPAA and BAA compliance require a custom contract",
+      "Primarily aimed at developers rather than non-technical teams",
+      "Email branding removal is a separate one-time fee"
+    ],
+    "faqs": [
+      {"question": "What is Stytch used for?", "answer": "Stytch is used by developers to add authentication, such as passwordless login, SSO, and fraud prevention, to consumer and B2B applications."},
+      {"question": "Is Stytch free?", "answer": "Yes, Stytch's Pay as You Go tier is free for up to 10,000 monthly active users and AI agents, with usage-based pricing beyond that."},
+      {"question": "Who owns Stytch now?", "answer": "Stytch is owned by Twilio, which acquired the company in a deal that closed on November 14, 2025."},
+      {"question": "What is passwordless authentication?", "answer": "Passwordless authentication lets users sign in using methods like magic links or one-time passcodes instead of a traditional password."},
+      {"question": "Does Stytch support SSO and SCIM?", "answer": "Yes, Stytch supports OAuth, SSO, and SCIM provisioning, with five connections included on the Pay as You Go tier and additional connections billed separately."},
+      {"question": "Can Stytch be used for B2B multi-tenant apps?", "answer": "Yes, Stytch offers organization-level auth policies and built-in multi-tenancy designed for B2B SaaS applications."},
+      {"question": "How much does Stytch cost after the free tier?", "answer": "Beyond the free allotment, Stytch charges for extra SSO or SCIM connections and fraud-prevention fingerprints, with custom Enterprise pricing available for larger organizations."},
+      {"question": "Is Stytch good for AI agent authentication?", "answer": "Yes, Stytch offers machine-to-machine tokens designed to support API-to-API and AI agent authentication use cases."}
+    ],
+    "use_cases": [
+      {"title": "Passwordless Login for Consumer Apps", "description": "Replacing traditional password login with magic links or one-time passcodes.", "audience": "Consumer app developers"},
+      {"title": "B2B SaaS SSO and Multi-Tenant Management", "description": "Managing organization-level authentication policies and SSO for business customers.", "audience": "B2B SaaS engineering teams"},
+      {"title": "Machine-to-Machine and AI Agent Authentication", "description": "Authenticating API-to-API calls and AI agents using M2M tokens.", "audience": "Teams building AI-powered applications"}
+    ],
+    "pricing_plans": [
+      {"plan_name": "Pay as You Go", "price": "Free up to 10,000 MAU", "billing_cycle": "Usage-based", "features": ["10,000 monthly active users and AI agents included free", "Unlimited organizations", "5 SSO or SCIM connections included", "1,000 M2M tokens included", "Full authentication suite with OAuth, SSO, sessions, and RBAC"]},
+      {"plan_name": "Enterprise", "price": "Custom (contact sales)", "billing_cycle": "Custom", "features": ["Discounted rates", "Dedicated Slack support channel", "99.99% uptime SLA", "HIPAA and BAA compliance", "Migration assistance"]}
+    ],
+    "tags": ["authentication", "identity-platform", "passwordless-login", "developer-tools", "api-platform", "fraud-prevention"],
+    "publish": true
+  }
+}
+]

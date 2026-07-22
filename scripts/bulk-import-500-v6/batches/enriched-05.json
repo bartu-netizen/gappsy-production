@@ -1,0 +1,643 @@
+[
+  {
+    "tool_id": "5876a809-20b6-4a29-bd49-189eea244f05",
+    "slug": "manage-my-damn-life",
+    "name": "Manage My Damn Life",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source web front end for managing CalDAV tasks and calendars across multiple accounts.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Manage My Damn Life (MMDL) is a free, open-source, self-hosted front end for CalDAV tasks and calendars. Rather than replacing your calendar server, it acts as a unified interface that connects to existing CalDAV backends such as Nextcloud, Baikal, and Radicale, plus Google Calendar over OAuth.",
+            "The project is built with Next.js and distributed on GitHub under the intri-in organization, with Docker deployment support for people who want to run it on their own infrastructure alongside their existing calendar server."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "MMDL is aimed at self-hosters who already run a CalDAV server and want a more capable task-and-calendar interface than their server's default web UI, without handing calendar data to a third-party SaaS product."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-account CalDAV support", "description": "Connect several CalDAV accounts and manage them from one interface, using the tsdav library for protocol access." },
+        { "title": "Multiple task and calendar views", "description": "Switch between list, calendar, and Gantt-chart views of the same underlying tasks and events." },
+        { "title": "Subtasks and rich task fields", "description": "Tasks support due dates, status, description, and recurrence rules." },
+        { "title": "Nextcloud, Baikal, and Radicale compatibility", "description": "Tested against these open-source CalDAV servers, with broader server support expected via the tsdav library." },
+        { "title": "Google Calendar OAuth", "description": "Connect a Google Calendar account alongside self-hosted CalDAV accounts." },
+        { "title": "Docker deployment", "description": "Ships with a sample docker-compose file for self-hosting." }
+      ],
+      "pros": [
+        "Free and open source, no vendor lock-in",
+        "Works with popular self-hosted CalDAV servers you may already run",
+        "Multiple views (list, calendar, Gantt) for the same task data",
+        "Supports multiple accounts and both CalDAV and Google Calendar"
+      ],
+      "cons": [
+        "Requires you to already run (or set up) a separate CalDAV server such as Nextcloud, Baikal, or Radicale",
+        "Small community project — support relies on the GitHub repository rather than dedicated documentation or a company",
+        "Self-hosting and Docker familiarity required to deploy it"
+      ],
+      "faqs": [
+        { "question": "Do I need a CalDAV server to use Manage My Damn Life?", "answer": "Yes. MMDL is a front end only — it connects to an existing CalDAV server such as Nextcloud, Baikal, or Radicale (or to Google Calendar via OAuth)." },
+        { "question": "Is Manage My Damn Life free?", "answer": "Yes, it's free and open source, distributed on GitHub." },
+        { "question": "How do I deploy it?", "answer": "The project provides a sample docker-compose configuration for self-hosted deployment." }
+      ],
+      "use_cases": [
+        { "title": "Unified task/calendar dashboard", "description": "Combine tasks and events from several CalDAV accounts and Google Calendar in one interface.", "audience": "Self-hosters managing multiple calendar accounts" },
+        { "title": "Project-style task tracking", "description": "Use the Gantt view to plan tasks with due dates and recurrence on top of a CalDAV backend.", "audience": "Individuals who want lightweight project tracking without a SaaS tool" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Manage My Damn Life is a free, open-source, self-hosted web front end for managing CalDAV tasks and calendars from Nextcloud, Baikal, or Radicale."
+    }
+  },
+  {
+    "tool_id": "95330f45-8ddc-4fe4-b00d-c7498b26f5ac",
+    "slug": "radicale",
+    "name": "Radicale",
+    "enrichment": {
+      "short_description": "Lightweight, free CalDAV and CardDAV server for self-hosting calendars, to-do lists, and contacts.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Radicale is a small but capable CalDAV (calendars, to-do lists, journal entries) and CardDAV (contacts) server, released under the GPLv3 license and maintained by the Kozea community. It's written in Python 3.9+ and can run as a standalone HTTP server or as a WSGI application behind another web server.",
+            "It stores data directly on the filesystem in a simple folder structure, avoiding a database dependency, and works out of the box with minimal configuration. Radicale supports TLS, pluggable authentication and access-control backends, and runs on Linux, BSD, macOS, and Windows, as well as via Docker (amd64 and arm64)."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Radicale suits individuals and small teams who want to self-host calendar and contact sync (compatible with standard CalDAV/CardDAV clients like Apple Calendar/Contacts, Thunderbird, and DAVx5) without running a heavier groupware suite."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "CalDAV support", "description": "Sync events, to-dos, and journal entries to any standard CalDAV client." },
+        { "title": "CardDAV support", "description": "Sync contacts/address books to any standard CardDAV client." },
+        { "title": "Filesystem storage", "description": "Data is stored as plain files, simplifying backup and inspection." },
+        { "title": "Pluggable authentication and rights", "description": "Extensible auth, rights-management, storage, and web-interface plugin system." },
+        { "title": "TLS support", "description": "Secure client connections out of the box." },
+        { "title": "Cross-platform", "description": "Runs on Linux, BSD, macOS, Windows, and via Docker." }
+      ],
+      "pros": [
+        "Genuinely lightweight — minimal dependencies and simple filesystem-based storage",
+        "No complicated setup required to get a working CalDAV/CardDAV server",
+        "Free and open source under GPLv3",
+        "Works with any standard CalDAV/CardDAV client"
+      ],
+      "cons": [
+        "No built-in web UI comparable to full groupware suites — it's a protocol server, not a polished app",
+        "Scaling and multi-user administration is more manual than hosted alternatives",
+        "Community-maintained project, not a commercial product with SLAs"
+      ],
+      "faqs": [
+        { "question": "Is Radicale free?", "answer": "Yes, Radicale is free, open-source software licensed under GPLv3." },
+        { "question": "What protocols does Radicale support?", "answer": "CalDAV for calendars and to-do lists, and CardDAV for contacts." },
+        { "question": "Does Radicale need a database?", "answer": "No, it stores data directly on the filesystem." },
+        { "question": "Can I use Radicale with Apple Calendar or Thunderbird?", "answer": "Yes, any standard CalDAV/CardDAV client can connect to a Radicale server." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted calendar sync", "description": "Sync calendars and to-do lists across devices without a third-party cloud provider.", "audience": "Privacy-focused individuals and small teams" },
+        { "title": "Backend for CalDAV front ends", "description": "Serve as the storage backend for other apps and front ends that speak CalDAV/CardDAV.", "audience": "Self-hosters building a personal productivity stack" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac"],
+      "seo_meta_description": "Radicale is a free, open-source CalDAV and CardDAV server for self-hosting calendars, to-do lists, and contacts with minimal setup."
+    }
+  },
+  {
+    "tool_id": "a457e2a0-cf21-4282-b4c7-bfaec9f56dc1",
+    "slug": "anycable",
+    "name": "AnyCable",
+    "enrichment": {
+      "short_description": "Self-hosted realtime WebSocket server with delivery guarantees, built to offload real-time features from web app backends.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2017,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "AnyCable is a standalone realtime server, written in Go, that handles persistent WebSocket connections on behalf of a web application backend. It adds delivery guarantees (recovering messages missed during a disconnect), presence tracking, message ordering, and connection persistence across backend deployments.",
+            "It's built and maintained by Evil Martians and released under the MIT license as open-source software, with an optional paid Pro tier and a managed SaaS offering for teams that don't want to operate it themselves. AnyCable integrates with Rails/Hotwire and Turbo Streams natively, and can be used from Laravel, Node.js, Python, or any backend that can call its HTTP API."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "AnyCable is aimed at engineering teams — particularly Rails/Hotwire shops, but also polyglot teams — who need reliable real-time features (chat, live dashboards, notifications, presence) at a scale where a request/response backend's built-in WebSocket handling (e.g. Action Cable) becomes a bottleneck."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Delivery guarantees", "description": "Automatically recovers messages missed during connectivity interruptions." },
+        { "title": "Connection persistence", "description": "Keeps WebSocket connections alive across backend application deployments." },
+        { "title": "High connection capacity", "description": "Designed to support 10,000+ concurrent connections per server instance." },
+        { "title": "Presence tracking", "description": "Track which users/clients are currently connected to a channel." },
+        { "title": "Framework integrations", "description": "Native support for Rails/Hotwire/Turbo Streams, plus HTTP API access from Laravel, Node.js, Python, and other backends." },
+        { "title": "On-premise deployment", "description": "Self-hosted option keeps connection data on your own infrastructure." }
+      ],
+      "pros": [
+        "Open-source core is free and self-hostable under MIT license",
+        "Written in Go for low memory overhead on long-lived connections",
+        "Built-in delivery guarantees and reconnection handling reduce custom real-time code",
+        "Strong Rails/Hotwire integration from a well-known Ruby consultancy (Evil Martians)"
+      ],
+      "cons": [
+        "Advanced features (adaptive scaling, binary compression, dedicated support) are gated behind the paid Pro tier",
+        "Adds an extra service to operate and monitor alongside your main backend",
+        "Best-documented for Rails/Hotwire; other backend integrations rely on a generic HTTP API"
+      ],
+      "faqs": [
+        { "question": "Is AnyCable free to self-host?", "answer": "Yes, the open-source core is free and MIT-licensed. A paid Pro tier (listed at $1,490/year) adds features like adaptive scaling and dedicated support." },
+        { "question": "What frameworks does AnyCable work with?", "answer": "It has native integration with Rails/Hotwire/Turbo Streams and can be used from Laravel, Node.js, Python, or any backend via its HTTP API." },
+        { "question": "Who builds AnyCable?", "answer": "AnyCable is developed by Evil Martians and has been used in production since 2017." }
+      ],
+      "use_cases": [
+        { "title": "Scaling WebSocket connections", "description": "Offload persistent connection handling from a Rails/Hotwire or other backend to a dedicated Go server.", "audience": "Engineering teams outgrowing built-in WebSocket handling" },
+        { "title": "Real-time notifications and dashboards", "description": "Push live updates (dashboards, tracking, chat) to clients with delivery guarantees.", "audience": "Product teams building real-time features" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted realtime server", "MIT license", "Core delivery guarantees and connection handling"] },
+        { "plan_name": "Pro", "price": "$1,490/year", "billing_cycle": "yearly", "features": ["Unlimited instances", "Adaptive scaling", "Binary compression", "Dedicated support"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "api"],
+      "seo_meta_description": "AnyCable is a self-hosted, MIT-licensed realtime WebSocket server with delivery guarantees, built by Evil Martians for Rails, Laravel, and Node.js apps."
+    }
+  },
+  {
+    "tool_id": "1c38ae10-51dd-4efa-aae5-4c2f20863745",
+    "slug": "centrifugo",
+    "name": "Centrifugo",
+    "enrichment": {
+      "short_description": "Open-source, self-hosted real-time messaging server for broadcasting updates over WebSocket and other transports.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Centrifugo is a self-hosted, MIT-licensed real-time messaging server written in Go. It manages persistent client connections and broadcasts messages over WebSocket, HTTP streaming, SSE, WebTransport, or gRPC, acting as a self-hosted alternative to hosted services like Pusher, Ably, or PubNub.",
+            "It supports PUB/SUB messaging, channel history, online presence, and clustering via Redis, PostgreSQL, or NATS as a broker, making it suitable for broadcasting to large numbers of concurrently connected clients. A commercial Centrifugo PRO edition adds features like analytics, real-time tracing, push notification APIs, and SSO, licensed separately from the open-source core."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Centrifugo is aimed at backend engineering teams who need to add real-time features — chat, live comments, multiplayer state sync, live dashboards, or AI token streaming — to an existing application without depending on a hosted real-time SaaS provider."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multiple transport protocols", "description": "WebSocket, HTTP-streaming, Server-Sent Events, WebTransport, and gRPC." },
+        { "title": "PUB/SUB and state sync", "description": "Broadcast messages and synchronize state to subscribed clients." },
+        { "title": "Channel history and presence", "description": "Track channel history and which clients are currently online." },
+        { "title": "Clustering via Redis/PostgreSQL/NATS", "description": "Scale across multiple nodes using a supported broker/engine." },
+        { "title": "Client SDKs", "description": "Official SDKs for web and mobile clients, with a language-agnostic backend publishing API." },
+        { "title": "Centrifugo PRO add-ons", "description": "Commercial edition adds analytics, tracing, push notification APIs, and SSO integrations." }
+      ],
+      "pros": [
+        "Open-source core is free, MIT-licensed, and self-hostable",
+        "Language-agnostic — any backend can publish messages via its API",
+        "Built for horizontal scaling to large numbers of concurrent connections",
+        "Supports several transport protocols beyond plain WebSocket"
+      ],
+      "cons": [
+        "Advanced operational features (analytics, tracing, SSO) require the paid PRO edition with custom, company-size-based pricing",
+        "Requires running and operating a separate broker (Redis/PostgreSQL/NATS) for multi-node clustering",
+        "Adds infrastructure to manage compared to a fully hosted real-time API"
+      ],
+      "faqs": [
+        { "question": "Is Centrifugo free?", "answer": "The core Centrifugo server is free and open source under the MIT license. Centrifugo PRO is a separately licensed commercial edition with custom pricing based on company size." },
+        { "question": "What transports does Centrifugo support?", "answer": "WebSocket, HTTP-streaming, Server-Sent Events, WebTransport, and gRPC." },
+        { "question": "Can Centrifugo scale across multiple servers?", "answer": "Yes, using Redis, PostgreSQL, or NATS as a broker for clustering." }
+      ],
+      "use_cases": [
+        { "title": "Live chat and comments", "description": "Broadcast chat messages or comment updates to connected clients in real time.", "audience": "Engineering teams building chat or live-comment features" },
+        { "title": "Live dashboards and data feeds", "description": "Stream analytics, financial, or IoT sensor data to connected clients.", "audience": "Teams building real-time dashboards" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted messaging server", "MIT license", "Core PUB/SUB, presence, and history"] },
+        { "plan_name": "Centrifugo PRO", "price": "Custom (contact sales)", "billing_cycle": "yearly", "features": ["Analytics and real-time tracing", "Push notification APIs", "SSO integrations", "Priority support and updates"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "api"],
+      "seo_meta_description": "Centrifugo is an open-source, self-hosted real-time messaging server for broadcasting over WebSocket, SSE, and gRPC, with an optional PRO edition."
+    }
+  },
+  {
+    "tool_id": "dd982ac6-15fa-4c92-86fd-7b3367a55768",
+    "slug": "chitchatter",
+    "name": "Chitchatter",
+    "enrichment": {
+      "short_description": "Free, open-source peer-to-peer chat app that runs serverless in the browser with no accounts and no message storage.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Chitchatter is a free, open-source, GPLv2-licensed chat application that connects users directly, browser-to-browser, using WebRTC — there's no chat backend storing messages. Rooms are ephemeral: when a peer leaves, messages held only in that peer's memory are gone.",
+            "It requires only static hosting (the project itself is served from GitHub Pages) plus public WebTorrent trackers and TURN relay servers to help establish peer connections; no application server or database is needed. Because it's open source, it can also be self-hosted as a static site."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Chitchatter suits people who want a quick, no-signup, privacy-oriented chat room for a conversation, file transfer, or screen share, without relying on a server that could log or retain messages."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Serverless peer-to-peer chat", "description": "Messages travel directly between browsers over WebRTC with no backend server." },
+        { "title": "Public and private rooms", "description": "Create shareable public rooms or private, name-gated rooms." },
+        { "title": "Video, audio, and screen sharing", "description": "Supports video/audio chat and screen sharing between peers in a room." },
+        { "title": "Encrypted file transfer", "description": "Files are encrypted before sending and decrypted by the receiver, with no practical size limit." },
+        { "title": "Markdown messages", "description": "Message text supports Markdown formatting and code syntax highlighting." },
+        { "title": "Ephemeral by design", "description": "Messages are never persisted to disk and disappear from memory when a peer leaves." }
+      ],
+      "pros": [
+        "No account, sign-up, or server-side message storage required",
+        "Free and open source under GPLv2, can be self-hosted as a static site",
+        "Supports video, audio, screen share, and encrypted file transfer, not just text",
+        "Ephemeral messaging by design reduces data-retention risk"
+      ],
+      "cons": [
+        "Relies on public WebTorrent trackers and TURN servers for peer discovery/relay, which are outside your control",
+        "No message history or persistence — anything not backfilled from a connected peer is lost",
+        "As a browser-based P2P tool, reliability can vary with network conditions (NAT/firewall traversal)"
+      ],
+      "faqs": [
+        { "question": "Does Chitchatter store my messages?", "answer": "No. Messages exist only in each connected browser's memory and are cleared when you leave a room." },
+        { "question": "Do I need an account to use Chitchatter?", "answer": "No, there's no sign-up — you join a room by name and start chatting." },
+        { "question": "Is Chitchatter self-hostable?", "answer": "Yes, it's open source under GPLv2, so it can be deployed as a static site rather than using the hosted chitchatter.im instance." }
+      ],
+      "use_cases": [
+        { "title": "Quick private conversation", "description": "Spin up a named room for a one-off private chat without creating an account.", "audience": "Privacy-conscious individuals" },
+        { "title": "Ad hoc file or screen sharing", "description": "Share files or a screen directly between browsers without uploading to a server.", "audience": "People needing a quick, serverless P2P session" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Chitchatter is a free, open-source, serverless peer-to-peer chat app with video, screen sharing, and no message storage or sign-up."
+    }
+  },
+  {
+    "tool_id": "5e84117d-d544-4f29-89e5-dcf3d6e9f06a",
+    "slug": "conduit",
+    "name": "Conduit",
+    "enrichment": {
+      "short_description": "Lightweight, open-source Matrix homeserver in Rust for self-hosting your own federated chat server.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Conduit is a Matrix homeserver implementation written in Rust, released under the Apache-2.0 license by developer Timo Koesters. It's designed to be a single binary with an embedded RocksDB database, aiming for low system requirements and a quick setup compared to larger homeservers like Synapse.",
+            "Because it implements the Matrix protocol, a self-hosted Conduit server can federate with the wider Matrix network and use bridges to connect to platforms like Discord. The project describes itself as still in beta — most Matrix rooms and features work, but some smaller features may be missing or buggy. It received German government (BMBF/Prototype Fund) funding for part of its development."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Conduit is aimed at self-hosters who want a lightweight, low-maintenance Matrix homeserver — for example running a small personal or community Matrix server — without the resource overhead of larger homeserver implementations."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Single-binary deployment", "description": "Ships as one binary with an embedded RocksDB database, simplifying setup." },
+        { "title": "Matrix protocol / federation", "description": "Federates with the wider Matrix network like other Matrix homeservers." },
+        { "title": "Low system requirements", "description": "Built to run on modest hardware compared to larger Matrix homeserver implementations." },
+        { "title": "Bridge compatibility", "description": "Can be paired with Matrix bridges to connect to platforms like Discord." }
+      ],
+      "pros": [
+        "Free, open source (Apache-2.0), and self-hostable",
+        "Simple single-binary setup with no external database to manage",
+        "Lower resource footprint than larger Matrix homeserver implementations",
+        "Interoperable with the broader federated Matrix network"
+      ],
+      "cons": [
+        "Officially labeled beta — some smaller Matrix features may be missing or unreliable",
+        "Smaller contributor base than the reference Synapse homeserver",
+        "Community forks (like Continuwuity) have diverged with additional features and more active recent development"
+      ],
+      "faqs": [
+        { "question": "Is Conduit free?", "answer": "Yes, Conduit is free, open-source software (Apache-2.0 license); the project also accepts donations." },
+        { "question": "What is Conduit built with?", "answer": "It's written in Rust and uses an embedded RocksDB database, packaged as a single binary." },
+        { "question": "Is Conduit production-ready?", "answer": "The project describes itself as beta — functional for most Matrix use, but potentially missing smaller features." }
+      ],
+      "use_cases": [
+        { "title": "Personal or small-community Matrix server", "description": "Self-host a lightweight homeserver to chat on the Matrix network under your own domain.", "audience": "Individuals and small communities self-hosting chat" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Conduit is a free, open-source, single-binary Matrix homeserver written in Rust for self-hosting your own federated chat server."
+    }
+  },
+  {
+    "tool_id": "35d633ed-e78a-443f-ae86-ab29e7bc10d2",
+    "slug": "continuwuity",
+    "name": "Continuwuity",
+    "enrichment": {
+      "short_description": "Community-driven, actively maintained Matrix homeserver in Rust, continuing the Conduwuit/Conduit lineage.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2025,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Continuwuity is a Matrix homeserver written in Rust, positioned as the official community-driven continuation of the conduwuit project, which was itself a hard fork of the original Conduit homeserver. It was started in 2025 after conduwuit was abandoned by its maintainers, to keep that codebase alive with ongoing releases.",
+            "The project is open source and community-maintained, hosted across Forgejo, Codeberg, and GitHub mirrors, with a stated goal of a new release roughly every one to two weeks. Existing conduwuit users can migrate by simply changing the container image name in their deployment, since Continuwuity aims to stay a drop-in replacement."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Continuwuity is aimed at self-hosters running (or considering) a Matrix homeserver who want an actively maintained option, including existing conduwuit users whose original project stopped receiving updates."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Matrix protocol federation", "description": "Functions as a full Matrix homeserver, federating with the wider Matrix network." },
+        { "title": "Drop-in conduwuit migration", "description": "Compatible with existing conduwuit deployments — migration is typically just a container image change." },
+        { "title": "Rust implementation", "description": "Built in Rust for performance and memory safety." },
+        { "title": "Regular release cadence", "description": "New releases roughly every one to two weeks from an active community." },
+        { "title": "Multiple deployment methods", "description": "Supports Docker and NixOS deployment, among other methods." },
+        { "title": "Bridge support", "description": "Works with Matrix bridges to platforms like Discord and Telegram." }
+      ],
+      "pros": [
+        "Actively maintained with a frequent release cadence, unlike the now-abandoned conduwuit",
+        "Free, open source, and self-hostable",
+        "Drop-in compatible with existing conduwuit deployments",
+        "Community-governed rather than dependent on a single maintainer"
+      ],
+      "cons": [
+        "Very young project (started 2025), with a shorter track record than established homeservers like Synapse",
+        "As a community fork of a fork, long-term project continuity depends on volunteer contributors",
+        "Licensing is mixed across sub-repositories rather than a single unified license"
+      ],
+      "faqs": [
+        { "question": "Is Continuwuity a fork of Conduit?", "answer": "It's the community continuation of conduwuit, which was itself a hard fork of the original Conduit Matrix homeserver." },
+        { "question": "Why was Continuwuity created?", "answer": "conduwuit was abandoned by its maintainers in 2025; Continuwuity was started by community contributors to keep the codebase actively developed." },
+        { "question": "Can I migrate from conduwuit to Continuwuity?", "answer": "Yes, it's designed as a drop-in replacement — migration is generally just changing the container image name." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted Matrix homeserver", "description": "Run your own federated Matrix chat server with active upstream maintenance.", "audience": "Self-hosters and Matrix communities" },
+        { "title": "conduwuit migration", "description": "Move an existing conduwuit deployment to an actively maintained continuation.", "audience": "Existing conduwuit administrators" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Continuwuity is a free, open-source, actively maintained Matrix homeserver in Rust that continues the conduwuit/Conduit project."
+    }
+  },
+  {
+    "tool_id": "3573cac7-ce24-4055-bf17-e0ce515e92a5",
+    "slug": "globaleaks",
+    "name": "GlobaLeaks",
+    "enrichment": {
+      "short_description": "Open-source software framework for running a secure, anonymous whistleblowing submission platform.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2011,
+      "company_size": null,
+      "headquarters": "Italy",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "GlobaLeaks is free, open-source software, licensed under the GNU Affero General Public License v3, that lets organizations run their own secure and anonymous whistleblowing platform. The software project began in 2010–2011 and is developed by the Hermes Center for Transparency and Digital Human Rights, an Italian digital-rights NGO.",
+            "It's built as a customizable framework rather than a single fixed product: organizations self-host their own instance and configure intake forms, workflows, and anonymity protections for reporters. GlobaLeaks supports over 70 languages and is designed with compliance considerations for standards such as the EU Whistleblowing Directive (2019/1937), ISO 37002, and GDPR."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "GlobaLeaks is used by media organizations, activist and civil-society groups, public agencies, and corporations that need to operate a secure channel for anonymous reports or whistleblower disclosures, particularly where legal whistleblower-protection compliance is required."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Anonymous submission channel", "description": "Lets whistleblowers submit reports without revealing their identity." },
+        { "title": "Customizable intake framework", "description": "Organizations configure their own forms, workflows, and questionnaires." },
+        { "title": "Multilingual support", "description": "Available in over 70 languages." },
+        { "title": "Regulatory-oriented design", "description": "Built with EU Whistleblowing Directive, ISO 37002, and GDPR considerations in mind." },
+        { "title": "Self-hosted deployment", "description": "Organizations run their own instance rather than relying on a third-party host." }
+      ],
+      "pros": [
+        "Free, open-source, and self-hostable under the AGPLv3 license",
+        "Purpose-built for anonymity and whistleblower protection, not a repurposed general form tool",
+        "Widely translated (70+ languages)",
+        "Long track record — actively developed since 2011"
+      ],
+      "cons": [
+        "Requires self-hosting and ongoing security/administration responsibility, which matters for a tool handling sensitive disclosures",
+        "As a compliance-adjacent tool, correct configuration for legal requirements in your jurisdiction is the operator's responsibility",
+        "Community/NGO-backed project rather than a commercial vendor with formal SLAs"
+      ],
+      "faqs": [
+        { "question": "Is GlobaLeaks free?", "answer": "Yes, GlobaLeaks is free, open-source software under the AGPLv3 license." },
+        { "question": "Who maintains GlobaLeaks?", "answer": "It's developed by the Hermes Center for Transparency and Digital Human Rights, an Italian NGO." },
+        { "question": "Does GlobaLeaks help with whistleblower law compliance?", "answer": "It's designed with frameworks such as the EU Whistleblowing Directive, ISO 37002, and GDPR in mind, though correct configuration for a specific jurisdiction is up to the operator." }
+      ],
+      "use_cases": [
+        { "title": "Corporate whistleblower channel", "description": "Run an internal reporting channel to meet whistleblower-protection regulations.", "audience": "Companies and public agencies" },
+        { "title": "Investigative journalism tip line", "description": "Offer sources a secure, anonymous way to submit leaks or documents.", "audience": "Media organizations and journalists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "GlobaLeaks is free, open-source software for running a secure, anonymous whistleblowing platform, developed by the Hermes Center since 2011."
+    }
+  },
+  {
+    "tool_id": "685a2454-07f3-45db-9fc9-03a9a78f0a9b",
+    "slug": "gnunet",
+    "name": "GNUnet",
+    "enrichment": {
+      "short_description": "GNU project's peer-to-peer networking framework for building secure, decentralized, privacy-preserving applications.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2001,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "GNUnet is a GNU project providing a network protocol stack for building secure, decentralized, and privacy-preserving applications, licensed under the GNU Affero General Public License v3 (or later). It started in 2001, originally as anonymous, censorship-resistant file sharing, and has since grown into a broader set of building blocks for secure peer-to-peer networking, including resource discovery, naming, and encrypted communication channels.",
+            "As a decentralized, self-organizing network, GNUnet has no reliance on central servers. It's primarily a developer framework/protocol stack rather than a polished end-user application — applications are built on top of it rather than GNUnet itself being a single consumer product."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "GNUnet is aimed at developers and researchers building privacy-preserving, decentralized applications or protocols, and at technically advanced users interested in running peer-to-peer network infrastructure that protects metadata as well as content."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Decentralized peer-to-peer architecture", "description": "Self-organizing network with no central point of control." },
+        { "title": "Metadata-preserving routing", "description": "Designed to protect sender/receiver identity and communication patterns, not just message content." },
+        { "title": "Encrypted communication channels", "description": "Provides building blocks for secure, encrypted networking between peers." },
+        { "title": "Naming and resource discovery services", "description": "Includes decentralized naming and addressing components for applications built on top of it." },
+        { "title": "Free software", "description": "Released under the GNU AGPLv3+ license as part of the GNU Project." }
+      ],
+      "pros": [
+        "Free and open source under the GNU AGPLv3+ license",
+        "Long-running research and development history (since 2001) backed by academic contributors",
+        "Designed around metadata privacy, not just content encryption",
+        "Fully decentralized with no dependency on central servers"
+      ],
+      "cons": [
+        "It's a protocol/framework for developers, not a ready-to-use end-user chat or file-sharing app",
+        "Smaller ecosystem and user base than mainstream P2P or messaging networks",
+        "Requires technical expertise to deploy and build applications on top of it"
+      ],
+      "faqs": [
+        { "question": "Is GNUnet a chat app?", "answer": "No — it's a decentralized networking framework/protocol stack that applications (including messaging tools) can be built on top of." },
+        { "question": "Is GNUnet free?", "answer": "Yes, it's free software released under the GNU AGPLv3+ license." },
+        { "question": "Who develops GNUnet?", "answer": "It's a GNU project, with development led by Christian Grothoff and contributors since 2001." }
+      ],
+      "use_cases": [
+        { "title": "Privacy-preserving application development", "description": "Build decentralized applications on top of GNUnet's networking, naming, and encryption primitives.", "audience": "Developers and researchers" },
+        { "title": "Censorship-resistant infrastructure", "description": "Use GNUnet's decentralized routing to avoid single points of control or failure.", "audience": "Privacy and digital-rights technologists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "GNUnet is a free, open-source GNU project networking framework for building secure, decentralized, privacy-preserving peer-to-peer applications."
+    }
+  },
+  {
+    "tool_id": "e4e15aa2-1586-4029-bdbb-ccdc26761466",
+    "slug": "hyphanet",
+    "name": "Hyphanet",
+    "enrichment": {
+      "short_description": "Open-source, decentralized peer-to-peer network for censorship-resistant, anonymous publishing and communication.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1999,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Hyphanet is the continuation of the original Freenet project, which began as Ian Clarke's student project at the University of Edinburgh in 1999 and grew into one of the earliest anonymous, censorship-resistant peer-to-peer publishing networks. In 2023, the original Freenet codebase was spun off under the name Hyphanet, maintained by its existing team, while the Freenet name and organization moved to a separate, newer project.",
+            "Hyphanet is a fully decentralized network with no central servers: users can connect to the public Opennet, build trusted friend-to-friend (darknet) links, or bridge offline via sneakernets. A plugin system enables use cases like personal websites (freesites), forums, microblogging, and file sharing on top of the anonymous network layer."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Hyphanet suits people who need censorship-resistant publishing or communication — for example under surveillance or content-blocking conditions — and who are willing to trade convenience and speed for a decentralized, anonymous network with no central point of failure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Decentralized, serverless network", "description": "No central authority or server required to publish or retrieve content." },
+        { "title": "Opennet and darknet modes", "description": "Connect to the public network or build friend-to-friend trusted links." },
+        { "title": "Plugin ecosystem", "description": "Plugins add personal websites, forums, microblogging, and file/media sharing." },
+        { "title": "Sneakernet bridging", "description": "Supports offline data exchange to bridge isolated network segments." },
+        { "title": "Anonymity by design", "description": "Built around anonymous publishing and communication rather than added as an afterthought." }
+      ],
+      "pros": [
+        "Free and open source with a very long operating history (since 1999)",
+        "Fully decentralized — no central servers to seize, block, or shut down",
+        "Supports both public (Opennet) and trusted friend-to-friend (darknet) modes",
+        "Actively maintained, with builds released through 2025–2026"
+      ],
+      "cons": [
+        "Network performance and content availability depend on peer participation, and can be slower than centralized alternatives",
+        "The 2023 Freenet/Hyphanet rebrand can cause confusion about which project ('Freenet' or 'Hyphanet') a given resource refers to",
+        "Steeper learning curve than mainstream messaging or publishing tools"
+      ],
+      "faqs": [
+        { "question": "Is Hyphanet the same as Freenet?", "answer": "Hyphanet is the continuation of the original Freenet codebase (started in 1999), rebranded in 2023 after the Freenet name and organization moved to a separate, newer project." },
+        { "question": "Is Hyphanet free?", "answer": "Yes, it's free, open-source software." },
+        { "question": "Does Hyphanet require central servers?", "answer": "No, it's a fully decentralized peer-to-peer network." }
+      ],
+      "use_cases": [
+        { "title": "Censorship-resistant publishing", "description": "Publish freesites, forums, or files that remain accessible even if individual peers go offline.", "audience": "Activists, journalists, and privacy-focused publishers" },
+        { "title": "Anonymous communication under surveillance", "description": "Communicate and share information without relying on centralized, blockable infrastructure.", "audience": "Users in high-censorship or high-surveillance environments" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac"],
+      "seo_meta_description": "Hyphanet (formerly Freenet, since 1999) is a free, open-source, decentralized peer-to-peer network for censorship-resistant anonymous publishing."
+    }
+  }
+]

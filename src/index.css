@@ -112,16 +112,42 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+/* #root (not html/body) gets height:100% — once body is left to its
+   natural content height below, #root's 100% resolves against that real
+   height instead of clamping to the viewport. */
+#root {
   height: 100%;
 }
 
+/* html/body deliberately do NOT get height:100% here. Combined with
+   overflow-x:hidden below, that used to force body into an internally
+   auto-scrolling box (per the CSS spec, overflow-x:hidden with no
+   explicit overflow-y forces overflow-y to compute as 'auto', not
+   'visible' — setting overflow-y: visible explicitly doesn't override
+   this, the UA still coerces it) — scrolling then happened via
+   document.body.scrollTop instead of the normal window/document scroll.
+   Every scroll-aware bit of code in this app (header "scrolled" shadow
+   states, ScrollToTop, sticky positioning) assumes the standard
+   window-level scroll, and this pattern is also a known source of
+   scroll-freeze bugs on iOS Safari specifically. Removing height:100%
+   here restores normal document scrolling: body is just as tall as its
+   content, and the window scrolls it. */
 html {
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
+/* body deliberately does NOT also get overflow-x:hidden — html having it
+   is enough to prevent horizontal scrollbars, and having BOTH html and
+   body compute overflow-y:auto made them two competing "scroll
+   containers" nested inside each other. Since body's own box was always
+   exactly as tall as its content (nothing genuinely overflowed IT), that
+   second scroll container never actually scrolled — but any
+   position:sticky element inside body bound to body (the nearer one) as
+   its scroll boundary instead of html (the one that actually scrolls),
+   so sticky headers silently stopped sticking site-wide. */
 body {
-  overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 @media (max-width: 768px) {
@@ -426,6 +452,117 @@ body {
 @media (min-width: 768px) {
   .hero-intro-text {
     margin-bottom: 24px;
+  }
+}
+
+.hero-featured-agencies {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-featured-agencies-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin: 0;
+}
+
+.hero-featured-agencies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero-featured-agency-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-featured-agency-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.hero-featured-agency-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.hero-featured-agency-logo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.hero-featured-agency-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.hero-featured-agency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: #4F47E6;
+  border-radius: 999px;
+  padding: 2px 7px;
+  margin-bottom: 4px;
+}
+
+.hero-featured-agency-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.hero-featured-agency-desc {
+  font-size: 11.5px;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 3px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-featured-agency-arrow {
+  width: 14px;
+  height: 14px;
+  color: #64748b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .hero-featured-agencies {
+    margin-top: 20px;
   }
 }
 
@@ -1549,7 +1686,7 @@ body {
 }
 
 .premium-regions-section {
-  padding: 0;
+  padding: 80px 0;
   background: var(--bg-primary);
 }
 

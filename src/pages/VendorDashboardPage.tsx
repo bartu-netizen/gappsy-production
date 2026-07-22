@@ -1,0 +1,980 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
+  MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles,
+} from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { vendorDashboard } from '../lib/vendorDashboardApi';
+import EntitySEOTags from '../components/EntitySEOTags';
+import { useNoindex } from '../components/NoindexMeta';
+import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
+
+interface ToolRow {
+  id: string; slug: string; name: string; logo: string | null; website: string | null;
+  short_description: string | null; long_description: string | null; pricing_model: string | null;
+  starting_price: string | null; youtube_url: string | null; founded_year: number | null;
+  company_size: string | null; headquarters: string | null; languages: string[];
+  best_for: string | null; target_audience: string | null; pricing_summary: string | null;
+  features_summary: string | null; integrations_summary: string | null; company_summary: string | null;
+  rating: number; review_count: number; verified: boolean; featured: boolean;
+  featured_until: string | null; status: string; updated_at: string;
+}
+interface FeatureRow { id: string; title: string; description: string | null; sort_order: number }
+interface TextRow { id: string; text: string; sort_order: number }
+interface FaqRow { id: string; question: string; answer: string; sort_order: number }
+interface ReviewRow {
+  id: string; reviewer_name: string; rating: number; title: string | null; body: string;
+  status: string; vendor_response: string | null; vendor_response_at: string | null; created_at: string;
+}
+interface ClaimSubscriptionRow { status: string; created_at: string }
+interface GrowthSubscriptionRow {
+  status: string; billing_interval: string | null; current_period_end: string | null;
+  featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null;
+}
+interface AnalyticsData { views_total: number; views_30d: number; clicks_total: number; clicks_30d: number }
+interface ComparisonRequestRow {
+  id: string; status: string; admin_notes: string | null; created_at: string;
+  requested_tool: { slug: string; name: string; logo: string | null } | null;
+}
+interface ChatQuestionRow { content: string; created_at: string }
+
+type Tab = 'overview' | 'listing' | 'content' | 'reviews' | 'billing' | 'analytics' | 'comparisons' | 'chat_questions';
+
+const TABS: { key: Tab; label: string; icon: typeof LayoutDashboard }[] = [
+  { key: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { key: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { key: 'chat_questions', label: 'Visitor Questions', icon: Sparkles },
+  { key: 'comparisons', label: 'Comparisons', icon: ArrowLeftRight },
+  { key: 'listing', label: 'Listing', icon: FileText },
+  { key: 'content', label: 'Features & FAQs', icon: FileText },
+  { key: 'reviews', label: 'Reviews', icon: MessageSquare },
+  { key: 'billing', label: 'Billing', icon: Wallet },
+];
+
+export default function VendorDashboardPage() {
+  useNoindex();
+  const { user, loading: authLoading, signOut } = useAuth();
+  const [tab, setTab] = useState<Tab>('overview');
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const [tool, setTool] = useState<ToolRow | null>(null);
+  const [features, setFeatures] = useState<FeatureRow[]>([]);
+  const [pros, setPros] = useState<TextRow[]>([]);
+  const [cons, setCons] = useState<TextRow[]>([]);
+  const [faqs, setFaqs] = useState<FaqRow[]>([]);
+  const [reviews, setReviews] = useState<ReviewRow[]>([]);
+  const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
+  const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [chatQuestions, setChatQuestions] = useState<ChatQuestionRow[]>([]);
+  const [comparisonRequests, setComparisonRequests] = useState<ComparisonRequestRow[]>([]);
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    vendorDashboard.fetchAll().then((res) => {
+      if (!res.ok) {
+        setLoadError(res.error || 'Failed to load your dashboard');
+        setLoading(false);
+        return;
+      }
+      setTool(res.tool);
+      setFeatures(res.features);
+      setPros(res.pros);
+      setCons(res.cons);
+      setFaqs(res.faqs);
+      setReviews(res.reviews);
+      setClaimSubscription(res.claimSubscription);
+      setGrowthSubscription(res.growthSubscription);
+      setAnalytics(res.analytics);
+      setChatQuestions(res.chatQuestions || []);
+      setComparisonRequests(res.comparisonRequests || []);
+      setLoading(false);
+    }).catch(() => {
+      setLoadError('Failed to load your dashboard');
+      setLoading(false);
+    });
+  }, [authLoading, user]);
+
+  if (authLoading) {
+    return <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa] px-4">
+        <div className="text-center">
+          <h1 className="text-lg font-bold text-[#0B1221] mb-2">Sign in required</h1>
+          <p className="text-sm text-slate-500 mb-4">You need to sign in to view your vendor dashboard.</p>
+          <Link to="/login" className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-2.5 rounded-xl font-semibold text-sm">Sign in</Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f7f8fa]">
+      <EntitySEOTags title="Vendor Dashboard | Gappsy" description="Manage your featured Gappsy listing." path="/vendor/dashboard" noindex />
+
+      <header className="sticky top-0 z-30 bg-[#0A1735]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <Link to="/" aria-label="Gappsy home" className="flex items-center">
+            <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-7 w-auto" />
+          </Link>
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-[13px] text-white/50">{user.email}</span>
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/70 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
+            >
+              <LogOut className="w-3.5 h-3.5" /> Sign out
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        {loading && (
+          <div className="flex items-center justify-center py-24"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
+        )}
+
+        {!loading && loadError && (
+          <div className="max-w-md mx-auto text-center py-16">
+            <h1 className="text-lg font-bold text-[#0B1221] mb-2">Couldn't load your dashboard</h1>
+            <p className="text-sm text-slate-500">{loadError}</p>
+          </div>
+        )}
+
+        {!loading && !loadError && tool && (
+          <div className="flex flex-col lg:flex-row gap-6">
+            <nav className="lg:w-56 shrink-0">
+              <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+                {TABS.filter(({ key }) => (key !== 'analytics' && key !== 'comparisons' && key !== 'chat_questions') || growthSubscription?.status === 'active').map(({ key, label, icon: Icon }) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTab(key)}
+                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-colors text-left ${
+                      tab === key ? 'bg-[#EEF0FE] text-[#4338CA]' : 'text-slate-500 hover:bg-white hover:text-[#0B1221]'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </nav>
+
+            <div className="flex-1 min-w-0">
+              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} />}
+              {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
+              {tab === 'chat_questions' && <ChatQuestionsTab questions={chatQuestions} />}
+              {tab === 'comparisons' && (
+                <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
+              )}
+              {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
+              {tab === 'content' && (
+                <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
+              )}
+              {tab === 'reviews' && (
+                <ReviewsTab reviews={reviews} onReviews={setReviews} isGrowthActive={growthSubscription?.status === 'active'} toolWebsite={tool.website} />
+              )}
+              {tab === 'billing' && (
+                <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} />
+              )}
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+function Card({ children }: { children: React.ReactNode }) {
+  return <div className="bg-white border border-[#eef0f3] rounded-2xl p-5 sm:p-6 shadow-[0_4px_16px_rgba(15,23,42,0.04)]">{children}</div>;
+}
+
+const LOGO_ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml'];
+const LOGO_MAX_SIZE = 5 * 1024 * 1024;
+
+// Lets the vendor add/replace their own tool's logo directly from the
+// dashboard (vendor-tool-media edge function — resolves the tool from the
+// caller's own session, never from anything sent by the client). Client-
+// side checks mirror the server's so a bad file gets instant feedback
+// instead of a round-trip.
+function LogoUploader({ tool, onLogoUpdated }: { tool: ToolRow; onLogoUpdated: (logo: string) => void }) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inputId = 'vendor-logo-upload-input';
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allow re-selecting the same file later
+    if (!file) return;
+
+    if (!LOGO_ALLOWED_TYPES.includes(file.type)) {
+      setError('Invalid file type. Use PNG, JPG, WebP, or SVG.');
+      return;
+    }
+    if (file.size > LOGO_MAX_SIZE) {
+      setError('File too large — maximum size is 5MB.');
+      return;
+    }
+
+    setError(null);
+    setUploading(true);
+    const res = await vendorDashboard.uploadLogo(file);
+    setUploading(false);
+    if (res.ok) {
+      onLogoUpdated(res.url);
+    } else {
+      setError(res.error || 'Failed to upload logo');
+    }
+  }
+
+  return (
+    <div className="shrink-0">
+      <label htmlFor={inputId} className="relative group block w-14 h-14 rounded-2xl cursor-pointer">
+        {tool.logo ? (
+          <img src={tool.logo} alt={tool.name} className="w-14 h-14 rounded-2xl object-contain border border-slate-100 bg-white" />
+        ) : (
+          <div className="w-14 h-14 rounded-2xl bg-[#EEF0FE] flex items-center justify-center text-[#8B90D9] font-bold text-xl">{tool.name.charAt(0)}</div>
+        )}
+        <span className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+          {uploading ? (
+            <Loader2 className="w-5 h-5 text-white animate-spin" />
+          ) : (
+            <Camera className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+          )}
+        </span>
+        <input id={inputId} type="file" accept={LOGO_ALLOWED_TYPES.join(',')} onChange={handleFileChange} disabled={uploading} className="sr-only" />
+      </label>
+      {error && <p className="text-[11px] text-rose-600 mt-1 max-w-[8rem]">{error}</p>}
+    </div>
+  );
+}
+
+function OverviewTab({
+  tool, growthSubscription, reviews, onLogoUpdated,
+}: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void }) {
+  const pendingCount = reviews.filter((r) => r.status === 'pending').length;
+  const publishedCount = reviews.filter((r) => r.status === 'approved').length;
+  const isActive = growthSubscription?.status === 'active';
+
+  return (
+    <div className="space-y-5">
+      <Card>
+        <div className="flex items-start gap-4">
+          <LogoUploader tool={tool} onLogoUpdated={onLogoUpdated} />
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-lg font-bold text-[#0B1221] truncate">{tool.name}</h1>
+              {tool.verified && <ShieldCheck className="w-4 h-4 text-[#4F47E6] shrink-0" aria-label="Verified" />}
+            </div>
+            <div className="flex items-center gap-3 mt-1.5 text-[13px] text-slate-500 flex-wrap">
+              <span className="inline-flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />{tool.rating.toFixed(1)} ({tool.review_count})</span>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${tool.status === 'published' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+                {tool.status === 'published' ? 'Live' : tool.status}
+              </span>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${isActive ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-400'}`}>
+                {isActive ? 'Featured' : 'Not featured'}
+              </span>
+            </div>
+            <Link to={`/tools/${tool.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA] mt-2.5">
+              View live listing <ExternalLink className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Card><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Rating</p><p className="text-2xl font-bold text-[#0B1221]">{tool.rating.toFixed(1)}</p></Card>
+        <Card><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Published reviews</p><p className="text-2xl font-bold text-[#0B1221]">{publishedCount}</p></Card>
+        <Card><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Awaiting moderation</p><p className="text-2xl font-bold text-[#0B1221]">{pendingCount}</p></Card>
+      </div>
+
+      {isActive ? (
+        <Card>
+          <p className="text-sm text-slate-600">
+            You're on Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>}
+            {tool.featured_until && <> — active until <strong className="text-[#0B1221]">{new Date(tool.featured_until).toLocaleDateString()}</strong></>}.
+            {growthSubscription?.billing_interval !== 'year' && (
+              <> <Link to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`} className="font-medium text-[#4F47E6] hover:text-[#4338CA]">Switch to Yearly</Link> for a produced video review, a newsletter feature, and an ad-free listing.</>
+            )}
+          </p>
+        </Card>
+      ) : (
+        <Card>
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <p className="text-sm font-bold text-[#0B1221]">You're on Claim & Verify only</p>
+              <p className="text-[13px] text-slate-500 mt-1 max-w-md">
+                Upgrade to Growth for featured placement across category, comparison, and search — Yearly adds a produced video review, a newsletter feature, and an ad-free listing.
+              </p>
+            </div>
+            <Link
+              to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`}
+              className="shrink-0 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
+            >
+              Upgrade to Growth
+            </Link>
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+function AnalyticsStat({ icon: Icon, label, value }: { icon: typeof BarChart3; label: string; value: number }) {
+  return (
+    <Card>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-8 h-8 rounded-lg bg-[#EEF0FE] flex items-center justify-center shrink-0"><Icon className="w-4 h-4 text-[#4F47E6]" /></div>
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
+      </div>
+      <p className="text-2xl font-bold text-[#0B1221]">{value.toLocaleString()}</p>
+    </Card>
+  );
+}
+
+function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Listing analytics</p>
+        <p className="text-[13px] text-slate-500 mt-1">A Growth perk — how many people see and click through to your listing.</p>
+      </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <AnalyticsStat icon={BarChart3} label="Page views (last 30 days)" value={analytics.views_30d} />
+        <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (last 30 days)" value={analytics.clicks_30d} />
+        <AnalyticsStat icon={BarChart3} label="Page views (all-time)" value={analytics.views_total} />
+        <AnalyticsStat icon={MousePointerClick} label="Outbound clicks (all-time)" value={analytics.clicks_total} />
+      </div>
+    </div>
+  );
+}
+
+// A Growth perk: what visitors actually ask the Ask Gappsy chat while on
+// this listing's own page — real buyer intent/objections, anonymized by
+// design (the API never returns session_id/ip_address, only the question
+// text and its date — see vendor-dashboard/index.ts).
+function ChatQuestionsTab({ questions }: { questions: { content: string; created_at: string }[] }) {
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Visitor questions</p>
+        <p className="text-[13px] text-slate-500 mt-1">
+          A Growth perk — real questions visitors asked the Ask Gappsy chat while looking at your listing. Anonymized: no name, session, or IP is ever shown, just the question itself.
+        </p>
+      </Card>
+
+      {questions.length === 0 ? (
+        <Card>
+          <p className="text-sm text-slate-400 text-center py-6">No questions yet — they'll show up here as visitors use the chat on your listing.</p>
+        </Card>
+      ) : (
+        <Card>
+          <div className="divide-y divide-slate-100">
+            {questions.map((q, i) => (
+              <div key={i} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#EEF0FE] flex items-center justify-center shrink-0 mt-0.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#4F47E6]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13.5px] text-[#0B1221] leading-snug">{q.content}</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">{new Date(q.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+function ComparisonRequestsTab({
+  tool, requests, onRequests,
+}: {
+  tool: ToolRow; requests: ComparisonRequestRow[]; onRequests: (v: ComparisonRequestRow[]) => void;
+}) {
+  const [selectedTool, setSelectedTool] = useState<ToolOption | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    if (!selectedTool) return;
+    setSubmitting(true);
+    setError(null);
+    const res = await vendorDashboard.requestComparison(selectedTool.slug);
+    setSubmitting(false);
+    if (res.ok) {
+      onRequests([res.request, ...requests]);
+      setSelectedTool(null);
+    } else {
+      setError(res.error || 'Failed to submit request');
+    }
+  }
+
+  const statusStyles: Record<string, string> = {
+    pending: 'bg-amber-50 text-amber-700',
+    approved: 'bg-emerald-50 text-emerald-700',
+    rejected: 'bg-slate-100 text-slate-500',
+  };
+  const statusIcons: Record<string, typeof Clock> = { pending: Clock, approved: CheckCircle2, rejected: XCircle };
+
+  return (
+    <div className="space-y-5">
+      <Card>
+        <p className="text-sm font-bold text-[#0B1221]">Request a comparison</p>
+        <p className="text-[13px] text-slate-500 mt-1 mb-4">
+          A Growth perk — ask us to build a head-to-head comparison between {tool.name} and a specific competitor. We review every request before publishing.
+        </p>
+        <div className="flex items-end gap-2 flex-wrap">
+          <div className="flex-1 min-w-[220px]">
+            <ToolSelectCombobox label="Competitor" value={selectedTool} onChange={setSelectedTool} excludeSlug={tool.slug} compact />
+          </div>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!selectedTool || submitting}
+            className="h-10 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50"
+          >
+            {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowLeftRight className="w-4 h-4" />}
+            Request
+          </button>
+        </div>
+        {error && <p className="text-[13px] text-rose-600 mt-2">{error}</p>}
+      </Card>
+
+      {requests.length > 0 && (
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221] mb-3">Your requests</p>
+          <div className="space-y-2">
+            {requests.map((r) => {
+              const StatusIcon = statusIcons[r.status] || Clock;
+              return (
+                <div key={r.id} className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 px-3.5 py-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    {r.requested_tool?.logo ? (
+                      <img src={r.requested_tool.logo} alt="" className="w-7 h-7 rounded-lg object-contain border border-slate-100 shrink-0" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">
+                        {(r.requested_tool?.name || '?').charAt(0)}
+                      </div>
+                    )}
+                    <p className="text-sm font-medium text-[#0B1221] truncate">{tool.name} vs {r.requested_tool?.name || 'Unknown'}</p>
+                  </div>
+                  <span className={`shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold capitalize ${statusStyles[r.status] || 'bg-slate-100 text-slate-500'}`}>
+                    <StatusIcon className="w-3 h-3" /> {r.status}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+function FieldInput({ label, value, onChange, placeholder, type = 'text' }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-slate-600 mb-1.5">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full h-10 rounded-xl border border-slate-200 px-3.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow"
+      />
+    </div>
+  );
+}
+
+function FieldTextarea({ label, value, onChange, rows = 3 }: { label: string; value: string; onChange: (v: string) => void; rows?: number }) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-slate-600 mb-1.5">{label}</label>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={rows}
+        className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-[#0B1221] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] transition-shadow resize-y"
+      />
+    </div>
+  );
+}
+
+function ListingTab({ tool, onSaved }: { tool: ToolRow; onSaved: (t: ToolRow) => void }) {
+  const [form, setForm] = useState({
+    short_description: tool.short_description || '',
+    long_description: tool.long_description || '',
+    website: tool.website || '',
+    pricing_model: tool.pricing_model || '',
+    starting_price: tool.starting_price || '',
+    youtube_url: tool.youtube_url || '',
+    founded_year: tool.founded_year ? String(tool.founded_year) : '',
+    company_size: tool.company_size || '',
+    headquarters: tool.headquarters || '',
+    best_for: tool.best_for || '',
+    target_audience: tool.target_audience || '',
+    pricing_summary: tool.pricing_summary || '',
+    features_summary: tool.features_summary || '',
+    integrations_summary: tool.integrations_summary || '',
+    company_summary: tool.company_summary || '',
+  });
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  function set<K extends keyof typeof form>(key: K, value: string) {
+    setForm((f) => ({ ...f, [key]: value }));
+    setSaved(false);
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    setSaved(false);
+    const res = await vendorDashboard.updateListing({
+      ...form,
+      founded_year: form.founded_year ? Number(form.founded_year) : null,
+    });
+    setSaving(false);
+    if (res.ok) {
+      onSaved(res.tool);
+      setSaved(true);
+    }
+  }
+
+  return (
+    <div className="space-y-5">
+      <Card>
+        <h2 className="text-sm font-bold text-[#0B1221] mb-4">Basics</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FieldInput label="Website" value={form.website} onChange={(v) => set('website', v)} placeholder="https://" />
+          <FieldInput label="YouTube demo URL" value={form.youtube_url} onChange={(v) => set('youtube_url', v)} placeholder="https://youtube.com/watch?v=..." />
+          <FieldInput label="Founded year" value={form.founded_year} onChange={(v) => set('founded_year', v)} type="number" />
+          <FieldInput label="Company size" value={form.company_size} onChange={(v) => set('company_size', v)} placeholder="e.g. 51-200 employees" />
+          <FieldInput label="Headquarters" value={form.headquarters} onChange={(v) => set('headquarters', v)} placeholder="e.g. Sydney, Australia" />
+        </div>
+        <div className="mt-4"><FieldTextarea label="Short description" value={form.short_description} onChange={(v) => set('short_description', v)} rows={2} /></div>
+        <div className="mt-4"><FieldTextarea label="Long description" value={form.long_description} onChange={(v) => set('long_description', v)} rows={6} /></div>
+      </Card>
+
+      <Card>
+        <h2 className="text-sm font-bold text-[#0B1221] mb-4">Pricing</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FieldInput label="Pricing model" value={form.pricing_model} onChange={(v) => set('pricing_model', v)} placeholder="e.g. Freemium" />
+          <FieldInput label="Starting price" value={form.starting_price} onChange={(v) => set('starting_price', v)} placeholder="e.g. $12/mo" />
+        </div>
+        <div className="mt-4"><FieldTextarea label="Pricing summary" value={form.pricing_summary} onChange={(v) => set('pricing_summary', v)} rows={3} /></div>
+      </Card>
+
+      <Card>
+        <h2 className="text-sm font-bold text-[#0B1221] mb-4">Editorial summaries</h2>
+        <div className="space-y-4">
+          <FieldTextarea label="Best for" value={form.best_for} onChange={(v) => set('best_for', v)} rows={2} />
+          <FieldTextarea label="Target audience" value={form.target_audience} onChange={(v) => set('target_audience', v)} rows={2} />
+          <FieldTextarea label="Features summary" value={form.features_summary} onChange={(v) => set('features_summary', v)} rows={3} />
+          <FieldTextarea label="Integrations summary" value={form.integrations_summary} onChange={(v) => set('integrations_summary', v)} rows={3} />
+          <FieldTextarea label="Company summary" value={form.company_summary} onChange={(v) => set('company_summary', v)} rows={3} />
+        </div>
+      </Card>
+
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving}
+          className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all disabled:opacity-60"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+          Save changes
+        </button>
+        {saved && <span className="text-[13px] text-emerald-600 font-medium">Saved</span>}
+      </div>
+    </div>
+  );
+}
+
+function ContentTab({
+  features, pros, cons, faqs, onFeatures, onPros, onCons, onFaqs,
+}: {
+  features: FeatureRow[]; pros: TextRow[]; cons: TextRow[]; faqs: FaqRow[];
+  onFeatures: (v: FeatureRow[]) => void; onPros: (v: TextRow[]) => void; onCons: (v: TextRow[]) => void; onFaqs: (v: FaqRow[]) => void;
+}) {
+  return (
+    <div className="space-y-5">
+      <FeaturesEditor features={features} onSaved={onFeatures} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <ListTextEditor title="Pros" items={pros} onSaved={onPros} action={vendorDashboard.setPros} placeholder="e.g. Fast onboarding" />
+        <ListTextEditor title="Cons" items={cons} onSaved={onCons} action={vendorDashboard.setCons} placeholder="e.g. Limited free tier" />
+      </div>
+      <FaqsEditor faqs={faqs} onSaved={onFaqs} />
+    </div>
+  );
+}
+
+function FeaturesEditor({ features, onSaved }: { features: FeatureRow[]; onSaved: (v: FeatureRow[]) => void }) {
+  const [items, setItems] = useState(features.map((f) => ({ title: f.title, description: f.description || '' })));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  function update(index: number, field: 'title' | 'description', value: string) {
+    setItems((prev) => prev.map((it, i) => (i === index ? { ...it, [field]: value } : it)));
+    setSaved(false);
+  }
+  function remove(index: number) {
+    setItems((prev) => prev.filter((_, i) => i !== index));
+    setSaved(false);
+  }
+  function add() {
+    setItems((prev) => [...prev, { title: '', description: '' }]);
+  }
+  async function save() {
+    setSaving(true);
+    const cleaned = items.filter((it) => it.title.trim());
+    const res = await vendorDashboard.setFeatures(cleaned);
+    setSaving(false);
+    if (res.ok) {
+      onSaved(res.items);
+      setItems(res.items.map((f: FeatureRow) => ({ title: f.title, description: f.description || '' })));
+      setSaved(true);
+    }
+  }
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-bold text-[#0B1221]">Key features</h2>
+        <button type="button" onClick={add} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
+      </div>
+      <div className="space-y-3">
+        {items.length === 0 && <p className="text-[13px] text-slate-400">No features yet — add your first one.</p>}
+        {items.map((it, i) => (
+          <div key={i} className="flex items-start gap-2 border border-slate-100 rounded-xl p-3">
+            <div className="flex-1 min-w-0 space-y-2">
+              <input value={it.title} onChange={(e) => update(i, 'title', e.target.value)} placeholder="Feature title" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
+              <textarea value={it.description} onChange={(e) => update(i, 'description', e.target.value)} placeholder="Short description (optional)" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y" />
+            </div>
+            <button type="button" onClick={() => remove(i)} aria-label="Remove feature" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-3 mt-4">
+        <button type="button" onClick={save} disabled={saving} className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl font-semibold text-[13px] transition-colors disabled:opacity-60">
+          {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />} Save features
+        </button>
+        {saved && <span className="text-[13px] text-emerald-600 font-medium">Saved</span>}
+      </div>
+    </Card>
+  );
+}
+
+function ListTextEditor({
+  title, items, onSaved, action, placeholder,
+}: {
+  title: string; items: TextRow[]; onSaved: (v: TextRow[]) => void; action: (items: { text: string }[]) => Promise<{ ok: boolean; items: TextRow[] }>; placeholder: string;
+}) {
+  const [values, setValues] = useState(items.map((it) => it.text));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  function update(index: number, value: string) {
+    setValues((prev) => prev.map((v, i) => (i === index ? value : v)));
+    setSaved(false);
+  }
+  function remove(index: number) {
+    setValues((prev) => prev.filter((_, i) => i !== index));
+    setSaved(false);
+  }
+  async function save() {
+    setSaving(true);
+    const cleaned = values.filter((v) => v.trim()).map((text) => ({ text }));
+    const res = await action(cleaned);
+    setSaving(false);
+    if (res.ok) {
+      onSaved(res.items);
+      setValues(res.items.map((it) => it.text));
+      setSaved(true);
+    }
+  }
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-bold text-[#0B1221]">{title}</h2>
+        <button type="button" onClick={() => setValues((prev) => [...prev, ''])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
+      </div>
+      <div className="space-y-2">
+        {values.length === 0 && <p className="text-[13px] text-slate-400">Nothing added yet.</p>}
+        {values.map((v, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <input value={v} onChange={(e) => update(i, e.target.value)} placeholder={placeholder} className="flex-1 h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
+            <button type="button" onClick={() => remove(i)} aria-label="Remove" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-3 mt-4">
+        <button type="button" onClick={save} disabled={saving} className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl font-semibold text-[13px] transition-colors disabled:opacity-60">
+          {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />} Save {title.toLowerCase()}
+        </button>
+        {saved && <span className="text-[13px] text-emerald-600 font-medium">Saved</span>}
+      </div>
+    </Card>
+  );
+}
+
+function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) => void }) {
+  const [items, setItems] = useState(faqs.map((f) => ({ question: f.question, answer: f.answer })));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  function update(index: number, field: 'question' | 'answer', value: string) {
+    setItems((prev) => prev.map((it, i) => (i === index ? { ...it, [field]: value } : it)));
+    setSaved(false);
+  }
+  function remove(index: number) {
+    setItems((prev) => prev.filter((_, i) => i !== index));
+    setSaved(false);
+  }
+  async function save() {
+    setSaving(true);
+    const cleaned = items.filter((it) => it.question.trim() && it.answer.trim());
+    const res = await vendorDashboard.setFaqs(cleaned);
+    setSaving(false);
+    if (res.ok) {
+      onSaved(res.items);
+      setItems(res.items.map((f: FaqRow) => ({ question: f.question, answer: f.answer })));
+      setSaved(true);
+    }
+  }
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-bold text-[#0B1221]">FAQs</h2>
+        <button type="button" onClick={() => setItems((prev) => [...prev, { question: '', answer: '' }])} className="inline-flex items-center gap-1 text-[13px] font-medium text-[#4F47E6] hover:text-[#4338CA]"><Plus className="w-3.5 h-3.5" /> Add</button>
+      </div>
+      <div className="space-y-3">
+        {items.length === 0 && <p className="text-[13px] text-slate-400">No FAQs yet.</p>}
+        {items.map((it, i) => (
+          <div key={i} className="flex items-start gap-2 border border-slate-100 rounded-xl p-3">
+            <div className="flex-1 min-w-0 space-y-2">
+              <input value={it.question} onChange={(e) => update(i, 'question', e.target.value)} placeholder="Question" className="w-full h-9 rounded-lg border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0]" />
+              <textarea value={it.answer} onChange={(e) => update(i, 'answer', e.target.value)} placeholder="Answer" rows={2} className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y" />
+            </div>
+            <button type="button" onClick={() => remove(i)} aria-label="Remove FAQ" className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-3 mt-4">
+        <button type="button" onClick={save} disabled={saving} className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl font-semibold text-[13px] transition-colors disabled:opacity-60">
+          {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />} Save FAQs
+        </button>
+        {saved && <span className="text-[13px] text-emerald-600 font-medium">Saved</span>}
+      </div>
+    </Card>
+  );
+}
+
+function ReviewsTab({
+  reviews, onReviews, isGrowthActive, toolWebsite,
+}: {
+  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isGrowthActive: boolean; toolWebsite: string | null;
+}) {
+  if (reviews.length === 0) {
+    return <Card><p className="text-sm text-slate-500 text-center py-6">No reviews yet.</p></Card>;
+  }
+  return (
+    <div className="space-y-4">
+      {!isGrowthActive && (
+        <div className="rounded-2xl bg-[#EEF0FE]/60 border border-[#E0E3FC] px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+          <p className="text-[13px] text-slate-600">
+            <span className="font-semibold text-[#0B1221]">Reply to reviews is included in Claim & Verify.</span>{' '}
+            Removing or hiding a review from your page is a Growth feature.
+          </p>
+          <Link
+            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            className="shrink-0 text-[13px] font-semibold text-[#4F47E6] hover:text-[#4338CA]"
+          >
+            Upgrade to Growth
+          </Link>
+        </div>
+      )}
+      {reviews.map((review) => (
+        <ReviewCard key={review.id} review={review} isGrowthActive={isGrowthActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} />
+      ))}
+    </div>
+  );
+}
+
+function ReviewCard({ review, onUpdate, isGrowthActive }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isGrowthActive: boolean }) {
+  const [responseText, setResponseText] = useState(review.vendor_response || '');
+  const [busy, setBusy] = useState(false);
+
+  async function submitResponse() {
+    if (!responseText.trim()) return;
+    setBusy(true);
+    const res = await vendorDashboard.respondToReview(review.id, responseText.trim());
+    setBusy(false);
+    if (res.ok) onUpdate(res.review);
+  }
+  async function toggleVisibility() {
+    setBusy(true);
+    const res = review.status === 'rejected' ? await vendorDashboard.restoreReview(review.id) : await vendorDashboard.removeReview(review.id);
+    setBusy(false);
+    if (res.ok) onUpdate(res.review);
+  }
+
+  const isRemoved = review.status === 'rejected';
+  const isPending = review.status === 'pending';
+
+  return (
+    <Card>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-semibold text-sm text-[#0B1221]">{review.reviewer_name}</span>
+            <span className="inline-flex items-center gap-0.5 text-amber-600 text-xs font-semibold">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />{review.rating}
+            </span>
+            {isPending && <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Awaiting moderation</span>}
+            {isRemoved && <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-600">Hidden from your page</span>}
+          </div>
+          {review.title && <p className="text-sm font-medium text-[#0B1221] mt-1.5">{review.title}</p>}
+          <p className="text-sm text-slate-600 mt-1 leading-relaxed">{review.body}</p>
+        </div>
+        {!isPending && isGrowthActive && (
+          <button
+            type="button"
+            onClick={toggleVisibility}
+            disabled={busy}
+            title={isRemoved ? 'Restore to your public page' : 'Hide from your public page'}
+            className={`shrink-0 inline-flex items-center gap-1 text-[12px] font-medium px-2.5 py-1.5 rounded-lg transition-colors disabled:opacity-60 ${
+              isRemoved ? 'text-emerald-600 hover:bg-emerald-50' : 'text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            {isRemoved ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+            {isRemoved ? 'Restore' : 'Remove'}
+          </button>
+        )}
+        {!isPending && !isGrowthActive && (
+          <span
+            title="Upgrade to Growth to remove or restore reviews"
+            className="shrink-0 inline-flex items-center gap-1 text-[12px] font-medium px-2.5 py-1.5 rounded-lg text-slate-300 cursor-not-allowed"
+          >
+            <EyeOff className="w-3.5 h-3.5" />
+            Remove
+          </span>
+        )}
+      </div>
+
+      {!isPending && (
+        <div className="mt-4 pt-4 border-t border-slate-100">
+          {review.vendor_response && (
+            <div className="bg-[#EEF0FE]/60 rounded-xl p-3 mb-3">
+              <p className="text-[11px] font-semibold text-[#4F47E6] mb-1">Your response</p>
+              <p className="text-sm text-slate-700">{review.vendor_response}</p>
+            </div>
+          )}
+          <div className="flex items-start gap-2">
+            <textarea
+              value={responseText}
+              onChange={(e) => setResponseText(e.target.value)}
+              placeholder="Write a public response…"
+              rows={2}
+              className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-[#A8AEF0] resize-y"
+            />
+            <button
+              type="button"
+              onClick={submitResponse}
+              disabled={busy || !responseText.trim()}
+              className="shrink-0 inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-colors disabled:opacity-60"
+            >
+              <MessageSquareReply className="w-3.5 h-3.5" /> {review.vendor_response ? 'Update' : 'Reply'}
+            </button>
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function BillingTab({
+  claimSubscription, growthSubscription, toolSlug, toolWebsite,
+}: {
+  claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; toolSlug: string; toolWebsite: string | null;
+}) {
+  const [opening, setOpening] = useState(false);
+
+  async function openPortal() {
+    setOpening(true);
+    const res = await vendorDashboard.openBillingPortal(`${window.location.origin}/vendor/dashboard`);
+    setOpening(false);
+    if (res.ok && res.url) window.location.href = res.url;
+  }
+
+  if (!claimSubscription && !growthSubscription) {
+    return <Card><p className="text-sm text-slate-500 text-center py-6">No billing history found for this listing.</p></Card>;
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Claim — one-time charge, nothing to renew or manage in a portal */}
+      <Card>
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
+          <div>
+            <p className="text-sm font-bold text-[#0B1221]">Claim & Verify — {toolSlug}</p>
+            <p className={`text-[13px] font-medium ${claimSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
+              {claimSubscription?.status === 'active' ? 'Paid — one-time, $29' : claimSubscription ? claimSubscription.status : 'Not claimed yet'}
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      {/* Growth — recurring, so this is the only one with a billing portal */}
+      <Card>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
+          <div>
+            <p className="text-sm font-bold text-[#0B1221]">
+              Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>} — {toolSlug}
+            </p>
+            <p className={`text-[13px] font-medium ${growthSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
+              {!growthSubscription ? 'Not subscribed' : growthSubscription.status === 'active' ? 'Active' : growthSubscription.status === 'past_due' ? 'Payment past due' : growthSubscription.status === 'canceled' ? 'Canceled' : growthSubscription.status}
+            </p>
+          </div>
+        </div>
+        {growthSubscription?.current_period_end && (
+          <p className="text-[13px] text-slate-500 mb-4">
+            {growthSubscription.status === 'canceled' ? 'Ended' : 'Renews'} on {new Date(growthSubscription.current_period_end).toLocaleDateString()}
+          </p>
+        )}
+        {growthSubscription ? (
+          <button
+            type="button"
+            onClick={openPortal}
+            disabled={opening || !growthSubscription.stripe_customer_id}
+            className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-60"
+          >
+            {opening && <Loader2 className="w-4 h-4 animate-spin" />}
+            Manage billing
+          </button>
+        ) : (
+          <Link
+            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
+          >
+            Upgrade to Growth
+          </Link>
+        )}
+      </Card>
+    </div>
+  );
+}

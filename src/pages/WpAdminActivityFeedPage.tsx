@@ -245,7 +245,7 @@ function agencyHelperHref(
 
 function smartLinkUrl(slug: string | null | undefined, state: string | null | undefined): string | null {
   if (!slug) return null;
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.gappsy.com';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://gappsy.com';
   if (state) return `${origin}/your-agency/${encodeURIComponent(state)}/${encodeURIComponent(slug)}`;
   return `${origin}/your-agency/${encodeURIComponent(slug)}`;
 }

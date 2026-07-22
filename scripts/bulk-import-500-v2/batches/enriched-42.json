@@ -1,0 +1,628 @@
+[
+  {
+    "tool_id": "b790465f-8d9b-4776-8b1b-364273fb48a0",
+    "slug": "twingate",
+    "name": "Twingate",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Zero Trust Network Access platform that replaces traditional VPNs with identity-based, least-privilege access to private resources.",
+      "pricing_model": "Freemium",
+      "starting_price": "$5/user/month (Teams plan)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Twingate: Zero Trust Network Access to replace VPNs, with identity-based least-privilege access and a free tier for small teams.",
+      "features": [
+        { "title": "Zero Trust Network Access", "description": "Provides remote access to office networks, cloud VPCs, and private resources without a traditional VPN." },
+        { "title": "Least privilege access controls", "description": "Automated, network-layer access policies that limit users and services to only the resources they need." },
+        { "title": "Device posture checks", "description": "Native checks on connecting devices before granting access, as part of conditional access policies." },
+        { "title": "DNS and content filtering", "description": "Built-in internet security features including DNS filtering and threat detection." },
+        { "title": "Broad platform support", "description": "Native apps for macOS, Windows, Linux, Chrome OS, iOS, and Android." },
+        { "title": "Infrastructure-as-code support", "description": "Configurable via Terraform, Pulumi, and a REST API for automated deployment." }
+      ],
+      "pros": [
+        "Free Starter plan available for up to 5 users",
+        "Fast deployment marketed as minutes rather than days",
+        "Wide client platform support across desktop and mobile",
+        "Terraform/Pulumi/API support for automated setup",
+        "Clear per-user pricing for Teams and Business tiers"
+      ],
+      "cons": [
+        "Enterprise tier pricing is custom/quote-only",
+        "Home plan is explicitly limited to non-commercial use",
+        "Headquarters and founding year are not published on the site"
+      ],
+      "faqs": [
+        { "question": "Does Twingate have a free plan?", "answer": "Yes, the Starter plan is free for up to 5 users with broad OS compatibility and peer-to-peer connections." },
+        { "question": "What platforms does Twingate support?", "answer": "Twingate has native clients for macOS, Windows, Linux, Chrome OS, iOS, and Android." },
+        { "question": "How much does Twingate cost for a business?", "answer": "The Teams plan is $5/user/month (up to 100 users) and the Business plan is $10/user/month (up to 500 users), both with a 15% discount when billed yearly." },
+        { "question": "Is Enterprise pricing available?", "answer": "Yes, Twingate offers a custom Enterprise plan with custom user limits, SLAs, and geoblocking, priced on request." }
+      ],
+      "use_cases": [
+        { "title": "VPN replacement for remote teams", "description": "Gives distributed employees identity-based access to internal apps and networks instead of a traditional VPN.", "audience": "IT and security teams" },
+        { "title": "Securing multi-cloud infrastructure", "description": "Uses Terraform/Pulumi and a REST API to codify least-privilege access to cloud VPCs and resources.", "audience": "DevOps and platform teams" },
+        { "title": "Personal and homelab use", "description": "The free Starter plan and paid Home plan let individuals secure access to home networks and personal projects.", "audience": "Individuals and hobbyists" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Starter", "price": "Free", "billing_cycle": null, "features": ["Up to 5 users", "Broad OS compatibility", "Peer-to-peer connections", "Split tunneling", "Conditional access controls"] },
+        { "plan_name": "Home", "price": "$15/month", "billing_cycle": "monthly", "features": ["Up to 7 users", "Secure service accounts", "Exit networks", "Device posture checks", "MFA support", "Non-commercial use only"] },
+        { "plan_name": "Teams", "price": "$5/user/month", "billing_cycle": "monthly", "features": ["Up to 100 users", "SSO via Google Workspace", "SaaS application gating", "Device posture checks", "Automated least-privilege policies"] },
+        { "plan_name": "Business", "price": "$10/user/month", "billing_cycle": "monthly", "features": ["Up to 500 users", "IdP user provisioning", "SSO via Okta/Entra ID", "Endpoint detection integrations", "DNS filtering"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom user limits", "Custom MSA & SLAs", "Geoblocking", "Priority support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Twingate?",
+          "level": 2,
+          "paragraphs": [
+            "Twingate is a Zero Trust Network Access (ZTNA) platform built to replace traditional corporate VPNs. It gives users and services identity-based, direct access to private resources such as office networks, cloud VPCs, and internal applications, enforced through least-privilege policies at the network layer.",
+            "The platform includes device posture checks, DNS and content filtering, and audit logging, and can be deployed and managed through Terraform, Pulumi, or its REST API."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Twingate is for",
+          "level": 2,
+          "paragraphs": [
+            "Twingate serves organizations replacing legacy VPNs, development and DevOps teams securing multi-cloud infrastructure, and individuals who use the free Starter plan or paid Home plan to secure personal networks and homelab projects."
+          ]
+        }
+      ],
+      "tags": ["freemium", "free-plan", "api", "mac", "windows", "ios", "android"]
+    }
+  },
+  {
+    "tool_id": "621c1563-301c-4006-9dc0-beb9d7803b61",
+    "slug": "teleport",
+    "name": "Teleport",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Unified identity and access platform that replaces standing credentials with cryptographic, just-in-time access for infrastructure and AI agents.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Oakland, CA, USA",
+      "languages": [],
+      "seo_meta_description": "Teleport unifies identity and access for humans, machines, and AI agents with cryptographic identity and no standing privileges.",
+      "features": [
+        { "title": "Unified identity layer", "description": "A single identity model covering humans, machines, agents, and AI accessing infrastructure." },
+        { "title": "Cryptographic, hardware-rooted identity", "description": "Eliminates shareable secrets in favor of hardware root-of-trust identity, including HSM, TPM, and biometric support." },
+        { "title": "Ephemeral, just-in-time privileges", "description": "Grants time-limited access instead of maintaining standing privileges." },
+        { "title": "Agentic AI access control", "description": "Manages identity and access for AI agents and Model Context Protocol (MCP) tools." },
+        { "title": "Comprehensive audit trails", "description": "Full visibility and recording of access sessions and workflows across resources." },
+        { "title": "Compliance-ready access", "description": "Supports regulatory requirements including FedRAMP and FIPS 140-2." }
+      ],
+      "pros": [
+        "Covers servers, Kubernetes, databases, and applications under one identity model",
+        "Eliminates standing privileges and shared credentials",
+        "Supports FedRAMP and FIPS 140-2 compliance requirements",
+        "Active open-source community with 20K+ GitHub stars"
+      ],
+      "cons": [
+        "No published pricing tiers; costs require submitting a form or downloading a pricing guide",
+        "Homepage does not disclose specific plan names or feature comparisons",
+        "Founding year is not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What is Teleport used for?", "answer": "Teleport provides a unified identity and access layer for humans, machines, and AI agents accessing infrastructure like servers, Kubernetes, and databases." },
+        { "question": "Is Teleport pricing public?", "answer": "No, Teleport uses transparent usage-based pricing based on active users and protected resources, but specific figures require requesting a quote or pricing guide." },
+        { "question": "Does Teleport offer a free trial?", "answer": "Yes, a free trial is available according to the site." },
+        { "question": "Where is Teleport headquartered?", "answer": "Teleport is headquartered at 2100 Franklin St, Suite 400, Oakland, CA 94612." }
+      ],
+      "use_cases": [
+        { "title": "Privileged access management", "description": "Replaces shared credentials and standing privileges with cryptographic, just-in-time access across infrastructure.", "audience": "Security and IAM teams" },
+        { "title": "Multi-cloud infrastructure access", "description": "Unifies access to servers, Kubernetes clusters, databases, and applications across cloud environments.", "audience": "Engineering and DevOps teams" },
+        { "title": "Governing AI agent access", "description": "Manages identity and permissions for AI agents and MCP tools operating in production systems.", "audience": "Organizations deploying AI agents" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Teleport?",
+          "level": 2,
+          "paragraphs": [
+            "Teleport is an identity and access management platform that gives humans, machines, and AI agents a single, cryptographic identity for reaching infrastructure, eliminating shareable secrets and standing privileges in favor of ephemeral, just-in-time access.",
+            "It supports servers, Kubernetes, databases, and applications, with full audit trails and compliance features such as FedRAMP and FIPS 140-2 support."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Teleport is for",
+          "level": 2,
+          "paragraphs": [
+            "Teleport is used by engineering teams managing multi-cloud infrastructure, organizations with regulatory compliance requirements, and companies that need to govern access for AI agents alongside human users."
+          ]
+        }
+      ],
+      "tags": ["ai", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "3a50e7f9-8dac-4f95-a6a8-044c2a5b961d",
+    "slug": "strongdm",
+    "name": "StrongDM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Zero Trust Privileged Access Management platform providing runtime access control and session visibility across infrastructure and cloud resources.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "StrongDM is a Zero Trust PAM platform with runtime access control, live session visibility, and no standing privileges across infrastructure.",
+      "features": [
+        { "title": "Runtime access management", "description": "Adaptive access controls with full session visibility and no standing privileges." },
+        { "title": "Identity firewall", "description": "Continuously enforces authorization across connected resources." },
+        { "title": "Cross-stack coverage", "description": "Supports Kubernetes, databases, network devices, cloud services, and servers under one access model." },
+        { "title": "Live session control", "description": "Real-time visibility and control over user actions during active sessions." },
+        { "title": "Credential elimination", "description": "Removes standing credentials to reduce theft and lateral-movement risk." },
+        { "title": "Compliance framework support", "description": "Supports NIST 800-53, FedRAMP, HIPAA, SOC 2, PCI DSS 4.0, and ISO 27001." }
+      ],
+      "pros": [
+        "Single SKU, per-user pricing model with all features included",
+        "No separate charges by protocol, resource type, or usage",
+        "Broad resource coverage across databases, Kubernetes, cloud, and servers",
+        "Backed by Delinea following its acquisition of StrongDM"
+      ],
+      "cons": [
+        "No public pricing figures; requires a sales conversation or demo",
+        "Recent acquisition by Delinea may bring product or roadmap changes",
+        "Founding year and headquarters are not published on the site"
+      ],
+      "faqs": [
+        { "question": "What is StrongDM?", "answer": "StrongDM is a Zero Trust Privileged Access Management platform offering runtime access control, session visibility, and elimination of standing privileges." },
+        { "question": "Is StrongDM pricing public?", "answer": "No, StrongDM uses a single SKU, per-user pricing model with all features included, but exact prices require contacting sales." },
+        { "question": "Who owns StrongDM?", "answer": "StrongDM was recently acquired by Delinea to expand capabilities around agentic AI and context-aware authorization." },
+        { "question": "What compliance frameworks does StrongDM support?", "answer": "StrongDM supports NIST 800-53, FedRAMP, HIPAA, SOC 2, PCI DSS 4.0, and ISO 27001, among other standards." }
+      ],
+      "use_cases": [
+        { "title": "Privileged access across infrastructure", "description": "Provides continuous authorization enforcement and session control for databases, servers, and Kubernetes.", "audience": "Infrastructure and cloud teams" },
+        { "title": "Compliance-driven access management", "description": "Helps organizations meet frameworks like FedRAMP, HIPAA, and PCI DSS 4.0 through auditable access control.", "audience": "Security and IAM professionals" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is StrongDM?",
+          "level": 2,
+          "paragraphs": [
+            "StrongDM is a Zero Trust Privileged Access Management (PAM) platform that manages runtime access to databases, servers, Kubernetes clusters, network devices, and cloud resources, enforcing authorization continuously rather than relying on standing credentials.",
+            "It offers live session visibility and control, letting security teams monitor and interrupt sessions in real time, and supports compliance frameworks such as NIST 800-53, FedRAMP, HIPAA, SOC 2, and PCI DSS 4.0."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who StrongDM is for",
+          "level": 2,
+          "paragraphs": [
+            "StrongDM is aimed at infrastructure, cloud, and security teams that need centralized privileged access management across a mixed technology stack without dictating architecture choices."
+          ]
+        }
+      ],
+      "tags": []
+    }
+  },
+  {
+    "tool_id": "6af1626a-384b-452a-8ba7-fab48922dd57",
+    "slug": "kolide",
+    "name": "Kolide",
+    "status": "skip",
+    "skip_reason": "Kolide was acquired by 1Password and folded into '1Password Extended Access Management'; its own pricing page states Kolide Device Trust is 'no longer being sold as a standalone product' as of May [year], so it no longer exists as an independent product under this name.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "b0661eaf-0146-4993-862a-300b62279f7d",
+    "slug": "drata",
+    "name": "Drata",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "AI-driven GRC platform that automates compliance evidence collection, control monitoring, and audit readiness across frameworks like SOC 2 and ISO 27001.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Drata automates GRC operations with AI agents that map controls, collect evidence, and draft security questionnaire responses.",
+      "features": [
+        { "title": "Enterprise GRC control mapping", "description": "Unified control mapping, evidence collection, and monitoring across multiple compliance frameworks." },
+        { "title": "Continuous compliance automation", "description": "Ongoing evidence collection and control monitoring to keep organizations audit-ready." },
+        { "title": "Trust Center", "description": "A secure portal for sharing security posture with stakeholders and prospective customers." },
+        { "title": "AI questionnaire assistance", "description": "Autonomous agents draft consistent responses to incoming security questionnaires." },
+        { "title": "Third-party risk management", "description": "Automated vendor assessment and risk evaluation workflows." },
+        { "title": "Agent governance", "description": "Discovers and governs AI agents operating in enterprise environments with policy enforcement." }
+      ],
+      "pros": [
+        "Supports many major frameworks: SOC 2, ISO 27001, ISO 42001, GDPR, HIPAA, PCI DSS, DORA, FedRAMP, and CMMC",
+        "4.8/5.0 rating on G2",
+        "Large customer base of 8,500+ organizations",
+        "AI-assisted questionnaire responses and agent discovery reduce manual GRC work"
+      ],
+      "cons": [
+        "No pricing details published on the site; requires contacting sales",
+        "Specific integration list is not detailed on the homepage",
+        "Founding year and headquarters are not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What frameworks does Drata support?", "answer": "Drata supports SOC 2, ISO 27001, ISO 42001, GDPR, HIPAA, PCI DSS, DORA, FedRAMP, CMMC, and custom frameworks." },
+        { "question": "Does Drata use AI?", "answer": "Yes, Drata uses AI agents to draft security questionnaire responses and to discover and govern AI agents within an organization's environment." },
+        { "question": "Is Drata pricing public?", "answer": "No, Drata does not publish pricing; the homepage directs visitors to a demo or contact-sales flow." },
+        { "question": "How many customers does Drata have?", "answer": "Drata states it serves 8,500+ global customers and holds a 4.8/5.0 rating on G2." }
+      ],
+      "use_cases": [
+        { "title": "Launching a first compliance program", "description": "Helps startups get SOC 2 or ISO 27001 readiness in place quickly.", "audience": "Startups" },
+        { "title": "Scaling governance across teams", "description": "Expands control monitoring and evidence collection as companies grow.", "audience": "Growth-stage companies" },
+        { "title": "Managing multi-framework compliance", "description": "Supports enterprises managing compliance across multiple regions and frameworks at once.", "audience": "Enterprise organizations" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Drata?",
+          "level": 2,
+          "paragraphs": [
+            "Drata is a governance, risk, and compliance (GRC) platform that automates evidence collection, control monitoring, and audit preparation across frameworks such as SOC 2, ISO 27001, ISO 42001, GDPR, HIPAA, PCI DSS, DORA, FedRAMP, and CMMC.",
+            "It also includes a Trust Center for sharing security posture externally, AI-assisted responses to security questionnaires, and a newer Agent Governance capability that discovers and applies policy to AI agents running in an organization's environment."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Drata is for",
+          "level": 2,
+          "paragraphs": [
+            "Drata is built for startups launching their first compliance program, growth-stage companies expanding governance across teams, and enterprises managing compliance across multiple regions and frameworks."
+          ]
+        }
+      ],
+      "tags": ["ai"]
+    }
+  },
+  {
+    "tool_id": "0412c80c-5647-4376-b362-9ccece4ef8e5",
+    "slug": "hyperproof",
+    "name": "Hyperproof",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "AI-powered GRC platform that automates compliance evidence collection, risk monitoring, and audit management across 160+ frameworks.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Seattle, WA, USA",
+      "languages": [],
+      "seo_meta_description": "Hyperproof automates GRC work with AI-assisted control mapping, risk monitoring, and audit management across 160+ frameworks.",
+      "features": [
+        { "title": "Compliance management", "description": "Continuous compliance automation with control mapping across frameworks." },
+        { "title": "Risk management", "description": "Real-time threat monitoring and mitigation acceleration." },
+        { "title": "Audit management", "description": "Evidence collection and secure collaboration with auditors." },
+        { "title": "Third-party risk management", "description": "Vendor assessment automation and ecosystem risk oversight." },
+        { "title": "Policy management", "description": "Centralized governance workflows aligning policies to controls." },
+        { "title": "Hyperproof AI", "description": "Human-in-the-loop AI that automates control operations, mapping, and vendor assessments." }
+      ],
+      "pros": [
+        "160+ pre-built compliance frameworks including HIPAA, SOC 2, ISO 27001, GDPR, PCI DSS, NIST, and FedRAMP",
+        "200+ integrations including Slack, AWS, ServiceNow, Okta, GitHub, Jira, and Datadog",
+        "Hyperproof Gov offering is FedRAMP Moderate authorized",
+        "G2 Leader recognition in both Enterprise and Mid-Market categories"
+      ],
+      "cons": [
+        "No pricing published on the site; requires a demo request",
+        "AI feature scope is described only at a high level on the homepage",
+        "Founding year is not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What frameworks does Hyperproof support?", "answer": "Hyperproof includes 160+ pre-built frameworks such as HIPAA, SOC 2, ISO 27001, GDPR, PCI DSS, NIST standards, FedRAMP, and CMMC." },
+        { "question": "Does Hyperproof use AI?", "answer": "Yes, Hyperproof AI automates control operations, mapping, and vendor assessments with human-in-the-loop oversight." },
+        { "question": "Where is Hyperproof headquartered?", "answer": "Hyperproof is headquartered in Seattle, WA." },
+        { "question": "Is there a government-specific version of Hyperproof?", "answer": "Yes, Hyperproof Gov is FedRAMP Moderate authorized." }
+      ],
+      "use_cases": [
+        { "title": "Continuous compliance across frameworks", "description": "Automates evidence collection and control mapping for organizations managing multiple certifications.", "audience": "Compliance and security teams" },
+        { "title": "Vendor and third-party risk oversight", "description": "Automates vendor risk assessments across an organization's supplier ecosystem.", "audience": "Risk management teams" },
+        { "title": "Regulated industry compliance", "description": "Serves healthcare, fintech, aviation, and manufacturing organizations pursuing sector-specific certifications.", "audience": "Regulated industry organizations" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Hyperproof?",
+          "level": 2,
+          "paragraphs": [
+            "Hyperproof is a governance, risk, and compliance (GRC) platform that automates control mapping, evidence collection, risk monitoring, and audit collaboration across more than 160 pre-built compliance frameworks, including HIPAA, SOC 2, ISO 27001, GDPR, and FedRAMP.",
+            "Its Hyperproof AI feature applies human-in-the-loop automation to control operations and vendor assessments, and the platform connects to 200+ tools including Slack, AWS, ServiceNow, Okta, and Jira."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Hyperproof is for",
+          "level": 2,
+          "paragraphs": [
+            "Hyperproof serves organizations across healthcare, technology, fintech, aviation, and manufacturing that need to manage multiple compliance certifications, including government contractors that require its FedRAMP Moderate authorized Hyperproof Gov offering."
+          ]
+        }
+      ],
+      "tags": ["ai"]
+    }
+  },
+  {
+    "tool_id": "39e085ba-918c-440b-8ad4-af576ba5ba03",
+    "slug": "thoropass",
+    "name": "Thoropass",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Compliance platform combining a licensed CPA audit firm with AI-assisted software to manage SOC 2, ISO 27001, and other framework audits end-to-end.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Thoropass pairs a licensed CPA audit firm with AI-assisted software to manage SOC 2, ISO 27001, and 30+ compliance frameworks.",
+      "features": [
+        { "title": "Audit Lifecycle Platform (ALP)", "description": "Centralized system managing compliance from readiness through final audit reporting." },
+        { "title": "Multi-framework support", "description": "Covers SOC 1/2, ISO 27001, HIPAA, HITRUST, PCI DSS, GDPR, NIST CSF 2.0, CMMC Level 1, and 30+ other frameworks." },
+        { "title": "AI-powered automation", "description": "Suggests control mappings, identifies gaps, and organizes audit evidence." },
+        { "title": "Penetration testing", "description": "CREST-accredited pentest services with audit-ready reporting." },
+        { "title": "Vulnerability scanning", "description": "On-demand and scheduled scans with exportable audit evidence." },
+        { "title": "Compliance Suite monitoring", "description": "Real-time monitoring and alerts to maintain continuous compliance." }
+      ],
+      "pros": [
+        "Bundles a licensed CPA audit firm (Laika Compliance, LLC) with the software platform",
+        "Supports 30+ compliance frameworks with overlapping control mapping",
+        "Includes in-house CREST-accredited penetration testing",
+        "Trusted by more than 1,000 organizations globally"
+      ],
+      "cons": [
+        "No published pricing; quotes vary by framework, scope, and company size",
+        "Bundled audit-plus-software model may cost more than software-only tools",
+        "Founding year and headquarters are not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What is Thoropass?", "answer": "Thoropass is a compliance and audit platform that combines a licensed CPA audit firm with AI-assisted software to manage security certifications like SOC 2 and ISO 27001." },
+        { "question": "Is Thoropass pricing public?", "answer": "No, pricing varies by frameworks pursued, audit scope, company size, and required services, and is provided as a tailored quote." },
+        { "question": "Does Thoropass perform penetration testing?", "answer": "Yes, Thoropass offers CREST-accredited penetration testing with audit-ready reporting." },
+        { "question": "How many frameworks does Thoropass support?", "answer": "Thoropass supports SOC 1/2, ISO 27001, HIPAA, HITRUST, PCI DSS, GDPR, NIST CSF 2.0, CMMC Level 1, and 30+ additional frameworks." }
+      ],
+      "use_cases": [
+        { "title": "End-to-end SOC 2 or ISO 27001 audits", "description": "Combines software and an in-house CPA audit firm to manage the full audit lifecycle.", "audience": "Startups and SaaS companies" },
+        { "title": "Multi-framework compliance", "description": "Maps overlapping controls across frameworks to reduce duplicate audit work.", "audience": "Regulated companies pursuing multiple certifications" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Thoropass?",
+          "level": 2,
+          "paragraphs": [
+            "Thoropass is a compliance and audit platform that pairs its own licensed CPA firm, Laika Compliance, LLC (dba Thoropass Assurance), with AI-assisted software for managing security audits. Its Audit Lifecycle Platform (ALP) covers readiness, evidence organization, and final reporting for frameworks including SOC 1/2, ISO 27001, HIPAA, HITRUST, and PCI DSS.",
+            "The company also offers CREST-accredited penetration testing and vulnerability scanning, and its leadership includes co-founders Sam Li, Austin Ogilvie, and Eva Pittas."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Thoropass is for",
+          "level": 2,
+          "paragraphs": [
+            "Thoropass serves companies across healthcare, SaaS, and fintech pursuing compliance certifications, from startups to enterprises, and is used by more than 1,000 organizations globally."
+          ]
+        }
+      ],
+      "tags": ["ai"]
+    }
+  },
+  {
+    "tool_id": "01db3fa1-4544-4df3-b94a-c8779f0ed121",
+    "slug": "sprinto",
+    "name": "Sprinto",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Automation-led compliance platform that continuously monitors controls and evidence to help companies achieve SOC 2 and other certifications.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Sprinto automates SOC 2 and other compliance work with continuous control monitoring, 200+ integrations, and expert guidance.",
+      "features": [
+        { "title": "Automation-led compliance monitoring", "description": "Evaluates over 1 million compliance checks monthly across connected systems." },
+        { "title": "Centralized compliance dashboard", "description": "Manages multiple compliance frameworks and controls from one place." },
+        { "title": "1:1 expert guidance", "description": "Onboarding support and 24/7 assistance throughout the compliance process." },
+        { "title": "200+ integrations", "description": "Connects to a wide range of tools for continuous risk visibility." },
+        { "title": "Policy templates", "description": "Ready-to-use templates to speed up compliance documentation." },
+        { "title": "Built-in lightweight MDM", "description": "Includes mobile device management as part of the platform." }
+      ],
+      "pros": [
+        "Rated #1 for ease of use on G2 by 900+ customers",
+        "Includes built-in lightweight MDM, reducing need for a separate tool",
+        "200+ integrations for continuous compliance monitoring",
+        "1:1 expert guidance included alongside the software"
+      ],
+      "cons": [
+        "No public pricing plans found on the site; not verifiable without contacting sales",
+        "Marketing claims (e.g., cost/time savings) are self-reported and not independently verified",
+        "Founding year and headquarters are not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What does Sprinto automate?", "answer": "Sprinto automates SOC 2 and other compliance work, evaluating over 1 million compliance checks monthly and providing continuous control monitoring." },
+        { "question": "Does Sprinto include device management?", "answer": "Yes, Sprinto includes a built-in lightweight Mobile Device Management (MDM) capability." },
+        { "question": "How many integrations does Sprinto support?", "answer": "Sprinto supports 200+ integrations for compliance risk visibility." },
+        { "question": "Is Sprinto's pricing public?", "answer": "Specific pricing plans were not available on the pages reviewed; interested buyers should check Sprinto's site directly or contact sales." }
+      ],
+      "use_cases": [
+        { "title": "SOC 2 Type II certification", "description": "Automates evidence collection and monitoring to help SaaS companies reach SOC 2 certification faster.", "audience": "SaaS and tech companies" },
+        { "title": "Ongoing multi-framework compliance", "description": "Provides a centralized dashboard to manage several compliance frameworks continuously.", "audience": "Compliance and security teams" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Sprinto?",
+          "level": 2,
+          "paragraphs": [
+            "Sprinto is a compliance automation platform focused on frameworks like SOC 2, running continuous checks (over 1 million monthly) against connected systems to keep controls and evidence audit-ready.",
+            "It pairs automation with 1:1 expert guidance, 200+ integrations, policy templates, and a built-in lightweight MDM for device compliance."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Sprinto is for",
+          "level": 2,
+          "paragraphs": [
+            "Sprinto is aimed at SaaS and tech companies pursuing SOC 2 Type II certification, particularly teams with limited in-house compliance resources who need to meet customer security requirements."
+          ]
+        }
+      ],
+      "tags": []
+    }
+  },
+  {
+    "tool_id": "52bf5267-89af-4200-b109-d8ec448cc105",
+    "slug": "scrut-automation",
+    "name": "Scrut Automation",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "GRC automation platform with AI agents that continuously monitor controls, validate evidence, and manage vendor risk across 60+ frameworks.",
+      "pricing_model": "Custom/Enterprise",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Scrut Automation uses AI agents to monitor controls, validate evidence, and manage vendor risk across 60+ compliance frameworks.",
+      "features": [
+        { "title": "Continuous control monitoring", "description": "24/7 automated evaluation of security controls with real-time gap notifications." },
+        { "title": "Scrut Teammates", "description": "AI-powered agents that provide guided remediation, evidence validation, and automated security questionnaire completion." },
+        { "title": "Pre-built compliance library", "description": "60+ frameworks including SOC 2, ISO 27001, GDPR, PCI DSS, HIPAA, and NIST AI RMF." },
+        { "title": "Customizable workflows", "description": "Supports custom frameworks, controls, and risk formulas." },
+        { "title": "Audit streamlining", "description": "Centralized audit tracking and evidence collection." },
+        { "title": "Vendor risk management", "description": "AI-driven third-party risk assessments." }
+      ],
+      "pros": [
+        "60+ pre-built frameworks including NIST AI RMF",
+        "AI agents (Scrut Teammates) automate evidence validation and questionnaire responses",
+        "Monitors 10 million+ assets monthly across customers",
+        "Recognized in Forrester's GRC Platforms Landscape (Q4 2025) and G2 Top 50"
+      ],
+      "cons": [
+        "No public pricing found; the pricing page was not accessible during research",
+        "Specific integration list is not detailed on the homepage",
+        "Founding year and headquarters are not stated on the site"
+      ],
+      "faqs": [
+        { "question": "What are Scrut Teammates?", "answer": "Scrut Teammates are AI-powered agents that provide guided remediation, intelligent evidence validation, and automated security questionnaire completion." },
+        { "question": "How many frameworks does Scrut support?", "answer": "Scrut offers 60+ pre-built frameworks, including SOC 2, ISO 27001, GDPR, PCI DSS, HIPAA, and NIST AI RMF." },
+        { "question": "How many customers use Scrut?", "answer": "Scrut states it serves 2,500+ organizations and monitors 10 million+ assets monthly." },
+        { "question": "Is Scrut's pricing public?", "answer": "Specific pricing details were not accessible on the site during research; Scrut appears to use a demo/consultation-based sales approach." }
+      ],
+      "use_cases": [
+        { "title": "Rapid compliance readiness", "description": "Helps startups quickly stand up controls and evidence collection for their first framework.", "audience": "Startups" },
+        { "title": "Managing multiple frameworks at scale", "description": "Supports growth-stage and enterprise companies running several compliance frameworks simultaneously.", "audience": "Growth-stage and enterprise companies" }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Scrut Automation?",
+          "level": 2,
+          "paragraphs": [
+            "Scrut Automation is a governance, risk, and compliance (GRC) platform that continuously monitors security controls and automatically collects evidence across 60+ pre-built frameworks, including SOC 2, ISO 27001, GDPR, PCI DSS, HIPAA, and NIST AI RMF.",
+            "Its 'Scrut Teammates' are AI agents that assist with guided remediation, evidence validation, and automated completion of security questionnaires, alongside vendor risk assessment tools."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Scrut Automation is for",
+          "level": 2,
+          "paragraphs": [
+            "Scrut serves startups needing rapid compliance readiness as well as growth-stage and enterprise companies managing multiple frameworks across industries such as enterprise software, financial services, healthcare, and travel."
+          ]
+        }
+      ],
+      "tags": ["ai"]
+    }
+  },
+  {
+    "tool_id": "7bb7ddf3-25d3-4c05-bc83-0b82d47bf1b6",
+    "slug": "astra-security",
+    "name": "Astra Security",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "AI-powered continuous penetration testing platform combining PTaaS, DAST, API security, and cloud vulnerability scanning.",
+      "pricing_model": "Free Trial",
+      "starting_price": "$69/month (DAST Scanner Lite)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Astra Security offers AI-powered pentesting, DAST, API security, and cloud vulnerability scanning with a $7 trial week and published pricing.",
+      "features": [
+        { "title": "Penetration Testing as a Service (PTaaS)", "description": "Hacker-style vulnerability assessments with real-time collaboration between customers and testers." },
+        { "title": "DAST scanner", "description": "Dynamic application security testing covering 10,000+ vulnerabilities, including the OWASP Top 10." },
+        { "title": "API security platform", "description": "Discovers shadow, zombie, and undocumented APIs and scans them for vulnerabilities." },
+        { "title": "Cloud vulnerability scanner", "description": "Agentless scanning detecting 400+ misconfigurations across AWS, Azure, and GCP." },
+        { "title": "AI-powered threat modeling", "description": "Uses AI to correlate and prioritize discovered vulnerabilities." },
+        { "title": "CI/CD and ticketing integrations", "description": "Integrates with CI/CD pipelines, Slack, and Jira for remediation workflows." },
+        { "title": "Trust Center", "description": "Demonstrates compliance posture for standards such as SOC 2, HIPAA, and ISO." }
+      ],
+      "pros": [
+        "Published, transparent pricing across pentest, DAST, API, and cloud products",
+        "Low-cost $7 trial week with no credit card required",
+        "Covers web, API, and cloud security under one platform",
+        "4.6 G2 rating and 1,000+ engineering team customers cited"
+      ],
+      "cons": [
+        "Enterprise tiers for Pentest, API, and Cloud products remain custom/quote-only",
+        "Per-product, per-target pricing can add up for organizations with many assets",
+        "Headquarters and founding year are not disclosed on the site"
+      ],
+      "faqs": [
+        { "question": "Does Astra Security offer a free trial?", "answer": "Yes, a $7 trial week is available for the DAST Scanner, API Scanner, and Cloud Starter products, with no credit card required." },
+        { "question": "How much does Astra's DAST scanner cost?", "answer": "The Scanner Lite tier starts at $69/month ($699/year), with a Scanner tier at $199/month and a Scanner Agency tier at $499/month." },
+        { "question": "Does Astra do penetration testing?", "answer": "Yes, Astra offers Pentest Auto starting at $1,999/year and Pentest Expert (manual, certified-expert testing) at $5,999/year, plus a custom Enterprise tier." },
+        { "question": "Does Astra scan cloud infrastructure?", "answer": "Yes, its Cloud Security Platform scans AWS, Azure, and GCP for 400+ misconfigurations, starting at $99/month for Cloud Starter." }
+      ],
+      "use_cases": [
+        { "title": "Continuous web application security testing", "description": "Runs ongoing DAST scans covering 10,000+ tests including the OWASP Top 10.", "audience": "Engineering and security teams" },
+        { "title": "API attack surface discovery", "description": "Finds undocumented and shadow APIs and scans them for vulnerabilities.", "audience": "Teams managing API-driven products" },
+        { "title": "Cloud misconfiguration detection", "description": "Agentless scanning across AWS, Azure, and GCP to catch security misconfigurations.", "audience": "Cloud and DevOps teams" },
+        { "title": "Compliance-driven penetration testing", "description": "Combines automated and manual pentesting with compliance reporting for SOC 2, HIPAA, and ISO audits.", "audience": "Companies handling sensitive data" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Scanner Lite", "price": "$69/month or $699/year", "billing_cycle": "monthly", "features": ["1 target", "3 monthly scans, 10,000+ tests", "Authenticated scanning", "1 integration", "AI vulnerability assistance"] },
+        { "plan_name": "Scanner", "price": "$199/month or $1,999/year", "billing_cycle": "monthly", "features": ["1 target", "Unlimited scans, 10,000+ tests", "Unlimited integrations", "4 expert-vetted scans annually", "Compliance reporting"] },
+        { "plan_name": "Scanner Agency", "price": "$499/month or $4,999/year", "billing_cycle": "monthly", "features": ["5-target pool (changeable every 30 days)", "Everything in Scanner", "Dedicated account manager"] },
+        { "plan_name": "Pentest Auto", "price": "$1,999/year", "billing_cycle": "annual", "features": ["1 target", "Autonomous pentest equivalent to a 2-week manual engagement", "Same-day first report", "Compliance reports", "1 expert re-scan"] },
+        { "plan_name": "Pentest Expert", "price": "$5,999/year", "billing_cycle": "annual", "features": ["1 target", "Manual pentesting by certified experts", "Cloud config review", "API testing", "2 re-scans", "Verifiable certificate"] },
+        { "plan_name": "Cloud Starter", "price": "$99/month or $999/year", "billing_cycle": "monthly", "features": ["1 cloud target (AWS/Azure/GCP)", "Unlimited automated scans", "250 resources/month", "PDF reports"] },
+        { "plan_name": "Cloud Growth", "price": "$199/month or $1,999/year", "billing_cycle": "monthly", "features": ["3 cloud targets", "1,000 resources/month", "Priority support", "Slack/Jira integration", "Compliance mapping"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Astra Security?",
+          "level": 2,
+          "paragraphs": [
+            "Astra Security is a continuous security testing platform combining Penetration Testing as a Service (PTaaS), a DAST scanner covering 10,000+ vulnerability checks, an API security platform that finds shadow and undocumented APIs, and a cloud vulnerability scanner for AWS, Azure, and GCP.",
+            "It uses AI to correlate and prioritize vulnerabilities, integrates with CI/CD pipelines, Slack, and Jira, and publishes tiered pricing across each product, including a $7 trial week for select plans."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Astra Security is for",
+          "level": 2,
+          "paragraphs": [
+            "Astra is aimed at engineering and security teams that need ongoing, rather than one-time, security testing for web applications, APIs, and cloud infrastructure, including companies handling sensitive data such as healthcare information."
+          ]
+        }
+      ],
+      "tags": ["ai", "free-trial"]
+    }
+  }
+]

@@ -1,0 +1,1746 @@
+[
+  {
+    "tool_id": "f0a80f4d-54d7-42de-ad76-cecc618d9b90",
+    "slug": "sourcegraph-cody",
+    "name": "Sourcegraph Cody",
+    "enrichment": {
+      "short_description": "Sourcegraph Cody is an enterprise AI coding assistant with codebase-aware chat, autocomplete, and search for large engineering teams.",
+      "pricing_model": "Custom-Enterprise pricing",
+      "starting_price": "Starting at $16,000/year (custom quote, scales with team size)",
+      "founded_year": 2013,
+      "company_size": "~150-200 employees (fully remote)",
+      "headquarters": "San Francisco, California, USA",
+      "languages": [
+        "English"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Sourcegraph Cody is the AI coding assistant built by Sourcegraph, the code-intelligence company co-founded by Quinn Slack and Beyang Liu in 2013 and headquartered in San Francisco. Cody layers chat, contextual autocomplete-style \"auto-edit\" suggestions, and prompt automation on top of Sourcegraph's existing code-search engine, so answers are grounded in the context of an organization's actual repositories rather than generic training data pulled from the open internet.",
+            "Historically, Cody shipped in Free, Pro, and Enterprise Starter tiers alongside a full Enterprise edition, competing directly with editor-first assistants like GitHub Copilot for individual developer mindshare. In mid-2025, Sourcegraph retired the Free, Pro, and Enterprise Starter offerings to focus its engineering effort on two distinct products: Cody Enterprise for large organizations already running Sourcegraph's code-search platform, and a separate agentic coding tool called Amp aimed at individual and small-team developers who previously used the free and Pro tiers. Existing Free and Pro users were offered transition credits toward Amp as part of the wind-down.",
+            "As a result, Cody today is positioned squarely as an enterprise product rather than a consumer app. It is sold on annual contracts, with published pricing starting at $16,000 and scaling with team size and usage credits, bundled together with Sourcegraph's broader code-search, Batch Changes, and code-insights platform. Buyers evaluate Cody as part of a wider engineering-intelligence purchase rather than as a standalone monthly subscription, and most detailed quotes require a conversation with Sourcegraph's sales team rather than a self-serve checkout flow."
+          ]
+        },
+        {
+          "id": "who-sourcegraph-cody-is-for",
+          "heading": "Who Sourcegraph Cody Is For",
+          "level": 2,
+          "paragraphs": [
+            "Cody is built for engineering organizations that already rely on, or are actively evaluating, Sourcegraph's code-search platform to navigate large, multi-repository codebases. It suits companies with dozens to thousands of engineers spread across many services, where knowing which repository a given function or configuration lives in is a daily challenge rather than an occasional one.",
+            "It also fits security- and compliance-conscious enterprises that need single-tenant cloud or fully self-hosted deployment, administrative control over which repositories are allowed to feed AI responses through context filters, and centralized AI-credit pooling across an entire engineering organization rather than fragmented, per-seat billing that is harder to govern at scale.",
+            "Platform, developer-experience, and developer-productivity teams responsible for standardizing tooling across many IDEs (VS Code, JetBrains, Visual Studio) and code hosts (GitHub, GitLab) are a natural buyer, since Cody's value comes largely from codebase-wide context and organization-level administration rather than single-file autocomplete alone. Organizations already budgeting for Sourcegraph's code-search and Batch Changes tooling can add Cody as an incremental capability on the same annual contract, which simplifies procurement compared with introducing an entirely separate AI vendor."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Individual developers, students, and open-source maintainers who want a free or low-cost AI pair programmer should look elsewhere: Sourcegraph discontinued Cody Free and Cody Pro in 2025, so there is no longer a self-serve sign-up or personal-use path into the product at all.",
+            "Small startups and solo founders on tight budgets will find the enterprise, annual-contract pricing model, starting near $16,000 per year and requiring a sales conversation, hard to justify next to lower-cost, month-to-month tools such as GitHub Copilot or Cursor that offer comparable in-editor assistance without a procurement process or a minimum contract size.",
+            "Teams that want a lightweight, agentic coding assistant without adopting Sourcegraph's broader code-search platform are better served by Sourcegraph's own Amp product or by other standalone assistants, since Cody is now sold strictly as part of the Enterprise package rather than as an à la carte add-on that a small team could purchase independently."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "Cody's core surface is an in-IDE chat that answers questions about a codebase, explains unfamiliar code, and proposes fixes, paired with an auto-edit mode that offers contextual, cursor-aware code suggestions as engineers type rather than generic boilerplate completions.",
+            "Its context engine draws on Sourcegraph's search API to pull in relevant files, symbols, and cross-repository references rather than relying only on files open in the editor, and administrators can apply context filters to control which repositories are allowed to inform responses, which matters for organizations that handle sensitive, regulated, or otherwise access-restricted source code.",
+            "Beyond chat and autocomplete, Cody offers a library of shareable Prompts for automating recurring tasks such as code-review checklists, documentation generation, and debugging workflows, plus enterprise controls including MCP server, API, and CLI access, single-tenant or self-hosted deployment, and org-wide AI-credit pooling that carries over rather than expiring on a monthly cycle. These capabilities sit alongside the wider Sourcegraph platform's Batch Changes and Insights tooling, so Cody is one part of a broader engineering-intelligence suite rather than an isolated point solution."
+          ]
+        },
+        {
+          "id": "the-sourcegraph-cody-experience",
+          "heading": "The Sourcegraph Cody Experience",
+          "level": 2,
+          "paragraphs": [
+            "Day to day, engineers interact with Cody from inside their existing IDE, whether VS Code, a JetBrains IDE, or Visual Studio, or through GitHub and GitLab integrations, so the workflow stays close to where code is already written, reviewed, and shipped rather than requiring a separate tool or browser tab.",
+            "Because responses are grounded in Sourcegraph's indexed search of the organization's own repositories, answers tend to reference real internal functions, services, and naming conventions rather than generic examples, which is the main differentiator engineering teams cite versus editor-only assistants that only see the currently open file.",
+            "On the operations side, administrators get controls for managing seats, AI credits, and repository access, 24x5 support with premium upgrade options, and volume-based contract terms, reflecting that Cody is delivered and supported as a component of an enterprise platform rather than a self-serve subscription an individual engineer can start or cancel on their own initiative."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "AI Chat",
+          "description": "A codebase-aware conversational assistant for understanding, writing, and fixing code, grounded in context from the organization's own repositories."
+        },
+        {
+          "title": "Auto-Edit (Autocomplete)",
+          "description": "Contextual, cursor-aware code suggestions that appear as engineers type, based on the surrounding file and broader codebase context."
+        },
+        {
+          "title": "Context Engine / Deep Search",
+          "description": "Draws on Sourcegraph's search API to retrieve relevant files, symbols, and cross-repository references for more accurate AI answers."
+        },
+        {
+          "title": "Context Filters",
+          "description": "Admin-configurable controls over which repositories are permitted to inform Cody's chat and autocomplete responses."
+        },
+        {
+          "title": "Prompts Library",
+          "description": "Shareable, reusable prompt templates for automating recurring engineering tasks like code review, documentation, and debugging."
+        },
+        {
+          "title": "Debugging Assistance",
+          "description": "Helps identify the source of errors within existing code and proposes fixes using surrounding codebase context."
+        },
+        {
+          "title": "IDE and Code Host Integrations",
+          "description": "Works inside VS Code, JetBrains IDEs, and Visual Studio, and integrates with GitHub and GitLab repositories."
+        },
+        {
+          "title": "MCP Server, API, and CLI Access",
+          "description": "Programmatic and agent-based access to Cody's capabilities for custom tooling and automation pipelines."
+        },
+        {
+          "title": "Enterprise Security and Admin Controls",
+          "description": "Single-tenant cloud or self-hosted deployment options with enterprise-grade access management and admin oversight."
+        },
+        {
+          "title": "Batch Changes and Code Insights",
+          "description": "Broader Sourcegraph platform tools for large-scale code changes and engineering analytics, bundled with Cody Enterprise."
+        }
+      ],
+      "pros": [
+        "Deep, codebase-wide context via Sourcegraph's search engine, not just the files open in the editor.",
+        "Strong fit for very large, multi-repository, multi-language enterprise codebases.",
+        "Enterprise deployment flexibility, including single-tenant cloud or fully self-hosted options.",
+        "Org-wide AI-credit pooling avoids per-seat usage friction across large teams.",
+        "Bundled with Sourcegraph's mature code-search, Batch Changes, and Insights tooling."
+      ],
+      "cons": [
+        "No free or individual-developer tier; Cody Free and Cody Pro were discontinued in 2025.",
+        "Enterprise-only, annual-contract pricing starting near $16,000/year is a high floor for smaller teams.",
+        "Requires buy-in to the broader Sourcegraph platform rather than a lightweight standalone install.",
+        "Public pricing detail is limited; most buyers must contact sales for an exact quote.",
+        "Faces strong competition from lower-cost, self-serve assistants such as GitHub Copilot and Cursor."
+      ],
+      "faqs": [
+        {
+          "question": "Is there a free version of Sourcegraph Cody?",
+          "answer": "No. Sourcegraph discontinued the Cody Free and Cody Pro plans in 2025; Cody is now available only as part of Sourcegraph Enterprise. Individual developers looking for a free option are pointed to Sourcegraph's separate Amp product instead."
+        },
+        {
+          "question": "How much does Cody cost?",
+          "answer": "Cody is sold as part of Sourcegraph Enterprise, with published pricing starting at $16,000 per year and scaling with team size and usage credits. Exact quotes require contacting Sourcegraph sales."
+        },
+        {
+          "question": "Which IDEs and code hosts does Cody support?",
+          "answer": "Cody integrates with VS Code, JetBrains IDEs, and Visual Studio, and works alongside repositories hosted on GitHub and GitLab."
+        },
+        {
+          "question": "Does Cody require the full Sourcegraph code-search platform?",
+          "answer": "Yes. In its current form, Cody is delivered as a capability within Sourcegraph Enterprise, alongside code search, Batch Changes, and Insights, rather than as a standalone product."
+        },
+        {
+          "question": "What happened to Cody in the Enterprise Starter tier?",
+          "answer": "Sourcegraph removed Cody from the Enterprise Starter tier in 2025, so Cody is now offered only within the full Sourcegraph Enterprise plan."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Onboarding engineers into large monorepos",
+          "description": "New hires use Cody chat to ask questions about unfamiliar services and get answers grounded in the actual codebase instead of generic explanations.",
+          "audience": "Engineering managers and onboarding teams at large organizations"
+        },
+        {
+          "title": "Cross-repository debugging",
+          "description": "Engineers use Cody's context-aware search to trace an error across multiple interconnected repositories and get a proposed fix without manually searching each service.",
+          "audience": "Platform and backend engineering teams"
+        },
+        {
+          "title": "Standardizing AI tooling across many IDEs",
+          "description": "Developer-experience teams roll out Cody across VS Code, JetBrains, and Visual Studio so every engineer gets a consistent, codebase-aware assistant regardless of editor choice.",
+          "audience": "Developer experience (DevEx) and platform engineering teams"
+        },
+        {
+          "title": "Automating recurring engineering workflows",
+          "description": "Teams build and share Cody Prompts for repetitive tasks such as code-review checklists or documentation generation, reducing manual repetitive work.",
+          "audience": "Engineering leads standardizing team workflows"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Cody Enterprise",
+          "price": "Starting at $16,000",
+          "billing_cycle": "Annual",
+          "features": [
+            "Codebase-wide search and navigation",
+            "AI chat, auto-edit, and Prompts",
+            "Deep Search context engine",
+            "Batch Changes, Insights, and Monitoring",
+            "MCP Server, API, and CLI access",
+            "Single-tenant cloud or self-hosted deployment",
+            "Enterprise-grade security and admin controls",
+            "24x5 support with premium upgrade options"
+          ]
+        },
+        {
+          "plan_name": "Custom / Volume",
+          "price": "Custom quote",
+          "billing_cycle": "Annual contract",
+          "features": [
+            "Volume-based pricing for larger engineering organizations",
+            "Org-wide AI-credit pooling with no monthly expiry",
+            "Dedicated account and solutions engineering support",
+            "Tailored deployment and SLA terms"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "api",
+        "web-app"
+      ],
+      "seo_meta_description": "Sourcegraph Cody: enterprise AI coding assistant with codebase-aware chat, autocomplete, and search context for large engineering teams."
+    }
+  },
+  {
+    "tool_id": "6ef381d0-f2eb-4c4f-bf13-583a63f2091b",
+    "slug": "speechify",
+    "name": "Speechify",
+    "enrichment": {
+      "short_description": "AI text-to-speech app that reads articles, PDFs, ebooks, and documents aloud in natural voices, with OCR scanning and voice cloning.",
+      "pricing_model": "Freemium",
+      "starting_price": "$11.58/month (billed annually); $29/month billed monthly",
+      "founded_year": 2017,
+      "company_size": "Roughly 150-200 employees, fully distributed",
+      "headquarters": "Miami, Florida, USA",
+      "languages": [
+        "English",
+        "Spanish",
+        "French",
+        "German",
+        "Portuguese",
+        "Italian",
+        "Hindi",
+        "Mandarin Chinese",
+        "Japanese",
+        "Arabic",
+        "Russian",
+        "Dutch"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Speechify is a text-to-speech application that converts articles, PDFs, ebooks, emails, and scanned documents into spoken audio. Founded by Cliff Weitzman, who built the first version to help himself keep up with college reading as a student with dyslexia, the product has grown into a broader reading and productivity tool used across desktop, mobile, and browser environments by millions of everyday readers.",
+            "At its core, Speechify uses AI-generated voices to narrate written text at adjustable speeds, letting users listen instead of read. Beyond basic narration, the platform has expanded into optical character recognition for physical books, AI-generated summaries, voice cloning, and dictation, positioning it as an all-purpose voice and reading assistant rather than a single-feature text-to-speech tool aimed at one narrow use case. This broader scope reflects a shift in the product from a simple reading aid toward a wider voice-and-productivity suite.",
+            "The company offers a free tier with limited voices and speeds, alongside a paid Premium subscription that unlocks a larger voice library, faster playback, and AI features such as summarization and chat. Separate offerings, Speechify Studio and a developer API, extend the same underlying voice technology into video voiceovers, audio dubbing, and third-party app integrations for teams building their own products. Together these tiers let the same core technology serve casual readers and commercial audio producers alike."
+          ]
+        },
+        {
+          "id": "who-speechify-is-for",
+          "heading": "Who Speechify Is For",
+          "level": 2,
+          "paragraphs": [
+            "Speechify is aimed squarely at people who read large volumes of text and want an audio alternative. Students juggling textbooks and course readings, especially those with dyslexia or other reading-related learning differences, are a core audience the product was originally built to serve, and it remains a popular accessibility tool in that space today.",
+            "Knowledge workers, researchers, and professionals who need to get through long reports, articles, or PDFs during commutes or while multitasking are another natural fit. The ability to speed up playback, switch between devices, and pull documents straight from cloud storage makes it useful for anyone trying to reclaim time that would otherwise go to silent reading at a desk, turning idle moments throughout the day into productive reading time.",
+            "Content creators and small teams also use Speechify's voice technology for narration, voiceovers, and podcast-style audio through its Studio and API products, making the tool relevant beyond individual reading assistance and into lightweight audio production workflows for marketing, video, and independent media projects. Developers looking to add spoken-word features to their own apps can likewise tap the underlying API rather than building voice synthesis from scratch."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Users who only need occasional, basic text-to-speech, such as reading a short article once in a while, may find the free tier's slower speeds and robotic-sounding voices limiting, while the Premium subscription cost may not be justified for such light, infrequent use compared with a browser's built-in reading tools.",
+            "Teams that need precise control over voice production quality, such as broadcast-grade narration with fine-tuned pacing and emotional delivery, may find general-purpose AI voices less suitable than specialized professional voiceover software or human talent for high-stakes, polished commercial projects.",
+            "Organizations with strict data-handling requirements for sensitive or regulated documents should evaluate Speechify's data policies carefully before uploading confidential files, since the product is designed primarily for everyday reading rather than as a compliance-focused enterprise document platform with dedicated data-residency guarantees. Buyers comparing dedicated enterprise document or compliance tools should weigh those requirements against Speechify's consumer-oriented focus before committing."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "Speechify's core feature is natural-sounding AI text-to-speech, letting users listen to web pages, documents, PDFs, and ebooks at adjustable speeds. Premium unlocks a much larger voice library, spanning dozens of languages and accents, plus faster playback speeds compared with the free tier's limited, slower options.",
+            "Scan & Listen uses optical character recognition to turn photos of printed pages or physical books into audio, while integrations with Google Drive, Dropbox, and Microsoft OneDrive let users pull documents directly into the app for narration without manual uploads, keeping reading lists synced across a person's existing file storage and reducing the friction of moving files between apps.",
+            "Additional AI-driven features include document summaries and chat for quickly digesting long content, voice typing for hands-free dictation, voice cloning for a personalized narrator, and AI podcast creation. A browser extension, mobile apps, and desktop apps keep the reading experience consistent across devices and picking up where a user left off, syncing playback position between phone, browser, and desktop sessions."
+          ]
+        },
+        {
+          "id": "the-speechify-experience",
+          "heading": "The Speechify Experience",
+          "level": 2,
+          "paragraphs": [
+            "Using Speechify typically starts with importing or opening a piece of text, whether that's a webpage via the browser extension, a PDF, or a photographed page, and then pressing play. The interface highlights words as they are read aloud, which helps with following along and comprehension, especially for readers who benefit from a visual anchor alongside the audio.",
+            "The jump from the free tier to Premium is noticeable: voices sound considerably more natural, playback can run several times faster, and features like AI summaries, voice cloning, and voice typing become available. Many users describe the transition as changing the app from a novelty into a daily productivity habit woven into commutes, workouts, and study sessions.",
+            "Overall, the experience is built around convenience and speed, letting people consume more written material passively during commutes, chores, or other tasks. The trade-off is that, like any AI voice, even the best Speechify voices can occasionally mispronounce uncommon words, names, or technical jargon, requiring users to adjust expectations rather than expect flawless narration in every scenario."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "AI text-to-speech narration",
+          "description": "Converts articles, documents, PDFs, and ebooks into natural-sounding spoken audio with adjustable playback speed."
+        },
+        {
+          "title": "Scan & Listen (OCR)",
+          "description": "Uses optical character recognition to turn photos of printed pages or physical books into audio."
+        },
+        {
+          "title": "Large multilingual voice library",
+          "description": "Premium unlocks a large library of AI voices spanning dozens of languages and accents."
+        },
+        {
+          "title": "Voice cloning",
+          "description": "Lets users create a custom AI voice modeled on their own voice for personalized narration."
+        },
+        {
+          "title": "AI summaries and document chat",
+          "description": "Generates quick summaries of long documents and lets users ask questions about the content."
+        },
+        {
+          "title": "Voice typing / dictation",
+          "description": "Converts spoken words into written text for faster note-taking and drafting."
+        },
+        {
+          "title": "AI podcast creation",
+          "description": "Turns written content into podcast-style audio for on-the-go listening."
+        },
+        {
+          "title": "Cloud storage integrations",
+          "description": "Connects with Google Drive, Dropbox, and Microsoft OneDrive to import documents directly for narration."
+        },
+        {
+          "title": "Cross-platform apps and browser extension",
+          "description": "Available on web, iOS, Android, Mac, and Windows, plus a Chrome extension for reading web pages aloud."
+        }
+      ],
+      "pros": [
+        "Natural-sounding AI voices with adjustable speeds up to 5x",
+        "Supports many input types: web pages, PDFs, ebooks, and scanned physical pages",
+        "Useful accessibility tool for users with dyslexia or reading difficulties",
+        "Available across web, mobile, and desktop with a browser extension for convenience",
+        "Separate Studio and API products extend the voice technology beyond personal reading"
+      ],
+      "cons": [
+        "Free tier is limited to slower speeds and fewer, more robotic-sounding voices",
+        "Premium subscription cost may feel steep for occasional or light users",
+        "AI voices can mispronounce uncommon words, names, or technical terms",
+        "Some advanced AI features depend on ongoing internet connectivity",
+        "Voice cloning and premium features add a learning curve for new users"
+      ],
+      "faqs": [
+        {
+          "question": "Is Speechify free to use?",
+          "answer": "Speechify offers a free plan with basic text-to-speech at slower speeds and a limited voice selection. A paid Premium subscription unlocks faster speeds, more natural voices, and additional AI features."
+        },
+        {
+          "question": "What file types can Speechify read aloud?",
+          "answer": "Speechify can read web pages, PDFs, Word documents, ebooks, emails, and even photographed or scanned physical pages using its OCR-based Scan & Listen feature."
+        },
+        {
+          "question": "Does Speechify work on mobile devices?",
+          "answer": "Yes, Speechify has apps for iOS and Android, along with Mac and Windows desktop apps and a Chrome browser extension, so listening can continue across devices."
+        },
+        {
+          "question": "Can Speechify clone my own voice?",
+          "answer": "Speechify includes a voice cloning feature that lets users create a custom AI voice based on a sample of their own voice, available as part of its premium offerings."
+        },
+        {
+          "question": "Is Speechify good for people with dyslexia?",
+          "answer": "Speechify was originally created to help a student with dyslexia keep up with reading, and it remains commonly used as an accessibility tool for people with dyslexia and other reading challenges."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Accessible reading for students with dyslexia",
+          "description": "Converts textbooks, articles, and assigned readings into spoken audio so students can follow along or listen instead of reading text visually.",
+          "audience": "Students and learners with dyslexia or reading-related learning differences"
+        },
+        {
+          "title": "Faster consumption of long documents",
+          "description": "Lets professionals listen to reports, research papers, and PDFs at increased speeds during commutes or while multitasking.",
+          "audience": "Knowledge workers and researchers"
+        },
+        {
+          "title": "Turning physical books into audio",
+          "description": "Uses OCR to scan printed pages or photographed text and narrate the content aloud, useful for material without a digital version.",
+          "audience": "Readers of physical books and printed materials"
+        },
+        {
+          "title": "Voiceover and podcast content creation",
+          "description": "Applies Speechify's AI voice technology through Studio and API products to generate voiceovers, dubbing, and podcast-style audio from written scripts.",
+          "audience": "Content creators and small production teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0",
+          "billing_cycle": "N/A",
+          "features": [
+            "Playback speeds up to 1.5x",
+            "10 standard voices",
+            "Text-to-speech on web and mobile"
+          ]
+        },
+        {
+          "plan_name": "Premium (Monthly)",
+          "price": "$29/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "1000+ natural AI voices",
+            "60+ languages",
+            "Playback speeds up to 5x",
+            "Scan & Listen OCR",
+            "AI summaries and document chat",
+            "Voice typing and AI podcast creation"
+          ]
+        },
+        {
+          "plan_name": "Premium (Annual)",
+          "price": "$139/year (about $11.58/month)",
+          "billing_cycle": "Annual",
+          "features": [
+            "Same features as monthly Premium at a reduced effective monthly rate",
+            "1000+ natural AI voices and 60+ languages",
+            "Playback speeds up to 5x",
+            "Cloud storage integrations with Google Drive, Dropbox, and OneDrive"
+          ]
+        },
+        {
+          "plan_name": "Studio & API",
+          "price": "Contact for pricing",
+          "billing_cycle": "Custom",
+          "features": [
+            "AI voiceover and dubbing tools for video and audio production",
+            "Developer API for integrating Speechify voices into third-party apps",
+            "Custom usage terms based on volume and use case"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "ios",
+        "android",
+        "web-app",
+        "freemium"
+      ],
+      "seo_meta_description": "Speechify review: AI text-to-speech app that reads PDFs, articles, and ebooks aloud with natural voices, OCR scanning, and voice cloning."
+    }
+  },
+  {
+    "tool_id": "17484540-c7ef-4a3f-b23f-5866c0cdd5ac",
+    "slug": "spoton",
+    "name": "SpotOn",
+    "enrichment": {
+      "short_description": "All-in-one POS and payments platform for restaurants and retail, bundling hardware, online ordering, marketing, and payroll tools.",
+      "pricing_model": "Contact for pricing",
+      "starting_price": "Custom quote; published tiers range from $0 to $55+ per station/month plus card-processing fees and hardware costs",
+      "founded_year": 2017,
+      "company_size": "Approximately 2,600 employees (as of 2026)",
+      "headquarters": "San Francisco, California, USA",
+      "languages": [
+        "English"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SpotOn is a point-of-sale and business management platform built primarily for restaurants and retail businesses, combining payment processing, POS hardware, online ordering, and marketing tools into one system. Founded in 2017 and headquartered in San Francisco, the company positions itself as an alternative to legacy POS vendors, pairing its software with human account representatives rather than a purely self-service signup flow.",
+            "The platform spans full-service and quick-service restaurants, bars, retail shops, salons, and other small to midsize businesses, offering countertop terminals, handheld devices, and kiosk hardware alongside cloud-based software for menu management, table service, and reporting. Add-on modules extend the core POS to cover commission-free online ordering, reservations, marketing campaigns, and payroll and labor management.",
+            "Rather than a single flat subscription, SpotOn sells bundled hardware-plus-software packages across several tiers, ranging from lower monthly fees paired with higher card-processing rates to higher monthly software fees paired with lower processing rates. Getting an exact price generally requires speaking with a sales representative, who tailors the quote to business type, location count, and expected processing volume."
+          ]
+        },
+        {
+          "id": "who-spoton-is-for",
+          "heading": "Who SpotOn Is For",
+          "level": 2,
+          "paragraphs": [
+            "SpotOn suits independent restaurant owners and small multi-location groups who want a single vendor for payments, POS hardware, online ordering, and marketing rather than stitching together separate tools. Businesses that value a dedicated setup and ongoing support relationship, instead of an instant self-serve account creation flow, tend to fit the model well.",
+            "Retailers and service businesses, including bars, cafes, salons, and specialty shops, that need integrated hardware such as handheld ordering devices, kitchen display systems, or kiosks also fall within SpotOn's target market, since the company builds and supports its own terminal lineup rather than relying solely on third-party hardware.",
+            "Owners who want built-in labor management, tip tracking, and payroll alongside their POS, or who want commission-free online ordering tied directly to their menu and kitchen, are well matched to SpotOn's bundled approach, since these modules are designed to work natively with the core POS rather than as bolt-on integrations added later."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Businesses outside the United States, or those needing a POS with mature, well-documented international payment support, should look elsewhere, since SpotOn's payments and hardware distribution focus on the US market. Purely e-commerce operations with no in-person sales component will also find much of the hardware-centric feature set unnecessary for their day-to-day operations.",
+            "Owners who want fully transparent, self-service pricing published as fixed dollar figures without a sales conversation may find SpotOn's custom-quote process frustrating, since final costs depend on negotiated processing rates, contract length, and the chosen hardware bundle rather than a single published price list.",
+            "Very small or seasonal merchants who only need a basic mobile card reader and no back-of-house software, or who want to avoid the multi-year contract terms tied to some lower-cost plans, may be better served by simpler, contract-free mobile payment tools rather than a full restaurant and retail management platform like SpotOn."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "At its core, SpotOn provides POS hardware and software for restaurants and retail, covering order entry, table and menu management, kitchen display routing, and integrated card payment processing with tiered in-person and keyed-in rates.",
+            "On top of the base POS, SpotOn layers commission-free online ordering through SpotOn Order, table reservations through SpotOn Reserve, and a marketing module that centralizes email and SMS campaigns and review management from one dashboard, all designed to sync back into the same guest and sales data rather than operating as separate silos.",
+            "For labor-intensive operations, SpotOn Teamwork adds scheduling, tip management, and payroll integration synced directly to POS sales, while a developer center and OAuth-based API let businesses and partners connect accounting, e-commerce, and other third-party software into the platform."
+          ]
+        },
+        {
+          "id": "the-spoton-experience",
+          "heading": "The SpotOn Experience",
+          "level": 2,
+          "paragraphs": [
+            "Getting started with SpotOn typically involves a sales conversation and account setup process rather than an instant self-service signup, with a representative helping select hardware, a pricing tier, and add-on modules before installation and staff training take place.",
+            "Once running, users generally interact with SpotOn through countertop or handheld terminals in-store and a web-based back-office dashboard for reporting, menu edits, marketing, and staff scheduling. SpotOn has built a reputation among review sites like G2 and Capterra for responsive customer support compared with some larger competitors in the category.",
+            "As with any full-service POS switch, businesses should expect a learning curve during onboarding and menu or system migration, plus some contract commitment depending on the pricing tier chosen. Many owners cite the combination of hardware, software, and dedicated support as a meaningful trade-off versus assembling multiple point solutions on their own."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "POS Hardware and Software",
+          "description": "Countertop terminals, handheld devices, and kitchen display integration for restaurant and retail order flows, including table and menu management."
+        },
+        {
+          "title": "Payment Processing",
+          "description": "Built-in card processing with tiered in-person and keyed-in rates, plus financing options for purchasing hardware over time."
+        },
+        {
+          "title": "SpotOn Order",
+          "description": "Commission-free online ordering connected directly to the POS and kitchen, so orders flow through without a third-party marketplace cut."
+        },
+        {
+          "title": "SpotOn Reserve",
+          "description": "Table reservation and guest management tools built for full-service restaurants."
+        },
+        {
+          "title": "Marketing Assist",
+          "description": "Centralized email and SMS marketing campaigns and online review management from a single dashboard."
+        },
+        {
+          "title": "SpotOn Teamwork",
+          "description": "Scheduling, tip management, and payroll integration synced to POS sales data for labor management."
+        },
+        {
+          "title": "Reporting and Analytics",
+          "description": "Sales, labor, and profitability dashboards for single-location and multi-location businesses."
+        },
+        {
+          "title": "Menu and Table Management",
+          "description": "Digital menu editing and table layout tools used by service staff during daily operations."
+        },
+        {
+          "title": "Developer API and Integrations",
+          "description": "OAuth-based API and partner integrations connecting accounting, e-commerce, and marketing tools such as QuickBooks and Shopify."
+        },
+        {
+          "title": "GoTo Place App",
+          "description": "A white-labeled, guest-facing ordering app tied to a business's own branding."
+        }
+      ],
+      "pros": [
+        "Bundles POS hardware, payments, online ordering, and marketing under one vendor and dashboard.",
+        "Commission-free online ordering keeps more of each sale compared with third-party delivery marketplaces.",
+        "Dedicated sales and support representatives assist with setup rather than a purely self-serve flow.",
+        "Built-in labor and payroll tools through SpotOn Teamwork reduce the need for separate scheduling software.",
+        "Multiple pricing tiers let merchants trade off monthly software fees against card-processing rates."
+      ],
+      "cons": [
+        "Pricing isn't fully published; getting an exact quote requires a sales conversation.",
+        "Lower-cost plans can require multi-year contracts and processing minimums.",
+        "Primarily built for the US market, which limits fit for international merchants.",
+        "Switching to SpotOn's proprietary hardware and menu setup involves an onboarding and migration period.",
+        "Add-on modules like marketing and labor management carry additional monthly costs on top of core POS fees."
+      ],
+      "faqs": [
+        {
+          "question": "What kind of businesses use SpotOn?",
+          "answer": "SpotOn is used mainly by restaurants (full-service and quick-service), bars, and retail or service businesses like salons that need integrated POS, payments, online ordering, and marketing tools."
+        },
+        {
+          "question": "How much does SpotOn cost?",
+          "answer": "Pricing varies by plan: published tiers include a $0/station/month option with higher processing rates and multi-year terms, and a $55/station/month option with lower processing rates on a month-to-month basis. Exact costs depend on a custom quote from SpotOn's sales team."
+        },
+        {
+          "question": "Does SpotOn offer a free trial?",
+          "answer": "SpotOn does not widely advertise a standard free trial. Instead it offers sales demos and consultations, and one of its plans has no monthly software fee but comes with contract and processing-volume requirements."
+        },
+        {
+          "question": "Does SpotOn have an API for integrations?",
+          "answer": "Yes. SpotOn provides a developer center and an OAuth-based API that partners and businesses can use to connect accounting, e-commerce, and other third-party software."
+        },
+        {
+          "question": "What hardware does SpotOn support?",
+          "answer": "SpotOn sells its own proprietary terminals and handheld devices, along with kiosk options, and offers financing so merchants can spread hardware costs over time instead of paying entirely upfront."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Full-service restaurant table management",
+          "description": "Combine POS ordering, table layouts, and SpotOn Reserve reservations in one system to manage front-of-house operations end to end.",
+          "audience": "Full-service restaurant owners and managers"
+        },
+        {
+          "title": "Quick-service and counter ordering",
+          "description": "Use commission-free SpotOn Order alongside counter POS terminals to handle high-volume, fast-turnaround orders without marketplace fees.",
+          "audience": "Quick-service and fast-casual operators"
+        },
+        {
+          "title": "Multi-location labor and payroll management",
+          "description": "Run scheduling, tip tracking, and payroll through SpotOn Teamwork synced to POS sales data across several locations.",
+          "audience": "Multi-unit restaurant and retail groups"
+        },
+        {
+          "title": "Retail and service business checkout",
+          "description": "Process in-person payments and manage inventory or service bookings through SpotOn's POS hardware and software outside of restaurants.",
+          "audience": "Small retail shops and service businesses like salons"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "All-In",
+          "price": "$0 per station",
+          "billing_cycle": "Monthly (2-year minimum term)",
+          "features": [
+            "POS hardware and software included",
+            "Higher card-processing rates",
+            "Online ordering and table management",
+            "24/7 support"
+          ]
+        },
+        {
+          "plan_name": "POS Essentials",
+          "price": "$55 per station",
+          "billing_cycle": "Monthly, month-to-month",
+          "features": [
+            "Lower card-processing rates",
+            "Hardware financing options",
+            "Menu and table management",
+            "Reporting and 24/7 support"
+          ]
+        },
+        {
+          "plan_name": "Build Your Own (Multi-Unit/Enterprise)",
+          "price": "Custom",
+          "billing_cycle": "Custom",
+          "features": [
+            "Tailored software bundle",
+            "Custom processing rates",
+            "Multi-location support",
+            "Dedicated account management"
+          ]
+        },
+        {
+          "plan_name": "Core Add-On Bundle",
+          "price": "$50/month + 0.20% of processing volume (capped at $200)",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Profit Assist analytics",
+            "SpotOn Order online ordering",
+            "GoTo Place guest app",
+            "Marketing Assist"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "api",
+        "web-app",
+        "ios",
+        "android"
+      ],
+      "seo_meta_description": "SpotOn review: pricing, features, and use cases for this restaurant and retail POS platform bundling payments, online ordering, and marketing."
+    }
+  },
+  {
+    "tool_id": "ccce00ad-ab0d-46f9-a30a-defa7ebb0d6a",
+    "slug": "sprout-social",
+    "name": "Sprout Social",
+    "enrichment": {
+      "short_description": "Enterprise social media management platform for publishing, engagement, listening, and analytics across networks.",
+      "pricing_model": "Paid (free trial available)",
+      "starting_price": "$79/seat/month (Essentials plan, billed annually)",
+      "founded_year": 2010,
+      "company_size": "1,000-5,000 employees",
+      "headquarters": "Chicago, Illinois, USA",
+      "languages": [
+        "English",
+        "Spanish",
+        "Portuguese (Brazilian)"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Sprout Social is a social media management platform founded in 2010 and headquartered in Chicago, Illinois. Publicly traded on the Nasdaq, the company has grown from a Chicago startup into one of the most recognized names in enterprise social software, serving marketing, customer care, and communications teams at organizations of many sizes, from growing mid-market brands to large multinational enterprises.",
+            "The platform centers on a unified workflow: publishing and scheduling content, managing inbound messages and comments through a shared Smart Inbox, listening to broader social conversations and trends, and reporting on performance across networks such as Facebook, Instagram, X, LinkedIn, TikTok, YouTube, Pinterest, Threads, and Bluesky. Rather than being a single-purpose scheduler, Sprout positions itself as a system of record for a brand's entire social presence, connecting the people who create content, the people who respond to customers, and the people who report results.",
+            "Over time Sprout Social has layered in AI-assisted writing and reply suggestions, sentiment analysis, employee advocacy tools, review management, and API access for custom reporting and integrations. Its tiered, per-seat pricing and emphasis on collaboration, approval workflows, and detailed analytics reflect a product built primarily for teams rather than individual users, and its acquisitions and product expansions over the years have steadily broadened it from a scheduling tool into a fuller customer experience platform."
+          ]
+        },
+        {
+          "id": "who-sprout-social-is-for",
+          "heading": "Who Sprout Social Is For",
+          "level": 2,
+          "paragraphs": [
+            "Sprout Social is built for marketing, social media, and customer care teams inside mid-market and enterprise organizations that manage multiple brands, profiles, or regional accounts. Its collaboration features, such as content approval workflows, task assignment, and role-based permissions, are designed for groups of people working from the same content calendar rather than a single marketer posting alone, which makes handoffs between writers, approvers, and publishers far smoother than juggling spreadsheets and shared logins.",
+            "Agencies that manage social presence on behalf of several clients are another strong fit, since Sprout consolidates publishing, listening, and reporting for many profiles into one dashboard and can generate client-ready reports without manually stitching together data from each network. Brands with a meaningful customer care or community management function also benefit from the Smart Inbox, which routes and tags incoming messages so support and social teams can respond without missing conversations across busy campaign periods.",
+            "Organizations that rely on data to justify social spend, such as those needing competitor benchmarking, campaign tagging, or executive-level reporting, tend to get the most value from Sprout's analytics and listening tools, which go well beyond basic scheduling metrics and help teams tie social activity back to broader marketing and customer experience goals."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Solo creators, freelancers, and very small businesses on a tight budget are likely to find Sprout Social more platform than they need. Per-seat pricing that starts well above many lightweight scheduling tools can be hard to justify when the requirement is simply queuing a handful of posts a week for one person managing one or two accounts.",
+            "Teams whose primary need is deep, native-feeling short-form video workflows, influencer collaboration, or highly specialized TikTok and creator-economy tooling may find purpose-built platforms in that niche better tailored to their day-to-day work than a broad, all-in-one suite that treats every network in a fairly similar way.",
+            "Buyers who are price-sensitive or only need one core function, such as basic scheduling or simple hashtag monitoring, may also be better served by a narrower, lower-cost tool rather than paying for the reporting, listening, and workflow depth Sprout is built around, especially if their team is small enough that formal approval chains and seat-based licensing add more overhead than value."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "At the core of Sprout Social is the Smart Inbox, which aggregates messages, comments, and mentions from connected profiles into a single stream, with tagging, assignment, and saved reply tools that help teams divide and track response work without duplicating effort. Alongside it sits a visual content calendar and publishing tool supporting scheduling, drafts, approval workflows, and asset libraries for reusable creative across campaigns.",
+            "Social listening lets teams track keywords, competitors, and industry trends across public conversations, surfacing sentiment and volume data that feeds into strategy and crisis monitoring before an issue escalates. Reporting spans profile-level performance, paid and organic comparisons, competitor benchmarking, and team productivity, with exportable dashboards suitable for stakeholders outside the core social team, including executives and clients.",
+            "Additional capabilities include AI Assist for drafting and refining post copy and replies, review management for aggregating and responding to reviews across sites, employee advocacy tools for amplifying content through staff networks, and, on higher tiers, API access and helpdesk integrations that connect Sprout to a broader customer support stack such as a shared ticketing system."
+          ]
+        },
+        {
+          "id": "the-sprout-social-experience",
+          "heading": "The Sprout Social Experience",
+          "level": 2,
+          "paragraphs": [
+            "New users typically go through a guided onboarding flow that connects social profiles and introduces the Smart Inbox, publishing calendar, and reporting tabs. The interface favors dense, data-rich screens over minimalism, which suits teams that want visibility into everything at once but can feel like a learning curve for someone used to lighter, single-purpose scheduling apps with fewer menus and settings to absorb.",
+            "Sprout Social also ships iOS and Android mobile apps so on-call team members can monitor and respond to messages away from a desktop, and its support organization is generally regarded as responsive, offering live chat, a searchable help center, and account-level guidance on higher-tier plans, along with training resources for teams that are onboarding several people at once.",
+            "Because features and message volume expand with each pricing tier, the day-to-day experience can differ noticeably between a Standard-plan user managing a handful of profiles and an Advanced or Enterprise customer running listening, sentiment analysis, and API-driven workflows across a large organization with dozens of connected accounts and multiple regional teams."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Smart Inbox",
+          "description": "Consolidates messages, comments, and mentions from all connected profiles into one stream with tagging and assignment."
+        },
+        {
+          "title": "Publishing & Content Calendar",
+          "description": "Visual scheduling, drafts, and approval workflows for planning and publishing content across networks."
+        },
+        {
+          "title": "Social Listening",
+          "description": "Tracks keywords, competitors, and industry conversations to surface trends and sentiment at scale."
+        },
+        {
+          "title": "Analytics & Reporting",
+          "description": "Cross-network performance dashboards, competitor benchmarking, and exportable reports for stakeholders."
+        },
+        {
+          "title": "AI Assist",
+          "description": "AI-generated post copy, reply suggestions, and content enhancement built into the composer and inbox."
+        },
+        {
+          "title": "Employee Advocacy",
+          "description": "Lets employees discover and share approved company content to extend organic reach."
+        },
+        {
+          "title": "Review Management",
+          "description": "Aggregates and responds to customer reviews from multiple sites alongside social messages."
+        },
+        {
+          "title": "Sentiment Analysis",
+          "description": "Classifies inbound messages and mentions by sentiment to help prioritize responses and gauge brand health."
+        },
+        {
+          "title": "Sprout API",
+          "description": "Provides programmatic access to data for custom reporting and integration with other business systems."
+        },
+        {
+          "title": "Mobile Apps",
+          "description": "iOS and Android apps for monitoring and responding to messages while away from a desktop."
+        }
+      ],
+      "pros": [
+        "Unifies publishing, engagement, listening, and reporting in one platform",
+        "Strong collaboration tools including approval workflows and task assignment",
+        "Detailed, exportable analytics suited to stakeholder reporting",
+        "Responsive customer support and a well-organized help center",
+        "Mobile apps allow teams to manage the Smart Inbox on the go"
+      ],
+      "cons": [
+        "Per-seat pricing is high relative to lightweight scheduling tools",
+        "Advanced features like sentiment analysis and API access require higher-tier plans",
+        "Interface density can create a learning curve for new users",
+        "Enterprise pricing requires a sales conversation rather than transparent self-serve rates",
+        "Some social listening depth is gated behind a separate add-on"
+      ],
+      "faqs": [
+        {
+          "question": "Does Sprout Social offer a free plan?",
+          "answer": "No, Sprout Social does not offer a permanent free plan. It offers a 30-day free trial across its Standard, Professional, and Advanced tiers with no credit card required."
+        },
+        {
+          "question": "How much does Sprout Social cost?",
+          "answer": "Pricing is per seat and billed primarily on an annual basis, starting around $79 per seat per month for the Essentials plan, with Standard, Professional, and Advanced tiers priced higher as more features are added. Enterprise pricing is custom."
+        },
+        {
+          "question": "Which social networks does Sprout Social support?",
+          "answer": "Sprout Social supports publishing, engagement, and reporting for networks including Facebook, Instagram, X, LinkedIn, TikTok, YouTube, Pinterest, Threads, and Bluesky, with coverage varying somewhat by plan."
+        },
+        {
+          "question": "Is Sprout Social suited to small businesses?",
+          "answer": "It can work for small teams that need robust collaboration and reporting, but its per-seat pricing is generally higher than budget scheduling tools, so very small or solo operations may find it more platform than they need."
+        },
+        {
+          "question": "Does Sprout Social include social listening?",
+          "answer": "Yes, listening for keywords, competitors, and trends is built into the platform, with deeper listening capabilities available as part of higher tiers or a dedicated add-on."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Multi-brand marketing teams",
+          "description": "Manage publishing, approvals, and reporting across several brands or regional profiles from a single dashboard.",
+          "audience": "Enterprise marketing and social media teams"
+        },
+        {
+          "title": "Agency client management",
+          "description": "Consolidate scheduling, inbox management, and client reporting for multiple accounts in one workspace.",
+          "audience": "Social media and marketing agencies"
+        },
+        {
+          "title": "Customer care and community management",
+          "description": "Route, tag, and respond to inbound messages and reviews through a shared inbox to keep response times consistent.",
+          "audience": "Customer support and community teams"
+        },
+        {
+          "title": "Brand monitoring and reputation tracking",
+          "description": "Track sentiment, mentions, and competitor activity to inform crisis response and campaign strategy.",
+          "audience": "Corporate communications and PR teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Essentials",
+          "price": "$79/seat/month",
+          "billing_cycle": "annual",
+          "features": [
+            "Up to 5 social profiles",
+            "Optimal send times",
+            "Profile and post-level reporting"
+          ]
+        },
+        {
+          "plan_name": "Standard",
+          "price": "$199/seat/month",
+          "billing_cycle": "annual",
+          "features": [
+            "5 social profiles",
+            "Smart Inbox",
+            "Content calendar and scheduling",
+            "Keyword and location monitoring",
+            "Review management"
+          ]
+        },
+        {
+          "plan_name": "Professional",
+          "price": "$299/seat/month",
+          "billing_cycle": "annual",
+          "features": [
+            "Unlimited social profiles",
+            "Message tagging",
+            "Competitor and paid performance reports",
+            "AI Assist for content"
+          ]
+        },
+        {
+          "plan_name": "Advanced",
+          "price": "$399/seat/month",
+          "billing_cycle": "annual",
+          "features": [
+            "AI-enhanced reply suggestions",
+            "Sentiment analysis",
+            "Sprout API access",
+            "Helpdesk integrations",
+            "Message spike alerts"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "api",
+        "web-app",
+        "ios",
+        "free-trial"
+      ],
+      "seo_meta_description": "Sprout Social review: pricing, features, pros and cons of this enterprise social media management platform for publishing, listening, and analytics."
+    }
+  },
+  {
+    "tool_id": "bb2fc581-be51-4423-a4e1-a32e3a5ab109",
+    "slug": "spyfu",
+    "name": "SpyFu",
+    "enrichment": {
+      "short_description": "Competitor keyword research tool revealing rivals' organic and paid search keywords, ad history, and rank tracking for SEO and PPC teams.",
+      "pricing_model": "Freemium",
+      "starting_price": "$39/month (billed monthly); lower with annual billing",
+      "founded_year": 2006,
+      "company_size": "11-50 employees",
+      "headquarters": "Scottsdale, Arizona, United States",
+      "languages": [
+        "English"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SpyFu is a competitor keyword research and PPC/SEO intelligence platform founded in 2006 and headquartered in Scottsdale, Arizona. It was built around a simple idea: type any domain into a search box and immediately see the organic and paid keywords that domain ranks for, an estimate of its monthly search traffic and Google Ads budget, and a record of the ads it has run. Nearly two decades later, that single search experience is still the core of the product.",
+            "Rather than positioning itself as a broad, all-in-one marketing suite, SpyFu deliberately narrows its focus to competitive intelligence: keyword overlap between domains, historical PPC ad copy and spend, rank tracking, and backlink visibility. The company remains a small, privately held business that sells subscriptions directly through tiered monthly and annual plans rather than through enterprise sales negotiations, and it markets itself primarily to individual marketers, freelancers, and small agencies rather than large enterprise buyers.",
+            "SpyFu sits in the same competitive-research category as Semrush, Ahrefs, and SimilarWeb, but it differentiates on price and on the depth of its historical advertising archive, which spans well over a decade of ad copy and spend estimates for millions of domains. That archive, combined with a lower price point than most rivals, is the feature most often cited by longtime users as the reason they keep a SpyFu subscription alongside or instead of larger SEO suites."
+          ]
+        },
+        {
+          "id": "who-spyfu-is-for",
+          "heading": "Who SpyFu Is For",
+          "level": 2,
+          "paragraphs": [
+            "SpyFu is aimed at small and mid-sized marketing teams, freelance SEOs, PPC specialists, and boutique marketing agencies that need to understand what competitors are doing in organic and paid search without paying enterprise SEO-suite prices. Its interface is deliberately simple, so someone who is new to SEO or paid search advertising can search a competitor's domain and get useful, readable answers within minutes rather than needing training to interpret the data.",
+            "Agencies managing several client accounts get particular value from the higher-tier plans, which add multiple user logins, custom branded reporting, and larger rank-tracking keyword allowances, letting account managers pull competitor insights and present them directly inside client-facing reports without needing a separate reporting tool. This makes SpyFu a common fit for agencies that want one login shared across a small team.",
+            "Solo consultants, small in-house marketing hires, and e-commerce owners also use SpyFu as an affordable alternative to pricier platforms, relying on it mainly for competitor keyword discovery, PPC ad research, and periodic rank checks rather than for deep technical SEO auditing or large-scale content operations. For these users, the appeal is getting a focused, competitor-centric view of the search landscape without paying for a full enterprise toolkit."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Large enterprises and agencies that need deep technical SEO auditing, site-crawling, log-file analysis, or large-scale content optimization will likely find SpyFu too narrow, since it lacks the crawling, technical-audit, and content-workflow depth found in tools such as Semrush, Ahrefs, or Screaming Frog. Teams whose primary need is fixing on-site technical issues rather than researching competitors are better served elsewhere.",
+            "Teams that require the broadest possible keyword or backlink index, or that operate mainly outside English-speaking, US-centric search markets, may find SpyFu's data coverage thinner than competitors that index a wider set of international search engines and languages. Businesses with a strong international SEO focus should evaluate SpyFu's coverage for their specific markets before committing to a plan.",
+            "Organizations that want a single platform covering social media scheduling, content publishing, technical audits, and keyword research together should also look elsewhere, since SpyFu is intentionally scoped to keyword research, PPC intelligence, and competitor tracking rather than serving as an all-in-one marketing stack. Buyers expecting an enterprise-style suite with dedicated account management may also find SpyFu's self-serve, subscription model a mismatch for their procurement process."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "At its core, SpyFu's domain overview shows any website's organic ranking keywords, estimated monthly search traffic, and estimated paid search budget in a single dashboard, making it fast to size up a competitor before digging into specifics. From that overview, users can drill into individual keywords to see ranking history, estimated click-through value, and which competing domains also rank for the same terms.",
+            "The Kombat tool visualizes keyword overlap between multiple domains as a Venn diagram, helping users quickly spot keywords a competitor ranks for that they do not, while Ad History reconstructs years of a competitor's Google Ads copy and spend estimates so marketers can study which ad variations have run longest, a signal often used as a proxy for what messaging is converting well.",
+            "Rounding out the toolset are rank tracking for monitoring keyword positions over time across search engines, backlink and SERP feature analysis, PPC keyword and ad-group recommendations for building out Google Ads campaigns, custom branded PDF reporting for client-facing agency work, and RivalFlow, an AI-assisted feature that generates content and keyword recommendations based on how competitors are already ranking."
+          ]
+        },
+        {
+          "id": "the-spyfu-experience",
+          "heading": "The SpyFu Experience",
+          "level": 2,
+          "paragraphs": [
+            "Using SpyFu typically starts with a single search: enter a domain or keyword and the tool immediately returns organic and paid keyword data without requiring an account first, which lowers the barrier for a first look at what the product can do before anyone commits to a paid plan.",
+            "The dashboard favors clear tables and straightforward visualizations over dense, enterprise-style reporting, and most day-to-day tasks, such as pulling a competitor's top keywords, exporting a keyword list, or checking an ad's run history, can be completed in a handful of clicks without a steep learning curve. New users tend to find the product approachable largely because it avoids overwhelming them with every possible metric at once.",
+            "Paid plans unlock unlimited searches, larger data exports, and expanded rank tracking, and the overall experience scales reasonably well, from a single freelancer checking a handful of competitors up to an agency team tracking rankings and building reports across many client accounts, though larger teams with heavier data or technical-audit needs may eventually outgrow what SpyFu alone can provide."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Domain Overview",
+          "description": "Enter any competitor's domain to see its organic and paid keyword counts, estimated monthly search traffic, and estimated PPC budget in one dashboard."
+        },
+        {
+          "title": "Competitor Keyword Research",
+          "description": "Discover the exact keywords a competitor ranks for organically or bids on in paid search, along with ranking position and estimated value."
+        },
+        {
+          "title": "Ad History",
+          "description": "Review years of a competitor's historical Google Ads copy variations and estimated ad spend to study which messaging has run the longest."
+        },
+        {
+          "title": "Kombat Tool",
+          "description": "Compare keyword overlap between your domain and up to several competitors using a Venn-diagram visualization to spot content and ranking gaps."
+        },
+        {
+          "title": "Rank Tracking",
+          "description": "Monitor keyword ranking positions over time across search engines, with tracking allowances that scale by plan tier."
+        },
+        {
+          "title": "Backlink Analysis",
+          "description": "View a domain's inbound backlink profile to understand which sites are linking to competitors and where link-building opportunities exist."
+        },
+        {
+          "title": "PPC Keyword and Ad-Group Recommendations",
+          "description": "Get suggested keywords and ad-group structures for building or refining Google Ads campaigns based on competitor performance."
+        },
+        {
+          "title": "Custom Branded Reporting",
+          "description": "Generate white-labeled PDF or exportable reports for client-facing agency work on higher-tier plans."
+        },
+        {
+          "title": "RivalFlow",
+          "description": "An AI-assisted feature that surfaces content and keyword recommendations based on where competitors are already ranking."
+        },
+        {
+          "title": "API Access",
+          "description": "Pull SpyFu keyword and competitor data programmatically into other systems, available on higher-tier plans."
+        }
+      ],
+      "pros": [
+        "Deep historical ad archive spanning many years of competitor Google Ads copy and spend estimates",
+        "Simple, approachable interface compared to denser enterprise SEO suites",
+        "Lower entry-level pricing than many competing SEO/PPC platforms",
+        "Combines organic SEO and paid search competitor data in a single tool",
+        "Free account tier lets new users search and preview data without a credit card"
+      ],
+      "cons": [
+        "Keyword and backlink database is generally smaller than larger suites like Semrush or Ahrefs",
+        "Rank tracking is capped by plan tier, requiring an upgrade for larger keyword lists",
+        "No dedicated mobile app for on-the-go access",
+        "Data coverage and interface are strongest for English-language, US-centric search markets",
+        "Lacks the technical SEO auditing and site-crawling depth of dedicated technical SEO tools"
+      ],
+      "faqs": [
+        {
+          "question": "Is SpyFu free to use?",
+          "answer": "SpyFu offers a free account with no credit card required, letting users search domains and keywords with limited data. Full keyword exports, unlimited searches, and rank tracking require a paid subscription."
+        },
+        {
+          "question": "What is SpyFu mainly used for?",
+          "answer": "SpyFu is used for competitor keyword research, PPC ad intelligence, and SEO rank tracking, helping marketers see what keywords and ads competitors are using in organic and paid search."
+        },
+        {
+          "question": "How much does SpyFu cost?",
+          "answer": "Paid plans start around $39 per month billed monthly, with a mid-tier plan around $119 per month and an agency-focused plan around $249 per month; annual billing typically reduces the effective monthly price."
+        },
+        {
+          "question": "Does SpyFu offer a free trial or refund?",
+          "answer": "SpyFu provides a free account tier for basic searches and backs paid subscriptions with a 30-day money-back guarantee if a customer is not satisfied."
+        },
+        {
+          "question": "How does SpyFu compare to Semrush or Ahrefs?",
+          "answer": "SpyFu generally has a smaller keyword and backlink index than Semrush or Ahrefs but is priced lower and is often considered easier to learn, with a particularly deep historical PPC ad archive."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Competitor PPC Research",
+          "description": "Analyze which keywords and ad copy competitors are bidding on and running in Google Ads, including historical ad variations and estimated spend.",
+          "audience": "PPC specialists and paid search marketers"
+        },
+        {
+          "title": "SEO Keyword Gap Analysis",
+          "description": "Use the Kombat tool and domain overview to find organic keywords competitors rank for that a site does not yet target.",
+          "audience": "SEO specialists and content marketers"
+        },
+        {
+          "title": "Ad Copy and Messaging Inspiration",
+          "description": "Study which of a competitor's ad variations have run longest as a signal for effective messaging to inform new campaigns.",
+          "audience": "Marketing teams building ad campaigns"
+        },
+        {
+          "title": "Client Rank Tracking and Reporting",
+          "description": "Track keyword rankings for multiple client domains and generate branded reports summarizing competitor positioning.",
+          "audience": "Marketing agencies managing multiple accounts"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Basic",
+          "price": "$39/month",
+          "billing_cycle": "Monthly (discounted rate available with annual billing)",
+          "features": [
+            "Unlimited keyword and domain searches",
+            "Data exports",
+            "Rank tracking for up to 5,000 keywords",
+            "Organic and paid keyword research"
+          ]
+        },
+        {
+          "plan_name": "Professional (Pro + AI)",
+          "price": "$119/month",
+          "billing_cycle": "Monthly (discounted rate available with annual billing)",
+          "features": [
+            "Everything in Basic",
+            "RivalFlow AI content and keyword recommendations",
+            "Custom branded reporting",
+            "API access",
+            "Rank tracking for up to 15,000 keywords"
+          ]
+        },
+        {
+          "plan_name": "Team/Agency",
+          "price": "$249/month",
+          "billing_cycle": "Monthly (discounted rate available with annual billing)",
+          "features": [
+            "Everything in Professional",
+            "Rank tracking for up to 50,000 keywords",
+            "Five user logins",
+            "Daily rank update snapshots",
+            "Unlimited custom reporting"
+          ]
+        }
+      ],
+      "tags": [
+        "web-app",
+        "freemium",
+        "free-plan",
+        "api",
+        "ai"
+      ],
+      "seo_meta_description": "SpyFu review: pricing, features, pros and cons of this competitor keyword research and PPC/SEO intelligence tool for marketers and agencies."
+    }
+  },
+  {
+    "tool_id": "9aaf51c9-b792-42f0-8f4d-c00a00023f84",
+    "slug": "square",
+    "name": "Square",
+    "enrichment": {
+      "short_description": "All-in-one POS, payments, and commerce platform helping small businesses accept payments, sell online, and manage day-to-day operations.",
+      "pricing_model": "Freemium",
+      "starting_price": "$0/month (Square Free plan; per-transaction processing fees apply)",
+      "founded_year": 2009,
+      "company_size": "5,000-10,000 employees (Square is part of Block, Inc.)",
+      "headquarters": "San Francisco, California, USA",
+      "languages": [
+        "English",
+        "Spanish",
+        "French",
+        "Japanese"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Square was founded in 2009 by Jack Dorsey and Jim McKelvey, initially known for its small white card reader that plugged into a phone's headphone jack and let anyone accept card payments without a traditional merchant account or lengthy bank application. That simple hardware innovation removed a major barrier for small businesses, market vendors, and independent sellers who previously had no affordable, fast way to take card payments outside of cash.",
+            "Since then, Square has grown from a single card reader into a full commerce ecosystem that includes point-of-sale software, e-commerce tools, invoicing, payroll, business financing, and banking services. In 2021 the parent company renamed itself Block, Inc., which now also owns Cash App and the buy-now-pay-later provider Afterpay, while the Square brand remains the seller-facing commerce and payments platform used by businesses day to day.",
+            "Square is headquartered in San Francisco, California, and serves sellers ranging from solo freelancers to multi-location retail and restaurant chains. Its products combine physical hardware, such as card readers, standalone terminals, and full point-of-sale registers, with a cloud-based dashboard that ties together sales, inventory, payments, and customer data across in-person and online channels, so a business can manage most of its day-to-day operations from one connected account rather than juggling several disconnected tools."
+          ]
+        },
+        {
+          "id": "who-square-is-for",
+          "heading": "Who Square Is For",
+          "level": 2,
+          "paragraphs": [
+            "Square is built for independent retailers, cafes, restaurants, bars, salons, food trucks, and other small businesses that want to start accepting card payments quickly without signing a long-term merchant contract or navigating the complex underwriting typical of traditional bank merchant accounts. Its low upfront cost and flexible, no-contract model make it approachable for first-time business owners.",
+            "It also suits small multi-location businesses that need centralized reporting alongside vertical-specific tools, such as table management and course timing for restaurants, barcode-based inventory for retailers, or online booking and deposits for appointment-based services like salons and spas. Owners who want one consistent system across every location, rather than separate tools per site, tend to get the most value from Square's unified, cross-location reporting and permissions.",
+            "Freelancers, contractors, and solo service providers who occasionally need to invoice clients or take an in-person card payment benefit from Square's free tools and pay-as-you-go processing fees, since there is no monthly subscription required to get started, and hardware costs stay low for anyone selling only occasionally. This makes Square a practical fit for seasonal sellers, market stalls, and side businesses that cannot justify a fixed monthly software cost."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Larger enterprises with complex multi-entity accounting, deep ERP integrations, or highly customized workflow requirements may find Square's ecosystem more prescriptive than the open, fully configurable platforms typically built for that scale, and may need to weigh Square's API against a more bespoke, custom-built commerce stack assembled from specialized vendors.",
+            "Merchants with very high monthly transaction volumes may find Square's flat-rate processing fees more expensive than an interchange-plus rate negotiated directly with a traditional payment processor or bank, so it is worth comparing total processing costs, including hardware and subscription fees, before committing to Square as a primary payments provider.",
+            "Businesses operating outside Square's supported markets, currently the United States, Canada, the United Kingdom, Australia, Japan, Ireland, France, and Spain, cannot use Square as their main payments provider and should evaluate processors that are actually available and compliant in their own country instead, since account eligibility depends on where a business is legally registered."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "At its core, Square offers point-of-sale software that runs on Square-branded terminals, registers, and stands, as well as third-party iOS and Android devices, handling sales, tax, discounts, refunds, and receipts through a single, consistent checkout interface that can be tailored to a specific type of business.",
+            "Beyond checkout, Square's commerce tools extend to an online store builder, integrated invoicing with online payment collection, inventory that syncs across in-person and online channels, appointment scheduling with reminders, and built-in loyalty and marketing programs designed to bring customers back and grow repeat revenue over time.",
+            "A financial services layer rounds out the platform, including Square Banking checking and savings accounts, Square Capital financing based on a business's own sales history rather than a traditional credit check, and payroll tools for paying and managing a team, all accessible from the same dashboard used for daily payments and reporting, which reduces the need to reconcile numbers across separate financial systems."
+          ]
+        },
+        {
+          "id": "the-square-experience",
+          "heading": "The Square Experience",
+          "level": 2,
+          "paragraphs": [
+            "Getting started with Square is designed to be fast: a business can sign up online, order an affordable card reader, download the app, and begin accepting payments the same day, without the lengthy underwriting process typical of traditional bank merchant accounts and processors. Many owners describe the initial setup as closer to installing a consumer app than opening a business banking relationship.",
+            "The Square dashboard unifies sales reporting, inventory, staff activity, and customer information in one place, giving owners a single view of the business instead of juggling separate systems. Square's current three-tier subscription structure, Free, Plus, and Premium, consolidated a previously fragmented set of a la carte add-on subscriptions into simpler, more predictable monthly bundles that are easier to budget for.",
+            "Support resources include an online help center, community forum, and phone or chat support, with Premium subscribers receiving elevated, more responsive support alongside the platform's lowest available processing rates, while Free and Plus users still retain access to standard support channels and the same core set of hardware and software, so no seller is locked out of basic help."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Point of Sale Software",
+          "description": "Customizable checkout software with modes tailored to retail, restaurants, and other business types."
+        },
+        {
+          "title": "Card Readers and Terminals",
+          "description": "A range of hardware from low-cost magstripe readers to standalone Square Terminal and Register devices."
+        },
+        {
+          "title": "Online Store",
+          "description": "Build an e-commerce website with orders and inventory synced to in-person sales."
+        },
+        {
+          "title": "Invoicing",
+          "description": "Send digital invoices with online payment collection and automated payment reminders."
+        },
+        {
+          "title": "Inventory Management",
+          "description": "Track stock across locations and sales channels with low-stock alerts and reporting."
+        },
+        {
+          "title": "Team Management and Payroll",
+          "description": "Schedule staff, track hours, set permissions, and run payroll from the same account."
+        },
+        {
+          "title": "Square Capital",
+          "description": "Apply for business financing based on sales history, repaid as a percentage of daily sales."
+        },
+        {
+          "title": "Square Banking",
+          "description": "Business checking and savings accounts with fast access to revenue from card sales."
+        },
+        {
+          "title": "Appointments",
+          "description": "Online booking, calendar management, and reminders for salons, spas, and service businesses."
+        },
+        {
+          "title": "Loyalty and Marketing",
+          "description": "Built-in loyalty programs plus email and SMS marketing tools to drive repeat business."
+        }
+      ],
+      "pros": [
+        "Free POS software with no monthly fee required to start accepting payments.",
+        "Transparent, flat-rate processing fees with no long-term contracts.",
+        "Fast sign-up and same-day setup with minimal underwriting.",
+        "Broad ecosystem covering payments, online sales, invoicing, payroll, and banking in one account.",
+        "Vertical-specific POS modes for restaurants, retail, and appointment-based businesses."
+      ],
+      "cons": [
+        "Flat-rate processing fees can cost more than negotiated rates for high-volume merchants.",
+        "Only available in a limited number of countries.",
+        "Square can hold or review funds for accounts flagged for unusual activity.",
+        "Some advanced features require the paid Plus or Premium subscription tiers.",
+        "Customization and third-party integration depth are more limited than fully open payment platforms."
+      ],
+      "faqs": [
+        {
+          "question": "Is Square free to use?",
+          "answer": "Yes, Square Free costs $0 per month per location and includes POS software, an online store, invoicing, and Square Banking; instead of a subscription, you pay a per-transaction processing fee."
+        },
+        {
+          "question": "What payment processing fees does Square charge?",
+          "answer": "Fees vary depending on the plan and how a payment is taken, whether in person, online, or keyed in, and Square Premium subscribers get the lowest processing rates. Current rates are listed on Square's pricing page."
+        },
+        {
+          "question": "What countries does Square support?",
+          "answer": "Square is currently available in the United States, Canada, the United Kingdom, Australia, Japan, Ireland, France, and Spain."
+        },
+        {
+          "question": "Does Square offer a free trial for paid plans?",
+          "answer": "Yes, the Square Plus and Square Premium subscription tiers each include a 30-day free trial before billing begins."
+        },
+        {
+          "question": "What is the difference between Square and Block, Inc.?",
+          "answer": "Block, Inc. is the publicly traded parent holding company, which also owns Cash App and Afterpay, while Square is the seller-facing commerce and payments brand under that umbrella."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Retail Checkout and Inventory",
+          "description": "A boutique or retail store uses Square POS with barcode scanning and inventory synced between its physical shop and online store.",
+          "audience": "Small retailers and shop owners"
+        },
+        {
+          "title": "Restaurant and Quick-Service Ordering",
+          "description": "A cafe or restaurant runs Square for Restaurants for table management, course timing, and split checks alongside online ordering.",
+          "audience": "Restaurants, cafes, and food trucks"
+        },
+        {
+          "title": "Service and Appointment Booking",
+          "description": "A salon or spa uses Square Appointments to let clients book online, pay deposits, and receive automated reminders.",
+          "audience": "Salons, spas, and other appointment-based businesses"
+        },
+        {
+          "title": "Freelance Invoicing and On-the-Go Payments",
+          "description": "A freelancer or contractor sends free digital invoices and accepts card payments in person with a mobile reader.",
+          "audience": "Freelancers, consultants, and solo service providers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "$0/month per location",
+          "billing_cycle": "Monthly",
+          "features": [
+            "POS software for in-person and online sales",
+            "Online store and online ordering",
+            "Invoicing",
+            "Square Banking checking and savings",
+            "Pay-per-transaction processing fees"
+          ]
+        },
+        {
+          "plan_name": "Plus",
+          "price": "$49/month per location",
+          "billing_cycle": "Monthly (30-day free trial)",
+          "features": [
+            "Everything in Free",
+            "Advanced POS modes for restaurants, retail, salons, and bars",
+            "Advanced inventory management",
+            "Loyalty programs",
+            "Staff management tools"
+          ]
+        },
+        {
+          "plan_name": "Premium",
+          "price": "$149/month per location",
+          "billing_cycle": "Monthly (30-day free trial)",
+          "features": [
+            "Everything in Plus",
+            "Lowest processing rates",
+            "Premium customer support",
+            "Full suite of advanced business tools"
+          ]
+        }
+      ],
+      "tags": [
+        "freemium",
+        "free-plan",
+        "free-trial",
+        "ios",
+        "android"
+      ],
+      "seo_meta_description": "Square (squareup.com) offers free POS software, card readers, online stores, invoicing, and payments for small businesses, with paid Plus and Premium tiers."
+    }
+  },
+  {
+    "tool_id": "5355600e-7720-44d4-a9be-5558cbddc251",
+    "slug": "stable-diffusion",
+    "name": "Stable Diffusion",
+    "enrichment": {
+      "short_description": "Open-weight AI model for generating and editing images from text prompts, with hosted API and app options from Stability AI.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (self-hosted, open weights); Stable Assistant plans from $9/month",
+      "founded_year": 2019,
+      "company_size": "~150-200 employees",
+      "headquarters": "London, United Kingdom",
+      "languages": [
+        "English"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Stable Diffusion is an open-weight text-to-image diffusion model originally developed by Stability AI together with researchers from CompVis at LMU Munich, Runway, and the LAION dataset initiative, and first released publicly in 2022. Unlike closed, API-only systems such as DALL-E or Midjourney, Stable Diffusion's model weights can be downloaded, inspected, fine-tuned, and run independently on a user's own hardware or cloud infrastructure, which set it apart from the moment it launched and helped seed a large ecosystem of community tools, plugins, and derivative models built on top of it.",
+            "Over time the model family has been developed through multiple generations, with each iteration generally improving image quality, prompt understanding, and resolution support while remaining accessible under open licensing terms for most versions. This open approach turned Stable Diffusion into a foundation that other products, plugins, and fine-tuned checkpoints are built around, rather than a single closed application controlled entirely by one vendor's release schedule and interface choices.",
+            "Stability AI, the London-based company behind the model, now offers several ways to use the technology beyond raw open weights: a usage-based developer API for building custom applications at scale, and consumer-facing products such as Stable Assistant that wrap the underlying models in a simpler chat and image-generation interface for people who do not want to manage their own infrastructure or GPU capacity. This layered approach means the same underlying research can reach hobbyists, startups, and larger enterprises through very different levels of technical involvement."
+          ]
+        },
+        {
+          "id": "who-stable-diffusion-is-for",
+          "heading": "Who Stable Diffusion Is For",
+          "level": 2,
+          "paragraphs": [
+            "Developers and machine learning engineers who want full control over an image-generation pipeline are a core audience. Because the weights are open, they can self-host the model, fine-tune it on custom datasets, integrate it into existing applications through an API, and avoid dependence on a single vendor's interface, pricing, or product roadmap for their entire generation workflow.",
+            "Designers, marketers, and independent creators who need an affordable or free way to produce visual assets also fit well, particularly through Stability AI's hosted apps and API tiers, which remove the need for their own GPU hardware while still giving access to the underlying model family for illustration, concept art, and social content.",
+            "Researchers and academics working in computer vision or generative modeling frequently use Stable Diffusion as an open, well-documented baseline for experimentation, benchmarking, and teaching, since its architecture and training approach are far more transparent than closed commercial alternatives, making it easier to study, cite, reproduce, and build coursework or published papers around."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Non-technical users who want a completely turnkey, zero-configuration creative tool may find the self-hosted route frustrating, since running the open-weight model locally typically requires a capable GPU, familiarity with community interfaces like ComfyUI or similar tools, and some comfort with installing, configuring, and updating software over time.",
+            "Organizations that require guaranteed enterprise SLAs, built-in content moderation, and fully managed compliance out of the box without additional engineering work should evaluate Stability AI's enterprise offerings carefully, since open self-hosted deployments place the responsibility for safety filtering, moderation, and legal review largely on the operator rather than the vendor.",
+            "Users who specifically want the curated aesthetic, integrated chat workflow, or one-click polish that some closed competitors emphasize may prefer those tools directly, since getting the most out of Stable Diffusion's flexibility often means investing time in prompts, models, and settings rather than relying on a single fixed, pre-tuned house style."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "At its core, Stable Diffusion supports text-to-image generation from natural-language prompts, along with image-to-image transformation, inpainting to edit specific regions of an image, and outpainting to extend an image beyond its original borders, all built on the same underlying diffusion architecture that has been refined across successive model generations.",
+            "Because the model is open-weight, it supports fine-tuning and lightweight adaptation techniques that let users train custom styles or subjects, and it works with a broad ecosystem of community-built extensions, control mechanisms for guiding composition and pose, and alternative checkpoints trained for specific visual styles ranging from photorealism to illustration.",
+            "Stability AI complements the open model with hosted access options, including a credit-based developer API offering different model tiers for varying quality and cost needs, and the Stable Assistant application, which packages generation and editing capabilities into a more conversational, ready-to-use interface for people who prefer not to manage their own deployment or GPU infrastructure. Together these options let teams choose the tradeoff between cost, control, and convenience that best fits their workflow."
+          ]
+        },
+        {
+          "id": "the-stable-diffusion-experience",
+          "heading": "The Stable Diffusion Experience",
+          "level": 2,
+          "paragraphs": [
+            "How Stable Diffusion feels to use depends heavily on the access path chosen. Developers running it locally or on their own servers typically interact with it through community interfaces or direct API calls, giving them granular control over sampling settings, resolution, and model checkpoints, at the cost of needing to manage their own environment, drivers, and hardware.",
+            "Users who go through Stability AI's hosted API or the Stable Assistant app get a more streamlined experience: prompts are submitted through a simple interface or endpoint, credits are consumed per generation, and results come back without any local setup, which trades some fine-grained control for convenience, speed, and predictable usage-based costs.",
+            "Across both paths, the broader experience is shaped by an active open-source community that continuously produces new fine-tuned models, control tools, and workflow templates, meaning the practical capabilities of Stable Diffusion tend to extend well beyond what Stability AI ships directly, for users willing to explore, adopt, and combine that wider ecosystem of tools, forums, and shared prompt libraries."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Text-to-image generation",
+          "description": "Creates original images from natural-language text prompts using a diffusion-based model architecture."
+        },
+        {
+          "title": "Image-to-image transformation",
+          "description": "Takes an existing image plus a prompt and produces a modified or stylized variant of it."
+        },
+        {
+          "title": "Inpainting",
+          "description": "Edits or replaces a selected region of an image while keeping the rest of the composition intact."
+        },
+        {
+          "title": "Outpainting",
+          "description": "Extends an image beyond its original frame, generating new content that blends with the existing edges."
+        },
+        {
+          "title": "Open model weights",
+          "description": "Publicly available weights let developers download, inspect, and run the model outside of Stability AI's own infrastructure."
+        },
+        {
+          "title": "Fine-tuning support",
+          "description": "The open architecture supports training custom styles, subjects, or domains on top of the base model."
+        },
+        {
+          "title": "Developer API",
+          "description": "A hosted, credit-based API exposes multiple model tiers for integrating generation into external applications."
+        },
+        {
+          "title": "Stable Assistant app",
+          "description": "A consumer-facing chat and image interface that wraps Stability AI's models for users who prefer not to self-host."
+        },
+        {
+          "title": "Community ecosystem",
+          "description": "A large ecosystem of third-party checkpoints, extensions, and control tools has grown up around the open model."
+        }
+      ],
+      "pros": [
+        "Open weights allow self-hosting, inspection, and full control over deployment",
+        "Can be fine-tuned or customized for specific styles and use cases",
+        "Backed by a large, active community producing extensions and custom models",
+        "Multiple access paths, from free self-hosting to paid hosted API and apps",
+        "No strict dependency on a single vendor's hosted service to keep using the model"
+      ],
+      "cons": [
+        "Self-hosting requires a capable GPU and some technical setup knowledge",
+        "Getting high-quality results often requires prompt and parameter experimentation",
+        "Content moderation and safety filtering are largely the operator's responsibility when self-hosted",
+        "Hosted API and Stable Assistant costs scale with usage, which can add up for heavy users",
+        "The variety of community models and tools can be overwhelming for newcomers"
+      ],
+      "faqs": [
+        {
+          "question": "Is Stable Diffusion free to use?",
+          "answer": "The underlying model weights are open and can be run for free on your own hardware, though Stability AI also offers paid, usage-based API access and subscription apps like Stable Assistant for people who prefer a hosted option."
+        },
+        {
+          "question": "Do I need a powerful computer to run Stable Diffusion myself?",
+          "answer": "Self-hosting generally benefits from a dedicated GPU with sufficient memory; users without suitable hardware typically rely on Stability AI's hosted API or app instead."
+        },
+        {
+          "question": "What is the difference between Stable Diffusion and Stable Assistant?",
+          "answer": "Stable Diffusion refers to the underlying open-weight image model, while Stable Assistant is Stability AI's consumer application that packages that technology into a simpler, subscription-based chat and image interface."
+        },
+        {
+          "question": "Can I fine-tune Stable Diffusion on my own images?",
+          "answer": "Yes, because the model weights are open, it supports fine-tuning and related customization techniques to adapt it to specific styles, subjects, or brands."
+        },
+        {
+          "question": "Does Stability AI offer an API for developers?",
+          "answer": "Yes, Stability AI provides a hosted, credit-based developer API with multiple model tiers so applications can generate images without managing their own infrastructure."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Custom application image generation",
+          "description": "Developers integrate Stable Diffusion through the API or self-hosted deployment to add image generation directly into their own products.",
+          "audience": "Software developers and product teams"
+        },
+        {
+          "title": "Marketing and content visuals",
+          "description": "Creators and marketers generate original illustrations, concept art, and social content using hosted apps like Stable Assistant.",
+          "audience": "Marketers, designers, and independent creators"
+        },
+        {
+          "title": "Research and experimentation",
+          "description": "Academics and ML researchers use the open model as a transparent baseline for studying diffusion models and generative AI techniques.",
+          "audience": "Researchers and academic institutions"
+        },
+        {
+          "title": "Custom fine-tuned model creation",
+          "description": "Technical users fine-tune the open weights to build specialized checkpoints for particular art styles, brands, or subjects.",
+          "audience": "ML engineers and technical hobbyists"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Self-hosted (open weights)",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Download and run open model weights on your own hardware",
+            "Full control over configuration and fine-tuning",
+            "No usage fees to Stability AI",
+            "Relies on community tools and your own compute resources"
+          ]
+        },
+        {
+          "plan_name": "Stable Assistant Standard",
+          "price": "$9/month",
+          "billing_cycle": "Monthly (annual option available)",
+          "features": [
+            "Monthly credit allotment for chat and image generation",
+            "Access via web app interface",
+            "Includes a free trial period",
+            "Cancel or change plan at any time"
+          ]
+        },
+        {
+          "plan_name": "Stable Assistant Pro/Plus",
+          "price": "$19-$49/month",
+          "billing_cycle": "Monthly (annual option available)",
+          "features": [
+            "Higher monthly credit allotment than Standard",
+            "Access to chat and image generation features",
+            "Includes a free trial period",
+            "Cancel or change plan at any time"
+          ]
+        },
+        {
+          "plan_name": "Developer API",
+          "price": "Usage-based, billed per credit",
+          "billing_cycle": "Pay-as-you-go",
+          "features": [
+            "Credit-based billing across multiple model tiers",
+            "Some free credits included for new accounts",
+            "Custom enterprise pricing available for high-volume use",
+            "Integrate generation directly into your own application"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "api",
+        "web-app",
+        "freemium",
+        "free-trial"
+      ],
+      "seo_meta_description": "Stable Diffusion: Stability AI's open-weight text-to-image model. Compare self-hosting, API, and Stable Assistant pricing, features, pros and cons."
+    }
+  },
+  {
+    "tool_id": "279c7ff2-d20a-4f79-bdc5-e15f28fdc531",
+    "slug": "sudowrite",
+    "name": "Sudowrite",
+    "enrichment": {
+      "short_description": "AI writing assistant built for novelists, offering a Story Bible, brainstorming, and rewriting tools to help fiction writers draft faster.",
+      "pricing_model": "Paid (free trial available)",
+      "starting_price": "$10/month (billed annually; $19/month billed monthly)",
+      "founded_year": 2020,
+      "company_size": "11-50 employees",
+      "headquarters": "San Francisco, California, United States",
+      "languages": [
+        "English"
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Sudowrite is an AI writing assistant built specifically for fiction authors, positioning itself as a co-writer rather than a generic content generator. Founded in 2020 in San Francisco by Amit Gupta and James Yu, the company set out to address the loneliness and blank-page anxiety that many novelists face, using large language models tuned toward narrative craft rather than marketing or business copy.",
+            "The product centers on the Story Bible, a structured space where writers build out premise, characters, worldbuilding, outline, and chapter braids before drafting begins, so that later AI-generated prose stays consistent with established plot and voice. From there, writers move through tools like Write, Describe, Expand, Rewrite, Brainstorm, Canvas, Feedback, and Visualize, each addressing a different stage of the drafting and revision process.",
+            "Sudowrite is not free software; it runs on a credit-based subscription with a Hobby & Student tier, a Professional tier, a Max tier with rollover credits, and custom Enterprise pricing for larger teams or publishers. New users get a free trial without a credit card, letting them test the Story Bible and writing tools on a real manuscript before committing to a paid plan."
+          ]
+        },
+        {
+          "id": "who-sudowrite-is-for",
+          "heading": "Who Sudowrite Is For",
+          "level": 2,
+          "paragraphs": [
+            "Sudowrite is aimed squarely at fiction writers, self-published authors, and genre novelists working in fantasy, romance, science fiction, mystery, and similar categories that release frequently and depend on faster drafting cycles. Writers who habitually get stuck at the outline or first-draft stage are a natural fit, since Story Bible is essentially built to move an idea into chapters quickly.",
+            "Screenwriters and short-story writers also use it for brainstorming scenes, generating alternate descriptions, or getting unstuck at a specific plot beat, without necessarily writing an entire novel with it. Writing groups, coaches, and students working on craft assignments can use the Hobby & Student tier as an affordable way to experiment with AI-assisted brainstorming and feedback.",
+            "Writers who are comfortable treating AI output as raw material, to be edited, rewritten, and folded into a manuscript in their own voice, tend to get the most value, since Sudowrite is explicit that its outputs are meant as drafts and prompts rather than finished prose."
+          ]
+        },
+        {
+          "id": "who-should-avoid-it",
+          "heading": "Who Should Avoid It",
+          "level": 2,
+          "paragraphs": [
+            "Writers who need a general business or marketing writing tool will find Sudowrite too narrow; its prompts, Story Bible structure, and vocabulary are tuned for narrative fiction, not blog posts, ad copy, emails, or technical documentation. Non-fiction authors, journalists, and copywriters are generally better served by a general-purpose AI writing assistant.",
+            "Anyone opposed in principle to using AI-generated text anywhere in their creative process should also steer clear, since Sudowrite's entire premise is collaborative machine-assisted drafting. Some publishers, contests, and platforms have policies restricting or requiring disclosure of AI-assisted work, so writers should check submission guidelines before relying on it.",
+            "Because the product runs on a metered credit system rather than unlimited usage, heavy daily users writing very long manuscripts on the cheapest tier can burn through their monthly allotment quickly and may find the entry-level plan frustrating. Writers on a tight budget who only need occasional help may be better off with a one-off tool rather than a recurring subscription."
+          ]
+        },
+        {
+          "id": "main-features",
+          "heading": "Main Features",
+          "level": 2,
+          "paragraphs": [
+            "The Story Bible is the anchor feature: writers fill in a braindump, genre, style, and characters, then Sudowrite drafts an outline and chapter-by-chapter breakdown that stays referenced throughout the project, so later generations account for established plot points and character details. Canvas gives a visual board for mapping story structure, arcs, and relationships.",
+            "Write generates prose continuations in the author's own established voice, while Describe produces sensory descriptions across the five senses for a chosen passage. Expand and Shrink adjust pacing by stretching or condensing a scene, Rewrite offers alternate phrasings or tones for existing text, and Feedback analyzes a draft for pacing, dialogue, and other craft elements.",
+            "Brainstorm helps generate names, plot twists, or worldbuilding details on demand, Chat provides a novelist-focused conversational assistant for talking through story problems, and Visualize creates reference art for characters and settings. A plugin ecosystem lets writers extend the base toolset with community-built prompts and workflows."
+          ]
+        },
+        {
+          "id": "the-sudowrite-experience",
+          "heading": "The Sudowrite Experience",
+          "level": 2,
+          "paragraphs": [
+            "Sudowrite lives entirely in the browser as a purpose-built editor rather than a plugin bolted onto a word processor like Word or Google Docs, though many writers still draft in Sudowrite and paste finished chapters into their manuscript tool of choice. The interface is organized around one project per manuscript, with the Story Bible, chapter list, and generation tools all visible from the same screen.",
+            "Every generation draws down a pool of monthly credits, and the app shows usage as you go, so the experience feels closer to a metered utility than an all-you-can-use subscription. Heavier tools like longer Write generations or Feedback reports cost more credits than a quick Describe or Brainstorm call.",
+            "Because the underlying language models are general-purpose but the prompts and interface are fiction-specific, output quality depends heavily on how much context a writer has already loaded into the Story Bible. Writers who invest time upfront in characters, style, and outline tend to report noticeably more usable prose than those who prompt cold."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Story Bible",
+          "description": "A structured workspace for premise, characters, worldbuilding, and chapter-by-chapter outlines that keeps later AI generations consistent with the established story."
+        },
+        {
+          "title": "Write",
+          "description": "Generates prose continuations that attempt to match the author's established voice and the context loaded into the Story Bible."
+        },
+        {
+          "title": "Describe",
+          "description": "Produces sensory, multi-sense descriptions for a selected passage to help enrich scene-setting."
+        },
+        {
+          "title": "Expand and Shrink",
+          "description": "Stretches or condenses a scene to adjust pacing without rewriting it from scratch."
+        },
+        {
+          "title": "Rewrite",
+          "description": "Offers alternate phrasings, tones, or perspectives for existing text during revision."
+        },
+        {
+          "title": "Feedback",
+          "description": "Analyzes a draft for pacing, dialogue, and other craft elements, giving writers a critique pass before human editors see it."
+        },
+        {
+          "title": "Canvas",
+          "description": "A visual board for mapping plot structure, story arcs, and character relationships."
+        },
+        {
+          "title": "Brainstorm",
+          "description": "Generates names, plot twists, and worldbuilding ideas on demand when a writer is stuck."
+        },
+        {
+          "title": "Chat",
+          "description": "A conversational assistant tuned for talking through story problems rather than general Q&A."
+        },
+        {
+          "title": "Plugins",
+          "description": "A library of community-built prompts and workflows that extend the base toolset for specific genres or tasks."
+        }
+      ],
+      "pros": [
+        "Purpose-built for fiction, with a Story Bible that keeps characters and plot consistent across a long manuscript",
+        "Free trial with no credit card required, so writers can test real manuscript workflows before paying",
+        "Broad toolset covering brainstorming, drafting, descriptions, pacing, and structural feedback in one product",
+        "Plugin ecosystem lets writers customize or extend prompts for specific genres and workflows",
+        "Max plan's credit rollover reduces the use-it-or-lose-it pressure of a monthly credit allotment"
+      ],
+      "cons": [
+        "Credit-based system can feel restrictive on the entry-level tier for writers producing long manuscripts",
+        "Not designed for non-fiction, business, or marketing writing use cases",
+        "Interface and prompt tuning are English-first, with less consistent behavior in other languages",
+        "AI-generated output still requires substantial editing to match a writer's personal voice",
+        "Full novel-length projects often require the pricier Professional or Max tiers to avoid running out of credits"
+      ],
+      "faqs": [
+        {
+          "question": "Does Sudowrite have a free plan?",
+          "answer": "Sudowrite does not offer a permanent free plan, but it provides a free trial that does not require a credit card, letting new users try the Story Bible and core writing tools before subscribing."
+        },
+        {
+          "question": "What is the Story Bible?",
+          "answer": "The Story Bible is Sudowrite's structured planning workspace where writers define premise, characters, worldbuilding, and a chapter-by-chapter outline, which the AI then references when generating or revising prose."
+        },
+        {
+          "question": "Can I use Sudowrite in languages other than English?",
+          "answer": "Sudowrite can generate text in many languages and the Write tool tries to match a writer's input language, but the interface and prompt tuning are optimized for English, so results in other languages can be less consistent."
+        },
+        {
+          "question": "Do unused credits roll over to the next month?",
+          "answer": "On the Hobby & Student and Professional tiers, unused monthly credits generally do not carry over, while the Max tier allows unused credits to roll over for up to 12 months."
+        },
+        {
+          "question": "Is Sudowrite good for non-fiction or business writing?",
+          "answer": "Sudowrite is built specifically for fiction craft, so its features and prompts are tuned for novels, screenplays, and short stories rather than non-fiction, marketing, or technical writing."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Drafting a first novel manuscript",
+          "description": "Writers build out a Story Bible with premise, characters, and outline, then use Write and Expand to move from a blank page to a full first draft chapter by chapter.",
+          "audience": "Debut and indie novelists"
+        },
+        {
+          "title": "Breaking through a stuck scene",
+          "description": "When a writer hits writer's block mid-scene, Brainstorm and Rewrite provide alternate directions or phrasings to get momentum back without abandoning the scene.",
+          "audience": "Working novelists and hobbyist writers"
+        },
+        {
+          "title": "World-building and character development for a series",
+          "description": "Canvas and Story Bible let authors map out recurring characters, settings, and plot threads that need to stay consistent across multiple books.",
+          "audience": "Fantasy, sci-fi, and series authors"
+        },
+        {
+          "title": "Getting structural feedback before submission",
+          "description": "Feedback analyzes pacing, dialogue, and other craft elements in a draft, giving authors a critique pass before querying agents or self-publishing.",
+          "audience": "Authors preparing a manuscript for query or publication"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Hobby & Student",
+          "price": "$10/month",
+          "billing_cycle": "Annual (monthly billing also available at a higher rate)",
+          "features": [
+            "225,000 credits per month",
+            "Full access to Story Bible and core writing tools",
+            "Free trial, no credit card required"
+          ]
+        },
+        {
+          "plan_name": "Professional",
+          "price": "$22/month",
+          "billing_cycle": "Annual (monthly billing also available at a higher rate)",
+          "features": [
+            "1,000,000 credits per month",
+            "Full access to all writing tools",
+            "Feedback on written work",
+            "Suited to longer works like a novel or screenplay"
+          ]
+        },
+        {
+          "plan_name": "Max",
+          "price": "$44/month",
+          "billing_cycle": "Annual (monthly billing also available at a higher rate)",
+          "features": [
+            "2,000,000 credits per month",
+            "Unused credits roll over for up to 12 months",
+            "Full access to all writing tools",
+            "Aimed at authors publishing multiple times a year"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom",
+          "billing_cycle": "Custom",
+          "features": [
+            "Tailored plans for teams, studios, or publishers",
+            "Custom credit and seat arrangements",
+            "Direct sales contact for pricing"
+          ]
+        }
+      ],
+      "tags": [
+        "ai",
+        "web-app",
+        "free-trial",
+        "templates"
+      ],
+      "seo_meta_description": "Sudowrite is an AI writing partner for fiction authors, featuring Story Bible, brainstorming, and rewriting tools on credit-based plans with a free trial."
+    }
+  }
+]

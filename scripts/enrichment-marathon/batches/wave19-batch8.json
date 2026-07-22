@@ -1,0 +1,1388 @@
+[
+  {
+    "tool_id": "bc74d5c2-961f-4a99-a34b-c92eee310096",
+    "slug": "openrouteservice",
+    "name": "OpenRouteService",
+    "enrichment": {
+      "short_description": "OpenRouteService (ORS) is a free, open-source geospatial routing and directions API built on OpenStreetMap data by HeiGIT, the Heidelberg Institute for Geoinformation Technology.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2008,
+      "company_size": "Non-profit research institute (HeiGIT gGmbH, a spin-off of Heidelberg University's GIScience Research Group)",
+      "headquarters": "Heidelberg, Germany",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenRouteService Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenRouteService review covering routing and isochrone APIs, free tier limits, pricing, key features, and top alternatives like OSRM, GraphHopper and Mapbox.",
+      "llm_readable_summary": "OpenRouteService (ORS) is a free, open-source routing and geospatial analysis API built entirely on OpenStreetMap (OSM) data. It originated in 2008 as a research project of the GIScience Research Group, led by Professor Alexander Zipf, at Heidelberg University in Germany. The project matured into HeiGIT gGmbH (Heidelberg Institute for Geoinformation Technology), a non-profit research institute that now develops and operates the service alongside other OSM-based location tools. ORS provides a suite of endpoints including Directions (turn-by-turn routing for car, bike, foot, wheelchair, and heavy-goods-vehicle profiles), Isochrones (reachability/travel-time polygons), Matrix (many-to-many travel time and distance calculations), Geocoding (Pelias-based address search), POIs, and elevation and optimization services. It differentiates itself from commercial routing APIs like Google Maps Directions or Mapbox Directions by being fully open source, transparent about its OSM data lineage, and free to self-host, while still offering a managed cloud API for convenience. Its target audience spans academic researchers, GIS professionals, logistics and mobility startups, NGOs doing humanitarian mapping, and developers who want OSM-based routing without vendor lock-in. The hosted API is accessed via a free API key through a HeiGIT account, with a free tier covering roughly 2,500 requests per day and 40,000 per month across all endpoints, suitable for personal projects, research, and early-stage commercial development; higher-volume commercial and enterprise use requires a paid HeiGIT plan or self-hosting the open-source backend (openrouteservice-backend on GitHub) on a customer's own infrastructure, which removes rate limits entirely at the cost of running the OSM data pipeline. With over a decade of development and reportedly more than 150,000 users worldwide, ORS is considered one of the most established open-source, OSM-based routing engines, alongside OSRM and GraphHopper. Its main competitors are Google Maps Platform Directions API, Mapbox Directions API, HERE Routing, GraphHopper, and Open Source Routing Machine (OSRM) -- a separate, distinct routing engine project. ORS is licensed under GPLv3 for its backend, and its underlying data inherits the Open Database License of OpenStreetMap. Because it is grounded in academic geoinformatics research, ORS is frequently cited in scientific papers on accessibility analysis, humanitarian logistics, and urban mobility planning, giving it credibility in domains where data provenance and algorithmic transparency matter more than raw API polish.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenRouteService is a routing and geospatial analysis API that turns OpenStreetMap data into usable directions, isochrones, and distance matrices for developers and researchers. It is maintained by HeiGIT, a research institute spun out of Heidelberg University's GIScience group, which also builds several other OSM-based location services.",
+            "Unlike closed commercial mapping APIs, the entire backend is open source and can be self-hosted, giving organizations full control over their routing infrastructure and data. The hosted version at openrouteservice.org offers a convenient free-tier entry point without requiring any infrastructure setup."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "Core capabilities include multi-profile Directions (driving-car, driving-hgv, cycling, foot, wheelchair), Isochrones for time- and distance-based reachability analysis, a Matrix API for bulk travel-time and distance computation, Geocoding and reverse geocoding, POI search, elevation data, and route optimization for multi-stop problems.",
+            "Because it runs on OpenStreetMap, coverage is global and continuously updated by the OSM community, and users can inspect or correct the underlying map data themselves, something not possible with most proprietary routing providers."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "The hosted API is free to start: a HeiGIT account provides an API key with a free tier of roughly 2,500 requests per day and 40,000 per month across all endpoints, with up to 40 concurrent requests, which is enough for prototypes, research, and small commercial apps.",
+            "Higher-volume or production commercial usage requires a paid HeiGIT account plan, priced by request volume, or self-hosting the open-source openrouteservice backend on your own servers, which is free of licensing cost but requires running and maintaining the OSM data pipeline."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Multi-profile Directions API",
+          "description": "Turn-by-turn routing for car, HGV/truck, bicycle, walking, and wheelchair-accessible profiles."
+        },
+        {
+          "title": "Isochrones",
+          "description": "Generates reachability polygons showing areas accessible within a given travel time or distance."
+        },
+        {
+          "title": "Matrix API",
+          "description": "Computes many-to-many travel time and distance matrices for logistics and accessibility analysis."
+        },
+        {
+          "title": "Geocoding and POI search",
+          "description": "Pelias-based address search, reverse geocoding, and points-of-interest lookup."
+        },
+        {
+          "title": "Route optimization",
+          "description": "Solves multi-stop vehicle routing and delivery optimization problems."
+        },
+        {
+          "title": "Elevation data",
+          "description": "Returns elevation profiles along a route for cycling and hiking use cases."
+        },
+        {
+          "title": "Self-hostable open-source backend",
+          "description": "The full routing engine can be deployed on private infrastructure with no usage limits."
+        }
+      ],
+      "pros": [
+        "Fully open source and built on transparent OpenStreetMap data",
+        "Generous free tier for research, prototypes, and small apps",
+        "Self-hosting option removes rate limits entirely",
+        "Backed by an academic research institute with strong geospatial expertise",
+        "Supports niche profiles like wheelchair and heavy-goods-vehicle routing"
+      ],
+      "cons": [
+        "Routing accuracy in some regions depends on local OpenStreetMap data quality",
+        "Free tier rate limits can be restrictive for growing commercial products",
+        "Self-hosting requires nontrivial DevOps and OSM data pipeline maintenance",
+        "Documentation can be sparse compared to large commercial mapping platforms",
+        "Smaller support team than venture-backed competitors like Mapbox or Google"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenRouteService free to use?",
+          "answer": "Yes, the hosted API has a free tier of roughly 2,500 requests per day and 40,000 per month, and the backend software itself is free and open source under GPLv3."
+        },
+        {
+          "question": "Who runs OpenRouteService?",
+          "answer": "It is developed and operated by HeiGIT, the Heidelberg Institute for Geoinformation Technology, a non-profit research institute connected to Heidelberg University's GIScience group."
+        },
+        {
+          "question": "What data does OpenRouteService use?",
+          "answer": "It is built entirely on OpenStreetMap data, meaning coverage and accuracy depend on the OSM community in a given area."
+        },
+        {
+          "question": "Can I self-host OpenRouteService?",
+          "answer": "Yes, the full backend is open source and available on GitHub, allowing organizations to run it on their own infrastructure without API rate limits."
+        },
+        {
+          "question": "How is OpenRouteService different from OSRM?",
+          "answer": "OSRM (Open Source Routing Machine) is a separate, distinct open-source routing engine project; OpenRouteService is a different codebase and API built by HeiGIT with additional services like isochrones and geocoding."
+        },
+        {
+          "question": "Does OpenRouteService support truck or HGV routing?",
+          "answer": "Yes, a driving-hgv profile accounts for vehicle restrictions like height, weight, and hazardous materials when computing routes."
+        },
+        {
+          "question": "What are the main alternatives to OpenRouteService?",
+          "answer": "Common alternatives include OSRM, GraphHopper, Mapbox Directions API, Google Maps Platform, and HERE Routing."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Academic and humanitarian mapping research",
+          "description": "Researchers use ORS isochrones and matrices to study accessibility to hospitals, schools, and emergency services.",
+          "audience": "Academics and NGOs"
+        },
+        {
+          "title": "Logistics and delivery route planning",
+          "description": "Businesses use the Directions and Matrix APIs to plan multi-stop delivery routes and estimate travel times.",
+          "audience": "Logistics and delivery companies"
+        },
+        {
+          "title": "Mobility app development",
+          "description": "Startups embed ORS routing into cycling, hiking, or accessibility-focused navigation apps.",
+          "audience": "App developers and startups"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free API Key",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Roughly 2,500 requests per day",
+            "Roughly 40,000 requests per month",
+            "Up to 40 concurrent requests",
+            "Access to Directions, Isochrones, Matrix, Geocoding, and POIs"
+          ]
+        },
+        {
+          "plan_name": "Paid HeiGIT Plans",
+          "price": "Custom, usage-based",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Higher request volumes for commercial use",
+            "Priority support",
+            "Suitable for production applications"
+          ]
+        },
+        {
+          "plan_name": "Self-Hosted",
+          "price": "Free (open source)",
+          "billing_cycle": "N/A",
+          "features": [
+            "No rate limits",
+            "Full control over data and infrastructure",
+            "Requires running your own OSM data pipeline and servers"
+          ]
+        }
+      ],
+      "tags": [
+        "routing api",
+        "geospatial",
+        "openstreetmap",
+        "directions api",
+        "logistics",
+        "open source"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "897517f2-e813-44cf-9a91-5b3befd56d44",
+    "slug": "opensearch",
+    "name": "OpenSearch",
+    "enrichment": {
+      "short_description": "OpenSearch is an Apache 2.0-licensed open-source search, analytics, observability, and vector database engine, originally forked from Elasticsearch and Kibana by AWS in 2021 and now governed by the OpenSearch Software Foundation under the Linux Foundation.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2021,
+      "company_size": "Open source foundation project (OpenSearch Software Foundation, part of the Linux Foundation, with premier members AWS, SAP and Uber)",
+      "headquarters": "San Francisco, California, USA (Linux Foundation)",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenSearch Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenSearch review covering search, analytics, observability and vector search features, self-hosted and AWS managed pricing, and alternatives to Elasticsearch.",
+      "llm_readable_summary": "OpenSearch is an open-source search, analytics, observability, and vector database platform originally created in 2021 by Amazon Web Services as a fork of Elasticsearch and Kibana, after Elastic NV relicensed those projects away from the open-source Apache 2.0 license to the Server Side Public License (SSPL). AWS forked the last Apache 2.0 versions of Elasticsearch and Kibana to create OpenSearch and OpenSearch Dashboards, preserving open-source access for the community and its own managed Amazon OpenSearch Service customers. In September 2024, governance of the project was transferred from AWS to the newly formed OpenSearch Software Foundation, organized as an open technical project within the Linux Foundation, with premier members AWS, SAP, and Uber, and general members including Aiven, Aryn, Atlassian, Canonical, DigitalOcean, Eliatra, Graylog, and NetApp Instaclustr. By 2025 the project had surpassed roughly one billion cumulative software downloads with contributions from thousands of developers and more than 200 project maintainers. Functionally, OpenSearch competes directly with Elasticsearch and Apache Solr as a distributed search and analytics engine: it powers full-text search, log analytics, security analytics, and infrastructure observability through OpenSearch Dashboards (its Kibana-equivalent visualization layer). A key differentiator versus Elastic's current licensing model is that OpenSearch bundles enterprise-grade features -- fine-grained security (LDAP, SAML, field- and document-level access control), alerting, anomaly detection, machine learning, and searchable snapshots -- for free under Apache 2.0, rather than gating them behind a paid tier. OpenSearch also has a mature k-NN plugin for vector search and embeddings, positioning it as a viable vector database for retrieval-augmented generation (RAG) and AI search applications, with active development of GPU acceleration (via NVIDIA cuVS) for large-scale vector workloads. There is no licensing cost to self-host OpenSearch; organizations that prefer a managed offering typically use Amazon OpenSearch Service or OpenSearch Serverless, which are billed by AWS on a usage basis (instance-hours, storage, and data transfer), or third-party managed OpenSearch offerings from vendors like Aiven, DigitalOcean, or Instaclustr. Target users range from individual developers self-hosting a small search cluster to large enterprises running petabyte-scale observability and security-analytics platforms. Its primary competitors are Elasticsearch, Apache Solr, Algolia, Meilisearch, and Typesense, with OpenSearch generally positioned as the most Elasticsearch-API-compatible, fully open-source, vendor-neutral option in the category.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSearch is a distributed search and analytics engine that started life as an AWS-led fork of Elasticsearch and Kibana in 2021, created after Elastic changed those projects' licenses away from Apache 2.0. Since September 2024 it has been governed independently by the OpenSearch Software Foundation under the Linux Foundation, with AWS, SAP, and Uber as premier members.",
+            "It is used for full-text search, log and metrics analytics, security analytics, and vector search, with OpenSearch Dashboards providing the visualization and exploration layer, functionally similar to Kibana."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenSearch bundles features that are typically paywalled in competing products, including role-based access control, SAML/LDAP authentication, alerting, anomaly detection, and machine learning plugins, all under the permissive Apache 2.0 license.",
+            "Its k-NN vector search plugin supports embedding-based similarity search, making it a common choice for AI-powered search and retrieval-augmented generation pipelines, alongside its established use in log analytics and observability stacks."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenSearch itself is free and open source with no licensing fees for self-hosting on your own infrastructure.",
+            "Organizations that want a managed experience typically pay for Amazon OpenSearch Service or OpenSearch Serverless on a usage basis (compute, storage, and data transfer), or use third-party managed hosting from vendors such as Aiven, DigitalOcean, or Instaclustr, whose pricing varies by provider and cluster size."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Full-text search engine",
+          "description": "Distributed, Elasticsearch-API-compatible search across structured and unstructured data at scale."
+        },
+        {
+          "title": "OpenSearch Dashboards",
+          "description": "Kibana-equivalent visualization and exploration tool for logs, metrics, and search analytics."
+        },
+        {
+          "title": "Vector search (k-NN plugin)",
+          "description": "Similarity search over embeddings for AI-powered search and retrieval-augmented generation."
+        },
+        {
+          "title": "Observability and log analytics",
+          "description": "Ingests and analyzes application logs, traces, and metrics for monitoring and troubleshooting."
+        },
+        {
+          "title": "Security analytics and SIEM",
+          "description": "Detects threats and anomalies across log data with built-in detection rules."
+        },
+        {
+          "title": "Free enterprise security",
+          "description": "Fine-grained access control, SAML/LDAP authentication, and encryption included at no cost."
+        },
+        {
+          "title": "Alerting and anomaly detection",
+          "description": "Built-in plugins trigger notifications based on thresholds or machine-learning-detected anomalies."
+        }
+      ],
+      "pros": [
+        "Free under Apache 2.0 with enterprise security features included, unlike Elastic's paywalled model",
+        "Governed by a neutral, multi-vendor foundation rather than a single company",
+        "Largely API-compatible with Elasticsearch, easing migration",
+        "Strong and improving vector search capability for AI and RAG use cases",
+        "Large download base and active contributor community"
+      ],
+      "cons": [
+        "Some newer Elasticsearch features diverge and are not available in OpenSearch",
+        "Managed hosting costs on AWS can scale up significantly with data volume",
+        "Smaller third-party ecosystem and fewer integrations than Elasticsearch at times",
+        "Migrating existing Elasticsearch clusters can require compatibility testing",
+        "Documentation and tooling maturity can lag behind Elastic's commercial offerings"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenSearch free?",
+          "answer": "Yes, OpenSearch is free and open source under the Apache 2.0 license; costs only apply if you use a managed hosting service such as Amazon OpenSearch Service."
+        },
+        {
+          "question": "Who governs OpenSearch?",
+          "answer": "Since September 2024, OpenSearch has been governed by the OpenSearch Software Foundation, an open technical project within the Linux Foundation, with AWS, SAP, and Uber as premier members."
+        },
+        {
+          "question": "Why was OpenSearch created?",
+          "answer": "AWS created OpenSearch in 2021 as a fork of the last Apache 2.0 versions of Elasticsearch and Kibana after Elastic relicensed those projects under the Server Side Public License."
+        },
+        {
+          "question": "Is OpenSearch compatible with Elasticsearch?",
+          "answer": "OpenSearch shares a common codebase origin with Elasticsearch and remains largely API-compatible for many operations, though the two projects have diverged over time."
+        },
+        {
+          "question": "Does OpenSearch support vector search?",
+          "answer": "Yes, its k-NN plugin supports vector embeddings and similarity search, and the project is actively developing GPU acceleration for large-scale vector workloads."
+        },
+        {
+          "question": "What is OpenSearch Dashboards?",
+          "answer": "It is OpenSearch's built-in visualization and analytics interface, functionally equivalent to Kibana, used to explore logs, metrics, and search results."
+        },
+        {
+          "question": "What are the main alternatives to OpenSearch?",
+          "answer": "The main alternatives are Elasticsearch, Apache Solr, Algolia, Meilisearch, and Typesense."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Log analytics and observability",
+          "description": "Engineering teams ingest application and infrastructure logs into OpenSearch to monitor performance and troubleshoot incidents.",
+          "audience": "DevOps and SRE teams"
+        },
+        {
+          "title": "Enterprise search",
+          "description": "Organizations build internal or customer-facing full-text search over documents, products, or knowledge bases.",
+          "audience": "Enterprises and product teams"
+        },
+        {
+          "title": "AI-powered retrieval and RAG",
+          "description": "Developers use the k-NN vector plugin to power semantic search and retrieval-augmented generation pipelines for AI applications.",
+          "audience": "AI and ML engineers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Self-Hosted Open Source",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full search, analytics, security, and vector search features",
+            "Apache 2.0 license",
+            "Requires self-managed infrastructure"
+          ]
+        },
+        {
+          "plan_name": "Amazon OpenSearch Service",
+          "price": "Usage-based (varies by instance type and storage)",
+          "billing_cycle": "Pay-as-you-go",
+          "features": [
+            "Fully managed hosting on AWS",
+            "Automatic scaling and patching",
+            "Integration with the AWS ecosystem"
+          ]
+        },
+        {
+          "plan_name": "Third-Party Managed Hosting",
+          "price": "Varies by provider",
+          "billing_cycle": "Monthly, usage-based",
+          "features": [
+            "Managed OpenSearch clusters from providers such as Aiven, DigitalOcean, and Instaclustr",
+            "Multi-cloud options",
+            "Support SLAs depending on vendor"
+          ]
+        }
+      ],
+      "tags": [
+        "search engine",
+        "analytics",
+        "observability",
+        "vector database",
+        "open source",
+        "elasticsearch alternative"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "541442eb-549b-42a3-a8f8-d423bdb42a14",
+    "slug": "openshot",
+    "name": "OpenShot",
+    "enrichment": {
+      "short_description": "OpenShot is a free, open-source, cross-platform video editor for Windows, Mac, Linux, and ChromeOS, created by Jonathan Thomas in 2008.",
+      "pricing_model": "Free",
+      "starting_price": "Free",
+      "founded_year": 2008,
+      "company_size": "Volunteer-driven open-source project with a small core team",
+      "headquarters": "North Texas, USA (project origin; distributed volunteer contributors worldwide)",
+      "languages": [
+        "English",
+        "Multiple community-translated languages"
+      ],
+      "seo_title": "OpenShot Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenShot review covering the free, open-source video editor's features, cross-platform support, pricing, and alternatives like Shotcut and Kdenlive.",
+      "llm_readable_summary": "OpenShot is a free, open-source, non-linear video editor created in August 2008 by Jonathan Thomas, a self-taught developer based near Dallas, Texas, after he found Ubuntu Linux lacked a stable, user-friendly video editor. Thomas built OpenShot using Python for rapid development, later rearchitecting the rendering engine (libopenshot) in C++ for performance while keeping the interface in Python and PyQt5, and exposing a Python API for scripting and extension. The project is licensed under the GPLv3 and has grown from a Linux-only tool into a genuinely cross-platform application, adding native Windows and macOS support with version 2.1.0 in 2016 and ChromeOS support with version 2.6.0 in 2021. Development of the modern OpenShot 2.0 rewrite, and later a browser-based cloud editing initiative, were partly funded through Kickstarter crowdfunding campaigns run directly by Thomas and the community, reflecting the project's grassroots, donation- and volunteer-supported model rather than venture funding. OpenShot's feature set targets hobbyists, students, content creators, and small studios who want professional-feeling editing without a subscription: drag-and-drop editing across unlimited tracks and layers, video transitions, real-time preview, title templates and 3D animated titles, key-framed animations, audio mixing and waveform visualization, chroma key (green screen) compositing, time effects such as slow motion and reverse, and image/video/audio format support via FFmpeg. Because it is entirely free with no paid tier, watermark, or feature gating, it is frequently recommended as a beginner-friendly entry point into video editing and as a lightweight, budget-conscious alternative to subscription tools like Adobe Premiere Pro or Final Cut Pro, and is most often compared against other free/open-source editors such as Shotcut, Kdenlive, and DaVinci Resolve's free tier. The interface has been translated into dozens of languages by a global community of volunteer translators via crowd-translation platforms, extending its reach well beyond English-speaking users. OpenShot is distributed via its own installers, Flatpak, Snap, and Linux distribution repositories, and its source code is hosted publicly on GitHub, allowing developers to audit, extend, or contribute to the project. As a community project without a company behind it, OpenShot has no formal company size, headquarters, or funding round in the traditional startup sense; its sustainability comes from donations, optional paid conversions of media (via a companion cloud API), and volunteer contributions rather than subscription revenue.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenShot is a free, open-source video editor built to give Linux, Windows, and Mac users a stable, approachable alternative to expensive commercial editing software. It was started in 2008 by developer Jonathan Thomas after he noticed a lack of good Linux video editors when he switched to Ubuntu.",
+            "The application is written in Python with a C++ rendering engine (libopenshot) and a PyQt5 interface, and it is distributed under the GPLv3 open-source license, meaning the source code is freely available to inspect, modify, and redistribute."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenShot offers unlimited tracks and layers, drag-and-drop editing, a wide range of video transitions and effects, key-framed animations, 3D animated titles, and audio waveform visualization for precise audio-video syncing.",
+            "It also supports chroma key (green screen) compositing, time effects like slow motion and reverse playback, and broad file format compatibility through FFmpeg, making it capable of handling most common video, audio, and image formats without additional plugins."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenShot is completely free to download and use, with no paid tiers, subscriptions, watermarks, or feature restrictions of any kind.",
+            "The project is sustained through voluntary donations and community contributions rather than commercial licensing, consistent with its open-source, non-profit-style development model."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Unlimited tracks and layers",
+          "description": "Stack as many video, audio, and image layers as needed without artificial limits."
+        },
+        {
+          "title": "Drag-and-drop timeline editing",
+          "description": "Intuitive, beginner-friendly interface for arranging and trimming clips."
+        },
+        {
+          "title": "3D animated titles and transitions",
+          "description": "Built-in title templates and transition effects with keyframe-based animation."
+        },
+        {
+          "title": "Chroma key compositing",
+          "description": "Green-screen background removal for compositing effects."
+        },
+        {
+          "title": "Audio waveform visualization",
+          "description": "Visual audio waveforms make it easier to sync cuts to sound and music."
+        },
+        {
+          "title": "Cross-platform support",
+          "description": "Runs natively on Windows, macOS, Linux, and ChromeOS."
+        },
+        {
+          "title": "Time effects",
+          "description": "Slow motion, fast forward, and reverse playback effects for creative editing."
+        }
+      ],
+      "pros": [
+        "Completely free with no subscription or watermark",
+        "Open-source code that can be audited or extended",
+        "Cross-platform on Windows, Mac, Linux, and ChromeOS",
+        "Beginner-friendly drag-and-drop interface",
+        "Active community with translations into dozens of languages"
+      ],
+      "cons": [
+        "Can be less stable on very large or complex projects compared to commercial editors",
+        "Rendering performance may lag behind GPU-optimized proprietary tools",
+        "Fewer advanced color-grading tools than DaVinci Resolve",
+        "Smaller plugin and template ecosystem than Adobe Premiere Pro",
+        "Support relies on community forums rather than paid customer service"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenShot really free?",
+          "answer": "Yes, OpenShot is entirely free and open source under the GPLv3 license, with no paid tiers or watermarks."
+        },
+        {
+          "question": "What operating systems does OpenShot support?",
+          "answer": "OpenShot runs on Windows, macOS, Linux, and ChromeOS."
+        },
+        {
+          "question": "Who created OpenShot?",
+          "answer": "OpenShot was created by developer Jonathan Thomas in August 2008."
+        },
+        {
+          "question": "What programming languages is OpenShot built with?",
+          "answer": "OpenShot's interface is built with Python and PyQt5, while its rendering engine, libopenshot, is written in C++."
+        },
+        {
+          "question": "Does OpenShot support green screen editing?",
+          "answer": "Yes, OpenShot includes chroma key compositing for removing green-screen backgrounds."
+        },
+        {
+          "question": "How does OpenShot compare to Shotcut or Kdenlive?",
+          "answer": "All three are free, open-source video editors; OpenShot is generally considered the most beginner-friendly, while Shotcut and Kdenlive offer more advanced editing controls for experienced users."
+        },
+        {
+          "question": "Is OpenShot suitable for professional video production?",
+          "answer": "OpenShot is best suited for hobbyists, students, and small content creators; larger professional productions often prefer tools like DaVinci Resolve or Adobe Premiere Pro for advanced color grading and stability at scale."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "YouTube and social content creation",
+          "description": "Creators use OpenShot to edit videos, add titles and transitions, and export content for YouTube and social platforms.",
+          "audience": "Content creators and YouTubers"
+        },
+        {
+          "title": "Student and educational video projects",
+          "description": "Students and educators use OpenShot as a free, no-cost tool for classroom video assignments and presentations.",
+          "audience": "Students and educators"
+        },
+        {
+          "title": "Hobbyist home video editing",
+          "description": "Individuals edit family videos, travel footage, and personal projects without paying for subscription software.",
+          "audience": "Home users and hobbyists"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "OpenShot",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Unlimited tracks and layers",
+            "All editing, transition, and title features included",
+            "Cross-platform installers for Windows, Mac, Linux, and ChromeOS",
+            "No watermarks or feature restrictions"
+          ]
+        }
+      ],
+      "tags": [
+        "video editing",
+        "open source",
+        "free software",
+        "cross-platform",
+        "content creation"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "8b92e33a-9ce9-4f11-bf8a-c6758fc2237c",
+    "slug": "opensign",
+    "name": "OpenSign",
+    "enrichment": {
+      "short_description": "OpenSign is an open-source electronic signature platform, founded in 2023, that offers a free self-hosted version and paid cloud plans as an alternative to DocuSign.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2023,
+      "company_size": "Early-stage startup (small team)",
+      "headquarters": "New York City, New York, USA",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenSign Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenSign review covering the open-source e-signature platform's features, free and paid pricing plans, and alternatives to DocuSign and HelloSign.",
+      "llm_readable_summary": "OpenSign is an open-source electronic signature and digital document-signing platform founded in 2023 and headquartered in New York City. It positions itself explicitly as a free and open-source alternative to DocuSign, built on the Parse Platform backend, and is distributed both as a self-hosted open-source project (available on GitHub as OpenSignLabs/OpenSign) and as a hosted cloud service run by OpenSign Labs. The self-hosted, free version can be downloaded, deployed, and modified at no cost, and it supports unlimited document creation and signature requests, making it attractive to privacy-conscious organizations, developers, and cost-sensitive businesses that want full control over their signing infrastructure and data residency. The hosted cloud product offers a tiered pricing model: a Free plan for individuals with basic signing needs; a Professional plan at 9.99 US dollars per month adding advanced field validations, webhooks, Zapier integration, API access with a monthly allotment of API signatures, and custom email templates; a Teams plan at 19.99 US dollars per user per month that layers on a larger API signature allotment, team and organization management, template sharing, and bulk sending for up to 50 documents at once; and a custom-priced Enterprise plan adding a custom domain, white-labeling, an uptime SLA, single sign-on (SSO), and priority support. Core product features include multi-signer sequential and parallel signing workflows, one-time-password (OTP) identity verification, detailed audit trails for legal compliance, reusable document templates, embeddable signing widgets for integrating into other web apps, and support for common document formats including PDF, DOCX, JPG, and PNG. As an unfunded, bootstrapped startup rather than a venture-backed company, OpenSign competes primarily on cost and transparency against established e-signature incumbents such as DocuSign, Dropbox Sign (formerly HelloSign), PandaDoc, SignNow, and Adobe Acrobat Sign, appealing especially to startups, small and medium businesses, and open-source-first organizations that find those incumbents' pricing or vendor lock-in unattractive. Because the underlying code is open source, OpenSign also serves developers who want to embed e-signature functionality directly into their own products via API rather than relying on a third-party SaaS subscription indefinitely.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSign is an open-source digital signature platform founded in 2023 and based in New York City, built to give individuals, businesses, and developers a transparent, cost-effective alternative to commercial e-signature tools like DocuSign.",
+            "It is available both as a free, self-hosted open-source deployment for organizations that want full control over their infrastructure and data, and as a managed cloud service with tiered subscription plans for teams that prefer a hosted solution."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenSign supports multi-signer sequential and parallel signing workflows, OTP-based identity verification, comprehensive audit trails, and reusable templates for recurring document types.",
+            "Paid plans add API access, webhooks, Zapier integration, bulk document sending, team and organization management, custom branding, and single sign-on for larger organizations."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "The self-hosted open-source version is free with unlimited signatures, while the hosted cloud service offers a Free plan, a Professional plan at 9.99 US dollars per month, a Teams plan at 19.99 US dollars per user per month, and a custom-priced Enterprise plan.",
+            "Higher tiers unlock larger API signature allotments, webhooks, Zapier automation, bulk sending, white-labeling, and SSO, letting organizations scale from individual use to enterprise deployment."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Multi-signer sequential signing",
+          "description": "Route documents through multiple signers in a defined order or in parallel."
+        },
+        {
+          "title": "OTP identity verification",
+          "description": "One-time-password verification confirms signer identity before signing."
+        },
+        {
+          "title": "Audit trail and compliance logging",
+          "description": "Detailed, timestamped logs of every action taken on a document for legal evidence."
+        },
+        {
+          "title": "Reusable templates",
+          "description": "Save frequently used document layouts and signing fields as templates."
+        },
+        {
+          "title": "API and webhook access",
+          "description": "Integrate e-signature workflows directly into other applications and automation tools."
+        },
+        {
+          "title": "Zapier integration",
+          "description": "Connect OpenSign to thousands of other apps without custom code."
+        },
+        {
+          "title": "Bulk document sending",
+          "description": "Send the same document to up to 50 recipients at once on the Teams plan."
+        },
+        {
+          "title": "Self-hosting option",
+          "description": "Deploy the open-source codebase on private infrastructure for full data control."
+        }
+      ],
+      "pros": [
+        "Free, unlimited self-hosted option with full source code access",
+        "Significantly cheaper paid plans than most commercial e-signature tools",
+        "Open-source transparency around security and data handling",
+        "API and webhook access included from the Professional tier",
+        "Zapier integration simplifies workflow automation"
+      ],
+      "cons": [
+        "Younger, less established brand than DocuSign or Adobe Sign",
+        "Self-hosting requires technical setup and ongoing maintenance",
+        "Smaller integration ecosystem than large incumbent e-signature vendors",
+        "Enterprise features like SSO require the custom-priced Enterprise plan",
+        "As an early-stage, unfunded startup, long-term roadmap pace may vary"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenSign free to use?",
+          "answer": "Yes, the self-hosted open-source version is free with unlimited signatures, and the hosted cloud service also offers a free plan with basic features."
+        },
+        {
+          "question": "How much does OpenSign's paid plan cost?",
+          "answer": "The Professional plan is 9.99 US dollars per month, and the Teams plan is 19.99 US dollars per user per month; Enterprise pricing is custom."
+        },
+        {
+          "question": "Can I self-host OpenSign?",
+          "answer": "Yes, OpenSign's source code is publicly available and can be deployed on your own infrastructure at no licensing cost."
+        },
+        {
+          "question": "Is OpenSign a legitimate alternative to DocuSign?",
+          "answer": "Yes, OpenSign is explicitly built and marketed as an open-source alternative to DocuSign, offering similar core e-signature workflows at a lower cost."
+        },
+        {
+          "question": "What document formats does OpenSign support?",
+          "answer": "OpenSign supports PDF, DOCX, JPG, and PNG documents for signing."
+        },
+        {
+          "question": "Does OpenSign offer an API?",
+          "answer": "Yes, API access with a monthly signature allotment is included starting on the Professional plan."
+        },
+        {
+          "question": "Where is OpenSign based?",
+          "answer": "OpenSign Labs was founded in 2023 and is headquartered in New York City, USA."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Contract and agreement signing for small businesses",
+          "description": "Small businesses use OpenSign to collect legally binding signatures on contracts and agreements without expensive licensing fees.",
+          "audience": "Small and medium businesses"
+        },
+        {
+          "title": "Embedded signing for SaaS products",
+          "description": "Developers use OpenSign's API to add native e-signature functionality directly inside their own applications.",
+          "audience": "Developers and SaaS companies"
+        },
+        {
+          "title": "Self-hosted signing for regulated organizations",
+          "description": "Organizations with strict data residency or compliance requirements self-host OpenSign to keep signed documents on their own infrastructure.",
+          "audience": "Regulated industries and privacy-conscious organizations"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Free",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Unlimited document creation",
+            "Unlimited signature requests (self-hosted)",
+            "Basic signing workflows"
+          ]
+        },
+        {
+          "plan_name": "Professional",
+          "price": "$9.99/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Advanced field validations",
+            "Webhooks",
+            "Zapier integration",
+            "API access with monthly signature allotment",
+            "Custom email templates"
+          ]
+        },
+        {
+          "plan_name": "Teams",
+          "price": "$19.99/user/month",
+          "billing_cycle": "Monthly",
+          "features": [
+            "Larger API signature allotment",
+            "Team and organization management",
+            "Template sharing",
+            "Bulk sending for up to 50 documents"
+          ]
+        },
+        {
+          "plan_name": "Enterprise",
+          "price": "Custom",
+          "billing_cycle": "Custom",
+          "features": [
+            "Custom domain",
+            "White-labeling",
+            "Uptime SLA",
+            "Single sign-on (SSO)",
+            "Priority support"
+          ]
+        }
+      ],
+      "tags": [
+        "e-signature",
+        "open source",
+        "document signing",
+        "docusign alternative",
+        "saas"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "9571c8ca-968b-4f1b-93a0-ecf103c67bfa",
+    "slug": "opensips",
+    "name": "openSIPS",
+    "enrichment": {
+      "short_description": "openSIPS is a free, open-source SIP server used by carriers and telecoms for VoIP infrastructure, maintained by OpenSIPS Solutions in Bucharest, Romania.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2001,
+      "company_size": "2-10 employees (OpenSIPS Solutions)",
+      "headquarters": "Bucharest, Romania",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "openSIPS Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "openSIPS review covering the open-source SIP server's features, history, free pricing, commercial support options, and alternatives like Kamailio and FreeSWITCH.",
+      "llm_readable_summary": "openSIPS is a free, open-source SIP (Session Initiation Protocol) proxy and server used by telecom carriers, VoIP operators, and enterprises to build voice, video, instant messaging, and presence infrastructure. Its lineage traces back to 2001, when the project began as SIP Express Router (SER); in 2004 the team and copyrights moved to iptel.org, which was acquired by Tekelec in 2005. In 2005, Bogdan-Andrei Lancu of the Romanian company Voice System created a fork called OpenSER, which quickly became one of the most widely used open-source SIP proxies. In 2008, a trademark dispute forced a rename from OpenSER to openSIPS, and the same year internal disagreements within the development team caused a split into two separate projects: Kamailio and openSIPS. Since then, openSIPS has been actively maintained by OpenSIPS Solutions, a small, specialized telecommunications company headquartered in Bucharest, Romania, with roughly 2 to 10 employees. The software is distributed under the GPLv2 open-source license at no cost, and Google recognized it with an Open Source Peer Bonus award in 2017. Functionally, openSIPS is used to build Class 4/5 residential telephony platforms, wholesale and trunking solutions, enterprise and virtual PBX systems, session border controllers (SBCs), application servers, front-end load balancers, IMS (IP Multimedia Subsystem) platforms, and call centers, making it core infrastructure software for the VoIP and unified communications industry rather than a consumer-facing product. There is no traditional per-seat pricing; the core software is free, and OpenSIPS Solutions generates revenue through commercial support, consulting, training, and its annual OpenSIPS Summit conference, which brings together the global SIP and VoIP developer community. Because it shares deep architectural roots with Kamailio, the two are frequently compared and often used together or interchangeably depending on a project's specific routing and scripting needs. Its broader competitive set includes Kamailio, FreeSWITCH, Asterisk, and commercial session border controller vendors such as Oracle and Sansay. openSIPS's target audience is telecom engineers, VoIP service providers, and infrastructure teams building carrier-grade or enterprise SIP signaling infrastructure, rather than end users, since it is a low-level signaling server that typically sits behind a branded telephony product or service.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "openSIPS is a mature, open-source SIP proxy and server used to build VoIP, unified communications, and telecom signaling infrastructure. Its history dates back to 2001 as SIP Express Router, later forked into OpenSER in 2005, and renamed openSIPS in 2008 after a trademark dispute split the project into Kamailio and openSIPS.",
+            "The project is maintained by OpenSIPS Solutions, a small telecommunications company based in Bucharest, Romania, and is used by carriers, ITSPs, and enterprises worldwide to run production-grade SIP signaling platforms."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "openSIPS supports building Class 4/5 residential telephony platforms, wholesale trunking, enterprise and virtual PBX systems, session border controllers, application servers, load balancers, IMS platforms, and call centers.",
+            "Its scripting language and modular architecture allow deep customization of call routing logic, making it a flexible foundation rather than an out-of-the-box product for non-technical users."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "The core openSIPS software is free and open source under the GPLv2 license, with no licensing fees for deployment at any scale.",
+            "OpenSIPS Solutions monetizes through paid commercial support, consulting, custom development, and training services rather than software licensing."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "SIP proxy and registrar",
+          "description": "Core SIP signaling functions for routing calls, messages, and presence between endpoints."
+        },
+        {
+          "title": "Session border controller (SBC)",
+          "description": "Secures and manages SIP traffic at network boundaries between carriers or enterprises."
+        },
+        {
+          "title": "Class 4/5 telephony support",
+          "description": "Builds wholesale trunking (Class 4) and residential/business telephony (Class 5) platforms."
+        },
+        {
+          "title": "Load balancing and failover",
+          "description": "Distributes SIP traffic across multiple servers for high availability."
+        },
+        {
+          "title": "Modular scripting architecture",
+          "description": "Highly customizable routing logic via openSIPS's configuration scripting language."
+        },
+        {
+          "title": "Virtual PBX and enterprise telephony",
+          "description": "Supports building multi-tenant PBX and enterprise communication systems."
+        }
+      ],
+      "pros": [
+        "Free and open source with no licensing costs",
+        "Mature, carrier-grade codebase with roots dating back over two decades",
+        "Highly flexible scripting for custom call routing logic",
+        "Recognized by Google with an Open Source Peer Bonus award",
+        "Active community and dedicated annual OpenSIPS Summit conference"
+      ],
+      "cons": [
+        "Steep learning curve requiring SIP and telecom protocol expertise",
+        "No graphical management interface out of the box",
+        "Small maintaining company means limited commercial support capacity",
+        "Overlaps closely with Kamailio, creating some ecosystem fragmentation",
+        "Not suitable for non-technical users without telecom engineering skills"
+      ],
+      "faqs": [
+        {
+          "question": "Is openSIPS free?",
+          "answer": "Yes, the core openSIPS software is free and open source under the GPLv2 license."
+        },
+        {
+          "question": "What is openSIPS used for?",
+          "answer": "It is used to build SIP-based VoIP infrastructure including residential and wholesale telephony platforms, virtual PBX systems, session border controllers, and call centers."
+        },
+        {
+          "question": "How is openSIPS different from Kamailio?",
+          "answer": "Both trace back to the same OpenSER codebase and split in 2008 due to internal disagreements; they remain similar in purpose but have diverged in features and community over time."
+        },
+        {
+          "question": "Who maintains openSIPS?",
+          "answer": "openSIPS is maintained by OpenSIPS Solutions, a small telecommunications company based in Bucharest, Romania."
+        },
+        {
+          "question": "Does openSIPS offer commercial support?",
+          "answer": "Yes, OpenSIPS Solutions offers paid support, consulting, training, and custom development services."
+        },
+        {
+          "question": "Is openSIPS suitable for enterprises or only carriers?",
+          "answer": "Both; it is used for carrier-grade Class 4/5 platforms as well as enterprise and virtual PBX systems."
+        },
+        {
+          "question": "What are the main alternatives to openSIPS?",
+          "answer": "Kamailio, FreeSWITCH, and Asterisk are the main open-source alternatives, alongside commercial session border controller products."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Carrier-grade VoIP trunking",
+          "description": "Telecom carriers use openSIPS to build Class 4 wholesale trunking and Class 5 residential telephony platforms.",
+          "audience": "Telecom carriers and VoIP operators"
+        },
+        {
+          "title": "Enterprise virtual PBX systems",
+          "description": "Businesses deploy openSIPS to run multi-tenant, customizable internal phone systems.",
+          "audience": "Enterprises and IT teams"
+        },
+        {
+          "title": "Session border control and security",
+          "description": "Network engineers use openSIPS as a session border controller to secure and manage SIP traffic between networks.",
+          "audience": "Network and telecom engineers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Open Source",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full SIP server and proxy functionality",
+            "GPLv2 licensed source code",
+            "Community support via forums and mailing lists"
+          ]
+        },
+        {
+          "plan_name": "Commercial Support",
+          "price": "Custom",
+          "billing_cycle": "Custom",
+          "features": [
+            "Paid support contracts",
+            "Consulting and custom development",
+            "Training from OpenSIPS Solutions"
+          ]
+        }
+      ],
+      "tags": [
+        "sip server",
+        "voip",
+        "open source",
+        "telecom infrastructure",
+        "session border controller"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "9dee94a4-8e82-47af-beeb-930afb5a54a0",
+    "slug": "openslides",
+    "name": "OpenSlides",
+    "enrichment": {
+      "short_description": "OpenSlides is an open-source assembly and meeting management platform for agendas, motions, and electronic voting, developed by Intevation GmbH in Osnabr\u00fcck, Germany.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2011,
+      "company_size": "Small-to-midsize IT services company (Intevation GmbH, founded 1999)",
+      "headquarters": "Osnabr\u00fcck, Germany",
+      "languages": [
+        "English",
+        "German"
+      ],
+      "seo_title": "OpenSlides Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenSlides review covering the open-source assembly and e-voting platform's features, free self-hosted option, SaaS pricing, and alternatives.",
+      "llm_readable_summary": "OpenSlides is an open-source digital assembly and meeting management system used to run agendas, motions, elections, and electronic voting for parliamentary-style organizations, associations, and committees. Its roots trace to 2005, when Emanuel Sch\u00fctze built an early PHP prototype for the federal meetings of a German Protestant student association; at the end of 2010, Sch\u00fctze, Oskar Hahn, and Norman J\u00e4ckel began a full rewrite in Python and Django, releasing OpenSlides version 1.0 on September 12, 2011. The project is developed and professionally operated by Intevation GmbH, an independent IT services company based in Osnabr\u00fcck, Germany, founded in 1999 with a long-standing commitment to free and open-source software. OpenSlides is distributed under the MIT license as free/libre open-source software (FLOSS), meaning organizations can self-host it at no licensing cost, and an electronic voting module was added to the platform in 2019, extending it from presentation and agenda management into full legally-relevant electronic elections and motions voting. Beyond the free self-hosted option, Intevation offers OpenSlides as a hosted SaaS product with usage-based, per-account pricing across three tiers: Online Voting at 2 euros per account for a minimum 14-day event, starting at 50 accounts, covering live and unlimited online voting and elections; Conference Management at 4 euros per account for a minimum one-month engagement, covering the full feature range for one-time meetings including agenda, motions, and speaking lists; and Committee Management at 36 euros per account for a minimum 12-month term with fixed account tiers of 100, 250, 500, or 1000, designed for organizations running recurring, unlimited meetings and adding capabilities like single sign-on and integrated livestreaming. Core features across the platform include agenda and speaking-list management, a full motions workflow (submission, amendment, discussion, voting), candidate lists and election management, live projector output for displaying agendas and results during meetings, autopilot presentation mode, custom branding, and data export. OpenSlides primarily serves parliaments, political parties, non-profit associations, unions, cooperatives, and any membership organization that must run formal, auditable votes and motions according to procedural rules, positioning it against tools like Loomio, Decidim, and dedicated online-voting vendors such as Election Buddy and Simply Voting, as well as general conference/event platforms for organizations that only need the meeting-management side.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSlides is an open-source system for digitally managing assemblies, committees, and meetings, covering agendas, motions, elections, and electronic voting. It began as a 2005 prototype and was rebuilt from 2010 into the modern Python/Django-based system, first released as version 1.0 in September 2011.",
+            "It is developed and operated by Intevation GmbH, a German IT services company founded in 1999 with a long history in free software, and is distributed under the MIT license, allowing free self-hosting alongside a paid, hosted SaaS offering."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenSlides manages meeting agendas and speaking lists, a structured motions workflow for submission and amendment, candidate lists and election tracking, and a dedicated electronic voting module added in 2019 for live and online voting.",
+            "Additional capabilities include projector display mode for live meeting rooms, autopilot presentation sequencing, custom branding, single sign-on for larger organizations, and integrated livestreaming for hybrid or fully remote assemblies."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenSlides can be self-hosted for free as open-source software under the MIT license, giving organizations full control over deployment and data.",
+            "The hosted SaaS product is priced per account: Online Voting at 2 euros per account (minimum 14 days, from 50 accounts), Conference Management at 4 euros per account (minimum 1 month), and Committee Management at 36 euros per account per year (fixed tiers of 100 to 1000 accounts, minimum 12 months)."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "Motions workflow",
+          "description": "Structured submission, amendment, discussion, and voting process for formal motions."
+        },
+        {
+          "title": "Electronic voting module",
+          "description": "Live and online voting for elections and motions, added to the platform in 2019."
+        },
+        {
+          "title": "Agenda and speaking lists",
+          "description": "Manages meeting agendas and speaker queues in real time."
+        },
+        {
+          "title": "Candidate lists and elections",
+          "description": "Tracks candidates and results for formal elections within an assembly."
+        },
+        {
+          "title": "Projector mode",
+          "description": "Displays agendas, motions, and live results on a projector or screen during meetings."
+        },
+        {
+          "title": "Single sign-on and livestream integration",
+          "description": "Available on higher SaaS tiers for larger, recurring organizational meetings."
+        },
+        {
+          "title": "Self-hosted open-source deployment",
+          "description": "Fully free deployment option under the MIT license for organizations wanting data control."
+        }
+      ],
+      "pros": [
+        "Free, open-source self-hosted option under the MIT license",
+        "Purpose-built for formal parliamentary-style motions and voting, not generic polling",
+        "Backed by an established German free-software company since 1999",
+        "Flexible SaaS pricing scaled to event size and duration",
+        "Electronic voting module supports legally relevant elections"
+      ],
+      "cons": [
+        "Per-account SaaS pricing can add up for large recurring assemblies",
+        "Committee Management tier requires a 12-month minimum commitment",
+        "Self-hosting requires technical setup and Python/Django expertise",
+        "Smaller global brand recognition than general voting or event platforms",
+        "Feature depth is narrowly focused on assembly/motion use cases rather than broad event management"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenSlides free?",
+          "answer": "Yes, the self-hosted open-source version is free under the MIT license; the hosted SaaS version is priced per account."
+        },
+        {
+          "question": "What is OpenSlides used for?",
+          "answer": "It is used to manage assemblies, committee meetings, agendas, motions, elections, and electronic voting for organizations like parliaments, associations, and unions."
+        },
+        {
+          "question": "Who develops OpenSlides?",
+          "answer": "OpenSlides is developed and operated by Intevation GmbH, an IT services company based in Osnabr\u00fcck, Germany, founded in 1999."
+        },
+        {
+          "question": "When did OpenSlides add electronic voting?",
+          "answer": "An electronic voting module was added to OpenSlides in 2019."
+        },
+        {
+          "question": "How is OpenSlides SaaS pricing structured?",
+          "answer": "It is priced per account across three tiers: Online Voting at 2 euros per account, Conference Management at 4 euros per account, and Committee Management at 36 euros per account per year."
+        },
+        {
+          "question": "Can I self-host OpenSlides instead of using the SaaS version?",
+          "answer": "Yes, OpenSlides is open source under the MIT license and can be self-hosted at no licensing cost."
+        },
+        {
+          "question": "What organizations typically use OpenSlides?",
+          "answer": "Parliaments, political parties, non-profit associations, unions, and cooperatives that need formal, auditable motions and voting processes."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Parliamentary and political assembly voting",
+          "description": "Political parties and parliamentary-style organizations use OpenSlides to run formal motions and elections.",
+          "audience": "Political organizations and parliaments"
+        },
+        {
+          "title": "Association and union annual meetings",
+          "description": "Non-profits and unions use OpenSlides for agenda management and member voting at annual general meetings.",
+          "audience": "Non-profits and membership associations"
+        },
+        {
+          "title": "Recurring committee meeting management",
+          "description": "Organizations with regular committee meetings use the Committee Management tier for ongoing agenda, motion, and voting needs.",
+          "audience": "Committees and boards"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Self-Hosted Open Source",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full motions, agenda, and voting functionality",
+            "MIT licensed source code",
+            "Requires self-managed hosting"
+          ]
+        },
+        {
+          "plan_name": "Online Voting",
+          "price": "\u20ac2/account",
+          "billing_cycle": "Minimum 14 days",
+          "features": [
+            "Live and online voting",
+            "Unlimited elections",
+            "From 50 accounts"
+          ]
+        },
+        {
+          "plan_name": "Conference Management",
+          "price": "\u20ac4/account",
+          "billing_cycle": "Minimum 1 month",
+          "features": [
+            "Full feature range for one-time meetings",
+            "From 50 accounts"
+          ]
+        },
+        {
+          "plan_name": "Committee Management",
+          "price": "\u20ac36/account/year",
+          "billing_cycle": "Minimum 12 months",
+          "features": [
+            "Recurring, unlimited meetings",
+            "Fixed tiers of 100, 250, 500, or 1000 accounts",
+            "Single sign-on and livestream integration"
+          ]
+        }
+      ],
+      "tags": [
+        "assembly management",
+        "electronic voting",
+        "meeting software",
+        "open source",
+        "motions and elections"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "99730711-228d-48f9-acb0-4108e2522d7d",
+    "slug": "opensmtpd",
+    "name": "OpenSMTPD",
+    "enrichment": {
+      "short_description": "OpenSMTPD is a free, open-source SMTP mail server daemon developed as part of the OpenBSD project, focused on security, simplicity, and easy configuration.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": "Open source project (OpenBSD)",
+      "headquarters": "Open source project (OpenBSD)",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenSMTPD Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenSMTPD review covering the free, open-source OpenBSD SMTP server's features, security design, pricing, and alternatives like Postfix and Exim.",
+      "llm_readable_summary": "OpenSMTPD, also referred to as the OpenBSD SMTP Server, is a free and open-source Unix daemon that implements the Simple Mail Transfer Protocol (SMTP) to deliver email locally or relay it to other mail servers. It has been in development within the OpenBSD project since late 2008 and was first publicly released as version 5.3 on March 17, 2013. It is primarily developed by Gilles Chehade, Eric Faurot, and Charles Longeau as part of the broader OpenBSD operating system project, which is well known for prioritizing security and code auditability across all its components. OpenSMTPD was created specifically to address recurring problems the developers saw in existing SMTP daemons: difficult and error-prone configuration syntax, complex codebases that were hard to security-audit, and licensing terms the OpenBSD project considered unsuitable. Its design goals center on security, reliability, ease of configuration, and support for the most common real-world mail-server use cases, deliberately implementing a smaller feature surface than daemons like Postfix or Exim, prioritizing correctness and auditability over exhaustive configurability for niche scenarios. Security hardening techniques used internally include strict validity checking on all network input, bounded-buffer string operations (via strlcpy), and privilege separation, where different processes run with minimal privileges to contain the impact of any potential security vulnerability. The source code is released under the permissive ISC license, and like OpenSSH, OpenSMTPD has an official portable version maintained as a separate child project (initiated by Charles Longeau) that adds cross-platform support for NetBSD, FreeBSD, DragonFly BSD, and numerous Linux distributions, in addition to its native home on OpenBSD. As a component of the OpenBSD project rather than a commercial company, OpenSMTPD has no company size, headquarters, funding, or traditional pricing in the conventional sense; it is entirely free to download, deploy, and modify, and its typical use cases include local mail delivery, relaying, authenticated mail submission, and receiving mail for virtual domains on servers of any scale. Its direct competitors in the SMTP server daemon category are Postfix, Exim, Sendmail, and qmail, with OpenSMTPD generally positioned as the smallest, most security-focused, and easiest to configure of the group, at the cost of supporting fewer advanced or niche mail-routing features than the more mature and feature-rich Postfix or Exim.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSMTPD is a free, open-source SMTP mail server daemon developed within the OpenBSD project, first publicly released in March 2013 after development beginning in late 2008. It was created to offer a simpler, more auditable, and more secure alternative to existing SMTP daemons.",
+            "It is maintained primarily by Gilles Chehade, Eric Faurot, and Charles Longeau, and is distributed under the ISC license, with a portable version supporting NetBSD, FreeBSD, DragonFly BSD, and various Linux distributions in addition to native OpenBSD."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "OpenSMTPD supports local mail delivery, relaying to other SMTP servers, authenticated mail submission, and receiving mail for virtual domains, covering the most common mail-server deployment scenarios.",
+            "Its security design includes strict input validation, bounded-buffer string handling, and privilege separation across processes, along with a deliberately simplified configuration syntax compared to larger daemons like Postfix or Exim."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "OpenSMTPD is entirely free and open source under the ISC license, with no licensing fees for deployment on any number of servers.",
+            "As a component of the OpenBSD project rather than a commercial vendor, there are no paid tiers, support contracts, or enterprise editions offered directly by the project itself."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "SMTP mail delivery and relaying",
+          "description": "Handles local mail delivery and relaying of messages to other SMTP servers."
+        },
+        {
+          "title": "Privilege separation",
+          "description": "Runs internal processes with minimal privileges to contain the impact of potential vulnerabilities."
+        },
+        {
+          "title": "Simplified configuration syntax",
+          "description": "Designed for straightforward, human-readable configuration compared to larger mail daemons."
+        },
+        {
+          "title": "Authenticated mail submission",
+          "description": "Supports authenticated SMTP submission for trusted mail clients and relays."
+        },
+        {
+          "title": "Virtual domain support",
+          "description": "Can receive and route mail for multiple virtual domains on a single server."
+        },
+        {
+          "title": "Portable cross-platform version",
+          "description": "An official portable release supports NetBSD, FreeBSD, DragonFly BSD, and Linux distributions."
+        }
+      ],
+      "pros": [
+        "Completely free and open source under the permissive ISC license",
+        "Strong security-first design with privilege separation and strict input validation",
+        "Simple, auditable codebase compared to larger mail daemons",
+        "Easy-to-write configuration syntax",
+        "Backed by the security-focused OpenBSD project's development practices"
+      ],
+      "cons": [
+        "Fewer advanced features than mature daemons like Postfix or Exim",
+        "Smaller community and third-party documentation base",
+        "No official commercial support offering from the project itself",
+        "Less common in large-scale enterprise mail deployments than Postfix",
+        "Niche or highly customized mail-routing setups may be harder to achieve"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenSMTPD free?",
+          "answer": "Yes, OpenSMTPD is free and open source under the ISC license."
+        },
+        {
+          "question": "Who develops OpenSMTPD?",
+          "answer": "It is developed primarily by Gilles Chehade, Eric Faurot, and Charles Longeau as part of the OpenBSD project."
+        },
+        {
+          "question": "When was OpenSMTPD first released?",
+          "answer": "It was publicly released as version 5.3 on March 17, 2013, after development beginning in late 2008."
+        },
+        {
+          "question": "Can OpenSMTPD run on Linux?",
+          "answer": "Yes, an official portable version supports Linux distributions as well as NetBSD, FreeBSD, and DragonFly BSD in addition to native OpenBSD."
+        },
+        {
+          "question": "What makes OpenSMTPD different from Postfix or Exim?",
+          "answer": "OpenSMTPD deliberately implements a smaller, simpler feature set focused on security and ease of configuration, rather than the extensive configurability of Postfix or Exim."
+        },
+        {
+          "question": "Is OpenSMTPD suitable for production mail servers?",
+          "answer": "Yes, it supports local delivery, relaying, authenticated submission, and virtual domains, covering the most common production mail-server use cases."
+        },
+        {
+          "question": "What are the main alternatives to OpenSMTPD?",
+          "answer": "The main alternatives are Postfix, Exim, Sendmail, and qmail."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Small business and personal mail servers",
+          "description": "System administrators run OpenSMTPD to handle local and relayed email for small-scale mail servers.",
+          "audience": "System administrators and small businesses"
+        },
+        {
+          "title": "OpenBSD and BSD system mail infrastructure",
+          "description": "OpenBSD, FreeBSD, and NetBSD users deploy OpenSMTPD as the native or portable SMTP daemon for their systems.",
+          "audience": "BSD system administrators"
+        },
+        {
+          "title": "Security-focused mail relay deployments",
+          "description": "Organizations prioritizing auditable, minimal-attack-surface software choose OpenSMTPD for mail relaying and submission.",
+          "audience": "Security-conscious infrastructure teams"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Open Source",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full SMTP server functionality",
+            "ISC licensed source code",
+            "Portable version for NetBSD, FreeBSD, DragonFly BSD, and Linux",
+            "Community support via mailing lists and documentation"
+          ]
+        }
+      ],
+      "tags": [
+        "smtp server",
+        "mail server",
+        "openbsd",
+        "open source",
+        "email infrastructure"
+      ],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "4e5f6c77-3f3a-46b6-8db5-4bd0f9c1c6a9",
+    "slug": "openssh-sftp-server",
+    "name": "OpenSSH SFTP server",
+    "enrichment": {
+      "short_description": "OpenSSH SFTP server (sftp-server) is the free, open-source SFTP subsystem bundled with OpenSSH, providing secure file transfer over SSH as part of the OpenBSD project.",
+      "pricing_model": "Open Source",
+      "starting_price": "Free",
+      "founded_year": 2000,
+      "company_size": "Open source project (OpenBSD)",
+      "headquarters": "Open source project (OpenBSD)",
+      "languages": [
+        "English"
+      ],
+      "seo_title": "OpenSSH SFTP Server Review 2026: Features, Pricing and Alternatives",
+      "seo_meta_description": "OpenSSH SFTP server review covering sftp-server's history, features, free open-source pricing, and alternatives for secure file transfer over SSH.",
+      "llm_readable_summary": "OpenSSH SFTP server, commonly known by its binary name sftp-server, is the server-side subsystem that implements the SFTP (SSH File Transfer Protocol) within the OpenSSH suite. It provides secure, encrypted file transfer capability over an existing SSH connection and is invoked by the sshd daemon via the Subsystem configuration directive rather than being run directly by users. Support for the server side of SFTP was written by developer Markus Friedl and first released with OpenSSH 2.3.0 in November 2000, with sftp-server first appearing in OpenBSD 2.8. OpenSSH itself is developed as part of the OpenBSD operating system project, and traces its lineage to the original free ssh 1.2.12 release by Tatu Yl\u00f6nen, the last version of that codebase free enough for the OpenBSD team to build upon; all patented or restrictively licensed components were subsequently removed or replaced with external libraries such as LibreSSL. Functionally, sftp-server works together with the sftp client command-line tool to give users and administrators a secure alternative to legacy, unencrypted FTP, transferring files, directories, and permissions over an authenticated, encrypted SSH channel. Key operational features include support for chrooted (jailed) SFTP-only user accounts, a read-only mode for restricting write access, configurable logging of file operations, and request filtering to restrict which SFTP protocol operations a given user or connection is permitted to perform, making it a common building block for secure file-transfer-only accounts on shared or multi-tenant servers. As a bundled component of OpenSSH, sftp-server has no independent company, funding, or headquarters; it is maintained by the OpenBSD project's core developers under a permissive BSD-style license, and is distributed and pre-installed with virtually every Linux distribution, BSD variant, and macOS as part of the standard OpenSSH package, making it arguably the single most widely deployed SFTP server implementation in the world by installation count, even though it is rarely marketed or discussed as a standalone product. Because it ships for free with the SSH daemon nearly every server already runs, its primary competitors are less other SFTP daemons and more alternative secure file transfer approaches: dedicated FTPS/SFTP daemons like ProFTPD, Pure-FTPd, or vsftpd (which primarily target FTP/FTPS rather than SFTP), and commercial managed file transfer (MFT) platforms such as GoAnywhere MFT or Globalscape, which add web UIs, workflow automation, and compliance reporting on top of core SFTP functionality that OpenSSH's sftp-server already provides for free at the protocol level.",
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSSH SFTP server, or sftp-server, is the server-side component that implements the SFTP protocol within the OpenSSH suite, giving administrators secure, encrypted file transfer as a subsystem of the SSH daemon. It was written by Markus Friedl and first shipped with OpenSSH 2.3.0 in November 2000.",
+            "As part of the OpenBSD project, it is developed with the same security-first, auditable-code philosophy applied across all OpenSSH components, and is bundled by default with virtually every Linux, BSD, and macOS installation that includes OpenSSH."
+          ]
+        },
+        {
+          "id": "key-features",
+          "heading": "Key Features",
+          "level": 2,
+          "paragraphs": [
+            "sftp-server supports chrooted SFTP-only accounts, allowing administrators to restrict specific users to file transfer without granting full shell access, along with a read-only mode and configurable logging of file operations.",
+            "It is invoked automatically by sshd via the Subsystem directive and communicates with SFTP clients, most commonly the bundled sftp command-line tool, over an already-encrypted SSH session, requiring no separate encryption layer or certificate management."
+          ]
+        },
+        {
+          "id": "pricing-overview",
+          "heading": "Pricing",
+          "level": 2,
+          "paragraphs": [
+            "sftp-server is entirely free and open source, distributed as a standard part of the OpenSSH package under a permissive BSD-style license with no licensing fees.",
+            "There is no paid tier or commercial edition of sftp-server itself; organizations needing additional workflow automation, web dashboards, or compliance reporting on top of core SFTP typically pay for separate managed file transfer platforms instead."
+          ]
+        }
+      ],
+      "features": [
+        {
+          "title": "SFTP protocol subsystem",
+          "description": "Implements the server side of the SSH File Transfer Protocol as a subsystem invoked by sshd."
+        },
+        {
+          "title": "Chrooted SFTP-only accounts",
+          "description": "Restricts specific users to file transfer only, without granting shell access, via chroot jails."
+        },
+        {
+          "title": "Read-only mode",
+          "description": "Restricts write access for accounts that should only download files."
+        },
+        {
+          "title": "Request filtering",
+          "description": "Controls which SFTP protocol operations a given connection is permitted to perform."
+        },
+        {
+          "title": "Configurable logging",
+          "description": "Logs file transfer operations for auditing and troubleshooting."
+        },
+        {
+          "title": "Encrypted transport via SSH",
+          "description": "Inherits SSH's encryption and authentication, avoiding the security weaknesses of legacy FTP."
+        }
+      ],
+      "pros": [
+        "Completely free and bundled with virtually every Linux, BSD, and macOS system",
+        "Inherits SSH's strong encryption and authentication without extra configuration",
+        "Supports chrooted, file-transfer-only user accounts for restricted access",
+        "Backed by OpenBSD's security-focused development practices",
+        "Extremely widely deployed and battle-tested since 2000"
+      ],
+      "cons": [
+        "No graphical or web-based management interface out of the box",
+        "Lacks workflow automation and compliance reporting found in commercial MFT tools",
+        "Configuration is done via text files and command-line tools, requiring technical skill",
+        "No built-in support for advanced enterprise features like detailed compliance dashboards",
+        "Rarely updated with major new features since it is a stable, mature subsystem"
+      ],
+      "faqs": [
+        {
+          "question": "Is OpenSSH SFTP server free?",
+          "answer": "Yes, sftp-server is free and open source, bundled as a standard part of the OpenSSH package."
+        },
+        {
+          "question": "Who created the OpenSSH SFTP server?",
+          "answer": "Support for the server side of SFTP was written by developer Markus Friedl and first released with OpenSSH 2.3.0 in November 2000."
+        },
+        {
+          "question": "How do I use sftp-server?",
+          "answer": "It is not run directly; it is invoked automatically by the sshd daemon via the Subsystem configuration directive when an SFTP client connects."
+        },
+        {
+          "question": "Can I restrict users to file transfer only?",
+          "answer": "Yes, sftp-server supports chrooted SFTP-only accounts that prevent users from getting full shell access."
+        },
+        {
+          "question": "Is sftp-server the same as an FTP server?",
+          "answer": "No, it implements SFTP over an encrypted SSH connection, which is a different and more secure protocol than traditional FTP or FTPS."
+        },
+        {
+          "question": "What operating systems include OpenSSH SFTP server?",
+          "answer": "It is bundled with virtually all Linux distributions, BSD variants, and macOS as part of the standard OpenSSH package."
+        },
+        {
+          "question": "What are alternatives to OpenSSH SFTP server?",
+          "answer": "Alternatives include dedicated FTP/FTPS daemons like ProFTPD, Pure-FTPd, and vsftpd, as well as commercial managed file transfer platforms like GoAnywhere MFT and Globalscape."
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "Secure server-to-server file transfer",
+          "description": "System administrators use sftp-server to transfer files securely between servers over an encrypted SSH connection.",
+          "audience": "System administrators and DevOps engineers"
+        },
+        {
+          "title": "Restricted file-transfer-only user accounts",
+          "description": "Organizations create chrooted SFTP-only accounts to give partners or clients limited file access without shell access.",
+          "audience": "Hosting providers and IT teams"
+        },
+        {
+          "title": "Automated file transfer in scripts and pipelines",
+          "description": "Developers use sftp-server alongside sftp or SFTP client libraries to automate file transfers in deployment and data pipelines.",
+          "audience": "Developers and automation engineers"
+        }
+      ],
+      "pricing_plans": [
+        {
+          "plan_name": "Open Source",
+          "price": "Free",
+          "billing_cycle": "N/A",
+          "features": [
+            "Full SFTP subsystem functionality bundled with OpenSSH",
+            "BSD-style licensed source code",
+            "Pre-installed on most Linux, BSD, and macOS systems",
+            "Community support via OpenSSH and OpenBSD documentation"
+          ]
+        }
+      ],
+      "tags": [
+        "sftp server",
+        "openssh",
+        "secure file transfer",
+        "openbsd",
+        "open source"
+      ],
+      "publish": true
+    }
+  }
+]

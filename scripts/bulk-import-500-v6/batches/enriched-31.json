@@ -1,0 +1,657 @@
+[
+  {
+    "tool_id": "5950887b-56e9-4a05-b6d2-f57b3d882853",
+    "slug": "calagopus",
+    "name": "Calagopus",
+    "enrichment": {
+      "short_description": "Open-source, Rust-based game server panel for deploying Minecraft, Rust, ARK, Valheim and other titles in isolated Docker containers.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Calagopus is an open-source game server control panel written in Rust. It lets self-hosters and hosting providers deploy, monitor, and maintain multiple game server instances from a single web interface, with each server isolated in its own Docker container.",
+            "Games are added through an egg system similar to other panels in this space, which the project says can support arbitrary games including Minecraft, Rust, ARK: Survival Evolved, and Valheim. Calagopus also ships an Extension API written in Rust so developers can add custom backend logic, routes, and UI elements to the panel itself."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Calagopus targets both individual server admins running a handful of community servers and commercial hosting providers who need a lightweight, self-hosted control layer. Because it runs on ARM64, including Raspberry Pi hardware, it's also usable on low-power home setups.",
+            "The project provides migration tooling for people currently running Pterodactyl or Pelican Panel, positioning itself as a faster, Rust-based alternative for teams already familiar with that egg-based panel model."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Docker-based isolation", "description": "Each game server runs in its own container, keeping instances separated for stability and security." },
+        { "title": "Egg system", "description": "Game definitions ('eggs') let the panel support a wide range of titles beyond a fixed built-in list." },
+        { "title": "Rust Extension API", "description": "Developers can extend the panel with custom backend logic, routes, and UI components." },
+        { "title": "Migration tooling", "description": "Built-in tools help import existing setups from Pterodactyl or Pelican Panel." },
+        { "title": "Responsive, mobile-friendly UI", "description": "The web dashboard is designed to work across desktop and mobile screens." },
+        { "title": "ARM64 / Raspberry Pi support", "description": "The panel can run on low-power ARM hardware in addition to standard x86 servers." }
+      ],
+      "pros": [
+        "Free and open source with no feature restrictions",
+        "Written in Rust for performance and memory safety",
+        "Runs on low-power ARM64 hardware such as Raspberry Pi",
+        "Provides a migration path for existing Pterodactyl/Pelican users",
+        "Active Discord community for support"
+      ],
+      "cons": [
+        "Newer project with a smaller install base and ecosystem than established panels",
+        "Requires Docker knowledge to deploy and operate",
+        "Documentation and third-party resources are still maturing"
+      ],
+      "faqs": [
+        { "question": "Is Calagopus free to use?", "answer": "Yes, the core panel is open source and free for both personal and commercial use." },
+        { "question": "What games can I host with Calagopus?", "answer": "It uses an egg system that supports a wide range of games, including Minecraft, Rust, ARK, and Valheim." },
+        { "question": "Can I migrate from Pterodactyl or Pelican Panel?", "answer": "Yes, the project provides migration tooling for both." },
+        { "question": "Does Calagopus run on a Raspberry Pi?", "answer": "Yes, it supports ARM64 hardware including Raspberry Pi devices." }
+      ],
+      "use_cases": [
+        { "title": "Community server hosting", "description": "Self-hosters running Minecraft, Rust, or Valheim servers for friends or a community.", "audience": "Hobbyist admins" },
+        { "title": "Multi-game hosting business", "description": "Providers offering multiple game titles to customers from a single control panel.", "audience": "Small hosting providers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Calagopus is a free, open-source Rust panel for deploying and managing Minecraft, Rust, ARK, and Valheim game servers in Docker containers."
+    }
+  },
+  {
+    "tool_id": "27d05620-43c3-4522-a6b6-5ae2a23a50b9",
+    "slug": "crafty-controller",
+    "name": "Crafty Controller",
+    "enrichment": {
+      "short_description": "Free, open-source web panel for launching, managing, and backing up Minecraft servers from a browser.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Crafty Controller is a free and open-source Minecraft server launcher and manager. It runs as a self-hosted web application, so admins start, stop, and configure Minecraft servers through a browser instead of the command line, and can port-forward the panel for remote access.",
+            "It supports running any Minecraft server jar, including Vanilla, Spigot, Paper, and Bedrock builds, and can manage multiple servers and versions from one install. Its data stays entirely on the host's own hardware."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "The tool is aimed at people who want to run a Minecraft server for friends, family, or a small community without learning server-console administration in depth. It's distributed under GPLv3, with source available on GitLab, and installable on Linux, Windows, Docker, macOS, and UnRAID."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-server, multi-version management", "description": "Run and switch between several Minecraft servers and versions from one dashboard." },
+        { "title": "Player and console management", "description": "Manage players and run server commands directly from the web UI." },
+        { "title": "File editor", "description": "Edit server configuration and world files without SSH or FTP." },
+        { "title": "Scheduled backups", "description": "Create and schedule backups of server worlds and data." },
+        { "title": "Mobile PWA monitoring", "description": "A progressive web app lets admins check server status from a phone." },
+        { "title": "Secure authentication", "description": "Uses Argon2 password hashing and an SSL-secured web server." }
+      ],
+      "pros": [
+        "Completely free, GPLv3 licensed, with full source available",
+        "Installers for Linux, Windows, Docker, macOS, and UnRAID",
+        "Supports Spigot, Paper, Vanilla, and Bedrock server jars",
+        "All data stays on the operator's own hardware",
+        "Active Discord community for support"
+      ],
+      "cons": [
+        "Focused solely on Minecraft, not other game titles",
+        "Remote access requires manual port forwarding",
+        "Backups and updates still need to be managed by the server operator"
+      ],
+      "faqs": [
+        { "question": "Is Crafty Controller free?", "answer": "Yes, it's free as in cost and free as in source code, under the GPLv3 license." },
+        { "question": "What Minecraft server types does it support?", "answer": "Any jar-based server, including Vanilla, Spigot, Paper, and Bedrock editions." },
+        { "question": "Can I run multiple servers at once?", "answer": "Yes, Crafty Controller can manage multiple servers and versions simultaneously." },
+        { "question": "Does it work on Windows?", "answer": "Yes, there's a standalone Windows executable that requires no installation." }
+      ],
+      "use_cases": [
+        { "title": "Home Minecraft server", "description": "Managing a Minecraft server for friends and family from a simple web dashboard.", "audience": "Hobbyist players" },
+        { "title": "Small community hosting", "description": "Running and maintaining multiple Minecraft servers for a clan or community.", "audience": "Community admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "windows", "mac"],
+      "seo_meta_description": "Crafty Controller is a free, open-source web panel for launching, managing, and backing up Minecraft servers on Linux, Windows, macOS, or Docker."
+    }
+  },
+  {
+    "tool_id": "ddb9f7aa-c8c0-4280-bea1-ba03e21c1bf6",
+    "slug": "drop",
+    "name": "Drop",
+    "enrichment": {
+      "short_description": "Self-hosted, open-source game library and distribution platform positioned as an alternative to Steam and Epic for your own collection.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Drop is an open-source, self-hosted platform for building and distributing a personal or organizational game library. It describes itself as an alternative to commercial storefronts like Steam and Epic, giving operators a built-in storefront UI, rich metadata editing with Markdown and image support, and automatic metadata imports from IGDB, GiantBomb, and PCGamingWiki.",
+            "A native cross-platform desktop client handles downloading and launching games from a Drop server, and admins can post server news to communicate with their users. Drop is released under the AGPLv3 license."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Drop suits people who want full control of their game library and data on their own infrastructure, rather than relying on a third-party platform. It supports both simple built-in accounts and SSO integration, so it can scale from a single household to an organization with existing identity systems, with the project stating it scales to libraries of thousands of games."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Built-in storefront", "description": "A browsable storefront UI for discovering and filtering games in the library." },
+        { "title": "Automatic metadata imports", "description": "Pulls metadata and artwork from IGDB, GiantBomb, and PCGamingWiki." },
+        { "title": "Rich metadata editing", "description": "Manually edit game descriptions with Markdown and custom images." },
+        { "title": "Native desktop client", "description": "Cross-platform client for downloading and launching games from the server." },
+        { "title": "Flexible authentication", "description": "Supports simple built-in accounts or SSO for organizational deployments." },
+        { "title": "Server news", "description": "Admins can post announcements visible to library users." }
+      ],
+      "pros": [
+        "Full ownership of the game library and its data",
+        "Free, AGPLv3-licensed and open source",
+        "Automatic metadata and artwork enrichment from multiple sources",
+        "Scales from personal use to organization-wide SSO deployments",
+        "Native client for downloading and launching titles"
+      ],
+      "cons": [
+        "Requires self-hosting infrastructure and ongoing maintenance",
+        "Users must supply their own legally owned game files",
+        "Newer project relative to long-established self-hosted alternatives"
+      ],
+      "faqs": [
+        { "question": "Is Drop a piracy tool?", "answer": "No, Drop is a distribution platform for games you already own the rights to; it does not provide games itself." },
+        { "question": "Do I need a client app to use it?", "answer": "Yes, a native cross-platform desktop client is used to download and launch games from a Drop server." },
+        { "question": "Is Drop free?", "answer": "Yes, it's open source under the AGPLv3 license." },
+        { "question": "Can I use single sign-on?", "answer": "Yes, Drop supports SSO integration alongside its built-in account system." }
+      ],
+      "use_cases": [
+        { "title": "Personal game library", "description": "Hosting a private library of owned games accessible from home devices.", "audience": "Individual hobbyists" },
+        { "title": "Organizational game distribution", "description": "Distributing internal builds or licensed titles to a team with SSO-based access.", "audience": "Studios and organizations" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Drop is a free, open-source, self-hosted game library and distribution platform, positioned as an alternative to Steam and Epic."
+    }
+  },
+  {
+    "tool_id": "9f50961f-98ec-4271-b1ef-2f486257a4a5",
+    "slug": "easywi",
+    "name": "EasyWI",
+    "enrichment": {
+      "short_description": "Open-source web panel for hosters and gaming clans to centrally manage game servers, TeamSpeak, web space, and databases.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Easy-Wi is an open-source, self-hosted service administration platform built for hosting providers, clans, and sponsoring projects. It offers distributed management of multiple services from one interface, including game servers and TeamSpeak 3 voice servers, with monitoring and automatic crash recovery.",
+            "Beyond game servers, Easy-Wi can manage web space (Apache2/Nginx), MySQL/MariaDB databases, and includes a built-in CMS for running a project's pages and news. A symlink-based file-sharing approach reduces installation time and disk usage when deploying multiple game server instances."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Easy-Wi is aimed at hosting providers and gaming clans that need to administer many services (game servers, voice servers, web space, databases) from a single responsive control panel. Installers are provided for Debian, Ubuntu, and CentOS, and the project relies on volunteer contributors."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Multi-service management", "description": "Manage game servers and TeamSpeak 3 voice servers from one panel." },
+        { "title": "Crash recovery and monitoring", "description": "Automatically detects and recovers crashed services." },
+        { "title": "Symlink-based installs", "description": "Shares common game files via symlinks to cut install time and disk usage." },
+        { "title": "Webspace management", "description": "Manage websites served through Apache2, Nginx, and other web servers." },
+        { "title": "Database management", "description": "Provision and manage MySQL/MariaDB databases." },
+        { "title": "Built-in CMS", "description": "Run project pages and news posts without a separate CMS." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Consolidates game server, voice server, web space, and database admin in one panel",
+        "Symlink-based installs save disk space across multiple servers",
+        "Installers available for major Debian/Ubuntu/CentOS releases"
+      ],
+      "cons": [
+        "Relies on a volunteer community for development and support",
+        "Less actively documented and marketed than newer panels",
+        "Requires Linux server administration knowledge to deploy"
+      ],
+      "faqs": [
+        { "question": "Is Easy-Wi free?", "answer": "Yes, it's an open-source, community-driven project with no listed cost." },
+        { "question": "Does it manage more than game servers?", "answer": "Yes, it can also manage TeamSpeak 3, web space, and MySQL/MariaDB databases." },
+        { "question": "What operating systems are supported?", "answer": "Installers are provided for several Debian, Ubuntu, and CentOS releases." }
+      ],
+      "use_cases": [
+        { "title": "Game hosting provider", "description": "Running many game and voice server instances for paying customers.", "audience": "Hosting businesses" },
+        { "title": "Clan infrastructure", "description": "Managing a gaming clan's servers, voice chat, and web presence together.", "audience": "Gaming clans" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Easy-Wi is a free, open-source panel for hosters and clans to manage game servers, TeamSpeak, web space, and databases in one place."
+    }
+  },
+  {
+    "tool_id": "ebf3f796-8c8b-4d07-a8cf-8d19e32204e3",
+    "slug": "gameap",
+    "name": "GameAP",
+    "enrichment": {
+      "short_description": "Free, open-source game server management panel written in Go, with a REST API, remote console, and plugin system.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "GameAP is a high-performance, open-source game server management panel written in Go and distributed as a native binary rather than requiring containers. The project reports it can run on as little as 256 MB of RAM and scale to thousands of servers per node with horizontal scaling.",
+            "It provides install/start/stop/restart controls, a browser-based remote console (no SSH needed), a file manager, and a task scheduler for automating restarts, backups, and updates. Explicitly documented supported games include Minecraft, Counter-Strike 2, Rust, and Grand Theft Auto V."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "GameAP targets operators who want a lightweight panel that scales from a handful of servers to enterprise infrastructure without container overhead. A documented REST API, with code examples in Go, PHP, and Node.js, plus a WebAssembly-based plugin system supporting Go, Rust, C++, and Python, make it a fit for teams that want to automate or extend the panel programmatically."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Lightweight native binary", "description": "Runs without containers and reportedly fits within 256 MB of RAM." },
+        { "title": "Remote console", "description": "Browser-based server console access without needing SSH." },
+        { "title": "Task scheduler", "description": "Automates restarts, backups, and updates on custom intervals." },
+        { "title": "Granular access control", "description": "Per-server permissions for different user roles." },
+        { "title": "Documented REST API", "description": "API with example code in Go, PHP, and Node.js for automation and integrations." },
+        { "title": "WASM plugin system", "description": "Extend the panel using Go, Rust, C++, Python, and other WebAssembly-compatible languages." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Very lightweight; no container requirement",
+        "Scales to thousands of servers per node",
+        "Documented REST API for automation",
+        "Available for Linux, Windows, and Docker installs"
+      ],
+      "cons": [
+        "Explicitly documented game support list is narrower than some competing panels",
+        "WASM plugin ecosystem is still developing",
+        "Native-binary architecture differs from the Docker-first model used by many rival panels"
+      ],
+      "faqs": [
+        { "question": "Is GameAP free?", "answer": "Yes, it's free and open source." },
+        { "question": "Does GameAP have an API?", "answer": "Yes, a documented REST API with code examples in Go, PHP, and Node.js." },
+        { "question": "How much RAM does it need?", "answer": "The project reports it can run on as little as 256 MB of RAM." },
+        { "question": "What games are explicitly supported?", "answer": "Minecraft, Counter-Strike 2, Rust, and Grand Theft Auto V are documented, among others." }
+      ],
+      "use_cases": [
+        { "title": "Large-scale game hosting", "description": "Managing thousands of game server instances across nodes.", "audience": "Hosting providers" },
+        { "title": "Automated server operations", "description": "Using the REST API to script server provisioning and maintenance.", "audience": "DevOps-minded admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api", "windows"],
+      "seo_meta_description": "GameAP is a free, open-source game server management panel written in Go, with a REST API, remote console, and plugin system."
+    }
+  },
+  {
+    "tool_id": "615af08e-8dd3-4316-8837-e9ead4f24aa4",
+    "slug": "gameyfin",
+    "name": "Gameyfin",
+    "enrichment": {
+      "short_description": "Free, self-hosted app that scans and organizes a video game collection into a browsable, downloadable web library.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Gameyfin is a free, open-source, self-hosted video game library manager. It automatically scans configured game folders, downloads metadata and cover art, and presents the result as a browsable library accessible from any device with a web browser.",
+            "Users can download game files directly through the web UI, share the library with other users, and extend functionality through a plugin system. The project explicitly states it does not endorse or support piracy and is meant to be used only with appropriately licensed games."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Gameyfin is aimed at individuals with a personal, often disorganized, collection of game files who want a media-library-style way to browse and access them, similar in spirit to self-hosted media servers for movies or music. It supports Docker and Unraid installation, plus user management and SSO."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Automatic library scanning", "description": "Scans configured folders and detects games automatically." },
+        { "title": "Metadata and cover art", "description": "Downloads descriptions and artwork for scanned games." },
+        { "title": "Web-based library UI", "description": "Browse and access the library from any device with a browser." },
+        { "title": "Direct downloads", "description": "Download game files straight from the web interface." },
+        { "title": "Library sharing", "description": "Share access to the library with other users." },
+        { "title": "Plugin system", "description": "Extend Gameyfin's functionality with plugins." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Automates organizing a messy game file collection",
+        "Accessible from any device via the browser",
+        "Docker and Unraid install options",
+        "Supports SSO and multi-user access"
+      ],
+      "cons": [
+        "Users must supply their own legally owned game files",
+        "Plugin ecosystem is still relatively new",
+        "Primarily download-based rather than cloud streaming"
+      ],
+      "faqs": [
+        { "question": "Is Gameyfin free?", "answer": "Yes, it is free and open-source software." },
+        { "question": "Does Gameyfin support piracy?", "answer": "No, the project explicitly states it should be used only with appropriately licensed games." },
+        { "question": "How is it installed?", "answer": "Via Docker, Unraid, or a standard installation." },
+        { "question": "Can multiple people share the library?", "answer": "Yes, Gameyfin supports library sharing with other users." }
+      ],
+      "use_cases": [
+        { "title": "Personal game collection organization", "description": "Turning a folder of loose game installers into a browsable library.", "audience": "Individual collectors" },
+        { "title": "Household game library", "description": "Sharing access to a family's game collection across devices.", "audience": "Households" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Gameyfin is a free, self-hosted app that scans your game collection and turns it into a browsable, downloadable web library."
+    }
+  },
+  {
+    "tool_id": "b2362d6f-46ea-441d-ab8b-269f62578937",
+    "slug": "lancache",
+    "name": "Lancache",
+    "enrichment": {
+      "short_description": "Open-source caching system that lets LAN party organizers download game and update content once and serve it to many attendees.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "LanCache.NET is an open-source, self-hosted caching solution built for LAN parties and similar local events. It caches game downloads and updates from services like Steam so that content only needs to be pulled from the internet once, then served locally to every attendee, drastically cutting bandwidth use and speeding up downloads.",
+            "The system is deployed as a set of Docker containers: a monolithic all-in-one option, a LanCache-DNS component that redirects traffic to the cache, an SNIProxy for caching HTTPS content, and generic caching support. It's released under the MIT license and maintained by the UKLans project community."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "LanCache is built for LAN party organizers, esports event operators, and network administrators who need many people on one local network to download the same large game files without saturating the internet connection."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Monolithic cache container", "description": "An all-in-one Docker container for quick single-box deployments." },
+        { "title": "LanCache-DNS", "description": "Redirects supported traffic to the local cache server." },
+        { "title": "SNIProxy", "description": "Enables caching of HTTPS-delivered game content." },
+        { "title": "Generic cache support", "description": "Caches additional content types beyond the pre-configured services." },
+        { "title": "Docker Compose deployment", "description": "Quick setup via Docker and Docker Compose." }
+      ],
+      "pros": [
+        "Free and MIT licensed",
+        "Dramatically reduces bandwidth and download time at LAN events",
+        "Fast Docker-based setup",
+        "Modular containers for DNS, HTTPS caching, and generic use"
+      ],
+      "cons": [
+        "Requires DNS redirection at the router level",
+        "Best suited to LAN-scale events, not general web hosting",
+        "Some networking knowledge is needed to configure correctly"
+      ],
+      "faqs": [
+        { "question": "What is LanCache used for?", "answer": "Caching game downloads locally so many people at a LAN event don't each re-download the same files from the internet." },
+        { "question": "Is it free?", "answer": "Yes, it's open source under the MIT license." },
+        { "question": "How is it deployed?", "answer": "Via Docker and Docker Compose." },
+        { "question": "Does it require network changes?", "answer": "Yes, DNS redirection at the router level is required for it to intercept and cache traffic." }
+      ],
+      "use_cases": [
+        { "title": "LAN party bandwidth savings", "description": "Caching game downloads for dozens or hundreds of LAN attendees.", "audience": "LAN party organizers" },
+        { "title": "Esports and gaming event support", "description": "Ensuring fast, reliable game downloads at events with limited internet bandwidth.", "audience": "Event network admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "LanCache is a free, open-source caching system that lets LAN party organizers download games once and serve them to many attendees."
+    }
+  },
+  {
+    "tool_id": "fa9fa04e-02dc-4476-8e37-077443604250",
+    "slug": "linuxgsm",
+    "name": "LinuxGSM",
+    "enrichment": {
+      "short_description": "Command-line tool for deploying and managing Linux dedicated game servers, supporting over 139 game titles via SteamCMD.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "LinuxGSM (Linux Game Server Managers) is a free, open-source command-line tool, written in BASH under the MIT license, for quickly deploying and managing Linux dedicated game servers. It handles installation, configuration, monitoring, automated updates via SteamCMD, crash detection and recovery, backups, and console access.",
+            "The project reports support for 139 game servers and counting, and can send alerts through channels including email, Discord, Slack, and Telegram. It uses tmux to keep server processes running in the background and supports cron-based scheduling for routine maintenance tasks."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "LinuxGSM is aimed at game server administrators who are comfortable with the Linux command line and want a scriptable, no-frills way to manage servers without running a full web panel. Several third-party web panels are built on top of it for admins who want a GUI."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "SteamCMD integration", "description": "Automates installing and updating SteamCMD-based game servers." },
+        { "title": "Crash detection and recovery", "description": "Detects server crashes and can automatically restart them." },
+        { "title": "Scheduled backups", "description": "Automates backups on custom intervals via cron." },
+        { "title": "Multi-channel alerting", "description": "Sends notifications via email, Discord, Slack, Telegram, and more." },
+        { "title": "Console access", "description": "Attach to a running server's console via tmux." },
+        { "title": "Broad game support", "description": "Supports 139+ game servers, including many built on the Source and Source 2 engines." }
+      ],
+      "pros": [
+        "Free and MIT licensed",
+        "Supports 139+ dedicated game server titles",
+        "Lightweight CLI with no web panel overhead",
+        "Strong automation for updates, backups, and crash recovery",
+        "Works across major Linux distributions"
+      ],
+      "cons": [
+        "Command-line only; no built-in web UI",
+        "Requires comfort with Linux and BASH",
+        "No native Windows server support"
+      ],
+      "faqs": [
+        { "question": "Is LinuxGSM free?", "answer": "Yes, it's open source under the MIT license." },
+        { "question": "Does it have a graphical interface?", "answer": "No, LinuxGSM is a CLI tool, though third-party panels exist that wrap it with a GUI." },
+        { "question": "How many games does it support?", "answer": "The project reports 139 game servers and counting." },
+        { "question": "How does it update game servers?", "answer": "It integrates with SteamCMD for Steam-based dedicated servers." }
+      ],
+      "use_cases": [
+        { "title": "Scriptable game server management", "description": "Managing dedicated servers on a VPS or bare-metal Linux box via scripts and cron.", "audience": "Linux-savvy server admins" },
+        { "title": "Community server hosting", "description": "Running community game servers with automated crash recovery and alerts.", "audience": "Community/clan admins" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "LinuxGSM is a free, open-source command-line tool for deploying and managing Linux dedicated game servers, supporting 139+ titles."
+    }
+  },
+  {
+    "tool_id": "39827ac6-8122-4689-9464-0147ac338943",
+    "slug": "minus-games",
+    "name": "Minus Games",
+    "enrichment": {
+      "short_description": "Small open-source suite for self-hosting a personal game and save-file sync server between devices like a Steam Deck and desktop PC.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Minus Games is an open-source suite for distributing games from a self-hosted server to client devices, with the ability to sync save files as well as game data. It was created so its author could keep games that aren't managed by Steam or another launcher, and their save data, in sync between a Steam Deck and a desktop PC.",
+            "The suite is made up of five components: a Server, Client, GUI, Finder, and Updater. Admins upload games to a server folder and trigger a scan, after which clients can browse, download, and launch the titles. The Finder can detect the engine a game uses, such as Unity, to help automatically locate its save data location."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Minus Games suits individuals managing a personal library of games outside mainstream launchers who want their play sessions and save progress to follow them between a couple of personal devices. It is a small, personal-scale project rather than a large hosting platform, so it's best suited to hobbyist, single-user or small-household setups."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Game distribution server", "description": "Upload games to a server and have clients download and launch them." },
+        { "title": "Save file sync", "description": "Syncs save data alongside game files between client devices." },
+        { "title": "Automatic save detection", "description": "Detects game engines like Unity to help locate save file locations." },
+        { "title": "Client GUI", "description": "A graphical client for browsing and launching available games." },
+        { "title": "Finder and Updater components", "description": "Separate services handle library scanning and keeping clients up to date." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Syncs save files as well as game installs, not just downloads",
+        "Useful for games not managed by Steam or another launcher",
+        "Lightweight, purpose-built for personal multi-device setups"
+      ],
+      "cons": [
+        "Built primarily around the creator's own use case, so the community and support are small",
+        "Fewer platforms and games verified for compatibility than larger projects",
+        "Documentation is more limited than established game server tools"
+      ],
+      "faqs": [
+        { "question": "What does Minus Games do?", "answer": "It distributes games and syncs their save files between a self-hosted server and client devices." },
+        { "question": "Is it free?", "answer": "Yes, it's an open-source project available on GitHub." },
+        { "question": "Does it require Steam?", "answer": "No, it was built specifically for games not managed by Steam or other launchers." },
+        { "question": "What components make up the suite?", "answer": "A Server, Client, GUI, Finder, and Updater." }
+      ],
+      "use_cases": [
+        { "title": "Multi-device save sync", "description": "Keeping game saves in sync between devices such as a Steam Deck and a desktop PC.", "audience": "Individual gamers" },
+        { "title": "Personal game distribution", "description": "Self-hosting a small library of non-launcher-managed games for personal use.", "audience": "Hobbyist self-hosters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Minus Games is a free, open-source suite for self-hosting a personal game library with save-file sync between devices."
+    }
+  },
+  {
+    "tool_id": "55f67bf7-283b-46a3-a504-fefc5445313f",
+    "slug": "pelican-panel",
+    "name": "Pelican Panel",
+    "enrichment": {
+      "short_description": "Free, open-source game server control panel and community successor to Pterodactyl, running servers in isolated Docker containers.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2024,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Pelican Panel is a free, open-source game server control panel that emerged as a community fork of Pterodactyl Panel, sharing much of its codebase and ecosystem while operating under independent governance. It pairs the web panel with Wings, a daemon that runs each game server in an isolated Docker container.",
+            "The panel offers one-click installs for a wide range of titles, including Minecraft, Terraria, Palworld, Valheim, Enshrouded, and Factorio, plus security features like SSL, two-factor authentication, and AES-256 encryption."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Pelican targets the same audience as Pterodactyl: self-hosters running servers for friends, and hosting providers who need a scalable, Docker-isolated multi-game panel. Because it shares Pterodactyl's codebase, it can draw on much of that project's existing third-party eggs and community resources."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Docker-isolated servers", "description": "Each game server runs in its own container via the Wings daemon." },
+        { "title": "One-click game installs", "description": "Supports Minecraft, Terraria, Palworld, Valheim, Enshrouded, Factorio, and more." },
+        { "title": "Security features", "description": "Includes SSL, two-factor authentication, and AES-256 encryption." },
+        { "title": "Automatic updates", "description": "The panel can keep itself updated." },
+        { "title": "Client dashboard", "description": "A client area and panel settings screen for managing servers and accounts." },
+        { "title": "Pterodactyl codebase heritage", "description": "Built on Pterodactyl's architecture, giving access to a large existing ecosystem of eggs and resources." }
+      ],
+      "pros": [
+        "100% free to use, including for commercial hosting",
+        "Inherits Pterodactyl's mature ecosystem and third-party eggs",
+        "Strong built-in security (2FA, SSL, AES-256)",
+        "Actively developed as an independent community project",
+        "Docker-based isolation for each server"
+      ],
+      "cons": [
+        "Younger project than Pterodactyl, with a shorter independent track record",
+        "Migrating from Pterodactyl requires care and planning",
+        "Documentation and ecosystem are still consolidating around the new project"
+      ],
+      "faqs": [
+        { "question": "Is Pelican related to Pterodactyl?", "answer": "Yes, it's a community fork/successor that shares much of Pterodactyl's codebase and ecosystem under independent governance." },
+        { "question": "Is Pelican Panel free?", "answer": "Yes, it's 100% free for personal and commercial use." },
+        { "question": "What games can it host?", "answer": "Many, including Minecraft, Palworld, Valheim, Terraria, Enshrouded, and Factorio, via Docker-based eggs." },
+        { "question": "How does it isolate servers?", "answer": "Each server runs in its own Docker container managed by the Wings daemon." }
+      ],
+      "use_cases": [
+        { "title": "Friend group hosting", "description": "Running Minecraft, Valheim, or Palworld servers for a small group of friends.", "audience": "Casual gamers" },
+        { "title": "Commercial game hosting", "description": "Providers offering managed, multi-game server hosting to customers.", "audience": "Hosting businesses" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Pelican Panel is a free, open-source game server control panel and Pterodactyl successor, running servers in isolated Docker containers."
+    }
+  }
+]

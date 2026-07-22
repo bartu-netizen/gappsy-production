@@ -1,0 +1,540 @@
+[
+{
+"tool_id": "9d2b5179-c120-4b5a-bf0a-35b5221bcf17",
+"slug": "nestia",
+"name": "Nestia",
+"enrichment": {
+"short_description": "Nestia is an open-source TypeScript toolkit for NestJS that reads controller code and automatically generates type-safe client SDKs, OpenAPI documents, and mock API simulators.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": 2022,
+"company_size": null,
+"headquarters": "Seoul, South Korea",
+"languages": ["English", "Korean"],
+"seo_title": "Nestia Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Nestia review 2026: how this open-source NestJS SDK generator creates type-safe clients, Swagger docs and mock APIs automatically. Features and pricing inside.",
+"llm_readable_summary": "Nestia is an open-source TypeScript development toolkit built specifically for the NestJS backend framework. It was created by Jeongho Nam, a developer who goes by the handle samchon and is based in Seoul, South Korea. Nestia is not a venture-backed company but an independently maintained open-source project distributed as a set of npm packages, principally nestia, at nestia/core, and at nestia/sdk, released under an open-source license and sustained partly through GitHub Sponsors. Its core function is to analyze the TypeScript types already present in a NestJS controller and automatically generate a fully type-safe client SDK, comparable in spirit to tRPC but without requiring developers to abandon standard REST controller patterns. Alongside SDK generation, at nestia/sdk produces accurate OpenAPI and Swagger documentation directly from TypeScript types, removing the need to hand-maintain decorators for documentation purposes. A distinguishing feature is its embedded mockup simulator, which uses the companion project typia (also created by samchon, with roughly 5,800 GitHub stars) to generate realistic random data conforming to a project's DTO types, letting frontend engineers build against a working fake backend before real endpoints exist. On the runtime side, at nestia/core replaces class-validator and class-transformer with typia-powered validation and serialization, which the project documents as dramatically faster: benchmarks cited by the maintainer claim up to 20,000 times faster runtime validation and roughly 200 times faster JSON serialization than the conventional NestJS defaults. Nestia additionally ships an automatic end-to-end test function generator and a Swagger-to-NestJS migration tool that can scaffold NestJS controllers and DTOs from an existing OpenAPI document, and it integrates with typia to produce AI function-calling schemas for building LLM agent backends. Nestia itself has around 2,200 GitHub stars. Because it is free and open source, there is no formal pricing tier; teams adopt it by installing the npm packages into an existing or new NestJS project. Its primary audience is full-stack TypeScript teams who want end-to-end type safety between a NestJS backend and a TypeScript frontend without maintaining a hand-written API client, as well as backend engineers who want OpenAPI documentation that can never drift out of sync with the actual controller code. Competitors and adjacent tools include tRPC, ts-rest, Zodios, and the standard NestJS Swagger module plus OpenAPI Generator, though Nestia differentiates itself by working directly from conventional REST-style NestJS controllers rather than requiring a bespoke router pattern, and by bundling documentation generation, SDK generation, mocking, and high-performance validation into one coherent toolchain maintained by a single prolific open-source author rather than a corporate vendor.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Nestia is an open-source TypeScript toolkit that plugs into the NestJS backend framework and turns existing controller code into a fully type-safe client SDK, an accurate OpenAPI or Swagger document, and a working mock server, all generated automatically from the TypeScript types already in the project.", "Created and maintained by Jeongho Nam (known online as samchon), a Seoul-based developer, Nestia is distributed as a family of npm packages rather than sold as a commercial product. It is closely paired with typia, the same author's high-performance runtime validation library, which Nestia uses under the hood for both validation and mock data generation."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Nestia's flagship capability is generating a strongly typed client SDK straight from NestJS controllers, giving frontend and backend TypeScript code a shared, always-current contract without hand-written API clients. It pairs this with automatic Swagger and OpenAPI document generation, an SDK-embedded mock simulator for frontend development before the backend is finished, and an automatic end-to-end test generator.", "On the performance side, at nestia/core swaps out class-validator and class-transformer for typia-powered validation and serialization, which the project reports as vastly faster in benchmarks. Nestia also includes a migration tool that can convert existing Swagger documents into NestJS controller scaffolding, easing adoption for teams migrating from other frameworks."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Nestia is completely free and open source with no paid tiers, usage limits, or license fees; teams install the npm packages directly into their NestJS project. The project accepts voluntary financial support through GitHub Sponsors, but this does not gate access to any feature.", "Because there is no commercial vendor behind Nestia, support comes from the open-source community, GitHub issues, and the maintainer's own documentation and blog posts rather than a dedicated support contract or SLA."]}
+],
+"features": [
+{"title": "Automatic SDK Generation", "description": "Analyzes NestJS controllers and TypeScript types to generate a fully type-safe client SDK with one function per API route."},
+{"title": "Swagger and OpenAPI Generation", "description": "Produces accurate OpenAPI documents directly from TypeScript types without manual decorators or annotations."},
+{"title": "Mockup Simulator", "description": "Embeds a mock server in the generated SDK that returns realistic random data validated against DTO types, letting frontend teams build before the backend is ready."},
+{"title": "High-Speed Runtime Validation", "description": "at nestia/core replaces class-validator with typia-powered validation, claimed to be up to 20,000 times faster."},
+{"title": "Fast JSON Serialization", "description": "Uses typia's compile-time code generation for JSON serialization reported to be around 200 times faster than class-transformer."},
+{"title": "Automatic E2E Test Generation", "description": "Generates end-to-end test functions automatically from controller definitions."},
+{"title": "Swagger-to-NestJS Migration", "description": "Includes a migration tool that converts existing Swagger and OpenAPI documents into NestJS controller and DTO scaffolding."},
+{"title": "AI Function-Calling Schemas", "description": "Integrates with typia to generate LLM function-calling schemas from TypeScript types for building AI agent backends."}
+],
+"pros": [
+"Eliminates manual SDK and client maintenance by generating it directly from backend source code",
+"Significant runtime performance gains over class-validator and class-transformer",
+"Free and open source with an active GitHub community",
+"Mock simulator lets frontend teams start work before backend endpoints are finished",
+"Strong TypeScript type safety end-to-end between client and server"
+],
+"cons": [
+"Tied specifically to the NestJS framework, not usable with other Node backends",
+"Smaller community and less enterprise support than mainstream API tooling like OpenAPI Generator",
+"Learning curve for teams unfamiliar with TypeScript's advanced type system",
+"Relies on strict TypeScript typing conventions that can require refactoring older codebases",
+"No dedicated commercial support plan, since it is maintained largely by one core developer plus contributors"
+],
+"faqs": [
+{"question": "Is Nestia free to use?", "answer": "Yes, Nestia is fully open source and free to use; there are no paid tiers."},
+{"question": "What frameworks does Nestia support?", "answer": "Nestia is purpose-built for NestJS and works alongside its Express or Fastify adapters."},
+{"question": "How is Nestia different from tRPC?", "answer": "Nestia generates its SDK from existing NestJS REST controllers and OpenAPI conventions, while tRPC requires building procedures in a tRPC-specific router; Nestia can also emit standard Swagger documents."},
+{"question": "Who maintains Nestia?", "answer": "Nestia is created and maintained by Jeongho Nam (samchon), a developer based in Seoul, South Korea, alongside open-source contributors."},
+{"question": "Does Nestia replace class-validator?", "answer": "Yes, at nestia/core replaces class-validator and class-transformer with typia-based validation and serialization for significant performance gains."},
+{"question": "Can Nestia generate mock APIs?", "answer": "Yes, its SDK-embedded mockup simulator returns realistic random data that conforms to your DTO types, so frontend teams can develop against a fake backend."},
+{"question": "Does Nestia support migrating from existing Swagger docs?", "answer": "Yes, Nestia includes a migration tool that can convert Swagger and OpenAPI documents into NestJS controllers and DTOs."}
+],
+"use_cases": [
+{"title": "Full-stack TypeScript teams", "description": "Teams building both a NestJS backend and a TypeScript frontend can auto-generate a type-safe client instead of hand-writing API calls.", "audience": "Full-stack development teams"},
+{"title": "API-first backend development", "description": "Backend teams that need accurate, always-current OpenAPI documentation without manually maintaining decorators.", "audience": "Backend engineers"},
+{"title": "Frontend development before backend completion", "description": "Using the mock simulator, frontend developers can build UI against realistic fake data while backend endpoints are still being implemented.", "audience": "Frontend engineers"}
+],
+"pricing_plans": [
+{"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Unlimited use under an open-source license", "SDK, Swagger, and mock generation", "Community support via GitHub", "Optional GitHub Sponsors support tiers"]}
+],
+"tags": ["nestjs", "typescript", "sdk-generator", "openapi", "swagger", "api-development", "developer-tools", "open-source"],
+"publish": true
+}
+},
+{
+"tool_id": "aec1c6d5-ecc8-46ac-9da2-4a389876a94b",
+"slug": "netbox",
+"name": "NetBox",
+"enrichment": {
+"short_description": "NetBox is an open-source network source-of-truth platform that combines IP address management (IPAM) and data center infrastructure management (DCIM) to power network automation.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": 2016,
+"company_size": "11-50 employees (NetBox Labs)",
+"headquarters": "New York, New York, United States (NetBox Labs)",
+"languages": ["English"],
+"seo_title": "NetBox Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "NetBox review 2026: the free, open-source IPAM and DCIM source of truth for network automation. Compare NetBox Community, Cloud and Enterprise pricing and features.",
+"llm_readable_summary": "NetBox is an open-source network source-of-truth platform that unifies IP address management (IPAM) and data center infrastructure management (DCIM) into a single, extensible data model. It was originally created in 2016 by Jeremy Stretch while he worked at DigitalOcean, who built it to replace a patchwork of spreadsheets and legacy tools used to document DigitalOcean's own network. NetBox is built on Python and the Django web framework with a PostgreSQL database, and it was released as free, open-source software under the Apache 2.0 license via the netbox-community GitHub organization, where it has grown into one of the most widely adopted network documentation tools, used by thousands of organizations to model devices, racks, cabling, circuits, IP prefixes, VLANs, and VRFs. In 2023, a dedicated commercial company called NetBox Labs was spun out of NS1 (the DNS and traffic management company that had been acquired by IBM), co-founded by former NS1 CEO Kris Beevers and NetBox creator Jeremy Stretch, to steward the open-source project and sell commercial offerings around it. NetBox Labs raised 20 million dollars in Series A funding in April 2023, led by Flybridge Capital with participation from GGV Capital, Grafana Labs CEO Raj Dutt, Mango Capital, Salesforce Ventures, Two Sigma Ventures, IBM, Founder Collective, and Entree Capital, and it operates out of New York with roughly 11 to 50 employees. NetBox's product line spans three tiers: NetBox Community, the free, self-hosted, open-source core; NetBox Cloud, a fully managed SaaS version handling upgrades, backups, and enterprise security controls; and NetBox Enterprise, a self-hosted commercial edition with vendor support and SLAs. Core features include a highly extensible data model that supports custom fields, tags, and custom object types, a large community plugin ecosystem covering things like wireless and circuits, REST and GraphQL APIs for infrastructure-as-code and automation workflows built with tools like Ansible and Terraform, and built-in change logging and journaling for auditing infrastructure state over time. NetBox's target audience is network engineers, NetOps and platform teams, data center operators, and managed service providers who need a canonical, API-driven inventory of their physical and logical network state to drive automation pipelines. Pricing for the open-source Community edition is free; NetBox Cloud and NetBox Enterprise are both sold on custom, quote-based pricing requiring a sales conversation with NetBox Labs. Competitors and adjacent tools in the network source-of-truth and IPAM/DCIM space include Device42, Infoblox, phpIPAM, Racktables, SolarWinds IPAM, and general-purpose CMDB platforms, though NetBox differentiates itself through its open-source-first model, deep API-driven extensibility, and status as the de facto standard data model referenced throughout the network automation community, particularly among users of tools like Nornir, NAPALM, and Ansible network modules.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["NetBox is an open-source platform that serves as a network source of truth, combining IP address management (IPAM) and data center infrastructure management (DCIM) into one structured, API-driven data model. It was created in 2016 by Jeremy Stretch while working at DigitalOcean and released as free, open-source software on GitHub.", "Since 2023, a dedicated company, NetBox Labs, has stewarded the open-source project and sells commercial NetBox Cloud and NetBox Enterprise offerings on top of the free core. NetBox Labs was co-founded by Stretch and former NS1 CEO Kris Beevers after spinning out of NS1 following its acquisition by IBM, and it raised a 20 million dollar Series A round in 2023."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["NetBox's data model covers IP prefixes, addresses, VRFs and VLANs for IPAM, and racks, devices, cabling, power, and circuits for DCIM, all searchable and filterable through a Django-based web UI. The model is highly extensible through custom fields, tags, and custom object types, and it can be extended further through a large community plugin ecosystem.", "REST and GraphQL APIs give NetBox its central role in network automation and infrastructure-as-code pipelines, letting tools like Ansible, Terraform, and Nornir treat NetBox as the canonical inventory. Built-in change logging and journaling track the history of every object for auditing and troubleshooting."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["NetBox Community, the open-source core, is completely free to self-host under the Apache 2.0 license, with support coming from the community and documentation. Organizations that want NetBox without operating the underlying infrastructure can choose NetBox Cloud, a managed SaaS offering from NetBox Labs.", "Both NetBox Cloud and the self-hosted commercial edition, NetBox Enterprise, are sold on custom, quote-based pricing that requires contacting NetBox Labs sales, since costs scale with the number of devices, users, and support requirements."]}
+],
+"features": [
+{"title": "IP Address Management (IPAM)", "description": "Track IP prefixes, addresses, VRFs, VLANs, and ranges with hierarchical organization."},
+{"title": "Data Center Infrastructure Management (DCIM)", "description": "Model racks, devices, cabling, power, and physical topology."},
+{"title": "Extensible Data Model", "description": "Custom fields, tags, and custom object types let teams adapt NetBox's schema to unique environments."},
+{"title": "REST and GraphQL APIs", "description": "Full programmatic access for automation, integrations, and infrastructure-as-code workflows."},
+{"title": "Plugin Ecosystem", "description": "A large community plugin catalog extends NetBox with circuits, wireless, and other domain-specific modules."},
+{"title": "Change Logging and Journaling", "description": "Tracks historical changes to objects for auditing network state over time."},
+{"title": "NetBox Cloud and Enterprise", "description": "Commercial managed and self-hosted offerings from NetBox Labs add SSO, backups, and support SLAs on top of the open-source core."},
+{"title": "Django-Based Web UI", "description": "A searchable, filterable web interface built on Django, familiar to Python-oriented network engineers."}
+],
+"pros": [
+"Free and open source with a very large, active community",
+"De facto standard source-of-truth tool for network automation pipelines",
+"Highly extensible via custom fields, tags, and plugins",
+"Backed by a dedicated company, NetBox Labs, for commercial support and hosting",
+"Strong REST and GraphQL API support for infrastructure-as-code integrations"
+],
+"cons": [
+"Self-hosting requires managing a Django, PostgreSQL, and Redis stack and ongoing maintenance",
+"Steeper learning curve for teams without networking or Python and Django background",
+"Commercial NetBox Cloud and Enterprise pricing is custom and not published",
+"Some advanced features and support are gated behind the paid NetBox Labs offerings",
+"UI and performance can lag on very large-scale deployments without tuning"
+],
+"faqs": [
+{"question": "Is NetBox free?", "answer": "Yes, the core NetBox platform is free and open source under the Apache 2.0 license; NetBox Labs also sells commercial NetBox Cloud and NetBox Enterprise offerings."},
+{"question": "Who created NetBox?", "answer": "NetBox was created by Jeremy Stretch in 2016 while he worked at DigitalOcean, to serve as a network source of truth."},
+{"question": "What is NetBox Labs?", "answer": "NetBox Labs is the company founded in 2023 by Kris Beevers and Jeremy Stretch, spun out of NS1 after its acquisition by IBM, to commercialize and steward the NetBox open-source project."},
+{"question": "What is the difference between NetBox Community, Cloud and Enterprise?", "answer": "NetBox Community is the free self-hosted open-source version; NetBox Cloud is a managed SaaS offering; NetBox Enterprise is a self-hosted commercial edition with added support and features."},
+{"question": "What technology is NetBox built on?", "answer": "NetBox is built with Python and the Django web framework, using PostgreSQL as its database."},
+{"question": "Does NetBox support automation workflows?", "answer": "Yes, NetBox exposes REST and GraphQL APIs used widely in network automation and infrastructure-as-code pipelines alongside tools like Ansible and Terraform."},
+{"question": "Can NetBox be extended with plugins?", "answer": "Yes, NetBox has a large community plugin ecosystem that adds functionality such as circuit management, wireless, and topology visualization."}
+],
+"use_cases": [
+{"title": "Network source of truth for automation", "description": "Network engineering teams use NetBox as the authoritative inventory feeding automation tools like Ansible, Terraform, and Nornir.", "audience": "Network engineers and NetOps teams"},
+{"title": "Data center inventory and IPAM", "description": "Enterprises and service providers track racks, devices, cabling, and IP address allocations across data centers.", "audience": "Data center and infrastructure teams"},
+{"title": "Managed network documentation via NetBox Cloud", "description": "Organizations that want NetBox's data model without operating the infrastructure themselves adopt the hosted NetBox Cloud SaaS.", "audience": "IT and network operations teams"}
+],
+"pricing_plans": [
+{"plan_name": "NetBox Community", "price": "Free", "billing_cycle": "N/A", "features": ["Full IPAM and DCIM data model", "REST and GraphQL APIs", "Plugin ecosystem", "Self-hosted, community support"]},
+{"plan_name": "NetBox Cloud", "price": "Custom", "billing_cycle": "Contact sales", "features": ["Fully managed SaaS hosting", "Automatic upgrades and backups", "SSO and enterprise security controls", "Vendor support SLA"]},
+{"plan_name": "NetBox Enterprise", "price": "Custom", "billing_cycle": "Contact sales", "features": ["Self-hosted commercial edition", "Enterprise support and SLAs", "Advanced scaling and security features"]}
+],
+"tags": ["network-management", "ipam", "dcim", "open-source", "network-automation", "infrastructure-as-code", "self-hosted"],
+"publish": true
+}
+},
+{
+"tool_id": "b6486af7-2d48-49bb-8a54-b53aaf072df4",
+"slug": "netdata",
+"name": "Netdata",
+"enrichment": {
+"short_description": "Netdata is an open-source, real-time infrastructure monitoring platform that collects per-second metrics from servers, containers, and cloud services with built-in machine learning anomaly detection.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2016,
+"company_size": "51-200 employees",
+"headquarters": "San Francisco, California, United States",
+"languages": ["English"],
+"seo_title": "Netdata Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Netdata review 2026: real-time, per-second infrastructure monitoring with ML anomaly detection. Compare the free open-source Agent to Netdata Cloud pricing.",
+"llm_readable_summary": "Netdata is an open-source, real-time infrastructure monitoring platform created by Costa Tsaousis, who built the original monitoring agent after becoming frustrated with the limitations of existing monitoring tools. The company behind Netdata is headquartered in San Francisco, California, and has raised roughly 34.9 million dollars in total funding across multiple rounds, including a 17 million dollar Series A round led by Bain Capital Ventures announced in September 2019 and a later extension led by Bessemer Venture Partners in September 2020 that brought the Series A total to 31 million dollars. Netdata employs an estimated 51 to 200 people. The product architecture centers on a lightweight, open-source Netdata Agent that can be installed on any server, container, or edge device to collect and visualize thousands of system and application metrics per second with near-zero configuration, thanks to auto-detection of running services and a library of more than 800 pre-built integrations spanning operating systems, databases, web servers, containers, and cloud platforms. A key differentiator is Netdata's per-second granularity, far finer than the 30-to-60-second intervals typical of many monitoring tools, paired with unsupervised machine learning models trained on each individual metric's own history to automatically flag anomalies without manually configured thresholds. Netdata Cloud is the company's commercial SaaS layer that aggregates dashboards, alerting, and centralized visibility across many distributed Netdata Agents, and it also offers log management and AI-assisted troubleshooting. Netdata's pricing follows a freemium model: the open-source Agent itself is always free to self-host with no node limits, while Netdata Cloud offers a free Community plan capped at 5 connected nodes and 1 custom dashboard for non-commercial use; a Homelab plan at 90 dollars per year for unlimited nodes under a fair-use policy aimed at personal, non-commercial use by home users and students; a Business plan priced at 4.50 dollars per node per month when billed annually (6 dollars per node per month billed monthly) that unlocks unlimited metrics, logs, users, and retention plus 10 free AI troubleshooting sessions per month; and an Enterprise On-Premise plan with custom pricing starting at 200 node licenses for organizations that need to run Netdata Cloud's centralized layer inside their own infrastructure. Netdata's target audience spans DevOps and SRE teams monitoring production infrastructure, homelab enthusiasts and students running the low-cost Homelab tier, and larger enterprises adopting Business or Enterprise On-Premise plans for fleet-wide observability. Its primary competitors in the infrastructure monitoring and observability space include Datadog, Prometheus with Grafana, Zabbix, Dynatrace, and New Relic, with Netdata differentiating itself through its always-free, fully open-source core agent, extremely low resource overhead, per-second metric granularity, and out-of-the-box anomaly detection that does not require manual threshold configuration.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Netdata is an open-source infrastructure monitoring platform that collects and visualizes system, application, and container metrics in real time, at per-second granularity, with essentially zero manual configuration. It was created by Costa Tsaousis and is headquartered in San Francisco, California.", "The core Netdata Agent is free and open source and can run entirely standalone on a server or edge device. Netdata Cloud is the company's commercial layer on top of that agent, centralizing dashboards, alerting, log management, and AI-assisted troubleshooting across fleets of monitored systems."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Netdata auto-detects running services and applications on a host and immediately begins collecting relevant metrics, backed by a library of more than 800 pre-built integrations for operating systems, databases, containers, web servers, and cloud platforms. Its per-second collection interval gives much finer visibility than the 30-to-60-second intervals common in other monitoring tools.", "Unsupervised machine learning models trained on each metric's own history automatically flag anomalies without manual threshold configuration, and Netdata Cloud adds centralized dashboards, log management, and AI-assisted troubleshooting sessions across an organization's entire monitored fleet."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Netdata follows a freemium model. The open-source Agent is always free to self-host with no node limits, and Netdata Cloud's Community plan is free for up to 5 connected nodes and 1 custom dashboard under non-commercial use.", "Paid Netdata Cloud tiers start with Homelab at 90 dollars per year for unlimited personal, non-commercial nodes, followed by Business at 4.50 dollars per node per month billed annually (6 dollars per node per month billed monthly) with unlimited metrics, logs, users, and retention, and Enterprise On-Premise with custom pricing starting at 200 node licenses."]}
+],
+"features": [
+{"title": "Real-Time Per-Second Monitoring", "description": "Collects and visualizes thousands of system, application, and container metrics per second with essentially zero configuration."},
+{"title": "800+ Integrations", "description": "Out-of-the-box collectors for operating systems, databases, containers, web servers, cloud services, and more."},
+{"title": "Machine Learning Anomaly Detection", "description": "Unsupervised ML models trained on each metric's own history flag anomalies automatically without manual thresholds."},
+{"title": "Netdata Cloud", "description": "A centralized SaaS layer that aggregates dashboards, alerts, and metrics from distributed Netdata Agents across infrastructure."},
+{"title": "Log Management", "description": "Centralizes and correlates logs alongside metrics for troubleshooting."},
+{"title": "AI-Assisted Troubleshooting", "description": "AI-powered root-cause analysis and troubleshooting sessions included in paid Business plans."},
+{"title": "Open-Source Agent", "description": "A free, self-hosted collector and dashboard that can run standalone without any cloud dependency."},
+{"title": "Auto-Detection and Zero Configuration", "description": "Automatically discovers running services and applications on a host and begins collecting relevant metrics immediately."}
+],
+"pros": [
+"The core Netdata Agent is free, open source, and can be fully self-hosted",
+"Per-second granularity gives much finer visibility than typical 30 to 60 second interval monitoring tools",
+"Very large library of pre-built integrations reduces setup time",
+"Machine-learning anomaly detection works out of the box without manual threshold tuning",
+"Low resource footprint designed to run alongside monitored workloads"
+],
+"cons": [
+"Centralized Netdata Cloud features such as unlimited nodes and AI troubleshooting require a paid plan",
+"Per-node pricing on the Business plan can become costly for very large fleets",
+"Advanced enterprise features like on-premise Cloud require a custom sales conversation",
+"Long metric retention and enterprise access controls are gated behind paid tiers",
+"Less suited to deep distributed tracing and APM use cases than specialized APM vendors"
+],
+"faqs": [
+{"question": "Is Netdata free?", "answer": "Yes, the core Netdata open-source Agent is free to self-host, and Netdata Cloud offers a free Community plan for up to 5 connected nodes."},
+{"question": "Who founded Netdata?", "answer": "Netdata was created by Costa Tsaousis, who built the original monitoring agent out of frustration with existing monitoring tools."},
+{"question": "How much does Netdata Cloud cost?", "answer": "Paid plans start with Homelab at 90 dollars per year for unlimited personal, non-commercial nodes, and Business at 4.50 dollars per node per month billed annually (6 dollars per node per month billed monthly)."},
+{"question": "What is Netdata's anomaly detection?", "answer": "Netdata trains lightweight unsupervised machine learning models on each individual metric's history to automatically flag unusual behavior without manual thresholds."},
+{"question": "How much funding has Netdata raised?", "answer": "Netdata has raised roughly 34.9 million dollars in total funding, including a 17 million dollar Series A round led by Bain Capital Ventures and a later extension led by Bessemer Venture Partners."},
+{"question": "Where is Netdata headquartered?", "answer": "Netdata is headquartered in San Francisco, California."},
+{"question": "Can Netdata monitor containers and cloud infrastructure?", "answer": "Yes, Netdata monitors servers, containers, Kubernetes, networks, and cloud infrastructure in real time."}
+],
+"use_cases": [
+{"title": "Real-time infrastructure monitoring", "description": "DevOps and SRE teams monitor servers, containers, and applications with per-second granularity to catch issues before they escalate.", "audience": "DevOps and SRE teams"},
+{"title": "Homelab and personal server monitoring", "description": "Hobbyists and students use the free or low-cost Homelab plan to monitor personal infrastructure.", "audience": "Homelab enthusiasts and students"},
+{"title": "Enterprise observability at scale", "description": "Larger organizations use Business or Enterprise On-Premise plans for unlimited retention, AI troubleshooting, and centralized dashboards across large fleets.", "audience": "Enterprise IT operations teams"}
+],
+"pricing_plans": [
+{"plan_name": "Community", "price": "Free", "billing_cycle": "Forever", "features": ["Up to 5 connected nodes", "1 custom dashboard", "Non-commercial use", "Open-source Agent included"]},
+{"plan_name": "Homelab", "price": "$90/year", "billing_cycle": "Annual", "features": ["Unlimited nodes for personal non-commercial use", "Unlimited dashboards", "Full notification integrations"]},
+{"plan_name": "Business", "price": "$4.50/node/month (annual) or $6/node/month (monthly)", "billing_cycle": "Monthly or annual", "features": ["Unlimited metrics, logs, users, and retention", "10 free AI troubleshooting sessions per month", "Centralized alerting and dashboards"]},
+{"plan_name": "Enterprise On-Premise", "price": "Custom", "billing_cycle": "Annual contract", "features": ["Starts at 200 node licenses", "On-premise deployment of Netdata Cloud", "Dedicated support"]}
+],
+"tags": ["infrastructure-monitoring", "observability", "open-source", "real-time-monitoring", "devops", "anomaly-detection"],
+"publish": true
+}
+},
+{
+"tool_id": "aade9c0c-6fb6-412a-9dc0-66e5e626d8a8",
+"slug": "nethunt-crm",
+"name": "NetHunt CRM",
+"enrichment": {
+"short_description": "NetHunt CRM is a sales CRM that integrates natively into Gmail and Google Workspace, letting teams manage leads, pipelines, and communication without leaving their inbox.",
+"pricing_model": "Subscription",
+"starting_price": "$24/user/month (billed annually)",
+"founded_year": 2015,
+"company_size": "~15 employees",
+"headquarters": "Kyiv, Ukraine",
+"languages": ["English"],
+"seo_title": "NetHunt CRM Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "NetHunt CRM review 2026: a Gmail-native sales CRM for pipelines, email tracking, and automation. Compare Basic, Business, and Business Plus pricing plans.",
+"llm_readable_summary": "NetHunt CRM is a sales customer relationship management platform that embeds directly inside Gmail and the broader Google Workspace ecosystem, so sales teams can manage contacts, deals, pipelines, and communication without switching away from their inbox. The company was founded in 2015 and started in Kyiv, Ukraine, where it remains headquartered, and it is a member of the IT Ukraine Association trade group. NetHunt is a relatively small, lean company with approximately 15 employees distributed across Europe and North America as of the mid-2020s, reflecting a bootstrapped or lightly funded growth path rather than a large venture-backed scale-up. The product's defining architectural choice is that it does not operate as a separate application users must switch to; instead, it installs as a sidebar and set of extensions inside Gmail, turning existing email threads, contacts, and folders into structured CRM records, deals, and pipeline stages. Core functionality includes customizable visual sales pipelines for tracking deals from lead to close, email open and click tracking, reusable email templates, bulk email campaign sending directly from Gmail, a LinkedIn browser extension that captures profile data into CRM records, workflow automation for repetitive tasks like lead assignment and follow-up reminders, shared team folders and records for collaboration, flexible custom fields, and reporting dashboards for sales performance and pipeline velocity. NetHunt offers a 14-day free trial with no restriction on the number of invited users. Its pricing is structured across four tiers billed per user per month: Basic at 30 dollars per user per month (about 24 dollars with a 20 percent annual billing discount), Basic Plus at 42 dollars, Business at 60 dollars, and Business Plus at 84 dollars, with each tier unlocking progressively more automation, integrations, and reporting depth. NetHunt also runs targeted discount programs: startups founded within the previous three years can apply for a 75 percent discount on the Business plan for their first 12 months, and registered non-profit organizations can receive a 25 percent discount, both arranged by contacting the sales team directly. NetHunt's target audience is small and mid-sized sales teams, agencies, recruiters, and partnership managers who are already deeply embedded in the Google Workspace ecosystem and want CRM functionality without adopting a separate standalone tool. Its main competitors include other lightweight or Gmail-adjacent CRMs such as Streak, Copper, and Salesflare, as well as broader CRM platforms like HubSpot, Pipedrive, and Salesforce, against which NetHunt differentiates itself primarily through its deep, native Gmail integration and lower price point relative to enterprise CRM suites.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["NetHunt CRM is a sales CRM that lives inside Gmail rather than as a separate application, letting sales teams manage contacts, deals, and pipelines directly from their inbox. The company was founded in 2015 and started in Kyiv, Ukraine, where it continues to operate as a lean team of roughly 15 people.", "Because NetHunt integrates natively with Gmail and Google Workspace, adoption is fast for teams already living in that ecosystem: existing emails, contacts, and folders can be converted directly into structured CRM records and pipeline stages without a separate login or interface to learn."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Core functionality includes customizable visual sales pipelines, email open and click tracking, reusable templates, and bulk email campaigns sent directly from Gmail. A LinkedIn browser extension captures profile data straight into CRM records, and workflow automation handles repetitive tasks like lead assignment and follow-up reminders.", "Teams collaborate through shared folders and records inside Gmail, with flexible custom fields to match different sales processes, plus reporting dashboards that track sales performance, pipeline velocity, and team activity."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["NetHunt CRM is sold per user per month across four tiers: Basic at 30 dollars, Basic Plus at 42 dollars, Business at 60 dollars, and Business Plus at 84 dollars, with roughly a 20 percent discount for annual billing. A 14-day free trial is available with no cap on invited users.", "Early-stage startups founded within the last three years can apply for a 75 percent discount on the Business plan for their first year, and registered non-profits can receive a 25 percent discount, both arranged directly with NetHunt's sales team."]}
+],
+"features": [
+{"title": "Native Gmail Integration", "description": "NetHunt lives directly inside the Gmail inbox as a sidebar, so users manage contacts, deals, and pipelines without leaving email."},
+{"title": "Sales Pipeline Management", "description": "Visual, customizable pipelines to track deals through stages from lead to close."},
+{"title": "Email Tracking and Campaigns", "description": "Open and click tracking, email templates, and bulk email campaigns sent directly from Gmail."},
+{"title": "LinkedIn Integration", "description": "Captures LinkedIn profile data into CRM records via a browser extension."},
+{"title": "Workflow Automation", "description": "Automates repetitive tasks like lead assignment, follow-up reminders, and record updates."},
+{"title": "Team Collaboration", "description": "Shared inboxes, folders, and records so sales teams collaborate on the same customer data inside Gmail."},
+{"title": "Custom Fields and Folders", "description": "Flexible data structure for organizing contacts, companies, and deals to match a team's own sales process."},
+{"title": "Reporting and Analytics", "description": "Dashboards for sales performance, pipeline velocity, and team activity."}
+],
+"pros": [
+"Deep native integration means reps can work entirely from Gmail without switching tools",
+"Lower learning curve for teams already living in Google Workspace",
+"Flexible custom fields and folder structures adapt to varied sales processes",
+"Discounts available for early-stage startups and non-profits",
+"14-day free trial with no user-count restrictions"
+],
+"cons": [
+"Tightly coupled to Gmail and Google Workspace, less useful for Outlook-first teams",
+"Per-user pricing rises quickly for larger teams, especially on higher tiers",
+"Some advanced automation and reporting features are reserved for Business and Business Plus tiers",
+"Smaller company with around 15 employees means a smaller support organization than larger CRM vendors",
+"Less name recognition and third-party integration breadth compared to Salesforce or HubSpot"
+],
+"faqs": [
+{"question": "What is NetHunt CRM?", "answer": "NetHunt CRM is a sales CRM that integrates natively into Gmail and Google Workspace, letting teams manage leads, pipelines, and communication inside their inbox."},
+{"question": "How much does NetHunt CRM cost?", "answer": "Plans start at 30 dollars per user per month billed monthly, or about 24 dollars billed annually, for Basic, scaling up through Basic Plus, Business, and Business Plus."},
+{"question": "Is there a free trial?", "answer": "Yes, NetHunt CRM offers a 14-day free trial with no limit on the number of users invited."},
+{"question": "Where is NetHunt CRM based?", "answer": "NetHunt CRM was founded in Kyiv, Ukraine, and continues to operate as a distributed team."},
+{"question": "Does NetHunt CRM work with Outlook?", "answer": "NetHunt CRM is built primarily for Gmail and Google Workspace, so its core integration advantage is specific to the Google ecosystem."},
+{"question": "Does NetHunt CRM offer startup discounts?", "answer": "Yes, startups founded within the last three years can apply for a 75 percent discount on the Business plan for their first 12 months, and non-profits can receive a 25 percent discount."},
+{"question": "Can NetHunt CRM capture LinkedIn data?", "answer": "Yes, a browser extension lets users save LinkedIn profile information directly into NetHunt CRM records."}
+],
+"use_cases": [
+{"title": "Gmail-based sales teams", "description": "Small and mid-sized sales teams that live in Gmail use NetHunt to manage pipelines without adopting a separate CRM interface.", "audience": "Small and mid-market sales teams"},
+{"title": "Startup sales operations", "description": "Early-stage startups take advantage of NetHunt's startup discount to get an affordable, Gmail-native CRM.", "audience": "Early-stage startup founders and sales teams"},
+{"title": "Recruitment and partnership pipelines", "description": "Teams outside pure sales, such as recruiters or partnership managers, use NetHunt's flexible folders to track candidates or partners inside Gmail.", "audience": "Recruiters and partnership teams"}
+],
+"pricing_plans": [
+{"plan_name": "Basic", "price": "$30/user/month (monthly) or ~$24/user/month (annual)", "billing_cycle": "Monthly or annual", "features": ["Core CRM inside Gmail", "Pipeline management", "Basic email tracking"]},
+{"plan_name": "Basic Plus", "price": "$42/user/month", "billing_cycle": "Monthly or annual", "features": ["Everything in Basic", "Expanded automation", "Additional integrations"]},
+{"plan_name": "Business", "price": "$60/user/month", "billing_cycle": "Monthly or annual", "features": ["Advanced workflow automation", "Team performance reporting", "LinkedIn integration"]},
+{"plan_name": "Business Plus", "price": "$84/user/month", "billing_cycle": "Monthly or annual", "features": ["Highest usage limits", "Priority support", "Advanced customization"]}
+],
+"tags": ["crm", "gmail-crm", "sales-crm", "google-workspace", "lead-management", "sales-automation"],
+"publish": true
+}
+},
+{
+"tool_id": "26474910-f9a4-4767-aebb-d9caf5983498",
+"slug": "netlify",
+"name": "Netlify",
+"enrichment": {
+"short_description": "Netlify is a cloud platform for building, deploying, and hosting modern web applications, known for its git-based continuous deployment workflow for JAMstack and framework-driven sites.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2014,
+"company_size": "100-250 employees",
+"headquarters": "San Francisco, California, United States",
+"languages": ["English"],
+"seo_title": "Netlify Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Netlify review 2026: git-based deployment, edge functions, and global hosting for modern web apps. Compare Free, Personal, Pro and Enterprise pricing plans.",
+"llm_readable_summary": "Netlify is a cloud platform for building, deploying, and hosting modern web applications, best known for popularizing git-based continuous deployment for static sites and JAMstack applications. It was founded on July 10, 2014, by Danish entrepreneur Mathias 'Matt' Biilmann, who had previously run a content management startup called Webpop, and his childhood friend Christian Bach, who joined as co-founder after working as an executive at a creative services agency in Denmark. The company is headquartered in San Francisco, California, and has raised approximately 212 million dollars in total funding across five rounds from investors including Andreessen Horowitz, Bessemer Venture Partners, and Bloomberg Beta, with its most recent disclosed round being a 105 million dollar Series D in November 2021 that valued the company at around 2 billion dollars, making it a unicorn. Employee count estimates from various data providers in 2026 range roughly from about 110 to over 200, suggesting a workforce in the range of 100 to 250 people. Netlify's product architecture centers on connecting a git repository on GitHub, GitLab, or Bitbucket to automatically trigger builds and deployments on every push, with every branch or pull request receiving its own live deploy preview URL for team review. Sites are served from a global edge network and CDN for fast load times worldwide, and the platform supports serverless functions and edge functions for running backend logic without managing infrastructure, along with Netlify Forms for collecting form submissions on static sites and Netlify Identity for built-in authentication. Netlify natively supports popular frameworks including Next.js, Astro, Gatsby, Hugo, and Remix with minimal configuration, and it has expanded over time from purely static site hosting into full support for server-side rendering and more complex modern web architectures, including newer AI-assisted build tooling. Pricing has shifted to a credit-based model as of 2025 to 2026: a Free plan offers 300 credits per month, a Personal plan costs 9 dollars per month for 1,000 credits, a Pro plan starts at 20 dollars per month with 3,000 scalable credits and, as of an April 2026 pricing change, unlimited team seats included in that flat fee, and an Enterprise plan offers custom pricing with advanced security, compliance, and SLAs. Netlify's target audience spans individual frontend developers and hobbyists on the free tier, marketing teams and agencies building fast, SEO-friendly sites, and larger enterprise engineering organizations that need multi-team deployment governance. Its main competitors include Vercel, Cloudflare Pages, AWS Amplify, and GitHub Pages, with Netlify differentiating itself through its early-mover JAMstack ecosystem, broad framework support, and integrated forms, identity, and functions offerings alongside its core hosting product.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Netlify is a cloud platform for building, deploying, and hosting modern web applications, founded in 2014 by Mathias Biilmann and Christian Bach and headquartered in San Francisco. It became widely known for popularizing git-based continuous deployment for static sites and JAMstack applications.", "The company has raised about 212 million dollars across five funding rounds, including a 105 million dollar Series D in 2021 that valued it at roughly 2 billion dollars, and today employs an estimated 100 to 250 people serving a broad base of developers, agencies, and enterprises."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Netlify connects directly to GitHub, GitLab, or Bitbucket repositories to automatically build and deploy sites on every push, generating a unique deploy preview URL for every branch or pull request. Sites are served from a global CDN and edge network for fast worldwide performance.", "The platform supports serverless and edge functions for backend logic, Netlify Forms for collecting submissions without a backend, and Netlify Identity for built-in authentication, alongside native build support for frameworks like Next.js, Astro, Gatsby, and Hugo."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Netlify moved to a credit-based pricing model in 2025 and refined it again in 2026. The Free plan includes 300 credits per month at no cost, and the Personal plan costs 9 dollars per month for 1,000 credits.", "The Pro plan starts at 20 dollars per month for 3,000 scalable credits and, since an April 2026 update, includes unlimited team seats in that flat fee. Enterprise pricing is custom and includes advanced security, compliance controls, and SLAs."]}
+],
+"features": [
+{"title": "Git-Based Continuous Deployment", "description": "Automatically builds and deploys sites from GitHub, GitLab, or Bitbucket on every push, with deploy previews for pull requests."},
+{"title": "Global Edge Network", "description": "Serves sites from a global CDN and edge network for fast load times worldwide."},
+{"title": "Serverless and Edge Functions", "description": "Run backend logic as serverless functions or edge functions without managing infrastructure."},
+{"title": "Netlify Forms", "description": "Collect form submissions on static sites without a backend."},
+{"title": "Netlify Identity", "description": "Built-in authentication and user management for JAMstack sites."},
+{"title": "Deploy Previews and Split Testing", "description": "Every branch or pull request gets a live preview URL, and traffic can be split for A/B testing."},
+{"title": "Framework-Agnostic Builds", "description": "Native build support for popular frameworks like Next.js, Astro, Gatsby, and Hugo."},
+{"title": "AI-Assisted Build Tooling", "description": "Newer additions include AI-assisted build tooling and agent-driven workflows for modern web apps."}
+],
+"pros": [
+"Extremely fast, low-friction git-based deployment workflow",
+"Generous free tier suitable for personal projects and prototypes",
+"Deploy previews streamline collaborative review of frontend changes",
+"Broad framework support with minimal configuration",
+"Strong brand recognition and mature ecosystem of integrations"
+],
+"cons": [
+"Usage-based credit pricing can become expensive and harder to predict at scale",
+"Serverless and edge function limits can affect complex backend workloads",
+"Enterprise features and support require custom, contact-sales pricing",
+"Recent shift to credit-based billing in 2025 and 2026 has caused confusion for existing customers",
+"Less suited to traditional long-running server applications compared to full IaaS platforms"
+],
+"faqs": [
+{"question": "What is Netlify?", "answer": "Netlify is a cloud platform for building, deploying, and hosting modern web applications, popularized by its git-based continuous deployment workflow for static sites and JAMstack apps."},
+{"question": "Who founded Netlify?", "answer": "Netlify was founded by Mathias 'Matt' Biilmann and Christian Bach, launching in 2014 out of San Francisco."},
+{"question": "How much does Netlify cost?", "answer": "Netlify offers a free plan with 300 monthly credits, a Personal plan at 9 dollars per month, a flat-fee Pro plan starting at 20 dollars per month with unlimited team seats, and custom Enterprise pricing."},
+{"question": "Does Netlify support serverless functions?", "answer": "Yes, Netlify supports both serverless functions and edge functions for running backend logic alongside static or framework-rendered sites."},
+{"question": "How much funding has Netlify raised?", "answer": "Netlify has raised about 212 million dollars total across five funding rounds, including a 105 million dollar Series D in November 2021, reaching a 2 billion dollar valuation."},
+{"question": "What frameworks does Netlify support?", "answer": "Netlify natively supports popular frameworks including Next.js, Astro, Gatsby, Hugo, and Remix via its build system and framework adapters."},
+{"question": "Is Netlify only for static sites?", "answer": "No, while Netlify started with static sites, it now supports server-side rendering, serverless and edge functions, and full modern web app architectures."}
+],
+"use_cases": [
+{"title": "JAMstack and static site hosting", "description": "Developers deploy static sites and single-page apps with automatic CI/CD from git.", "audience": "Frontend developers"},
+{"title": "Marketing and content sites", "description": "Marketing teams and agencies use Netlify to host fast, SEO-friendly marketing sites and landing pages.", "audience": "Marketing teams and agencies"},
+{"title": "Enterprise composable web platforms", "description": "Larger organizations use Netlify Enterprise for multi-team, multi-site deployment governance, SSO, and SLAs.", "audience": "Enterprise engineering organizations"}
+],
+"pricing_plans": [
+{"plan_name": "Free", "price": "$0/month", "billing_cycle": "Monthly", "features": ["300 credits/month", "Global CDN", "Deploy previews", "Community support"]},
+{"plan_name": "Personal", "price": "$9/month", "billing_cycle": "Monthly", "features": ["1,000 credits/month", "For individual developers"]},
+{"plan_name": "Pro", "price": "From $20/month", "billing_cycle": "Monthly", "features": ["3,000 credits/month (scalable)", "Unlimited team seats", "Rollover credits at 5,000+", "Priority support"]},
+{"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Annual contract", "features": ["Custom credits and SLAs", "Advanced security and compliance", "Dedicated support"]}
+],
+"tags": ["web-hosting", "jamstack", "static-site-hosting", "ci-cd", "serverless", "edge-functions", "frontend-deployment"],
+"publish": true
+}
+},
+{
+"tool_id": "3c70ee2d-b30a-457c-abbc-1172ad14a91d",
+"slug": "netron",
+"name": "netron",
+"enrichment": {
+"short_description": "Netron is a free, open-source viewer for neural network, deep learning, and machine learning models, letting engineers inspect model architecture graphs, layers, and tensor shapes in the browser or desktop.",
+"pricing_model": "Open Source",
+"starting_price": "Free",
+"founded_year": null,
+"company_size": null,
+"headquarters": null,
+"languages": ["English"],
+"seo_title": "Netron Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "Netron review 2026: the free, open-source neural network model visualizer for ONNX, PyTorch, TensorFlow and more. See features and alternatives.",
+"llm_readable_summary": "Netron is a free, open-source visualizer for neural network, deep learning, and machine learning model files, built and maintained by independent developer Lutz Roeder rather than a formal company. It is not to be confused with networking or infrastructure tools despite the similar name; Netron is strictly a developer and machine learning engineering utility for inspecting the internal computation graph of a trained model, showing its layers, operators, tensor shapes, and attributes in a visual, explorable diagram. The project is hosted on GitHub at lutzroeder slash netron under the MIT license, meaning it is free to use, modify, and redistribute with no commercial tiers, subscription fees, or paid upsells. As of mid-2026, the repository has accumulated more than 32,000 GitHub stars, reflecting broad adoption within the machine learning and MLOps community as a go-to tool for model inspection and debugging. Netron is distributed in three primary forms: a hosted web application at netron.app that runs entirely client-side in the browser with no installation or account required, a native desktop application available for macOS, Windows, and Linux, and a Python package that can be installed via pip and launched from the command line or a notebook environment for local model files. Its core value proposition is broad format coverage: Netron natively supports ONNX, TensorFlow Lite, PyTorch, torch.export, ExecuTorch, TorchScript, TensorFlow, Core ML, OpenVINO, Keras, Caffe, Darknet, Safetensors, and NumPy files, and it offers experimental support for a longer tail of formats including MLIR, JAX, GGUF, RKNN, ncnn, MNN, PaddlePaddle, and scikit-learn models. This makes it one of the few tools that lets machine learning engineers, researchers, and students visually inspect and compare model architectures across many different frameworks and export formats without writing custom visualization code. Because model files can contain proprietary architectures or sensitive weights, the fact that the web version runs entirely in the browser without uploading files to a server is a notable privacy and security feature that has helped drive adoption in enterprise ML teams. Netron's target audience includes machine learning engineers and researchers debugging or documenting model architectures, students and educators teaching neural network structure, and MLOps practitioners auditing models before deployment or conversion between formats. As a free, community-maintained, single-developer open-source project, Netron does not have direct commercial competitors in the traditional sense, but it is commonly compared to or used alongside framework-specific visualization tools such as TensorBoard's graph viewer, PyTorch's native torchviz, and Netscope, with Netron differentiating itself through its unmatched breadth of supported model formats and its zero-install, browser-based accessibility.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["Netron is a free, open-source visualizer for neural network, deep learning, and machine learning model files, created and maintained by independent developer Lutz Roeder. It renders a model's computation graph as an explorable diagram, showing layers, operators, tensor shapes, and attributes.", "Netron should not be confused with networking or infrastructure tools; despite the similar-sounding name, it is a machine learning developer utility, distinct from tools like NetBox that manage physical network infrastructure. It is distributed as a hosted web app at netron.app, a native desktop app for macOS, Windows, and Linux, and a Python package."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["Netron's central strength is breadth of format support: it natively handles ONNX, TensorFlow Lite, PyTorch, TorchScript, TensorFlow, Core ML, OpenVINO, Keras, Caffe, Darknet, Safetensors, and NumPy files, with experimental support for formats like MLIR, JAX, GGUF, RKNN, ncnn, MNN, and PaddlePaddle.", "Because the browser-based version runs entirely client-side, model files are never uploaded to a server, which matters for teams working with proprietary or sensitive model architectures. The interface lets users zoom, search, and inspect individual layers and tensor shapes interactively."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["Netron is completely free and open source under the MIT license, with no paid tiers, subscriptions, or usage limits across the web app, desktop app, or Python package.", "As a community project maintained primarily by one developer, support comes through GitHub issues and community contributions rather than a commercial support contract."]}
+],
+"features": [
+{"title": "Broad Model Format Support", "description": "Natively supports ONNX, TensorFlow Lite, PyTorch, TorchScript, TensorFlow, Core ML, OpenVINO, Keras, Caffe, Darknet, Safetensors, and NumPy, with experimental support for more."},
+{"title": "Browser-Based Web App", "description": "The hosted app at netron.app runs entirely client-side with no installation or account required."},
+{"title": "Desktop Application", "description": "Native desktop apps are available for macOS, Windows, and Linux."},
+{"title": "Python Package", "description": "Installable via pip for launching model visualization from the command line or notebooks."},
+{"title": "Interactive Graph Exploration", "description": "Lets users zoom, search, and inspect individual layers, operators, and tensor shapes within a model graph."},
+{"title": "Client-Side Privacy", "description": "Model files processed in the browser version are never uploaded to a server, preserving confidentiality."},
+{"title": "Experimental Format Support", "description": "Adds emerging support for formats like MLIR, JAX, GGUF, RKNN, ncnn, MNN, and PaddlePaddle."},
+{"title": "Free and Open Source", "description": "Released under the MIT license with no paid tiers or usage restrictions."}
+],
+"pros": [
+"Completely free and open source with no usage limits",
+"Supports an exceptionally wide range of ML model formats in one tool",
+"Browser version requires no installation and keeps model files client-side",
+"Actively maintained with frequent updates for new model formats",
+"Large, established community with over 32,000 GitHub stars"
+],
+"cons": [
+"No formal company or commercial support contract stands behind the project",
+"Some newer or niche formats are only experimentally supported",
+"Purely a visualization tool with no model editing, training, or conversion capabilities",
+"Large models can be slow to render or navigate in the browser",
+"Documentation is minimal compared to commercially backed developer tools"
+],
+"faqs": [
+{"question": "What is Netron used for?", "answer": "Netron is used to visualize the architecture of neural network and machine learning models, showing layers, operators, and tensor shapes as an explorable graph."},
+{"question": "Is Netron free?", "answer": "Yes, Netron is completely free and open source under the MIT license, with no paid tiers."},
+{"question": "Who created Netron?", "answer": "Netron was created and is maintained by independent developer Lutz Roeder."},
+{"question": "What model formats does Netron support?", "answer": "Netron natively supports ONNX, TensorFlow Lite, PyTorch, TorchScript, TensorFlow, Core ML, OpenVINO, Keras, Caffe, Darknet, Safetensors, and NumPy, plus experimental support for formats like MLIR, JAX, and GGUF."},
+{"question": "Do I need to install Netron?", "answer": "No, Netron is available as a browser-based web app at netron.app that requires no installation, though desktop apps and a Python package are also available."},
+{"question": "Is Netron the same as NetBox?", "answer": "No, Netron is a machine learning model visualizer, while NetBox is an unrelated open-source tool for network infrastructure documentation and IP address management."},
+{"question": "Does Netron upload model files to a server?", "answer": "No, the browser-based version of Netron processes model files entirely client-side, so files are never uploaded."}
+],
+"use_cases": [
+{"title": "Model architecture debugging", "description": "Machine learning engineers inspect a trained model's layers and tensor shapes to debug conversion or deployment issues.", "audience": "Machine learning engineers"},
+{"title": "Education and learning neural network structure", "description": "Students and educators use Netron to visually explore how different neural network architectures are structured.", "audience": "Students and educators"},
+{"title": "Pre-deployment model auditing", "description": "MLOps practitioners review a model's architecture and format before converting or deploying it to production.", "audience": "MLOps practitioners"}
+],
+"pricing_plans": [
+{"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Web, desktop, and Python package access", "Support for a wide range of ML model formats", "No usage limits", "Community support via GitHub"]}
+],
+"tags": ["machine-learning", "deep-learning", "model-visualization", "open-source", "developer-tools", "onnx", "mlops"],
+"publish": true
+}
+},
+{
+"tool_id": "55145ca3-38c5-472e-91e5-8e0f54c3f703",
+"slug": "neuronwriter",
+"name": "NeuronWriter",
+"enrichment": {
+"short_description": "NeuronWriter is a semantic SEO content optimization platform that uses NLP and real-time SERP analysis to help writers plan, draft, and optimize content that ranks in search.",
+"pricing_model": "Subscription",
+"starting_price": "$19/month (billed annually)",
+"founded_year": 2019,
+"company_size": "1-10 employees",
+"headquarters": "Zamosc, Poland",
+"languages": ["English", "Polish"],
+"seo_title": "NeuronWriter Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "NeuronWriter review 2026: semantic SEO content scoring, SERP analysis, and AI writing. Compare Bronze, Silver, Gold, Platinum, and Diamond pricing plans.",
+"llm_readable_summary": "NeuronWriter is a semantic SEO content optimization platform that combines natural language processing (NLP), real-time Google SERP analysis, and competitor content data to help writers plan, draft, and optimize content intended to rank in organic search. It is built by the team behind Contadu, a Polish content intelligence platform, and the company was founded in 2019 and is based in the Zamosc and Lublin region of Poland. NeuronWriter was launched as a standalone product, spun out from Contadu's content-writer module, by co-founders Pawel Sokolowski, who serves as CEO, and Damian Kielbasa, who serves as CTO; the two had previously built other SEO tools for the Polish market, including Clusteric. NeuronWriter and Contadu together operate as a small, bootstrapped company with reportedly around 6 employees, having never raised outside venture funding, which distinguishes it from many VC-backed competitors in the content optimization space. The product's core mechanism is a content score that measures a piece of writing against the terms, headings, and topics used by top-ranking pages for a target keyword, generated through real-time analysis of Google's search results. Around this scoring engine, NeuronWriter provides shareable content briefs with recommended terms and questions for writers, a built-in AI content writing assistant integrated directly into the editor, internal linking suggestions based on topical relevance across a site's existing content, plagiarism and readability checks, team collaboration and project management across multiple projects and folders, and newer AI-visibility tracking features that monitor how content performs in AI-generated search answers, reflecting the platform's evolution alongside AI search trends. NeuronWriter is sold across five subscription tiers priced per month, each cheaper when billed annually: Bronze at 23 dollars per month (19 dollars annual) with 2 projects and 25 content writer analyses per month; Silver at 45 dollars (37 dollars annual) with 5 projects and 50 analyses; Gold at 69 dollars (57 dollars annual) with 10 projects and 75 analyses; Platinum at 93 dollars (77 dollars annual) with 25 projects and 100 analyses; and Diamond at 117 dollars (97 dollars annual) with 50 projects and 150 analyses, aimed at SEO and content agencies. NeuronWriter has also been distributed through lifetime-deal marketplaces such as AppSumo, broadening access for small businesses and solo creators. Its target audience spans individual bloggers and small business owners, in-house marketing and SEO teams standardizing their content workflow, and SEO or content marketing agencies managing multiple client projects on the higher-tier plans. Its primary competitors in the AI-assisted SEO content optimization category include Surfer SEO, Clearscope, MarketMuse, and Frase, with NeuronWriter differentiating itself through comparatively affordable pricing, a combined content-scoring-plus-AI-writing workflow, and its roots as a bootstrapped, founder-led Polish software company.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["NeuronWriter is a semantic SEO content optimization platform that scores content against top-ranking search results using NLP and real-time SERP analysis. It was founded in 2019 in Poland by Pawel Sokolowski and Damian Kielbasa, the team behind the related Contadu content intelligence platform.", "The company is a small, bootstrapped operation with roughly 6 employees and no outside venture funding, having previously built other SEO tools for the Polish market before launching NeuronWriter as a standalone product for individuals and small teams."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["NeuronWriter's core content score measures a draft against the terms, headings, and topics used by pages currently ranking for a target keyword, paired with shareable content briefs and an AI writing assistant built directly into the editor. Internal linking suggestions, plagiarism checks, and readability scoring round out the content workflow.", "Newer AI-visibility tracking capabilities monitor how content performs in AI-generated search answers, reflecting the platform's expansion beyond traditional Google SERP optimization as search behavior evolves."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["NeuronWriter offers five tiers priced per month, each discounted for annual billing: Bronze at 23 dollars (19 dollars annual), Silver at 45 dollars (37 dollars annual), Gold at 69 dollars (57 dollars annual), Platinum at 93 dollars (77 dollars annual), and Diamond at 117 dollars (97 dollars annual), which is aimed at agencies.", "Plans differ mainly by the number of projects and folders, the number of monthly content writer analyses, and the amount of included AI credits. NeuronWriter has also been sold via lifetime-deal platforms such as AppSumo."]}
+],
+"features": [
+{"title": "Content Score and NLP Analysis", "description": "Scores content against top-ranking pages for a target keyword using semantic and NLP term analysis."},
+{"title": "SERP Analysis", "description": "Real-time analysis of Google search results to surface competitor content structure and terms."},
+{"title": "AI Content Writer", "description": "Built-in AI writing assistant to draft and optimize content directly within content briefs."},
+{"title": "Content Briefs", "description": "Generates shareable content briefs with recommended terms, headings, and questions for writers."},
+{"title": "Internal Linking Suggestions", "description": "Recommends internal links based on existing site content and topical relevance."},
+{"title": "Plagiarism and Readability Checks", "description": "Additional content quality checks alongside SEO scoring."},
+{"title": "AI Visibility Tracking", "description": "Tracks how content appears and performs in AI-generated search answers."},
+{"title": "Team Collaboration and Project Management", "description": "Multiple projects and folders per plan for organizing content across sites or clients."}
+],
+"pros": [
+"Affordable pricing relative to competitors like Surfer SEO and Clearscope",
+"Combines content scoring, AI writing, and SERP research in a single tool",
+"Frequent lifetime-deal availability makes it accessible to small businesses",
+"Simple, fast content editor workflow",
+"Actively updated with newer AI-visibility features"
+],
+"cons": [
+"Small team of around 6 people means slower feature rollout than larger, VC-funded competitors",
+"AI credit and content-analysis limits can be restrictive on lower-tier plans",
+"Interface and terminology can feel less polished than premium competitors",
+"Primarily focused on Google SERP-based optimization, less mature on other search engines",
+"Limited enterprise features such as SSO and dedicated account management compared to larger platforms"
+],
+"faqs": [
+{"question": "What is NeuronWriter?", "answer": "NeuronWriter is a semantic SEO content optimization platform that uses NLP and SERP analysis to help writers plan, draft, and optimize content that ranks."},
+{"question": "How much does NeuronWriter cost?", "answer": "Plans range from Bronze at 23 dollars per month (19 dollars annual) up to Diamond at 117 dollars per month (97 dollars annual), with tiers differentiated by projects and content analyses."},
+{"question": "Who created NeuronWriter?", "answer": "NeuronWriter was created by the team behind Contadu, a Polish content intelligence platform, led by co-founders Pawel Sokolowski and Damian Kielbasa."},
+{"question": "Is there a free trial?", "answer": "NeuronWriter has offered free trial access and has also been sold via lifetime-deal platforms like AppSumo."},
+{"question": "What is the difference between NeuronWriter and Contadu?", "answer": "NeuronWriter is the content-writer module aimed at individuals and small businesses, spun out from Contadu, which targets larger teams managing multiple content projects."},
+{"question": "Does NeuronWriter include an AI writer?", "answer": "Yes, NeuronWriter includes an AI content writing assistant integrated directly into its content editor and briefs."},
+{"question": "Where is NeuronWriter based?", "answer": "NeuronWriter and Contadu are based in Poland, with the team located in the Zamosc and Lublin region."}
+],
+"use_cases": [
+{"title": "SEO content writing for bloggers and small businesses", "description": "Individual writers and small business owners use NeuronWriter to optimize blog posts for search rankings.", "audience": "Bloggers and small business content creators"},
+{"title": "Agency content optimization", "description": "SEO and content agencies use higher-tier plans to manage multiple client projects and content briefs.", "audience": "SEO and content marketing agencies"},
+{"title": "In-house content and SEO teams", "description": "Marketing teams use NeuronWriter to standardize content briefs and improve organic search performance.", "audience": "In-house marketing and SEO teams"}
+],
+"pricing_plans": [
+{"plan_name": "Bronze", "price": "$23/month ($19/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["2 projects/folders", "25 content writer analyses/month", "15,000 AI credits"]},
+{"plan_name": "Silver", "price": "$45/month ($37/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["5 projects/folders", "50 content writer analyses/month", "30,000 AI credits"]},
+{"plan_name": "Gold", "price": "$69/month ($57/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["10 projects/folders", "75 content writer analyses/month", "45,000 AI credits"]},
+{"plan_name": "Platinum", "price": "$93/month ($77/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["25 projects/folders", "100 content writer analyses/month", "60,000 AI credits"]},
+{"plan_name": "Diamond", "price": "$117/month ($97/month billed annually)", "billing_cycle": "Monthly or annual", "features": ["50 projects/folders", "150 content writer analyses/month", "Designed for agencies"]}
+],
+"tags": ["seo-tool", "content-optimization", "semantic-seo", "ai-writing", "content-marketing", "serp-analysis"],
+"publish": true
+}
+},
+{
+"tool_id": "f36057a5-8bfe-46d6-b430-56cb10cd464c",
+"slug": "new-relic",
+"name": "New Relic",
+"enrichment": {
+"short_description": "New Relic is an observability platform that unifies application performance monitoring, infrastructure monitoring, logs, and more into a single data platform for engineering teams.",
+"pricing_model": "Freemium",
+"starting_price": "Free",
+"founded_year": 2008,
+"company_size": "~3,000 employees",
+"headquarters": "San Francisco, California, United States",
+"languages": ["English"],
+"seo_title": "New Relic Review 2026: Features, Pricing and Alternatives",
+"seo_meta_description": "New Relic review 2026: full-stack observability with APM, infrastructure, and log monitoring. Compare the free 100GB tier to Standard, Pro, and Enterprise.",
+"llm_readable_summary": "New Relic is an observability platform that unifies application performance monitoring (APM), infrastructure monitoring, log management, browser and mobile monitoring, synthetic monitoring, and AI monitoring into a single underlying data platform. The company was founded in 2008 by Lew Cirne, a serial software entrepreneur who had previously founded the application performance monitoring company Wily Technology, and it is headquartered in San Francisco, California. New Relic went public on the New York Stock Exchange in December 2014, raising approximately 115 million dollars in its IPO and reaching an initial market capitalization above 1.4 billion dollars. The company remained publicly traded for nearly a decade until July 2023, when private equity firms Francisco Partners and TPG announced an agreement to acquire New Relic for approximately 6.5 billion dollars; the deal closed in November 2023, taking the company private and ending its era of public financial disclosure. As of the mid-2020s, New Relic employs roughly 3,000 people distributed across teams on multiple continents. Architecturally, New Relic's differentiator is its unified telemetry data platform, internally referred to as NRDB, which ingests metrics, events, logs, and traces (often summarized as MELT data) into one queryable store rather than siloed tools for each data type, letting customers correlate an infrastructure alert with an application trace and a log line inside one interface. The platform offers more than 50 capabilities, including APM with distributed tracing across languages and frameworks, real-time infrastructure and Kubernetes monitoring, centralized log management, synthetic monitoring for uptime and performance checks, an Errors Inbox with AI-assisted anomaly correlation branded Applied Intelligence, custom dashboards and alert policies, and a newer AI monitoring capability for observing the performance, cost, and quality of LLM-powered applications. New Relic's pricing model, restructured around 2020 away from legacy per-host pricing, combines a per-user fee with consumption-based data ingest charges: a perpetual Free tier includes 100 GB of monthly data ingest, one full platform user, and unlimited basic and core users across all 50-plus capabilities; the Standard tier charges 10 dollars for the first full platform user and 99 dollars for each additional full user up to five, plus 49 dollars per core user, with 100 GB of included ingest; the Pro tier offers unlimited full platform users at 349 dollars per user annually (equivalent to about 418.80 dollars per month billed separately) with 49-dollar core users and priority support carrying a two-hour critical SLA; and Enterprise pricing is fully custom for large, complex organizations. Data ingested beyond the free allotment is billed at 0.40 dollars per gigabyte for standard data or 0.60 dollars per gigabyte for the higher-retention Data Plus tier. New Relic's target audience ranges from individual developers and startups using the generous free tier, to mid-sized software engineering and DevOps teams standardizing on APM, up to large enterprises consolidating many monitoring tools into one platform. Its principal competitors in the observability and monitoring market include Datadog, Dynatrace, Splunk, Grafana Labs, and Netdata, with New Relic differentiating itself through the breadth of its unified platform, deep historical presence as a pioneer of the APM category, and its perpetual free tier.",
+"long_form_blocks": [
+{"id": "overview", "heading": "Overview", "level": 2, "paragraphs": ["New Relic is an observability platform that unifies application performance monitoring, infrastructure monitoring, log management, and more into a single underlying data platform. It was founded in 2008 by Lew Cirne, a veteran of the APM category who previously founded Wily Technology, and is headquartered in San Francisco.", "New Relic went public via IPO in December 2014 and remained publicly traded until it was acquired by private equity firms Francisco Partners and TPG for about 6.5 billion dollars, a deal that closed in November 2023 and returned the company to private ownership."]},
+{"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": ["New Relic's core architecture is a unified data platform, internally called NRDB, that ingests metrics, events, logs, and traces into one queryable store so teams can correlate infrastructure alerts, application traces, and log lines without switching tools. Capabilities span APM, infrastructure monitoring, log management, synthetic monitoring, and more than 50 features in total.", "Newer capabilities include AI monitoring for observing the performance and cost of LLM-powered applications, alongside an Errors Inbox with AI-assisted anomaly correlation branded Applied Intelligence for faster root-cause analysis."]},
+{"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": ["New Relic combines per-user pricing with consumption-based data ingest charges. The perpetual Free tier includes 100 GB of monthly ingest, one full platform user, and unlimited basic and core users across all capabilities.", "The Standard tier starts at 10 dollars for the first full user plus 99 dollars per additional full user, the Pro tier offers unlimited full users at 349 dollars per user annually with priority support, and Enterprise pricing is fully custom. Ingest beyond the free allotment costs 0.40 dollars per gigabyte for standard data or 0.60 dollars for the higher-retention Data Plus option."]}
+],
+"features": [
+{"title": "Application Performance Monitoring (APM)", "description": "Deep tracing and performance monitoring for applications across languages and frameworks."},
+{"title": "Infrastructure Monitoring", "description": "Real-time visibility into servers, containers, and cloud infrastructure."},
+{"title": "Log Management", "description": "Centralized log ingestion, search, and correlation with metrics and traces."},
+{"title": "Full-Stack Observability", "description": "Unifies metrics, events, logs, and traces in a single data platform called NRDB."},
+{"title": "Synthetic Monitoring", "description": "Scripted and simple browser checks to proactively test uptime and performance."},
+{"title": "AI Monitoring", "description": "Observability for LLM and AI application performance, cost, and quality."},
+{"title": "Custom Dashboards and Alerts", "description": "Build unified dashboards and configurable alert policies across all monitored data."},
+{"title": "Errors Inbox and Applied Intelligence", "description": "AI-assisted incident correlation and anomaly detection to speed up root-cause analysis."}
+],
+"pros": [
+"Broad all-in-one observability platform covering APM, infrastructure, logs, and browser and mobile monitoring in one place",
+"Generous perpetual free tier of 100 GB ingest per month for small projects",
+"Mature product with 50-plus capabilities and wide language and framework support",
+"Long track record and enterprise adoption dating back to 2008",
+"Consumption-based pricing can scale down for smaller workloads"
+],
+"cons": [
+"Data ingest-based pricing can become expensive and unpredictable at high volumes",
+"Now a private company following the 2023 Francisco Partners and TPG acquisition, reducing public financial transparency",
+"Full platform user pricing is significantly more expensive than core or basic users on the Pro tier",
+"Feature sprawl across 50-plus capabilities can create a learning curve for new teams",
+"Competition from more focused or cheaper observability tools on specific use cases"
+],
+"faqs": [
+{"question": "What is New Relic?", "answer": "New Relic is an observability platform that unifies application performance monitoring, infrastructure monitoring, logs, and more into a single data platform."},
+{"question": "Who founded New Relic?", "answer": "New Relic was founded in 2008 by Lew Cirne, who previously founded the APM company Wily Technology."},
+{"question": "Is New Relic still a public company?", "answer": "No, New Relic went public via IPO in December 2014 but was acquired by private equity firms Francisco Partners and TPG for approximately 6.5 billion dollars, completing in November 2023, and is now privately held."},
+{"question": "Does New Relic have a free tier?", "answer": "Yes, New Relic offers a perpetual free tier with 100 GB of monthly data ingest, one full platform user, and unlimited basic and core users."},
+{"question": "How is New Relic priced?", "answer": "Pricing combines a per-user fee for full platform users on the Standard or Pro tiers plus consumption-based data ingest charges beyond the free 100 GB, with custom Enterprise pricing for large organizations."},
+{"question": "Where is New Relic headquartered?", "answer": "New Relic is headquartered in San Francisco, California."},
+{"question": "What does New Relic compete with?", "answer": "New Relic competes with observability and monitoring platforms such as Datadog, Dynatrace, Splunk, Grafana, and Netdata."}
+],
+"use_cases": [
+{"title": "Application performance monitoring for engineering teams", "description": "Software teams use New Relic APM to trace and optimize application performance across microservices.", "audience": "Software engineering and DevOps teams"},
+{"title": "Enterprise-wide observability consolidation", "description": "Large enterprises consolidate APM, infrastructure, and log monitoring into one unified New Relic platform to reduce tool sprawl.", "audience": "Enterprise IT and platform engineering teams"},
+{"title": "Startup and small-team monitoring on the free tier", "description": "Small teams and startups use New Relic's free 100 GB tier to get production monitoring without upfront cost.", "audience": "Startups and small engineering teams"}
+],
+"pricing_plans": [
+{"plan_name": "Free", "price": "$0/month", "billing_cycle": "Monthly", "features": ["100 GB data ingest/month", "1 full platform user", "Unlimited basic and core users", "Access to 50+ capabilities"]},
+{"plan_name": "Standard", "price": "From $10 (first full user)", "billing_cycle": "Monthly", "features": ["100 GB data ingest/month", "Up to 5 full platform users at $99 each", "Core users at $49 each", "Ticketed support"]},
+{"plan_name": "Pro", "price": "$349/user/year (or ~$418.80/month)", "billing_cycle": "Annual or monthly", "features": ["Unlimited full platform users", "Core users at $49 each", "Priority support with 2-hour critical SLA", "Advanced features"]},
+{"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Annual contract", "features": ["Custom data ingest and user pricing", "Dedicated support and SLAs", "Advanced security and compliance"]}
+],
+"tags": ["observability", "apm", "infrastructure-monitoring", "application-performance-monitoring", "log-management", "devops"],
+"publish": true
+}
+}
+]

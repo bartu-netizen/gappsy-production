@@ -21,7 +21,7 @@ export default function AgencyReviewSEO({ agency }: AgencyReviewSEOProps) {
   const description = `Independent review of ${agency.agency_name}, a marketing agency in ${agency.city || agency.state_name}. We analyze transparency, credibility signals, and public information to help you make an informed hiring decision.`;
 
   // CANONICAL: always /agency-reviews/{agency_slug} — no trailing slash, no state_slug appended
-  const canonicalUrl = `https://www.gappsy.com/agency-reviews/${agency.agency_slug}`;
+  const canonicalUrl = `https://gappsy.com/agency-reviews/${agency.agency_slug}`;
 
   const lastUpdatedDate = formatLastUpdated(agency.last_updated);
   const schemaDate = formatSchemaDate(agency.last_updated);
@@ -129,7 +129,7 @@ export default function AgencyReviewSEO({ agency }: AgencyReviewSEOProps) {
           "name": `What are the best alternatives to ${agency.agency_name}?`,
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": `We've identified 25 top-performing marketing agencies in ${agency.state_name} with verified credentials and proven track records. View the full list at https://www.gappsy.com/marketing-agencies-in-${agency.state_slug}-united-states/`
+            "text": `We've identified 25 top-performing marketing agencies in ${agency.state_name} with verified credentials and proven track records. View the full list at https://gappsy.com/marketing-agencies-in-${agency.state_slug}-united-states/`
           }
         },
         {

@@ -28,5 +28,34 @@ Allow: /*.svg
 Allow: /*.woff
 Allow: /*.woff2
 
-# Sitemap location (canonical domain with www)
-Sitemap: https://www.gappsy.com/sitemap.xml
+# Explicit allow blocks for AI/LLM crawlers and answer engines.
+# Already covered by the blanket "User-agent: * / Allow: /" above — these
+# exist so AI crawlers see an explicit, unambiguous allow rather than
+# relying on the wildcard, since some AI companies' bots specifically look
+# for a named rule before falling back to the wildcard.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap location (canonical domain: apex, matches Netlify primary domain and GSC property)
+Sitemap: https://gappsy.com/sitemap.xml

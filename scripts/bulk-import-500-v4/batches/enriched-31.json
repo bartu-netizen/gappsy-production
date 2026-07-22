@@ -1,0 +1,600 @@
+[
+  {
+    "tool_id": "23c53c70-2a21-4d74-b527-25a8f44a4362",
+    "slug": "postal",
+    "name": "Postal",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Postal is an open-source, self-hosted mail delivery platform for sending and receiving transactional email, built as an alternative to SendGrid or Mailgun.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Postal is a free, open-source mail server for self-hosting SMTP relay and inbound email, released under the MIT license.",
+      "features": [
+        {"title": "SMTP relay and delivery", "description": "Send transactional and bulk email through your own infrastructure instead of a third-party ESP."},
+        {"title": "Inbound email handling", "description": "Receive and route incoming mail for connected domains."},
+        {"title": "Webhooks", "description": "Trigger events for message delivery, bounces, and other mail events for integration with other systems."},
+        {"title": "Web-based management UI", "description": "Administer mail servers, domains, and message queues from a browser."},
+        {"title": "Docker-based installation", "description": "Deploy Postal via Docker containers rather than a manual server build."},
+        {"title": "MIT licensed", "description": "Fully open source and free for commercial and private use."}
+      ],
+      "pros": [
+        "Free and open source under the MIT license",
+        "Self-hosted, giving full control over mail infrastructure and data",
+        "Active project with 16.7k GitHub stars and regular releases (latest v3.3.7)",
+        "Webhooks support for integrating mail events into other systems"
+      ],
+      "cons": [
+        "Requires self-managed server infrastructure, Docker, and Ruby to run",
+        "No official first-party hosted/managed version",
+        "Deliverability depends on the operator's own IP reputation and DNS setup"
+      ],
+      "faqs": [
+        {"question": "Is Postal free?", "answer": "Yes, Postal is open source and released under the MIT license."},
+        {"question": "Does Postal offer a hosted version?", "answer": "The official project is self-hosted via Docker; no first-party managed hosting is documented on the official site."},
+        {"question": "What does Postal replace?", "answer": "It's designed as a self-hosted alternative to commercial services like SendGrid or Mailgun."},
+        {"question": "Does Postal support webhooks?", "answer": "Yes, it provides webhooks for mail delivery events."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted transactional email", "description": "Run your own SMTP relay for application-generated email instead of paying a third-party ESP.", "audience": "Developers and DevOps teams"},
+        {"title": "Inbound email processing", "description": "Receive and route incoming mail programmatically via webhooks.", "audience": "SaaS teams building email-driven workflows"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Postal?", "level": 2, "paragraphs": [
+          "Postal is an open-source mail delivery platform that lets organizations run their own mail server for sending and receiving email, rather than relying on a commercial email service provider.",
+          "It is released under the MIT license, deployed via Docker, and built primarily with Ruby. The project has 16.7k GitHub stars and continues to ship regular releases, including v3.3.7."
+        ]},
+        {"id": "who-its-for", "heading": "Who Postal is for", "level": 2, "paragraphs": [
+          "Postal suits developers and DevOps teams who want a self-hosted, MIT-licensed alternative to services like SendGrid or Mailgun and are comfortable managing their own mail infrastructure via Docker."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "api", "web-app"]
+    }
+  },
+  {
+    "tool_id": "f9d56d4e-fc0b-4b1a-9ea8-231bd20b02d4",
+    "slug": "mailcow",
+    "name": "Mailcow",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mailcow is an open-source, Dockerized mail server suite combining Postfix, Rspamd, SOGo, and Nginx behind a web-based admin UI.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Mailcow is a free, GPLv3-licensed Dockerized mail server suite with Postfix, Rspamd, and SOGo, plus optional paid professional support.",
+      "features": [
+        {"title": "Dockerized deployment", "description": "Runs via Docker and Docker Compose for reproducible installs."},
+        {"title": "Postfix mail transfer agent", "description": "Handles sending and receiving mail for connected domains."},
+        {"title": "Rspamd spam filtering", "description": "Built-in spam filtering engine included in the stack."},
+        {"title": "SOGo groupware", "description": "Provides webmail, calendar, and address book functionality."},
+        {"title": "Nginx web component", "description": "Serves the admin panel and webmail interfaces."},
+        {"title": "Web-based administration UI", "description": "Manage domains, mailboxes, and settings from a browser."}
+      ],
+      "pros": [
+        "Free and open source (GPLv3)",
+        "Combines multiple mail components (MTA, spam filter, groupware, web server) into one managed stack",
+        "Large, active community with 13.1k GitHub stars",
+        "Optional paid professional support available via servercow.de"
+      ],
+      "cons": [
+        "Requires Docker/Docker Compose and a Debian-based host",
+        "DNS and SSL/TLS configuration must be handled by the operator",
+        "No official free hosted/cloud version, only self-hosting or paid professional support"
+      ],
+      "faqs": [
+        {"question": "Is Mailcow free?", "answer": "Yes, the core software is free and open source under the GPLv3 license."},
+        {"question": "What components does Mailcow bundle?", "answer": "Postfix, Rspamd, SOGo, and Nginx, orchestrated via Docker."},
+        {"question": "Is professional support available?", "answer": "Yes, through The Infrastructure Company GmbH / servercow.de."},
+        {"question": "What OS does Mailcow require?", "answer": "A Debian-based system running Docker and Docker Compose."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted business email", "description": "Run a full mail server stack with webmail and groupware for a company domain.", "audience": "IT admins and self-hosting enthusiasts"},
+        {"title": "Managed alternative via paid support", "description": "Get professional support for a Mailcow deployment without building an in-house team.", "audience": "Small businesses without dedicated sysadmins"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Mailcow?", "level": 2, "paragraphs": [
+          "Mailcow is an open-source, Dockerized mail server suite that bundles Postfix, Rspamd, SOGo, and Nginx into a single managed stack with a web-based admin UI.",
+          "It is licensed under GPLv3, has 13.1k GitHub stars, and offers optional paid professional support through servercow.de for teams that don't want to self-support."
+        ]},
+        {"id": "who-its-for", "heading": "Who Mailcow is for", "level": 2, "paragraphs": [
+          "Mailcow is aimed at IT admins and self-hosting teams who want a complete, Docker-based mail and groupware stack on a Debian-based server, with the option to buy professional support instead of handling everything in-house."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "web-app"]
+    }
+  },
+  {
+    "tool_id": "fcb91d77-94ad-4a0c-b605-9adaf3d6225f",
+    "slug": "mailu",
+    "name": "Mailu",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mailu is a free, open-source mail server distributed as Docker images, covering IMAP, SMTP, webmail, and spam/anti-spoofing protection.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Mailu is a free, MIT-licensed Docker-based mail server with IMAP, SMTP, webmail, DKIM/DMARC, and antivirus, deployable via Compose or Kubernetes.",
+      "features": [
+        {"title": "IMAP, SMTP, and Submission", "description": "Standard mail protocols with auto-configuration for clients."},
+        {"title": "Full-text search and aliases", "description": "Supports full-text search plus custom email forwarding and aliases."},
+        {"title": "Enforced TLS, DANE, and MTA-STS", "description": "Security protocols with Let's Encrypt certificate support."},
+        {"title": "DKIM signing and DMARC/SPF validation", "description": "Built-in email authentication and anti-spoofing protection."},
+        {"title": "Antivirus scanning", "description": "Blocks malicious attachments and scans incoming mail."},
+        {"title": "Auto-learning anti-spam with greylisting", "description": "Reduces spam without manual rule maintenance."},
+        {"title": "Web interfaces", "description": "Separate interfaces for end users and administrators."},
+        {"title": "Domain delegation and quotas", "description": "Global admin roles, per-domain delegation, and mailbox quotas."}
+      ],
+      "pros": [
+        "Free, MIT-licensed, fully open-source components",
+        "Supports both Docker Compose and Kubernetes deployment",
+        "Built-in antivirus, DKIM/DMARC, and anti-spoofing security",
+        "7.4k GitHub stars with active development"
+      ],
+      "cons": [
+        "Requires operator-managed DNS, TLS certificates, and a database backend",
+        "No official managed/hosted offering",
+        "Self-hosting requires ongoing maintenance and security patching"
+      ],
+      "faqs": [
+        {"question": "Is Mailu free?", "answer": "Yes, it's free software licensed under MIT."},
+        {"question": "What deployment options does Mailu support?", "answer": "Docker Compose and Kubernetes."},
+        {"question": "Does Mailu include antivirus and spam filtering?", "answer": "Yes, both are built in."},
+        {"question": "What databases does Mailu support?", "answer": "MySQL, MariaDB, or PostgreSQL, per the documentation."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted mail infrastructure", "description": "Deploy a full-featured mail server via Docker Compose or Kubernetes.", "audience": "DevOps teams and self-hosters"},
+        {"title": "Privacy-focused email hosting", "description": "Run your own domain email with built-in DKIM, DMARC, and antivirus protections.", "audience": "Privacy-conscious organizations"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Mailu?", "level": 2, "paragraphs": [
+          "Mailu is a free, open-source mail server distributed as a set of Docker images, providing IMAP, SMTP, webmail, and security features like DKIM signing, DMARC/SPF validation, and antivirus scanning.",
+          "It is MIT licensed, has 7.4k GitHub stars, and can be deployed via Docker Compose or Kubernetes with MySQL, MariaDB, or PostgreSQL as the database backend."
+        ]},
+        {"id": "who-its-for", "heading": "Who Mailu is for", "level": 2, "paragraphs": [
+          "Mailu fits DevOps teams and self-hosters who want a container-native, fully open-source mail server with strong built-in security defaults and no vendor lock-in."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "web-app"]
+    }
+  },
+  {
+    "tool_id": "ba61acd7-9961-41fb-a375-101e19f2f40e",
+    "slug": "modoboa",
+    "name": "Modoboa",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Modoboa is an open-source email server platform offering webmail, unlimited domains and mailboxes, and admin tools, installable in minutes.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Modoboa is a free, ISC-licensed open-source email server with webmail, calendars, and unlimited domains, powering 800,000+ mailboxes.",
+      "features": [
+        {"title": "Browser-based webmail", "description": "Access mail directly from a web browser."},
+        {"title": "Calendar and address book", "description": "Built-in calendar and contacts management."},
+        {"title": "Filtering rules and auto-responder", "description": "Configure email filtering rules and out-of-office replies."},
+        {"title": "Unlimited domains and mailboxes", "description": "No software-imposed cap on domains, mailboxes, or aliases created."},
+        {"title": "Admin statistics and migration tools", "description": "Built-in tools for administrators to monitor usage and migrate data."},
+        {"title": "Fast installer", "description": "The site states installation takes less than 10 minutes."}
+      ],
+      "pros": [
+        "Free and open source (ISC license)",
+        "Reports over 800,000 mailboxes deployed",
+        "Fast installation process (claimed under 10 minutes)",
+        "Unlimited domains, mailboxes, and aliases with no software-imposed cap"
+      ],
+      "cons": [
+        "Hands-on professional support requires paid services",
+        "Requires the operator to configure DNS after installation",
+        "Self-hosted only; no official managed cloud version"
+      ],
+      "faqs": [
+        {"question": "Is Modoboa free?", "answer": "Yes, the core software is free and open source (ISC license)."},
+        {"question": "How long does installation take?", "answer": "The site states installation takes less than 10 minutes."},
+        {"question": "Is paid support available?", "answer": "Yes, via Modoboa.com, with installation/upgrade services starting from €150 and issue resolution from €120."},
+        {"question": "How many mailboxes does Modoboa power?", "answer": "The site cites more than 800,000 mailboxes."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted email for organizations", "description": "Run unlimited domains and mailboxes on your own infrastructure with webmail included.", "audience": "IT teams and self-hosters"},
+        {"title": "Assisted deployment via paid services", "description": "Use Modoboa's paid installation and maintenance services instead of self-managing setup.", "audience": "Small businesses without in-house sysadmins"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Installation/Upgrade Service", "price": "From €150", "billing_cycle": null, "features": ["Professional installation or upgrade assistance"]},
+        {"plan_name": "Issue Resolution Service", "price": "From €120", "billing_cycle": null, "features": ["Professional troubleshooting assistance"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Modoboa?", "level": 2, "paragraphs": [
+          "Modoboa is an open-source email server platform that lets anyone install their own email server with webmail, calendars, and unlimited domains and mailboxes.",
+          "It is ISC licensed, has 3.5k GitHub stars, and the project's site claims more than 800,000 mailboxes are running on Modoboa deployments worldwide."
+        ]},
+        {"id": "who-its-for", "heading": "Who Modoboa is for", "level": 2, "paragraphs": [
+          "Modoboa targets both technical self-hosters who want a fast, unlimited-mailbox installation and less technical users who can pay for Modoboa.com's professional installation, troubleshooting, and maintenance services."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "web-app"]
+    }
+  },
+  {
+    "tool_id": "db5dc978-1f33-4ece-86f5-07c85e0d3438",
+    "slug": "stalwart-mail-server",
+    "name": "Stalwart Mail Server",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Stalwart is a Rust-native, open-source mail and collaboration server supporting JMAP, IMAP, and SMTP, with a paid Enterprise edition.",
+      "pricing_model": "Freemium",
+      "starting_price": "€2.00/mailbox/year (Enterprise, 25-499 mailboxes)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Stalwart is an open-source (AGPL-3.0) Rust mail server with JMAP/IMAP/SMTP and CalDAV/CardDAV; Enterprise pricing starts at €2/mailbox/year.",
+      "features": [
+        {"title": "JMAP, IMAP, POP3, and SMTP", "description": "Supports multiple mail access and transfer protocols."},
+        {"title": "CalDAV, CardDAV, and WebDAV", "description": "Built-in calendar, contacts, and file storage collaboration protocols."},
+        {"title": "Spam and phishing protection", "description": "Statistical filtering combined with AI-based analysis."},
+        {"title": "Encryption at rest", "description": "Supports S/MIME and OpenPGP for stored message encryption."},
+        {"title": "DANE, MTA-STS, and automatic TLS", "description": "Transport security protocols configured automatically."},
+        {"title": "Clustering", "description": "Scale the server across multiple nodes."},
+        {"title": "Pluggable storage backends", "description": "Supports RocksDB, PostgreSQL, S3, Azure Blob, and other backends."}
+      ],
+      "pros": [
+        "Community edition is open source (AGPL-3.0)",
+        "Combines email, calendar, contacts, and file storage in one server",
+        "Rust-native, with 13.7k GitHub stars",
+        "Enterprise edition includes unlimited domains, tenants, mailing lists, and aliases at no extra cost"
+      ],
+      "cons": [
+        "Enterprise edition uses a proprietary license (Stalwart Enterprise License v2), not open source",
+        "Enterprise pricing is per-mailbox and scales with deployment size",
+        "Premium support is only included starting at 150+ mailboxes on Enterprise"
+      ],
+      "faqs": [
+        {"question": "Is Stalwart free?", "answer": "The Community edition is free and open source under AGPL-3.0; the Enterprise edition is paid."},
+        {"question": "What does Enterprise pricing look like?", "answer": "It's tiered per mailbox, starting at €2.00/mailbox/year for 25-499 mailboxes and dropping in price at higher tiers, with custom quotes above 100,000 mailboxes."},
+        {"question": "What protocols does Stalwart support?", "answer": "JMAP, IMAP, POP3, SMTP, plus CalDAV/CardDAV/WebDAV."},
+        {"question": "Can Stalwart cluster across nodes?", "answer": "Yes, it supports clustering for scaling across multiple nodes."}
+      ],
+      "use_cases": [
+        {"title": "Self-hosted email and collaboration", "description": "Run mail, calendar, and contacts on one Rust-based server using the open-source Community edition.", "audience": "Self-hosters and developers"},
+        {"title": "Enterprise mail hosting at scale", "description": "Deploy the paid Enterprise edition for per-mailbox licensing with premium support at larger mailbox counts.", "audience": "Organizations needing supported, scalable mail infrastructure"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community", "price": "Free", "billing_cycle": null, "features": ["Open source (AGPL-3.0)", "Self-hosted"]},
+        {"plan_name": "Enterprise (25-499 mailboxes)", "price": "€2.00/mailbox/year", "billing_cycle": "annual", "features": ["Unlimited domains, tenants, mailing lists and aliases"]},
+        {"plan_name": "Enterprise (500-999 mailboxes)", "price": "€1.70/mailbox/year", "billing_cycle": "annual", "features": ["Unlimited domains, tenants, mailing lists and aliases"]},
+        {"plan_name": "Enterprise (1,000-4,999 mailboxes)", "price": "€1.45/mailbox/year", "billing_cycle": "annual", "features": ["Unlimited domains, tenants, mailing lists and aliases"]},
+        {"plan_name": "Enterprise (100,000+ mailboxes)", "price": "Custom quote", "billing_cycle": null, "features": ["Custom enterprise pricing"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Stalwart Mail Server?", "level": 2, "paragraphs": [
+          "Stalwart is a Rust-native mail and collaboration platform that combines email (JMAP/IMAP/POP3/SMTP), calendar and contacts (CalDAV/CardDAV), and file storage (WebDAV) in a single server.",
+          "The Community edition is open source under AGPL-3.0 with 13.7k GitHub stars, while an Enterprise edition adds premium support and is licensed separately under the Stalwart Enterprise License v2, priced per mailbox per year."
+        ]},
+        {"id": "who-its-for", "heading": "Who Stalwart Mail Server is for", "level": 2, "paragraphs": [
+          "Stalwart suits self-hosters who want a single Rust-based server for mail and collaboration, as well as organizations that want per-mailbox Enterprise pricing with premium support instead of maintaining a purely community-supported stack."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "e21bbe8e-03eb-4184-be8d-54e23a99ca1f",
+    "slug": "maddy-mail-server",
+    "name": "Maddy Mail Server",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Maddy is a free, open-source, composable all-in-one mail server written in Go that consolidates SMTP, IMAP, and mail security into one daemon.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Maddy Mail Server is a free, GPL-3.0-licensed Go mail server combining SMTP, IMAP, DKIM, SPF, DMARC, and DANE into a single daemon.",
+      "features": [
+        {"title": "Combined SMTP/MTA and SMTP/MX", "description": "Handles both sending and receiving mail in one daemon."},
+        {"title": "Built-in IMAP storage", "description": "Provides IMAP access to stored mail, currently labeled beta by the developers."},
+        {"title": "DKIM, SPF, DMARC, DANE, MTA-STS", "description": "Implements common email authentication and transport security protocols."},
+        {"title": "Docker support", "description": "Can be deployed using Docker."},
+        {"title": "Single-daemon architecture", "description": "Replaces separate tools like Postfix, Dovecot, and OpenDKIM with one process."}
+      ],
+      "pros": [
+        "Free and open source (GPL-3.0)",
+        "Consolidates multiple mail server roles into a single Go binary/daemon",
+        "6,000 GitHub stars, actively maintained",
+        "Built-in email authentication (DKIM/SPF/DMARC/DANE/MTA-STS)"
+      ],
+      "cons": [
+        "IMAP storage is labeled \"beta\" by the developers, who recommend Dovecot for production storage",
+        "No documented specific OS/system requirements on the official site content reviewed",
+        "Community-only support (IRC, mailing list), no paid support tier"
+      ],
+      "faqs": [
+        {"question": "Is Maddy free?", "answer": "Yes, it's open source under the GPL-3.0 license."},
+        {"question": "Is Maddy production-ready for IMAP storage?", "answer": "The developers describe IMAP storage as \"beta\" and suggest pairing with Dovecot for production storage."},
+        {"question": "What does Maddy replace?", "answer": "It replaces separate tools like Postfix, Dovecot, and OpenDKIM with one daemon."},
+        {"question": "Does Maddy support Docker?", "answer": "Yes, Docker deployment is supported."}
+      ],
+      "use_cases": [
+        {"title": "Lightweight self-hosted mail server", "description": "Run SMTP sending/receiving and mail security (DKIM/SPF/DMARC) from a single Go daemon.", "audience": "Self-hosters wanting a simpler alternative to multi-tool mail stacks"},
+        {"title": "Mail delivery focus", "description": "Use Maddy primarily for message transmission while pairing with Dovecot for IMAP storage.", "audience": "Admins prioritizing production-grade storage reliability"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Maddy Mail Server?", "level": 2, "paragraphs": [
+          "Maddy is a composable, all-in-one mail server written in Go that consolidates message transmission, reception, and IMAP storage into a single daemon, along with DKIM, SPF, DMARC, DANE, and MTA-STS.",
+          "It is open source under GPL-3.0 with 6,000 GitHub stars. The developers note that its IMAP storage component is still labeled beta and recommend Dovecot for production storage needs."
+        ]},
+        {"id": "who-its-for", "heading": "Who Maddy Mail Server is for", "level": 2, "paragraphs": [
+          "Maddy fits self-hosters and developers who want a single Go binary handling mail delivery and security protocols instead of wiring together Postfix, Dovecot, and OpenDKIM separately."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "d082b33f-646c-4955-831f-c22ea77858a8",
+    "slug": "mail-in-a-box",
+    "name": "Mail-in-a-Box",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mail-in-a-Box is a free, CC0-licensed script that turns a fresh Ubuntu cloud server into a full self-hosted mail server in a few hours.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Mail-in-a-Box is a free, public-domain (CC0) tool that installs a complete self-hosted mail server with webmail, DNS, and TLS on Ubuntu 22.04.",
+      "features": [
+        {"title": "Webmail via Roundcube", "description": "Browser-based email access included out of the box."},
+        {"title": "Contacts and calendar sync", "description": "Uses Nextcloud for contacts and calendar synchronization."},
+        {"title": "Web-based control panel", "description": "Manage user accounts through a control panel."},
+        {"title": "Automated DNS configuration", "description": "Sets up SPF, DKIM, DMARC, MTA-STS, and DNSSEC automatically."},
+        {"title": "Automatic TLS certificates", "description": "Provisions certificates via Let's Encrypt."},
+        {"title": "Spam filtering with greylisting", "description": "Reduces unwanted mail without manual configuration."},
+        {"title": "Static website hosting", "description": "Can also serve a static website from the same box."},
+        {"title": "Two-factor authentication and REST API", "description": "Adds account security and programmatic access."},
+        {"title": "Automated backups", "description": "Backs up to Amazon S3 and other supported storage services."}
+      ],
+      "pros": [
+        "Free and released under the CC0 public domain dedication, with no license restrictions",
+        "Single-command setup targeted at non-experts",
+        "15.4k GitHub stars, indicating broad adoption",
+        "Automates DNS, TLS, and backup configuration, reducing manual setup work"
+      ],
+      "cons": [
+        "Requires a fresh Ubuntu 22.04 LTS 64-bit cloud server, not existing/shared servers",
+        "Installation takes \"a few hours\" per the official site",
+        "Self-hosted only; no official hosted/managed version"
+      ],
+      "faqs": [
+        {"question": "Is Mail-in-a-Box free?", "answer": "Yes, it's released under the CC0-1.0 public domain dedication."},
+        {"question": "What server does it require?", "answer": "A fresh Ubuntu 22.04 LTS 64-bit machine running in the cloud."},
+        {"question": "How is it installed?", "answer": "Via a single setup command: curl -s https://mailinabox.email/setup.sh | sudo bash."},
+        {"question": "Does it include webmail?", "answer": "Yes, via Roundcube, plus contacts/calendar sync via Nextcloud."}
+      ],
+      "use_cases": [
+        {"title": "Turnkey self-hosted email", "description": "Turn a fresh cloud VM into a working mail server without deep sysadmin expertise.", "audience": "Individuals and small organizations self-hosting email"},
+        {"title": "Privacy-focused personal email", "description": "Run your own domain's email, contacts, and calendar independent of third-party providers.", "audience": "Privacy-focused individuals"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Mail-in-a-Box?", "level": 2, "paragraphs": [
+          "Mail-in-a-Box is a free, public-domain script that turns a fresh Ubuntu 22.04 LTS cloud server into a complete, working mail server, including webmail, contacts/calendar sync, DNS automation, and TLS certificates.",
+          "It is released under the CC0-1.0 dedication, has 15.4k GitHub stars, and installs via a single setup command that takes a few hours to complete."
+        ]},
+        {"id": "who-its-for", "heading": "Who Mail-in-a-Box is for", "level": 2, "paragraphs": [
+          "Mail-in-a-Box targets individuals and small organizations who want to self-host email without deep systems administration expertise, thanks to its heavily automated DNS, TLS, and backup setup."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "api"]
+    }
+  },
+  {
+    "tool_id": "75720a0f-3359-4066-8426-dccd1160a142",
+    "slug": "mailpit",
+    "name": "Mailpit",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Mailpit is a free, open-source, single-binary email testing tool with a web UI, SMTP server, REST API, and HTML/CSS compatibility checks.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Mailpit is a free, MIT-licensed email testing tool for developers with a web UI, SMTP capture, REST API, and spam-score testing.",
+      "features": [
+        {"title": "Single binary, zero dependencies", "description": "Deploy as one executable with no external dependencies."},
+        {"title": "Live web UI", "description": "Real-time notifications as new captured messages arrive."},
+        {"title": "HTML/CSS compatibility checker", "description": "Checks email markup against client compatibility rules."},
+        {"title": "Link validation and screenshots", "description": "Validates links and generates screenshots of rendered emails."},
+        {"title": "Spam testing", "description": "Integrates with SpamAssassin for spam-score testing."},
+        {"title": "REST API", "description": "Programmatic access to captured messages for test automation."},
+        {"title": "POP3 server support", "description": "Exposes captured mail over POP3 in addition to the web UI."},
+        {"title": "Message tagging, relaying, and forwarding", "description": "Organize and route captured test messages."}
+      ],
+      "pros": [
+        "Free and open source (MIT license)",
+        "Single binary with zero dependencies, simple to deploy",
+        "9.9k GitHub stars",
+        "Includes a REST API and webhook integration for test automation"
+      ],
+      "cons": [
+        "Intended for email testing, not production mail delivery",
+        "No official pricing/support tiers; community-supported only",
+        "Frontend built with Go/Vue, requiring build tooling to customize"
+      ],
+      "faqs": [
+        {"question": "Is Mailpit free?", "answer": "Yes, it's open source under the MIT license."},
+        {"question": "What is Mailpit used for?", "answer": "It's an SMTP testing tool for developers to capture and inspect outgoing email during development."},
+        {"question": "Does Mailpit have an API?", "answer": "Yes, it includes a REST API for programmatic access."},
+        {"question": "Can Mailpit test for spam scoring?", "answer": "Yes, via SpamAssassin integration."}
+      ],
+      "use_cases": [
+        {"title": "Local email testing", "description": "Capture and preview outgoing application email during development without sending real messages.", "audience": "Developers"},
+        {"title": "CI/CD email testing", "description": "Use the REST API to assert on captured emails within automated test suites.", "audience": "QA and DevOps engineers"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Mailpit?", "level": 2, "paragraphs": [
+          "Mailpit is a free, open-source email testing tool for developers: a small, zero-dependency single binary that runs an SMTP server plus a web UI and REST API for capturing and inspecting outgoing email.",
+          "It is MIT licensed, has 9.9k GitHub stars, and adds developer-focused extras like HTML/CSS client compatibility checks, link validation, screenshot generation, and SpamAssassin-based spam testing."
+        ]},
+        {"id": "who-its-for", "heading": "Who Mailpit is for", "level": 2, "paragraphs": [
+          "Mailpit is built for developers and QA/DevOps engineers who need to capture and verify outgoing application email in local development or CI/CD pipelines without sending real messages."
+        ]}
+      ],
+      "tags": ["self-hosted", "open-source", "api", "web-app"]
+    }
+  },
+  {
+    "tool_id": "7b032bbf-1c83-4ca0-8ae9-0ff746c43cee",
+    "slug": "mjml",
+    "name": "MJML",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "MJML is a free, open-source markup language created by Mailjet in 2015 that compiles into responsive, cross-client HTML email.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 2015,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "MJML is a free, MIT-licensed responsive email markup language from Mailjet that transpiles into cross-client HTML with inlined CSS.",
+      "features": [
+        {"title": "Semantic markup tags", "description": "Uses tags like mj-section and mj-column instead of raw HTML tables."},
+        {"title": "Responsive by default", "description": "Output is responsive across major email clients, including Outlook."},
+        {"title": "Component-based architecture", "description": "Reusable, extensible native components."},
+        {"title": "Custom components", "description": "Build your own components beyond the native set."},
+        {"title": "HTML transpilation", "description": "Compiles MJML into responsive HTML with nested tables and inline CSS."},
+        {"title": "Built with React.js", "description": "The framework's tooling is built for high composability using React.js."}
+      ],
+      "pros": [
+        "Free and open source (MIT license)",
+        "18.2k GitHub stars, one of the most widely adopted email markup frameworks",
+        "Simplifies notoriously fragile HTML email coding",
+        "Extensible with custom components"
+      ],
+      "cons": [
+        "Requires a build/compile step to transpile MJML into HTML",
+        "No official hosted editor or paid tier found on the official site",
+        "Learning a markup language adds overhead versus writing raw HTML for very simple emails"
+      ],
+      "faqs": [
+        {"question": "Is MJML free?", "answer": "Yes, it's open source under the MIT license."},
+        {"question": "Who created MJML?", "answer": "Mailjet, released in 2015 during work on their Passport drag-and-drop email builder."},
+        {"question": "Does MJML guarantee cross-client compatibility?", "answer": "It's designed to be responsive by default across major email clients, including Outlook."},
+        {"question": "Can I extend MJML with custom components?", "answer": "Yes, its component-based architecture supports custom, reusable components."}
+      ],
+      "use_cases": [
+        {"title": "Responsive transactional/marketing email", "description": "Author email templates in a simplified markup language that compiles to cross-client-safe HTML.", "audience": "Frontend developers building email templates"},
+        {"title": "Reusable email component libraries", "description": "Build custom, reusable MJML components for consistent email design across a product.", "audience": "Product/design teams standardizing email output"}
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is MJML?", "level": 2, "paragraphs": [
+          "MJML is a responsive email framework created by Mailjet in 2015 that uses a semantic markup language, transpiled into responsive HTML with nested tables and inline CSS, to simplify the notoriously fragile process of coding HTML email.",
+          "It is open source under the MIT license, has 18.2k GitHub stars, and is built with a component-based architecture that includes both native and custom-buildable components."
+        ]},
+        {"id": "who-its-for", "heading": "Who MJML is for", "level": 2, "paragraphs": [
+          "MJML is for frontend developers and product teams who build responsive HTML email templates and want a semantic markup layer plus a build step instead of hand-coding nested HTML tables and inline CSS."
+        ]}
+      ],
+      "tags": ["open-source", "templates", "api"]
+    }
+  },
+  {
+    "tool_id": "2af93f8f-0570-4f36-b4b2-40e5917e9e2a",
+    "slug": "unlayer",
+    "name": "Unlayer",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Unlayer is a developer platform providing embeddable email, page, document, and popup builders with a free plan and paid usage-based tiers.",
+      "pricing_model": "Freemium",
+      "starting_price": "$250/month (Launch plan)",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Unlayer lets developers embed drag-and-drop email, page, and document builders into their apps, from a free plan up to a $2,000/month Optimize plan.",
+      "features": [
+        {"title": "Visual builders", "description": "Drag-and-drop email, page, document, and popup builders."},
+        {"title": "AI workflows", "description": "Content generation, rewriting, personalization, and translation."},
+        {"title": "Branded templates", "description": "Create and manage branded templates for end users."},
+        {"title": "Multi-format export", "description": "Export designs to HTML, PDF, images, and plain text."},
+        {"title": "Developer SDK and APIs", "description": "SDK, REST APIs, React Elements, and a CLI for integrating builders into a product."},
+        {"title": "Media management", "description": "Asset upload and organization within the builders."},
+        {"title": "White-labeling", "description": "Available on paid plans for embedding under a customer's own brand."},
+        {"title": "Team collaboration", "description": "Available on the Scale plan and above."}
+      ],
+      "pros": [
+        "Free plan available with core email/page/popup/document builders",
+        "SOC 2 Type II compliant with a 99.9% uptime SLA",
+        "Used by 1,000+ SaaS brands including Mastercard, Bank of America, and Twilio, per Unlayer's site",
+        "Y Combinator-backed",
+        "14-day free trial on paid plans"
+      ],
+      "cons": [
+        "Paid plans start at $250/month, a significant jump from the free tier",
+        "Higher-value features (custom CSS, custom themes, AMP, inbox previews) are reserved for the $2,000/month Optimize plan",
+        "Usage-based add-ons (AI, export, inbox preview, bandwidth credits) cost extra, from $50 to $2,000/month, on top of plan fees",
+        "Enterprise pricing is custom/quote-only"
+      ],
+      "faqs": [
+        {"question": "Does Unlayer have a free plan?", "answer": "Yes, a free plan with email, page, popup, and document builders is available at $0."},
+        {"question": "What do paid plans cost?", "answer": "Launch is $250/month, Scale is $750/month, and Optimize is $2,000/month, each with a 14-day free trial; Enterprise is custom-priced."},
+        {"question": "Is Unlayer SOC 2 compliant?", "answer": "Yes, it's SOC 2 Type II compliant with a 99.9% uptime SLA."},
+        {"question": "Does Unlayer offer an annual discount?", "answer": "Yes, annual billing saves 10% versus monthly."},
+        {"question": "Who is Unlayer for?", "answer": "Developers and technical teams embedding content-creation tools, such as email/page/document builders, into their own SaaS products."}
+      ],
+      "use_cases": [
+        {"title": "Embedded email builder for SaaS", "description": "Add a drag-and-drop email design tool inside a marketing platform or CRM product.", "audience": "SaaS product teams (email service providers, CRMs, marketing platforms)"},
+        {"title": "White-labeled content creation tools", "description": "Offer branded page, document, and popup builders to end customers via SDK/API integration.", "audience": "Developers building customer-facing design tools"},
+        {"title": "AI-assisted content generation", "description": "Use built-in AI workflows to generate, rewrite, personalize, or translate email/page content.", "audience": "Marketing and growth teams"}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Email, page, popup, and document builders"]},
+        {"plan_name": "Launch", "price": "$250/month", "billing_cycle": "monthly", "features": ["1 TB bandwidth", "White-labeling", "Font management", "Custom storage", "AI assistant", "Cloud API", "14-day free trial"]},
+        {"plan_name": "Scale", "price": "$750/month", "billing_cycle": "monthly", "features": ["Everything in Launch", "Custom blocks", "Audit tab", "Team collaboration", "Built-in themes", "Smart merge tags", "14-day free trial"]},
+        {"plan_name": "Optimize", "price": "$2,000/month", "billing_cycle": "monthly", "features": ["Everything in Scale", "Custom themes", "Custom CSS", "Custom tabs", "AMP support", "Inbox previews", "Synced blocks", "14-day free trial"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": null, "features": ["Custom contracts", "SOC 2 Type II", "White-label", "Dedicated CSM"]}
+      ],
+      "long_form_blocks": [
+        {"id": "overview", "heading": "What is Unlayer?", "level": 2, "paragraphs": [
+          "Unlayer is a developer platform that lets companies embed drag-and-drop email, page, document, and popup builders directly inside their own applications, so end users can create content without leaving the host product.",
+          "It offers a free plan plus paid Launch ($250/month), Scale ($750/month), and Optimize ($2,000/month) tiers, each with a 14-day free trial, and custom Enterprise pricing. The company states it is SOC 2 Type II compliant, offers a 99.9% uptime SLA, is backed by Y Combinator, and serves 1,000+ SaaS brands."
+        ]},
+        {"id": "who-its-for", "heading": "Who Unlayer is for", "level": 2, "paragraphs": [
+          "Unlayer is built for developers and technical teams at SaaS companies, such as marketing platforms, CRMs, and email service providers, who want to integrate content-creation experiences into their product via SDK, REST API, or React Elements rather than building a builder from scratch."
+        ]}
+      ],
+      "tags": ["ai", "api", "freemium", "free-plan", "free-trial", "templates", "web-app"]
+    }
+  }
+]

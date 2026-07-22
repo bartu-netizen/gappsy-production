@@ -1,17 +1,6 @@
 import { ReactNode, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
-interface SidebarAd {
-  id: string;
-  position: string;
-  display_order: number;
-  logo_url: string;
-  title: string;
-  subtitle: string;
-  target_url: string;
-  bg_color: string;
-  is_active: boolean;
-}
+import { fetchSidebarAds, type SidebarAd } from '../lib/sidebarAdsCache';
 
 const defaultBgColors = [
   '#E0F2FE',
@@ -43,9 +32,22 @@ export default function ThreeColumnLayout({ children, className }: ThreeColumnLa
     }
   }, [showAds]);
 
+  // Must match the condition below that actually renders the fixed ad
+  // rails + internal scrollable column (not just "are we on the homepage").
+  // The bug this was causing: showAds alone goes true the instant the
+  // route matches "/", before the ad fetch resolves — so body/html got
+  // overflow:hidden the moment you landed on the homepage, while the JSX
+  // was still rendering the plain fallback branch below (no internal
+  // scrollable div to compensate). Scrolling did nothing for that entire
+  // window on every homepage visit, and permanently if the ad fetch ever
+  // failed or returned zero ads — exactly the "page freezes, big blank
+  // area, scrolling stops working" reports.
+  const showAdRails = showAds && !loading && ads.length > 0;
+
   useEffect(() => {
-    // Only apply overflow styles on homepage with ads
-    if (!showAds) return;
+    // Only apply overflow styles when the ad-rail layout (with its own
+    // internal scrollable column) is actually rendered.
+    if (!showAdRails) return;
 
     const mq = window.matchMedia('(min-width: 1280px)');
     const apply = () => {
@@ -72,22 +74,12 @@ export default function ThreeColumnLayout({ children, className }: ThreeColumnLa
       document.documentElement.style.height = '';
       document.body.style.height = '';
     };
-  }, [showAds]);
+  }, [showAdRails]);
 
   const loadAds = async () => {
-    try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/sidebar-ads-fetch`;
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (data.ads) {
-        setAds(data.ads);
-      }
-    } catch (err) {
-      console.error('Failed to load sidebar ads:', err);
-    } finally {
-      setLoading(false);
-    }
+    const data = await fetchSidebarAds();
+    setAds(data);
+    setLoading(false);
   };
 
   const leftAds = ads.filter(ad => ad.position === 'left').slice(0, 5);
@@ -143,7 +135,7 @@ export default function ThreeColumnLayout({ children, className }: ThreeColumnLa
   };
 
   // If not on homepage, or no ads to show, render simple layout
-  if (!showAds || loading || ads.length === 0) {
+  if (!showAdRails) {
     return <div className={`w-full ${className || ''}`}>{children}</div>;
   }
 

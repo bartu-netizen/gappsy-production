@@ -19,6 +19,7 @@ export interface AuditLogEntry {
   user_agent?: string;
   status: "success" | "rejected" | "error";
   rejection_reason?: string;
+  duration_ms?: number;
 }
 
 export async function authenticateAdmin(req: Request): Promise<AuthResult> {

@@ -1,0 +1,641 @@
+[
+  {
+    "tool_id": "016aac11-14a9-4e56-958c-3b361e5b1ef4",
+    "slug": "corteza-crm",
+    "name": "Corteza CRM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Corteza is an open-source, low-code platform (Apache 2.0) with a built-in CRM module for records-based business apps.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Corteza is a free, open-source low-code platform with a built-in CRM, messaging, and workflow automation, licensed under Apache 2.0.",
+      "features": [
+        { "title": "Low-code CRM", "description": "Gives a 360-degree overview of leads and accounts, with a module for automating sales and service processes." },
+        { "title": "Unified Workspace", "description": "A Google Workspace-style collaboration layer bundled into the platform." },
+        { "title": "Enterprise Messaging", "description": "Built-in Slack-style internal messaging for teams." },
+        { "title": "Flattened RBAC", "description": "Role-based access control that lets organizations apply complex internal security policies." },
+        { "title": "Low-code app builder", "description": "Build and iterate custom records-based business apps beyond CRM." },
+        { "title": "Accessibility", "description": "The platform is built to conform to WCAG 2.1 accessibility guidelines." }
+      ],
+      "pros": [
+        "Fully open source under the Apache 2.0 license with no vendor lock-in",
+        "Code is contributed to the Commons Conservancy Software Foundation, so access cannot be revoked by a single vendor",
+        "Bundles CRM, internal messaging, and workspace tools in one self-hosted platform",
+        "Actively maintained on GitHub with recent commits and 2,000+ stars"
+      ],
+      "cons": [
+        "Requires self-hosting (e.g. via Docker) and technical setup to run",
+        "No first-party managed-cloud pricing page on cortezaproject.org; hosted instances are offered by third parties such as Planet Crust",
+        "Smaller community and ecosystem than major commercial CRMs like Salesforce"
+      ],
+      "faqs": [
+        { "question": "Is Corteza free?", "answer": "Yes. Corteza is fully open source under the Apache 2.0 license and free to download and self-host." },
+        { "question": "What license does Corteza use?", "answer": "Corteza is released under the Apache License 2.0." },
+        { "question": "Can I run Corteza without managing my own server?", "answer": "Corteza is designed to be self-hosted via Docker; hosted cloud instances are also offered by third parties such as Planet Crust, separate from the core open-source project." },
+        { "question": "Is Corteza only a CRM?", "answer": "No. Corteza is a broader low-code platform that includes a CRM module alongside a unified workspace and enterprise messaging." }
+      ],
+      "use_cases": [
+        { "title": "Open-source CRM without vendor lock-in", "description": "Organizations that want a self-hosted alternative to closed-source CRMs and full control of their data.", "audience": "IT teams and organizations avoiding vendor lock-in" },
+        { "title": "Custom low-code business apps", "description": "Building bespoke records-based workflow apps on top of the same platform that powers the CRM.", "audience": "Developers and low-code app builders" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Corteza CRM?",
+          "level": 2,
+          "paragraphs": [
+            "Corteza is an open-source, low-code platform that includes a CRM module for managing leads and accounts, alongside a unified workspace and enterprise messaging. It is released under the Apache 2.0 license, and its code has been contributed to the Commons Conservancy Software Foundation.",
+            "The platform is self-hosted, typically via Docker, and includes a flattened role-based access control (RBAC) system so organizations can apply their own internal security policies."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Corteza CRM is for",
+          "level": 2,
+          "paragraphs": [
+            "Corteza suits organizations that want an open-source, self-hosted CRM and are comfortable running and maintaining their own infrastructure, as well as developers who want to extend the same low-code platform to build other records-based business apps."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "c0b30aa3-ea8d-4c30-98b3-03b802c687b0",
+    "slug": "atomic-crm",
+    "name": "Atomic CRM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Atomic CRM is an open-source CRM toolkit by Marmelab, built with React, Shadcn UI, and Supabase, that teams can self-host or customize.",
+      "pricing_model": "Freemium",
+      "starting_price": "€25/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Atomic CRM is an open-source CRM built with React and Supabase, offering free self-hosting or paid managed plans from €25/month.",
+      "features": [
+        { "title": "Sales pipeline and Kanban board", "description": "Customizable Kanban board for tracking deals through a sales pipeline." },
+        { "title": "Contact and activity management", "description": "Contact organization with avatars, activity tracking, notes, and email-to-note capture." },
+        { "title": "Task management", "description": "Task creation with reminders tied to contacts and deals." },
+        { "title": "Data import/export", "description": "Import and export CRM data for migrations and reporting." },
+        { "title": "Single sign-on", "description": "SSO support via Google, Azure, Keycloak, or Auth0." },
+        { "title": "API and MCP Server", "description": "API integration plus an MCP Server for connecting AI assistants to CRM data." },
+        { "title": "Mobile app", "description": "A companion mobile app for accessing the CRM on the go." }
+      ],
+      "pros": [
+        "Fully open source with code available on GitHub, so any feature can be modified",
+        "No vendor lock-in — can be self-hosted on your own infrastructure at no cost",
+        "Built on a modern, well-documented stack (React, TypeScript, Shadcn UI, Supabase)",
+        "Includes SSO and an MCP Server for AI-assistant integration out of the box"
+      ],
+      "cons": [
+        "Paid Starter and Team plans cap contacts and storage (1,000 contacts/1GB and 10,000 contacts/10GB respectively)",
+        "Self-hosting requires managing your own Supabase/PostgreSQL infrastructure",
+        "Enterprise pricing is custom and not published"
+      ],
+      "faqs": [
+        { "question": "Is Atomic CRM free?", "answer": "Yes, it can be self-hosted for free since it is fully open source; Marmelab also offers paid managed plans starting at €25/month." },
+        { "question": "Who built Atomic CRM?", "answer": "Atomic CRM is built by Marmelab, using React, TypeScript, Shadcn UI, Tailwind CSS, and Supabase." },
+        { "question": "Can I self-host Atomic CRM?", "answer": "Yes, self-hosting is supported for full data sovereignty, in addition to Marmelab's Supabase-managed hosting option." },
+        { "question": "Does Atomic CRM support single sign-on?", "answer": "Yes, it supports SSO via Google, Azure, Keycloak, and Auth0." }
+      ],
+      "use_cases": [
+        { "title": "Customizable CRM without vendor lock-in", "description": "Teams that want a CRM they can fully modify at the code level rather than adapting to a closed platform.", "audience": "Companies needing a tailored CRM" },
+        { "title": "Managed hosted CRM", "description": "Teams that want the open-source toolkit without operating their own infrastructure, using Marmelab's Starter or Team plans.", "audience": "Small to mid-sized sales teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free (self-hosted)", "price": "$0", "billing_cycle": null, "features": ["Self-hosted on your own infrastructure", "Full source code access"] },
+        { "plan_name": "Starter", "price": "€25/month", "billing_cycle": "monthly", "features": ["Up to 1,000 contacts", "1GB storage"] },
+        { "plan_name": "Team", "price": "€50/month", "billing_cycle": "monthly", "features": ["Up to 10,000 contacts", "10GB storage"] },
+        { "plan_name": "Enterprise", "price": null, "billing_cycle": null, "features": ["Unlimited capacity", "Custom pricing"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Atomic CRM?",
+          "level": 2,
+          "paragraphs": [
+            "Atomic CRM is an open-source CRM toolkit from Marmelab, built with React, TypeScript, Shadcn UI, Tailwind CSS, and Supabase. It covers contact management, a Kanban-based sales pipeline, task reminders, and activity tracking.",
+            "Because the full source is available on GitHub, teams can modify any feature to fit their process instead of working around a closed vendor's roadmap. Marmelab also offers Supabase-managed hosting as a paid alternative to self-hosting."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Atomic CRM is for",
+          "level": 2,
+          "paragraphs": [
+            "Atomic CRM fits teams that want to self-host a CRM and customize it at the code level, as well as smaller sales teams that prefer a managed hosted plan without giving up the option to self-host later."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "a346f9ff-ee8c-46ac-9a67-521ae858c58b",
+    "slug": "krayin-crm",
+    "name": "Krayin CRM",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Krayin CRM is a free, open-source, self-hosted CRM built on Laravel, maintained by Webkul, covering sales, marketing, and support.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Krayin CRM is a free, open-source Laravel CRM for sales, marketing automation, and customer support, with 23,000+ GitHub stars.",
+      "features": [
+        { "title": "Sales management", "description": "Lead tracking, deal management, and sales forecasting." },
+        { "title": "Marketing automation", "description": "Campaign management, email marketing, and customer segmentation." },
+        { "title": "Customer support", "description": "VoIP, live chat, and multi-channel feedback handling." },
+        { "title": "Reporting and analytics", "description": "Performance reporting and analysis tools for sales and support activity." },
+        { "title": "Custom fields and access control", "description": "Custom fields, activity logs, and access control lists for tailoring the CRM to a business." },
+        { "title": "Multi-channel communication", "description": "Connects with Gmail, Outlook, WhatsApp, Facebook, WeChat, Skype, and phone systems." }
+      ],
+      "pros": [
+        "Fully open source (MIT license) and free to self-host",
+        "Large, active GitHub project with 23,000+ stars and recent commits",
+        "Covers sales, marketing automation, and support in one CRM",
+        "Extensible with official extensions for VoIP, multi-tenant SaaS, and Google Workspace sync"
+      ],
+      "cons": [
+        "Self-hosting on Laravel/PHP requires setting up and maintaining your own server",
+        "No fixed first-party managed-cloud pricing; hosted setups are sold separately through Webkul's Cloudkul service and third-party hosts",
+        "Industry-specific solution templates and extensions add complexity to evaluate"
+      ],
+      "faqs": [
+        { "question": "Is Krayin CRM free?", "answer": "Yes, Krayin is fully open source and free to download and self-host." },
+        { "question": "Who maintains Krayin CRM?", "answer": "Krayin is maintained by Webkul as an open-source project." },
+        { "question": "What is Krayin built on?", "answer": "Krayin is built on Laravel (PHP)." },
+        { "question": "Can I get Krayin as managed hosting?", "answer": "Webkul offers Cloudkul managed hosting setup on AWS, GCP, and Azure, and third-party hosts also offer Krayin hosting plans." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted sales CRM", "description": "Tracking leads, deals, and forecasts without paying per-user SaaS fees.", "audience": "SMEs wanting an open-source CRM" },
+        { "title": "Support and marketing in one platform", "description": "Combining live chat, VoIP, and email campaigns with CRM records.", "audience": "Support and marketing teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Krayin CRM?",
+          "level": 2,
+          "paragraphs": [
+            "Krayin CRM is an open-source, self-hosted CRM built on Laravel and maintained by Webkul. It covers sales pipeline management, marketing automation, and multi-channel customer support (including VoIP and live chat) in a single self-hosted application.",
+            "The project has more than 23,000 GitHub stars and is actively developed, with extensions available for VoIP, multi-tenant SaaS deployments, and Google Workspace synchronization."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Krayin CRM is for",
+          "level": 2,
+          "paragraphs": [
+            "Krayin suits businesses that want a free, self-hosted CRM built on a familiar Laravel/PHP stack, and that are comfortable managing their own server or contracting managed hosting through Webkul or a third party."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "e2c5c190-2aaa-46b6-b142-c38b763e334a",
+    "slug": "odoo-community",
+    "name": "Odoo Community",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Odoo Community is the free, open-source (LGPLv3) edition of Odoo's business management suite, with 40+ integrated apps.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": "8,000+ employees",
+      "headquarters": "Grand Rosière, Belgium",
+      "languages": [],
+      "seo_meta_description": "Odoo Community is the free, open-source edition of Odoo, offering 40+ integrated apps for accounting, CRM, inventory, and more.",
+      "features": [
+        { "title": "Integrated business apps", "description": "40+ apps spanning Accounting, Invoicing, Expenses, CRM, Sales, Point of Sale, Inventory, Manufacturing, Purchase, HR, and Website/eCommerce." },
+        { "title": "Open-source codebase", "description": "Source code is publicly available on GitHub under the LGPLv3 license." },
+        { "title": "PostgreSQL-based data model", "description": "Runs on PostgreSQL with no proprietary data format." },
+        { "title": "Community app marketplace", "description": "Access to 40,000+ community-developed apps." },
+        { "title": "Self-hosted or Odoo.sh hosting", "description": "Can be deployed on-premise or hosted via Odoo's own Odoo.sh cloud platform." }
+      ],
+      "pros": [
+        "Completely free to download, install, and modify under the LGPLv3 license",
+        "Broad coverage of business functions (finance, sales, inventory, HR) in one open-source suite",
+        "Large third-party app marketplace and active developer community",
+        "Backed by Odoo, a large, established company with 8,000+ employees"
+      ],
+      "cons": [
+        "Extra apps, infrastructure, and professional services are reserved for the paid Enterprise edition",
+        "Self-hosting requires managing your own server, or paying for Odoo.sh cloud hosting",
+        "40+ apps and heavy customization options can mean a steeper setup and configuration process"
+      ],
+      "faqs": [
+        { "question": "Is Odoo Community really free?", "answer": "Yes, Odoo Community is open source and free to use, with no licensing cost." },
+        { "question": "What license does Odoo Community use?", "answer": "Odoo Community is licensed under LGPLv3." },
+        { "question": "What's the difference between Odoo Community and Enterprise?", "answer": "Enterprise adds extra apps, infrastructure, and professional services on top of the free Community edition." },
+        { "question": "Can Odoo Community be self-hosted?", "answer": "Yes, it can be self-hosted, or deployed via Odoo's own Odoo.sh cloud hosting platform." }
+      ],
+      "use_cases": [
+        { "title": "Free, self-hosted ERP core", "description": "Running accounting, sales, and inventory on open-source software without licensing fees.", "audience": "Small and mid-sized businesses" },
+        { "title": "Custom app development on Odoo's framework", "description": "Building or installing community-developed apps on top of the Odoo framework.", "audience": "Developers and Odoo implementation partners" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community", "price": "$0", "billing_cycle": null, "features": ["Open source, self-hosted", "Access to core apps and GitHub source"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Odoo Community?",
+          "level": 2,
+          "paragraphs": [
+            "Odoo Community is the free, open-source edition of Odoo's business management platform, licensed under LGPLv3. It includes 40+ integrated apps covering finance, sales, supply chain, HR, and website/eCommerce, all built on PostgreSQL.",
+            "It differs from Odoo Enterprise, which adds extra apps, infrastructure, and professional services on top of the same open-source core."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Odoo Community is for",
+          "level": 2,
+          "paragraphs": [
+            "Odoo Community fits businesses that want a free, self-hosted alternative to commercial ERP/CRM suites and are willing to manage their own deployment, as well as developers building on Odoo's open framework."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "99b0c7e3-3443-428c-9117-bae2653976d1",
+    "slug": "frappe-books",
+    "name": "Frappe Books",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Frappe Books is a free, open-source desktop accounting app for freelancers and small businesses that stores data locally in SQLite.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Frappe Books is a free, open-source offline desktop accounting app with double-entry bookkeeping and invoicing for small businesses.",
+      "features": [
+        { "title": "Double-entry accounting", "description": "Records each transaction across two accounts for accurate financial tracking." },
+        { "title": "Financial dashboard", "description": "Overview of key financial data and performance metrics." },
+        { "title": "Point of Sale", "description": "Integrated POS for processing retail sales transactions." },
+        { "title": "Standard financial reports", "description": "Profit and Loss Statement, Trial Balance, and Balance Sheet reports." },
+        { "title": "Invoice template builder", "description": "A template builder for customizing invoice appearance using basic HTML." },
+        { "title": "Offline, local-first storage", "description": "Runs offline as a desktop app, storing all data in a local SQLite file for full data ownership." }
+      ],
+      "pros": [
+        "Completely free and open source with no subscription cost",
+        "Works fully offline, with data stored locally for privacy and data ownership",
+        "Cross-platform desktop app (Windows, macOS, Linux) via Electron",
+        "Data lives in a single SQLite file, making backups as simple as copying the file"
+      ],
+      "cons": [
+        "Desktop-only application, not a hosted web app by default",
+        "No official first-party managed cloud version dedicated to Frappe Books",
+        "Being a smaller project, it has fewer built-in integrations than larger accounting platforms"
+      ],
+      "faqs": [
+        { "question": "Is Frappe Books free?", "answer": "Yes, Frappe Books is free and open source with no subscription fee." },
+        { "question": "Does Frappe Books work offline?", "answer": "Yes, it runs locally and does not require an internet connection." },
+        { "question": "What database does Frappe Books use?", "answer": "It uses a local SQLite file to store all financial data and configuration." },
+        { "question": "What platforms does Frappe Books support?", "answer": "It runs as a desktop application via Electron on Windows, macOS, and Linux." }
+      ],
+      "use_cases": [
+        { "title": "Offline bookkeeping for freelancers", "description": "Managing invoices, expenses, and reports without an internet connection or subscription.", "audience": "Freelancers and small business owners" },
+        { "title": "Privacy-focused accounting", "description": "Keeping all financial data on a local machine rather than a third-party cloud.", "audience": "Businesses prioritizing data ownership" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Full desktop app", "Local SQLite storage", "Offline use"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Frappe Books?",
+          "level": 2,
+          "paragraphs": [
+            "Frappe Books is a free, open-source desktop accounting application for small and medium businesses. It supports double-entry bookkeeping, invoicing, a point-of-sale module, and standard reports like Profit and Loss and Balance Sheet.",
+            "Built with Electron, it runs offline on Windows, macOS, and Linux, storing all data in a local SQLite file so users retain full ownership of their financial data."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Frappe Books is for",
+          "level": 2,
+          "paragraphs": [
+            "Frappe Books fits freelancers and small business owners who want free, offline accounting software and prefer keeping their financial data on their own machine rather than in a third-party cloud."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "windows", "mac"]
+    }
+  },
+  {
+    "tool_id": "d1cc4c3e-0cf9-4d81-96ce-6a93cb963869",
+    "slug": "akaunting",
+    "name": "Akaunting",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Akaunting is open-source accounting software for small businesses, free to self-host on-premise or available as paid cloud plans from $8/month.",
+      "pricing_model": "Freemium",
+      "starting_price": "$8/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Akaunting is open-source accounting software, free to self-host or available as cloud plans from $8/month, used by 300,000+ businesses.",
+      "features": [
+        { "title": "Invoicing", "description": "Professional invoice templates with recurring invoices and billing." },
+        { "title": "Double-entry accounting", "description": "Chart of Accounts, Balance Sheet, and General Ledger." },
+        { "title": "Expense and cash flow tracking", "description": "Expense categorization and cash flow management tools." },
+        { "title": "Client portal", "description": "Lets clients view transactions and accept payments online." },
+        { "title": "Inventory and project tools", "description": "Inventory management, project tracking, and time tracking." },
+        { "title": "Payroll and CRM apps", "description": "Optional apps for payroll and basic CRM functionality." }
+      ],
+      "pros": [
+        "Self-hosted On-Premise Standard plan is free, with full source code available",
+        "Used by 300,000+ users across 100+ countries",
+        "Available in 50+ languages",
+        "Cloud plans scale from a single freelancer up to unlimited companies and users"
+      ],
+      "cons": [
+        "Higher-value features (payroll, inventory, CRM, POS) are gated to Elite/Ultimate cloud tiers",
+        "Cloud plan limits (e.g. invoice counts, number of apps) scale with price, so growing businesses may need to upgrade tiers",
+        "On-premise self-hosting requires managing your own server infrastructure"
+      ],
+      "faqs": [
+        { "question": "Is Akaunting free?", "answer": "The On-Premise/self-hosted Standard plan is free, with source code available; Akaunting also offers paid cloud plans starting at $8/month (billed yearly)." },
+        { "question": "How many languages does Akaunting support?", "answer": "Akaunting is available in 50+ languages." },
+        { "question": "What's included in the cheapest cloud plan?", "answer": "The Standard Cloud plan supports 1 company, 1 user plus 1 accountant, 1,000 invoices, and 4 apps." },
+        { "question": "Can I self-host Akaunting?", "answer": "Yes, via the On-Premise version, separate from the hosted cloud plans." }
+      ],
+      "use_cases": [
+        { "title": "Free self-hosted bookkeeping", "description": "Running invoicing and double-entry accounting on your own server at no license cost.", "audience": "Freelancers and small businesses" },
+        { "title": "Cloud accounting for growing teams", "description": "Scaling from a single company to unlimited companies and users with add-on apps like payroll and inventory.", "audience": "Small to mid-sized businesses and accountants" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Standard Cloud", "price": "$8/month", "billing_cycle": "annual", "features": ["1 company", "1 user + 1 accountant", "1,000 invoices", "4 apps"] },
+        { "plan_name": "Premium Cloud", "price": "$24/month", "billing_cycle": "annual", "features": ["10 companies", "10 users", "10,000 invoices", "10 apps", "Double-Entry, Bank Feeds, Expense Claims, Client Portal"] },
+        { "plan_name": "Elite Cloud", "price": "$56/month", "billing_cycle": "annual", "features": ["30 companies", "30 users", "30,000 invoices", "30 apps", "Payroll, Projects, Inventory, CRM, Shopify, Stripe"] },
+        { "plan_name": "Ultimate Cloud", "price": "$145/month", "billing_cycle": "annual", "features": ["Unlimited companies, users, invoices", "All 50+ apps", "POS, budgeting, custom fields, tax regulation reports"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Akaunting?",
+          "level": 2,
+          "paragraphs": [
+            "Akaunting is accounting software for small businesses and freelancers, covering invoicing, expense tracking, double-entry bookkeeping, and a client portal. It's used by 300,000+ users across more than 100 countries and is available in 50+ languages.",
+            "The On-Premise Standard plan is free and open source, while Akaunting also sells hosted cloud plans (Standard, Premium, Elite, and Ultimate) that add features like payroll, inventory, CRM, and point of sale as you move up tiers."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Akaunting is for",
+          "level": 2,
+          "paragraphs": [
+            "Akaunting suits freelancers and small businesses that want free, self-hosted bookkeeping, as well as growing businesses and accountants that prefer a managed cloud plan with add-on modules like payroll and inventory."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "7a4e1855-1280-4e6d-addb-b37221f3a3ec",
+    "slug": "invoice-ninja",
+    "name": "Invoice Ninja",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Invoice Ninja is invoicing and business management software with a free plan, paid hosted plans from $14/month, and a self-hosted open-source version.",
+      "pricing_model": "Freemium",
+      "starting_price": "$14/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Invoice Ninja offers invoicing, payments, and time tracking with a free plan, paid plans from $14/month, and self-hosting via GitHub.",
+      "features": [
+        { "title": "Invoicing", "description": "Customizable invoice templates (4 on the free plan, 11 on paid plans)." },
+        { "title": "Online payments", "description": "Payment processing through multiple gateways including Stripe, PayPal, and Square." },
+        { "title": "Time tracking and projects", "description": "Time tracking and project management with Kanban boards." },
+        { "title": "Expense and vendor tracking", "description": "Expense tracking and vendor management." },
+        { "title": "Recurring billing", "description": "Recurring invoices and automatic billing." },
+        { "title": "Client portal", "description": "A client-facing portal for viewing invoices and making payments." },
+        { "title": "Quotes with e-signature", "description": "Quotes and proposal generation with e-signature support." }
+      ],
+      "pros": [
+        "Perpetually free plan available with 5 clients and unlimited invoicing",
+        "Open-source self-hosted version available via GitHub for full control",
+        "Wide range of native payment gateway integrations (Stripe, PayPal, Square, GoCardless) plus QuickBooks, Gmail, Slack, and Zapier/Make/Pabbly automation",
+        "Paid plans include a 30-day money-back guarantee"
+      ],
+      "cons": [
+        "Free plan limits invoice templates and client count",
+        "Higher-end e-invoicing/PEPPOL network access is limited to the Enterprise+ tier",
+        "Self-hosted version requires separate setup and maintenance versus the hosted plans"
+      ],
+      "faqs": [
+        { "question": "Is Invoice Ninja free?", "answer": "There's a perpetually free plan with 5 clients and unlimited invoicing, plus paid plans and a self-hosted open-source version." },
+        { "question": "How much do paid plans cost?", "answer": "Ninja Pro starts at $14/month ($140/year), and Enterprise starts at $18/month ($180/year) for up to 100 users." },
+        { "question": "Can Invoice Ninja be self-hosted?", "answer": "Yes, an open-source version is available for self-hosting via its GitHub repository." },
+        { "question": "What payment gateways does it support?", "answer": "It supports Stripe, PayPal, Square, GoCardless, and other gateways, plus integrations like QuickBooks and Zapier." }
+      ],
+      "use_cases": [
+        { "title": "Free invoicing for a handful of clients", "description": "Sending unlimited invoices to up to 5 clients at no cost.", "audience": "Freelancers just starting out" },
+        { "title": "Paid plans for growing teams", "description": "Adding more clients, users, templates, and features like e-signatures and PEPPOL e-invoicing.", "audience": "Small businesses and agencies" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["5 clients", "Unlimited invoicing", "4 invoice templates"] },
+        { "plan_name": "Ninja Pro", "price": "$14/month", "billing_cycle": "monthly", "features": ["11 invoice templates", "$140/year option"] },
+        { "plan_name": "Enterprise", "price": "$18/month", "billing_cycle": "monthly", "features": ["Up to 100 users", "$180/year option"] },
+        { "plan_name": "Premium Business", "price": "From $280/year", "billing_cycle": "annual", "features": ["Concierge support", "Priority support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Invoice Ninja?",
+          "level": 2,
+          "paragraphs": [
+            "Invoice Ninja is invoicing and business management software for freelancers and small businesses, covering invoicing, online payments, time tracking, expense tracking, and a client portal.",
+            "It offers a perpetually free plan, several paid hosted tiers (Ninja Pro, Enterprise, Premium Business), and an open-source version that can be self-hosted from its GitHub repository."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Invoice Ninja is for",
+          "level": 2,
+          "paragraphs": [
+            "Invoice Ninja fits freelancers who want a free way to invoice a small client base, and small businesses or agencies that need more clients, templates, or e-invoicing/e-signature features on a paid or self-hosted plan."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium", "free-plan"]
+    }
+  },
+  {
+    "tool_id": "607fbb48-621c-4c7e-b652-55e4892d86ce",
+    "slug": "crater",
+    "name": "Crater",
+    "status": "skip",
+    "skip_reason": "Official website craterapp.com now permanently redirects to crater.financial, an unrelated AI-powered embedded fintech/AR-AP platform for developers, not the open-source self-hosted invoicing app for freelancers this record refers to. The original open-source GitHub repo (crater-invoice-inc/crater) still exists and is not archived, but has had no commits since August 2024 and no active official site describing it as a self-hosted invoicing product, indicating the maintainer has pivoted/rebranded away from it.",
+    "enrichment": null
+  },
+  {
+    "tool_id": "b0ef7337-a5e2-4799-a976-3b354b927eaf",
+    "slug": "bigcapital",
+    "name": "Bigcapital",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Bigcapital is open-source accounting and inventory software (AGPL-3.0), free to self-host or available as hosted cloud plans from $20/month.",
+      "pricing_model": "Freemium",
+      "starting_price": "$20/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Bigcapital is open-source accounting software, free to self-host under AGPL-3.0 or available as hosted cloud plans from $20/month.",
+      "features": [
+        { "title": "Sales and purchase invoicing", "description": "Invoicing with support for recurring invoices." },
+        { "title": "Financial reporting", "description": "Real-time financial reports for business intelligence." },
+        { "title": "Inventory tracking", "description": "Automatic stock management tied to sales and purchases." },
+        { "title": "Multi-currency accounting", "description": "Support for multiple currencies with live exchange rates." },
+        { "title": "Role-based access control", "description": "Collaboration tools with custom user roles and access controls." },
+        { "title": "Budgeting and cost centers", "description": "Budgeting and cost-center analysis on higher plans." }
+      ],
+      "pros": [
+        "Open source under AGPL-3.0, so the full platform can be self-hosted for free",
+        "A commercial license option exists for organizations that need an AGPL exemption",
+        "Docker-based self-hosting is documented, with no per-user licensing fees",
+        "Hosted cloud plans include a 14-day free trial"
+      ],
+      "cons": [
+        "AGPL-3.0 requires releasing modifications if you deploy a modified version over a network",
+        "Multi-currency, inventory, and budgeting features are split across higher-priced plans (Essential, Plus, Big)",
+        "Company details like founding year and headquarters are not published"
+      ],
+      "faqs": [
+        { "question": "Is Bigcapital free?", "answer": "The self-hosted version is free and open source under AGPL-3.0; a managed cloud version is also available with paid plans starting at $20/month." },
+        { "question": "What license does Bigcapital use?", "answer": "Bigcapital is released under the GNU Affero General Public License v3.0 (AGPL-3.0), with a commercial license option available." },
+        { "question": "Can Bigcapital be self-hosted?", "answer": "Yes, self-hosting via Docker is documented and free." },
+        { "question": "Is there a free trial for the cloud version?", "answer": "Yes, Bigcapital's hosted cloud plans include a 14-day free trial and a 30-day money-back guarantee on annual billing." }
+      ],
+      "use_cases": [
+        { "title": "Free self-hosted accounting", "description": "Running accounting and inventory tracking on your own infrastructure with no license fee.", "audience": "Cost-conscious SMBs and developers" },
+        { "title": "Managed cloud accounting", "description": "Using Bigcapital's hosted plans to get multi-currency accounting, inventory, and budgeting without self-hosting.", "audience": "Growing small businesses" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Capital Basic", "price": "$20/month", "billing_cycle": "monthly", "features": ["Unlimited invoices/estimates", "GST/VAT tracking", "Bank connections", "Chart of accounts", "Basic reports"] },
+        { "plan_name": "Capital Essential", "price": "$40/month", "billing_cycle": "monthly", "features": ["Purchase invoices", "Multi-currency support", "Inventory tracking", "Smart reports"] },
+        { "plan_name": "Capital Plus", "price": "$55/month", "billing_cycle": "monthly", "features": ["Custom user roles", "Vendor credits", "Budgeting", "Cost center analysis"] },
+        { "plan_name": "Capital Big", "price": "$60/month", "billing_cycle": "monthly", "features": ["Multiple branches", "Warehouse support"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Bigcapital?",
+          "level": 2,
+          "paragraphs": [
+            "Bigcapital is open-source accounting and inventory software, released under AGPL-3.0, that automates invoicing, financial reporting, and stock tracking. It can be self-hosted for free via Docker, or run as a managed cloud service with paid plans from $20/month.",
+            "Paid plans add multi-currency support, inventory tracking, budgeting, cost-center analysis, and multi-branch support as you move up tiers, with a 14-day free trial available."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Bigcapital is for",
+          "level": 2,
+          "paragraphs": [
+            "Bigcapital fits businesses that want an open-source, self-hostable alternative to accounting platforms like QuickBooks or Xero, as well as those that would rather use Bigcapital's own hosted cloud plans."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-trial"]
+    }
+  },
+  {
+    "tool_id": "1f92f756-1ddd-475c-a7ab-6671d8405485",
+    "slug": "firefly-iii",
+    "name": "Firefly III",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Firefly III is a free, open-source, self-hosted personal finance manager licensed under AGPLv3, with a full REST API.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Firefly III is free, open-source, self-hosted personal finance software with budgets, categories, rules, and a full REST API.",
+      "features": [
+        { "title": "Double-entry bookkeeping", "description": "Tracks income and expenses using a double-entry bookkeeping system." },
+        { "title": "Budgets, categories, and tags", "description": "Organize transactions with budgets, categories, and tags to control spending." },
+        { "title": "Recurring transactions and rules", "description": "Create recurring transactions and rule-based automation for transaction handling." },
+        { "title": "Piggy banks", "description": "Save toward a goal using built-in piggy banks." },
+        { "title": "REST JSON API", "description": "A REST API that covers almost every part of Firefly III for integrations and automation." },
+        { "title": "Multi-currency support", "description": "Supports any currency." },
+        { "title": "Financial reports", "description": "Multiple built-in financial reports." }
+      ],
+      "pros": [
+        "Completely free and open source under AGPLv3, with no paid tiers or usage limits",
+        "Fully self-hosted and isolated — never contacts external servers unless explicitly configured to",
+        "Flexible deployment via Docker, Kubernetes, Softaculous, Cloudron, Lando, or Yunohost",
+        "Large, active project with 24,000+ GitHub stars and a documented REST API"
+      ],
+      "cons": [
+        "No official first-party hosted cloud version — users must self-host or use a third-party hosting provider",
+        "Requires technical setup (Docker or server administration) to run",
+        "As a self-hosted tool, backups and uptime are the user's own responsibility"
+      ],
+      "faqs": [
+        { "question": "Is Firefly III free?", "answer": "Yes, Firefly III is completely free and open source under the AGPLv3 license, with no paid tiers." },
+        { "question": "Does Firefly III offer a hosted cloud version?", "answer": "No official hosted cloud version is provided by the project itself; it is designed to be self-hosted, though third-party hosts offer Firefly III hosting." },
+        { "question": "Does Firefly III have an API?", "answer": "Yes, it has a REST JSON API covering almost every part of the application." },
+        { "question": "How is Firefly III deployed?", "answer": "It supports Docker, Kubernetes, and installers like Softaculous, Cloudron, Lando, and Yunohost." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted personal budgeting", "description": "Tracking personal income, expenses, and budgets without sending data to a third-party service.", "audience": "Privacy-conscious individuals" },
+        { "title": "Automated finance tracking via API", "description": "Building custom scripts or integrations against Firefly III's REST API to automate transaction entry.", "audience": "Developers and power users" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": null, "features": ["Full self-hosted feature set", "REST API access", "No usage limits"] }
+      ],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "What is Firefly III?",
+          "level": 2,
+          "paragraphs": [
+            "Firefly III is a free, open-source personal finance manager that is entirely self-hosted. It supports double-entry bookkeeping, budgets, categories, tags, recurring transactions, rule-based automation, and savings goals via piggy banks.",
+            "It is licensed under AGPLv3, includes a REST JSON API covering nearly every part of the app, and never contacts external servers unless explicitly configured to do so."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who Firefly III is for",
+          "level": 2,
+          "paragraphs": [
+            "Firefly III fits individuals who want full control and privacy over their personal finance data and are comfortable self-hosting via Docker or a similar deployment method, including developers who want to automate finance tracking through its API."
+          ]
+        }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "free-plan"]
+    }
+  }
+]

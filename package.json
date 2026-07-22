@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.js && node scripts/generate-og-images.js && vite build && node scripts/write-build-id.js && node scripts/scan-forbidden-keywords.js && node scripts/verify-seo-prerender.mjs && node scripts/verify-seo-indexability.js",
+    "build": "node scripts/generate-sitemap.js && node scripts/generate-llms-txt.js && node scripts/generate-og-images.js && vite build && node scripts/write-build-id.js && node scripts/scan-forbidden-keywords.js && node scripts/verify-seo-prerender.mjs && node scripts/verify-seo-indexability.js && node scripts/verify-seo-tools.mjs && node scripts/verify-prerender-integrity.mjs",
     "scan-content": "node scripts/scan-forbidden-keywords.js",
     "build:verify": "npm run build && bash scripts/verify-prerendered-files.sh",
     "build:quick": "vite build",

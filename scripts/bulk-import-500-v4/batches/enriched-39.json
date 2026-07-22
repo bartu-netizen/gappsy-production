@@ -1,0 +1,602 @@
+[
+  {
+    "tool_id": "6ee44c6e-b374-4911-ad78-9275dc36fec8",
+    "slug": "suricata",
+    "name": "Suricata",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source network threat detection engine that runs as an IDS, IPS, and network security monitor.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Suricata is a free, open-source IDS/IPS and network security monitoring engine maintained by the nonprofit OISF.",
+      "features": [
+        { "title": "Intrusion detection and prevention", "description": "Runs as an IDS that alerts on suspicious traffic or as an inline IPS that can drop traffic in real time, from a single binary." },
+        { "title": "Network security monitoring", "description": "Logs HTTP requests, TLS handshakes, DNS queries, file transfers, and other protocol activity for later analysis." },
+        { "title": "Multi-threaded engine", "description": "Built as a multi-threaded engine designed to scale across modern multi-core hardware for higher-throughput networks." },
+        { "title": "Snort-compatible rule syntax", "description": "Uses Snort-style rule syntax, allowing rulesets such as the Emerging Threats Open ruleset to work without modification." },
+        { "title": "Community and vendor embedding", "description": "Used directly by organizations and embedded by major security vendors into their own products." }
+      ],
+      "pros": [
+        "Free and open source under GPLv2 with no licensing fee for the engine",
+        "Multi-threaded architecture suited to high-throughput networks",
+        "Compatible with existing Snort-style rulesets, including Emerging Threats Open",
+        "Maintained by the nonprofit Open Information Security Foundation (OISF)",
+        "Active community with an annual SuriCon conference"
+      ],
+      "cons": [
+        "Requires manual rule management and tuning to be effective",
+        "No official managed/hosted commercial tier from OISF itself",
+        "Effective deployment requires network security expertise"
+      ],
+      "faqs": [
+        { "question": "Is Suricata free to use?", "answer": "Yes. Suricata is free and open-source software, licensed under GPLv2, with no fee for the engine." },
+        { "question": "Who maintains Suricata?", "answer": "Suricata is maintained by the Open Information Security Foundation (OISF), a nonprofit foundation." },
+        { "question": "What rule format does Suricata use?", "answer": "Suricata uses Snort-style rule syntax, so rulesets like Emerging Threats Open work with it out of the box." },
+        { "question": "Can Suricata block traffic, not just alert?", "answer": "Yes. Suricata can run inline as an intrusion prevention system (IPS) that drops malicious traffic, in addition to IDS alerting and NSM logging." }
+      ],
+      "use_cases": [
+        { "title": "Network intrusion detection", "description": "Deploy Suricata to passively monitor network traffic and alert on suspicious or malicious activity.", "audience": "Security operations teams" },
+        { "title": "Inline intrusion prevention", "description": "Run Suricata inline to automatically drop traffic matching known-bad signatures.", "audience": "Network security engineers" },
+        { "title": "Embedded threat detection", "description": "Vendors embed the Suricata engine into their own security appliances and products.", "audience": "Security product vendors" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Suricata?", "level": 2, "paragraphs": [
+          "Suricata is a free, open-source network threat detection engine maintained by the Open Information Security Foundation (OISF). It combines intrusion detection (IDS), intrusion prevention (IPS), and network security monitoring (NSM) in a single, multi-threaded binary.",
+          "The engine uses Snort-compatible rule syntax, which means widely used rulesets such as Emerging Threats Open work with Suricata without modification. It is used directly by organizations and is also embedded into products by major security vendors."
+        ] },
+        { "id": "who-its-for", "heading": "Who Suricata is for", "level": 2, "paragraphs": [
+          "Suricata suits security operations teams, network engineers, and vendors who need an open-source engine for detecting or blocking network-based threats, and who have the in-house expertise to configure, tune, and maintain an IDS/IPS deployment."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "82d8db18-43fe-4252-9850-0cc4a603d607",
+    "slug": "zeek",
+    "name": "Zeek",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source network security monitoring framework that generates detailed transaction logs of network traffic.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 1995,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Zeek is a free, BSD-licensed network security monitoring framework, originally created as Bro in 1995 and renamed in 2018.",
+      "features": [
+        { "title": "Passive network traffic analysis", "description": "Analyzes network traffic in real time on passive sensors rather than actively blocking traffic like an inline IPS." },
+        { "title": "Extensive default logging", "description": "Generates over 70 log files by default, covering protocol activity, files, and connections." },
+        { "title": "Broad event coverage", "description": "Tracks more than 3,000 distinct network events for detailed visibility into activity on the wire." },
+        { "title": "SIEM integration", "description": "Log output is designed to integrate with SIEM systems for centralized security analysis." },
+        { "title": "Customizable scripting", "description": "A scripting layer lets users customize what data is extracted and how traffic is analyzed." }
+      ],
+      "pros": [
+        "Free and open source under a permissive BSD license",
+        "Very high visibility into network activity via 70+ default log types",
+        "Backed by over 20 years of research and development history",
+        "Receives ongoing development and financial support from Corelight",
+        "Reported 10,000+ deployments worldwide"
+      ],
+      "cons": [
+        "Passive monitoring only; does not block traffic like an inline IPS",
+        "No official paid or hosted tier from the Zeek project itself",
+        "Requires expertise to deploy sensors and interpret log output effectively"
+      ],
+      "faqs": [
+        { "question": "Is Zeek free?", "answer": "Yes. Zeek is free, open-source software released under a BSD license." },
+        { "question": "Was Zeek previously called something else?", "answer": "Yes. Zeek was originally created by Vern Paxson in 1995 under the name Bro, and the project was renamed to Zeek in 2018." },
+        { "question": "Does Zeek block malicious traffic?", "answer": "No. Zeek operates passively on sensors to monitor and log traffic; it is a monitoring framework rather than an inline intrusion prevention system." },
+        { "question": "Who supports Zeek's development?", "answer": "Zeek receives development and financial support from Corelight, in addition to its open-source community." }
+      ],
+      "use_cases": [
+        { "title": "Network security monitoring", "description": "Capture detailed transaction logs and file contents from network traffic for security analysis.", "audience": "Security operations centers" },
+        { "title": "Incident investigation", "description": "Use Zeek's detailed historical logs to investigate and reconstruct network-based incidents.", "audience": "Incident responders" },
+        { "title": "SIEM data enrichment", "description": "Feed Zeek's rich network logs into a SIEM for correlation with other security data.", "audience": "SOC analysts" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Zeek?", "level": 2, "paragraphs": [
+          "Zeek is a free, open-source network security monitoring framework that analyzes network traffic in real time. Rather than actively blocking traffic, Zeek runs passively on sensors and generates detailed transaction logs, file content records, and customizable output for security analysts.",
+          "Originally created by Vern Paxson in 1995 as 'Bro,' the project was renamed Zeek in 2018. It is released under a permissive BSD license and receives ongoing development and financial support from Corelight."
+        ] },
+        { "id": "who-its-for", "heading": "Who Zeek is for", "level": 2, "paragraphs": [
+          "Zeek is built for security operations teams and incident responders who need deep, log-based visibility into network activity and plan to integrate that data with a SIEM or other analysis workflow."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "816a340d-aa9a-49e1-9aad-c93e0406c1d9",
+    "slug": "snort",
+    "name": "Snort",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source network intrusion detection and prevention system, created in 1998 and now developed by Cisco.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": 1998,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Snort is a free, open-source network IDS/IPS created in 1998 by Martin Roesch and now developed by Cisco under GPLv2.",
+      "features": [
+        { "title": "Real-time traffic analysis", "description": "Performs real-time traffic analysis and packet logging on IP networks." },
+        { "title": "Packet sniffer and logger", "description": "Can run as a simple packet sniffer (like tcpdump) or a packet logger for network traffic debugging." },
+        { "title": "Intrusion prevention system", "description": "Can be deployed as a full network intrusion prevention system to detect and stop attacks inline." },
+        { "title": "Protocol analysis and content matching", "description": "Detects attacks such as buffer overflows, stealth port scans, CGI attacks, SMB probes, and OS fingerprinting attempts." },
+        { "title": "Snort 3 plugin architecture", "description": "Snort 3 adds performance improvements and a range of 200+ plugins for custom network setups." },
+        { "title": "Community and subscriber rulesets", "description": "Rules are distributed as a Community Ruleset and a Cisco Talos-curated Subscriber Ruleset." }
+      ],
+      "pros": [
+        "Free and open source under GPLv2 for the engine and Community Ruleset",
+        "Long track record dating back to 1998, now backed by Cisco/Talos",
+        "Snort 3 offers a large plugin ecosystem (200+ plugins)",
+        "Can function as sniffer, logger, or full IPS depending on need",
+        "Widely documented with dedicated Cisco training courses"
+      ],
+      "cons": [
+        "The curated Subscriber Ruleset from Cisco Talos is a paid add-on, unlike the free Community Ruleset",
+        "Requires manual tuning and rule management for effective detection",
+        "Some resources and documentation assume familiarity with network security concepts"
+      ],
+      "faqs": [
+        { "question": "Is Snort free?", "answer": "Yes. The Snort engine and Community Ruleset are free and open source under GPLv2. Cisco Talos also offers a paid Subscriber Ruleset." },
+        { "question": "Who develops Snort?", "answer": "Snort was created in 1998 by Martin Roesch and is now developed by Cisco, which acquired Sourcefire (Snort's original company) in 2013." },
+        { "question": "What is Snort 3?", "answer": "Snort 3 is the current major version, adding performance improvements and a plugin architecture with 200+ available plugins." },
+        { "question": "Can Snort prevent attacks, not just detect them?", "answer": "Yes. Snort can be deployed as an intrusion prevention system (IPS) in addition to intrusion detection (IDS)." }
+      ],
+      "use_cases": [
+        { "title": "Network intrusion detection and prevention", "description": "Monitor and optionally block malicious network traffic using signature-based rules.", "audience": "Network security teams" },
+        { "title": "Traffic debugging", "description": "Use Snort as a packet sniffer or logger for troubleshooting network issues.", "audience": "Network administrators" },
+        { "title": "Cisco security curricula", "description": "Learn open-source IDS/IPS concepts through Cisco's official Snort training courses.", "audience": "Security engineers and students" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Snort?", "level": 2, "paragraphs": [
+          "Snort is a free, open-source network intrusion detection and prevention system created by Martin Roesch in 1998. It performs real-time traffic analysis and packet logging on IP networks, and can be run as a packet sniffer, packet logger, or full network intrusion prevention system.",
+          "Snort is now developed by Cisco, which acquired Sourcefire, Snort's original company, in 2013. The engine and Community Ruleset are distributed under GPLv2, while Cisco Talos also maintains a paid Subscriber Ruleset with additional curated detection content."
+        ] },
+        { "id": "who-its-for", "heading": "Who Snort is for", "level": 2, "paragraphs": [
+          "Snort suits network security teams and administrators who need an established, well-documented open-source IDS/IPS, and organizations already invested in the Cisco security ecosystem."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  },
+  {
+    "tool_id": "717823fe-8010-4821-a2b2-2263a7afbe21",
+    "slug": "defectdojo",
+    "name": "DefectDojo",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source vulnerability management and ASPM platform for centralizing security findings from 200+ scanning tools.",
+      "pricing_model": "Freemium",
+      "starting_price": "$300/month",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "DefectDojo centralizes vulnerability findings from 200+ security tools. Free open-source edition (BSD-3) plus a paid Pro tier.",
+      "features": [
+        { "title": "Finding import and deduplication", "description": "Imports results from over 200 security scanning tools and deduplicates overlapping findings." },
+        { "title": "Role-based access control", "description": "Supports RBAC alongside authentication via username/password, LDAP, SAML, and OAuth." },
+        { "title": "REST API and Swagger UI", "description": "Provides a REST API with built-in Swagger documentation for automation and integration." },
+        { "title": "Automation rules engine (Pro)", "description": "Pro tier adds a rules engine, tunable deduplication, and background imports for automated workflows." },
+        { "title": "Premium parsers and integrations (Pro)", "description": "Pro tier includes additional integrations such as Snyk, SonarQube, and AWS, plus a universal CSV/JSON parser." },
+        { "title": "Cloud-hosted option (Pro)", "description": "Pro tier can be run as a cloud-hosted SaaS instance in addition to self-hosting." }
+      ],
+      "pros": [
+        "Free, self-hosted open-source edition under BSD-3-Clause",
+        "Over 200 integrations with security scanning tools",
+        "38 million+ downloads and 4,000+ GitHub stars for the open-source project",
+        "Storage-based pricing on Pro rather than per-app or per-user fees",
+        "Active community support via Slack"
+      ],
+      "cons": [
+        "Advanced automation, premium parsers, and MFA require the paid Pro tier",
+        "Pro pricing beyond the base tier requires a custom quote for larger storage volumes",
+        "Self-hosting the open-source edition requires infrastructure and maintenance effort"
+      ],
+      "faqs": [
+        { "question": "Is DefectDojo free?", "answer": "Yes, DefectDojo has a free, open-source, self-hosted edition licensed under BSD-3-Clause. A paid Pro tier with additional features starts around $300/month." },
+        { "question": "What license is DefectDojo released under?", "answer": "The open-source edition is released under the BSD-3-Clause license." },
+        { "question": "How many tools does DefectDojo integrate with?", "answer": "DefectDojo offers over 200 integrations with security scanning tools." },
+        { "question": "What does DefectDojo Pro add over the free edition?", "answer": "Pro adds an automation rules engine, tunable deduplication, background imports, premium parsers, a cloud-hosted option, MFA, and premium support." }
+      ],
+      "use_cases": [
+        { "title": "Vulnerability management", "description": "Centralize and deduplicate vulnerability findings from many different scanning tools in one place.", "audience": "Application security teams" },
+        { "title": "ASPM (Application Security Posture Management)", "description": "Track security posture across applications with dashboards, RBAC, and reporting.", "audience": "AppSec and DevSecOps teams" },
+        { "title": "Pentest and MSSP reporting", "description": "Consolidate and report on findings across engagements for clients or internal stakeholders.", "audience": "Pen testers and MSPs" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free (Open Source)", "price": "$0", "billing_cycle": null, "features": ["Core finding import & deduplication", "Authentication (LDAP, SAML, OAuth)", "Role-based access control", "REST API & Swagger UI", "Manual import & reimport", "Basic dashboard & reporting"] },
+        { "plan_name": "Pro", "price": "From $300/month", "billing_cycle": "monthly", "features": ["Everything in Free", "Automation rules engine", "Tunable deduplication", "Background imports", "Premium parsers and integrations", "Cloud-hosted option", "MFA", "Premium support & SLAs"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is DefectDojo?", "level": 2, "paragraphs": [
+          "DefectDojo is a vulnerability management and application security posture management (ASPM) platform that centralizes security findings from more than 200 scanning tools. It offers a free, open-source, self-hosted edition released under the BSD-3-Clause license, alongside a paid Pro tier.",
+          "The open-source edition covers finding import and deduplication, authentication (including LDAP, SAML, and OAuth), role-based access control, and a REST API. DefectDojo Pro adds automation, premium parsers, a cloud-hosted option, and enterprise support, priced on a storage-based model starting around $300/month."
+        ] },
+        { "id": "who-its-for", "heading": "Who DefectDojo is for", "level": 2, "paragraphs": [
+          "DefectDojo suits application security teams, pen testers, and MSSPs that need to consolidate findings from many disparate security tools into a single system, whether self-hosting the free edition or paying for Pro's automation and cloud hosting."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "119e88eb-8125-4474-bd00-8010e05e2e72",
+    "slug": "faraday",
+    "name": "Faraday",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Offensive security platform combining vulnerability management, pentest reporting, and attack surface management, with a free open-source community edition.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": "Miami, Florida, United States",
+      "languages": [],
+      "seo_meta_description": "Faraday is an offensive security platform for vulnerability management and pentest reporting, with a free GPL-3.0 community edition.",
+      "features": [
+        { "title": "Vulnerability management", "description": "Continuous vulnerability scanning with context-driven prioritization through a smart-scoring system." },
+        { "title": "Pentest reporting", "description": "Automatically centralizes and organizes penetration testing findings into reports." },
+        { "title": "Attack surface management", "description": "Maps external digital exposure and threat intelligence across an organization's assets." },
+        { "title": "DevSecOps integration", "description": "Embeds security checks into development pipelines as part of a DevSecOps workflow." },
+        { "title": "Free community edition", "description": "A free, open-source community edition is available under the GPL-3.0 license and downloadable from GitHub." },
+        { "title": "Commercial tiers with SSO and ticketing", "description": "Paid Professional and Corporate editions add API endpoints, executive reports, LDAP/SAML SSO, and ticketing tool integrations." }
+      ],
+      "pros": [
+        "Free, open-source community edition licensed under GPL-3.0",
+        "Combines vulnerability management, pentest reporting, and attack surface management in one platform",
+        "In operation since 2004 with an established enterprise client base",
+        "ISO/IEC 27001:2022 certified",
+        "Offers both cloud-hosted and on-premises deployment"
+      ],
+      "cons": [
+        "Advanced features (SSO, ticketing integrations, executive reporting) require paid Professional/Corporate tiers",
+        "Pricing for commercial tiers is not published and requires contacting sales",
+        "Additional paid products (Enrichment, CART, OPS) are sold separately from the core platform"
+      ],
+      "faqs": [
+        { "question": "Is Faraday free to use?", "answer": "Yes. Faraday has a free, open-source community edition released under GPL-3.0. Paid Professional and Corporate editions add further features." },
+        { "question": "When was Faraday founded?", "answer": "Faraday was founded in 2004." },
+        { "question": "Where is Faraday headquartered?", "answer": "Faraday is headquartered in Miami, Florida, with a research lab in Buenos Aires, Argentina." },
+        { "question": "Does Faraday offer cloud hosting?", "answer": "Yes. Faraday can be deployed both in the cloud and on-premises." }
+      ],
+      "use_cases": [
+        { "title": "Continuous vulnerability management", "description": "Track and prioritize vulnerabilities across assets with automated smart scoring.", "audience": "Security teams" },
+        { "title": "Pentest reporting", "description": "Centralize findings from multiple penetration tests into unified reports.", "audience": "Penetration testers and MSSPs" },
+        { "title": "Attack surface mapping", "description": "Discover and monitor external-facing digital assets and exposure.", "audience": "Enterprise security teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community", "price": "$0", "billing_cycle": null, "features": ["Open-source core platform (GPL-3.0)", "Self-hosted deployment"] },
+        { "plan_name": "Pentest on Demand", "price": "Custom", "billing_cycle": null, "features": ["Initial security testing engagement"] },
+        { "plan_name": "Always On", "price": "Custom", "billing_cycle": null, "features": ["All platform modules", "Continuous offensive security and automation"] },
+        { "plan_name": "Enterprise+", "price": "Custom", "billing_cycle": null, "features": ["Tailored enterprise-scale offensive security"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Faraday?", "level": 2, "paragraphs": [
+          "Faraday is an offensive security platform, founded in 2004 and headquartered in Miami, Florida, that combines vulnerability management, penetration testing reporting, and attack surface management. It serves enterprises and MSSPs and holds ISO/IEC 27001:2022 certification.",
+          "A free, open-source community edition is available under the GPL-3.0 license and can be self-hosted. Paid Professional and Corporate tiers add features such as additional API endpoints, executive reporting, LDAP/SAML SSO, and ticketing tool integrations, alongside separately sold add-ons like Faraday Enrichment, CART, and OPS."
+        ] },
+        { "id": "who-its-for", "heading": "Who Faraday is for", "level": 2, "paragraphs": [
+          "Faraday suits security teams and MSSPs that need to centralize vulnerability and pentest data, ranging from teams self-hosting the free community edition to enterprises needing SSO, ticketing integrations, and continuous offensive security services."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "b102eee5-b364-47b7-9569-b256d99e7549",
+    "slug": "dependency-track",
+    "name": "Dependency-Track",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, OWASP-maintained platform that analyzes SBOMs to inventory components and identify supply-chain vulnerabilities.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OWASP Dependency-Track is a free, Apache 2.0-licensed platform for SBOM-based software supply chain risk management.",
+      "features": [
+        { "title": "SBOM-based inventory", "description": "Uses CycloneDX SBOMs to track libraries, containers, operating systems, firmware, and services across projects." },
+        { "title": "Continuous vulnerability analysis", "description": "Matches inventoried components against multiple vulnerability sources, including NVD, GitHub Advisories, Snyk, and OSV." },
+        { "title": "Policy engine", "description": "An expression-based policy engine enforces security, operational, and license-compliance rules." },
+        { "title": "Horizontal scalability", "description": "Version 5.0 adds horizontal scaling and active/active high availability for large deployments." },
+        { "title": "Docker-based deployment", "description": "Deploys via Docker or Docker Compose with a PostgreSQL database (v5.0+)." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "Maintained by OWASP as a Flagship Project",
+        "Used by 20,000+ organizations according to the project site",
+        "Scales to process tens of thousands of SBOMs per hour",
+        "Cross-references multiple vulnerability intelligence sources"
+      ],
+      "cons": [
+        "No official paid or managed hosting tier from the project itself",
+        "Requires self-hosting infrastructure (Docker, PostgreSQL) and ongoing maintenance",
+        "Effectiveness depends on consistently generating accurate SBOMs upstream"
+      ],
+      "faqs": [
+        { "question": "Is Dependency-Track free?", "answer": "Yes. Dependency-Track is free and open source, licensed under Apache 2.0." },
+        { "question": "Who maintains Dependency-Track?", "answer": "Dependency-Track is maintained as an OWASP Flagship Project." },
+        { "question": "What format of SBOM does Dependency-Track use?", "answer": "Dependency-Track ingests CycloneDX SBOMs to build its component inventory." },
+        { "question": "How is Dependency-Track deployed?", "answer": "It is typically deployed via Docker or Docker Compose, with PostgreSQL as the database for version 5.0 and later." }
+      ],
+      "use_cases": [
+        { "title": "Software supply chain risk management", "description": "Continuously monitor components across projects for known vulnerabilities.", "audience": "Application security teams" },
+        { "title": "License compliance", "description": "Enforce license-compliance policies against the software component inventory.", "audience": "Legal and compliance teams" },
+        { "title": "SBOM ingestion at scale", "description": "Process large volumes of CycloneDX SBOMs from CI/CD pipelines.", "audience": "DevSecOps engineers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Dependency-Track?", "level": 2, "paragraphs": [
+          "Dependency-Track is a free, open-source software supply chain risk management platform maintained as an OWASP Flagship Project. It ingests CycloneDX SBOMs to inventory components such as libraries, containers, operating systems, and firmware, then continuously matches them against vulnerability sources including NVD, GitHub Advisories, Snyk, and OSV.",
+          "The platform is released under the Apache 2.0 license and includes an expression-based policy engine for security, operational, and license-compliance enforcement. Version 5.0 added horizontal scaling and active/active high availability for larger deployments."
+        ] },
+        { "id": "who-its-for", "heading": "Who Dependency-Track is for", "level": 2, "paragraphs": [
+          "Dependency-Track suits application security and DevSecOps teams that already generate SBOMs in CI/CD and need a self-hosted, open-source system to track component risk and license compliance at scale."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "4e30e978-262d-4a83-b746-96ea2a1f37ae",
+    "slug": "owasp-dependency-check",
+    "name": "OWASP Dependency-Check",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Free, open-source software composition analysis tool that identifies publicly disclosed vulnerabilities in project dependencies.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "OWASP Dependency-Check scans project dependencies for known CVEs. Free, Apache 2.0-licensed, with Maven, Gradle, and CI/CD plugins.",
+      "features": [
+        { "title": "CPE-based vulnerability detection", "description": "Identifies known vulnerable components by matching Common Platform Enumeration (CPE) identifiers against dependencies." },
+        { "title": "CVE-linked reporting", "description": "Generates reports that link detected components to their associated CVE entries." },
+        { "title": "Automatic NVD updates", "description": "Automatically updates its vulnerability database using NIST's National Vulnerability Database (NVD) data feeds." },
+        { "title": "Third-party data sources", "description": "Cross-references NPM Audit API, OSS Index, RetireJS, and Bundler Audit for additional coverage." },
+        { "title": "Build tool and CI/CD plugins", "description": "Available as Maven, Gradle, and Ant plugins, plus integrations for Jenkins, GitHub Actions, and Azure DevOps." },
+        { "title": "Container and CLI support", "description": "Distributed as a command-line tool, Docker container image, and via Mac Homebrew." }
+      ],
+      "pros": [
+        "Free and open source under the Apache 2.0 license",
+        "OWASP Flagship Tool Project with broad community backing",
+        "Integrates directly into Maven, Gradle, Jenkins, and other common build/CI tools",
+        "Cross-references multiple vulnerability data sources beyond just NVD",
+        "Also available as a SonarQube plugin"
+      ],
+      "cons": [
+        "Initial vulnerability database download can take 10+ minutes",
+        "Relies on CPE matching, which can produce false positives or miss non-CPE-mapped components",
+        "No official paid or hosted tier; self-managed setup and updates required"
+      ],
+      "faqs": [
+        { "question": "Is OWASP Dependency-Check free?", "answer": "Yes. It is free and open source, released under the Apache 2.0 license." },
+        { "question": "What build tools does it integrate with?", "answer": "It offers plugins for Maven, Gradle, and Ant, plus integrations for Jenkins, GitHub Actions, Azure DevOps, and SonarQube." },
+        { "question": "Where does it get vulnerability data?", "answer": "It primarily uses NIST's NVD data feeds, supplemented by NPM Audit API, OSS Index, RetireJS, and Bundler Audit." },
+        { "question": "Who leads the OWASP Dependency-Check project?", "answer": "The project is led by Jeremy Long under the OWASP Foundation." }
+      ],
+      "use_cases": [
+        { "title": "Build-time vulnerability scanning", "description": "Scan project dependencies for known CVEs as part of a Maven, Gradle, or Ant build.", "audience": "Software developers" },
+        { "title": "CI/CD security gating", "description": "Fail builds in Jenkins, GitHub Actions, or Azure DevOps when known-vulnerable dependencies are detected.", "audience": "DevSecOps engineers" },
+        { "title": "Ad hoc dependency audits", "description": "Run scans via CLI or Docker to audit a project's dependencies outside of a CI pipeline.", "audience": "Security teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is OWASP Dependency-Check?", "level": 2, "paragraphs": [
+          "OWASP Dependency-Check is a free, open-source software composition analysis (SCA) tool that identifies publicly disclosed vulnerabilities in a project's dependencies. It matches components against Common Platform Enumeration (CPE) identifiers and links results to CVE entries, drawing primarily on NIST's NVD data feeds along with sources like NPM Audit API, OSS Index, RetireJS, and Bundler Audit.",
+          "Released under the Apache 2.0 license and recognized as an OWASP Flagship Tool Project, it is available as a command-line tool, Maven/Gradle/Ant plugin, Docker container, Homebrew package, and integrates with Jenkins, GitHub Actions, Azure DevOps, and SonarQube."
+        ] },
+        { "id": "who-its-for", "heading": "Who OWASP Dependency-Check is for", "level": 2, "paragraphs": [
+          "It suits developers and DevSecOps teams who want a free, self-hosted way to catch known-vulnerable dependencies directly inside their build tools and CI/CD pipelines."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "2fda9f09-2141-4cc7-84c4-66606e716a87",
+    "slug": "harbor",
+    "name": "Harbor",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Open-source, CNCF-graduated container registry with built-in vulnerability scanning, RBAC, and image replication.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Harbor is a free, open-source, CNCF-graduated container registry with vulnerability scanning, RBAC, and replication.",
+      "features": [
+        { "title": "Vulnerability scanning", "description": "Scans stored artifacts for known vulnerabilities as part of its security policy enforcement." },
+        { "title": "Content signing and validation", "description": "Supports signing and validating container images to ensure content integrity." },
+        { "title": "Role-based access control", "description": "Provides multi-tenant RBAC with identity integration for controlling who can push and pull artifacts." },
+        { "title": "Cross-registry replication", "description": "Replicates artifacts across multiple registries for distribution or disaster recovery." },
+        { "title": "Kubernetes and Docker deployment", "description": "Deployable on any Kubernetes environment or a system with Docker support." },
+        { "title": "Extensible API and web UI", "description": "Offers a full API alongside a web UI for managing artifacts and policies." }
+      ],
+      "pros": [
+        "Free and open source, and a CNCF Graduated project",
+        "Built-in vulnerability scanning and image signing without extra tooling",
+        "Multi-tenant RBAC suited to shared/enterprise environments",
+        "Supports replication across registries for HA/DR scenarios",
+        "Adopted by large enterprises such as JD.com and China Mobile"
+      ],
+      "cons": [
+        "Requires self-hosting on Kubernetes or Docker; no official managed hosted tier from the project",
+        "Operational overhead for upgrades, scaling, and storage backend management",
+        "No commercial support channel documented on the official site"
+      ],
+      "faqs": [
+        { "question": "Is Harbor free?", "answer": "Yes. Harbor is free, open-source software and a CNCF Graduated project." },
+        { "question": "What governance status does Harbor have?", "answer": "Harbor is a Cloud Native Computing Foundation (CNCF) Graduated project." },
+        { "question": "Does Harbor scan images for vulnerabilities?", "answer": "Yes. Harbor includes built-in vulnerability scanning as part of its artifact security policies." },
+        { "question": "Where can Harbor be deployed?", "answer": "Harbor can be deployed on any Kubernetes environment or on a system with Docker support." }
+      ],
+      "use_cases": [
+        { "title": "Private container registry", "description": "Host and manage container images and other OCI artifacts privately within an organization.", "audience": "Platform and DevOps teams" },
+        { "title": "Supply chain security for images", "description": "Enforce vulnerability scanning and content signing before images reach production.", "audience": "DevSecOps teams" },
+        { "title": "Multi-region image replication", "description": "Replicate artifacts across registries for redundancy or geographic distribution.", "audience": "Infrastructure teams" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Harbor?", "level": 2, "paragraphs": [
+          "Harbor is a free, open-source registry for container images and other OCI artifacts, built for cloud-native environments such as Kubernetes and Docker. It is a Cloud Native Computing Foundation (CNCF) Graduated project, reflecting mature governance and broad industry adoption.",
+          "Harbor secures artifacts with role-based access control, vulnerability scanning, and content signing, and it supports replication across multiple registries. It can be deployed on any Kubernetes environment or a Docker-enabled system, and is used by enterprises such as JD.com and China Mobile."
+        ] },
+        { "id": "who-its-for", "heading": "Who Harbor is for", "level": 2, "paragraphs": [
+          "Harbor suits platform, DevOps, and DevSecOps teams that need a self-hosted, security-focused container registry with fine-grained access control and replication, particularly in Kubernetes-based environments."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"]
+    }
+  },
+  {
+    "tool_id": "d5332e67-88ad-4e34-998d-c503ab84ed89",
+    "slug": "quay",
+    "name": "Quay",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Container registry platform from Red Hat, available as the open-source Project Quay, the hosted Quay.io service, and enterprise Red Hat Quay.",
+      "pricing_model": "Freemium",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Red Hat Quay is a security-focused container registry with vulnerability scanning, geo-replication, and CI/CD build automation.",
+      "features": [
+        { "title": "Vulnerability scanning and access control", "description": "Provides granular security management with access controls and image vulnerability scanning." },
+        { "title": "High availability and geo-replication", "description": "Supports high availability and geographic replication by running multiple instances." },
+        { "title": "Automated CI/CD builds", "description": "Triggers automated image builds from GitHub, BitBucket, and GitLab for high-velocity CI/CD." },
+        { "title": "Enterprise authentication", "description": "Supports LDAP and OIDC for enterprise authentication and team-based access control." },
+        { "title": "OpenShift integration", "description": "Integrates with OpenShift for automated credential exchange and image management." },
+        { "title": "Free public repositories on Quay.io", "description": "Quay.io, the hosted service, offers unlimited free public repository hosting and storage." }
+      ],
+      "pros": [
+        "Public repositories are free and unlimited on the hosted Quay.io service",
+        "Underlying Project Quay is open source",
+        "Built-in vulnerability scanning and image signing for security-conscious teams",
+        "Tight integration with OpenShift and Kubernetes",
+        "Geo-replication support for high availability"
+      ],
+      "cons": [
+        "Private repositories on Quay.io require a paid plan",
+        "Red Hat Quay enterprise self-managed pricing is not publicly listed and requires contacting sales",
+        "Enterprise features are oriented toward organizations already using Red Hat/OpenShift infrastructure"
+      ],
+      "faqs": [
+        { "question": "Is Quay free?", "answer": "Public repositories on the hosted Quay.io service are free with unlimited storage. Private repositories require a paid plan, and Red Hat Quay's self-managed enterprise product is priced separately." },
+        { "question": "What is the difference between Project Quay and Red Hat Quay?", "answer": "Project Quay is the open-source upstream project; Red Hat Quay is Red Hat's supported, self-managed enterprise product, and Quay.io is the hosted SaaS version." },
+        { "question": "Does Quay integrate with OpenShift?", "answer": "Yes. Quay integrates with OpenShift for automated credential exchange and image management." },
+        { "question": "Can Quay build images automatically from source repos?", "answer": "Yes. Quay supports automated CI/CD builds triggered from GitHub, BitBucket, and GitLab." }
+      ],
+      "use_cases": [
+        { "title": "Public open-source image hosting", "description": "Host public container images for free with unlimited storage on Quay.io.", "audience": "Open-source projects" },
+        { "title": "Enterprise private registry", "description": "Run a self-managed, security-focused registry across data centers and cloud environments.", "audience": "Enterprises using Kubernetes/OpenShift" },
+        { "title": "CI/CD image automation", "description": "Automatically build and publish images from source repository changes.", "audience": "DevOps teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Quay.io Free (Public)", "price": "$0", "billing_cycle": null, "features": ["Unlimited public repositories", "Free security scanning of public images"] },
+        { "plan_name": "Quay.io Micro", "price": "Paid", "billing_cycle": "monthly", "features": ["10 private repositories", "Unlimited public repos", "Team-based permissions"] },
+        { "plan_name": "Quay.io Small", "price": "Paid", "billing_cycle": "monthly", "features": ["20 private repositories", "Unlimited public repos", "Team-based permissions"] },
+        { "plan_name": "Red Hat Quay (self-managed)", "price": "Custom", "billing_cycle": null, "features": ["Priced per deployment", "Sold standalone or with OpenShift Platform Plus"] }
+      ],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Quay?", "level": 2, "paragraphs": [
+          "Quay is a container registry platform from Red Hat, available in three forms: the open-source Project Quay, the hosted Quay.io SaaS service, and the commercial, self-managed Red Hat Quay enterprise product. It offers vulnerability scanning, access controls, geographic replication, and automated CI/CD builds from GitHub, BitBucket, and GitLab.",
+          "Public repositories on Quay.io are free with unlimited storage, while private repositories require a paid plan priced by repository count. Red Hat Quay, the self-managed enterprise offering, is priced per deployment and can be sold standalone or bundled with OpenShift Platform Plus, with tight integration into OpenShift for credential exchange and image management."
+        ] },
+        { "id": "who-its-for", "heading": "Who Quay is for", "level": 2, "paragraphs": [
+          "Quay suits open-source projects that want free public image hosting, and enterprises running Kubernetes or OpenShift that need a security-focused private registry with geo-replication and enterprise authentication."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"]
+    }
+  },
+  {
+    "tool_id": "e4836b9e-697c-4735-b03e-624cbcf6545f",
+    "slug": "verdaccio",
+    "name": "Verdaccio",
+    "status": "ready",
+    "skip_reason": null,
+    "enrichment": {
+      "short_description": "Lightweight, free open-source Node.js private proxy registry for npm, yarn, and pnpm packages.",
+      "pricing_model": "Free",
+      "starting_price": null,
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": [],
+      "seo_meta_description": "Verdaccio is a free, MIT-licensed, zero-config private npm proxy registry supporting npm, yarn, and pnpm.",
+      "features": [
+        { "title": "Private package hosting", "description": "Hosts proprietary packages privately within an organization with minimal configuration." },
+        { "title": "Registry proxying and caching", "description": "Chains and proxies multiple registries, caching npmjs.org packages to reduce latency and provide failover." },
+        { "title": "Package overriding", "description": "Allows deploying modified versions of public packages locally under the same package name." },
+        { "title": "Multi-client support", "description": "Works with npm, yarn, and pnpm package manager clients." },
+        { "title": "Docker and Kubernetes deployment", "description": "Ships an official Docker image and a Helm chart for Kubernetes deployments." },
+        { "title": "Plugin ecosystem", "description": "Supports community plugins for extended storage backends, including Amazon S3 and Google Cloud Storage." }
+      ],
+      "pros": [
+        "Completely free and open source under the MIT license",
+        "Minimal configuration required to get a private registry running",
+        "Used by well-known projects including Nx, pnpm, Angular CLI, and Storybook",
+        "Supports all major Node.js package manager clients (npm, yarn, pnpm)",
+        "Official Docker image and Helm chart simplify deployment"
+      ],
+      "cons": [
+        "Run entirely by volunteers, with no one working on it full-time",
+        "No official paid or hosted commercial tier",
+        "Self-hosting requires the user to manage uptime, storage, and scaling"
+      ],
+      "faqs": [
+        { "question": "Is Verdaccio free?", "answer": "Yes. Verdaccio is free and open-source software released under the MIT license." },
+        { "question": "What package managers does Verdaccio support?", "answer": "Verdaccio supports npm, yarn, and pnpm clients." },
+        { "question": "Can Verdaccio proxy the public npm registry?", "answer": "Yes. Verdaccio can proxy and cache packages from npmjs.org, and it can chain multiple registries together." },
+        { "question": "How is Verdaccio deployed?", "answer": "Verdaccio can be run directly, via its official Docker image, or deployed to Kubernetes using its Helm chart." }
+      ],
+      "use_cases": [
+        { "title": "Private npm registry", "description": "Host proprietary internal packages without publishing them publicly.", "audience": "Development teams" },
+        { "title": "Registry caching and failover", "description": "Cache public npm packages locally to reduce latency and provide offline failover.", "audience": "Platform engineers" },
+        { "title": "Local package overrides", "description": "Test or patch modified versions of public packages locally before publishing changes upstream.", "audience": "Open-source maintainers" }
+      ],
+      "pricing_plans": [],
+      "long_form_blocks": [
+        { "id": "overview", "heading": "What is Verdaccio?", "level": 2, "paragraphs": [
+          "Verdaccio is a free, open-source, lightweight Node.js private proxy registry that functions as a local npm registry with minimal configuration. It is released under the MIT license and supports npm, yarn, and pnpm clients.",
+          "Verdaccio can host private packages, proxy and cache the public npmjs.org registry, and override public packages locally under the same name. It ships an official Docker image and Helm chart, and supports community plugins for storage backends like Amazon S3 and Google Cloud Storage. It is run by volunteers and used by projects such as Nx, pnpm, Angular CLI, and Storybook."
+        ] },
+        { "id": "who-its-for", "heading": "Who Verdaccio is for", "level": 2, "paragraphs": [
+          "Verdaccio suits development teams and open-source maintainers who need a free, self-hosted way to host private npm packages or cache and override public registry packages."
+        ] }
+      ],
+      "tags": ["self-hosted", "open-source"]
+    }
+  }
+]

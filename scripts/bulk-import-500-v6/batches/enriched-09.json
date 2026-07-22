@@ -1,0 +1,657 @@
+[
+  {
+    "tool_id": "a5b0bebc-38eb-4762-ae9c-52a84181c2e6",
+    "slug": "exim",
+    "name": "Exim",
+    "enrichment": {
+      "short_description": "Exim is a free, highly configurable open-source mail transfer agent for routing and delivering email on Unix systems.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1995,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Exim is a message transfer agent (MTA) originally written by Philip Hazel in 1995 for the University of Cambridge Computing Service, with its first public release in 1996. It is distributed under the GNU General Public License and runs on Unix-like systems, where it accepts, routes, and delivers email.",
+            "Exim is built around a highly flexible configuration language that lets administrators define custom routing rules, access control lists, and content checks. It has long been one of the most widely deployed MTAs on the internet and is the default mail server on Debian and several other Linux distributions."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Exim suits system administrators and hosting providers who need a self-hosted mail server with fine-grained control over routing, spam and virus filtering integration, and access policy, and who are comfortable working with a text-based configuration file rather than a graphical interface."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Flexible mail routing", "description": "A rule-based configuration language lets administrators define custom routers and transports for delivering mail to local mailboxes, remote hosts, or other programs." },
+        { "title": "Access control lists (ACLs)", "description": "ACLs applied at each stage of an SMTP transaction allow fine-grained accept/reject/defer decisions based on sender, recipient, content, or connection data." },
+        { "title": "Content scanning integration", "description": "Built-in hooks integrate with external antivirus and antispam engines such as ClamAV and SpamAssassin." },
+        { "title": "TLS encryption", "description": "Supports STARTTLS for encrypting SMTP sessions between mail servers and clients." },
+        { "title": "Extensive logging", "description": "Detailed, configurable logging helps administrators trace message delivery and diagnose problems." },
+        { "title": "Wide platform support", "description": "Runs on Linux, BSD, macOS, and most other Unix-like operating systems, with an active build farm testing each release." }
+      ],
+      "pros": [
+        "Mature, battle-tested codebase with three decades of production use",
+        "Extremely configurable routing and filtering logic",
+        "Default MTA on Debian and other major distributions, so documentation and community support are abundant",
+        "Free and open source under the GPL",
+        "Active security maintenance with regular patch releases"
+      ],
+      "cons": [
+        "Configuration syntax has a steep learning curve compared to newer MTAs",
+        "No graphical interface; requires command-line and file-editing comfort",
+        "Complex deployments (e.g. with content scanning) need real Unix sysadmin expertise"
+      ],
+      "faqs": [
+        { "question": "Is Exim free to use?", "answer": "Yes. Exim is free, open-source software released under the GNU General Public License." },
+        { "question": "What operating systems does Exim run on?", "answer": "Exim runs on Linux, the BSDs, macOS, and other Unix-like systems." },
+        { "question": "Is Exim still actively maintained?", "answer": "Yes. The project continues to ship security and bug-fix releases, including patches for newly discovered vulnerabilities." },
+        { "question": "How does Exim compare to Postfix or Sendmail?", "answer": "All three are open-source Unix MTAs. Exim is known for its highly flexible, string-expansion-based configuration language, while Postfix emphasizes simplicity and Sendmail is the oldest of the three." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted mail server", "description": "Run your own inbound and outbound mail server for a domain instead of relying on a hosted provider.", "audience": "System administrators and small hosting operators" },
+        { "title": "ISP and hosting-provider MTA", "description": "Handle mail routing for many domains and mailboxes with custom acceptance and filtering policies.", "audience": "Web hosts and ISPs" },
+        { "title": "Custom mail gateway", "description": "Use Exim's routing rules to build a gateway that inspects, filters, or forwards mail before it reaches its final destination.", "audience": "Enterprises with custom mail-flow requirements" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Exim: a free, open-source mail transfer agent for Unix. Flexible routing, ACLs, and content-scanning integration since 1995."
+    }
+  },
+  {
+    "tool_id": "9af66bbf-b130-4408-9f34-c92e212205a4",
+    "slug": "haraka",
+    "name": "Haraka",
+    "enrichment": {
+      "short_description": "Haraka is an open-source, event-driven SMTP server built on Node.js with a JavaScript plugin architecture.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2011,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Haraka is a Node.js-based SMTP server originally created by Matt Sergeant, a former SpamAssassin project lead. Released under the MIT license, it is designed for high throughput and low latency, handling large volumes of concurrent connections.",
+            "Instead of a monolithic configuration file, Haraka exposes every stage of an SMTP transaction — connect, HELO, MAIL FROM, RCPT TO, DATA, and queueing — as a hook that can be extended with a small JavaScript plugin. This makes it popular with developers who want to build custom mail-filtering or routing logic in code rather than a configuration DSL."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Haraka fits teams that are comfortable writing JavaScript and want a scriptable SMTP server for high-volume inbound or outbound mail handling, custom antispam logic, or embedding mail processing into a Node.js-based infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Plugin-based architecture", "description": "Every SMTP transaction stage is a hook that can be extended or overridden with custom JavaScript plugins." },
+        { "title": "High throughput design", "description": "Built on Node.js's event loop to handle large numbers of concurrent SMTP connections." },
+        { "title": "Bundled plugin library", "description": "Ships with plugins for common needs such as DNS-based blocklist checks, rate limiting, and authentication." },
+        { "title": "npm-based installation and packaging", "description": "Installed and managed as an npm package, fitting naturally into Node.js toolchains." },
+        { "title": "Community maintenance", "description": "Actively maintained on GitHub by the Haraka community, with regular releases." }
+      ],
+      "pros": [
+        "Highly extensible via JavaScript plugins rather than a proprietary config language",
+        "Designed for high-volume, high-performance mail handling",
+        "Free and open source under the permissive MIT license",
+        "Familiar toolchain (npm, JavaScript) for Node.js developers"
+      ],
+      "cons": [
+        "Requires JavaScript/Node.js knowledge to customize behavior effectively",
+        "Smaller ecosystem and community than long-established MTAs like Postfix or Exim",
+        "Documentation is less exhaustive than more mature mail servers"
+      ],
+      "faqs": [
+        { "question": "Is Haraka free?", "answer": "Yes. Haraka is open-source software released under the MIT license." },
+        { "question": "What do I need to run Haraka?", "answer": "Haraka runs on Node.js and is installed via npm." },
+        { "question": "Can I customize how Haraka handles mail?", "answer": "Yes, through its plugin system — each stage of the SMTP transaction can be extended with custom JavaScript." },
+        { "question": "Who maintains Haraka?", "answer": "It was created by Matt Sergeant and is now maintained by the Haraka open-source community on GitHub." }
+      ],
+      "use_cases": [
+        { "title": "High-volume outbound mail", "description": "Handle large sending volumes with a server tuned for concurrency and throughput.", "audience": "Developers running transactional or bulk mail infrastructure" },
+        { "title": "Custom antispam / filtering logic", "description": "Write JavaScript plugins to implement bespoke filtering, scoring, or routing rules at any SMTP stage.", "audience": "Engineering teams with specific mail-processing requirements" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Haraka: a free, open-source, plugin-driven SMTP server built on Node.js for high-throughput, customizable email handling."
+    }
+  },
+  {
+    "tool_id": "99730711-228d-48f9-acb0-4108e2522d7d",
+    "slug": "opensmtpd",
+    "name": "OpenSMTPD",
+    "enrichment": {
+      "short_description": "OpenSMTPD is a free, ISC-licensed SMTP server from the OpenBSD project, designed to be simple to configure and secure.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenSMTPD implements the server-side SMTP protocol (RFC 5321) along with common extensions, letting a machine send and receive email. It originated within the OpenBSD project — first appearing in the OpenBSD base system in 2009 and reaching its first standalone public release in 2013 — and is primarily developed by Gilles Chehade and Eric Faurot, with contributions from the wider OpenBSD community.",
+            "The project was started out of dissatisfaction with the complexity of existing mail transfer agents, and it is released under the permissive ISC license. While it ships as part of OpenBSD, a portable version is maintained separately on GitHub for Linux and other Unix-like systems."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OpenSMTPD is aimed at administrators who want a straightforward, security-focused mail server with a simple configuration syntax, particularly those already running OpenBSD or who prefer OpenBSD-style tooling on Linux."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "RFC 5321-compliant SMTP", "description": "Implements the standard SMTP protocol plus common extensions for interoperability with other mail servers." },
+        { "title": "Simple configuration syntax", "description": "Uses a concise, readable configuration file designed to reduce the risk of misconfiguration." },
+        { "title": "Privilege separation", "description": "Follows OpenBSD's security-first design philosophy, splitting the daemon into separate, minimally privileged processes." },
+        { "title": "Table-based lookups", "description": "Supports pluggable backends (files, databases) for user, alias, and virtual-domain lookups." },
+        { "title": "Portable builds", "description": "A separately maintained portable version runs on Linux and other non-OpenBSD Unix-like systems." }
+      ],
+      "pros": [
+        "Simple, readable configuration compared to older MTAs",
+        "Security-oriented design inherited from the OpenBSD project",
+        "Free and open source under the ISC license",
+        "Actively maintained with regular releases"
+      ],
+      "cons": [
+        "Smaller feature surface and plugin ecosystem than Postfix or Exim",
+        "Best-documented and most battle-tested on OpenBSD itself; the portable Linux build is a secondary target",
+        "Fewer third-party tutorials and integrations than more established MTAs"
+      ],
+      "faqs": [
+        { "question": "Is OpenSMTPD free?", "answer": "Yes. It is free, open-source software released under the ISC license." },
+        { "question": "Does OpenSMTPD only run on OpenBSD?", "answer": "No. While it's developed as part of OpenBSD, a portable version is maintained on GitHub for Linux and other Unix-like operating systems." },
+        { "question": "Who develops OpenSMTPD?", "answer": "It is primarily developed by Gilles Chehade and Eric Faurot, with contributions from OpenBSD developers and the wider community." },
+        { "question": "What is OpenSMTPD's design philosophy?", "answer": "It aims for a simpler, more secure alternative to older, more complex mail transfer agents, following OpenBSD's emphasis on privilege separation and code auditing." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted mail server on OpenBSD", "description": "Run inbound/outbound mail natively as part of an OpenBSD-based server stack.", "audience": "OpenBSD administrators" },
+        { "title": "Lightweight Linux mail server", "description": "Deploy the portable build as a simpler alternative to Postfix or Exim on Linux systems.", "audience": "Sysadmins who prefer minimal, security-focused configuration" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "OpenSMTPD: a free, ISC-licensed SMTP server from the OpenBSD project built for simple configuration and security."
+    }
+  },
+  {
+    "tool_id": "8af6231d-94ed-4f47-822f-a4b6cf8b5e1f",
+    "slug": "postfix",
+    "name": "Postfix",
+    "enrichment": {
+      "short_description": "Postfix is a free, open-source mail transfer agent built as a fast, secure, easy-to-administer alternative to Sendmail.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1998,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Postfix was created by Wietse Venema at the IBM Thomas J. Watson Research Center, with a first public release in December 1998 (originally under the names VMailer and IBM Secure Mailer). It is released under the IBM Public License and remains under active development by Venema.",
+            "Postfix maintains a Sendmail-compatible command-line interface so it can be dropped into existing Sendmail-based setups, while its internal architecture is built from small, cooperating processes designed for speed, security, and administrative simplicity. It runs on most Unix-like systems, including Linux, the BSDs, macOS, AIX, HP-UX, and Solaris, and is the default MTA on many Linux distributions."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Postfix is a common default choice for system administrators who want a self-hosted mail server that is easier to configure and audit than classic Sendmail, from single-server personal mail setups to large-scale hosting environments."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Sendmail-compatible interface", "description": "Command-line tools and behavior mimic Sendmail closely, easing migration from legacy Sendmail deployments." },
+        { "title": "Modular, multi-process design", "description": "Splits mail handling across small, single-purpose processes for better isolation and security." },
+        { "title": "Virtual domain and mailbox support", "description": "Supports virtual users and domains backed by files, databases, or directory services." },
+        { "title": "TLS and SASL authentication", "description": "Supports encrypted SMTP sessions and authenticated relaying." },
+        { "title": "Content filtering hooks", "description": "Integrates with external antispam and antivirus tools via a milter or pipe interface." },
+        { "title": "Broad platform support", "description": "Runs on AIX, the BSDs, HP-UX, Linux, macOS, and Solaris." }
+      ],
+      "pros": [
+        "Widely regarded as easier to configure and secure than legacy Sendmail",
+        "Mature and extremely widely deployed, with a large body of documentation",
+        "Free and open source under the IBM Public License",
+        "Actively maintained by its original author",
+        "Default MTA on many Linux distributions"
+      ],
+      "cons": [
+        "Command-line and file-based configuration; no bundled graphical interface",
+        "Requires Unix system administration knowledge to deploy and secure properly",
+        "Advanced setups (virtual domains, content filtering) require additional configuration work"
+      ],
+      "faqs": [
+        { "question": "Is Postfix free?", "answer": "Yes. Postfix is free, open-source software released under the IBM Public License." },
+        { "question": "Who maintains Postfix?", "answer": "Wietse Venema, its original creator, continues to oversee its development." },
+        { "question": "What platforms does Postfix support?", "answer": "Postfix runs on AIX, BSD variants, HP-UX, Linux, macOS, and Solaris." },
+        { "question": "How is Postfix different from Sendmail?", "answer": "Postfix was built as a faster, easier-to-administer, more secure alternative to Sendmail while keeping a similar command-line interface for compatibility." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted mail server", "description": "Send and receive mail for a domain without relying on a third-party hosted provider.", "audience": "System administrators" },
+        { "title": "Enterprise and hosting-provider mail relay", "description": "Route mail for many domains and virtual mailboxes at scale.", "audience": "Hosting providers and enterprise IT teams" },
+        { "title": "Outbound transactional mail relay", "description": "Act as the local relay that hands off application-generated email to upstream delivery services.", "audience": "Developers and DevOps teams" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Postfix: a free, open-source mail transfer agent built for speed, security, and easy administration as a Sendmail alternative."
+    }
+  },
+  {
+    "tool_id": "4741d451-b4f1-4455-802f-b4d98dfdba96",
+    "slug": "sendmail",
+    "name": "Sendmail",
+    "enrichment": {
+      "short_description": "Sendmail is a long-standing open-source mail transfer agent, with a commercial Sentrion edition offered by Proofpoint for larger deployments.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 1983,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Sendmail traces back to Eric Allman's delivermail program (1979) at UC Berkeley and shipped under the name Sendmail with BSD 4.1c in 1983, making it one of the oldest actively distributed mail transfer agents. The open-source edition is released under the Sendmail Open Source License, a BSD-style license, and continues to be distributed from sendmail.org.",
+            "Sendmail is now stewarded by Proofpoint, which offers the classic MTA as a free open-source download alongside a separate commercial product, Sendmail Sentrion, aimed at large and complex enterprise mail environments (virtualization, consolidation, cloud migration, and similar needs). Pricing for Sentrion is not published and requires contacting Proofpoint directly."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "The open-source edition suits administrators maintaining legacy or standard Unix mail infrastructure who are already familiar with Sendmail's configuration model. Organizations with large-scale, complex mail environments may instead evaluate the commercial Sentrion platform."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Mature routing engine", "description": "Decades-old, extensively documented rule-based mail routing and delivery engine." },
+        { "title": "Sendmail.cf configuration", "description": "Uses the well-known (if complex) sendmail.cf configuration format that many legacy tools and guides are built around." },
+        { "title": "Milter content-filtering interface", "description": "Supports the milter protocol for integrating antispam and antivirus filtering." },
+        { "title": "TLS and authentication support", "description": "Supports encrypted SMTP sessions and SMTP authentication." },
+        { "title": "Commercial Sentrion tier", "description": "Proofpoint's Sentrion platform extends the open-source core with features for large, complex enterprise mail environments." }
+      ],
+      "pros": [
+        "One of the oldest, most battle-tested mail transfer agents in existence",
+        "Free open-source edition available directly from sendmail.org",
+        "Extensive legacy documentation and community knowledge built up over decades",
+        "Backed by a commercial vendor (Proofpoint) for organizations that need enterprise support"
+      ],
+      "cons": [
+        "sendmail.cf configuration syntax is notoriously complex compared to newer MTAs like Postfix",
+        "Considered legacy by many administrators, with smaller active open-source contributor activity than Postfix or Exim",
+        "Sentrion enterprise pricing is not publicly listed and requires a sales conversation"
+      ],
+      "faqs": [
+        { "question": "Is Sendmail still free?", "answer": "Yes. The core Sendmail MTA remains available as free, open-source software under the Sendmail Open Source License." },
+        { "question": "What is Sendmail Sentrion?", "answer": "Sentrion is Proofpoint's separate commercial mail platform for large, complex enterprise environments, built on top of the Sendmail codebase, with pricing available on request." },
+        { "question": "Who maintains Sendmail today?", "answer": "Proofpoint distributes and supports Sendmail, including both the open-source edition and the commercial Sentrion platform." },
+        { "question": "How old is Sendmail?", "answer": "Its lineage dates to Eric Allman's 1979 delivermail program, with Sendmail itself shipping as part of BSD in 1983." }
+      ],
+      "use_cases": [
+        { "title": "Legacy Unix mail infrastructure", "description": "Maintain or extend an existing sendmail.cf-based mail server.", "audience": "System administrators running established Sendmail deployments" },
+        { "title": "Large enterprise mail consolidation", "description": "Evaluate the commercial Sentrion platform for complex, large-scale mail environments.", "audience": "Enterprise IT and messaging teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": null, "features": ["Core Sendmail MTA", "Self-hosted deployment", "Community documentation and support"] },
+        { "plan_name": "Sentrion", "price": "Contact for pricing", "billing_cycle": null, "features": ["Enterprise-grade mail platform", "Built for large, complex environments", "Commercial support from Proofpoint"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium"],
+      "seo_meta_description": "Sendmail: a veteran open-source mail transfer agent, with Proofpoint's commercial Sentrion platform available for enterprise environments."
+    }
+  },
+  {
+    "tool_id": "11597642-219f-4d25-9f31-8486b2b24eba",
+    "slug": "hyperkitty",
+    "name": "HyperKitty",
+    "enrichment": {
+      "short_description": "HyperKitty is the free, open-source web archiver for GNU Mailman 3, letting users browse and search mailing list discussions in a browser.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "HyperKitty is the archiver component of the GNU Mailman 3 suite, originating from the Fedora community. It is a Django-based web application, licensed under the GPLv3, that replaces older plain-text mailing list archives with a searchable, threaded, browsable web interface.",
+            "It plugs into a running Mailman 3 installation to archive incoming list traffic, but it can also be deployed standalone (using the hyperkitty and hyperkitty_standalone packages) to serve as a lightweight, forum-style discussion archive."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "HyperKitty is for organizations already running (or planning to run) GNU Mailman 3 who want a modern, searchable web archive of their list discussions rather than raw mbox files, as well as developers who want a standalone, forum-like archive of threaded conversations."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Searchable web archive", "description": "Full-text search across archived mailing list messages, replacing static mbox/text archives." },
+        { "title": "Threaded discussion view", "description": "Displays messages grouped into readable, threaded conversations." },
+        { "title": "Reply and post from the web", "description": "Registered users can start new threads or reply to existing ones directly from the browser." },
+        { "title": "Favorites", "description": "Users can mark messages as favorites for quick reference later." },
+        { "title": "Standalone or integrated deployment", "description": "Runs as part of the Mailman 3 suite or independently as a Django-based discussion archive." }
+      ],
+      "pros": [
+        "Free and open source under the GPLv3",
+        "Modern, searchable alternative to plain-text mailing list archives",
+        "Can double as a lightweight web forum when run standalone",
+        "Integrates natively with GNU Mailman 3"
+      ],
+      "cons": [
+        "Requires a Django deployment environment (Python, database, web server) to self-host",
+        "Most useful in combination with the rest of the Mailman 3 suite rather than as a fully independent product",
+        "Smaller community than the core Mailman project itself"
+      ],
+      "faqs": [
+        { "question": "Is HyperKitty free?", "answer": "Yes, HyperKitty is free, open-source software released under the GPLv3." },
+        { "question": "Do I need Mailman to use HyperKitty?", "answer": "It's built to archive GNU Mailman 3 lists, but it can also be deployed standalone as a Django-based discussion archive without the full Mailman suite." },
+        { "question": "What can users do in HyperKitty besides read archives?", "answer": "Registered users can search, start new threads, reply to existing messages, and mark messages as favorites." },
+        { "question": "Where does HyperKitty's source code live?", "answer": "It is hosted on GitLab, with development discussion on the Mailman Developers mailing list." }
+      ],
+      "use_cases": [
+        { "title": "Searchable mailing list archive", "description": "Give subscribers and the public a browsable, searchable web archive of a Mailman 3 list.", "audience": "Open-source projects and community mailing lists" },
+        { "title": "Standalone discussion forum", "description": "Run HyperKitty independently as a lightweight, threaded web forum.", "audience": "Communities that want forum-style archiving without full mailing list infrastructure" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "HyperKitty: the free, open-source web archiver for GNU Mailman 3, giving mailing lists a searchable, threaded browser archive."
+    }
+  },
+  {
+    "tool_id": "09b6e7a8-b810-4a31-9ecf-e4e0719bc76c",
+    "slug": "mailman",
+    "name": "Mailman",
+    "enrichment": {
+      "short_description": "GNU Mailman is free, open-source software for running and administering email discussion lists and newsletters.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1999,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "GNU Mailman is free software for managing email discussion lists and e-newsletters, released under the GNU General Public License and written in Python. Its origins trace to an early version written by John Viega, with development taken over and formalized in the late 1990s; it became an official GNU package shortly after.",
+            "Today's Mailman 3 is a suite made up of Mailman Core (the list-management engine), Postorius (a web-based admin/subscriber interface), and HyperKitty (a searchable web archiver), along with a documented REST API for integrations. The current lead developer is Abhilash Raj, with a group of long-standing core contributors. The latest stable release is Mailman 3.3.10 (October 2024); the older Mailman 2.1 branch remains available separately."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Mailman is used by open-source projects, universities, non-profits, and organizations that run community discussion lists or announcement newsletters and want a self-hosted, fully controllable alternative to third-party email marketing platforms."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "List management engine", "description": "Handles subscriptions, unsubscribes, bounce processing, moderation, and message delivery for discussion lists and newsletters." },
+        { "title": "Digest delivery", "description": "Subscribers can choose to receive individual messages or batched digests." },
+        { "title": "Content filtering and spam protection", "description": "Built-in tools for filtering unwanted content and reducing spam reaching list subscribers." },
+        { "title": "REST API", "description": "A documented REST API lets Postorius, HyperKitty, and third-party tools manage lists and members programmatically." },
+        { "title": "Companion web apps", "description": "Pairs with Postorius (list administration UI) and HyperKitty (searchable web archive) for a full self-hosted mailing list platform." },
+        { "title": "Bounce handling", "description": "Automatically detects and processes bounced messages to keep subscriber lists healthy." }
+      ],
+      "pros": [
+        "Free and open source under the GPL, with an official GNU project status",
+        "Long track record and large installed base across open-source projects and institutions",
+        "Documented REST API for automation and integration",
+        "Companion projects (Postorius, HyperKitty) provide a full web-based admin and archive experience",
+        "Active, ongoing development with regular releases"
+      ],
+      "cons": [
+        "Self-hosting the full Mailman 3 suite (Core, Postorius, HyperKitty) requires setting up multiple components",
+        "Mailman 3's architecture (Django-based web components plus a separate core) is more involved to deploy than the older Mailman 2.1",
+        "Not designed as a marketing-focused email platform with built-in campaign analytics like commercial newsletter tools"
+      ],
+      "faqs": [
+        { "question": "Is Mailman free?", "answer": "Yes. GNU Mailman is free, open-source software released under the GNU General Public License." },
+        { "question": "What's the difference between Mailman, Postorius, and HyperKitty?", "answer": "Mailman (Core) is the underlying list-management engine, Postorius is the web-based administration and subscriber interface, and HyperKitty is the searchable web archive — together they form the Mailman 3 suite." },
+        { "question": "Does Mailman have an API?", "answer": "Yes, Mailman Core exposes a documented REST API used by Postorius, HyperKitty, and third-party integrations." },
+        { "question": "Is the older Mailman 2.1 still available?", "answer": "Yes, Mailman 2.1.39 remains available for those not yet migrated to Mailman 3, though new deployments should use Mailman 3." }
+      ],
+      "use_cases": [
+        { "title": "Open-source project mailing lists", "description": "Run developer and user discussion lists for an open-source project.", "audience": "Open-source maintainers" },
+        { "title": "Institutional and community announcement lists", "description": "Send newsletters or announcements to a self-managed subscriber list.", "audience": "Universities, non-profits, and community organizations" },
+        { "title": "Self-hosted discussion forums", "description": "Combine Mailman with Postorius and HyperKitty for a full web-accessible list platform.", "audience": "Organizations wanting full control over their mailing list infrastructure" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api", "web-app"],
+      "seo_meta_description": "GNU Mailman: free, open-source software for running email discussion lists and newsletters, with a REST API and web UI suite."
+    }
+  },
+  {
+    "tool_id": "f8dc7535-36b0-4fce-a7c3-155bcabd5963",
+    "slug": "mlmmj",
+    "name": "mlmmj",
+    "enrichment": {
+      "short_description": "mlmmj is a free, open-source mailing list manager designed to be simple, lightweight, and resource-efficient.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "mlmmj (mailing list management made joyful) is a simple, slim mailing list manager inspired by ezmlm, released under the MIT license. It integrates with standard Mail Transfer Agents to handle subscription management, message distribution, and list moderation.",
+            "It is designed for minimal resource usage — the project notes that it requires no background daemons — which makes it well suited to small virtual private servers or other resource-constrained environments where a full mailing list platform would be overkill."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "mlmmj suits administrators who want a lightweight, no-frills mailing list manager for small to mid-sized lists, particularly on low-resource servers, and who are comfortable integrating it with an existing MTA rather than deploying a larger self-contained platform."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Message archiving", "description": "Keeps an archive of messages sent to each list." },
+        { "title": "Bounce processing", "description": "Automated handling of bounced messages to keep subscriber lists clean." },
+        { "title": "Moderation controls", "description": "Supports moderated lists where posts require approval before distribution." },
+        { "title": "Digest support", "description": "Subscribers can receive batched digests instead of individual messages." },
+        { "title": "Custom headers and footers", "description": "Lists can be configured with custom message headers and footers." },
+        { "title": "Subscriber-only posting and regex-based access control", "description": "Restrict who can post using subscriber-only rules or regular-expression-based access lists." },
+        { "title": "VERP and DSN support", "description": "Supports Variable Envelope Return Path and Delivery Status Notifications (RFC 1891) for reliable bounce tracking." },
+        { "title": "Optional web interface", "description": "An optional web interface is available for list interaction alongside the core command-line/MTA-integrated tool." }
+      ],
+      "pros": [
+        "Extremely lightweight; requires no background daemon process",
+        "Free and open source under the MIT license",
+        "Well suited to small VPS or resource-constrained hosting",
+        "Supports standard mailing-list features (moderation, digests, bounce handling) without unnecessary complexity"
+      ],
+      "cons": [
+        "Minimal by design, so it lacks the richer admin UI and ecosystem of larger platforms like GNU Mailman",
+        "Requires manual MTA integration and command-line/file-based configuration",
+        "Smaller community and slower release cadence than more widely used mailing list tools"
+      ],
+      "faqs": [
+        { "question": "Is mlmmj free?", "answer": "Yes, mlmmj is free, open-source software released under the MIT license." },
+        { "question": "Does mlmmj need a background daemon to run?", "answer": "No. It is designed to require no daemons, making it lightweight for small servers." },
+        { "question": "Does mlmmj have a web interface?", "answer": "An optional web interface is available for interacting with lists, in addition to its core MTA-integrated tooling." },
+        { "question": "What inspired mlmmj?", "answer": "mlmmj was inspired by ezmlm, another minimalist mailing list manager." }
+      ],
+      "use_cases": [
+        { "title": "Lightweight list hosting on small servers", "description": "Run mailing lists on a low-resource VPS without the overhead of a larger platform.", "audience": "Self-hosters and small organizations" },
+        { "title": "MTA-integrated list management", "description": "Add mailing list capability to an existing Postfix, Exim, or other MTA deployment.", "audience": "System administrators" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "mlmmj: a free, open-source, lightweight mailing list manager for MTAs, built for minimal resource use on small servers."
+    }
+  },
+  {
+    "tool_id": "05c5746c-f3a3-47a9-b647-2b4ab14ad200",
+    "slug": "phplist",
+    "name": "phpList",
+    "enrichment": {
+      "short_description": "phpList is free, open-source, self-hosted newsletter and email campaign software for sending to subscriber lists of any size.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2000,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "phpList is open-source email marketing and newsletter software, originally created in 2000 by Michiel Dethmers. It is released under the GNU Affero General Public License (AGPL) v3, which means anyone who runs a modified version on a public server must make that modified source code available to their users.",
+            "The self-hosted version at phplist.org is free to download and deploy on your own PHP server, and it is designed to scale from a few hundred subscribers up to large lists. A separately branded commercial hosted service, phpList.com, also exists for people who prefer not to manage their own server, and it operates independently from the free self-hosted project."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "phpList fits organizations and developers who want full control over their newsletter and campaign infrastructure — including data ownership and deliverability — and who are comfortable hosting a PHP application rather than relying on a third-party SaaS email marketing tool."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Subscriber list management", "description": "Organize subscribers into lists with custom fields and segmentation." },
+        { "title": "Campaign creation and sending", "description": "Compose and send email campaigns to subscriber lists of varying sizes." },
+        { "title": "Plugin architecture", "description": "Extend core functionality with plugins, including a REST API plugin for programmatic access." },
+        { "title": "Self-hosted deployment", "description": "Runs on your own PHP/MySQL server, giving full control over data and sending infrastructure." },
+        { "title": "Bounce and unsubscribe handling", "description": "Processes bounces and unsubscribe requests to keep lists compliant and clean." }
+      ],
+      "pros": [
+        "Free and open source, with full control over hosting and subscriber data",
+        "Long track record — the project dates back to 2000",
+        "Extensible via a plugin system, including an optional REST API plugin",
+        "Can scale from small lists to large subscriber bases"
+      ],
+      "cons": [
+        "Self-hosting requires managing your own PHP/MySQL server and email deliverability",
+        "AGPL licensing requires sharing modified source code if you run a customized version publicly",
+        "Fewer built-in modern campaign-analytics and design features than some commercial SaaS email marketing tools"
+      ],
+      "faqs": [
+        { "question": "Is phpList free?", "answer": "Yes, the self-hosted phpList software at phplist.org is free and open source under the AGPL v3." },
+        { "question": "Is there a hosted version of phpList?", "answer": "Yes, phpList.com offers a separately branded commercial hosted service for people who don't want to self-host, but the core phpList software itself is free open source." },
+        { "question": "What license does phpList use?", "answer": "phpList is released under the GNU Affero General Public License (AGPL) version 3." },
+        { "question": "Does phpList have an API?", "answer": "phpList offers an optional REST API plugin for programmatic list and campaign management." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted newsletter sending", "description": "Send newsletters and announcements to a subscriber list from your own server.", "audience": "Organizations that want full data ownership over their email marketing" },
+        { "title": "Large-scale campaign delivery", "description": "Manage and send to subscriber lists ranging from hundreds to much larger audiences.", "audience": "Publishers and marketing teams running self-hosted infrastructure" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api"],
+      "seo_meta_description": "phpList: free, open-source, self-hosted newsletter software for sending email campaigns to subscriber lists you fully control."
+    }
+  },
+  {
+    "tool_id": "6930e11f-db83-4fac-9da3-6754439654e5",
+    "slug": "postorius",
+    "name": "Postorius",
+    "enrichment": {
+      "short_description": "Postorius is the free, open-source Django-based web interface for administering and using GNU Mailman 3 mailing lists.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2010,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Postorius is the web-based administration and subscriber interface for GNU Mailman 3, originating from a Google Summer of Code project in 2010-2011 and now maintained under the Free Software Foundation's Mailman project. It is released under the GNU Lesser General Public License (LGPL) v3.",
+            "Built as a Django application, Postorius requires a running GNU Mailman Core installation to connect to and lets list owners, moderators, and subscribers manage lists, members, and settings through a browser instead of the command line. It's the piece of the Mailman 3 suite most users interact with directly for day-to-day list administration."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Postorius is for anyone running GNU Mailman 3 who wants a browser-based way to create and manage lists, approve subscribers, moderate posts, and adjust list settings, rather than relying solely on command-line tools or the raw REST API."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Web-based list creation and management", "description": "Create, configure, and delete mailing lists from a browser interface." },
+        { "title": "Subscriber management", "description": "Approve, remove, or manage subscribers and moderators through the web UI." },
+        { "title": "Moderation queue", "description": "Review and act on held messages and pending subscription requests." },
+        { "title": "List settings configuration", "description": "Adjust list-wide settings such as posting policy, digest options, and privacy controls." },
+        { "title": "Django-based deployment", "description": "Runs as a standard Django application, fitting into common Python web-hosting environments." }
+      ],
+      "pros": [
+        "Free and open source under the LGPL v3",
+        "Gives Mailman 3 a modern, browser-based admin experience instead of command-line-only management",
+        "Actively developed as part of the official Mailman 3 suite",
+        "Familiar Django deployment model for teams already using Python web stacks"
+      ],
+      "cons": [
+        "Requires a working GNU Mailman Core installation to function — it is not a standalone product",
+        "Deploying the full stack (Core, Postorius, and typically HyperKitty) takes more setup than a single-package tool",
+        "Requires Python 3.9+ and Django 4.2+, adding dependency management overhead"
+      ],
+      "faqs": [
+        { "question": "Is Postorius free?", "answer": "Yes, Postorius is free, open-source software released under the LGPL v3." },
+        { "question": "Can I use Postorius without Mailman?", "answer": "No. Postorius is a front-end for GNU Mailman Core and requires a running Mailman 3 installation to operate." },
+        { "question": "What technology is Postorius built on?", "answer": "It's a Django application requiring Python 3.9 or newer and Django 4.2 or newer." },
+        { "question": "Who maintains Postorius?", "answer": "It is maintained as part of the official GNU Mailman 3 project under the Free Software Foundation." }
+      ],
+      "use_cases": [
+        { "title": "Web-based Mailman administration", "description": "Give list owners and moderators a browser interface for day-to-day mailing list management.", "audience": "Mailing list administrators and moderators" },
+        { "title": "Self-service subscriber management", "description": "Let subscribers manage their own subscription settings through a web UI.", "audience": "Mailing list subscribers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Postorius: the free, open-source Django web interface for administering GNU Mailman 3 mailing lists in a browser."
+    }
+  }
+]

@@ -1,0 +1,601 @@
+[
+  {
+    "tool_id": "caf4aea6-fd20-4af6-9d16-4a5cbc4d2503",
+    "slug": "home-assistant",
+    "name": "Home Assistant",
+    "enrichment": {
+      "short_description": "Open-source home automation platform that unifies smart home devices under one local, privacy-focused dashboard.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Home Assistant is an open-source home automation platform started by Paulus Schoutsen in 2013 and now stewarded by the nonprofit Open Home Foundation. It runs locally (typically on a Raspberry Pi, mini PC, or NAS) and connects thousands of smart home devices and services through community-built integrations, letting users automate their homes without depending on a vendor's cloud.",
+            "The project prioritizes local control and privacy: automations and voice commands can run entirely on your own network. An optional paid subscription, Home Assistant Cloud from Nabu Casa, adds secure remote access and Google Assistant/Amazon Alexa integration, but the core platform is fully usable without it."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Home Assistant is aimed at hobbyists, developers, and privacy-conscious homeowners who want to combine devices from many brands (lighting, climate, locks, cameras, energy monitors, media players) into a single automation system rather than juggling several manufacturer apps."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Local-first control", "description": "Automations, dashboards, and voice processing can run entirely on local hardware without cloud dependency." },
+        { "title": "Massive integration library", "description": "Thousands of community-maintained integrations connect brands like Philips Hue, Zigbee/Z-Wave devices, Sonos, and more." },
+        { "title": "Automation engine", "description": "Trigger-condition-action automations plus scripts and scenes for complex home behavior." },
+        { "title": "Voice assistant (Assist)", "description": "A built-in, privacy-focused voice assistant that can process commands locally." },
+        { "title": "Add-ons via Supervisor", "description": "Home Assistant OS supports add-ons for extending the system, such as running additional services alongside the core." },
+        { "title": "Energy dashboard", "description": "Tracks and visualizes home energy production and consumption over time." }
+      ],
+      "pros": [
+        "Fully free and open source with no required subscription",
+        "Extremely broad device and protocol support",
+        "Strong focus on local control and data privacy",
+        "Large, active community and documentation base"
+      ],
+      "cons": [
+        "Initial setup and configuration have a learning curve for non-technical users",
+        "Best experience typically requires dedicated hardware (e.g., Raspberry Pi or mini PC)",
+        "Remote access and voice assistant integrations require the optional paid cloud subscription"
+      ],
+      "faqs": [
+        { "question": "Is Home Assistant free?", "answer": "Yes, the core Home Assistant software is free and open source under the Apache 2.0 license. An optional paid Home Assistant Cloud subscription from Nabu Casa adds remote access and voice assistant integrations." },
+        { "question": "Do I need special hardware to run Home Assistant?", "answer": "Home Assistant can run on a Raspberry Pi, a mini PC, a NAS, or a virtual machine. Official hardware like Home Assistant Green and Home Assistant Yellow are also sold as ready-to-use options." },
+        { "question": "Does Home Assistant work without internet access?", "answer": "Most local automations and device control continue to work without internet access since Home Assistant is designed to run locally." },
+        { "question": "Who maintains Home Assistant?", "answer": "Home Assistant is stewarded by the Open Home Foundation, a nonprofit organization, with funding support from Nabu Casa's Home Assistant Cloud subscriptions." }
+      ],
+      "use_cases": [
+        { "title": "Whole-home automation", "description": "Combine lighting, climate, locks, and sensors from different brands into unified automations.", "audience": "Smart home hobbyists" },
+        { "title": "Local energy monitoring", "description": "Track solar production and household energy consumption with the built-in energy dashboard.", "audience": "Homeowners with solar or smart meters" },
+        { "title": "Privacy-focused smart home", "description": "Run device automation and voice control locally without relying on manufacturer clouds.", "audience": "Privacy-conscious users" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Home Assistant Core", "price": "Free", "billing_cycle": "N/A", "features": ["Full local home automation platform", "Community integrations", "Self-hosted"] },
+        { "plan_name": "Home Assistant Cloud (Nabu Casa, optional)", "price": "$6.50/month or $65/year", "billing_cycle": "monthly or annual", "features": ["Secure remote access", "Google Assistant & Amazon Alexa integration", "Cloud text-to-speech/speech-to-text"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "android", "ios"],
+      "seo_meta_description": "Home Assistant is a free, open-source home automation platform that runs locally and connects thousands of smart home devices and brands."
+    }
+  },
+  {
+    "tool_id": "040370f5-8835-4009-88cd-4a1d8b345969",
+    "slug": "iobroker",
+    "name": "ioBroker",
+    "enrichment": {
+      "short_description": "Open-source, Node.js-based integration platform for connecting and automating smart home and IoT devices.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "ioBroker is an open-source, Node.js-based integration platform for home and building automation. It uses a modular architecture of \"adapters\" — community-built connectors for hundreds of smart home devices, protocols, and cloud services — that all publish data into a shared object and state database, so different systems can interoperate through one hub.",
+            "It runs on Raspberry Pi, Docker, Linux, macOS, and Windows, and is popular in the German-speaking DIY smart home community, though its documentation and adapters also support English."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "ioBroker suits technically inclined users who want a flexible, self-hosted hub to bridge many different smart home ecosystems, sensors, and building automation protocols under one system, with visual scripting for automations."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Adapter ecosystem", "description": "Hundreds of community adapters connect devices, protocols (MQTT, KNX, Zigbee, Z-Wave), and cloud services." },
+        { "title": "Visual scripting (Blockly/JavaScript)", "description": "Automations can be built visually with Blockly or written directly in JavaScript/TypeScript." },
+        { "title": "Web-based admin interface", "description": "Manage adapters, objects, and instances through a browser-based admin panel." },
+        { "title": "Cross-platform hosting", "description": "Runs on Raspberry Pi, Docker containers, Linux, macOS, and Windows." },
+        { "title": "State/object database", "description": "Central data store lets different adapters and automations share device state consistently." }
+      ],
+      "pros": [
+        "Free and open source with a very large adapter library",
+        "Runs on low-cost hardware like the Raspberry Pi",
+        "Flexible visual and code-based automation scripting",
+        "Active community, especially in German-speaking regions"
+      ],
+      "cons": [
+        "Documentation and community support skew toward German",
+        "Adapter quality varies since many are community-maintained",
+        "Requires Node.js familiarity for advanced customization"
+      ],
+      "faqs": [
+        { "question": "Is ioBroker free?", "answer": "Yes, ioBroker is free, open-source software." },
+        { "question": "What hardware does ioBroker run on?", "answer": "ioBroker runs on any device capable of running Node.js, including Raspberry Pi, Docker containers, Linux, macOS, and Windows." },
+        { "question": "Does ioBroker support Zigbee and Z-Wave devices?", "answer": "Yes, ioBroker has community adapters for Zigbee, Z-Wave, KNX, MQTT, and many other protocols and device brands." }
+      ],
+      "use_cases": [
+        { "title": "Multi-protocol smart home hub", "description": "Bridge devices using different protocols (Zigbee, Z-Wave, KNX, MQTT) into one automation system.", "audience": "DIY smart home builders" },
+        { "title": "Building automation", "description": "Integrate building management protocols like KNX alongside consumer smart home devices.", "audience": "Home automation enthusiasts and installers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "ioBroker is a free, open-source Node.js integration platform that connects smart home and IoT devices through community-built adapters."
+    }
+  },
+  {
+    "tool_id": "e1493d3f-721d-4cee-8c01-f904dc3274ec",
+    "slug": "onloc",
+    "name": "Onloc",
+    "enrichment": {
+      "short_description": "Self-hosted device location tracker that lets you monitor and manage your own devices without third-party services.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Onloc is a self-hosted device tracking application that lets users see the current and historical location of their own devices and send them remote commands, without routing data through a third-party cloud service. Users run their own Onloc server and pair it with the Onloc Android app to report location.",
+            "It is aimed at people who want the functionality of a \"find my device\" style tracker while keeping location data on infrastructure they control, and it includes an integration with Home Assistant for surfacing device positions in a broader smart home setup."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Self-hosted server", "description": "Run your own Onloc backend so location data stays under your control." },
+        { "title": "Location history", "description": "View a device's current location plus a history of past positions." },
+        { "title": "Remote device commands", "description": "Send commands to tracked devices, such as playing an alert sound to help locate a phone." },
+        { "title": "Android app", "description": "Official Android client distributed via F-Droid, GitHub releases, and Obtainium." },
+        { "title": "Home Assistant integration", "description": "Surface tracked device locations inside a Home Assistant smart home setup." }
+      ],
+      "pros": [
+        "Free, open-source, and self-hosted for full data ownership",
+        "No reliance on third-party location tracking services",
+        "Home Assistant integration for existing smart home users"
+      ],
+      "cons": [
+        "Android app only — no iOS client",
+        "Requires running and maintaining your own server",
+        "Smaller community/project compared to established device trackers"
+      ],
+      "faqs": [
+        { "question": "Is Onloc free?", "answer": "Yes, Onloc is free, open-source software that you self-host." },
+        { "question": "Does Onloc have an iOS app?", "answer": "Onloc's official client is distributed as an Android app; no iOS app is documented on the official site." },
+        { "question": "Can Onloc integrate with Home Assistant?", "answer": "Yes, Onloc documents an integration for use with Home Assistant." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted device tracking", "description": "Track the location of personal Android devices without a third-party cloud service.", "audience": "Privacy-conscious individuals" },
+        { "title": "Smart home location awareness", "description": "Feed device location data into Home Assistant automations.", "audience": "Home Assistant users" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "android"],
+      "seo_meta_description": "Onloc is a free, open-source, self-hosted app for tracking and remotely commanding your own devices without a third-party cloud."
+    }
+  },
+  {
+    "tool_id": "00ff6895-5fbd-49c5-9a5f-500fdaab2761",
+    "slug": "openhab",
+    "name": "openHAB",
+    "enrichment": {
+      "short_description": "Vendor- and technology-agnostic open-source home automation platform built in Java.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2010,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "openHAB (open Home Automation Bus) is an open-source home automation platform that started in 2010 with the goal of being vendor- and technology-agnostic, integrating devices and systems from many different manufacturers and protocols into a single automation environment. It is written in Java and runs on hardware such as a Raspberry Pi, NAS, or generic Linux/Windows server.",
+            "The project is stewarded by the openHAB Foundation e.V., a nonprofit organization that promotes free and open-source home automation, and it maintains a large binding (integration) ecosystem contributed by its community."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Bindings ecosystem", "description": "Hundreds of community bindings connect devices and protocols like Zigbee, Z-Wave, KNX, and MQTT." },
+        { "title": "Rule engine", "description": "Define automations using openHAB's rule DSL, JavaScript, Python, or a visual blocky-style editor." },
+        { "title": "Multiple UI options", "description": "Includes the Main UI, a customizable sitemap-based UI, and support for third-party dashboards." },
+        { "title": "Persistence services", "description": "Log and store historical item state data for charting and analysis." },
+        { "title": "Cross-platform runtime", "description": "Runs on any system supporting Java, including Raspberry Pi, Linux, and Windows." }
+      ],
+      "pros": [
+        "Free, open source, and technology-agnostic across many device ecosystems",
+        "Backed by a dedicated nonprofit foundation",
+        "Strong local control with no forced cloud dependency",
+        "Flexible rule engine supporting multiple scripting languages"
+      ],
+      "cons": [
+        "Steeper learning curve than some consumer-focused home automation tools",
+        "Java-based runtime can be heavier on constrained hardware",
+        "UI and setup experience is less polished than commercial alternatives"
+      ],
+      "faqs": [
+        { "question": "Is openHAB free?", "answer": "Yes, openHAB is free, open-source software licensed and maintained by the nonprofit openHAB Foundation." },
+        { "question": "What hardware does openHAB need?", "answer": "openHAB runs on anything that supports Java, including a Raspberry Pi, NAS devices, and standard Linux or Windows machines." },
+        { "question": "Does openHAB support Zigbee and Z-Wave?", "answer": "Yes, community bindings provide support for Zigbee, Z-Wave, KNX, MQTT, and many other protocols and brands." }
+      ],
+      "use_cases": [
+        { "title": "Multi-vendor home automation", "description": "Unify devices from different manufacturers and protocols under one automation system.", "audience": "Advanced smart home users" },
+        { "title": "Local, cloud-independent control", "description": "Run home automation entirely on local infrastructure without cloud dependency.", "audience": "Privacy-focused homeowners" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "openHAB is a free, open-source, vendor-agnostic home automation platform that integrates devices and protocols from many manufacturers."
+    }
+  },
+  {
+    "tool_id": "86bb955c-8712-45a0-8f45-aeab54c99a6f",
+    "slug": "openremote",
+    "name": "OpenRemote",
+    "enrichment": {
+      "short_description": "Open-source IoT device management platform for connecting, automating, and visualizing connected devices at scale.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": "Eindhoven, Netherlands",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "OpenRemote is a 100% open-source IoT device management platform used to connect, monitor, and automate connected devices and systems, aimed primarily at manufacturers, integrators, and organizations building IoT solutions for sectors like energy, smart buildings, cities, and fleets. The core software is free to self-host with no vendor lock-in.",
+            "For organizations that don't want to self-manage the platform, OpenRemote also offers paid professional services covering configuration, custom development, and managed hosting."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "OpenRemote targets manufacturers, systems integrators, and organizations that need a device-agnostic platform to manage large numbers of connected assets, rather than individual consumer smart-home users."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Device connectivity", "description": "Link and manage devices and data sources from many manufacturers through one manager interface." },
+        { "title": "Rules and automation", "description": "Define rules and scripts to automate behavior across connected assets." },
+        { "title": "Dashboards and maps", "description": "Build real-time dashboards and geographic maps from device data." },
+        { "title": "Asset provisioning", "description": "Provision and manage IoT assets at scale." },
+        { "title": "Custom app development", "description": "Build custom applications on top of the platform using web components." }
+      ],
+      "pros": [
+        "Fully open-source core with no vendor lock-in",
+        "Designed for large-scale, multi-device-type IoT deployments",
+        "Optional professional services for organizations that want managed hosting",
+        "Used by municipalities and enterprises across multiple sectors"
+      ],
+      "cons": [
+        "Aimed at organizations and integrators rather than individual home users",
+        "Professional/managed offerings are not priced publicly",
+        "Requires more setup effort than consumer smart-home tools"
+      ],
+      "faqs": [
+        { "question": "Is OpenRemote free?", "answer": "The OpenRemote platform itself is 100% open source and free to self-host. OpenRemote also offers paid professional services for configuration, development, and hosting." },
+        { "question": "Who uses OpenRemote?", "answer": "OpenRemote is used by manufacturers, systems integrators, and organizations including municipalities for IoT device management across sectors like energy, buildings, and smart cities." },
+        { "question": "Where is OpenRemote based?", "answer": "OpenRemote's head office is in Eindhoven, Netherlands, with additional offices in other regions." }
+      ],
+      "use_cases": [
+        { "title": "Smart building management", "description": "Connect and automate building systems and monitor them through dashboards.", "audience": "Building system integrators" },
+        { "title": "Municipal IoT deployments", "description": "Manage connected city infrastructure like sensors and energy systems.", "audience": "Smart city teams" },
+        { "title": "Fleet and asset tracking", "description": "Provision and monitor distributed connected assets at scale.", "audience": "IoT solution providers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted IoT platform", "Full source code access", "Community support"] },
+        { "plan_name": "Professional Services", "price": "Custom / contact sales", "billing_cycle": "N/A", "features": ["Configuration and custom development", "Managed hosting"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "OpenRemote is a free, open-source IoT device management platform for connecting, automating, and visualizing connected devices at scale."
+    }
+  },
+  {
+    "tool_id": "985dacad-07a6-451c-b58a-1273bc999b4c",
+    "slug": "sip-irrigation-control",
+    "name": "SIP Irrigation Control",
+    "enrichment": {
+      "short_description": "Free, open-source DIY sprinkler and irrigation control software that runs on a Raspberry Pi.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SIP is free, open-source DIY sprinkler/irrigation control software built with a Python backend and a JavaScript/jQuery web interface, designed to run on a Raspberry Pi. It lets hobbyists build and program custom irrigation controllers using low-cost hardware like relay boards, OpenSprinkler interface boards, or TIAO Smart Sprinkler controllers.",
+            "A plugin architecture lets developers extend the system without touching the core code, and it can integrate with Node-RED for visual, flow-based automation logic."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Web-based control interface", "description": "Manage and monitor irrigation stations through a responsive browser-based dashboard." },
+        { "title": "Raspberry Pi hardware support", "description": "Runs on Raspberry Pi paired with relay boards or compatible controller boards." },
+        { "title": "Plugin architecture", "description": "Extend functionality with plugins without modifying the core codebase." },
+        { "title": "Node-RED integration", "description": "Build visual, flow-based automation logic alongside irrigation scheduling." },
+        { "title": "Multiple hardware interfaces", "description": "Supports relay boards, OpenSprinkler interface boards, and TIAO Smart Sprinkler controllers." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Runs on inexpensive Raspberry Pi hardware",
+        "Extensible through plugins and Node-RED",
+        "Active community wiki and discussion forum"
+      ],
+      "cons": [
+        "Requires DIY hardware assembly and Raspberry Pi setup",
+        "No official mobile app",
+        "Aimed at hobbyists comfortable with self-installation, not turnkey users"
+      ],
+      "faqs": [
+        { "question": "What hardware do I need for SIP?", "answer": "SIP runs on a Raspberry Pi paired with a compatible relay board, OpenSprinkler interface board, or TIAO Smart Sprinkler controller." },
+        { "question": "Is SIP free?", "answer": "Yes, SIP is free, open-source irrigation control software." },
+        { "question": "Can SIP integrate with other automation tools?", "answer": "Yes, SIP supports integration with Node-RED for building custom automation flows." }
+      ],
+      "use_cases": [
+        { "title": "DIY sprinkler automation", "description": "Build a custom, self-hosted irrigation controller using a Raspberry Pi.", "audience": "Home automation hobbyists" },
+        { "title": "Custom irrigation scheduling", "description": "Program watering schedules and integrate with flow-based automation via Node-RED.", "audience": "Gardeners and makers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "SIP is free, open-source DIY sprinkler and irrigation control software that runs on a Raspberry Pi with a web-based dashboard."
+    }
+  },
+  {
+    "tool_id": "5a231e16-9bac-4260-965f-8748c267e354",
+    "slug": "solectrus",
+    "name": "SOLECTRUS",
+    "enrichment": {
+      "short_description": "Self-hosted dashboard for visualizing solar power generation, consumption, costs, and savings.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["German", "English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SOLECTRUS is a self-hosted, open-source dashboard for monitoring and visualizing photovoltaic (solar) energy systems, built on Ruby on Rails and InfluxDB. It displays live and historical data on power generation, consumption, costs, and savings, refreshing readings roughly every 5 seconds.",
+            "It's typically deployed via Docker on a Raspberry Pi, NAS (e.g., Synology, Proxmox), or a small server, and supports MQTT for pulling in data from inverters and energy meters, plus a kiosk mode for dedicated wall-mounted displays."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Live monitoring", "description": "Displays near real-time solar production and consumption data with frequent refresh." },
+        { "title": "Historical analytics", "description": "Tracks power generation, consumption, cost, and savings trends over time." },
+        { "title": "Weather forecast integration", "description": "Incorporates weather forecast data alongside energy metrics." },
+        { "title": "MQTT support", "description": "Ingests data from inverters and energy meters via MQTT." },
+        { "title": "Kiosk mode", "description": "Runs in a full-screen display mode suitable for dedicated wall-mounted screens." },
+        { "title": "Multi-device access", "description": "Accessible from desktop, smartphone, and tablet browsers." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Detailed, frequently refreshed solar energy visualizations",
+        "Runs on low-cost hardware like a Raspberry Pi or NAS",
+        "Kiosk mode good for dedicated dashboard displays"
+      ],
+      "cons": [
+        "Interface and documentation are primarily in German",
+        "Requires Docker/self-hosting setup skills",
+        "Depends on compatible data sources (e.g., MQTT-capable inverters/meters)"
+      ],
+      "faqs": [
+        { "question": "Is SOLECTRUS free?", "answer": "Yes, SOLECTRUS is free, open-source software available on GitHub." },
+        { "question": "What do I need to run SOLECTRUS?", "answer": "SOLECTRUS is typically deployed via Docker on hardware like a Raspberry Pi, NAS, or small VPS, alongside InfluxDB for data storage." },
+        { "question": "Does SOLECTRUS support MQTT data sources?", "answer": "Yes, it supports MQTT for pulling in data from compatible solar inverters and energy meters." }
+      ],
+      "use_cases": [
+        { "title": "Home solar monitoring", "description": "Visualize solar production, consumption, and savings on a self-hosted dashboard.", "audience": "Homeowners with solar installations" },
+        { "title": "Wall-mounted energy display", "description": "Run SOLECTRUS in kiosk mode on a dedicated screen for at-a-glance energy stats.", "audience": "Solar system owners" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "SOLECTRUS is a free, open-source, self-hosted dashboard for visualizing solar power generation, consumption, costs, and savings."
+    }
+  },
+  {
+    "tool_id": "4a94ac23-3cd5-4a86-822c-cdd69541e32e",
+    "slug": "tasmota",
+    "name": "Tasmota",
+    "enrichment": {
+      "short_description": "Open-source alternative firmware for ESP8266/ESP32-based smart devices, enabling local control without vendor cloud services.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Tasmota is free, open-source firmware that replaces the stock firmware on ESP8266 and ESP32-based smart devices — such as smart plugs, switches, and sensors from brands like Sonoff — with a version that supports local control via MQTT, HTTP, and a built-in web UI, without requiring a manufacturer's cloud service.",
+            "It's widely used alongside home automation platforms like Home Assistant and openHAB, giving users full local control over inexpensive smart devices and reducing dependency on vendor apps."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Local control", "description": "Control devices over the local network via web UI, MQTT, or HTTP without cloud dependency." },
+        { "title": "Broad device support", "description": "Supports a wide range of ESP8266/ESP32-based smart plugs, switches, lights, and sensors." },
+        { "title": "MQTT integration", "description": "Publishes device state and accepts commands over MQTT for use with home automation hubs." },
+        { "title": "Rules engine", "description": "Built-in rules let devices trigger actions based on conditions without an external controller." },
+        { "title": "OTA firmware updates", "description": "Devices can be updated over the air once flashed with Tasmota." },
+        { "title": "Web-based configuration", "description": "Configure Wi-Fi, modules, and device settings through a built-in web interface." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Removes dependency on manufacturer cloud services",
+        "Wide compatibility with inexpensive ESP8266/ESP32 devices",
+        "Integrates well with Home Assistant, openHAB, and other hubs via MQTT"
+      ],
+      "cons": [
+        "Requires flashing firmware, which carries some risk of bricking a device",
+        "Not all devices are officially supported or easy to flash",
+        "Manufacturer warranties are typically voided after flashing"
+      ],
+      "faqs": [
+        { "question": "Is Tasmota free?", "answer": "Yes, Tasmota is free, open-source firmware." },
+        { "question": "What devices can run Tasmota?", "answer": "Tasmota runs on ESP8266 and ESP32-based smart devices, including many smart plugs, switches, and sensors, most notably from Sonoff." },
+        { "question": "Does Tasmota work with Home Assistant?", "answer": "Yes, Tasmota devices integrate with Home Assistant and other hubs via MQTT." }
+      ],
+      "use_cases": [
+        { "title": "Cloud-free smart plugs and switches", "description": "Flash inexpensive smart devices to remove cloud dependency and enable local control.", "audience": "Privacy-conscious smart home users" },
+        { "title": "Home automation hub integration", "description": "Connect Tasmota-flashed devices to Home Assistant or openHAB via MQTT.", "audience": "DIY home automation builders" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "Tasmota is free, open-source firmware for ESP8266/ESP32 smart devices that enables local control without vendor cloud dependency."
+    }
+  },
+  {
+    "tool_id": "8e405b1d-8563-4f77-89f4-97e61f455d64",
+    "slug": "thingsboard",
+    "name": "Thingsboard",
+    "enrichment": {
+      "short_description": "Open-source IoT platform for device connectivity, data processing, visualization, and device management.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2016,
+      "company_size": null,
+      "headquarters": "New York, NY, USA",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "ThingsBoard is an open-source IoT platform for device connectivity, data collection, processing, visualization, and device management, supporting standard IoT protocols like MQTT, CoAP, and HTTP. The free Community Edition is Apache 2.0 licensed and self-hosted, offering the platform's core functionality including a rule engine, multi-tenancy, and over 600 customizable dashboard widgets.",
+            "ThingsBoard Inc., founded in 2016, also offers a paid Professional Edition with enterprise features and support, plus a managed ThingsBoard Cloud (PaaS) option for organizations that don't want to self-host."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "ThingsBoard is aimed at organizations and developers building IoT solutions at scale — device manufacturers, industrial companies, and system integrators — rather than individual consumer smart-home users."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Device connectivity", "description": "Connect devices using MQTT, CoAP, and HTTP with secure device authentication." },
+        { "title": "Rule engine", "description": "Flexible processing chains for transforming data and triggering alarms." },
+        { "title": "Dashboard widgets", "description": "Over 600 customizable widgets for building real-time visualizations." },
+        { "title": "Multi-tenancy", "description": "Supports multiple independent tenants within a single installation." },
+        { "title": "Horizontal scalability", "description": "Microservices architecture supports scaling without downtime." },
+        { "title": "Device management APIs", "description": "Provision, monitor, and manage devices with defined entity relationships." }
+      ],
+      "pros": [
+        "Free, full-featured Community Edition under Apache 2.0",
+        "Scales from small self-hosted deployments to large enterprise use",
+        "Large widget library for building dashboards without heavy coding",
+        "Used by well-known enterprises for production IoT deployments"
+      ],
+      "cons": [
+        "Professional Edition and Cloud pricing are not published — requires contacting sales",
+        "Complex feature set has a learning curve for small projects",
+        "Community Edition lacks some enterprise support and advanced features found in Professional Edition"
+      ],
+      "faqs": [
+        { "question": "Is ThingsBoard free?", "answer": "The ThingsBoard Community Edition is free and open source under the Apache 2.0 license. A paid Professional Edition and a managed Cloud (PaaS) option are also available." },
+        { "question": "What protocols does ThingsBoard support?", "answer": "ThingsBoard supports industry-standard IoT protocols including MQTT, CoAP, and HTTP." },
+        { "question": "Can ThingsBoard scale to large deployments?", "answer": "Yes, ThingsBoard uses a microservices architecture designed for horizontal scaling without downtime." }
+      ],
+      "use_cases": [
+        { "title": "Industrial IoT monitoring", "description": "Collect and visualize sensor and device data from industrial equipment.", "audience": "Industrial and manufacturing teams" },
+        { "title": "Multi-tenant device platforms", "description": "Build a device management platform serving multiple independent customers or business units.", "audience": "IoT solution providers" },
+        { "title": "Custom IoT dashboards", "description": "Create real-time dashboards from device telemetry using built-in widgets.", "audience": "Developers and data teams" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Community Edition", "price": "Free", "billing_cycle": "N/A", "features": ["Self-hosted deployment", "Core device management and rule engine", "600+ dashboard widgets"] },
+        { "plan_name": "Professional Edition", "price": "Custom / contact sales", "billing_cycle": "N/A", "features": ["Enterprise features", "Vendor support", "On-premises or cloud deployment"] },
+        { "plan_name": "ThingsBoard Cloud", "price": "Custom / contact sales", "billing_cycle": "N/A", "features": ["Fully managed hosting", "No infrastructure management"] }
+      ],
+      "tags": ["self-hosted", "open-source", "api", "freemium"],
+      "seo_meta_description": "ThingsBoard is an open-source IoT platform for device connectivity, data visualization, and device management, free to self-host."
+    }
+  },
+  {
+    "tool_id": "e3732b36-1f7f-4598-84f0-2ab858cfea63",
+    "slug": "webthings-gateway",
+    "name": "WebThings Gateway",
+    "enrichment": {
+      "short_description": "Open-source smart home gateway built on W3C Web of Things standards, focused on privacy and local control.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "WebThings Gateway is open-source software for building a private, self-hosted smart home hub, built on W3C Web of Things standards. It was originally developed by Mozilla and is now maintained by Krellian Ltd. It emphasizes privacy, security, and interoperability by letting users control their smart home devices from a single web interface without relying on manufacturer cloud services.",
+            "The gateway is distributed via Docker, Snap, and source code as version 2.0; the older Raspberry Pi-specific release (1.1) has been marked as deprecated in favor of the newer distribution methods."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Unified device control", "description": "Monitor and manage smart home devices through a single web interface." },
+        { "title": "Rules engine", "description": "Build automations with a drag-and-drop rules interface." },
+        { "title": "Floorplan visualization", "description": "View device locations and status on interactive floorplans." },
+        { "title": "Historical data logging", "description": "Log sensor data over time to review patterns and usage." },
+        { "title": "Add-ons for extensibility", "description": "Add-ons extend compatibility with additional devices and protocols." },
+        { "title": "W3C Web of Things standards", "description": "Built on open W3C standards intended to promote device interoperability." }
+      ],
+      "pros": [
+        "Free and open source with a focus on privacy and local control",
+        "Standards-based approach (W3C Web of Things) rather than a proprietary protocol",
+        "Extensible via add-ons"
+      ],
+      "cons": [
+        "Raspberry Pi-specific release is deprecated; Docker/Snap setup requires more technical comfort",
+        "No longer developed by Mozilla, now maintained by a smaller team (Krellian Ltd.)",
+        "Smaller device/add-on ecosystem than larger platforms like Home Assistant"
+      ],
+      "faqs": [
+        { "question": "Is WebThings Gateway still maintained?", "answer": "Yes, it is currently maintained by Krellian Ltd. after originally being developed by Mozilla, and version 2.0 is distributed via Docker, Snap, and source code." },
+        { "question": "Is WebThings Gateway free?", "answer": "Yes, it is free, open-source software." },
+        { "question": "Can I still run WebThings Gateway on a Raspberry Pi?", "answer": "The dedicated Raspberry Pi image (version 1.1) is marked as deprecated; current deployment is via Docker or Snap." }
+      ],
+      "use_cases": [
+        { "title": "Private smart home hub", "description": "Control smart home devices locally without depending on manufacturer cloud services.", "audience": "Privacy-focused smart home users" },
+        { "title": "Standards-based device integration", "description": "Connect devices using the W3C Web of Things standard rather than proprietary protocols.", "audience": "Developers building interoperable IoT setups" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "WebThings Gateway is a free, open-source smart home hub built on W3C Web of Things standards, focused on privacy and local control."
+    }
+  }
+]

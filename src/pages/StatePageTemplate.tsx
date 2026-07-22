@@ -454,6 +454,16 @@ export default function StatePageTemplate({ stateSlugOverride }: StatePageTempla
     };
   }, []);
 
+  // Auto-open the Submit Agency modal when arriving via ?submit=1 — used by
+  // the /get-listed intermediate page's state picker to drop a visitor
+  // straight into this state's Top 25 submission flow.
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('submit') === '1') {
+      setIsSubmitAgencyModalOpen(true);
+    }
+  }, []);
+
   useEffect(() => {
     async function loadStateData() {
       // Wait for slug resolution

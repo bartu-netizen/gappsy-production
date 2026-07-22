@@ -1,0 +1,676 @@
+[
+  {
+    "tool_id": "2c05a9b7-fdb5-409f-8a14-64eb71fbdace",
+    "slug": "wger",
+    "name": "wger",
+    "enrichment": {
+      "short_description": "wger is a free, self-hosted fitness manager for planning workouts, tracking nutrition, and logging body progress.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "wger (pronounced 'workout manager') is a free, libre, open-source (FLOSS) fitness application built with Django and Python. It covers workout routine planning with automatic weight-progression rules, a nutrition and calorie log backed by the Open Food Facts database, body-weight and custom measurement tracking, and a progress photo gallery.",
+            "The project is self-hostable via Docker, and it also ships native-quality Flutter mobile apps for Android and iOS with offline sync and barcode-based food logging. A public REST API is available for anyone who wants to build integrations or automations on top of their own data."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "wger suits self-hosters, home lab enthusiasts, and small gyms or trainers who want a fitness and nutrition tracker they fully control, without a subscription or a third party holding their training data. Its community-maintained exercise wiki and multilingual translations (managed via Weblate) also make it a practical option for non-English-speaking users."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Workout routine builder", "description": "Create structured training plans with configurable, automatic weight-progression rules across sessions." },
+        { "title": "Nutrition and calorie tracking", "description": "Log meals against a food database sourced from Open Food Facts, including barcode scanning in the mobile apps." },
+        { "title": "Body measurement and progress photos", "description": "Track body weight and custom measurements over time, with a gallery for progress photos." },
+        { "title": "Community exercise wiki", "description": "A shared, editable database of exercises that any instance can draw on and contribute to." },
+        { "title": "REST API", "description": "A documented API for building integrations, scripts, or third-party clients against your own wger data." },
+        { "title": "Mobile apps", "description": "Native-quality Flutter apps for Android and iOS with offline sync, available via app stores, F-Droid, and Flathub." },
+        { "title": "Basic gym management", "description": "Multi-user support that lets a trainer or small gym manage multiple members' plans from one instance." }
+      ],
+      "pros": [
+        "Completely free and self-hosted, with no subscription or data lock-in",
+        "Covers workouts, nutrition, and body tracking in a single tool",
+        "Active open-source project with regular releases and Docker deployment",
+        "Well-documented REST API for custom integrations",
+        "Official Android and iOS apps, not just a mobile web view"
+      ],
+      "cons": [
+        "Requires comfort with Docker or Python/Django deployment to self-host",
+        "No official managed cloud/SaaS version for non-technical users",
+        "UI and feature depth are more utilitarian than polished commercial fitness apps",
+        "No built-in coaching, social, or marketplace features"
+      ],
+      "faqs": [
+        { "question": "Is wger really free?", "answer": "Yes. wger is licensed as free/libre open-source software (AGPL) with no paid tiers; you self-host it yourself." },
+        { "question": "Do I need to know how to code to run wger?", "answer": "No coding is required, but you do need basic familiarity with Docker or a Linux server to deploy and maintain your own instance." },
+        { "question": "Does wger have a mobile app?", "answer": "Yes, official Flutter-based apps are available for Android and iOS, including offline workout logging and barcode food scanning." },
+        { "question": "Can I use wger to manage clients as a personal trainer?", "answer": "wger supports multiple users on one instance with basic gym-management features, so a trainer can track several members' plans." }
+      ],
+      "use_cases": [
+        { "title": "Personal fitness and nutrition tracking", "description": "Individuals who want to plan workouts and log meals and body metrics without handing data to a commercial fitness app.", "audience": "Self-hosters and privacy-conscious fitness enthusiasts" },
+        { "title": "Small gym or trainer client management", "description": "A trainer running one wger instance to plan routines and track progress for several clients.", "audience": "Independent personal trainers and small gyms" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "api", "android", "ios"],
+      "seo_meta_description": "wger is a free, self-hosted, open-source fitness manager for workout planning, nutrition tracking, and progress logging with Android/iOS apps."
+    }
+  },
+  {
+    "tool_id": "aa9d2774-9a4d-4792-8ad7-4de1b095e3bf",
+    "slug": "wingfit",
+    "name": "Wingfit",
+    "enrichment": {
+      "short_description": "Wingfit is a minimalist, self-hostable app for planning workouts, tracking personal records, and syncing smartwatch data.",
+      "pricing_model": "Free (self-hosted)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Wingfit is a lightweight fitness-tracking application for planning training routines, recording personal records, and pulling in data from a connected smartwatch. It is built with an Angular/PrimeNG/Tailwind frontend and a FastAPI/SQLModel/SQLite backend, and it deploys with a single Docker Compose command.",
+            "The source is publicly available on GitHub and can be self-hosted with no telemetry or tracking, though it is published under a CC BY-NC-SA 4.0 license, meaning the code is source-available for personal, non-commercial modification and sharing rather than a fully unrestricted OSI open-source license. A live public demo is hosted at wingfit.fr."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Wingfit suits individuals who want a no-frills, self-hosted way to plan workouts and track personal records without the account creation, ads, or data collection of mainstream fitness apps, especially those who already run a home Docker server."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Workout planning", "description": "Build and organize training routines ahead of time." },
+        { "title": "Personal record tracking", "description": "Log and monitor personal bests across exercises and sessions." },
+        { "title": "Smartwatch data integration", "description": "Pull in performance data recorded by a connected wearable." },
+        { "title": "Statistics and visualization", "description": "View training history and performance trends through the app's dashboard." },
+        { "title": "One-command Docker deployment", "description": "Runs via Docker Compose with no configuration required by default, or Docker run with a mounted data volume." }
+      ],
+      "pros": [
+        "Free to self-host, with no telemetry or tracking",
+        "Simple, minimalist interface focused on core workout tracking",
+        "Fast Docker Compose setup for anyone already running a home server",
+        "Modern, actively maintained tech stack (Angular 19, FastAPI)"
+      ],
+      "cons": [
+        "License is non-commercial (CC BY-NC-SA), not a standard OSI open-source license",
+        "Requires Docker/self-hosting knowledge; no official managed hosting for non-technical users",
+        "Small, single-maintainer project without a large plugin or integration ecosystem",
+        "No official native mobile app; smartwatch data is imported rather than tracked live in-app"
+      ],
+      "faqs": [
+        { "question": "Is Wingfit free?", "answer": "Yes, Wingfit is free to self-host. The developer accepts voluntary donations but does not charge for the app itself." },
+        { "question": "Is Wingfit fully open source?", "answer": "The source code is public on GitHub, but it's released under a CC BY-NC-SA 4.0 license, which restricts commercial use rather than granting unrestricted OSI open-source rights." },
+        { "question": "How do I try Wingfit before self-hosting it?", "answer": "A live demo is available directly on wingfit.fr." },
+        { "question": "What do I need to run Wingfit myself?", "answer": "A machine that can run Docker; the project deploys via Docker Compose with persistent storage for your data." }
+      ],
+      "use_cases": [
+        { "title": "Personal workout logging", "description": "Individuals tracking their own training plans and personal records outside of commercial fitness apps.", "audience": "Home-lab and self-hosting enthusiasts" },
+        { "title": "Smartwatch data consolidation", "description": "Bringing wearable-recorded workout data into one self-hosted place instead of a vendor's cloud app.", "audience": "Wearable device owners who value data ownership" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "web-app"],
+      "seo_meta_description": "Wingfit is a minimalist, free, self-hostable app for planning workouts, tracking personal records, and importing smartwatch training data."
+    }
+  },
+  {
+    "tool_id": "101c32bc-41e0-47dc-bff2-b5e2c5c7b0a5",
+    "slug": "admidio",
+    "name": "admidio",
+    "enrichment": {
+      "short_description": "Admidio is a free, self-hosted membership management system for associations, clubs, and other organizations.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2004,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Admidio is a free, open-source membership management system built for associations, clubs, and other groups that need to organize members and share information among them. It combines user and role management with modular tools: exportable member lists (Excel, PDF, CSV), event creation with registration and cancellation, a photo gallery, document/file distribution, and CSV-based bulk import of member records.",
+            "Access is controlled through a flexible rights system so different groups or departments within an organization can be granted different permissions. The project has been developed continuously since the mid-2000s and is extensible through plugins, with community support through a forum, blog, and social channels."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Admidio is aimed at webmasters and volunteer administrators running associations, sports clubs, non-profits, and other member-based organizations that want to self-host their own membership database and event system rather than relying on a paid SaaS platform."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Member and role management", "description": "Manage member records with configurable roles and per-group access rights." },
+        { "title": "Event management", "description": "Create events with member registration and cancellation handling." },
+        { "title": "Exportable member lists", "description": "Generate customizable lists exported to Excel, PDF, or CSV." },
+        { "title": "Photo gallery", "description": "Upload and organize photo albums for members to browse." },
+        { "title": "Document distribution", "description": "Share files and documents with members through the platform." },
+        { "title": "Bulk CSV import", "description": "Import and update member records in bulk via CSV files." },
+        { "title": "Plugin extensibility", "description": "Extend core functionality through community and custom plugins." }
+      ],
+      "pros": [
+        "Completely free and open source, with no subscription cost",
+        "Purpose-built for associations and clubs rather than generic CRM use",
+        "Long-running project (since the mid-2000s) with an active community",
+        "Granular, group-based permission system",
+        "Self-hosted, so member data stays under the organization's control"
+      ],
+      "cons": [
+        "Requires a self-managed PHP/web server environment to install and maintain",
+        "Interface is more functional than modern in design compared to newer SaaS tools",
+        "No official managed hosting offered by the project itself",
+        "Smaller ecosystem than large commercial membership platforms"
+      ],
+      "faqs": [
+        { "question": "Is Admidio free to use?", "answer": "Yes, Admidio is free, open-source software with no licensing cost." },
+        { "question": "Can Admidio be installed on an existing website?", "answer": "Yes, it's designed to be installed on an existing homepage or set up as a new site on your own web server." },
+        { "question": "Does Admidio support member payments or dues?", "answer": "Admidio focuses on member and event management with role-based access; payment/dues handling depends on available plugins rather than a built-in billing system." },
+        { "question": "Who maintains Admidio?", "answer": "It is maintained as a community open-source project, with development history dating back to the mid-2000s and code hosted on GitHub." }
+      ],
+      "use_cases": [
+        { "title": "Association and club membership management", "description": "Non-profits, sports clubs, and associations managing member records, roles, and communications.", "audience": "Volunteer administrators and webmasters" },
+        { "title": "Event registration for member organizations", "description": "Organizing events with member sign-up and cancellation tracking.", "audience": "Clubs and community groups" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Admidio is a free, open-source, self-hosted membership management system for associations, clubs, and organizations."
+    }
+  },
+  {
+    "tool_id": "079c889d-8df9-4612-92ff-bb745bc64902",
+    "slug": "domoticz",
+    "name": "Domoticz",
+    "enrichment": {
+      "short_description": "Domoticz is a free, open-source, self-hosted home automation system that runs entirely on local hardware.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2012,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Domoticz is a free and open-source (GPL-3.0) home automation system that monitors and controls lights, switches, and sensors (temperature, humidity, energy, and more) from a self-hosted web interface. It runs entirely on local hardware with no cloud dependency, supporting Linux, Windows, macOS, Raspberry Pi, and Docker.",
+            "The platform is lightweight enough to run on a Raspberry Pi Zero (under 50MB RAM) yet supports 150+ device protocols and brands including Z-Wave, Zigbee, MQTT, and Philips Hue. Automations can be written using its built-in dzVents scripting, Lua, Python, or the Blockly visual programming editor, and it sends mobile push notifications for iOS and Android."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Domoticz appeals to privacy-conscious smart-home users and Raspberry Pi hobbyists who want reliable local control over their devices without a subscription or a cloud vendor able to change terms, pricing, or availability."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Broad device support", "description": "Connects to 150+ smart home device types and protocols, including Z-Wave, Zigbee, MQTT, and Philips Hue." },
+        { "title": "Local-only operation", "description": "Runs and stores all data on your own hardware with no cloud dependency." },
+        { "title": "Multiple scripting options", "description": "Automate with dzVents, Lua, Python scripting, or the Blockly visual editor." },
+        { "title": "Energy monitoring", "description": "Tracks energy consumption and integrates with smart meters." },
+        { "title": "Lightweight footprint", "description": "Runs on constrained hardware such as a Raspberry Pi Zero, using well under 50MB of RAM." },
+        { "title": "Mobile notifications", "description": "Sends push notifications to iOS and Android devices." },
+        { "title": "Responsive web interface", "description": "A single HTML5 dashboard that works across desktop and mobile browsers." }
+      ],
+      "pros": [
+        "Completely free and open source, with no subscription fees",
+        "Runs locally with no mandatory cloud dependency, preserving privacy",
+        "Very lightweight, runs well on inexpensive hardware like a Raspberry Pi Zero",
+        "Broad protocol and device support built up over more than a decade",
+        "Multiple scripting/automation options for different skill levels"
+      ],
+      "cons": [
+        "Interface looks dated compared to newer smart-home platforms",
+        "Steeper learning curve for advanced automation scripting than no-code competitors",
+        "Requires self-hosting and manual maintenance; no official managed cloud version",
+        "Community-driven support rather than dedicated commercial customer service"
+      ],
+      "faqs": [
+        { "question": "Is Domoticz free?", "answer": "Yes, Domoticz is 100% free and open source under the GPL-3.0 license, with no paid tiers." },
+        { "question": "Does Domoticz require an internet connection?", "answer": "No, it runs entirely on local hardware and does not depend on a cloud service to function." },
+        { "question": "What hardware can run Domoticz?", "answer": "It runs on Linux, Windows, macOS, Raspberry Pi (including the Pi Zero), and via Docker." },
+        { "question": "Does Domoticz support Zigbee and Z-Wave?", "answer": "Yes, along with MQTT, Philips Hue, and over 150 other supported devices and protocols." }
+      ],
+      "use_cases": [
+        { "title": "Local-only smart home control", "description": "Homeowners who want to control lights, sensors, and switches without sending data to a cloud vendor.", "audience": "Privacy-conscious smart home users" },
+        { "title": "Low-cost home automation on Raspberry Pi", "description": "Running a full home automation hub on inexpensive, low-power hardware.", "audience": "Raspberry Pi and DIY hardware hobbyists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "windows"],
+      "seo_meta_description": "Domoticz is a free, open-source, self-hosted home automation system supporting 150+ devices with no cloud dependency."
+    }
+  },
+  {
+    "tool_id": "e5acefb5-8215-460f-9c6a-0a3d1e382f7e",
+    "slug": "emqx",
+    "name": "EMQX",
+    "enrichment": {
+      "short_description": "EMQX is an MQTT broker and IoT data platform for connecting devices, available self-hosted or as managed cloud/enterprise service.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2017,
+      "company_size": null,
+      "headquarters": "Menlo Park, California, United States",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "EMQX is an MQTT message broker used to connect and stream real-time data from IoT devices, vehicles, and industrial systems into analytics and AI pipelines. The open-source project traces back to 2013 (originally released as emqttd), and the company behind it, EMQ, was founded in 2017 and is headquartered in Menlo Park, California, with additional offices including Boston, Frankfurt, Stockholm, and locations in China.",
+            "Historically, EMQX's Community Edition was released under the permissive Apache License 2.0. As of version 5.9 (2025), EMQ unified the Community and Enterprise editions into one platform under the Business Source License (BSL) 1.1: the source remains viewable, downloadable, and modifiable, and single-node production and non-production use stay free, but multi-node clustering, commercial hosting, and embedding EMQX in a sold product now require a commercial license (BSL converts to Apache 2.0 after a set time period per release)."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "EMQX is aimed at engineering teams building IoT, connected-vehicle, or industrial data platforms that need a scalable MQTT broker — from hobbyists running a single self-hosted node for free, up to enterprises that need EMQX's fully managed cloud (Serverless, Dedicated Flex, BYOC) or on-prem Enterprise deployments with SLAs and support."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "MQTT broker core", "description": "Connects and routes real-time messages from millions of IoT/device connections." },
+        { "title": "Self-hosted deployment", "description": "Free to run yourself on a single node under the current Business Source License terms." },
+        { "title": "Managed cloud options", "description": "Serverless pay-as-you-go, single-tenant Dedicated Flex, and Bring Your Own Cloud (BYOC) hosted plans." },
+        { "title": "HTTP management API", "description": "Programmatic API for managing brokers, rules, and integrations." },
+        { "title": "40+ data integrations", "description": "Built-in connectors to route MQTT data into databases, streaming platforms, and analytics tools." },
+        { "title": "High availability clustering", "description": "Multi-node clustering for large-scale, high-throughput deployments (requires a commercial license under current terms)." }
+      ],
+      "pros": [
+        "Free to self-host on a single node, suitable for smaller or evaluation deployments",
+        "Scales to enterprise-grade, high-throughput IoT and vehicle connectivity workloads",
+        "Multiple managed cloud tiers (serverless to dedicated) for teams that don't want to run their own infrastructure",
+        "Extensive integration ecosystem for routing MQTT data into other systems"
+      ],
+      "cons": [
+        "As of v5.9, self-hosted multi-node clustering and commercial hosting require a paid license rather than being free under Apache 2.0",
+        "Pricing for Dedicated Flex and Enterprise plans is not fully transparent and often requires contacting sales",
+        "Licensing model (Business Source License) is more complex to evaluate than a straightforward open-source license"
+      ],
+      "faqs": [
+        { "question": "Is EMQX still open source?", "answer": "The core code remains source-available, and single-node self-hosted use stays free, but as of v5.9 (2025) EMQX uses the Business Source License 1.1 rather than pure Apache 2.0 — multi-node clustering and commercial hosting require a paid license." },
+        { "question": "What does the free EMQX Serverless cloud tier include?", "answer": "It's pay-as-you-go with a free monthly quota (up to roughly 1 million session minutes) and supports up to 1,000 connections before charges apply." },
+        { "question": "Can I self-host EMQX for free?", "answer": "Yes, single-node self-hosted deployments remain free under the current license terms." },
+        { "question": "Does EMQX offer enterprise support?", "answer": "Yes, through its Enterprise self-managed plan and Dedicated Flex/BYOC cloud plans, which include SLAs and priority support." }
+      ],
+      "use_cases": [
+        { "title": "IoT device connectivity", "description": "Connecting and streaming data from large fleets of sensors and connected devices.", "audience": "IoT platform and product engineering teams" },
+        { "title": "Connected vehicle data streaming", "description": "Handling real-time telemetry from vehicles at automotive scale.", "audience": "Automotive and mobility companies" },
+        { "title": "Small-scale self-hosted MQTT broker", "description": "Running a single-node MQTT broker for home labs, prototypes, or small IoT projects at no cost.", "audience": "Developers and hobbyists" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Self-Managed (single node)", "price": "Free", "billing_cycle": null, "features": ["Source-available under BSL 1.1", "Free for single-node production and non-production use"] },
+        { "plan_name": "Serverless (Cloud)", "price": "$0 + usage-based", "billing_cycle": "monthly", "features": ["Pay-as-you-go beyond free quota", "Up to 1,000 connections in free tier", "TLS/SSL encryption", "Basic monitoring"] },
+        { "plan_name": "Dedicated Flex (Cloud)", "price": "From $234/month", "billing_cycle": "monthly", "features": ["Single-tenant cluster in an isolated VPC", "40+ integrations", "99.99% uptime SLA", "24/7 support"] },
+        { "plan_name": "Enterprise (Self-Managed)", "price": "Custom", "billing_cycle": "annual", "features": ["Deploy on-prem, edge, or any cloud", "Custom plugins", "Professional services and priority support"] }
+      ],
+      "tags": ["self-hosted", "freemium", "api"],
+      "seo_meta_description": "EMQX is an MQTT broker for IoT and connected-vehicle data, free to self-host on a single node with paid cloud and enterprise tiers."
+    }
+  },
+  {
+    "tool_id": "3bbf9b79-3028-47ee-bd1d-05dbaf8b833d",
+    "slug": "evcc",
+    "name": "evcc",
+    "enrichment": {
+      "short_description": "evcc is a free, open-source, self-hosted energy manager that optimizes EV charging with solar power, dynamic tariffs, and batteries.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "evcc is an open-source, self-hosted energy management system that coordinates electric vehicle charging with home solar production, grid electricity, battery storage, and heat pumps. It automatically shifts or throttles charging power to follow available solar surplus or the cheapest/greenest available electricity, using dynamic tariff data where available.",
+            "It's community-developed, deployable on a Raspberry Pi or via Docker, and configured through a browser-based interface. evcc supports multi-device load management across several charging points and includes companion apps for iOS and Android. The project accepts sponsorships to fund ongoing development but does not charge for the core software."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "evcc is built for homeowners who already have (or are planning) an EV, solar panels, and/or a home battery, and who want vendor-independent, self-hosted control over when and how their vehicle charges rather than being locked into a single charger manufacturer's app."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Solar-aware charging", "description": "Automatically adjusts charging power to follow available solar surplus." },
+        { "title": "Dynamic tariff optimization", "description": "Times charging to the cheapest or greenest available grid electricity using dynamic pricing data." },
+        { "title": "Multi-device load management", "description": "Coordinates charging across multiple charge points to avoid exceeding available capacity." },
+        { "title": "Battery and heat pump coordination", "description": "Integrates home battery storage and heat pump operation into the overall energy strategy." },
+        { "title": "Grid signal compliance", "description": "Supports grid operator control signals such as Germany's §14a controllable consumption device rules." },
+        { "title": "Mobile companion apps", "description": "iOS and Android apps for monitoring and controlling charging remotely." }
+      ],
+      "pros": [
+        "Free, open-source, and self-hosted with no vendor lock-in",
+        "Works across many charger, inverter, and battery brands rather than one ecosystem",
+        "Actively maintained with regular releases and a responsive community",
+        "Runs on inexpensive hardware like a Raspberry Pi"
+      ],
+      "cons": [
+        "Requires self-hosting and some technical setup to configure hardware integrations",
+        "No official paid support tier; help comes from the community and documentation",
+        "Feature depth for a given setup depends on how well your specific hardware is supported"
+      ],
+      "faqs": [
+        { "question": "Is evcc free to use?", "answer": "Yes, evcc is free and open source; the project accepts optional sponsorships but doesn't charge for the software." },
+        { "question": "What hardware do I need to run evcc?", "answer": "A small always-on device such as a Raspberry Pi, or any machine that can run Docker." },
+        { "question": "Does evcc work without solar panels?", "answer": "Yes, it can also optimize charging purely around dynamic electricity pricing or grid signals, though solar-surplus charging is one of its core use cases." },
+        { "question": "Does evcc support multiple EV chargers at once?", "answer": "Yes, it includes multi-device load management to coordinate charging across several charge points." }
+      ],
+      "use_cases": [
+        { "title": "Solar surplus EV charging", "description": "Automatically charging an EV using excess solar production instead of grid power.", "audience": "Homeowners with solar panels and an EV" },
+        { "title": "Dynamic-tariff cost optimization", "description": "Scheduling charging to the cheapest hours under a dynamic electricity tariff.", "audience": "EV owners on variable-rate electricity plans" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "android", "ios"],
+      "seo_meta_description": "evcc is a free, open-source, self-hosted energy manager that optimizes EV charging using solar power, dynamic tariffs, and batteries."
+    }
+  },
+  {
+    "tool_id": "c12bd7ea-536c-4be0-9ac5-7f0daa0d7911",
+    "slug": "fhem",
+    "name": "FHEM",
+    "enrichment": {
+      "short_description": "FHEM is a free, open-source Perl server for home automation, controlling devices and logging sensor data locally.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 2005,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English", "German"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FHEM is a free, GPL-licensed Perl server for home automation, created by Rudolf Koenig. It automates tasks like controlling lights, shutters, and heating, while logging sensor data such as temperature and power consumption. It's controlled via web interfaces, smartphones, telnet, or direct TCP/IP connections, with support for text, JSON, and XML interfaces over TCP/IP, SSL, or HTTP.",
+            "The project has grown to more than 430 community-contributed modules covering a wide range of automation protocols and hardware, and it integrates with systems like Alexa, HomeKit, and MQTT. FHEM e.V. is a registered non-profit association that promotes the software and open standards around it."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FHEM is aimed at technically-minded homeowners, especially in the German-speaking DIY smart-home community, who want deep customization and broad hardware/protocol support without depending on cloud services."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "430+ community modules", "description": "A large library of modules covering diverse home automation protocols and hardware." },
+        { "title": "Auto-discovery of devices", "description": "Automatically creates devices and logs when new sensor data is received." },
+        { "title": "Timed and event-based automation", "description": "Trigger commands on a schedule or in response to specific events." },
+        { "title": "Multiple control interfaces", "description": "Accessible via web UI, smartphone apps, telnet, or direct TCP/IP." },
+        { "title": "Third-party integrations", "description": "Works with Alexa, HomeKit, MQTT, and various audio/video systems." },
+        { "title": "Self-hosted server", "description": "Runs 24/7 on a NAS, Raspberry Pi, or PC that the user controls." }
+      ],
+      "pros": [
+        "Completely free and open source under GPL v2",
+        "Very broad protocol and hardware support via its module ecosystem",
+        "Runs locally with no cloud dependency",
+        "Backed by a registered non-profit association (FHEM e.V.) rather than a single vendor"
+      ],
+      "cons": [
+        "Steep learning curve, especially for non-German speakers, since much community documentation is in German",
+        "Interface and configuration are text/config-driven rather than modern no-code style",
+        "Requires a dedicated always-on server to run",
+        "Smaller international community than newer home automation platforms"
+      ],
+      "faqs": [
+        { "question": "Is FHEM free?", "answer": "Yes, FHEM is free and open-source software licensed under GPL v2." },
+        { "question": "What hardware does FHEM need?", "answer": "A 24/7 server such as a NAS, Raspberry Pi, or PC running Perl, plus any protocol-specific hardware (like USB sticks) for the devices you want to control." },
+        { "question": "Does FHEM work with Alexa or HomeKit?", "answer": "Yes, integrations exist for Alexa, HomeKit, MQTT, and several other ecosystems through its module library." },
+        { "question": "Who maintains FHEM?", "answer": "It was created by Rudolf Koenig and is maintained by a large community of contributors, supported by the non-profit FHEM e.V." }
+      ],
+      "use_cases": [
+        { "title": "DIY smart home automation", "description": "Controlling lights, shutters, heating, and sensors from a single self-hosted server.", "audience": "Technically-minded homeowners" },
+        { "title": "Energy and sensor logging", "description": "Recording temperature, power consumption, and other sensor data over time.", "audience": "Home automation hobbyists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "FHEM is a free, open-source, self-hosted Perl server for home automation with 430+ community modules and no cloud dependency."
+    }
+  },
+  {
+    "tool_id": "1ae3dedf-781d-4eba-bac7-7d80412bd2db",
+    "slug": "flowforge",
+    "name": "FlowForge",
+    "enrichment": {
+      "short_description": "FlowForge (now FlowFuse) builds on open-source Node-RED to deploy, manage, and secure low-code flows across teams and sites.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (self-hosted)",
+      "founded_year": 2021,
+      "company_size": null,
+      "headquarters": "United Kingdom",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FlowForge was founded in 2021 by Nick O'Leary, co-creator of the open-source Node-RED visual programming tool, alongside Zeger-Jan van de Weg. The company has since rebranded as FlowFuse (flowforge.com now redirects to flowfuse.com), and its platform builds on Node-RED to help teams deploy, version, and centrally manage low-code flows across distributed devices and production sites, connecting core systems like MES/ERP/SCADA to shop-floor operations.",
+            "An open-source, self-hostable Starter edition remains free (up to 5 instances and 5 team members), while paid Cloud-hosted (Starter, Pro, Enterprise) and self-hosted Pro/Enterprise plans add team collaboration, device management, SSO, an MQTT broker, and enterprise support and SLAs."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FlowForge/FlowFuse targets manufacturing and industrial teams that already use or want to use Node-RED at scale — coordinating flows across many devices and sites — as well as smaller teams that want a managed, cloud-hosted Node-RED without running their own infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Built on Node-RED", "description": "Extends the open-source Node-RED low-code flow engine rather than replacing it." },
+        { "title": "Centralized deployment and version control", "description": "Manage and roll out flow changes across many devices and production sites from one place." },
+        { "title": "Device Agent", "description": "Remote deployment agent for pushing flows to edge devices in the field." },
+        { "title": "Self-hosted option", "description": "A free, self-hostable Starter edition, plus air-gapped self-hosted deployments for compliance-sensitive environments." },
+        { "title": "Team collaboration and RBAC", "description": "Role-based access control, SSO, and audit logging on paid plans." },
+        { "title": "Built-in MQTT broker", "description": "Included MQTT broker capacity on Pro and Enterprise plans for IoT/OT connectivity." }
+      ],
+      "pros": [
+        "Built on the mature, widely-used open-source Node-RED project",
+        "Free self-hosted Starter tier for evaluation or small deployments",
+        "Designed specifically for managing Node-RED at industrial/multi-site scale",
+        "SOC 2 Type 1/2 certified cloud offering for compliance-conscious buyers"
+      ],
+      "cons": [
+        "Company and product rebranded from FlowForge to FlowFuse, which can cause confusion when searching for it under the older name",
+        "Paid Cloud Pro and Enterprise plans are priced for teams/organizations, not casual individual use",
+        "Full pricing for Pro/Enterprise self-hosted tiers requires contacting sales"
+      ],
+      "faqs": [
+        { "question": "Is FlowForge the same as FlowFuse?", "answer": "Yes. FlowForge rebranded to FlowFuse; flowforge.com now redirects to flowfuse.com, and it's the same company and product line built on Node-RED." },
+        { "question": "Is the open-source edition free?", "answer": "Yes, the self-hosted Starter/open-source edition is free, supporting up to 5 instances and 5 team members." },
+        { "question": "Do I need to already use Node-RED?", "answer": "No, but the platform is specifically designed to extend and manage Node-RED, so familiarity with Node-RED helps." },
+        { "question": "What does the paid Cloud plan add?", "answer": "Paid Cloud plans add hosted instances, team collaboration, an MQTT broker, SSO, and support with uptime SLAs on top of the free open-source core." }
+      ],
+      "use_cases": [
+        { "title": "Multi-site industrial flow deployment", "description": "Rolling out and version-controlling Node-RED flows across many factories or production lines.", "audience": "Manufacturing and industrial IT/OT teams" },
+        { "title": "Managed cloud Node-RED hosting", "description": "Teams that want hosted Node-RED instances without managing their own servers.", "audience": "Small teams and developers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Starter (Self-Hosted / Open Source)", "price": "Free", "billing_cycle": null, "features": ["Up to 5 instances", "Up to 5 team members", "Core flow management"] },
+        { "plan_name": "Starter (Cloud)", "price": "From $20/month", "billing_cycle": "monthly", "features": ["1 hosted instance", "2 team members", "FlowFuse Expert AI assistance", "Blueprints"] },
+        { "plan_name": "Pro (Cloud)", "price": "From $425/month", "billing_cycle": "monthly", "features": ["5 hosted/remote instances", "20 team members", "MQTT broker", "99.5% SLA support"] },
+        { "plan_name": "Enterprise", "price": "Custom", "billing_cycle": "annual", "features": ["20+ hosted/remote instances", "Unlimited team members", "SSO", "Device group management", "99.9% SLA"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "no-code", "ai"],
+      "seo_meta_description": "FlowForge (now FlowFuse) extends open-source Node-RED for teams to deploy and manage low-code flows across devices and sites."
+    }
+  },
+  {
+    "tool_id": "a27aac5d-ba7b-4216-98f7-3b5ba2d3cd80",
+    "slug": "fmd-server",
+    "name": "FMD Server",
+    "enrichment": {
+      "short_description": "FMD Server is the open-source backend behind Find My Device (FMD Android), letting you self-host device location and control.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "FMD Server is the web server and web interface component of the FMD (Find My Device) project, a decentralized, open-source system for locating and remotely controlling Android phones. The companion FMD Android app connects to an FMD Server instance so the owner can look up the device's location or trigger remote actions through a browser.",
+            "The project offers a public hosted server for convenience, but its code is open source and hosted on GitLab, and users can self-host their own FMD Server instance for full control over their location data instead of relying on the maintainers' hosted option."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "FMD Server is for Android users, especially those on de-Googled or privacy-focused ROMs, who want a Find My Device-style recovery tool without routing their location data through Google's infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Remote device location", "description": "Look up the location of a paired Android device through the web interface." },
+        { "title": "Remote device control", "description": "Trigger remote actions on the paired device, such as those exposed by the FMD Android app." },
+        { "title": "Decentralized architecture", "description": "Run your own server instance instead of depending on a single central provider." },
+        { "title": "Free hosted option", "description": "A publicly hosted server is available for users who don't want to self-host." },
+        { "title": "F-Droid distribution", "description": "The companion Android app is distributed via F-Droid and custom repositories." }
+      ],
+      "pros": [
+        "Fully open source with a self-hostable server component",
+        "Privacy-friendly alternative to Google's Find My Device for location recovery",
+        "Works well with de-Googled or custom Android ROMs",
+        "Free hosted server option available for users who don't want to run their own"
+      ],
+      "cons": [
+        "Requires pairing with the separate FMD Android app to be useful",
+        "Self-hosting requires following GitLab-hosted setup documentation",
+        "Smaller community and less polished UX than mainstream device-finding services"
+      ],
+      "faqs": [
+        { "question": "Is FMD Server free?", "answer": "Yes, both self-hosting your own FMD Server and using the project's public hosted server are free." },
+        { "question": "Do I need the FMD Android app too?", "answer": "Yes, FMD Server is the backend/web interface; you also need the FMD Android app installed on the device you want to locate or control." },
+        { "question": "Can I self-host FMD Server?", "answer": "Yes, the project provides self-hosting documentation, and the code is open source on GitLab." },
+        { "question": "Where can I get the FMD Android app?", "answer": "It's available via F-Droid and custom repositories, in addition to being paired with FMD Server." }
+      ],
+      "use_cases": [
+        { "title": "Privacy-respecting device recovery", "description": "Locating or remotely controlling a lost Android phone without relying on Google's cloud.", "audience": "Privacy-conscious Android users" },
+        { "title": "Self-hosted find-my-device for custom ROMs", "description": "Adding find-my-device capability to de-Googled or custom Android builds.", "audience": "Custom ROM and de-Googled phone users" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app", "android"],
+      "seo_meta_description": "FMD Server is the open-source, self-hostable backend for Find My Device (FMD Android), a privacy-friendly device location tool."
+    }
+  },
+  {
+    "tool_id": "82491f2c-b6b1-4919-82ea-838eafd86db9",
+    "slug": "gladys",
+    "name": "Gladys",
+    "enrichment": {
+      "short_description": "Gladys Assistant is a free, open-source, self-hosted home automation platform with an optional paid Gladys Plus tier for remote access.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2013,
+      "company_size": null,
+      "headquarters": "France",
+      "languages": ["English", "French"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Gladys Assistant is an open-source home automation platform founded by Pierre-Gilles Leymarie that lets users monitor and control smart home devices from a central dashboard, without requiring coding knowledge. Core Gladys is 100% free and open source, deployable via Docker on a Raspberry Pi, NAS, mini-PC, or any Linux machine, and supports thousands of devices through Zigbee, Matter, MQTT, and other integrations with local-first data storage.",
+            "An optional paid subscription, Gladys Plus, adds end-to-end encrypted remote access, mobile apps for iOS/Android, Google Home and Amazon Alexa integration, encrypted backups, remote camera streaming, and AI features, priced starting around €5.83/month (Lite) or €8.33/month (Plus) when billed annually."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Gladys is aimed at privacy-conscious users who are comfortable with Docker/Linux and want a no-code way to build smart home scenes and automations, with an optional paid upgrade for those who also want secure remote access and mobile convenience without exposing their own network."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Central dashboard", "description": "Monitor temperature, cameras, presence, and other device data from one screen." },
+        { "title": "No-code scene automation", "description": "Build automation routines and scenes without writing code." },
+        { "title": "Voice-controlled automation", "description": "Includes a built-in voice assistant for controlling devices and scenes." },
+        { "title": "Broad device support", "description": "Integrates with thousands of devices via Zigbee, Matter, MQTT, and dedicated connectors." },
+        { "title": "Local-first data storage", "description": "Core functionality runs and stores data locally with no mandatory cloud dependency." },
+        { "title": "Gladys Plus remote access (paid)", "description": "End-to-end encrypted remote access and mobile apps for controlling your home away from your local network." }
+      ],
+      "pros": [
+        "Core platform is 100% free, open source, and self-hosted forever",
+        "No-code scene and automation builder is approachable for non-developers",
+        "Broad protocol support (Zigbee, Matter, MQTT) for thousands of devices",
+        "Optional paid tier adds secure remote access without giving up the free self-hosted core"
+      ],
+      "cons": [
+        "Full functionality (remote access, mobile apps, backups) requires the paid Gladys Plus subscription",
+        "Requires Docker/Linux familiarity to self-host",
+        "Smaller device/integration catalog than some larger commercial smart-home ecosystems"
+      ],
+      "faqs": [
+        { "question": "Is Gladys Assistant free?", "answer": "Yes, the core Gladys software is 100% free and open source and can be self-hosted indefinitely at no cost." },
+        { "question": "What does Gladys Plus add?", "answer": "Gladys Plus is an optional paid subscription (from about €5.83/month) that adds end-to-end encrypted remote access, mobile apps, encrypted backups, remote camera streaming, and AI features." },
+        { "question": "Do I need coding skills to use Gladys?", "answer": "No, scenes and automations are built through a no-code interface." },
+        { "question": "What hardware can run Gladys?", "answer": "Any Linux machine that supports Docker, including a Raspberry Pi, NAS, or mini-PC." }
+      ],
+      "use_cases": [
+        { "title": "No-code home automation", "description": "Building smart home scenes and routines without programming.", "audience": "Non-technical smart home users" },
+        { "title": "Privacy-first smart home with optional remote access", "description": "Running automation locally, then adding secure remote access via Gladys Plus when needed.", "audience": "Privacy-conscious homeowners" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Gladys (Core, Self-Hosted)", "price": "Free", "billing_cycle": null, "features": ["Open-source core platform", "No-code automation and scenes", "Local data storage", "Voice control"] },
+        { "plan_name": "Gladys Plus – Lite", "price": "€5.83/month (€69.99/year)", "billing_cycle": "monthly or annual", "features": ["End-to-end encrypted remote access", "Google Home & Amazon Alexa integration", "Open REST API", "Family accounts"] },
+        { "plan_name": "Gladys Plus – Plus", "price": "€8.33/month (€99.99/year)", "billing_cycle": "monthly or annual", "features": ["Everything in Lite", "Daily encrypted backups", "Remote camera streaming", "AI features", "MCP server"] }
+      ],
+      "tags": ["self-hosted", "open-source", "web-app", "android", "ios", "freemium", "no-code", "ai"],
+      "seo_meta_description": "Gladys Assistant is a free, open-source, self-hosted home automation platform with no-code scenes and an optional paid remote-access tier."
+    }
+  }
+]

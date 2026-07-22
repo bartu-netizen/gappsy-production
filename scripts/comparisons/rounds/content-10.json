@@ -1,0 +1,631 @@
+[
+  {
+    "slug": "dgraph-vs-surrealdb",
+    "tool_a_id": "ed38eac2-96a6-4a42-b699-28e0cef88f69",
+    "tool_a_name": "Dgraph",
+    "tool_b_id": "6c12f04e-e703-497a-b9ff-e4bd73be6bd0",
+    "tool_b_name": "SurrealDB",
+    "content": {
+      "verdict": "Dgraph is a focused, fully open-source graph database with a native GraphQL API and no commercial pricing to evaluate, while SurrealDB is a multi-model database (document, graph, vector, time-series, relational) with a published freemium/hourly pricing structure and an actively maintained managed cloud. The right pick depends on whether you need one data model done well and self-hosted, or several data models under one engine with a vendor-backed cloud option.",
+      "bestForToolA": "Teams that specifically need a graph database with native GraphQL access, are comfortable self-hosting under Apache 2.0, and don't require a vendor-managed cloud or published SLA.",
+      "bestForToolB": "Teams that want to consolidate document, graph, vector, and relational workloads into one engine, need AI/RAG-oriented features like agent memory and knowledge graphs, and want the option of an hourly-billed managed cloud or a custom Enterprise plan with SSO and audit logging.",
+      "whoNeedsBoth": "Organizations already running a graph-only workload on Dgraph that are separately evaluating SurrealDB for a new AI/RAG or multi-model project may end up operating both rather than migrating existing graph data.",
+      "keyDifferences": [
+        {
+          "title": "Data model scope",
+          "toolA": "Purpose-built graph database with a native GraphQL API, property-graph queries, full-text search, regex matching, and geo search.",
+          "toolB": "Multi-model engine unifying document, graph, vector, time-series, and relational data through a single query language, SurrealQL.",
+          "whyItMatters": "Teams with a single, well-defined graph workload get a lean fit from Dgraph, while teams juggling several data shapes can avoid standing up multiple specialized databases with SurrealDB.",
+          "benefitsWho": "Backend teams deciding whether to standardize infrastructure around one database engine or keep workloads separated by data type."
+        },
+        {
+          "title": "Commercial backing and managed hosting",
+          "toolA": "No published pricing and no confirmed active managed cloud offering; project ownership has moved from Dgraph Labs to Hypermode to Istari Digital.",
+          "toolB": "Publishes an hourly-priced Start (free forever, 1 instance/1GB) and Scale plan, plus a custom Enterprise tier with SSO, audit logging, and FIPS-compliant cryptography.",
+          "whyItMatters": "Organizations that need a vendor support contract, SLA, or managed hosting option can't currently rely on Dgraph's commercial status, whereas SurrealDB offers a documented path from free to enterprise.",
+          "benefitsWho": "Teams that need vendor accountability or managed infrastructure rather than pure self-hosted operation."
+        },
+        {
+          "title": "AI and agent-memory tooling",
+          "toolA": "No AI or agent-memory features are documented.",
+          "toolB": "Includes Spectron, a built-in agent memory system with entity extraction and knowledge graph construction, plus hybrid RAG and vector search.",
+          "whyItMatters": "Teams building AI agents or RAG pipelines get purpose-built primitives from SurrealDB that Dgraph does not offer.",
+          "benefitsWho": "AI/ML engineering teams building retrieval-augmented or agent-memory applications."
+        },
+        {
+          "title": "Licensing and deployment model",
+          "toolA": "Apache 2.0 open source, self-hosted only, with no company or pricing page to evaluate.",
+          "toolB": "Freemium model combining a free self-hosted-capable Start tier with paid hourly cloud plans and a custom self-hosted Enterprise option.",
+          "whyItMatters": "Dgraph is a pure self-hosting decision; SurrealDB lets teams start free, move to paid cloud, or self-host at the Enterprise tier as needs grow.",
+          "benefitsWho": "Teams that want flexibility to move between self-hosted and managed deployment as a project scales."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Data Model",
+          "rows": [
+            { "feature": "Native graph queries", "toolA": "available", "toolB": "available" },
+            { "feature": "Native GraphQL API", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Multi-model (document/vector/time-series/relational)", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "ACID transactions", "toolA": "available", "toolB": "available" },
+            { "feature": "Live/real-time queries", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Commercial Support",
+          "rows": [
+            { "feature": "Free/open-source self-hosting", "toolA": "available", "toolB": "available", "note": "Dgraph is Apache 2.0; SurrealDB's Start plan is free forever with self-hosted Enterprise available." },
+            { "feature": "Managed cloud offering", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Published commercial pricing", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Enterprise SSO/audit logging", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI & Agent Features",
+          "rows": [
+            { "feature": "Built-in agent memory system", "toolA": "unavailable", "toolB": "available", "note": "SurrealDB's Spectron system." },
+            { "feature": "Vector search", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Hybrid RAG tooling", "toolA": "unavailable", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Dgraph free to use?", "answer": "Yes, Dgraph is released under the Apache 2.0 open-source license and can be self-hosted at no cost, though no commercial pricing or managed cloud is currently documented." },
+        { "question": "Does SurrealDB have a free tier?", "answer": "Yes, the Start plan includes one free instance and 1GB of storage forever, plus a no-signup sandbox." },
+        { "question": "Does Dgraph support GraphQL?", "answer": "Yes, it offers a native GraphQL API in addition to direct property-graph database access." },
+        { "question": "What data models does SurrealDB support?", "answer": "It unifies document, graph, vector, time-series, and relational data models in one engine with ACID transactions." },
+        { "question": "Who owns Dgraph now?", "answer": "Dgraph originated at Dgraph Labs, which was acquired by Hypermode, later acquired by Istari Digital; the open-source project continues under this lineage." },
+        { "question": "Is there a SurrealDB Enterprise plan?", "answer": "Yes, it offers self-hosted deployment, audit logging, SSO, and SLA-backed uptime, with custom pricing." }
+      ]
+    }
+  },
+  {
+    "slug": "convex-vs-nhost",
+    "tool_a_id": "fe42bb0d-0769-4be9-8240-7ea8c6d5d159",
+    "tool_a_name": "Convex",
+    "tool_b_id": "ea768a9c-a511-4333-8959-87593d0426a5",
+    "tool_b_name": "Nhost",
+    "content": {
+      "verdict": "Convex is a reactive TypeScript-native backend built around end-to-end type safety and automatic scaling, priced per developer seat and already SOC 2/HIPAA-certified. Nhost is a managed Postgres-plus-GraphQL backend with multi-region infrastructure and its own AI toolkit, priced around project/compute usage with compliance gated behind its $599/month Team plan. The choice largely comes down to whether a team wants a reactive TypeScript-first data layer or a traditional Postgres/GraphQL stack with broader geographic distribution.",
+      "bestForToolA": "Teams building with TypeScript end-to-end who want automatic real-time sync, ACID transactions, and built-in vector/text search without managing infrastructure, and who need SOC 2/HIPAA compliance without waiting for a higher-priced tier.",
+      "bestForToolB": "Teams that want a familiar Postgres database with an auto-generated GraphQL API, multi-region deployment across 6 regions and 80+ CDN locations, and a bundled AI toolkit (embeddings, assistants) as part of the same platform.",
+      "whoNeedsBoth": "Agencies or platform teams that maintain both a Postgres-based product on Nhost and a newer reactive TypeScript service on Convex may run both rather than migrate an existing Postgres schema.",
+      "keyDifferences": [
+        {
+          "title": "Database engine and query model",
+          "toolA": "Reactive, proprietary TypeScript backend with automatic real-time sync and end-to-end type safety from database to client.",
+          "toolB": "Managed PostgreSQL with an instantly generated GraphQL API layer on top.",
+          "whyItMatters": "Teams already invested in relational/Postgres tooling and GraphQL clients fit Nhost's model; teams wanting reactive queries with compile-time type safety across the stack fit Convex's model.",
+          "benefitsWho": "Full-stack engineering teams choosing their core data-layer paradigm at project start."
+        },
+        {
+          "title": "Compliance certification and pricing tier it's gated behind",
+          "toolA": "SOC 2 Type II certified and HIPAA compliant, with HIPAA/SOC 2 reports available starting on the $25/developer/month Professional plan.",
+          "toolB": "SOC 2 Type II compliance and SLA support require the $599/month Team plan.",
+          "whyItMatters": "Regulated or enterprise buyers reach compliance-grade infrastructure far cheaper on Convex than on Nhost.",
+          "benefitsWho": "Startups in healthcare, fintech, or other regulated spaces needing compliance early without enterprise-level spend."
+        },
+        {
+          "title": "Pricing structure",
+          "toolA": "Professional plan bills per developer seat ($25/developer/month, 1-20 seats); Business/Enterprise has a $2,500/month minimum for 50+ seats.",
+          "toolB": "Pro plan starts from $25/month with included compute credits and storage/egress allotments rather than per-seat billing; Team jumps to $599/month.",
+          "whyItMatters": "Team size and growth trajectory affect total cost very differently: Convex scales with headcount, Nhost scales with usage until the steep Team-tier jump.",
+          "benefitsWho": "Finance/engineering leads budgeting backend costs as a team or usage grows."
+        },
+        {
+          "title": "Built-in AI features",
+          "toolA": "Text and vector search included in the free tier, plus built-in integrations for AI coding agents like Claude Code and Codex.",
+          "toolB": "A dedicated AI toolkit including embeddings, assistants, and file storage functionality for AI features.",
+          "whyItMatters": "Convex focuses AI support on the developer's coding workflow and search primitives; Nhost bundles AI-application-building blocks (embeddings/assistants) directly into the platform.",
+          "benefitsWho": "Teams deciding whether they need AI-assisted development tooling versus AI-application infrastructure."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Backend Capabilities",
+          "rows": [
+            { "feature": "Database", "toolA": "available", "toolB": "available", "note": "Convex: proprietary reactive document/relational store. Nhost: managed PostgreSQL." },
+            { "feature": "GraphQL API", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Serverless functions", "toolA": "available", "toolB": "available" },
+            { "feature": "File storage", "toolA": "available", "toolB": "available" },
+            { "feature": "Built-in authentication", "toolA": "available", "toolB": "available", "note": "Convex includes authentication in its Free & Starter tier feature list; Nhost lists authentication as a core feature." },
+            { "feature": "Real-time sync / reactivity", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Convex Free & Starter ($0, 1-6 seats); Nhost Starter ($0, 1 project, pauses after inactivity)." },
+            { "feature": "Per-developer/seat billing", "toolA": "available", "toolB": "unavailable" },
+            { "feature": "Self-hosted VPC deployment", "toolA": "limited", "toolB": "not-documented", "note": "Convex lists self-hosted VPC as in development, not yet generally available." },
+            { "feature": "External database connections", "toolA": "not-documented", "toolB": "available", "note": "Available starting on Nhost's Team plan." }
+          ]
+        },
+        {
+          "group": "Compliance & AI",
+          "rows": [
+            { "feature": "SOC 2 Type II", "toolA": "available", "toolB": "available", "note": "Convex includes it standard; Nhost requires the $599/month Team plan." },
+            { "feature": "HIPAA compliance", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Vector/text search", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Bundled AI toolkit (embeddings/assistants)", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Convex have a free plan?", "answer": "Yes, the Free & Starter tier is available at $0/month with pay-as-you-go overage charges, supporting 1-6 developer seats." },
+        { "question": "Does Nhost have a free plan?", "answer": "Yes, the Starter plan is $0/month with 1 GB database, 1 GB storage, and unlimited users, limited to 1 project." },
+        { "question": "How is Convex's Professional plan priced?", "answer": "The Professional plan costs $25 per developer per month, supporting 1-20 developer seats." },
+        { "question": "How much does Nhost's Pro plan cost?", "answer": "The Pro plan starts from $25/month and includes $15 of compute credits, 10 GB database, and 50 GB storage." },
+        { "question": "Is Convex compliant with security standards?", "answer": "Yes, Convex is SOC 2 Type II certified and HIPAA compliant." },
+        { "question": "Does Nhost support external database connections?", "answer": "Yes, external database connections are available starting on the Team plan." }
+      ]
+    }
+  },
+  {
+    "slug": "rive-vs-spline",
+    "tool_a_id": "dcc42744-8093-4da4-b78b-0290e5d5def0",
+    "tool_a_name": "Rive",
+    "tool_b_id": "fdd5fb34-6747-4479-81aa-8ae793ce0279",
+    "tool_b_name": "Spline",
+    "content": {
+      "verdict": "Rive centers on a GPU-accelerated vector rendering engine and state-machine logic that ships as native runtimes across web, mobile, and game engines, with a built-in AI agent on paid plans. Spline centers on browser-based 3D scene design with physics, live data hooks, and a companion 2D tool (Hana), with AI 3D generation sold as a separate add-on. The two solve different design problems — interactive 2D vector graphics/UI motion versus 3D scene design — more than they compete head-to-head.",
+      "bestForToolA": "Teams building interactive, resolution-independent 2D vector graphics and UI animations that need to run natively inside apps and game engines (Web, iOS, Android, Flutter, Unity, Unreal) via a single .riv file.",
+      "bestForToolB": "Teams designing real-time 3D scenes with physics and interactivity for the web, who want native code export to React, Next.js, Swift, Kotlin, Webflow, Framer, or Wix Studio, plus a bundled 2D canvas tool.",
+      "whoNeedsBoth": "Product teams building an app with both interactive 2D UI animation and embedded 3D scenes may use Rive for vector-based UI motion and Spline for 3D visual elements within the same product.",
+      "keyDifferences": [
+        {
+          "title": "Rendering medium and primary use case",
+          "toolA": "GPU-accelerated vector rendering engine (Rive Renderer, up to 120fps) driving interactive graphics via a State Machine.",
+          "toolB": "Real-time 3D modeling with materials, physics, particles, and game-style controls.",
+          "whyItMatters": "Choosing between these tools starts with whether the deliverable is 2D interactive vector graphics/UI or 3D scenes — they are not interchangeable outputs.",
+          "benefitsWho": "Product and motion designers scoping what kind of visual asset they're building."
+        },
+        {
+          "title": "Runtime and export targets",
+          "toolA": "Open-source runtimes with native playback of .riv files across Web, iOS, Android, Flutter, React, React Native, Unity, and Unreal Engine.",
+          "toolB": "Native export/code support for React, Next.js, Swift, Kotlin, Webflow, Framer, and Wix Studio, gated to the Professional plan and above.",
+          "whyItMatters": "Rive's game-engine runtimes (Unity, Unreal) matter for interactive/gaming use cases that Spline's export list doesn't cover; Spline's Webflow/Framer/Wix export matters for no-code site builders that Rive doesn't list.",
+          "benefitsWho": "Engineering teams selecting a tool based on where the final asset needs to run."
+        },
+        {
+          "title": "AI feature packaging",
+          "toolA": "A credit-metered AI agent for assisted editing is included on paid plans (Cadet and up), with an advanced-model option on Voyager.",
+          "toolB": "AI 3D generation is a separate paid add-on (+$5/seat/month) with 2,000 monthly AI credits, not bundled into any base plan.",
+          "whyItMatters": "Rive folds AI agent access into its paid tiers by default, while Spline treats AI generation as an optional upsell on top of any plan.",
+          "benefitsWho": "Teams budgeting for AI-assisted design work who need to know whether it's included or an extra line item."
+        },
+        {
+          "title": "Pricing ceiling and enterprise gating",
+          "toolA": "Enterprise tier ($120/seat/month) requires $10M+ in annual company revenue to qualify.",
+          "toolB": "Enterprise tier is custom-priced with no stated revenue requirement, adding SAML SSO, self-hosted exports, and centralized licensing.",
+          "whyItMatters": "Smaller but well-funded teams could be excluded from Rive's Enterprise tier by the revenue gate regardless of budget, whereas Spline's Enterprise appears open to negotiation regardless of company size.",
+          "benefitsWho": "Smaller companies or startups evaluating whether they even qualify for the top tier of either tool."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Design Capabilities",
+          "rows": [
+            { "feature": "2D vector/interactive graphics editor", "toolA": "available", "toolB": "available", "note": "Rive's core editor; Spline's Hana tool." },
+            { "feature": "3D modeling and materials", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "State-machine / interaction logic", "toolA": "available", "toolB": "available", "note": "Rive's State Machine; Spline's states/events/timeline system." },
+            { "feature": "Physics and particles", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Real-time collaboration", "toolA": "available", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Platforms & Export",
+          "rows": [
+            { "feature": "Native game engine runtimes (Unity/Unreal)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Native mobile app export (iOS/Android)", "toolA": "available", "toolB": "available", "note": "Spline's native Apple/Android exports require Professional plan or above." },
+            { "feature": "No-code site builder export (Webflow/Framer/Wix Studio)", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "React/code export", "toolA": "available", "toolB": "available", "note": "Spline's code export requires Professional plan or above." }
+          ]
+        },
+        {
+          "group": "Pricing & AI Add-ons",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Both free tiers are limited: Rive to 1 project/3 files, Spline to limited files with watermarked exports." },
+            { "feature": "AI features included in base paid plan", "toolA": "available", "toolB": "unavailable", "note": "Spline's AI generation is a separate paid add-on." },
+            { "feature": "Enterprise self-hosted exports", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Rive free to use?", "answer": "Yes, a free plan exists with 3 collaborative files, 1 project, and limited AI agent usage." },
+        { "question": "Is Spline free?", "answer": "Yes, a free plan exists with limited files and watermarked web exports." },
+        { "question": "What platforms can Rive content run on?", "answer": "Web, iOS, macOS, Android, Flutter, React, React Native, Framer, Webflow, Wix Studio, C++, Defold, Unity, and Unreal Engine." },
+        { "question": "What platforms does Spline support?", "answer": "Web, iOS, and Android, plus integrations with Webflow, Framer, Wix Studio, React, Next.js, Swift, and Kotlin." },
+        { "question": "Does Rive include AI features?", "answer": "Yes, paid plans include an agent with monthly credit allowances, or a bring-your-own-API-key option on Voyager." },
+        { "question": "Does Spline include AI tools?", "answer": "An optional Spline AI add-on (+$5/seat/month) provides AI 3D generation and 2,000 monthly AI credits." }
+      ]
+    }
+  },
+  {
+    "slug": "principle-vs-protopie",
+    "tool_a_id": "99ec53f2-7bec-4016-a54d-dea91440a5b5",
+    "tool_a_name": "Principle",
+    "tool_b_id": "bcaff713-bcb7-45e0-a2be-7c83c04fb5a4",
+    "tool_b_name": "ProtoPie",
+    "content": {
+      "verdict": "Principle is a macOS-only, one-time-purchase tool built around timeline-based animation and multi-screen app flows. ProtoPie is a no-code, freemium tool built around logic-driven interactions (variables, formulas, sensors, voice) targeting a much wider range of device targets including automotive and wearables. The two differ more in target complexity and platform reach than in being direct substitutes.",
+      "bestForToolA": "macOS-based designers who want deep, custom timeline control over transitions and a one-time license instead of a subscription, working primarily on multi-screen mobile/web/desktop app flows.",
+      "bestForToolB": "Teams prototyping logic-driven interactions across multiple device types (mobile, web, automotive HMI, TV, smartwatches, gaming) without writing code, especially where sensors, voice, or real data feeds are involved.",
+      "whoNeedsBoth": "Design teams that prototype standard mobile app flows on Principle but also need to prototype cross-device or sensor-driven experiences (e.g., wearables or in-car interfaces) may keep both tools for different project types.",
+      "keyDifferences": [
+        {
+          "title": "Platform availability",
+          "toolA": "Native macOS app only, with no Windows or Linux editor; finished prototypes can be viewed via web link on Windows, Linux, macOS, Android, and iOS.",
+          "toolB": "Not restricted to a single OS in the facts available, and explicitly targets automotive HMI, TV, smartwatches, and gaming interfaces in addition to mobile and web.",
+          "whyItMatters": "Teams without a Mac-based design workflow, or those targeting non-standard device categories, are effectively limited to ProtoPie's broader target list.",
+          "benefitsWho": "Design teams whose target device isn't a standard phone/web app, or that don't standardize on macOS."
+        },
+        {
+          "title": "Pricing model",
+          "toolA": "One-time $129 purchase with a free trial before buying; no recurring subscription fee.",
+          "toolB": "Freemium with a free tier to start prototyping, but paid plan pricing is not published on the marketing site.",
+          "whyItMatters": "Principle's cost is fully transparent and paid once; ProtoPie's true cost for paid features can't be evaluated without contacting sales.",
+          "benefitsWho": "Budget-conscious individual designers or small teams who want to know the full cost upfront."
+        },
+        {
+          "title": "Interaction complexity and inputs",
+          "toolA": "Timeline-based custom animation curves and a multi-screen flow view for connecting app screens.",
+          "toolB": "No-code logic using variables and formulas, native device sensors, voice interactions, and multi-/cross-device coordination.",
+          "whyItMatters": "ProtoPie supports more complex, data-driven, or sensor-based interactions than Principle's timeline/transition-focused model documented here.",
+          "benefitsWho": "Designers prototyping interactions that depend on real sensor input, voice, or logic beyond visual transitions."
+        },
+        {
+          "title": "Collaboration and sharing",
+          "toolA": "No team collaboration or commenting features are mentioned; prototypes are shared via a web link.",
+          "toolB": "Shareable interaction recordings let teams record and share interactions via links for review.",
+          "whyItMatters": "Teams that need built-in review workflows have a documented option in ProtoPie that isn't described for Principle.",
+          "benefitsWho": "Design teams that review prototypes collaboratively rather than working solo."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Prototyping",
+          "rows": [
+            { "feature": "Timeline-based animation", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "No-code logic (variables/formulas)", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Figma/Sketch import", "toolA": "available", "toolB": "available", "note": "ProtoPie's is described generically as \"design tool import.\"" },
+            { "feature": "Multi-screen flow view", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Native device sensors / voice interactions", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Platforms & Targets",
+          "rows": [
+            { "feature": "macOS native editor", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Cross-platform prototype viewing", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Automotive/TV/wearable/gaming targets", "toolA": "unavailable", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Sharing",
+          "rows": [
+            { "feature": "Free trial or free tier", "toolA": "available", "toolB": "available", "note": "Principle offers a free trial before a one-time purchase; ProtoPie has a free tier." },
+            { "feature": "Published paid pricing", "toolA": "available", "toolB": "unavailable" },
+            { "feature": "Shareable interaction recordings", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "What platforms does Principle run on?", "answer": "Principle is a native macOS app (Intel and Apple Silicon); shared prototypes can be viewed on the web from Windows, Linux, macOS, Android, and iOS." },
+        { "question": "Is ProtoPie free?", "answer": "A free tier is available; paid plans exist but exact pricing isn't published on the marketing page." },
+        { "question": "How much does Principle cost?", "answer": "Principle is a one-time $129 purchase, with options to renew or add seats." },
+        { "question": "What can ProtoPie prototype beyond phone apps?", "answer": "Per the site, it supports automotive HMI simulations, TV, smartwatches, and gaming interfaces in addition to mobile and web." },
+        { "question": "Can I import my existing Figma or Sketch files into Principle?", "answer": "Yes, Principle supports importing designs from both Figma and Sketch with intelligent merging." },
+        { "question": "Do I need to code to use ProtoPie?", "answer": "No, it's built for no-code interactive prototyping using logic, variables, and formulas." }
+      ]
+    }
+  },
+  {
+    "slug": "lunacy-vs-penpot",
+    "tool_a_id": "9d2f9ed7-498a-4028-a5a4-cc3e13c64bcc",
+    "tool_a_name": "Lunacy",
+    "tool_b_id": "e79526e3-fc9f-4ec0-848a-0c70b7a3bd92",
+    "tool_b_name": "Penpot",
+    "content": {
+      "verdict": "Lunacy is a free native desktop app (Windows/Mac/Linux) that works fully offline and opens Sketch and Figma files directly, but has no confirmed web or mobile version. Penpot is a fully open-source, web-based design platform that can also be self-hosted, with per-user pricing that scales from a generous free tier up to a $50,000/year self-hosted Private Server plan. The decision mostly turns on offline-native desktop use versus open, self-hostable, browser-based collaboration.",
+      "bestForToolA": "Designers who want a completely free, offline-capable native app on Windows, Mac, or Linux, especially those needing to open existing Sketch files or import from Figma without a browser.",
+      "bestForToolB": "Teams that want an open-source design platform built on open web standards, need multiplayer web-based collaboration, or require a self-hosted deployment for data control, with pricing that scales predictably per user.",
+      "whoNeedsBoth": "A studio that uses Lunacy for individual offline asset work (e.g., editing Sketch files while traveling) but collaborates on shared design systems through Penpot's web platform would reasonably keep both.",
+      "keyDifferences": [
+        {
+          "title": "Deployment model",
+          "toolA": "Native desktop application for Windows, Mac, and Linux that works fully offline; no web-based version confirmed.",
+          "toolB": "Web-based cloud platform with an explicit self-hosting option (including a dedicated Private Server plan).",
+          "whyItMatters": "Teams needing offline work default to Lunacy; teams needing browser-based access from any machine, or full control via self-hosting, default to Penpot.",
+          "benefitsWho": "IT/design-ops teams deciding on deployment constraints (offline access vs. centralized web access or data residency)."
+        },
+        {
+          "title": "Open-source status",
+          "toolA": "Not stated as open source; free plan includes all major features with no ads or restrictions.",
+          "toolB": "Fully open-source, built on open web standards (SVG, CSS, HTML) and Penpot's own open file format.",
+          "whyItMatters": "Teams with policies favoring open-source tooling, or wanting to avoid file-format lock-in, have a clear documented answer only with Penpot.",
+          "benefitsWho": "Organizations with open-source procurement requirements or concerns about proprietary file formats."
+        },
+        {
+          "title": "Pricing structure and ceiling",
+          "toolA": "Paid plan starts at $11.99/month, but exact feature differences from the free plan are not detailed on the main page.",
+          "toolB": "Free for up to 8 team members, then $7/user/month (capped at $175/month) on Unlimited, $25/user/month on Enterprise, or $50,000/year for a self-hosted Private Server.",
+          "whyItMatters": "Penpot's pricing is transparent and scales explicitly with team size and self-hosting needs; Lunacy's paid tier value is unclear from available facts.",
+          "benefitsWho": "Finance and design-ops leads budgeting for tool costs as a team grows."
+        },
+        {
+          "title": "Team collaboration features",
+          "toolA": "Real-time collaboration includes live feedback, text and audio chat, and sticker reactions.",
+          "toolB": "Multiplayer real-time collaborative editing across team members, with the free tier capped at 8 team members and unlimited viewers.",
+          "whyItMatters": "Lunacy documents richer social collaboration features (audio chat, reactions); Penpot documents an explicit team-size cap on its free tier that affects how many people can be full members.",
+          "benefitsWho": "Teams sizing how many people need edit access versus view-only access."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Design Tooling",
+          "rows": [
+            { "feature": "Vector editing", "toolA": "available", "toolB": "available" },
+            { "feature": "Sketch/Figma file import", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Design systems / component libraries & tokens", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "AI-assisted design-to-code workflows", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Built-in stock assets (icons/illustrations/UI kits)", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Platforms & Deployment",
+          "rows": [
+            { "feature": "Native desktop app (Windows/Mac/Linux)", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Web-based access", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Self-hosting option", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Offline editing", "toolA": "available", "toolB": "not-documented" }
+          ]
+        },
+        {
+          "group": "Pricing & Collaboration",
+          "rows": [
+            { "feature": "Free tier with full major features", "toolA": "available", "toolB": "available", "note": "Penpot's free (Professional) tier is capped at 8 team members." },
+            { "feature": "Real-time collaboration", "toolA": "available", "toolB": "available" },
+            { "feature": "SSO / audit logs", "toolA": "not-documented", "toolB": "available", "note": "Requires Penpot's Enterprise tier." },
+            { "feature": "Published detailed paid-tier pricing", "toolA": "unavailable", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Is Lunacy free?", "answer": "Yes, Lunacy's free plan includes all major features with no ads, and a paid plan is available for extra benefits starting at $11.99/month." },
+        { "question": "Is Penpot free?", "answer": "Yes, Penpot's Professional plan is free for up to 8 team members with unlimited viewers." },
+        { "question": "Can Lunacy open Sketch files?", "answer": "Yes, Lunacy can open Sketch files and import designs from Figma." },
+        { "question": "Is Penpot open source?", "answer": "Yes, Penpot is an open-source design platform built on open standards like SVG, CSS, and HTML." },
+        { "question": "Does Lunacy work offline?", "answer": "Yes, Lunacy works offline as a native desktop application." },
+        { "question": "Can Penpot be self-hosted?", "answer": "Yes, Penpot offers a self-hosted Private Server option in addition to the cloud-hosted plans." }
+      ]
+    }
+  },
+  {
+    "slug": "bugsnag-vs-sentry",
+    "tool_a_id": "66c6f447-c37a-4d38-b8f4-1f3f354d23b1",
+    "tool_a_name": "Bugsnag",
+    "tool_b_id": "dcce3938-3a1a-4634-a545-31842a7651dc",
+    "tool_b_name": "Sentry",
+    "content": {
+      "verdict": "Bugsnag (part of SmartBear) leads with stability scoring, distributed tracing, and an MCP server for AI-assisted fix suggestions, with usage-scaling paid tiers listed as 'starting at $0.' Sentry's documented facts are comparatively thin — it offers AI-powered debugging and session replay, a genuinely free ongoing single-user Developer plan, and published flat-rate Team ($26/month) and Business ($80/month) tiers. Sentry's published pricing is easier to evaluate upfront, while Bugsnag's platform breadth (50+ languages/platforms) is more explicitly documented.",
+      "bestForToolA": "Teams that want explicit stability scoring, distributed tracing correlated with crashes, and confirmed support across 50+ languages and platforms, backed by SmartBear.",
+      "bestForToolB": "Teams that want a straightforward, published flat-rate pricing ladder ($0 to $26 to $80/month) and are comfortable with a single-user free tier while evaluating AI-powered debugging.",
+      "whoNeedsBoth": "The facts don't indicate a scenario requiring both — these are largely substitutable error-monitoring platforms; teams typically pick one due to overlapping functionality.",
+      "keyDifferences": [
+        {
+          "title": "Pricing transparency",
+          "toolA": "Select and Preferred paid tiers are listed as 'starting at $0/month, scales with usage,' making the real cost unclear without a quote.",
+          "toolB": "Team ($26/month) and Business ($80/month) plans are published as flat monthly prices.",
+          "whyItMatters": "Buyers can budget more precisely with Sentry's published flat tiers than with Bugsnag's usage-scaled 'starting at $0' pricing.",
+          "benefitsWho": "Budget-conscious teams and finance stakeholders who want cost certainty before signing up."
+        },
+        {
+          "title": "AI feature implementation",
+          "toolA": "Integrates with SmartBear's MCP server to provide AI-powered fix suggestions inside developers' IDEs.",
+          "toolB": "Offers AI-powered debugging described as assistance for diagnosing and fixing tracked errors.",
+          "whyItMatters": "Bugsnag's AI assistance is explicitly IDE-integrated via MCP; Sentry's is described only at a higher level in the facts available, without IDE integration specifics.",
+          "benefitsWho": "Developers who want AI fix suggestions to appear directly inside their coding environment versus within the monitoring dashboard."
+        },
+        {
+          "title": "Platform and language coverage documentation",
+          "toolA": "Explicitly documented to support 50+ platforms and languages, including Android, iOS, JavaScript, React Native, Python, Kotlin, Ruby, Node.js, Java, Unity, and Flutter.",
+          "toolB": "Specific platform/language coverage is not documented in the facts available.",
+          "whyItMatters": "Teams needing to confirm coverage for a specific language or platform have clearer documentation with Bugsnag.",
+          "benefitsWho": "Engineering teams supporting a wide or unusual mix of languages/platforms."
+        },
+        {
+          "title": "Free tier limits",
+          "toolA": "Free plan is capped at 1 user, 7.5K events/month, and 7 days of data retention.",
+          "toolB": "Developer plan is free ongoing (not a time-limited trial) but limited to a single user.",
+          "whyItMatters": "Both cap the free tier at a single user, but Bugsnag additionally documents specific event volume and retention caps that Sentry's facts don't specify.",
+          "benefitsWho": "Solo developers or small side projects evaluating what a free tier actually includes before needing to pay."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Monitoring & AI Features",
+          "rows": [
+            { "feature": "Error/crash detection", "toolA": "available", "toolB": "available" },
+            { "feature": "Session replay", "toolA": "not-documented", "toolB": "available" },
+            { "feature": "Performance monitoring / tracing", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Stability scoring", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Distributed tracing with crash correlation", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "AI-assisted debugging/fix suggestions", "toolA": "available", "toolB": "available", "note": "Bugsnag's is IDE-integrated via SmartBear's MCP server; Sentry's is described more generally." }
+          ]
+        },
+        {
+          "group": "Pricing & Plans",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Bugsnag: 1 user, 7.5K events/month, 7-day retention. Sentry: 1 user, ongoing." },
+            { "feature": "Published flat-rate paid tiers", "toolA": "unavailable", "toolB": "available", "note": "Bugsnag's Select/Preferred are usage-scaled 'starting at $0.'" },
+            { "feature": "On-premises deployment option", "toolA": "available", "toolB": "not-documented", "note": "Bugsnag's Enterprise tier lists on-premises or SaaS deployment." },
+            { "feature": "Pay-as-you-go overages", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Bugsnag have a free plan?", "answer": "Yes, the Free plan supports 1 user, 7.5K events and 1M spans per month, with 7 days of data retention." },
+        { "question": "Is Sentry's Developer plan a time-limited trial?", "answer": "No — it's genuinely free ongoing, limited to a single user rather than a trial period." },
+        { "question": "Is Bugsnag part of another company?", "answer": "Yes, Bugsnag is part of SmartBear Software." },
+        { "question": "Does Bugsnag offer AI features?", "answer": "Yes, it integrates with SmartBear's MCP server to provide AI-powered fix suggestions inside developers' IDEs." },
+        { "question": "How much does Sentry's Team plan cost?", "answer": "The Team plan is $26 per month." },
+        { "question": "What platforms does Bugsnag support?", "answer": "BugSnag supports 50+ platforms including Android, iOS, JavaScript, React Native, Python, Kotlin, Ruby, Node.js, Java, Unity, and Flutter." }
+      ]
+    }
+  },
+  {
+    "slug": "rollbar-vs-sentry",
+    "tool_a_id": "3c7fb478-76a0-467c-ace5-e21d349568e4",
+    "tool_a_name": "Rollbar",
+    "tool_b_id": "dcce3938-3a1a-4634-a545-31842a7651dc",
+    "tool_b_name": "Sentry",
+    "content": {
+      "verdict": "Rollbar pairs real-time error grouping and session replay with Rollbar Resolve, an AI agent that opens fix pull requests — but Resolve is still in development, not yet generally available. Sentry's documented facts are comparatively thin, but it does offer AI-powered debugging live today plus published flat-rate Team ($26/month) and Business ($80/month) tiers, versus Rollbar's unpublished Essentials/Advanced pricing. Sentry looks better documented on pricing transparency; Rollbar looks better documented on certifications and free-tier specifics.",
+      "bestForToolA": "Teams that want explicit SOC2/ISO27001 certification, a documented free tier (5,000 occurrences, 1,000 replays/month), and cross-project root cause analysis linking frontend and backend errors, and can wait for or evaluate Rollbar Resolve as it matures.",
+      "bestForToolB": "Teams that want a live AI-powered debugging feature today and a transparent, published flat-rate pricing ladder rather than contact-sales pricing for mid-tier plans.",
+      "whoNeedsBoth": "The facts don't point to a scenario needing both simultaneously — these are overlapping error-monitoring platforms typically evaluated as alternatives to each other.",
+      "keyDifferences": [
+        {
+          "title": "AI fix-automation maturity",
+          "toolA": "Rollbar Resolve, an AI agent that reviews code, identifies what's breaking, and opens a pull request with a fix, is explicitly listed as still in development.",
+          "toolB": "AI-powered debugging is listed as a current feature without an in-development caveat.",
+          "whyItMatters": "Teams evaluating AI-driven fix automation today can use Sentry's AI debugging now, while Rollbar Resolve is not yet something they can rely on in production.",
+          "benefitsWho": "Teams prioritizing AI-driven remediation as a current, working feature rather than a roadmap item."
+        },
+        {
+          "title": "Pricing transparency on mid tiers",
+          "toolA": "Essentials and Advanced plan prices are not published and require sales contact, though usage tiers and credit allotments are listed.",
+          "toolB": "Team ($26/month) and Business ($80/month) plans are published as flat monthly prices.",
+          "whyItMatters": "Teams that want to self-serve a quote without a sales call have clearer information from Sentry's published tiers.",
+          "benefitsWho": "Smaller teams or individual developers who want to evaluate cost without a sales conversation."
+        },
+        {
+          "title": "Compliance certifications",
+          "toolA": "SOC2 and ISO27001 certified.",
+          "toolB": "No specific certifications are documented in the facts available.",
+          "whyItMatters": "Buyers with vendor security review requirements have a documented answer from Rollbar that isn't available for Sentry in these facts.",
+          "benefitsWho": "Security and compliance teams vetting vendors for regulated environments."
+        },
+        {
+          "title": "Free tier specifics",
+          "toolA": "Free plan includes 5,000 occurrences and 1,000 replays per month with 30 days of data retention.",
+          "toolB": "Developer plan is free ongoing, limited to a single user, without specific event/replay caps documented.",
+          "whyItMatters": "Rollbar's free tier gives teams concrete volume limits to plan around; Sentry's documented limit here is user count rather than event volume.",
+          "benefitsWho": "Teams sizing whether a free tier will cover their expected error/session volume."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Monitoring & AI Features",
+          "rows": [
+            { "feature": "Real-time error feed with grouping", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Session replay", "toolA": "available", "toolB": "available" },
+            { "feature": "Cross-project root cause analysis", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Deploy tracking", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "AI agent that opens fix pull requests", "toolA": "limited", "toolB": "not-documented", "note": "Rollbar Resolve is explicitly in development, not yet generally available." },
+            { "feature": "AI-powered debugging assistance", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "Pricing & Compliance",
+          "rows": [
+            { "feature": "Free tier", "toolA": "available", "toolB": "available", "note": "Rollbar: 5K occurrences/1K replays/month, 30-day retention. Sentry: single user, ongoing." },
+            { "feature": "Published flat-rate paid pricing", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "SOC2 certification", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "ISO27001 certification", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Pay-as-you-go overages", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does Rollbar have a free plan?", "answer": "Yes, the Free plan includes 5,000 occurrences and 1,000 replays per month with 30 days of data retention." },
+        { "question": "Is Sentry's Developer plan a time-limited trial?", "answer": "No — it's genuinely free ongoing, limited to a single user rather than a trial period." },
+        { "question": "What is Rollbar Resolve?", "answer": "Rollbar Resolve is an upcoming AI agent, still in development, that reviews code, identifies what's breaking, and opens a pull request with a fix." },
+        { "question": "How much does Sentry's Business plan cost?", "answer": "The Business plan is $80 per month." },
+        { "question": "Is Rollbar's Essentials or Advanced plan pricing public?", "answer": "No, exact prices for the Essentials and Advanced plans are not published; only usage tiers and credit allotments are listed." },
+        { "question": "How many users does Rollbar have?", "answer": "Rollbar states it has over 64,000 users." }
+      ]
+    }
+  },
+  {
+    "slug": "fullstory-vs-logrocket",
+    "tool_a_id": "21c299f2-5f17-4888-a6ff-d3d047043f79",
+    "tool_a_name": "FullStory",
+    "tool_b_id": "462722d4-4165-434a-8b0c-980f54d3e95b",
+    "tool_b_name": "LogRocket",
+    "content": {
+      "verdict": "FullStory offers a free-forever plan (30,000 monthly sessions, 12-month retention) with all paid tiers requiring a custom quote, while LogRocket publishes a concrete starting price ($176/month) but only a 14-day free trial rather than a permanent free tier. FullStory leans on StoryAI for natural-language querying of behavioral data; LogRocket leans on Galileo AI for automatically prioritizing and explaining errors with reproduction steps. The better fit depends on whether a team values a durable free tier or transparent entry pricing, and whether the priority is behavioral analytics or error/issue triage.",
+      "bestForToolA": "Teams that want to start on a genuinely free, ongoing plan with a meaningful session volume (30,000/month) and are comfortable requesting a custom quote once they outgrow it, and who value AI-driven behavioral insight querying via StoryAI.",
+      "bestForToolB": "Teams that want a published starting price ($176/month) to budget against, dedicated error tracking alongside session replay, and Galileo AI's automatic issue prioritization with reproduction steps for engineering triage.",
+      "whoNeedsBoth": "A product organization might use FullStory's free tier for broad behavioral/product analytics across the whole site while engineering separately runs LogRocket for its error-tracking and reproduction-step workflow — the facts support both being used for different purposes rather than as substitutes.",
+      "keyDifferences": [
+        {
+          "title": "Free tier durability",
+          "toolA": "FullstoryFree is a free-forever plan with 30,000 monthly sessions and 12-month retention for up to 10 users, no credit card required.",
+          "toolB": "Offers a 14-day free trial with full feature access, not a permanent free tier.",
+          "whyItMatters": "Teams wanting to run indefinitely on a free tier without ongoing cost have that option only with FullStory in these facts.",
+          "benefitsWho": "Early-stage or budget-constrained teams that want long-term free usage rather than a time-boxed trial."
+        },
+        {
+          "title": "Pricing transparency",
+          "toolA": "All paid tiers (Business, Advanced, Enterprise) are custom, contact-sales pricing with nothing published.",
+          "toolB": "Core plan starts at a published $176/month, scaling with session capture volume up to roughly $765/month before Enterprise custom pricing.",
+          "whyItMatters": "Teams that want to estimate cost without a sales call get a concrete starting number from LogRocket that FullStory doesn't provide.",
+          "benefitsWho": "Teams evaluating cost early in a purchasing process without engaging sales."
+        },
+        {
+          "title": "AI feature focus",
+          "toolA": "StoryAI turns behavioral data into insights teams can query directly, in natural language.",
+          "toolB": "Galileo AI automatically watches every session, surfaces impactful issues, and delivers reproduction steps.",
+          "whyItMatters": "StoryAI is oriented toward exploratory, natural-language analytics questions; Galileo AI is oriented toward proactively triaging and reproducing specific issues.",
+          "benefitsWho": "Product/analytics teams (StoryAI) versus engineering teams triaging bugs (Galileo AI)."
+        },
+        {
+          "title": "Dedicated error tracking",
+          "toolA": "Error tracking is not listed as a distinct feature; the platform is framed around session replay, product analytics, and heatmaps.",
+          "toolB": "Error tracking is an explicit core feature, identifying frequent errors, crashes, and network failures alongside session replay.",
+          "whyItMatters": "Engineering teams specifically needing bug/crash tracking as a first-class feature (not just qualitative session viewing) are better served by LogRocket per these facts.",
+          "benefitsWho": "Engineering teams whose primary need is diagnosing errors and crashes rather than broader product analytics."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Analytics Features",
+          "rows": [
+            { "feature": "Session replay", "toolA": "available", "toolB": "available" },
+            { "feature": "Product analytics / funnels", "toolA": "available", "toolB": "available" },
+            { "feature": "Heatmaps / clickmaps", "toolA": "available", "toolB": "available" },
+            { "feature": "Error tracking", "toolA": "not-documented", "toolB": "available" }
+          ]
+        },
+        {
+          "group": "AI & Supplementary Product Features",
+          "rows": [
+            { "feature": "Mobile app analytics", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "In-product guides and surveys", "toolA": "available", "toolB": "not-documented" },
+            { "feature": "Natural-language querying of behavioral data", "toolA": "available", "toolB": "not-documented", "note": "FullStory's StoryAI." },
+            { "feature": "Automatic issue prioritization with reproduction steps", "toolA": "not-documented", "toolB": "available", "note": "LogRocket's Galileo AI." }
+          ]
+        },
+        {
+          "group": "Pricing & Deployment",
+          "rows": [
+            { "feature": "Free-forever tier", "toolA": "available", "toolB": "unavailable", "note": "LogRocket offers only a 14-day free trial." },
+            { "feature": "Published starting price", "toolA": "unavailable", "toolB": "available" },
+            { "feature": "Self-hosted deployment option", "toolA": "not-documented", "toolB": "available", "note": "Available on LogRocket's Enterprise plan." },
+            { "feature": "SSO", "toolA": "not-documented", "toolB": "available" }
+          ]
+        }
+      ],
+      "faqs": [
+        { "question": "Does FullStory have a free plan?", "answer": "Yes, FullstoryFree offers 30,000 monthly sessions and 12 months of retention for up to 10 users, no credit card required." },
+        { "question": "Does LogRocket offer a free trial?", "answer": "Yes, a 14-day free trial with full feature access is available." },
+        { "question": "How much do FullStory's paid plans cost?", "answer": "Pricing is custom; you need to request pricing and a demo from FullStory." },
+        { "question": "How much does LogRocket cost?", "answer": "The Core plan starts at $176/month, with pricing scaling based on session capture volume; Enterprise is custom-priced." },
+        { "question": "What is StoryAI?", "answer": "FullStory's AI feature that transforms behavioral data into insights teams can query in natural language." },
+        { "question": "What does Galileo AI do?", "answer": "Galileo AI watches every session, analyzes severity across real sessions, and delivers reproduction steps so teams can act on issues quickly." }
+      ]
+    }
+  }
+]

@@ -69,7 +69,7 @@ export default function MiniHeader() {
 
             <Link
               to="/login/apps"
-              className="bg-white text-[#0A1735] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors text-center inline-block self-start md:self-auto"
+              className="bg-white text-[#0A1735] px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors text-center inline-block self-start md:self-auto"
               onClick={() => setIsMenuOpen(false)}
             >
               Login

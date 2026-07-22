@@ -46,7 +46,7 @@ export default function AdminSEOAuditPage() {
       const stateResults: StateAuditResult[] = (data || []).map(state => ({
         stateSlug: state.state_slug,
         stateName: state.state_name,
-        url: `https://www.gappsy.com/marketing-agencies-in-${state.state_slug}-united-states/`,
+        url: `https://gappsy.com/marketing-agencies-in-${state.state_slug}-united-states/`,
         status: 'pending',
         checks: {
           titleHasState: null,

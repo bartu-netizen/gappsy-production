@@ -1,0 +1,680 @@
+[
+  {
+    "tool_id": "ba51550d-a30f-4ff6-991a-d6db68d152ca",
+    "slug": "iredmail",
+    "name": "iRedMail",
+    "enrichment": {
+      "short_description": "Open-source installer that bundles Postfix, Dovecot, and webmail into a complete mail server on Linux and BSD.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2007,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "iRedMail is an open-source shell script that automates the deployment of a full mail server stack, including Postfix (SMTP), Dovecot (IMAP/POP3), a database backend (OpenLDAP, MySQL, MariaDB, or PostgreSQL), SpamAssassin and ClamAV for antispam/antivirus, and Roundcube or SOGo for webmail.",
+            "The project has been maintained since 2007 and supports major Linux distributions (Rocky, AlmaLinux, Debian, Ubuntu, CentOS Stream) as well as FreeBSD and OpenBSD. A commercial Enterprise Edition and iRedAdmin-Pro admin panel are available for organizations wanting one-click upgrades and additional management features."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "System administrators, small businesses, and hobbyists who want to self-host a complete email platform without manually configuring each component of the mail stack separately."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "One-click mail stack installer", "description": "A single installer script sets up Postfix, Dovecot, database backend, antispam, and antivirus together." },
+        { "title": "Webmail included", "description": "Ships with Roundcube or SOGo webmail clients out of the box." },
+        { "title": "CalDAV/CardDAV via SOGo", "description": "Optional SOGo groupware adds calendar and contact sync alongside email." },
+        { "title": "Antispam and antivirus", "description": "Integrates SpamAssassin and ClamAV for filtering incoming mail." },
+        { "title": "Flexible backend choice", "description": "Supports OpenLDAP, MySQL, MariaDB, or PostgreSQL as the storage backend." },
+        { "title": "ActiveSync support", "description": "Allows mobile devices to sync mail, contacts, and calendars." },
+        { "title": "TLS, SPF, DKIM", "description": "Built-in support for transport encryption and email authentication standards." },
+        { "title": "iRedAdmin-Pro (paid add-on)", "description": "Optional commercial web admin panel with extended management features." }
+      ],
+      "pros": [
+        "Free and open source core edition",
+        "Saves significant time versus manually configuring Postfix and Dovecot",
+        "Actively maintained since 2007",
+        "Wide distribution support across Linux and BSD"
+      ],
+      "cons": [
+        "Requires Linux/BSD system administration skills to install and maintain",
+        "Some advanced management features are gated behind the paid iRedAdmin-Pro add-on",
+        "Free edition relies on community support only"
+      ],
+      "faqs": [
+        { "question": "Is iRedMail free?", "answer": "Yes, the open-source edition is free. A commercial Enterprise Edition and iRedAdmin-Pro admin panel are available as paid options." },
+        { "question": "What operating systems does iRedMail support?", "answer": "CentOS Stream, Rocky Linux, AlmaLinux, Debian, Ubuntu, FreeBSD, and OpenBSD." },
+        { "question": "Does iRedMail include webmail?", "answer": "Yes, it installs Roundcube or SOGo webmail by default." },
+        { "question": "Can I use iRedMail to host email for my own domain?", "answer": "Yes, that is its primary purpose: deploying a complete self-hosted mail server for one or more domains." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted business email", "description": "Small organizations wanting full control over their mail server instead of using a hosted provider.", "audience": "Small businesses and IT teams" },
+        { "title": "Personal or family mail server", "description": "Privacy-conscious individuals running their own domain email.", "audience": "Self-hosting enthusiasts" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source Edition", "price": "Free", "billing_cycle": "N/A", "features": ["Full mail server stack installer", "Postfix + Dovecot + webmail", "Antispam and antivirus", "Community support"] },
+        { "plan_name": "Enterprise Edition / iRedAdmin-Pro", "price": "Paid (contact for pricing)", "billing_cycle": "Custom", "features": ["One-click upgrades", "Extended admin panel", "Commercial support"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "web-app"],
+      "seo_meta_description": "iRedMail is a free, open-source mail server installer for Linux/BSD bundling Postfix, Dovecot, webmail, antispam, and antivirus."
+    }
+  },
+  {
+    "tool_id": "ba65b701-bea2-49e3-a8e6-c127d99725d5",
+    "slug": "mox",
+    "name": "Mox",
+    "enrichment": {
+      "short_description": "Modern, all-in-one open-source mail server in Go with built-in SMTP, IMAP, spam filtering, and webmail.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Mox is a self-hosted email server written in Go by developer mjl-, built to consolidate SMTP, IMAP4, spam filtering, and webmail into a single binary rather than assembling separate components like Postfix, Dovecot, and Rspamd. It implements modern email security standards including SPF, DKIM, DMARC, MTA-STS, DANE, and DNSSEC by default.",
+            "The project is sponsored by the NLnet Foundation and the European Commission's NGI (Next Generation Internet) program, and emphasizes code quality through extensive automated and fuzz testing against relevant RFCs."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Individuals and small teams who want a modern, security-first mail server without manually integrating multiple separate mail components."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "All-in-one binary", "description": "SMTP, IMAP, webmail, and spam filtering ship in a single Go binary." },
+        { "title": "Automatic TLS", "description": "Certificates are provisioned automatically via Let's Encrypt." },
+        { "title": "Modern email security by default", "description": "Built-in support for SPF, DKIM, DMARC, MTA-STS, DANE, and DNSSEC." },
+        { "title": "Spam filtering", "description": "Reputation-based and content-based spam filtering are included out of the box." },
+        { "title": "Quickstart setup", "description": "A quickstart tool can get a working mail server running in around 10 minutes." },
+        { "title": "Integrated webmail", "description": "Includes a built-in webmail client, no separate install needed." },
+        { "title": "Internationalization support", "description": "Handles internationalized email addresses." }
+      ],
+      "pros": [
+        "Single binary greatly simplifies deployment compared to a multi-component mail stack",
+        "Modern security standards (DANE, MTA-STS, DNSSEC) enabled by default",
+        "Fast quickstart setup process",
+        "MIT licensed and actively maintained",
+        "Backed by NLnet and EU NGI program sponsorship"
+      ],
+      "cons": [
+        "Newer project, less battle-tested than Postfix/Dovecot in large-scale production",
+        "Prebuilt binaries mainly target Linux x86-64",
+        "Smaller community and ecosystem than legacy mail server tools"
+      ],
+      "faqs": [
+        { "question": "Is Mox free?", "answer": "Yes, Mox is released under the MIT license and is free and open source." },
+        { "question": "What protocols does Mox support?", "answer": "SMTP and IMAP4 for mail, plus SPF, DKIM, DMARC, MTA-STS, DANE, and DNSSEC for security." },
+        { "question": "Does Mox include a webmail client?", "answer": "Yes, an integrated webmail client is included." },
+        { "question": "Who maintains Mox?", "answer": "It is developed by mjl-, with sponsorship from the NLnet Foundation and the EU NGI program." }
+      ],
+      "use_cases": [
+        { "title": "Personal or small-domain email server", "description": "Running your own domain's email without stitching together Postfix, Dovecot, and Rspamd separately.", "audience": "Individuals and small teams" },
+        { "title": "Security-focused self-hosting", "description": "Deploying a mail server with DNSSEC, DANE, and MTA-STS support enabled from the start.", "audience": "Privacy and security-conscious self-hosters" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Mox is a free, open-source all-in-one mail server written in Go with built-in SMTP, IMAP, spam filtering, and webmail."
+    }
+  },
+  {
+    "tool_id": "e645d12e-427d-4de8-a46d-9232f2a915d2",
+    "slug": "simplelogin",
+    "name": "SimpleLogin",
+    "enrichment": {
+      "short_description": "Open-source email alias service that hides your real address behind forwarding aliases, with an option to self-host.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": 2020,
+      "company_size": null,
+      "headquarters": "Switzerland",
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "SimpleLogin lets users generate unique email aliases for each website or service they sign up for, forwarding messages to their real inbox while keeping the primary address hidden. Founded in 2020 and later acquired by Proton AG (maker of Proton Mail), SimpleLogin remains fully open source, with its full codebase available on GitHub.",
+            "Unlike most alias-forwarding services, SimpleLogin can also be self-hosted on your own server, making it one of the few options that combines a polished hosted product with a genuinely self-hostable open-source core."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Privacy-conscious individuals who want to avoid exposing their real email address to every website, and technical users who prefer to run their own alias infrastructure."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Email aliases", "description": "Create unique aliases per website; 10 aliases on the free plan, unlimited on Premium." },
+        { "title": "Two-way alias replies", "description": "Reply to or send new mail from an alias without revealing your real address." },
+        { "title": "Browser extensions", "description": "Extensions for Chrome, Firefox, and Safari to generate aliases on the fly." },
+        { "title": "Mobile apps", "description": "Native iOS and Android apps." },
+        { "title": "Custom domains", "description": "Bring your own domain to create branded aliases (unlimited on Premium)." },
+        { "title": "Catch-all aliasing", "description": "Wildcard/catch-all domain support for auto-generating aliases." },
+        { "title": "PGP encryption", "description": "Forwarded mail can be encrypted with PGP." },
+        { "title": "TOTP and WebAuthn 2FA", "description": "Two-factor authentication options for account security." },
+        { "title": "Self-hostable", "description": "Full source code is open source and can be deployed on your own server." }
+      ],
+      "pros": [
+        "Genuinely open source and self-hostable, not just free-to-use",
+        "Generous free plan with 10 aliases and unlimited bandwidth",
+        "Backed by Proton's infrastructure and reputation",
+        "Strong security options: PGP encryption, TOTP, and WebAuthn"
+      ],
+      "cons": [
+        "Free plan is limited to 10 aliases and 1 mailbox",
+        "Unlimited aliases, custom domains, and PGP require the paid Premium plan",
+        "Self-hosting requires technical setup and maintenance"
+      ],
+      "faqs": [
+        { "question": "Is SimpleLogin free?", "answer": "Yes, a free plan offers 10 aliases and 1 mailbox. Premium unlocks unlimited aliases and custom domains for $36/year or $4/month." },
+        { "question": "Can I self-host SimpleLogin?", "answer": "Yes, its source code is fully open source and it can be self-hosted on your own server." },
+        { "question": "Who owns SimpleLogin?", "answer": "SimpleLogin was acquired by Proton AG, the company behind Proton Mail, though it continues to operate as an open-source project." },
+        { "question": "Does SimpleLogin support custom domains?", "answer": "Yes, unlimited custom domains are included on the Premium plan." }
+      ],
+      "use_cases": [
+        { "title": "Alias-based privacy protection", "description": "Signing up for online services without exposing your real email address, and disabling a single alias to stop spam.", "audience": "Everyday privacy-conscious users" },
+        { "title": "Self-hosted alias infrastructure", "description": "Running your own instance of the aliasing service for full control over data and routing.", "audience": "Technical users and organizations" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Free", "price": "$0", "billing_cycle": "N/A", "features": ["10 aliases", "1 mailbox", "Unlimited bandwidth", "Reply from alias", "Browser extensions", "iOS and Android apps"] },
+        { "plan_name": "Premium", "price": "$36/year (or $4/month)", "billing_cycle": "Annual or monthly", "features": ["Unlimited aliases", "Unlimited custom domains", "Catch-all domain support", "5 subdomains", "50 usernames/directories", "Unlimited mailboxes", "PGP encryption"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium", "free-plan", "ios", "android"],
+      "seo_meta_description": "SimpleLogin is an open-source email alias service that hides your real address; free plan available, with self-hosting supported."
+    }
+  },
+  {
+    "tool_id": "591b7aee-2302-4201-805a-465e25e4cfbc",
+    "slug": "wildduck",
+    "name": "wildduck",
+    "enrichment": {
+      "short_description": "Scalable, open-source IMAP/POP3 mail server built on Node.js and MongoDB, designed for API-driven management.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "WildDuck is an open-source IMAP/POP3 email server built with Node.js and MongoDB, maintained by Zone Media. It's designed for horizontal scalability with a stateless, no-single-point-of-failure architecture, targeting deployments with 1,000 or more mailboxes.",
+            "WildDuck handles IMAP/POP3 only; it's typically paired with Haraka for inbound SMTP and ZoneMTA for outbound SMTP to form a complete mail stack. Management is designed to happen primarily through a REST API rather than configuration files."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Developers and hosting providers building custom, API-driven email platforms that need to scale horizontally."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Full IMAP4rev1 support", "description": "Includes IDLE, CONDSTORE, COMPRESS, and QUOTA extensions." },
+        { "title": "REST API", "description": "Manage accounts, mailboxes, messages, filters, autoreplies, and DKIM keys entirely through an API." },
+        { "title": "MongoDB-based storage", "description": "Uses MongoDB with sharding support for horizontal scale." },
+        { "title": "Stateless architecture", "description": "Designed to avoid single points of failure across the cluster." },
+        { "title": "TOTP and WebAuthn MFA", "description": "Modern multi-factor authentication options for mailbox accounts." },
+        { "title": "PGP encryption support", "description": "Can encrypt stored mail with PGP." },
+        { "title": "Unicode support", "description": "Handles internationalized email addresses and folder names." },
+        { "title": "Audit logging", "description": "Tracks account and mailbox activity for auditing." }
+      ],
+      "pros": [
+        "Fully open source under the EUPL 1.2 license",
+        "API-first design well suited to automation and custom mail products",
+        "Built for horizontal scale across large numbers of mailboxes",
+        "Modern authentication options (TOTP, WebAuthn)"
+      ],
+      "cons": [
+        "Requires MongoDB plus additional components (Haraka, ZoneMTA) for a full mail stack",
+        "More operationally complex than an all-in-one mail server",
+        "Best suited to teams with Node.js and MongoDB operations experience"
+      ],
+      "faqs": [
+        { "question": "Is wildduck free?", "answer": "Yes, it is released under the EUPL 1.2 open-source license." },
+        { "question": "Does wildduck handle SMTP?", "answer": "No, wildduck handles IMAP/POP3; it's typically paired with Haraka and ZoneMTA for SMTP." },
+        { "question": "Does wildduck have an API?", "answer": "Yes, a REST API is central to how accounts and mailboxes are managed." },
+        { "question": "Who maintains wildduck?", "answer": "Zone Media maintains the project." }
+      ],
+      "use_cases": [
+        { "title": "Large-scale hosted email platforms", "description": "Providers needing horizontal scaling across many mailboxes without a single point of failure.", "audience": "Email hosting providers" },
+        { "title": "API-driven mail products", "description": "Building custom applications on top of a mail server via a REST API rather than config files.", "audience": "Developers" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "api"],
+      "seo_meta_description": "WildDuck is an open-source, API-driven IMAP/POP3 mail server built on Node.js and MongoDB for scalable self-hosted email."
+    }
+  },
+  {
+    "tool_id": "8e2764a7-0bfa-42fa-913d-469e0d66e4ce",
+    "slug": "cyrus-imap",
+    "name": "Cyrus IMAP",
+    "enrichment": {
+      "short_description": "Free, open-source IMAP email, contacts, and calendar server used in production since 1993.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": 1993,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Cyrus IMAP is a free and open-source mail, contacts, and calendar server originally developed at Carnegie Mellon University, in active development and production use since 1993. It's built for performance and scalability in large deployments.",
+            "The server includes CardDAV and CalDAV support alongside IMAP, Sieve scripting for mail filtering, Cyrus SASL for flexible authentication, and JMAP support, and integrates with antivirus and antispam toolkits."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "System administrators and hosting providers running large-scale, high-performance IMAP infrastructure, including universities and enterprises."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "High-performance IMAP server", "description": "Built with speed and efficiency as core design goals." },
+        { "title": "CalDAV and CardDAV", "description": "Built-in calendar and contact server alongside IMAP." },
+        { "title": "Sieve scripting", "description": "Server-side mail filtering using the Sieve language." },
+        { "title": "Cyrus SASL authentication", "description": "Supports a wide range of authentication mechanisms." },
+        { "title": "SPF, DKIM, DMARC support", "description": "Standard email authentication protocols for deliverability and security." },
+        { "title": "Replication", "description": "Supports replication for high availability deployments." },
+        { "title": "JMAP support", "description": "Implements the modern JMAP protocol in addition to IMAP." },
+        { "title": "Antivirus/antispam integration", "description": "Works with external antivirus and antispam toolkits." }
+      ],
+      "pros": [
+        "Extremely mature, with over 30 years in production use",
+        "Strong performance and scalability track record for large installations",
+        "Free and open source",
+        "Supports modern protocols including JMAP alongside CalDAV/CardDAV"
+      ],
+      "cons": [
+        "Steeper learning curve for configuration than simpler mail servers",
+        "Documentation can be dense for newcomers",
+        "Best suited to experienced system administrators rather than casual self-hosters"
+      ],
+      "faqs": [
+        { "question": "Is Cyrus IMAP free?", "answer": "Yes, it is free and open source." },
+        { "question": "How long has Cyrus IMAP been around?", "answer": "Since 1993, originally developed at Carnegie Mellon University." },
+        { "question": "Does Cyrus support calendars and contacts?", "answer": "Yes, via built-in CalDAV and CardDAV support." },
+        { "question": "Does Cyrus support JMAP?", "answer": "Yes, JMAP is supported alongside IMAP." }
+      ],
+      "use_cases": [
+        { "title": "Large-scale institutional email", "description": "Universities and enterprises needing a proven, high-performance IMAP backend.", "audience": "Universities and enterprise IT teams" },
+        { "title": "Combined mail, calendar, and contacts server", "description": "Organizations wanting CalDAV/CardDAV alongside IMAP in a single server.", "audience": "System administrators" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "Cyrus IMAP is a free, open-source email, contacts, and calendar server in production use since 1993, built for scale."
+    }
+  },
+  {
+    "tool_id": "a42ba043-aed3-4e2a-accc-c2fe75a65c67",
+    "slug": "davmail",
+    "name": "DavMail",
+    "enrichment": {
+      "short_description": "Open-source gateway that lets standard mail and calendar clients connect to Exchange or Exchange Online.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "DavMail is a Java-based gateway that translates standard email and calendar protocols, including POP, IMAP, SMTP, CalDAV, CardDAV, and LDAP, into calls compatible with on-premise Exchange or Exchange Online. This lets users connect regular clients like Thunderbird or Apple Mail/iCal without relying on Outlook.",
+            "The application is cross-platform Java software, tested on Windows, Linux (Ubuntu and Fedora), and macOS, and can run headless on a server for remote or mobile clients."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Users on non-Outlook platforms, particularly Linux and macOS, who need to access a corporate Exchange mailbox using standard mail and calendar apps."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "POP and IMAP gateway", "description": "Receive Exchange mail through standard POP or IMAP clients." },
+        { "title": "SMTP gateway", "description": "Send mail through Exchange using standard SMTP." },
+        { "title": "CalDAV support", "description": "Calendar access including free/busy lookups." },
+        { "title": "CardDAV support", "description": "Sync personal contacts with standard CardDAV clients." },
+        { "title": "LDAP gateway", "description": "Search the Exchange global address book via LDAP." },
+        { "title": "Cross-platform", "description": "Runs on Windows, Linux, and macOS via the JVM." },
+        { "title": "Exchange Online support", "description": "Works with both on-premise Exchange and Exchange Online (Microsoft 365)." }
+      ],
+      "pros": [
+        "Free and open source",
+        "Enables non-Outlook clients like Thunderbird and Apple Mail/iCal to use Exchange",
+        "Actively maintained with recent releases",
+        "Works across Windows, Linux, and macOS"
+      ],
+      "cons": [
+        "Requires running an extra local or server-side gateway process",
+        "Java-based, so a JVM is required",
+        "Initial configuration can be fiddly for less technical users"
+      ],
+      "faqs": [
+        { "question": "Is DavMail free?", "answer": "Yes, it is open source." },
+        { "question": "Does DavMail work with Microsoft 365 (Exchange Online)?", "answer": "Yes, it supports both on-premise Exchange and Exchange Online." },
+        { "question": "What email clients work with DavMail?", "answer": "Any standard POP/IMAP/SMTP/CalDAV/CardDAV client, such as Thunderbird or Apple Mail/iCal." },
+        { "question": "What platforms does DavMail run on?", "answer": "Windows, Linux, and macOS; it can also run headless on a server." }
+      ],
+      "use_cases": [
+        { "title": "Non-Outlook access to Exchange", "description": "Employees who prefer Thunderbird, Apple Mail, or other clients but need Exchange connectivity.", "audience": "Employees on Linux or macOS" },
+        { "title": "Cross-platform Exchange calendar sync", "description": "Accessing Exchange calendars via CalDAV from non-Windows systems.", "audience": "IT teams supporting mixed-OS environments" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows", "mac"],
+      "seo_meta_description": "DavMail is a free, open-source gateway that lets Thunderbird, Apple Mail, and other clients connect to Exchange via POP/IMAP/CalDAV."
+    }
+  },
+  {
+    "tool_id": "da8a9e8f-5d1d-43cb-8de7-2ebf5cb6c5b8",
+    "slug": "dovecot",
+    "name": "Dovecot",
+    "enrichment": {
+      "short_description": "Widely used, high-performance open-source IMAP and POP3 server, with an optional commercial Dovecot Pro edition.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Dovecot is one of the most widely deployed open-source IMAP and POP3 servers, known for performance, standards compliance, and security. The open-source core is free, while Dovecot Pro is a separate commercial, enterprise-grade edition aimed at telcos, ISPs, and large hosting providers that need dynamic scalability and dedicated support.",
+            "The dovecot.org website and project are maintained by Open-Xchange GmbH. Dovecot handles IMAP/POP3 only and does not send mail itself; it's commonly paired with a mail transfer agent such as Postfix."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "System administrators of all sizes, from individual self-hosters to large hosting providers, who need a reliable IMAP/POP3 backend."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "High-performance IMAP/POP3", "description": "Optimized for speed and standards compliance." },
+        { "title": "mbox and Maildir support", "description": "Works with both mailbox storage formats." },
+        { "title": "Flexible authentication", "description": "Supports many different authentication databases and mechanisms." },
+        { "title": "Self-optimizing indexes", "description": "Includes self-healing index behavior for reliability." },
+        { "title": "Clustering and NFS support", "description": "Built for deployment across clustered and networked storage environments." },
+        { "title": "Plugin extensibility", "description": "Supports plugins and Lua scripting for customization." },
+        { "title": "Migration tools", "description": "Includes tools to migrate from existing IMAP/POP3 servers." },
+        { "title": "Dovecot Pro", "description": "Paid enterprise edition with dynamic scalability and dedicated support for telcos, ISPs, and hosting providers." }
+      ],
+      "pros": [
+        "Extremely mature and widely deployed across the industry",
+        "Strong performance and standards compliance",
+        "Free, open-source core",
+        "Active security disclosure program"
+      ],
+      "cons": [
+        "Advanced enterprise scaling features are gated behind the paid Dovecot Pro edition",
+        "Configuration can be complex for large deployments",
+        "Does not handle SMTP itself; requires pairing with an MTA like Postfix"
+      ],
+      "faqs": [
+        { "question": "Is Dovecot free?", "answer": "Yes, the core Dovecot software is free and open source; Dovecot Pro is a separate paid enterprise edition." },
+        { "question": "Does Dovecot handle sending mail?", "answer": "No, Dovecot is an IMAP/POP3 server; it is commonly paired with a mail transfer agent like Postfix for SMTP." },
+        { "question": "Who maintains Dovecot?", "answer": "The dovecot.org website is maintained by Open-Xchange GmbH." },
+        { "question": "What mailbox formats does Dovecot support?", "answer": "Both mbox and Maildir formats." }
+      ],
+      "use_cases": [
+        { "title": "Self-hosted mail server backend", "description": "Pairing Dovecot with Postfix for a complete self-hosted mail stack.", "audience": "System administrators" },
+        { "title": "Large-scale hosting or ISP email", "description": "Using Dovecot Pro's clustering and support for high-volume IMAP/POP3 deployments.", "audience": "Telcos, ISPs, and hosting providers" }
+      ],
+      "pricing_plans": [
+        { "plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["IMAP and POP3 server", "mbox and Maildir support", "Plugin extensibility"] },
+        { "plan_name": "Dovecot Pro", "price": "Contact for pricing", "billing_cycle": "Custom/Enterprise", "features": ["Dynamic scalability", "High performance at scale", "Dedicated support", "Built for telcos, ISPs, and hosting providers"] }
+      ],
+      "tags": ["self-hosted", "open-source", "freemium"],
+      "seo_meta_description": "Dovecot is a widely used, high-performance open-source IMAP/POP3 server, with a paid Dovecot Pro edition for large-scale hosting."
+    }
+  },
+  {
+    "tool_id": "fd084534-24c8-4496-a272-eb646dc24f55",
+    "slug": "chasquid",
+    "name": "chasquid",
+    "enrichment": {
+      "short_description": "Lightweight, easy-to-configure open-source SMTP server written in Go, built to avoid common misconfigurations.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "chasquid is an SMTP server (mail transfer agent) written in Go by developer Alberto Bertogli, offered as an easier-to-configure alternative to Postfix or Exim for individuals and small setups. It's designed so that secure configuration is the default, preventing common issues such as accidental open relays.",
+            "The project supports multiple virtual domains, user aliases, internationalized domain names, and automatic TLS certificate management via Let's Encrypt, along with SPF and MTA-STS verification."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Individuals and small organizations who want to run their own domain's SMTP server without dealing with the complexity of Postfix or Exim."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Simple configuration", "description": "Designed to be easy to set up correctly compared to traditional MTAs." },
+        { "title": "Multiple virtual domains", "description": "Supports hosting several domains and user aliases from one server." },
+        { "title": "Internationalized domain names", "description": "Supports IDNA for non-ASCII domain names." },
+        { "title": "Automatic TLS", "description": "Integrates with Let's Encrypt for certificate management." },
+        { "title": "SPF and MTA-STS verification", "description": "Built-in checks to improve deliverability and security." },
+        { "title": "Secure-by-default design", "description": "Prevents insecure configurations such as open relays." },
+        { "title": "Single static binary", "description": "Written in Go, simplifying deployment." }
+      ],
+      "pros": [
+        "Simpler to configure than Postfix or Exim",
+        "Secure defaults reduce the risk of misconfiguration",
+        "Free and open source under Apache 2.0",
+        "Built-in Let's Encrypt integration"
+      ],
+      "cons": [
+        "Smaller community than Postfix or Exim",
+        "Fewer plugins and extensions than more mature MTAs",
+        "Best suited to small-scale rather than large enterprise deployments"
+      ],
+      "faqs": [
+        { "question": "Is chasquid free?", "answer": "Yes, it is released under the Apache License 2.0." },
+        { "question": "Who develops chasquid?", "answer": "It is created and maintained by Alberto Bertogli." },
+        { "question": "What language is chasquid written in?", "answer": "Go." },
+        { "question": "Does chasquid support multiple domains?", "answer": "Yes, it supports multiple virtual domains and user aliases." }
+      ],
+      "use_cases": [
+        { "title": "Personal domain email server", "description": "Individuals wanting a simple, secure SMTP server for their own domain.", "audience": "Individual self-hosters" },
+        { "title": "Small business mail relay", "description": "Small teams needing straightforward SMTP without Postfix's configuration overhead.", "audience": "Small businesses" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source"],
+      "seo_meta_description": "chasquid is a free, open-source SMTP server written in Go, designed for easy, secure configuration on small mail setups."
+    }
+  },
+  {
+    "tool_id": "d0165e6b-299a-413e-8603-112e26c2317d",
+    "slug": "courier-mta",
+    "name": "Courier MTA",
+    "enrichment": {
+      "short_description": "Open-source integrated mail and groupware server combining ESMTP, IMAP, POP3, webmail, and calendaring.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "Courier (Courier MTA) is an open-source, integrated mail and groupware server released under the GNU General Public License. It bundles ESMTP, IMAP, POP3, webmail, and calendar/scheduling services into a single framework rather than requiring separate components.",
+            "It stores mail natively in maildir format, with legacy mbox support, and can be configured as a mail relay, a domain-specific server, or a hybrid setup. It compiles on most POSIX-based systems, including Linux, BSD, Solaris, and AIX."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "System administrators who want one integrated package rather than assembling separate MTA, IMAP, and webmail components."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Integrated protocol support", "description": "ESMTP, IMAP, and POP3 in a single server framework." },
+        { "title": "Maildir storage", "description": "Native maildir format storage, with legacy mbox support." },
+        { "title": "Webmail and admin UI", "description": "Includes web-based webmail access and administration tools." },
+        { "title": "TLS/SSL and SPF", "description": "Supports encrypted connections and Sender Policy Framework validation." },
+        { "title": "Authenticated SMTP relay", "description": "Supports authenticated relay configurations." },
+        { "title": "Mailing list management", "description": "Built-in tools for running mailing lists." },
+        { "title": "Mail filtering", "description": "Includes message filtering capabilities." },
+        { "title": "IMAP/POP3 proxy aggregation", "description": "Can aggregate multiple backend mail servers behind a single proxy." }
+      ],
+      "pros": [
+        "All-in-one mail and groupware stack in a single project",
+        "Free and open source under the GPL",
+        "Runs on most POSIX systems including Linux, BSD, Solaris, and AIX",
+        "Mature, long-standing project"
+      ],
+      "cons": [
+        "Development pace has slowed compared to Postfix and Dovecot",
+        "Smaller community and fewer recent updates",
+        "Documentation and interface feel dated"
+      ],
+      "faqs": [
+        { "question": "Is Courier MTA free?", "answer": "Yes, it is licensed under the GNU General Public License." },
+        { "question": "What mailbox format does Courier use?", "answer": "Maildir natively, with legacy mbox support." },
+        { "question": "What operating systems does Courier support?", "answer": "Most POSIX-based systems, including Linux, BSD, Solaris, and AIX." },
+        { "question": "Does Courier include webmail?", "answer": "Yes, it includes web-based webmail and administration tools." }
+      ],
+      "use_cases": [
+        { "title": "All-in-one self-hosted mail server", "description": "Teams wanting a single integrated package instead of combining separate MTA, IMAP, and webmail tools.", "audience": "System administrators" },
+        { "title": "Mailing list hosting", "description": "Organizations needing built-in mailing list management alongside regular email.", "audience": "Organizations running mailing lists" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "web-app"],
+      "seo_meta_description": "Courier MTA is a free, open-source integrated mail server combining ESMTP, IMAP, POP3, webmail, and calendaring in one package."
+    }
+  },
+  {
+    "tool_id": "48dce657-93e5-4f57-b7c7-2ec20c859674",
+    "slug": "emailrelay",
+    "name": "EmailRelay",
+    "enrichment": {
+      "short_description": "Lightweight, open-source store-and-forward SMTP server with POP access, built for simple mail relaying.",
+      "pricing_model": "Free (open source)",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "long_form_blocks": [
+        {
+          "id": "overview",
+          "heading": "Overview",
+          "level": 2,
+          "paragraphs": [
+            "E-MailRelay (EmailRelay) is a lightweight, single-process SMTP store-and-forward mail server with POP access to spooled messages, released under the permissive FSFAP open-source license. It uses non-blocking I/O for scalability, with an architecture similar to servers like Squid and nginx.",
+            "It supports smarthost forwarding or DNS MX-based routing, integrates with SpamAssassin, and can block connections via DNSBLs. Its policy-free design allows custom handling to be implemented through external scripts."
+          ]
+        },
+        {
+          "id": "who-its-for",
+          "heading": "Who It's For",
+          "level": 2,
+          "paragraphs": [
+            "Developers and system administrators who need a simple, low-dependency relay or forwarding server rather than a full mail stack."
+          ]
+        }
+      ],
+      "features": [
+        { "title": "Single-process architecture", "description": "Uses non-blocking I/O for efficient scalability." },
+        { "title": "Smarthost or MX-based routing", "description": "Can forward via a fixed smarthost or standard DNS MX lookups." },
+        { "title": "SpamAssassin integration", "description": "Can route messages through SpamAssassin for spam scoring." },
+        { "title": "DNSBL blocking", "description": "Blocks connections from IPs listed in DNS-based blocklists." },
+        { "title": "Address verification", "description": "Supports verifying recipient addresses before accepting mail." },
+        { "title": "SMTP and POP support", "description": "Provides SMTP for relaying and POP access to spooled messages, with maildir-based IMAP integration." },
+        { "title": "Policy-free scripting hooks", "description": "Custom handling can be implemented via external scripts." },
+        { "title": "Cross-platform", "description": "Runs on Unix-like systems and Windows, including as a Windows Service." }
+      ],
+      "pros": [
+        "Minimal dependencies and easy to install",
+        "Free and open source under the permissive FSFAP license",
+        "Cross-platform, running on both Linux and Windows",
+        "Lightweight and efficient for simple relay use cases"
+      ],
+      "cons": [
+        "Not a full-featured mail server; no built-in IMAP server, only maildir/POP access",
+        "Smaller community than major mail transfer agents",
+        "Best suited to relay and store-and-forward roles rather than full mailbox hosting"
+      ],
+      "faqs": [
+        { "question": "Is EmailRelay free?", "answer": "Yes, it is released under the permissive FSFAP license." },
+        { "question": "What does EmailRelay do?", "answer": "It is a store-and-forward SMTP server with POP access to spooled messages, commonly used as a simple mail relay." },
+        { "question": "Does EmailRelay run on Windows?", "answer": "Yes, including as a Windows Service." },
+        { "question": "Does EmailRelay include spam filtering?", "answer": "It integrates with SpamAssassin and supports DNSBL-based connection blocking." }
+      ],
+      "use_cases": [
+        { "title": "Simple SMTP relay", "description": "Applications or servers that need to send outbound mail without running a full mail server.", "audience": "Developers and sysadmins" },
+        { "title": "Store-and-forward mail spooling", "description": "Environments needing lightweight message queuing with POP retrieval.", "audience": "Small infrastructure teams" }
+      ],
+      "pricing_plans": [],
+      "tags": ["self-hosted", "open-source", "windows"],
+      "seo_meta_description": "E-MailRelay is a free, open-source, lightweight SMTP store-and-forward server with POP access, for simple mail relaying."
+    }
+  }
+]

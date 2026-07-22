@@ -346,7 +346,7 @@ function CopyDiscountBtn({ url, agencyId, stateSlug }: { url: string | null; age
       if (result.ok && result.data?.offers) {
         const tier15 = result.data.offers.find(o => o.discount_value === 15);
         if (tier15?.url) {
-          const fullUrl = `https://www.gappsy.com${tier15.url}`;
+          const fullUrl = `https://gappsy.com${tier15.url}`;
           setResolvedUrl(fullUrl);
           copyToClipboard(fullUrl);
           return;
@@ -415,7 +415,7 @@ function CopyOfferLinkBtn({ url, agencyId, stateSlug, agencyName }: { url: strin
       if (result.ok && result.data?.offers) {
         const tier15 = result.data.offers.find(o => o.discount_value === 15);
         if (tier15?.url) {
-          const fullUrl = `https://www.gappsy.com${tier15.url}`;
+          const fullUrl = `https://gappsy.com${tier15.url}`;
           setResolvedUrl(fullUrl);
           copyToClipboard(fullUrl);
           return;

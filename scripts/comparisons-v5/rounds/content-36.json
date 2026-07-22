@@ -1,0 +1,1658 @@
+[
+  {
+    "slug": "withknown-vs-writefreely",
+    "tool_a_id": "ece3f5b6-3302-4069-a41e-b5e480349b71",
+    "tool_a_name": "withknown",
+    "tool_b_id": "0eeb6217-8a67-456a-8643-6f5a58e0f979",
+    "tool_b_name": "writefreely",
+    "content": {
+      "verdict": "Known and WriteFreely are both open-source, IndieWeb-friendly publishing tools built for people who want to own their content rather than depend on a third-party platform, but they emphasize different parts of that mission. Known is a broader personal CMS for publishing blog posts, photos, and media to your own domain, with a documented DMCA takedown policy that signals real production use. WriteFreely narrows the focus to minimalist blogging with native ActivityPub/Fediverse integration, plus an optional managed hosting service run directly by the WriteFreely team for people who don't want to self-host.",
+      "bestForToolA": "Known fits IndieWeb practitioners who want a single self-hosted home for mixed media - posts, photos, and other content - published on their own domain, backed by a formal copyright/DMCA process.",
+      "bestForToolB": "WriteFreely fits writers who want a distraction-free, minimalist blogging experience that natively reaches Mastodon and other Fediverse followers, with the option to skip self-hosting via WriteFreely's managed hosting service.",
+      "whoNeedsBoth": "A publisher could run Known as the primary IndieWeb hub for photos and mixed media while syndicating text posts through WriteFreely to tap its native Fediverse audience on Mastodon - though the facts don't document any built-in bridge between the two, so this would require manual cross-posting.",
+      "keyDifferences": [
+        {
+          "title": "Hosting Options",
+          "toolA": "Known's documented model is IndieWeb-aligned self-publishing on your own domain, with no managed hosting service mentioned.",
+          "toolB": "WriteFreely offers a managed hosting option available directly from the WriteFreely team, in addition to self-hosting the open-source software.",
+          "whyItMatters": "Whether a vendor offers turnkey hosting determines how much server-management work falls on the publisher.",
+          "benefitsWho": "Non-technical writers who want to start blogging without running their own server benefit from WriteFreely's managed option."
+        },
+        {
+          "title": "Fediverse/ActivityPub Integration",
+          "toolA": "Known's short description emphasizes syndicating content to social networks, but ActivityPub/Fediverse support is not documented in the facts.",
+          "toolB": "WriteFreely is built on ActivityPub, so posts can be followed and interacted with directly from Mastodon and other Fediverse platforms.",
+          "whyItMatters": "Native Fediverse federation determines whether posts reach readers where they already follow accounts, versus requiring manual cross-posting.",
+          "benefitsWho": "Writers who want their posts to show up natively in followers' Mastodon timelines benefit from WriteFreely's ActivityPub integration."
+        },
+        {
+          "title": "Content Types Published",
+          "toolA": "Known is described as publishing blog posts, photos, and media to your own site, positioning it as a broader personal CMS.",
+          "toolB": "WriteFreely is described as a minimalist blogging platform, with no documented support for photo or media publishing beyond text posts.",
+          "whyItMatters": "The range of supported content types determines whether a single tool can serve as a full personal media hub or just a text-focused blog.",
+          "benefitsWho": "Publishers who want to post photos and mixed media alongside text benefit from Known's broader content model."
+        },
+        {
+          "title": "Formal Copyright/Takedown Policy",
+          "toolA": "Known publishes a documented DMCA copyright-takedown policy, signaling real production use that required a formal process.",
+          "toolB": "No formal DMCA or copyright-takedown policy is documented for WriteFreely in the facts.",
+          "whyItMatters": "A documented takedown process signals operational maturity and gives publishers and rights holders a defined path for disputes.",
+          "benefitsWho": "Publishers who need a documented legal/compliance process for user-submitted or federated content benefit from Known's DMCA policy."
+        },
+        {
+          "title": "Pricing Model",
+          "toolA": "Known is listed as Free / Open Source, with no paid tiers documented.",
+          "toolB": "WriteFreely is listed as Freemium, implying a paid layer (likely the managed hosting service), though no specific price is documented.",
+          "whyItMatters": "Knowing whether a paid tier exists at all shapes long-term budgeting even before specific prices are available.",
+          "benefitsWho": "Budget-conscious self-hosters who want a purely free tool benefit from Known's fully free/open-source model."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Publishing & Content",
+          "rows": [
+            {
+              "feature": "Blog post publishing",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Photo/media publishing",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Minimalist/distraction-free writing focus",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Publishing to your own domain",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Federation & Distribution",
+          "rows": [
+            {
+              "feature": "ActivityPub/Fediverse integration",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Mastodon interaction with posts",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Posts can be followed and interacted with from Mastodon"
+            },
+            {
+              "feature": "Syndication to social networks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Hosting & Governance",
+          "rows": [
+            {
+              "feature": "Self-hosting",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Managed/hosted service option",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Hosted service available directly from the WriteFreely team"
+            },
+            {
+              "feature": "Formal DMCA/copyright policy",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Open-source license",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Known open source?",
+          "answer": "Yes - Known is an open-source, IndieWeb-aligned content management system, listed with a Free / Open Source pricing model."
+        },
+        {
+          "question": "Does WriteFreely integrate with Mastodon?",
+          "answer": "Yes - WriteFreely is built on ActivityPub, so posts can be followed and interacted with from Mastodon and other Fediverse platforms."
+        },
+        {
+          "question": "Does Known offer a managed hosting option like WriteFreely?",
+          "answer": "The facts don't document a managed hosting service for Known; its model centers on self-publishing content on your own domain. WriteFreely explicitly offers a hosted service run by its own team."
+        },
+        {
+          "question": "Is WriteFreely free to use?",
+          "answer": "WriteFreely's pricing model is listed as Freemium, but a specific starting price isn't documented - likely tied to its optional managed hosting service."
+        },
+        {
+          "question": "Which tool is better for publishing photos, not just text?",
+          "answer": "Known explicitly documents publishing blog posts, photos, and media to your own site. WriteFreely's documented focus is minimalist text blogging, with no photo/media publishing feature listed."
+        },
+        {
+          "question": "Does Known federate with the Fediverse the way WriteFreely does?",
+          "answer": "That's not documented in the available facts for Known. WriteFreely's ActivityPub/Fediverse integration is explicitly confirmed, including Mastodon interoperability."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "super-productivity-vs-taskwarrior",
+    "tool_a_id": "17662ee8-4f5f-4a4b-9002-5343fb4b960a",
+    "tool_a_name": "Super Productivity",
+    "tool_b_id": "083ec4ab-767e-4d64-abab-5bc86ae9e884",
+    "tool_b_name": "Taskwarrior",
+    "content": {
+      "verdict": "Super Productivity and Taskwarrior are both completely free, open-source task managers, but they're built for opposite ends of the interface spectrum. Super Productivity is a graphical app with Kanban boards, an Eisenhower matrix, built-in time tracking, and a Pomodoro timer, plus direct integrations with issue trackers like Jira, GitHub, and Linear. Taskwarrior is a command-line-only tool dating back to 2006 that uses an urgency-scoring algorithm to auto-prioritize tasks and is extended through user-defined attributes (UDAs) and a hooks API rather than a GUI or plugin marketplace.",
+      "bestForToolA": "Super Productivity fits people who want a visual, all-in-one workspace combining task boards, time tracking, and Pomodoro focus sessions, especially developers who want tasks synced from Jira, GitHub, GitLab, or Linear.",
+      "bestForToolB": "Taskwarrior fits command-line-native power users and GTD practitioners who want a fast, scriptable task tool they can extend with custom attributes and hooks, without needing a graphical interface.",
+      "whoNeedsBoth": "A developer could track deep-work sessions and sprint boards visually in Super Productivity while using Taskwarrior's urgency algorithm and hooks API to script personal task automation from the terminal - though the two aren't documented to interoperate, so tasks would need to be maintained separately in each.",
+      "keyDifferences": [
+        {
+          "title": "Interface Paradigm",
+          "toolA": "Super Productivity is a graphical app with Kanban boards, an Eisenhower matrix, compact lists, and custom layouts.",
+          "toolB": "Taskwarrior's core product is a command-line utility; it does not ship a built-in GUI, requiring comfort with the terminal.",
+          "whyItMatters": "The interface determines both the learning curve and whether the tool suits visual planners versus keyboard-driven workflows.",
+          "benefitsWho": "Visual planners and non-technical users benefit from Super Productivity's GUI; terminal-native developers benefit from Taskwarrior's CLI speed."
+        },
+        {
+          "title": "Time Tracking & Focus Tools",
+          "toolA": "Super Productivity has built-in time tracking with keyboard shortcuts, detailed work logs, a Pomodoro timer, and a focus mode to reduce distractions.",
+          "toolB": "Time tracking and Pomodoro features are not documented as part of Taskwarrior's feature set.",
+          "whyItMatters": "Combining task management with time tracking in one tool avoids needing a separate timer or logging app.",
+          "benefitsWho": "Freelancers and deep-work practitioners who need to log hours per task benefit from Super Productivity's built-in time tracking."
+        },
+        {
+          "title": "Task Prioritization Logic",
+          "toolA": "Task prioritization in Super Productivity is manual, via boards, due dates, and subtasks; no automated urgency algorithm is documented.",
+          "toolB": "Taskwarrior automatically prioritizes tasks using an urgency algorithm based on due dates, tags, and other attributes.",
+          "whyItMatters": "An automated urgency score removes the need to manually re-sort a growing task list every day.",
+          "benefitsWho": "Power users managing large, complex task lists benefit from Taskwarrior's automated urgency scoring."
+        },
+        {
+          "title": "Issue Tracker Integrations",
+          "toolA": "Super Productivity imports and syncs tasks from Jira, GitHub, GitLab, Gitea, OpenProject, Linear, ClickUp, and Azure DevOps.",
+          "toolB": "Direct issue-tracker integrations are not documented for Taskwarrior; extensibility instead comes through its hooks API and UDAs.",
+          "whyItMatters": "Native integrations save engineering teams from manually re-entering tickets as personal tasks.",
+          "benefitsWho": "Software teams already using Jira, GitHub, or Linear benefit from Super Productivity's direct issue-tracker sync."
+        },
+        {
+          "title": "Mobile App Availability",
+          "toolA": "Super Productivity runs natively on Windows, macOS, Linux, Android, iOS, and as a web app.",
+          "toolB": "Native mobile apps are not part of the core Taskwarrior project.",
+          "whyItMatters": "Native mobile access determines whether a user can manage tasks away from a desktop or terminal.",
+          "benefitsWho": "Users who need to check or add tasks from a phone benefit from Super Productivity's native Android and iOS apps."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Task Management Core",
+          "rows": [
+            {
+              "feature": "Subtasks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Recurring/repeating tasks",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Taskwarrior uses configurable recurrence rules"
+            },
+            {
+              "feature": "Tags for categorization",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Taskwarrior has user-defined and built-in virtual tags"
+            },
+            {
+              "feature": "Time tracking",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Pomodoro timer / focus mode",
+              "toolA": "available",
+              "toolB": "unavailable"
+            }
+          ]
+        },
+        {
+          "group": "Interface & Platforms",
+          "rows": [
+            {
+              "feature": "Graphical user interface",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Taskwarrior ships no built-in GUI"
+            },
+            {
+              "feature": "Command-line interface",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Native mobile apps (iOS/Android)",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Web app",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Extensibility & Integrations",
+          "rows": [
+            {
+              "feature": "Issue tracker integrations (Jira, GitHub, GitLab, etc.)",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Custom fields/attributes",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Taskwarrior's User Defined Attributes (UDAs)"
+            },
+            {
+              "feature": "Hooks/scripting or plugin system",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "SP: plugin system; Taskwarrior: hooks API"
+            },
+            {
+              "feature": "Cross-device sync",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "SP via Dropbox/WebDAV/CalDAV, no account; Taskwarrior via Taskserver setup"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Does Super Productivity have a command-line interface?",
+          "answer": "That's not documented in the facts - Super Productivity is described as a graphical to-do and time-tracking app across desktop, mobile, and web."
+        },
+        {
+          "question": "Is Taskwarrior free to use?",
+          "answer": "Yes, Taskwarrior is free and open-source software released under the MIT license, with development dating back to 2006."
+        },
+        {
+          "question": "Which tool has a built-in Pomodoro timer?",
+          "answer": "Super Productivity has a built-in Pomodoro timer and focus mode; this isn't documented as a Taskwarrior feature."
+        },
+        {
+          "question": "Does Taskwarrior have native mobile apps?",
+          "answer": "No - native mobile apps are not part of the core Taskwarrior project, unlike Super Productivity's Android and iOS apps."
+        },
+        {
+          "question": "Can I sync tasks from Jira into either tool?",
+          "answer": "Super Productivity documents direct import and sync from Jira, GitHub, GitLab, Gitea, OpenProject, Linear, ClickUp, and Azure DevOps. This isn't documented for Taskwarrior, though its hooks API allows custom scripting."
+        },
+        {
+          "question": "How does each tool handle syncing across devices?",
+          "answer": "Super Productivity syncs via Dropbox, WebDAV, or CalDAV without requiring user registration. Taskwarrior supports syncing too, but via its Taskserver component, which requires additional configuration."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "siyuan-vs-super-productivity",
+    "tool_a_id": "fc868bfd-fdf4-4187-9d7e-b719006af946",
+    "tool_a_name": "SiYuan",
+    "tool_b_id": "17662ee8-4f5f-4a4b-9002-5343fb4b960a",
+    "tool_b_name": "Super Productivity",
+    "content": {
+      "verdict": "SiYuan and Super Productivity solve different problems: SiYuan is a block-based personal knowledge management app with backlinks, a knowledge graph, and spaced-repetition flashcards, while Super Productivity is a task manager with time tracking and a Pomodoro timer built in. SiYuan is freemium, with a free core and one-time paid PRO ($64) or Subscription ($148) tiers unlocking official cloud sync; Super Productivity is entirely free with no paid tier at all.",
+      "bestForToolA": "SiYuan fits people building a connected knowledge base who want block-level editing, a graph view of note relationships, and built-in FSRS flashcard review for studying their notes.",
+      "bestForToolB": "Super Productivity fits people who need to manage and time-track discrete tasks and to-do items, especially those who want Kanban/Eisenhower boards and direct sync with issue trackers like Jira or GitHub.",
+      "whoNeedsBoth": "Someone doing knowledge work could keep reference notes and study flashcards in SiYuan while tracking daily task execution and Pomodoro sessions in Super Productivity - the two serve genuinely different layers (knowledge base vs. task execution) rather than overlapping.",
+      "keyDifferences": [
+        {
+          "title": "Core Purpose",
+          "toolA": "SiYuan is a block-level personal knowledge management app built around bidirectional linking and a knowledge graph.",
+          "toolB": "Super Productivity is a to-do list and time-tracking app built around task boards, Pomodoro sessions, and issue-tracker sync.",
+          "whyItMatters": "Choosing the right category prevents forcing a task tool to act as a knowledge base or vice versa.",
+          "benefitsWho": "Anyone deciding whether they need a notes system or a task-execution system benefits from this distinction."
+        },
+        {
+          "title": "Pricing Model",
+          "toolA": "SiYuan's free tier has no official cloud storage, sync, or backup; PRO ($64 one-time) and Subscription ($148 one-time) tiers add third-party or official cloud sync.",
+          "toolB": "Super Productivity is free and open source under the MIT license with no paid tier documented at all.",
+          "whyItMatters": "Whether a paid tier exists at all affects long-term budgeting, especially for cloud sync needs.",
+          "benefitsWho": "Budget-conscious users who never want to pay for sync benefit from Super Productivity's fully free model; users wanting official managed cloud sync may accept SiYuan's one-time fee."
+        },
+        {
+          "title": "Knowledge Management Features",
+          "toolA": "SiYuan documents bidirectional linking, a knowledge graph, FSRS spaced-repetition flashcards, database/table views, and PDF annotation.",
+          "toolB": "None of these note-linking, graph, or flashcard features are documented for Super Productivity.",
+          "whyItMatters": "Deep knowledge-linking features are essential for building a long-term reference base, not just tracking to-dos.",
+          "benefitsWho": "Researchers, students, and writers who need to connect and review ideas over time benefit from SiYuan's knowledge tools."
+        },
+        {
+          "title": "Task & Time Tracking Features",
+          "toolA": "Time tracking and Pomodoro features are not documented for SiYuan.",
+          "toolB": "Super Productivity has built-in time tracking, a Pomodoro timer and focus mode, Kanban/Eisenhower boards, and integrations with Jira, GitHub, GitLab, Linear, and more.",
+          "whyItMatters": "Native time tracking and issue-tracker sync remove the need for a separate task app alongside a notes app.",
+          "benefitsWho": "Developers and freelancers logging billable or focus time benefit from Super Productivity's task and time-tracking features."
+        },
+        {
+          "title": "Deployment & Sync",
+          "toolA": "SiYuan runs self-hosted or via Docker, with third-party S3/WebDAV sync on the PRO tier and official cloud sync/8GB storage on the Subscription tier.",
+          "toolB": "Super Productivity syncs data across devices via Dropbox, WebDAV, or CalDAV without requiring user registration, and has no official cloud tier at all.",
+          "whyItMatters": "How sync is delivered - paid official cloud vs. free user-configured backends - affects setup effort and ongoing cost.",
+          "benefitsWho": "Users who want a maintained official sync service may prefer SiYuan's paid tiers; users who prefer configuring their own free backend benefit from Super Productivity's approach."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Knowledge Capture & Organization",
+          "rows": [
+            {
+              "feature": "Bidirectional linking/backlinks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Knowledge graph view",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Spaced-repetition flashcards",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "SiYuan uses the FSRS algorithm"
+            },
+            {
+              "feature": "PDF annotation",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Database/table views",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Task & Time Management",
+          "rows": [
+            {
+              "feature": "Subtask management",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Time tracking",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Pomodoro timer",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Issue tracker integrations",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Jira, GitHub, GitLab, Gitea, OpenProject, Linear, ClickUp, Azure DevOps"
+            },
+            {
+              "feature": "Kanban/Eisenhower boards",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Platforms & Sync",
+          "rows": [
+            {
+              "feature": "Self-hosting / Docker deployment",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Free tier available",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "SiYuan free tier excludes official cloud sync"
+            },
+            {
+              "feature": "Paid cloud sync tier",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "SiYuan PRO $64 one-time / Subscription $148 one-time"
+            },
+            {
+              "feature": "Native mobile apps",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "SiYuan: iOS/Android/HarmonyOS; SP: iOS/Android"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are SiYuan and Super Productivity solving the same problem?",
+          "answer": "No - SiYuan is a personal knowledge management app focused on linked notes and a knowledge graph, while Super Productivity is a task manager with time tracking and Pomodoro sessions."
+        },
+        {
+          "question": "Does Super Productivity have a paid tier?",
+          "answer": "No, Super Productivity is completely free and open source under the MIT license, with no paid tier documented."
+        },
+        {
+          "question": "What does SiYuan's paid tier unlock?",
+          "answer": "The PRO tier ($64 one-time) adds third-party S3/WebDAV sync and backup. The Subscription tier ($148 one-time) adds official cloud sync, 8GB of official cloud storage, cloud asset hosting, and a cloud inbox."
+        },
+        {
+          "question": "Does SiYuan support Pomodoro or time tracking?",
+          "answer": "That's not documented in the facts - SiYuan's documented features center on block editing, linking, flashcards, and PDF annotation rather than time tracking."
+        },
+        {
+          "question": "Does Super Productivity support bidirectional linking or a graph view like SiYuan?",
+          "answer": "No such feature is documented for Super Productivity; its focus is task boards, subtasks, and time tracking rather than note linking."
+        },
+        {
+          "question": "Which tool supports flashcards for spaced repetition?",
+          "answer": "SiYuan, via its built-in flashcard review using the FSRS spaced-repetition algorithm. This isn't documented for Super Productivity."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "siyuan-vs-trilium-notes",
+    "tool_a_id": "fc868bfd-fdf4-4187-9d7e-b719006af946",
+    "tool_a_name": "SiYuan",
+    "tool_b_id": "8a1e8900-232b-487e-a707-161bf160047b",
+    "tool_b_name": "Trilium Notes",
+    "content": {
+      "verdict": "SiYuan and Trilium Notes are both self-hosted, open-source personal knowledge base apps, but they organize information differently and price access differently. Trilium uses a hierarchical tree structure with note cloning and is completely free with no paid tier ever; SiYuan uses block-level editing with bidirectional linking and a knowledge graph, and reserves official cloud sync for one-time paid PRO ($64) or Subscription ($148) tiers.",
+      "bestForToolA": "SiYuan fits users who want a graph-oriented, block-based note structure with built-in FSRS spaced-repetition flashcards and native mobile apps for iOS, Android, and HarmonyOS.",
+      "bestForToolB": "Trilium Notes fits users who prefer a hierarchical, tree-based note organization, need to encrypt individual notes with AES-128-CBC, or are managing very large note collections (documented at 100,000+ notes) without ever paying.",
+      "whoNeedsBoth": "There's no clearly documented complementary scenario here - both are full personal knowledge base apps competing for the same core job, so most users would pick one as their primary note system rather than running both in parallel.",
+      "keyDifferences": [
+        {
+          "title": "Pricing & Licensing",
+          "toolA": "SiYuan's core is free (AGPL-3.0), but official cloud sync requires a one-time paid PRO ($64) or Subscription ($148) tier.",
+          "toolB": "Trilium Notes is fully free and open source with no paid tier at all, for any feature.",
+          "whyItMatters": "Whether advanced features are ever gated behind payment changes total cost of ownership over time.",
+          "benefitsWho": "Users who want to guarantee zero future cost benefit from Trilium's fully free model."
+        },
+        {
+          "title": "Note Structure Model",
+          "toolA": "SiYuan uses block-level editing with bidirectional linking, backlinks, and a knowledge graph to connect notes non-hierarchically.",
+          "toolB": "Trilium organizes notes in a tree structure, with the ability to clone a single note into multiple locations in the hierarchy.",
+          "whyItMatters": "A graph-based versus tree-based mental model changes how users navigate and structure large note collections.",
+          "benefitsWho": "Users who think in networks of linked ideas benefit from SiYuan's graph model; users who prefer strict hierarchical folders benefit from Trilium's tree with cloning."
+        },
+        {
+          "title": "Native Mobile Support",
+          "toolA": "SiYuan has native apps for iOS, Android, and HarmonyOS, alongside Windows/macOS/Linux desktop and Docker/web deployment.",
+          "toolB": "Trilium has no official mobile app; only an unofficial community Android client (TriliumDroid) and PWA browser support exist.",
+          "whyItMatters": "Official native mobile apps typically offer more reliable performance and support than unofficial community clients.",
+          "benefitsWho": "Users who need dependable on-the-go note access benefit from SiYuan's official mobile apps."
+        },
+        {
+          "title": "Spaced Repetition & Study Tools",
+          "toolA": "SiYuan has built-in flashcard review using the FSRS spaced-repetition algorithm.",
+          "toolB": "No flashcard or spaced-repetition feature is documented for Trilium Notes.",
+          "whyItMatters": "Built-in spaced repetition turns a notes app into a study tool without needing a separate flashcard app.",
+          "benefitsWho": "Students and lifelong learners reviewing material over time benefit from SiYuan's flashcard system."
+        },
+        {
+          "title": "Note Encryption",
+          "toolA": "Individual note encryption is not documented for SiYuan; privacy instead relies on self-hosting and local data control.",
+          "toolB": "Trilium supports password-protecting individual notes using AES-128-CBC encryption.",
+          "whyItMatters": "Per-note encryption lets users protect specific sensitive content without encrypting an entire vault or relying solely on server access control.",
+          "benefitsWho": "Users storing sensitive personal or financial notes benefit from Trilium's per-note password protection."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Note Organization & Editing",
+          "rows": [
+            {
+              "feature": "Hierarchical/tree notes with cloning",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Block-level editing (20+ block elements)",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Multiple note types (canvas, Mermaid, mindmap, code)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Note revisions/versioning",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Trilium: automatic background versioning with undo"
+            },
+            {
+              "feature": "Database/table/collection views",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Trilium adds calendar, Kanban, geomap, presentation views"
+            }
+          ]
+        },
+        {
+          "group": "Knowledge Tools",
+          "rows": [
+            {
+              "feature": "Bidirectional linking/backlinks",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Knowledge graph view",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Spaced-repetition flashcards",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "PDF annotation",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "REST API and scripting",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Platform & Access",
+          "rows": [
+            {
+              "feature": "Native mobile apps",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "SiYuan: iOS/Android/HarmonyOS; Trilium: unofficial only"
+            },
+            {
+              "feature": "Individual note encryption",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Trilium uses AES-128-CBC"
+            },
+            {
+              "feature": "Self-hosted/Docker deployment",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Paid tier for extra features",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "SiYuan PRO $64 one-time / Subscription $148 one-time"
+            },
+            {
+              "feature": "Handles very large note collections (100k+)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Trilium Notes completely free?",
+          "answer": "Yes, Trilium Notes is free and open source with no paid tier at all."
+        },
+        {
+          "question": "Does SiYuan cost money?",
+          "answer": "The core app is free (AGPL-3.0), but official cloud sync requires a one-time PRO tier ($64) or Subscription tier ($148)."
+        },
+        {
+          "question": "Which app has spaced-repetition flashcards?",
+          "answer": "SiYuan, via built-in flashcard review using the FSRS algorithm. This isn't documented as a Trilium feature."
+        },
+        {
+          "question": "Does Trilium have an official mobile app?",
+          "answer": "No - Trilium has no official mobile app, only an unofficial community Android client (TriliumDroid) and PWA support for browser-based mobile access."
+        },
+        {
+          "question": "Can I encrypt individual notes?",
+          "answer": "Trilium supports password-protecting individual notes with AES-128-CBC encryption. Per-note encryption is not documented for SiYuan."
+        },
+        {
+          "question": "Which tool is documented to handle very large note collections?",
+          "answer": "Trilium Notes documents handling 100,000+ notes. A similar scale claim is not documented for SiYuan."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "joplin-vs-trilium-notes",
+    "tool_a_id": "4de112c5-5df2-4ef8-9c42-0ec1c3bde762",
+    "tool_a_name": "Joplin",
+    "tool_b_id": "8a1e8900-232b-487e-a707-161bf160047b",
+    "tool_b_name": "Trilium Notes",
+    "content": {
+      "verdict": "Joplin and Trilium Notes are both open-source, self-hostable note apps, but Joplin is built around a hosted subscription model (Joplin Cloud) with native mobile apps, while Trilium is a fully free, tree-structured knowledge base with no official mobile app and no paid tier at all. Joplin documents specific Cloud pricing from Basic (\u20ac2.99/month) up to Teams (\u20ac7.99/user/month); Trilium's entire feature set, including its REST API and scripting, is free.",
+      "bestForToolA": "Joplin fits users who want native iOS/Android apps, a choice between Rich Text and Markdown editors, and either free sync backends (Nextcloud, Dropbox, OneDrive, WebDAV) or a paid hosted Joplin Cloud plan.",
+      "bestForToolB": "Trilium Notes fits users comfortable self-hosting who want a hierarchical, cloneable note tree, per-note AES-128-CBC encryption, and a REST API with scripting for automation, all without ever paying for a tier.",
+      "whoNeedsBoth": "There's no clear complementary use case documented - both target the same core job of personal note-taking, so the practical choice is Joplin for mobile-first, hosted convenience versus Trilium for self-hosted, tree-structured control.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Structure",
+          "toolA": "Joplin is freemium: the app is free, but Joplin Cloud plans run from Basic (\u20ac2.99/month, 2GB storage) to Pro (\u20ac5.99/month, 30GB), Pro 100GB (\u20ac9.99/month), and Teams (\u20ac7.99/user/month).",
+          "toolB": "Trilium Notes is entirely free with no paid tier at all, for any feature.",
+          "whyItMatters": "A published, tiered pricing model gives buyers predictable upgrade costs, while a fully free tool removes budgeting concerns entirely.",
+          "benefitsWho": "Teams needing hosted storage and support may accept Joplin's paid tiers; individuals who never want to pay benefit from Trilium's free model."
+        },
+        {
+          "title": "Mobile App Support",
+          "toolA": "Joplin has native apps for Android and iOS, alongside Windows, macOS, Linux, and a terminal client.",
+          "toolB": "Trilium has no official mobile app - only an unofficial Android client (TriliumDroid) and PWA browser support.",
+          "whyItMatters": "Official native mobile apps generally offer more reliable sync and support than community-built alternatives.",
+          "benefitsWho": "Users who frequently capture notes from a phone benefit from Joplin's native mobile apps."
+        },
+        {
+          "title": "Sync Options",
+          "toolA": "Joplin supports Joplin Cloud plus free alternatives: Nextcloud, Dropbox, OneDrive, or WebDAV.",
+          "toolB": "Trilium requires self-hosting a Trilium server for cross-device sync; no hosted cloud sync option is documented.",
+          "whyItMatters": "The range of sync backends determines how much infrastructure a user must manage themselves.",
+          "benefitsWho": "Users without server experience benefit from Joplin's free consumer sync backends; self-hosters comfortable running servers can use Trilium."
+        },
+        {
+          "title": "Note Organization Model",
+          "toolA": "Joplin organizes notes into notebooks with a choice of Rich Text or Markdown editing modes; a tree/cloning structure isn't documented.",
+          "toolB": "Trilium uses a hierarchical tree structure with the ability to clone a single note into multiple locations.",
+          "whyItMatters": "A cloneable tree structure supports more complex cross-referenced organization than flat notebooks.",
+          "benefitsWho": "Users managing very large, deeply nested note collections benefit from Trilium's tree-and-cloning model."
+        },
+        {
+          "title": "Extensibility Model",
+          "toolA": "Joplin offers a community plugin and theme ecosystem (55.6k GitHub stars) rather than a documented public REST API.",
+          "toolB": "Trilium offers a REST API and custom scripting for automation directly within the app.",
+          "whyItMatters": "A REST API enables programmatic automation, while a plugin ecosystem favors ready-made community extensions.",
+          "benefitsWho": "Developers wanting to script and automate their notes benefit from Trilium's REST API; users wanting ready-made add-ons benefit from Joplin's plugin ecosystem."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Storage & Sync",
+          "rows": [
+            {
+              "feature": "Free sync backends (non-cloud)",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Joplin: Nextcloud, Dropbox, OneDrive, WebDAV"
+            },
+            {
+              "feature": "Paid hosted cloud sync",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Joplin Cloud from \u20ac2.99/month"
+            },
+            {
+              "feature": "Note/data encryption",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Joplin: E2EE; Trilium: AES-128-CBC per note"
+            },
+            {
+              "feature": "Self-hosted server option",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Joplin Server for teams requires additional setup"
+            }
+          ]
+        },
+        {
+          "group": "Editing & Organization",
+          "rows": [
+            {
+              "feature": "Hierarchical tree notes with cloning",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Rich Text + Markdown editor toggle",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Multiple note types (canvas, Mermaid, mindmap)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Web clipper",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Note revisions/versioning",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Platforms & Extensibility",
+          "rows": [
+            {
+              "feature": "Native mobile apps",
+              "toolA": "available",
+              "toolB": "unavailable"
+            },
+            {
+              "feature": "Terminal/CLI client",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "REST API & scripting",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Plugin/theme ecosystem",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Notebook/note sharing collaboration",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Joplin Pro plan adds notebook sharing"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "What does Joplin Cloud cost?",
+          "answer": "Basic is \u20ac2.99/month (2GB storage), Pro is \u20ac5.99/month (30GB), Pro 100GB is \u20ac9.99/month, and Teams is \u20ac7.99/user/month."
+        },
+        {
+          "question": "Is Trilium Notes completely free?",
+          "answer": "Yes, Trilium is always free and open source with no paid tier, unlike Joplin's optional paid Cloud plans."
+        },
+        {
+          "question": "Does Trilium have a mobile app?",
+          "answer": "Not an official one - only an unofficial community Android client (TriliumDroid) and PWA browser support, versus Joplin's native Android and iOS apps."
+        },
+        {
+          "question": "Can I sync Joplin without paying?",
+          "answer": "Yes - Joplin supports free sync via Nextcloud, Dropbox, OneDrive, or WebDAV, in addition to the paid Joplin Cloud option."
+        },
+        {
+          "question": "Which app has a REST API for automation?",
+          "answer": "Trilium documents a REST API and custom scripting for automation. A public REST API is not documented for Joplin."
+        },
+        {
+          "question": "Which tool is documented to handle very large note collections better?",
+          "answer": "Trilium Notes documents handling 100,000+ notes. Joplin doesn't document a similar scale claim in the available facts."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "joplin-vs-standard-notes",
+    "tool_a_id": "4de112c5-5df2-4ef8-9c42-0ec1c3bde762",
+    "tool_a_name": "Joplin",
+    "tool_b_id": "19834a87-bdcd-4d0a-b9a5-f013e990b7b2",
+    "tool_b_name": "Standard Notes",
+    "content": {
+      "verdict": "Joplin and Standard Notes are both open-source, end-to-end encrypted note apps with free tiers, but they differ in what's free versus paid and how transparently pricing is published. Standard Notes' free plan includes unlimited device sync, while its Productivity and Professional plan prices aren't consistently published outside the app or checkout; Joplin publishes exact Cloud tier prices (from \u20ac2.99/month) and lets users avoid paying entirely by using free sync backends like Dropbox or WebDAV.",
+      "bestForToolA": "Joplin fits users who want a Rich Text/Markdown editor toggle, a web clipper, community plugins, and the flexibility to sync for free via Nextcloud, Dropbox, OneDrive, or WebDAV instead of paying for Joplin Cloud.",
+      "bestForToolB": "Standard Notes fits users who want unlimited device sync included in the free tier, self-hosting of the web app, and the Listed feature for publishing notes as a public online publication.",
+      "whoNeedsBoth": "There's no clear scenario for running both simultaneously as primary note apps - a user would more realistically migrate between them based on whether they value Joplin's published Cloud pricing and rich-text editing or Standard Notes' free unlimited sync and self-hosting option.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Transparency",
+          "toolA": "Joplin publishes specific Joplin Cloud prices: Basic \u20ac2.99/month, Pro \u20ac5.99/month, Pro 100GB \u20ac9.99/month, Teams \u20ac7.99/user/month.",
+          "toolB": "Standard Notes' Productivity and Professional plan prices are not consistently published outside the app or website checkout flow, per its documented cons.",
+          "whyItMatters": "Published pricing lets buyers compare costs upfront without needing to start a checkout flow.",
+          "benefitsWho": "Budget planners who want to compare exact costs before signing up benefit from Joplin's published tier pricing."
+        },
+        {
+          "title": "Free Tier Sync",
+          "toolA": "Joplin's free app supports free sync backends (Nextcloud, Dropbox, OneDrive, WebDAV); full Joplin Cloud sync starts at \u20ac2.99/month for 2GB.",
+          "toolB": "Standard Notes' free tier includes syncing across unlimited devices as a documented feature.",
+          "whyItMatters": "Whether device sync is free by default or requires configuring a third-party backend affects setup complexity for new users.",
+          "benefitsWho": "Users who want frictionless free sync out of the box benefit from Standard Notes' free unlimited device sync."
+        },
+        {
+          "title": "Editing Modes",
+          "toolA": "Joplin offers a switchable Rich Text and Markdown editor.",
+          "toolB": "A rich-text/Markdown toggle is not documented for Standard Notes; it instead extends functionality via community-built third-party extensions.",
+          "whyItMatters": "Editor flexibility matters for users who move between visual and plain-text writing styles.",
+          "benefitsWho": "Users who want to switch between WYSIWYG and Markdown editing benefit from Joplin's dual editor modes."
+        },
+        {
+          "title": "Web Publishing",
+          "toolA": "Joplin supports publishing individual notes to the web via Joplin Cloud, with a customizable publishing banner on the Pro plan.",
+          "toolB": "Standard Notes has a dedicated Listed feature to publish notes as an online publication.",
+          "whyItMatters": "Native publishing removes the need for a separate blogging tool to share notes publicly.",
+          "benefitsWho": "Writers who want to turn private notes into a public page benefit from either tool's publishing feature."
+        },
+        {
+          "title": "Self-Hosting",
+          "toolA": "Self-hosting the core Joplin app isn't documented; only self-hosting Joplin Server for team sync is mentioned, which requires additional technical setup.",
+          "toolB": "Standard Notes' web app can be deployed on a user-run server, per its documented self-hosting feature.",
+          "whyItMatters": "Full self-hosting gives users complete control over where their data lives, beyond just choosing a sync backend.",
+          "benefitsWho": "Privacy-focused users who want to run the entire app on their own infrastructure benefit from Standard Notes' self-hostable web app."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Sync & Storage",
+          "rows": [
+            {
+              "feature": "Free-tier unlimited device sync",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free alternative sync backends",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Joplin: Nextcloud, Dropbox, OneDrive, WebDAV"
+            },
+            {
+              "feature": "Paid cloud storage tier",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Joplin from \u20ac2.99/mo (2GB); Standard Notes Professional 100GB (price unpublished)"
+            },
+            {
+              "feature": "End-to-end encryption",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hosting",
+              "toolA": "limited",
+              "toolB": "available",
+              "note": "Joplin: only Joplin Server for teams; Standard Notes: full web app"
+            }
+          ]
+        },
+        {
+          "group": "Editing & Publishing",
+          "rows": [
+            {
+              "feature": "Rich Text and Markdown editor toggle",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Web publishing of notes",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Joplin via Joplin Cloud; Standard Notes via Listed"
+            },
+            {
+              "feature": "Web clipper",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Third-party extensions/plugins",
+              "toolA": "available",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Platforms & Extensibility",
+          "rows": [
+            {
+              "feature": "Native desktop + mobile apps",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Terminal client",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Family/team sharing",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Joplin Teams \u20ac7.99/user/mo; Standard Notes Professional family sharing"
+            },
+            {
+              "feature": "Notebook/note collaboration sharing",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Joplin Pro plan adds notebook sharing"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Standard Notes' paid plan pricing public?",
+          "answer": "Not consistently - Productivity and Professional plan prices are shown primarily at checkout, unlike Joplin's published Cloud tier prices."
+        },
+        {
+          "question": "Does the free plan include sync on both?",
+          "answer": "Standard Notes' free tier includes unlimited device sync by default. Joplin's free app supports free sync backends (Nextcloud, Dropbox, OneDrive, WebDAV), while full Joplin Cloud sync requires the paid Basic tier at \u20ac2.99/month."
+        },
+        {
+          "question": "Can I self-host either app?",
+          "answer": "Standard Notes' web app can be deployed on your own server. Joplin's core product doesn't document self-hosting in the same way - only Joplin Server for team sync, which needs extra technical setup."
+        },
+        {
+          "question": "Which one lets me publish notes as a public page?",
+          "answer": "Both do - Standard Notes via its Listed feature, and Joplin via Joplin Cloud publishing with a customizable banner on the Pro plan."
+        },
+        {
+          "question": "Does either support family or team plans?",
+          "answer": "Standard Notes' Professional plan includes family subscription sharing. Joplin's Teams plan (\u20ac7.99/user/month) adds multi-user management and consolidated billing."
+        },
+        {
+          "question": "Which has more granular editing modes?",
+          "answer": "Joplin, which lets users toggle between Rich Text and Markdown editors natively; this isn't documented for Standard Notes."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "notesnook-vs-standard-notes",
+    "tool_a_id": "bbef43e5-afc5-416f-a4bf-68df7c6a61ce",
+    "tool_a_name": "Notesnook",
+    "tool_b_id": "19834a87-bdcd-4d0a-b9a5-f013e990b7b2",
+    "tool_b_name": "Standard Notes",
+    "content": {
+      "verdict": "Notesnook and Standard Notes are both open-source, end-to-end encrypted note apps with free tiers and paid upgrades, but Notesnook publishes granular, storage-capped pricing across four tiers (Free, Essential \u20ac2.11/month, Pro \u20ac7.39/month, Believer \u20ac9.51/month), while Standard Notes' paid Productivity and Professional plan prices aren't consistently published outside checkout. Notesnook also documents its specific encryption algorithms (XChaCha20-Poly1305, Argon2) and offers a self-hostable sync server, whereas Standard Notes documents self-hosting the full web app itself.",
+      "bestForToolA": "Notesnook fits users who want transparent, storage-based pricing tiers, a password-protected vault for sensitive notes, and the option to self-host just the sync server (GPL-3.0) rather than the whole application.",
+      "bestForToolB": "Standard Notes fits users who want unlimited device sync on the free tier, the ability to self-host the entire web app, and a dedicated Listed feature for publishing notes publicly.",
+      "whoNeedsBoth": "There's no documented integration between them, and both compete for the same core encrypted note-taking job - most buyers would evaluate Notesnook's published per-tier storage caps against Standard Notes' unpublished-pricing but unlimited-sync free plan and pick one.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Transparency & Tiers",
+          "toolA": "Notesnook publishes exact prices for all four tiers: Free \u20ac0, Essential \u20ac2.11/month, Pro \u20ac7.39/month, Believer \u20ac9.51/month, each with specific storage caps.",
+          "toolB": "Standard Notes' paid Productivity and Professional tier prices aren't consistently published outside the app or website checkout flow.",
+          "whyItMatters": "Fully published pricing lets buyers budget precisely before signing up, without needing to enter a checkout flow.",
+          "benefitsWho": "Cost-conscious individuals comparing exact storage-per-dollar benefit from Notesnook's transparent tier pricing."
+        },
+        {
+          "title": "Free Plan Storage Limits",
+          "toolA": "Notesnook's free plan caps storage at 50MB/month with 50 notebooks and 50 tags, and a 10MB max file size.",
+          "toolB": "Standard Notes' free plan doesn't document a specific storage cap, instead emphasizing unlimited device sync as its headline free feature.",
+          "whyItMatters": "A documented storage cap tells free-tier users exactly when they'll need to upgrade.",
+          "benefitsWho": "Light note-takers who rarely attach large files may be comfortable with Notesnook's capped free tier; heavy syncers benefit from Standard Notes' unlimited-device free sync."
+        },
+        {
+          "title": "Self-Hostable Sync Server",
+          "toolA": "Notesnook lets users run their own self-hostable Notesnook sync server as an alternative to the hosted cloud (GPL-3.0 licensed).",
+          "toolB": "Standard Notes documents self-hosting the web app itself on a user-run server.",
+          "whyItMatters": "Self-hosting at the sync-server layer versus the full-app layer changes how much infrastructure a user manages.",
+          "benefitsWho": "Technical users wanting full data sovereignty benefit from either tool's self-hosting option, depending on which layer they prefer to control."
+        },
+        {
+          "title": "Encryption Method Documentation",
+          "toolA": "Notesnook documents its specific encryption algorithms: notes are encrypted on-device using XChaCha20-Poly1305 and Argon2.",
+          "toolB": "Standard Notes documents end-to-end encryption generally, without naming specific ciphers in the available facts.",
+          "whyItMatters": "Naming specific, well-vetted cryptographic algorithms lets security-conscious buyers evaluate the encryption independently.",
+          "benefitsWho": "Security researchers and privacy-focused professionals benefit from Notesnook's documented encryption specifics."
+        },
+        {
+          "title": "Publishing",
+          "toolA": "A public note-publishing feature is not documented for Notesnook.",
+          "toolB": "Standard Notes has a dedicated Listed feature for publishing notes as an online publication.",
+          "whyItMatters": "Native publishing removes the need for a separate blogging tool to share notes with the public.",
+          "benefitsWho": "Writers who want to turn private notes into a public blog benefit from Standard Notes' Listed feature."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Pricing & Storage",
+          "rows": [
+            {
+              "feature": "Published free-tier storage cap",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Notesnook: 50MB/month"
+            },
+            {
+              "feature": "Entry paid tier price",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Notesnook Essential \u20ac2.11/month"
+            },
+            {
+              "feature": "Top-tier storage",
+              "toolA": "available",
+              "toolB": "available",
+              "note": "Notesnook Believer 25GB/month; Standard Notes Professional 100GB"
+            },
+            {
+              "feature": "Unlimited notebooks/tags",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Notesnook Pro tier and above"
+            }
+          ]
+        },
+        {
+          "group": "Security & Sync",
+          "rows": [
+            {
+              "feature": "End-to-end encryption",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Named encryption algorithm",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Notesnook: XChaCha20-Poly1305, Argon2"
+            },
+            {
+              "feature": "Self-hostable sync server",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Self-hosted full app deployment",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Password-protected vault",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Platforms & Extras",
+          "rows": [
+            {
+              "feature": "Native apps (desktop, mobile, web)",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Bidirectional note linking",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Third-party extensions",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Note publishing to the web",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Web clipper",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How much does each app's cheapest paid plan cost?",
+          "answer": "Notesnook's Essential plan is \u20ac2.11/month. Standard Notes' Productivity plan price isn't consistently published outside checkout."
+        },
+        {
+          "question": "What's the free-plan storage cap?",
+          "answer": "Notesnook's free plan is capped at 50MB/month with 50 notebooks and 50 tags. Standard Notes doesn't document a specific storage cap, emphasizing unlimited device sync instead."
+        },
+        {
+          "question": "Can I self-host either app?",
+          "answer": "Notesnook offers a self-hostable sync server (GPL-3.0). Standard Notes' web app itself can be deployed on your own server."
+        },
+        {
+          "question": "Which tool documents its encryption algorithms?",
+          "answer": "Notesnook, which names XChaCha20-Poly1305 and Argon2. Standard Notes states it offers end-to-end encryption without naming a specific cipher in the available facts."
+        },
+        {
+          "question": "Does either let me publish notes publicly?",
+          "answer": "Standard Notes has a Listed feature for this. A public-publishing feature is not documented for Notesnook."
+        },
+        {
+          "question": "Is there a refund guarantee?",
+          "answer": "Notesnook documents a 14-day money-back guarantee on paid plans. A similar guarantee isn't documented for Standard Notes."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "memos-vs-notesnook",
+    "tool_a_id": "4d5b94dc-fbd1-4f00-aeaf-079f4a300745",
+    "tool_a_name": "Memos",
+    "tool_b_id": "bbef43e5-afc5-416f-a4bf-68df7c6a61ce",
+    "tool_b_name": "Notesnook",
+    "content": {
+      "verdict": "Memos and Notesnook both handle personal note capture but occupy different ends of the hosting and pricing spectrum. Memos is entirely free and open source with no paid tier, but requires self-hosting (a single ~20MB Docker image, with SQLite, MySQL, or PostgreSQL) since there's no official cloud version. Notesnook is freemium with a hosted cloud service by default, end-to-end encryption using XChaCha20-Poly1305 and Argon2, and paid tiers from Essential (\u20ac2.11/month) through Believer (\u20ac9.51/month) for more storage.",
+      "bestForToolA": "Memos fits people who want a lightweight, titleless, timeline-first Markdown capture tool they self-host themselves, with REST and gRPC APIs for integrations and zero telemetry by default.",
+      "bestForToolB": "Notesnook fits people who want a hosted, end-to-end encrypted note app with structured notebooks and tags, rich editing (tables, formulas, code blocks), and the option to self-host just the sync server instead of the whole app.",
+      "whoNeedsBoth": "A privacy-conscious user could self-host Memos for quick, throwaway daily logs while keeping structured, encrypted long-term notes in Notesnook - the two aren't documented to sync with each other, so this would mean maintaining two separate note stores.",
+      "keyDifferences": [
+        {
+          "title": "Pricing Model",
+          "toolA": "Memos is completely free and open source (MIT license) with no paid tier documented at all.",
+          "toolB": "Notesnook is freemium, with paid Essential (\u20ac2.11/month), Pro (\u20ac7.39/month), and Believer (\u20ac9.51/month) tiers for more storage and features.",
+          "whyItMatters": "Whether a paid tier exists at all shapes long-term costs, especially as storage needs grow.",
+          "benefitsWho": "Self-hosters who never want a subscription benefit from Memos' fully free model."
+        },
+        {
+          "title": "Hosting Requirement",
+          "toolA": "Memos requires self-hosting with no official cloud version - deployed as a single ~20MB Docker image, using SQLite by default or MySQL/PostgreSQL for larger setups.",
+          "toolB": "Notesnook offers a hosted cloud service by default, with self-hosting the sync server as an optional alternative.",
+          "whyItMatters": "Whether hosting is mandatory or optional determines how much server-management burden falls on the user.",
+          "benefitsWho": "Users without server infrastructure benefit from Notesnook's default hosted cloud; sysadmins who want full control benefit from Memos' self-hosted-only model."
+        },
+        {
+          "title": "Encryption",
+          "toolA": "Built-in note encryption is not documented for Memos; privacy instead relies on self-hosted infrastructure control and zero telemetry by default.",
+          "toolB": "Notesnook encrypts notes on-device before syncing, using XChaCha20-Poly1305 and Argon2.",
+          "whyItMatters": "Client-side encryption protects notes even if the sync provider's servers are compromised.",
+          "benefitsWho": "Users storing sensitive information in the cloud benefit from Notesnook's documented end-to-end encryption."
+        },
+        {
+          "title": "Note Structure",
+          "toolA": "Memos is deliberately minimal - a timeline of quick notes with no folders, templates, or titles.",
+          "toolB": "Notesnook supports structured organization with notebooks, tags (up to 500 on the Essential plan), and rich editing (tables, task lists, formulas, code blocks).",
+          "whyItMatters": "A minimal timeline suits fast capture, while structured notebooks and rich editing suit longer, organized reference material.",
+          "benefitsWho": "Users journaling quick daily thoughts benefit from Memos' timeline model; users building organized reference notes benefit from Notesnook's notebooks and rich editor."
+        },
+        {
+          "title": "API Access",
+          "toolA": "Memos documents both REST and gRPC APIs for building integrations and automations.",
+          "toolB": "A public API is not documented for Notesnook in the available facts.",
+          "whyItMatters": "A documented API enables developers to build custom tools and automations on top of the note data.",
+          "benefitsWho": "Developers wanting to script or integrate their notes elsewhere benefit from Memos' REST and gRPC APIs."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Deployment & Hosting",
+          "rows": [
+            {
+              "feature": "Self-hosting required",
+              "toolA": "available",
+              "toolB": "limited",
+              "note": "Memos requires it; Notesnook's sync server is optionally self-hostable"
+            },
+            {
+              "feature": "Official hosted/cloud version",
+              "toolA": "unavailable",
+              "toolB": "available"
+            },
+            {
+              "feature": "Lightweight single-binary/Docker deployment",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Memos: ~20MB Docker image"
+            },
+            {
+              "feature": "Database backend choice (SQLite/MySQL/PostgreSQL)",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Organization & Editing",
+          "rows": [
+            {
+              "feature": "Folders/notebooks",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "Memos has no folders by design"
+            },
+            {
+              "feature": "Tagging",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Titles required for notes",
+              "toolA": "unavailable",
+              "toolB": "not-documented",
+              "note": "Memos notes are titleless by design"
+            },
+            {
+              "feature": "Rich editing (tables, formulas, code blocks)",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Security & Extensibility",
+          "rows": [
+            {
+              "feature": "End-to-end encryption",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "REST/gRPC API",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Zero telemetry by default",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Password-protected vault",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Free-tier storage cap documented",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "Notesnook: 50MB/month"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Memos really free with no upsell?",
+          "answer": "Yes, Memos is completely free and open source under the MIT license with no paid tiers at all, but self-hosting is required since there's no official cloud version."
+        },
+        {
+          "question": "Does Notesnook have a free plan?",
+          "answer": "Yes, capped at 50MB/month storage, 50 notebooks, and 50 tags on the free tier."
+        },
+        {
+          "question": "Can I use Memos without running my own server?",
+          "answer": "No - Memos has no official hosted or cloud version, so self-hosting via Docker or a standalone binary is required."
+        },
+        {
+          "question": "Which has an API for building integrations?",
+          "answer": "Memos documents both REST and gRPC APIs. A public API is not documented for Notesnook."
+        },
+        {
+          "question": "Which encrypts notes end-to-end?",
+          "answer": "Notesnook, using XChaCha20-Poly1305 and Argon2. Built-in encryption is not documented for Memos."
+        },
+        {
+          "question": "How large is the Memos deployment footprint?",
+          "answer": "A single Go binary in an approximately 20MB Docker image, supporting SQLite by default or MySQL/PostgreSQL for larger deployments."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "memos-vs-silverbullet",
+    "tool_a_id": "4d5b94dc-fbd1-4f00-aeaf-079f4a300745",
+    "tool_a_name": "Memos",
+    "tool_b_id": "3c8191c2-eb3f-4d5e-8efc-4c1e054d313b",
+    "tool_b_name": "SilverBullet",
+    "content": {
+      "verdict": "Memos and SilverBullet are both free, open-source, self-hosted Markdown tools, but they're built for different workflows. Memos is a timeline-first app for quick, titleless notes with REST/gRPC APIs and zero telemetry; SilverBullet is a full Markdown wiki with wiki-style bidirectional linking, a built-in query language (SLIQ), and Space Lua scripting for treating notes as a programmable, queryable database.",
+      "bestForToolA": "Memos fits people who want a lightweight, single-binary deployment for quick daily-log-style Markdown notes with a choice of SQLite, MySQL, or PostgreSQL as the backend.",
+      "bestForToolB": "SilverBullet fits people who want to build an interconnected, queryable knowledge base with bidirectional links, page templates, and in-note scripting, rather than a simple note timeline.",
+      "whoNeedsBoth": "Someone could use Memos as a fast-capture inbox for daily notes and periodically move structured, interlinked material into SilverBullet where SLIQ queries and Space Lua scripting can operate on it - though no documented integration connects the two, so migration would be manual.",
+      "keyDifferences": [
+        {
+          "title": "Note Model",
+          "toolA": "Memos is a timeline-first log of quick, titleless Markdown notes with no folders or templates.",
+          "toolB": "SilverBullet is a full Markdown wiki with wiki-style bidirectional linking, page templates, and outlining - built for structured, interconnected knowledge bases.",
+          "whyItMatters": "A timeline suits rapid, low-friction capture, while a linked wiki suits deliberately structured, cross-referenced knowledge.",
+          "benefitsWho": "Users journaling quick daily thoughts benefit from Memos; users building an interconnected personal wiki benefit from SilverBullet."
+        },
+        {
+          "title": "Programmability",
+          "toolA": "A query language or in-note scripting is not documented for Memos, which instead offers REST and gRPC APIs for external integrations.",
+          "toolB": "SilverBullet includes a built-in query language (SLIQ) to query notes like a lightweight database, plus Space Lua scripting for dynamic content and automation.",
+          "whyItMatters": "In-note querying and scripting let users build dynamic, database-like views without leaving the app.",
+          "benefitsWho": "Power users who want to treat their notes as structured data benefit from SilverBullet's SLIQ query language and Space Lua scripting."
+        },
+        {
+          "title": "Deployment Footprint",
+          "toolA": "Memos runs as a single Go binary in an approximately 20MB Docker image, with SQLite by default or MySQL/PostgreSQL for larger deployments.",
+          "toolB": "SilverBullet also deploys as a single binary or Docker container, but no database backend choice is documented in the facts.",
+          "whyItMatters": "Database backend flexibility matters for teams anticipating larger-scale, multi-user deployments.",
+          "benefitsWho": "Self-hosters planning to scale beyond a single-user SQLite setup benefit from Memos' MySQL/PostgreSQL support."
+        },
+        {
+          "title": "Bidirectional Linking",
+          "toolA": "Bidirectional linking between notes is not documented for Memos, which organizes content via tags and full-text search instead.",
+          "toolB": "SilverBullet supports wiki-style bidirectional linking natively in its live-preview Markdown editor.",
+          "whyItMatters": "Bidirectional links let users navigate and discover related notes without manual tagging alone.",
+          "benefitsWho": "Users building a network of interconnected ideas benefit from SilverBullet's native bidirectional linking."
+        },
+        {
+          "title": "Task Management",
+          "toolA": "Dedicated task-list features are not documented for Memos, which focuses on freeform Markdown timeline entries.",
+          "toolB": "SilverBullet has built-in support for task lists and outlining directly inside notes.",
+          "whyItMatters": "Native task-list support lets a notes app double as a lightweight to-do system.",
+          "benefitsWho": "Users who want to mix task tracking with note-taking in one tool benefit from SilverBullet's built-in task management."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Note Structure & Linking",
+          "rows": [
+            {
+              "feature": "Bidirectional linking",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Timeline/log-style capture",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Page templates",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Tagging",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Full-text search",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        },
+        {
+          "group": "Automation & Querying",
+          "rows": [
+            {
+              "feature": "Built-in database-style query language",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "SilverBullet's SLIQ"
+            },
+            {
+              "feature": "In-note scripting",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "SilverBullet's Space Lua"
+            },
+            {
+              "feature": "REST/gRPC API",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Task lists/outlining",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Access",
+          "rows": [
+            {
+              "feature": "Single-binary/Docker deployment",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Database backend choice (SQLite/MySQL/PostgreSQL)",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Zero telemetry by default",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Browser-based editor",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Official hosted cloud version",
+              "toolA": "unavailable",
+              "toolB": "unavailable"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do either of these have a query language for notes?",
+          "answer": "SilverBullet has SLIQ, a built-in query language for treating notes as structured data. This isn't documented for Memos."
+        },
+        {
+          "question": "Which is better for quick, unstructured daily notes?",
+          "answer": "Memos, which is purpose-built as a timeline-first, titleless capture tool with no folders or templates."
+        },
+        {
+          "question": "Which supports scripting inside notes?",
+          "answer": "SilverBullet, via its Space Lua scripting environment for dynamic content and automation."
+        },
+        {
+          "question": "Do either offer a hosted cloud version?",
+          "answer": "No - both require self-hosting; neither documents an official hosted or cloud option."
+        },
+        {
+          "question": "What database backends does Memos support?",
+          "answer": "SQLite by default, with MySQL or PostgreSQL available for larger deployments."
+        },
+        {
+          "question": "Is either app free?",
+          "answer": "Yes, both Memos and SilverBullet are completely free and open source under the MIT license, with no paid tier."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "obsidian-vs-silverbullet",
+    "tool_a_id": "45916754-f5bf-43e2-98ed-4d4cec40d20c",
+    "tool_a_name": "Obsidian",
+    "tool_b_id": "3c8191c2-eb3f-4d5e-8efc-4c1e054d313b",
+    "tool_b_name": "SilverBullet",
+    "content": {
+      "verdict": "Obsidian and SilverBullet are both Markdown-based note tools built around bidirectional linking, but they take opposite approaches to hosting and monetization. Obsidian is a local-first app with a free, full-featured core plus separately priced Sync ($4-5/user/month) and Publish ($8-10/site/month) add-ons and a $50/user/year Commercial License for organizations; SilverBullet is entirely free and open source (MIT), fundamentally self-hosted and browser-based, with a built-in query language (SLIQ) and Space Lua scripting instead of a plugin marketplace.",
+      "bestForToolA": "Obsidian fits users who want a local-first Markdown app with a large third-party plugin ecosystem, a visual Canvas for diagramming, and optional paid Sync/Publish services rather than running their own server.",
+      "bestForToolB": "SilverBullet fits users comfortable self-hosting who want to query their notes like a database via SLIQ and script automation directly inside notes with Space Lua, without ever paying a subscription or commercial license.",
+      "whoNeedsBoth": "There's no documented complementary scenario - both are primary note-taking systems built on Markdown and linking, so a user would choose Obsidian for its plugin ecosystem and optional hosted services or SilverBullet for its free, self-hosted, queryable approach rather than running both as their main system.",
+      "keyDifferences": [
+        {
+          "title": "Pricing & Monetization",
+          "toolA": "Obsidian's core app is free, but Sync costs $4/user/month (annual) or $5/user/month (monthly), Publish costs $8/site/month (annual) or $10/site/month (monthly), and a Commercial License for organizational use is $50/user/year.",
+          "toolB": "SilverBullet is entirely free and open source (MIT license) with no paid tier or commercial license requirement of any kind.",
+          "whyItMatters": "Optional paid add-ons let casual users stay free while organizations pay for convenience, versus a tool that's free for every use case including commercial ones.",
+          "benefitsWho": "Organizations that want official commercial licensing and hosted sync may prefer Obsidian; users who never want to pay, including for commercial use, benefit from SilverBullet."
+        },
+        {
+          "title": "Deployment Model",
+          "toolA": "Obsidian is local-first, storing plain-text Markdown files on-device, with optional paid cloud Sync for cross-device access.",
+          "toolB": "SilverBullet is fundamentally self-hosted and browser-based, requiring users to run their own server (single binary or Docker) to access notes.",
+          "whyItMatters": "Local-first apps work offline by default, while browser-based self-hosted apps require maintaining a running server.",
+          "benefitsWho": "Users who want notes available offline without server setup benefit from Obsidian's local-first model; users who want browser access from any device to their own server benefit from SilverBullet."
+        },
+        {
+          "title": "Extensibility",
+          "toolA": "Obsidian has a large plugin ecosystem with thousands of community plugins and themes, built on an open API.",
+          "toolB": "SilverBullet offers built-in Space Lua scripting and a query language (SLIQ) baked into the core app rather than a third-party plugin marketplace.",
+          "whyItMatters": "A large plugin marketplace offers ready-made extensions, while built-in scripting offers deeper native customization without third-party dependencies.",
+          "benefitsWho": "Users who want ready-made community add-ons benefit from Obsidian's plugin ecosystem; developers who want to script directly benefit from SilverBullet's built-in Space Lua."
+        },
+        {
+          "title": "Querying Notes as Data",
+          "toolA": "A native query language is not documented for Obsidian; search and the graph view are the primary discovery tools.",
+          "toolB": "SilverBullet's built-in SLIQ query language lets users query notes like a lightweight database.",
+          "whyItMatters": "A query language enables database-style views (e.g., filtering notes by custom criteria) without external plugins.",
+          "benefitsWho": "Users who want to build dynamic, structured views of their notes benefit from SilverBullet's SLIQ."
+        },
+        {
+          "title": "Visual/Diagramming Tools",
+          "toolA": "Obsidian includes a Canvas feature, a visual space for brainstorming and diagramming.",
+          "toolB": "A canvas or diagramming feature is not documented for SilverBullet.",
+          "whyItMatters": "Visual canvases support spatial thinking and diagramming that plain Markdown text can't easily replicate.",
+          "benefitsWho": "Visual thinkers and brainstorming teams benefit from Obsidian's Canvas feature."
+        }
+      ],
+      "featureMatrix": [
+        {
+          "group": "Core Editing & Linking",
+          "rows": [
+            {
+              "feature": "Local Markdown file storage",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Bidirectional linking",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Graph view",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Canvas/visual diagramming",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Live-preview Markdown editor",
+              "toolA": "not-documented",
+              "toolB": "available"
+            }
+          ]
+        },
+        {
+          "group": "Deployment & Pricing",
+          "rows": [
+            {
+              "feature": "Free core app with no feature limits",
+              "toolA": "available",
+              "toolB": "available"
+            },
+            {
+              "feature": "Self-hosting required",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Paid sync add-on",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Obsidian Sync: $4-5/user/month"
+            },
+            {
+              "feature": "Paid publishing add-on",
+              "toolA": "available",
+              "toolB": "unavailable",
+              "note": "Obsidian Publish: $8-10/site/month"
+            },
+            {
+              "feature": "Commercial/organizational license",
+              "toolA": "available",
+              "toolB": "not-documented",
+              "note": "Obsidian: $50/user/year"
+            }
+          ]
+        },
+        {
+          "group": "Extensibility & Tools",
+          "rows": [
+            {
+              "feature": "Community plugin ecosystem",
+              "toolA": "available",
+              "toolB": "not-documented"
+            },
+            {
+              "feature": "Built-in query language",
+              "toolA": "unavailable",
+              "toolB": "available",
+              "note": "SilverBullet's SLIQ"
+            },
+            {
+              "feature": "In-app scripting",
+              "toolA": "not-documented",
+              "toolB": "available",
+              "note": "SilverBullet's Space Lua"
+            },
+            {
+              "feature": "Task management/outlining",
+              "toolA": "not-documented",
+              "toolB": "available"
+            },
+            {
+              "feature": "Open plugin API for developers",
+              "toolA": "available",
+              "toolB": "not-documented"
+            }
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is Obsidian really free?",
+          "answer": "Yes, the core app is free with no feature limits; Sync and Publish are separate optional paid add-ons."
+        },
+        {
+          "question": "Do I need to run my own server for either tool?",
+          "answer": "SilverBullet requires self-hosting (single binary or Docker). Obsidian is local-first and doesn't require a server, though its optional Sync and Publish services are hosted by Obsidian."
+        },
+        {
+          "question": "Which has a bigger plugin ecosystem?",
+          "answer": "Obsidian, with thousands of community plugins and themes built on an open API. A plugin marketplace isn't documented for SilverBullet."
+        },
+        {
+          "question": "Can I query my notes like a database?",
+          "answer": "SilverBullet's built-in SLIQ query language supports this. A native query language isn't documented for Obsidian."
+        },
+        {
+          "question": "What does Obsidian's Commercial License cost?",
+          "answer": "$50/user/year for organizational use."
+        },
+        {
+          "question": "Does SilverBullet have a paid tier for more features?",
+          "answer": "No, SilverBullet is entirely free and open source under the MIT license, with no paid tier documented."
+        }
+      ]
+    }
+  }
+]

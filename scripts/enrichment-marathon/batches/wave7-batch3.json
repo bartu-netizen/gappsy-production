@@ -1,0 +1,586 @@
+[
+  {
+    "tool_id": "d5186176-1b9e-4d69-9272-f95fc9700a4c",
+    "slug": "d8a.tech",
+    "name": "d8a",
+    "enrichment": {
+      "short_description": "d8a is an open-source, warehouse-native web analytics platform compatible with GA4 and Matomo tracking protocols, letting teams own their clickstream data.",
+      "pricing_model": "Freemium / Open Source",
+      "starting_price": "Free",
+      "founded_year": 2022,
+      "company_size": null,
+      "headquarters": "London, United Kingdom",
+      "languages": ["English"],
+      "seo_title": "d8a Review: Open-Source GA4 & Matomo Analytics Tool",
+      "seo_meta_description": "d8a is an open-source, warehouse-native analytics platform compatible with GA4 and Matomo. Self-host it free or use the EU-hosted cloud tier.",
+      "llm_readable_summary": "d8a, published at d8a.tech and developed under the GitHub organization d8a-tech, is an open-source, warehouse-native web analytics platform positioned as a data-ownership-first alternative to Google Analytics 4 (GA4) and Matomo. Rather than locking clickstream data inside a vendor-controlled dashboard, d8a ingests events using the same tracking protocols GA4 and Matomo already use, so teams can redirect existing gtag.js or Matomo tracking snippets into d8a with little to no code migration. The project also ships its own native web tracker, currently in beta, for teams that want to start collecting data without depending on either upstream protocol. The core proposition is that analytics data should live inside the customer's own data warehouse rather than a third party's proprietary store, so d8a structures incoming events into a normalized, reporting-ready schema and writes that schema into ClickHouse, Google BigQuery, or flat CSV/Parquet files stored on Amazon S3, Google Cloud Storage, or a local filesystem. Session stitching is computed on the backend rather than in the browser, which the project frames as more accurate and more resistant to ad blockers and browser tracking-prevention features than client-side session logic.\n\nd8a is released under the permissive MIT license and hosted publicly on GitHub, where the codebase is written primarily in Go (roughly 84 percent) with a TypeScript front end (roughly 14 percent) and Docker-based deployment tooling for local and production installs. Because the license imposes no usage restrictions, organizations can self-host d8a on Kubernetes, bare-metal servers, on-premises data centers, or fully air-gapped networks with no per-seat or per-event licensing fee. For teams that prefer not to operate the ingestion pipeline themselves, the company behind the project (registered in the United Kingdom as D8A TECH UK LTD, incorporated in February 2022 and headquartered in London) also runs a free, EU-hosted cloud version at app.d8a.tech, marketed as GDPR-aligned because of its EU-only data residency and available without a credit card.\n\nArchitecturally, the ingestion pipeline accepts hits through the GA4 Measurement Protocol and Matomo's tracking API, validates and enriches each event with device, geo, and referrer parsing, computes sessions and derived fields server-side, and batches writes into whichever destination sink is configured. This flexibility around sinks is one of d8a's clearest differentiators against closed platforms: because the resulting schema is documented and openly available, downstream tools such as dbt, Looker, Metabase, or a team's own SQL dashboards can query the warehouse tables directly, without the row sampling, data-retention windows, or export quotas that constrain GA4's native BigQuery export. d8a also advertises an EU-hosted AI agent layered on top of the warehouse data, intended to let analysts ask natural-language questions instead of hand-writing SQL for routine reporting.\n\nd8a's target market leans toward technically capable teams and organizations operating in regulated or compliance-sensitive industries. The marketing site explicitly calls out healthcare, government, and financial services because of the platform's support for self-hosted, air-gapped, or region-pinned deployments aligned with HIPAA, GDPR, FedRAMP, and SOX-style requirements — categories where GA4's centralized, Google-controlled infrastructure and Matomo's broader all-in-one feature set are less suited to strict data-residency mandates. Because d8a positions itself primarily as an ingestion and warehousing layer rather than a full analytics application, it competes less directly with polished dashboard products and more with other warehouse-native or privacy-first analytics projects such as Snowplow, PostHog, Plausible, and self-hosted Matomo, as well as with the GA4 and Matomo services it is designed to sit alongside or eventually replace.\n\nPricing is not structured as tiered SaaS subscriptions in the conventional sense. The free EU cloud tier provides a hosted collector and warehouse pipeline at no cost, while the self-hosted, MIT-licensed software can be run indefinitely on a customer's own infrastructure for free. The public marketing pages do not disclose a paid enterprise tier, dedicated support contract, or SLA pricing, so organizations that need contractual guarantees, custom onboarding, or dedicated support would need to contact the team directly; no structured paid plan was found during this research. In practice, the primary cost for self-hosting teams is the underlying warehouse infrastructure (ClickHouse, BigQuery, or object storage) rather than any d8a license fee.\n\nGiven its early stage, d8a has limited third-party review coverage — a sparse Capterra listing exists with few reviews — and the project does not publicly disclose team size, funding, or customer counts. It is best suited to engineering-led teams that already operate, or are willing to operate, a data warehouse and that value data portability and protocol compatibility with GA4/Matomo over an out-of-the-box analytics dashboard experience. It is a weaker fit for marketers or small teams that want a polished, zero-infrastructure analytics UI, since much of d8a's value depends on connecting it to a warehouse and a separate BI or visualization layer. Prospective adopters should track the project's GitHub activity and Discord community directly, since features such as the native web tracker are explicitly labeled beta and the product is still actively evolving.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "d8a is an open-source, warehouse-native analytics platform that ingests events using GA4 and Matomo tracking protocols while writing the resulting data into a customer-controlled warehouse such as ClickHouse or BigQuery, rather than a vendor-owned dashboard.",
+          "The project is MIT-licensed and available as a free EU-hosted cloud tier or a fully self-hosted deployment, aimed at teams that want data ownership and compliance-friendly infrastructure alongside familiar GA4/Matomo-style tracking."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "d8a supports drop-in compatibility with existing GA4 and Matomo tracking snippets, server-side session computation, and export to ClickHouse, BigQuery, or CSV/Parquet on S3, GCS, or local storage, all under a documented reporting-ready schema.",
+          "Deployment options range from Kubernetes and on-premises installs to air-gapped networks, supporting compliance-sensitive sectors such as healthcare, government, and financial services, alongside an EU-hosted AI agent for natural-language analysis over the warehouse data."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "d8a has no tiered subscription pricing. The self-hosted, MIT-licensed software is free to run on any infrastructure, and the EU-hosted cloud version at app.d8a.tech is offered free of charge with no credit card required.",
+          "No public enterprise or paid support tier is listed on the marketing site; teams needing dedicated support or contractual SLAs would need to contact the d8a team directly."
+        ]}
+      ],
+      "features": [
+        {"title": "GA4 & Matomo protocol compatibility", "description": "Ingests events from existing gtag.js or Matomo tracking snippets, minimizing migration effort for teams switching from either platform."},
+        {"title": "Native web tracker (beta)", "description": "An in-house tracker option for teams that want to collect data without depending on GA4 or Matomo tracking code."},
+        {"title": "Warehouse-native storage", "description": "Writes a normalized, reporting-ready schema directly into ClickHouse, BigQuery, or CSV/Parquet files on S3, GCS, or local storage."},
+        {"title": "Server-side session calculation", "description": "Computes sessions on the backend instead of in the browser for more consistent, ad-blocker-resistant metrics."},
+        {"title": "Flexible deployment", "description": "Runs as a free EU-hosted cloud service or fully self-hosted across Kubernetes, on-premises servers, or air-gapped networks."},
+        {"title": "Compliance-oriented architecture", "description": "Built with HIPAA, GDPR, FedRAMP, and SOX-style data residency and control requirements in mind."},
+        {"title": "EU-hosted AI agent", "description": "Provides natural-language analysis over collected warehouse data to reduce manual SQL work."},
+        {"title": "Open-source codebase", "description": "MIT-licensed Go and TypeScript project on GitHub, open to community contributions."}
+      ],
+      "pros": [
+        "Full data ownership with no vendor lock-in into a third-party analytics dashboard.",
+        "Free to self-host indefinitely under a permissive MIT license.",
+        "Drop-in compatibility with existing GA4/Matomo tracking reduces migration effort.",
+        "Self-hosted and air-gapped options make it attractive for regulated industries."
+      ],
+      "cons": [
+        "Requires warehouse infrastructure knowledge (ClickHouse/BigQuery) to get full value.",
+        "Native web tracker is still in beta.",
+        "Limited third-party reviews and public track record given its early stage.",
+        "No polished built-in BI or visualization layer; relies on external dashboards."
+      ],
+      "faqs": [
+        {"question": "Is d8a free to use?", "answer": "Yes. The self-hosted software is MIT-licensed and free, and d8a also offers a free EU-hosted cloud tier at app.d8a.tech."},
+        {"question": "Does d8a replace Google Analytics?", "answer": "It can. d8a accepts GA4 Measurement Protocol events, so teams can redirect existing GA4 tracking into d8a's pipeline while keeping data outside Google's infrastructure."},
+        {"question": "What databases does d8a support?", "answer": "ClickHouse and Google BigQuery as managed sinks, plus CSV/Parquet export to S3, Google Cloud Storage, or local storage."},
+        {"question": "Is d8a suitable for regulated industries?", "answer": "The project markets self-hosted and air-gapped deployment options aimed at HIPAA, GDPR, FedRAMP, and SOX use cases, though organizations should independently verify compliance for their specific requirements."},
+        {"question": "Who maintains d8a?", "answer": "d8a is developed as an open-source project on GitHub (d8a-tech/d8a), backed by a UK-registered company, D8A TECH UK LTD, with a community Discord for support."},
+        {"question": "Does d8a include a built-in dashboard?", "answer": "d8a focuses on ingestion and warehouse storage; visualization is typically handled by connecting BI tools such as Looker or Metabase to the resulting warehouse tables."}
+      ],
+      "use_cases": [
+        {"title": "Privacy-first web analytics for regulated industries", "audience": "Healthcare, government, and financial services teams", "description": "Organizations needing GDPR/HIPAA-aligned data residency can self-host d8a on-premises or air-gapped, keeping clickstream data within their own infrastructure while still using familiar GA4/Matomo tracking."},
+        {"title": "Warehouse-native analytics for data teams", "audience": "Data engineers and analysts", "description": "Teams already running BigQuery or ClickHouse can pipe web analytics directly into their warehouse via d8a instead of exporting from GA4, simplifying joins with other business data."},
+        {"title": "Free GA4 alternative for cost-conscious teams", "audience": "Startups and indie developers", "description": "Teams wanting to avoid GA4 data limits or Google's data handling can switch to d8a's free EU cloud tier with minimal tracking code changes."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Self-Hosted (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["MIT license", "Unlimited self-hosting", "GA4 and Matomo protocol compatibility", "Deploy on Kubernetes, on-premises, or air-gapped infrastructure"]},
+        {"plan_name": "Free Cloud", "price": "Free", "billing_cycle": "N/A", "features": ["EU-hosted collector and warehouse pipeline", "GDPR-oriented data residency", "AI agent for ad hoc analysis", "No credit card required"]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "web-app", "free-plan", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "b2320603-ad1f-48d1-a744-9445e8269225",
+    "slug": "d9",
+    "name": "d9",
+    "enrichment": {
+      "short_description": "d9 is an open-source, self-hosted fork of Directus 9 that layers auto-generated REST/GraphQL APIs and a no-code admin app on top of any SQL database.",
+      "pricing_model": "Free / Open Source (self-hosted)",
+      "starting_price": "Free",
+      "founded_year": 2022,
+      "company_size": null,
+      "headquarters": "Paris, France",
+      "languages": ["English", "French"],
+      "seo_title": "d9 Review: Open-Source Directus 9 Fork by La Webcapsule",
+      "seo_meta_description": "d9 is a free, GPLv3 open-source fork of Directus 9 maintained by La Webcapsule, adding instant REST/GraphQL APIs to any SQL database.",
+      "llm_readable_summary": "d9, documented at d9.webcapsule.io, is an open-source data platform maintained by the French engineering company La Webcapsule as an independent, community-driven fork of Directus 9. The project exists because Directus's core team moved subsequent major versions (Directus 10 and later) to a more commercial, business-source-style licensing model; d9 preserves the last fully open-source Directus 9 codebase under the GPLv3 license and continues to maintain it, explicitly stating it is not affiliated with the Directus core team. The tagline the project uses for itself is that it is 'an Open Data Platform built to democratize the database,' aiming to give technical and non-technical users on the same team equal access to a database's records and digital file assets, regardless of the underlying data model.\n\nFunctionally, d9 instantly layers a Node.js-based API on top of any existing or new SQL database. It introspects the target database's schema and generates an abstraction layer without requiring a data migration, meaning teams can point d9 at a production database and get instant REST and GraphQL endpoints without changing how the data itself is stored. Multi-database support spans PostgreSQL, MySQL, SQLite, OracleDB, CockroachDB, MariaDB, and Microsoft SQL Server, making it broadly compatible with the SQL engines most organizations already run. On top of the generated API, d9 ships a JavaScript SDK, a command-line interface for scripting and automation, and a no-code administrative application that lets non-developers browse records, manage digital assets, run CRUD operations, configure user permissions, build complex queries, and automate tasks through webhooks and flow-style automation, all backed by the same underlying API that developers use programmatically.\n\nd9 is self-hosted only; there is no vendor-hosted d9 cloud offering, and the project explicitly frames data ownership and full infrastructure control as central to its value proposition. It can be deployed via Docker, on bare-metal servers, or on any cloud provider a team chooses, which aligns with La Webcapsule's broader positioning around European regulatory compliance, portability, and avoiding vendor lock-in. La Webcapsule itself, registered as a société par actions simplifiée (SAS) in Paris since January 2022 with roughly 20,000 euros in capital, describes its overall mission as building engineering platforms for regulated environments — offering developer self-service catalogs, GitOps-based workflow management, distributed policy enforcement (RBAC, secrets, network policies), and compliance automation across the application lifecycle. Beyond d9, the company also maintains OrbiTS, an MIT-licensed open-source orchestration platform that underpins its commercial engineering-platform offerings, and it sells both a self-managed platform model, where clients own their infrastructure, and an ISO 27001-compliant hosted model with monitoring and scaling included. Individual infrastructure templates are also sold separately, and the company's platforms are listed on cloud marketplaces including AWS Marketplace.\n\nLa Webcapsule's disclosed client base spans regulated sectors, including large French enterprises such as Aramis Auto (a CAC 40-adjacent automotive retailer), the healthcare-sector organization OCIRP, the government services group Docaposte, and the energy-sector company Stackease.ai, suggesting the company's broader platform business targets mid-to-large regulated organizations even though d9 itself, as an open-source component, is free for anyone to self-host and use.\n\nBecause d9 preserves the Directus 9 feature set and API surface, its primary competitors and comparison points are Directus itself (in its newer, more commercially licensed versions), along with other open-source or headless backend/CMS platforms such as Strapi, Supabase's auto-generated API layer, PostgREST, and Hasura, all of which similarly aim to expose instant APIs over a SQL or Postgres database. d9's differentiator versus these alternatives is its explicit commitment to keeping the exact Directus 9 experience alive under a fully open license indefinitely, for teams that specifically want that codebase's stability and features without following Directus's newer licensing terms.\n\nPricing for d9 itself is straightforward: it is entirely free and open source under GPLv3, with no paid tiers, seat limits, or feature gates published for the core software. Organizations that want a managed, compliance-hosted version of the broader platform stack (which may incorporate d9 alongside other Webcapsule tooling) would need to engage La Webcapsule commercially for its separate engineering-platform and hosting offerings, which are priced on a custom, contact-sales basis rather than through public self-serve tiers. Given its origin as a licensing-driven fork and its self-hosted-only nature, d9 is best suited to developers, platform teams, and organizations that already value the Directus 9 workflow and want to keep using it without adopting Directus's post-9 licensing terms, or that need full control over where and how their data-access API layer runs for compliance reasons.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "d9 is an open-source, GPLv3-licensed fork of Directus 9, maintained independently by the French company La Webcapsule after Directus moved later versions to a more commercial licensing model.",
+          "It instantly generates REST and GraphQL APIs, a JavaScript SDK, a CLI, and a no-code admin app on top of any existing SQL database, without requiring a data migration."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "d9 supports PostgreSQL, MySQL, SQLite, OracleDB, CockroachDB, MariaDB, and MS-SQL, introspecting each database's schema to build an abstraction layer that keeps the underlying data unaltered.",
+          "It provides CRUD operations, configurable user permissions, complex querying, and webhook/flow-based automation, serving developers, analysts, and non-technical business users from the same underlying API."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "d9 is free and open source under the GPLv3 license, with no paid tiers or feature gates for the core software; it is self-hosted only.",
+          "La Webcapsule separately sells custom, contact-sales engineering-platform and ISO 27001-compliant hosting services that can incorporate d9 for organizations wanting a managed, compliance-oriented deployment."
+        ]}
+      ],
+      "features": [
+        {"title": "Instant API generation", "description": "Layers a Node.js REST and GraphQL API on top of any SQL database without requiring data migration."},
+        {"title": "Broad database support", "description": "Works with PostgreSQL, MySQL, SQLite, OracleDB, CockroachDB, MariaDB, and Microsoft SQL Server."},
+        {"title": "No-code admin app", "description": "Gives non-technical team members a visual interface to browse records, manage files, and run queries."},
+        {"title": "JavaScript SDK and CLI", "description": "Provides developer tooling for programmatic access and scripted automation of the data platform."},
+        {"title": "Configurable permissions", "description": "Role-based access control lets teams govern who can read, write, or administer specific data."},
+        {"title": "Webhooks and flow automation", "description": "Automates tasks and integrations triggered by data changes or scheduled events."},
+        {"title": "Self-hosted only", "description": "Deployable via Docker, bare metal, or any cloud provider, keeping data fully under the operator's control."},
+        {"title": "GPLv3 open-source license", "description": "Preserves the Directus 9 codebase and feature set as a permanently free, community-maintained fork."}
+      ],
+      "pros": [
+        "Fully free and open source with no seat limits or feature gates.",
+        "Works with an existing SQL database with no forced migration.",
+        "Serves developers, analysts, and non-technical users from one unified API.",
+        "Backed by a company (La Webcapsule) with an established focus on compliance and self-hosting."
+      ],
+      "cons": [
+        "Self-hosted only, so there is no official managed cloud version of d9 itself.",
+        "Not affiliated with or supported by the official Directus core team.",
+        "Smaller community and documentation footprint than mainstream headless-CMS alternatives.",
+        "Requires infrastructure and database administration expertise to deploy and maintain."
+      ],
+      "faqs": [
+        {"question": "What is d9?", "answer": "d9 is an open-source, GPLv3-licensed fork of Directus 9, maintained by La Webcapsule, that generates instant REST/GraphQL APIs and a no-code admin app over any SQL database."},
+        {"question": "Is d9 affiliated with Directus?", "answer": "No. d9 is an independent, community-maintained fork and is explicitly not affiliated with the official Directus core team or company."},
+        {"question": "Is d9 free?", "answer": "Yes, d9 is entirely free and open source under the GPLv3 license, with no paid tiers for the core software."},
+        {"question": "Can d9 be used with a cloud-hosted database?", "answer": "Yes, d9 works with any SQL database it supports, whether self-hosted or run on a managed cloud database service, since it introspects the schema rather than requiring migration."},
+        {"question": "Which databases does d9 support?", "answer": "PostgreSQL, MySQL, SQLite, OracleDB, CockroachDB, MariaDB, and Microsoft SQL Server."},
+        {"question": "Who maintains d9?", "answer": "d9 is maintained by La Webcapsule, a Paris-based engineering company (SAS, registered January 2022) that also builds compliance-focused engineering platforms and the open-source OrbiTS orchestration tool."}
+      ],
+      "use_cases": [
+        {"title": "Instant backend API for an existing database", "audience": "Backend developers and platform teams", "description": "Teams with a production SQL database can deploy d9 to instantly expose REST and GraphQL endpoints without migrating data or rewriting the schema."},
+        {"title": "Staying on the open-source Directus 9 workflow", "audience": "Teams already using Directus 9", "description": "Organizations that prefer the Directus 9 feature set but do not want to adopt Directus's newer, more commercial licensing can migrate to d9 and keep receiving open-source updates."},
+        {"title": "No-code data management for business teams", "audience": "Non-technical business users and analysts", "description": "d9's admin app gives non-developers a way to browse, edit, and query data safely, governed by role-based permissions configured by IT."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["GPLv3 license", "Self-hosted deployment via Docker or bare metal", "Full API, SDK, CLI, and no-code app", "No seat or feature limits"]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "no-code", "web-app"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "aef224a1-fe25-4992-8146-62c270b751d5",
+    "slug": "dagster",
+    "name": "Dagster",
+    "enrichment": {
+      "short_description": "Dagster is an open-source data orchestration platform for building, testing, and monitoring data and AI pipelines as declarative, asset-based DAGs.",
+      "pricing_model": "Freemium / Open Source",
+      "starting_price": "Free (self-hosted); Dagster+ from $120/month",
+      "founded_year": 2018,
+      "company_size": "~85 employees (as of 2026; now part of Prefect)",
+      "headquarters": "San Francisco, California, United States",
+      "languages": ["English"],
+      "seo_title": "Dagster Review 2026: Pricing, Features, Prefect Merger",
+      "seo_meta_description": "Dagster is an open-source data orchestration platform for asset-based pipelines. See pricing, features, and its 2026 acquisition by Prefect.",
+      "llm_readable_summary": "Dagster is an open-source data orchestration platform used to build, test, deploy, and monitor data and machine learning pipelines defined as directed acyclic graphs (DAGs). It was created by Nick Schrock, formerly a co-creator of GraphQL at Facebook, who founded the company originally named Elementl in 2018 to build Dagster; the company later rebranded to Dagster Labs. Dagster Labs raised roughly $49 million across a $1.8 million seed round in 2018, a $14 million Series A in November 2021 led by Index Ventures and Sequoia Capital, and a $33 million Series B in May 2023, with additional investors including 8VC, Amplify Partners, Coatue Management, F7 Ventures, and Fathom Capital. The company is headquartered in San Francisco and, as of 2026, employed roughly 83 to 85 people. Nick Schrock has served as founder, and Pete Hunt has served as CEO. In a significant development announced on July 13, 2026, workflow orchestration competitor Prefect agreed to acquire Dagster Labs, uniting the two most widely adopted successors to Apache Airflow into a single company; Prefect stated it will continue to fully maintain and invest in both open-source Dagster and Dagster+, keep pricing unchanged, and that Schrock and Hunt would move into strategic advisor roles while roughly 40 members of the Dagster team joined Prefect.\n\nArchitecturally, Dagster's core abstraction is the software-defined asset: rather than defining pipelines purely as a sequence of tasks, Dagster encourages users to declare the data assets (tables, files, ML models, dashboards) a pipeline produces, along with their dependencies, and Dagster computes the DAG of upstream and downstream relationships automatically. This asset-based model, distinct from the more task-centric approach of Apache Airflow or the flow-centric approach of Prefect, is designed to give teams built-in data lineage, freshness tracking, and observability without extra tooling. Dagster pipelines are authored in Python and can integrate with the broader modern data stack, including dbt, Spark, Pandas, Snowflake, BigQuery, Databricks, and various cloud object stores, and Dagster increasingly markets itself for orchestrating AI and LLM workloads such as retrieval-augmented generation pipelines and agent workflows, alongside traditional ETL/ELT.\n\nThe open-source core of Dagster is released under the Apache 2.0 license and can be self-hosted for free indefinitely, covering the full DAG engine, scheduler, sensors, and local web UI. For teams that want a managed control plane, Dagster Labs sells Dagster+ (formerly Dagster Cloud), a hosted or hybrid offering that adds a managed web UI, catalog search across pipelines and assets, cost and usage tracking, role-based access control, audit logging, and uptime SLAs, while still allowing customer code to execute in the customer's own infrastructure under the hybrid deployment model, or fully in Dagster's cloud under the serverless model. Dagster+ pricing was restructured effective May 1, 2026: the Solo plan, aimed at individual users, costs $120 per month and includes an allocation of 7,500 usage credits, one user, one code location, and one deployment; the Starter plan costs $1,200 per month with 30,000 credits, up to three users, and five code locations; and an Enterprise (formerly Pro) tier is available on a custom, contact-sales basis with unlimited code locations and deployments, dedicated support, and negotiated uptime SLAs. Credits in this system are consumed based on asset materializations and op executions, and additional serverless compute is billed separately if a team uses Dagster's hosted execution rather than the free hybrid model where compute runs in the customer's own cloud account. A 30-day free trial with unlimited users is available for teams evaluating Dagster+ before committing to a paid plan.\n\nDagster's target users are data engineering and data platform teams, ML/AI engineering teams building agentic or RAG pipelines, and analytics engineering teams that already use dbt and want native lineage and asset tracking layered on top of their transformations. Its most direct competitors are Apache Airflow (the long-standing incumbent it was explicitly designed to improve upon), Prefect (its new corporate sibling following the 2026 acquisition, previously a rival orchestrator with a more Python-native, dynamic-workflow philosophy), and newer entrants such as Mage, Kestra, and cloud-native managed orchestration offered by Databricks Workflows and AWS Step Functions. Dagster differentiates itself primarily through its asset-centric mental model, strong local development experience, and integrated data catalog and lineage features that are opinionated defaults rather than bolt-on add-ons. Reviews on sites such as G2 and Capterra generally cite Dagster's developer experience, testability, and observability as strengths, while some users note a steeper learning curve for the asset abstraction compared to simpler task-based schedulers, and note that Dagster+ credit-based pricing can be harder to predict at scale than flat per-seat pricing.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Dagster is an open-source data orchestration platform, created by Nick Schrock and originally built by the company Elementl (later renamed Dagster Labs), founded in 2018 in San Francisco.",
+          "It organizes pipelines around software-defined assets rather than plain tasks, giving teams built-in lineage and observability, and in July 2026 Dagster Labs was acquired by orchestration rival Prefect, which committed to keeping both products and their pricing unchanged."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Dagster pipelines are authored in Python and integrate with dbt, Spark, Snowflake, BigQuery, Databricks, and common cloud storage, with growing support for orchestrating AI/LLM and agentic workflows alongside traditional ETL.",
+          "The open-source core (Apache 2.0) includes the DAG engine, scheduler, sensors, and a local web UI, while the managed Dagster+ product adds a hosted control plane, catalog search, cost tracking, RBAC, audit logging, and uptime SLAs."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Self-hosting the open-source core is free. Dagster+ Solo costs $120/month with 7,500 credits, and Starter costs $1,200/month with 30,000 credits, both under the pricing structure effective May 1, 2026.",
+          "An Enterprise tier is available on a custom quote basis with unlimited code locations and deployments, and a 30-day free trial with unlimited users is offered for teams evaluating Dagster+."
+        ]}
+      ],
+      "features": [
+        {"title": "Software-defined assets", "description": "Declares data assets and their dependencies rather than raw tasks, giving automatic lineage and dependency graphs."},
+        {"title": "Python-native pipeline authoring", "description": "Pipelines, schedules, and sensors are defined in Python with strong local testability."},
+        {"title": "Modern data stack integrations", "description": "Native integrations with dbt, Spark, Snowflake, BigQuery, Databricks, and major cloud object stores."},
+        {"title": "AI and agent pipeline support", "description": "Increasingly used to orchestrate RAG pipelines, LLM workflows, and agent-based data tasks."},
+        {"title": "Hybrid or serverless execution", "description": "Dagster+ can run customer code in the customer's own cloud (hybrid) or fully managed (serverless)."},
+        {"title": "Built-in data catalog", "description": "Dagster+ provides catalog search across pipelines, assets, and metadata for platform-wide visibility."},
+        {"title": "Cost and usage tracking", "description": "Dagster+ tracks credit consumption and compute cost per asset, pipeline, or team."},
+        {"title": "RBAC, audit logging, and SLAs", "description": "Enterprise-grade governance features available on paid Dagster+ plans."}
+      ],
+      "pros": [
+        "Asset-based model gives built-in lineage and observability other orchestrators require add-ons for.",
+        "Strong local development and testing experience for Python-based pipelines.",
+        "Free, fully-featured open-source core with no artificial feature gating.",
+        "Post-acquisition, Prefect has committed to continued investment and unchanged pricing."
+      ],
+      "cons": [
+        "The asset-centric abstraction has a steeper learning curve than simpler task-based schedulers.",
+        "Dagster+ credit-based pricing can be harder to forecast than flat per-seat pricing at scale.",
+        "Enterprise pricing is not publicly listed and requires a sales conversation.",
+        "Recent acquisition by Prefect introduces some uncertainty about long-term product direction, despite stated commitments."
+      ],
+      "faqs": [
+        {"question": "Is Dagster free?", "answer": "Yes, the open-source core of Dagster is free and Apache 2.0 licensed and can be self-hosted indefinitely. Dagster+ is a paid managed offering on top of it."},
+        {"question": "What is Dagster+?", "answer": "Dagster+ (formerly Dagster Cloud) is Dagster Labs' managed control plane, adding a hosted UI, catalog search, cost tracking, RBAC, audit logging, and SLAs, priced from $120/month for the Solo plan."},
+        {"question": "Who created Dagster?", "answer": "Dagster was created by Nick Schrock, a former co-creator of GraphQL, who founded the company (originally Elementl, later renamed Dagster Labs) in 2018."},
+        {"question": "Did Dagster get acquired?", "answer": "Yes. Prefect announced on July 13, 2026 that it was acquiring Dagster Labs, with both open-source Dagster and Dagster+ continuing to be maintained and priced as before under Prefect."},
+        {"question": "How is Dagster different from Airflow?", "answer": "Dagster centers on software-defined assets with built-in lineage and testability, while Airflow is a more task-centric scheduler; Dagster was explicitly designed as a next-generation alternative to Airflow."},
+        {"question": "Can Dagster orchestrate AI/LLM workflows?", "answer": "Yes, Dagster is increasingly used to orchestrate RAG pipelines, LLM calls, and agentic workflows alongside traditional data engineering pipelines."}
+      ],
+      "use_cases": [
+        {"title": "Modern ETL/ELT orchestration", "audience": "Data engineering teams", "description": "Teams use Dagster to orchestrate ingestion, transformation (often via dbt), and loading into warehouses like Snowflake or BigQuery with built-in lineage."},
+        {"title": "ML and AI pipeline orchestration", "audience": "ML/AI engineering teams", "description": "Dagster orchestrates feature engineering, model training, and increasingly RAG or agentic LLM pipelines as declarative asset graphs."},
+        {"title": "Data platform observability and lineage", "audience": "Data platform and analytics engineering teams", "description": "Organizations use Dagster's asset catalog and lineage graph to understand data freshness and dependencies across many pipelines from one place."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Open Source", "price": "Free", "billing_cycle": "N/A", "features": ["Apache 2.0 license", "Full DAG engine, scheduler, and sensors", "Local web UI", "Self-hosted, unlimited use"]},
+        {"plan_name": "Dagster+ Solo", "price": "$120/month", "billing_cycle": "monthly (pay-as-you-go, 7,500 credits included)", "features": ["1 user", "1 code location", "1 deployment", "30-day free trial"]},
+        {"plan_name": "Dagster+ Starter", "price": "$1,200/month", "billing_cycle": "monthly (pay-as-you-go, 30,000 credits included)", "features": ["Up to 3 users", "5 code locations", "1 deployment", "Catalog search"]},
+        {"plan_name": "Dagster+ Enterprise", "price": "Custom", "billing_cycle": "Contact sales", "features": ["Unlimited code locations and deployments", "Cost tracking", "Dedicated support channel", "Uptime SLAs"]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "web-app", "free-trial", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "65a38524-812b-4ba7-9eff-27f973a0e40d",
+    "slug": "dagu",
+    "name": "Dagu",
+    "enrichment": {
+      "short_description": "Dagu is a lightweight, self-contained workflow engine that runs as a single binary, letting teams define and schedule DAGs in YAML without a database.",
+      "pricing_model": "Free / Open Source with paid self-hosted licenses",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "Dagu Review: Lightweight Open-Source Workflow Engine",
+      "seo_meta_description": "Dagu is a self-contained, single-binary workflow engine for defining DAGs in YAML. Free and open source, with optional paid enterprise licenses.",
+      "llm_readable_summary": "Dagu is a lightweight, self-contained workflow orchestration engine positioned as a simpler alternative to Apache Airflow or plain cron for small teams that do not want to operate a full orchestration platform. Its documentation, hosted at docs.dagu.sh, describes the project's philosophy directly: it is 'the workflow engine that doesn't turn into an SRE project.' The core design goal is to eliminate the operational overhead typically associated with orchestrators like Airflow, which usually require a database, a message broker, and multiple long-running services. Dagu instead runs as a single compiled binary written in Go, with no external database dependency by default, storing execution state in local files. This makes it straightforward to install on a laptop, a single server, or a small VM and have a working scheduler, web UI, and execution engine running within minutes.\n\nWorkflows in Dagu are defined as directed acyclic graphs (DAGs) using a simple, declarative YAML format, with each step able to invoke shell commands, Docker containers, Kubernetes jobs, SQL queries, HTTP requests, or remote commands executed over SSH. The project also supports third-party and official 'Dagu Actions,' reusable action packages maintained in the dagucloud GitHub organization, extending what a workflow step can do without writing custom code. Dagu ships a built-in web UI for visualizing DAG dependencies, tracking execution status, browsing logs, and manually triggering runs, along with standard orchestration features such as parameterization, human-in-the-loop approval steps, automatic retries, cron-based scheduling, and artifact handling between steps. A notable and increasingly emphasized feature is Dagu's built-in Model Context Protocol (MCP) server, which allows AI coding agents such as Claude Code, Codex, Gemini CLI, and OpenCode to author, inspect, and run Dagu workflows directly, positioning the tool as infrastructure for AI-agent-driven automation as well as traditional data and DevOps pipelines.\n\nArchitecturally, Dagu supports three deployment modes that let it scale gradually with a team's needs: a standalone mode where one binary runs the web UI, scheduler, and execution runtime together (ideal for individuals or small teams); a headless mode that exposes only the CLI and API without the web interface, suited to automated or embedded use; and a distributed mode with a central coordinator dispatching work to multiple labeled worker nodes, allowing Dagu to scale from a single laptop to a small fleet of machines without switching to a fundamentally different product. The project reports real-world use in ETL and data pipeline automation, legacy script orchestration, media conversion pipelines, infrastructure automation, containerized batch jobs, customer-support automation, IoT device operations, and AI-agent-assisted task execution.\n\nDagu's open-source community edition is released under the GPLv3 license and is described as 'free forever,' supporting unlimited self-hosted servers and workers along with the full set of core execution and scheduling features, Docker/SSH/HTTP executors, cron scheduling, and up to two API keys. The project's GitHub repository, now maintained under the dagucloud organization (having previously lived under dagu-org), has attracted several thousand GitHub stars, reflecting meaningful adoption within the self-hosted and homelab-adjacent developer community as an Airflow alternative. Alongside the free community edition, the project (through its dagucloud entity) has introduced paid, self-hosted license tiers for teams that need enterprise controls: a Minimum tier at $50 per month covering up to three server licenses with single sign-on, role-based access control, audit logging, and email support; a Pro tier at $150 per month covering up to fifteen server licenses with the same enterprise feature set; and a custom-priced Enterprise tier that adds architecture consulting, custom implementation assistance, and dedicated support. Dagu also offers a managed cloud option, running a hosted server on isolated Google Kubernetes Engine (GKE) infrastructure, with a hybrid variant that pairs a managed control plane with private, self-hosted worker nodes for organizations that want to keep execution inside their own network while offloading operational overhead for the control plane itself.\n\nBecause reliable public information about the founding date, headquarters, or team size behind Dagu/dagucloud was not found during this research, those details are omitted rather than estimated. Dagu's most direct competitors are other lightweight, self-hosted workflow tools such as Windmill and Kestra, as well as heavier incumbents like Apache Airflow and Prefect, against which Dagu differentiates itself primarily through its zero-dependency, single-binary architecture and minimal operational footprint. It is best suited to small teams, solo developers, and homelab or edge-computing use cases that want DAG-based scheduling and a web UI without standing up a database-backed orchestration platform, while teams needing enterprise governance features can upgrade to Dagu's paid self-hosted licenses or managed cloud offering without migrating off the same YAML-based workflow format.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Dagu is a lightweight, self-contained workflow orchestration engine, written in Go, that runs as a single binary with no external database requirement, positioned explicitly as an alternative to Apache Airflow and cron for teams that don't want to run an SRE-heavy orchestration platform.",
+          "Workflows are defined as YAML-based DAGs supporting shell, Docker, Kubernetes, SSH, HTTP, and SQL steps, with a built-in web UI, scheduling, retries, and — increasingly — a Model Context Protocol server so AI coding agents can author and run workflows directly."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Dagu supports three deployment modes — standalone, headless, and distributed with a coordinator and labeled workers — letting it scale from a single laptop to a small fleet without switching products.",
+          "It is used in production for ETL, legacy script orchestration, media conversion, infrastructure automation, containerized batch jobs, and AI-agent-driven task execution."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "The community edition is GPLv3-licensed and free forever, supporting unlimited self-hosted servers and workers with core scheduling and execution features.",
+          "Paid self-hosted licenses add enterprise controls: Minimum is $50/month (up to 3 servers), Pro is $150/month (up to 15 servers), and Enterprise is custom-priced; a managed GKE-hosted cloud option is also available."
+        ]}
+      ],
+      "features": [
+        {"title": "Single-binary, zero-dependency architecture", "description": "Runs the scheduler, web UI, and execution engine from one Go binary with no required external database."},
+        {"title": "Declarative YAML DAGs", "description": "Workflows are defined in simple YAML, wrapping existing shell scripts, SQL, and tools without rewriting them."},
+        {"title": "Multiple executors", "description": "Native support for shell commands, Docker containers, Kubernetes jobs, SSH, HTTP requests, and SQL queries."},
+        {"title": "Built-in web UI", "description": "Visualizes DAG dependencies, execution status, logs, and allows manual workflow triggering."},
+        {"title": "MCP server for AI agents", "description": "Lets AI coding agents like Claude Code, Codex, and Gemini CLI author and run Dagu workflows directly."},
+        {"title": "Distributed execution", "description": "Coordinator/worker architecture with label-based routing scales Dagu across multiple machines."},
+        {"title": "Operational controls", "description": "Parameters, human approval steps, retries, cron scheduling, and artifact passing between steps."},
+        {"title": "Enterprise add-ons", "description": "Paid licenses add SSO, RBAC, audit logging, and dedicated support on top of the free core."}
+      ],
+      "pros": [
+        "Extremely lightweight; installs and runs as one binary with no database to manage.",
+        "Free, GPLv3-licensed community edition with unlimited self-hosted servers and workers.",
+        "Simple YAML workflow definitions with a built-in web UI for visibility.",
+        "Built-in MCP server makes it a natural fit for AI-agent-driven automation."
+      ],
+      "cons": [
+        "Smaller ecosystem and community than established orchestrators like Airflow or Prefect.",
+        "Enterprise features (SSO, RBAC, audit logging) require a paid license.",
+        "Public information on the company's founding date, size, and funding is limited.",
+        "Best suited to small-to-mid scale workloads; very large-scale orchestration may still favor heavier platforms."
+      ],
+      "faqs": [
+        {"question": "Is Dagu free?", "answer": "Yes, Dagu's community edition is GPLv3-licensed and free forever, with unlimited self-hosted servers and workers and core scheduling/execution features included."},
+        {"question": "Does Dagu require a database?", "answer": "No. Dagu stores execution state in local files by default and runs as a single binary with no required external database or message broker."},
+        {"question": "Can Dagu run Docker or Kubernetes jobs?", "answer": "Yes, Dagu has native executors for Docker containers, Kubernetes jobs, SSH commands, HTTP requests, and SQL queries in addition to shell commands."},
+        {"question": "What are Dagu's paid plans for?", "answer": "Paid self-hosted licenses (Minimum at $50/month and Pro at $150/month) add enterprise features like SSO, RBAC, and audit logging on top of the free core engine."},
+        {"question": "Can AI agents use Dagu?", "answer": "Yes, Dagu includes a built-in Model Context Protocol (MCP) server that lets AI coding agents such as Claude Code and Gemini CLI author and run workflows directly."},
+        {"question": "How is Dagu different from Airflow?", "answer": "Dagu is designed to avoid Airflow's operational complexity, running as a single dependency-free binary instead of requiring a database, broker, and multiple long-running services."}
+      ],
+      "use_cases": [
+        {"title": "Lightweight ETL and data pipeline scheduling", "audience": "Small data teams and solo developers", "description": "Teams that find Airflow too heavy use Dagu to schedule and monitor ETL jobs with a simple YAML DAG and built-in web UI."},
+        {"title": "Legacy script and infrastructure automation", "audience": "DevOps and SRE-adjacent engineers at small companies", "description": "Dagu wraps existing shell scripts, SSH commands, and infrastructure tasks into observable, retryable, schedulable workflows without rewriting them."},
+        {"title": "AI-agent-driven task orchestration", "audience": "Developers building AI agent workflows", "description": "Dagu's MCP server lets AI coding agents define and execute multi-step workflows directly, useful for agentic automation pipelines."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Community (Open Source)", "price": "Free", "billing_cycle": "N/A", "features": ["GPLv3 license, free forever", "Unlimited self-hosted servers and workers", "Web UI, scheduling, and core executors", "Up to 2 API keys"]},
+        {"plan_name": "Minimum", "price": "$50/month", "billing_cycle": "monthly", "features": ["Up to 3 server licenses", "SSO and RBAC", "Audit logging", "Email support"]},
+        {"plan_name": "Pro", "price": "$150/month", "billing_cycle": "monthly", "features": ["Up to 15 server licenses", "SSO and RBAC", "Audit logging", "Email support"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Contact sales", "features": ["Architecture consulting", "Custom implementation", "Dedicated support"]}
+      ],
+      "tags": ["open-source", "self-hosted", "api", "web-app", "free-plan", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "8d0f250c-fcb6-42a1-ba65-14a33ddeb307",
+    "slug": "daily-stars-explorer",
+    "name": "Daily Stars Explorer",
+    "enrichment": {
+      "short_description": "Daily Stars Explorer is a free, open-source tool that shows the full daily and hourly GitHub star history of any repository, beyond GitHub's 40k-star limit.",
+      "pricing_model": "Free / Open Source",
+      "starting_price": "Free",
+      "founded_year": null,
+      "company_size": null,
+      "headquarters": null,
+      "languages": ["English"],
+      "seo_title": "Daily Stars Explorer: Free GitHub Star History Tool",
+      "seo_meta_description": "Daily Stars Explorer is a free, open-source GitHub tool showing full daily and hourly star history, repo comparisons, and activity trends.",
+      "llm_readable_summary": "Daily Stars Explorer is a free, open-source web tool for exploring the complete star history of any public GitHub repository at a daily and, for more recent activity, hourly resolution. It was created and is maintained by a developer using the GitHub handle emanuelef (Emanuele Fumagalli), who has written about the tool's development on Medium, DEV Community, and ITNEXT. The project is hosted at emanuelef.github.io/daily-stars-explorer and its source code lives in the emanuelef/daily-stars-explorer GitHub repository, released under the permissive MIT license, with roughly 393 GitHub stars of its own at the time of this research.\n\nThe core problem Daily Stars Explorer solves is a limitation in GitHub's own star history APIs and in most existing star-history visualization tools: GitHub's public API only returns star events for the most recent roughly 40,000 stargazers of a repository directly, which means popular projects with hundreds of thousands of stars typically show an artificially straight or interpolated line for their early growth on conventional star-history charts. Daily Stars Explorer works around this by fetching star history from both the beginning and the end of a repository's star timeline simultaneously, reconstructing the true daily curve even for very large repositories; the author's own write-ups describe fetching times of roughly three minutes for repositories with 100,000-plus stars on a first request. Once fetched, star history data is cached (with the tool's documentation citing cache windows in the range of seven to ten days across different versions of the product), and users can trigger a refresh to bring the data up to the current day without re-fetching the entire history from scratch.\n\nBeyond raw star counts, the tool surfaces a broader set of GitHub repository analytics: a 'Stars by Hour' chart that breaks down exactly when spikes in popularity happened, using hourly bars layered against the cumulative daily line, which is useful for correlating a star spike with a specific external event such as a Hacker News front-page post, a Reddit thread, a YouTube video, or a viral social media post. The tool explicitly surfaces mentions of a tracked repository from Hacker News, Reddit, YouTube, and GitHub itself, helping maintainers understand what drove a particular growth spike. It also tracks broader repository activity over time beyond stars, including commits, pull requests, issues, and contributor counts, giving a fuller picture of a project's health and momentum rather than stars alone, which are a commonly criticized vanity metric on their own. A side-by-side repository comparison feature lets users evaluate the growth trajectories of two competing open-source projects at once, which is a common use case for developers evaluating alternatives or investors and analysts tracking open-source ecosystem trends. A 'Transform' feature allows different levels of time-series aggregation and can apply Facebook's Prophet forecasting library to visualize trend lines over the raw daily data. Users can bookmark favorite repositories for quick repeat access, export the underlying data as CSV or JSON for their own analysis, and use the interface in a dark mode alongside the default light theme.\n\nTechnically, the project's backend is written primarily in Go (roughly a quarter of the codebase), reflecting its role fetching and processing GitHub API data efficiently, while the frontend is built primarily in JavaScript and TypeScript with supporting HTML and CSS. The project is also packaged for local or self-hosted use via Docker, letting technically inclined users run their own instance rather than relying on the hosted GitHub Pages deployment, which is useful for users who want to avoid the shared GitHub API rate limits of the public instance or who want to track private repositories they have access to.\n\nBecause Daily Stars Explorer is a free, single-maintainer open-source side project rather than a funded company, there is no pricing tier, subscription, or commercial entity behind it — it is entirely free to use at emanuelef.github.io/daily-stars-explorer, and free to self-host under the MIT license. It has no disclosed company size, headquarters, or funding, since it is not operated as a business. Its closest competitors and comparison points are Star History (star-history.com), a similarly purposed but more limited tool that is one of the most widely used GitHub star-history visualizers, along with GitHub's own native insights and traffic pages, which offer more limited historical depth. Daily Stars Explorer differentiates itself primarily through its ability to reconstruct full daily history past the 40k-star API limitation, its hourly-resolution spike analysis, and its broader activity-metric and comparison tooling, making it most useful for open-source maintainers tracking their own project's growth, developers evaluating or comparing competing open-source libraries, and analysts or content creators researching open-source ecosystem trends for articles, investment research, or due diligence.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Daily Stars Explorer is a free, open-source tool built by developer Emanuele Fumagalli (GitHub handle emanuelef) that reconstructs the complete daily, and recently hourly, star history of any public GitHub repository, including projects with more than 40,000 stars where GitHub's own API only exposes recent stargazers.",
+          "It is hosted at emanuelef.github.io/daily-stars-explorer, released under the MIT license, and can also be self-hosted via Docker."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "The tool fetches star history from both ends of a repository's timeline simultaneously to reconstruct accurate daily data even for very large repositories, and adds an hourly 'Stars by Hour' view to pinpoint exactly when growth spikes occurred.",
+          "Beyond stars, it tracks commits, forks, issues, pull requests, and contributors, supports side-by-side repository comparisons, surfaces Hacker News/Reddit/YouTube mentions tied to spikes, and offers CSV/JSON export and Prophet-based trend forecasting."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Daily Stars Explorer is entirely free to use at its hosted GitHub Pages URL, with no subscription tiers or paid features.",
+          "The MIT-licensed source code can also be self-hosted for free via Docker for users who want their own instance or to avoid shared API rate limits."
+        ]}
+      ],
+      "features": [
+        {"title": "Full daily star history", "description": "Reconstructs accurate daily star counts even for repositories with more than 40,000 stars, beyond GitHub API's default limit."},
+        {"title": "Hourly spike analysis", "description": "A 'Stars by Hour' chart pinpoints exactly when growth spikes happened, layered against the cumulative star line."},
+        {"title": "Repository comparison", "description": "Compares two repositories' growth trajectories side by side."},
+        {"title": "Broader activity tracking", "description": "Tracks commits, pull requests, issues, and contributor counts alongside stars for a fuller project health picture."},
+        {"title": "Spike source attribution", "description": "Surfaces mentions from Hacker News, Reddit, YouTube, and GitHub tied to specific growth spikes."},
+        {"title": "Trend forecasting", "description": "Applies Facebook's Prophet library to visualize aggregated trends over raw daily data."},
+        {"title": "Data export", "description": "Exports underlying star and activity data as CSV or JSON for further analysis."},
+        {"title": "Self-hostable via Docker", "description": "Can be run locally or on private infrastructure instead of relying on the hosted instance."}
+      ],
+      "pros": [
+        "Completely free and open source with no account or payment required.",
+        "Overcomes GitHub's 40,000-star API limitation to show true historical growth curves.",
+        "Provides deeper insight than star counts alone via activity metrics and spike source attribution.",
+        "Can be self-hosted via Docker for privacy or to avoid shared rate limits."
+      ],
+      "cons": [
+        "First-time data fetches for very large repositories can take several minutes.",
+        "Maintained by a single developer, so support and update cadence depend on one person's availability.",
+        "Limited to public GitHub repository data unless self-hosted with appropriate access tokens.",
+        "No official roadmap, SLA, or commercial support since it is a free side project rather than a company."
+      ],
+      "faqs": [
+        {"question": "Is Daily Stars Explorer free?", "answer": "Yes, it is completely free to use at emanuelef.github.io/daily-stars-explorer, and the MIT-licensed source code can also be self-hosted for free."},
+        {"question": "How does it show star history beyond GitHub's 40,000-star limit?", "answer": "It fetches star history from both the start and end of a repository's timeline simultaneously, reconstructing the true daily curve rather than the interpolated line most star-history tools show for very popular repositories."},
+        {"question": "Who created Daily Stars Explorer?", "answer": "It was created and is maintained by developer Emanuele Fumagalli (GitHub handle emanuelef) as an open-source project."},
+        {"question": "Can I compare two repositories?", "answer": "Yes, the tool includes a comparison feature to view two repositories' star growth trajectories side by side."},
+        {"question": "Does it track anything besides stars?", "answer": "Yes, it also tracks commits, pull requests, issues, contributors, and surfaces external mentions from Hacker News, Reddit, and YouTube tied to growth spikes."},
+        {"question": "Can I self-host Daily Stars Explorer?", "answer": "Yes, it is packaged for Docker deployment so users can run their own instance instead of using the public GitHub Pages site."}
+      ],
+      "use_cases": [
+        {"title": "Tracking your own open-source project's growth", "audience": "Open-source maintainers", "description": "Maintainers use Daily Stars Explorer to see exactly when their star growth spiked and correlate it with launches, Hacker News posts, or social media mentions."},
+        {"title": "Comparing competing open-source libraries", "audience": "Developers evaluating tools", "description": "Developers choosing between two similar open-source libraries use the comparison feature to see relative growth and momentum over time."},
+        {"title": "Open-source ecosystem research", "audience": "Analysts, investors, and content creators", "description": "Researchers writing about open-source trends or evaluating projects for investment due diligence use the tool's activity metrics and true historical star curves."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Free", "price": "Free", "billing_cycle": "N/A", "features": ["Full hosted access at emanuelef.github.io/daily-stars-explorer", "Unlimited repository lookups (subject to GitHub API rate limits)", "CSV/JSON export", "Self-hostable via Docker"]}
+      ],
+      "tags": ["open-source", "self-hosted", "web-app", "free-plan", "api"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "c4134253-62ea-44f0-8d58-12d26946aac4",
+    "slug": "dall-e",
+    "name": "DALL-E",
+    "enrichment": {
+      "short_description": "DALL-E is OpenAI's text-to-image AI model family. DALL-E 3 is being retired from ChatGPT and the API in 2026, succeeded by the GPT Image model line.",
+      "pricing_model": "Freemium",
+      "starting_price": "Free (ChatGPT); from $0.04/image (API, DALL-E 3, being phased out)",
+      "founded_year": 2015,
+      "company_size": "Large (OpenAI employs several thousand people globally)",
+      "headquarters": "San Francisco, California, United States",
+      "languages": ["English", "Multilingual prompt support"],
+      "seo_title": "DALL-E 3 in 2026: Status, Pricing, and GPT Image Successor",
+      "seo_meta_description": "DALL-E 3 is OpenAI's AI image generator, now being retired in 2026 in favor of GPT Image models. See pricing, history, and what's replacing it.",
+      "llm_readable_summary": "DALL-E is the name of a family of text-to-image AI models developed by OpenAI, the artificial intelligence research and deployment company founded in December 2015 by a group that included Sam Altman, Elon Musk, Greg Brockman, Ilya Sutskever, and others, and headquartered in San Francisco. The original DALL-E was announced in January 2021 as a research demonstration showing that a GPT-3-style transformer model, trained jointly on text and images, could generate plausible images from arbitrary text captions. DALL-E 2, a substantially higher-fidelity successor using a diffusion-based architecture, launched on April 6, 2022, and was rolled out gradually: a beta period opened to roughly one million waitlisted users starting July 20, 2022, the waitlist was removed entirely on September 28, 2022, and an API for developers followed in early November 2022. DALL-E 3 was released natively inside ChatGPT for ChatGPT Plus and Enterprise subscribers in October 2023, with API and 'Labs' platform access following in early November 2023; DALL-E 3 improved prompt-following accuracy substantially over DALL-E 2 and could render legible text within images far more reliably, and it was built with tighter integration into ChatGPT so users could iterate on prompts conversationally.\n\nAs of mid-2026, DALL-E 3 is in the process of being formally retired. OpenAI announced on November 14, 2025 that DALL-E 3 would be removed from the API on May 12, 2026, and Microsoft's Azure OpenAI Service had already retired its DALL-E 3 endpoint on March 4, 2026. Inside ChatGPT itself, OpenAI transitioned default image generation away from DALL-E 3 to its newer GPT Image model line (GPT Image 1, and later GPT Image 1.5) around December 2025, meaning most consumer-facing 'DALL-E' image generation inside ChatGPT today is actually powered by the GPT Image successor models rather than the DALL-E 3 model itself. This makes DALL-E, and specifically DALL-E 3, historically significant as the model that popularized mainstream AI image generation for millions of ChatGPT users, but increasingly a legacy brand as OpenAI consolidates its image generation roadmap under the GPT Image name, which is built on the same underlying multimodal architecture as GPT-4o-class models rather than DALL-E's earlier diffusion-based lineage.\n\nHistorically, DALL-E's pricing and access model evolved through several stages: DALL-E 2 initially used a credit-based system for free users before OpenAI simplified to per-image API pricing; DALL-E 3 was made available at no direct per-image cost to ChatGPT Plus ($20/month) and Enterprise subscribers as part of their subscription, with a limited number of free images available to users on ChatGPT's free tier (typically two to three images per day, subject to change), while API access to DALL-E 3 was billed per image, with standard 1024x1024 resolution priced at roughly $0.04 per image and higher-resolution or HD-quality outputs priced between roughly $0.08 and $0.12 per image. As DALL-E 3 sunsets, OpenAI's GPT Image models have become the pricing and product reference point going forward, with GPT Image 1.5 starting at roughly $0.03 per image for standard quality via the API, positioned as OpenAI's forward-looking, 'future-proof' image generation offering.\n\nDALL-E's core differentiators, particularly at its 2022-2023 peak, were tight integration with ChatGPT's conversational interface (letting users refine an image through natural-language follow-up rather than re-writing a prompt from scratch), strong adherence to complex, multi-object prompts, and industry-leading in-image text rendering compared to contemporaries at the time. Its most direct competitors across its lifespan have included Midjourney (widely regarded as offering stronger raw aesthetic quality for artistic outputs), Stability AI's Stable Diffusion and its many fine-tuned variants (notably cheaper and self-hostable), Google's Imagen and Gemini-integrated image generation, Adobe Firefly (with a commercial-safe licensing angle for enterprise creative workflows), and the open-weight Flux model family from Black Forest Labs, which by 2026 was frequently cited as matching or exceeding DALL-E 3's quality at a lower API price point with better text rendering. Typical users of DALL-E have spanned casual ChatGPT users generating images conversationally, marketers and content creators producing quick visual assets, and developers building DALL-E into third-party applications via the API, though the latter group is now being pushed toward GPT Image models given DALL-E 3's scheduled API removal. Given the deprecation timeline, any team or developer still integrating against the DALL-E 3 API should treat it as a legacy integration and plan a migration to GPT Image 1 or GPT Image 1.5 to avoid a service disruption once OpenAI completes the retirement.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "DALL-E is OpenAI's family of text-to-image AI models, starting with the original DALL-E (announced January 2021), DALL-E 2 (launched April 2022), and DALL-E 3 (released in ChatGPT in October 2023).",
+          "As of 2026, DALL-E 3 is being formally retired: OpenAI is removing it from the API on May 12, 2026, and ChatGPT's default image generation has already shifted to the newer GPT Image model line."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "DALL-E 3's main strengths were tight conversational integration with ChatGPT, strong adherence to complex multi-object prompts, and comparatively reliable rendering of legible text inside generated images.",
+          "It was accessible through ChatGPT Plus/Enterprise subscriptions, a limited ChatGPT free tier, and a pay-per-image API, though all API access is being phased out in favor of GPT Image 1 and GPT Image 1.5."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "DALL-E 3 image generation was included in ChatGPT Plus ($20/month) and Enterprise plans, with a small daily free-tier allowance, while API pricing ran from about $0.04/image (standard) to $0.08-$0.12/image (HD/higher resolution).",
+          "With DALL-E 3's API retirement on May 12, 2026, OpenAI's GPT Image 1.5 (from about $0.03/image) is now the primary supported and forward-looking pricing reference for OpenAI image generation."
+        ]}
+      ],
+      "features": [
+        {"title": "Text-to-image generation", "description": "Generates original images from natural-language text prompts."},
+        {"title": "ChatGPT conversational editing", "description": "Lets users refine generated images through natural-language follow-up prompts inside ChatGPT."},
+        {"title": "In-image text rendering", "description": "Renders legible text within generated images more reliably than many earlier-generation competitors."},
+        {"title": "API access for developers", "description": "Offered programmatic image generation for third-party applications, priced per image (being phased out for DALL-E 3)."},
+        {"title": "Multiple resolution/quality tiers", "description": "Supported standard and HD quality outputs at varying resolutions and price points."},
+        {"title": "Prompt adherence to complex scenes", "description": "Handled multi-object, multi-attribute prompts with comparatively strong accuracy for its era."},
+        {"title": "Integration with ChatGPT's free and paid tiers", "description": "Available to ChatGPT Plus/Enterprise subscribers, with limited daily generations for free-tier users."},
+        {"title": "Succeeded by GPT Image models", "description": "OpenAI's GPT Image 1 and GPT Image 1.5 now serve as the actively maintained successors as DALL-E 3 is retired."}
+      ],
+      "pros": [
+        "Deep, conversational integration with ChatGPT made iterative image editing simple for non-technical users.",
+        "Strong historical reputation for prompt accuracy and legible in-image text versus older competitors.",
+        "Accessible to a huge existing user base through ChatGPT's free and paid tiers.",
+        "OpenAI provides a clear, actively supported successor (GPT Image) for continuity."
+      ],
+      "cons": [
+        "DALL-E 3 is being retired from the API on May 12, 2026, requiring developers to migrate.",
+        "No longer OpenAI's default or most capable image model as of 2026; GPT Image models have superseded it.",
+        "Free-tier ChatGPT image generation is limited to a small number of images per day.",
+        "Newer competitors like Flux and Midjourney are frequently cited as matching or beating DALL-E 3 on quality and price."
+      ],
+      "faqs": [
+        {"question": "Is DALL-E 3 still available in 2026?", "answer": "It is being phased out. OpenAI is removing DALL-E 3 from its API on May 12, 2026, and ChatGPT's default image generation already shifted to the newer GPT Image model line in December 2025."},
+        {"question": "What replaced DALL-E 3?", "answer": "OpenAI's GPT Image 1 and GPT Image 1.5 models are the actively maintained successors, offering improved quality and, in some cases, lower per-image API pricing."},
+        {"question": "How much does DALL-E 3 cost via the API?", "answer": "Historically, standard 1024x1024 images cost about $0.04 each, with HD or higher-resolution outputs priced between roughly $0.08 and $0.12 per image, though this access is being retired."},
+        {"question": "Can I still generate images for free with DALL-E-branded tools?", "answer": "ChatGPT's free tier includes a small daily allowance of AI-generated images (typically a few per day), though these are now generated by GPT Image models rather than DALL-E 3 specifically."},
+        {"question": "Who created DALL-E?", "answer": "DALL-E was created by OpenAI, the AI research company founded in San Francisco in December 2015, with the original DALL-E announced in January 2021."},
+        {"question": "What are DALL-E's main competitors?", "answer": "Midjourney, Stability AI's Stable Diffusion, Google's Imagen/Gemini image generation, Adobe Firefly, and the open-weight Flux model family are its most commonly cited competitors."}
+      ],
+      "use_cases": [
+        {"title": "Conversational image generation for everyday users", "audience": "ChatGPT Plus and free-tier consumers", "description": "Casual users generate and iteratively refine images directly inside ChatGPT conversations without needing a separate design tool."},
+        {"title": "Marketing and content visual assets", "audience": "Marketers and content creators", "description": "Teams use DALL-E-family models to quickly produce blog headers, social graphics, and campaign visuals from text prompts."},
+        {"title": "Developer-integrated image generation (legacy)", "audience": "Developers building on the OpenAI API", "description": "Applications that previously called the DALL-E 3 API for programmatic image generation need to migrate to GPT Image 1/1.5 ahead of the May 2026 API retirement."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "ChatGPT Free", "price": "Free", "billing_cycle": "N/A", "features": ["Limited daily AI image generations (currently via GPT Image models)", "Access within ChatGPT's chat interface"]},
+        {"plan_name": "ChatGPT Plus", "price": "$20/month", "billing_cycle": "monthly", "features": ["Higher image generation limits", "Conversational image editing", "Priority access to newest models"]},
+        {"plan_name": "API (legacy DALL-E 3, retiring May 2026)", "price": "From $0.04/image", "billing_cycle": "pay-per-image", "features": ["Standard 1024x1024 images from $0.04", "HD/higher-resolution images $0.08-$0.12", "Being replaced by GPT Image 1/1.5 API pricing"]}
+      ],
+      "tags": ["ai", "api", "web-app", "ios", "android", "freemium", "free-plan"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "4504a9e9-0f49-455b-ad80-15afb8c4139d",
+    "slug": "dashlane",
+    "name": "Dashlane",
+    "enrichment": {
+      "short_description": "Dashlane is a subscription password manager with unlimited password/passkey storage, AI-powered scam protection, VPN, and dark web monitoring.",
+      "pricing_model": "Subscription",
+      "starting_price": "From ~$4.99/month (billed annually)",
+      "founded_year": 2009,
+      "company_size": "~309 employees (as of 2026)",
+      "headquarters": "New York City, New York, United States",
+      "languages": ["English", "French", "German", "Spanish", "Portuguese", "Italian", "Japanese", "Korean"],
+      "seo_title": "Dashlane Review 2026: Pricing, Features, and Alternatives",
+      "seo_meta_description": "Dashlane is a password manager with AI scam protection, VPN, and dark web monitoring. See 2026 pricing plans for individuals, families, and business.",
+      "llm_readable_summary": "Dashlane is a password management and digital identity security platform founded in 2009 by Emmanuel Schalit, Bernard Liautaud, Alexis Fogel, and Jean Guillou, and headquartered in New York City. The company has raised roughly $192 million in venture funding over multiple rounds, with investors including Sequoia Capital, Hercules Capital, SVB Capital, and SVB Financial Group, positioning it as one of the more heavily capitalized independent players in the consumer and business password management space, alongside competitors such as 1Password, Bitwarden, NordPass, Keeper, and LastPass. As of 2026, Dashlane employs roughly 309 people and reports serving more than 19 million users and over 22,000 businesses globally, spanning both its consumer/personal product line and its business-focused offerings.\n\nAt its core, Dashlane stores usernames, passwords, passkeys, payment card details, and other sensitive personal data in an end-to-end encrypted vault, synced across a user's devices via native apps for Windows, macOS, iOS, and Android, plus browser extensions for Chrome, Firefox, Safari, and Edge. The company uses a zero-knowledge encryption architecture, meaning Dashlane's own servers never have access to a user's unencrypted vault data or master password. Beyond core password storage and autofill, Dashlane's feature set includes a built-in VPN for protecting traffic on public Wi-Fi, dark web monitoring that alerts users when their credentials appear in known data breaches, secure and permissioned password sharing, encrypted document storage, and two-factor authentication support. In February 2026, Dashlane launched Passkey Linked Domains, a security enhancement improving how passkeys are matched and autofilled across related domains, reflecting the company's ongoing push toward passwordless authentication as passkey adoption grows across major platforms. Dashlane also markets AI-powered scam protection, which analyzes sites and autofill contexts in real time to warn users before they enter credentials or payment information on a suspected phishing or scam page, an area of increasing investment across the password manager category as AI-generated phishing content has become harder to detect manually.\n\nA significant recent change to Dashlane's business model was the retirement of its free plan: on September 16, 2025, Dashlane formally discontinued the Free tier that had previously let users store a limited number of passwords at no cost. Existing free users were first migrated to a temporary trial of Premium features starting August 5, 2025, and once that trial period ended on September 16, 2025, free-tier accounts lost the ability to add, edit, or view stored data (though users retained the ability to export their vault). Since that change, Dashlane operates exclusively as a paid subscription product, differentiating it from competitors such as Bitwarden and NordPass that continued to offer functional free tiers into 2026, though Dashlane still offers a 30-day money-back guarantee so new subscribers can trial the paid product with a refund safety net rather than an ongoing free tier.\n\nDashlane's current personal plans include Premium, its flagship individual subscription providing unlimited password and passkey storage, unlimited devices, the built-in VPN, AI-powered scam protection, secure sharing, dark web monitoring, 1GB of encrypted document storage, two-factor authentication, and live chat support, priced starting from roughly the $4-5 per month range when billed annually (promotional first-year pricing has historically been offered to new subscribers, so the effective price can vary by offer). A Friends & Family plan extends Premium-equivalent protection to up to ten family members under one subscription, with the primary plan manager receiving the full Premium feature set (including VPN) while other members receive most features except the VPN. On the business side, Dashlane offers a Starter plan at a flat rate for up to 10 users, a per-seat Business plan, and a more advanced per-seat Omnix tier that adds features such as SSO/SCIM integration, workforce password policy management, and credential breach prevention across domains outside a company's single sign-on perimeter; a fully custom Enterprise tier rounds out the business lineup with dedicated account management and volume-based pricing for large organizations.\n\nDashlane differentiates itself from rivals primarily through its emphasis on user experience and AI-driven proactive security features (scam detection, dark web monitoring, passkey management) bundled directly into its core subscription, and through its inclusion of a VPN at no extra cost on its Premium tier, whereas some competitors charge separately or bundle VPN only at higher tiers. It is best suited to individuals and families willing to pay for an all-in-one, actively maintained password and identity-security product, and to mid-size and large businesses needing centralized credential governance with SSO/SCIM integration, at the cost of Dashlane no longer offering any perpetually free option as of late 2025 onward, unlike several of its direct competitors.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Dashlane is a password management and digital identity security platform founded in 2009 by Emmanuel Schalit, Bernard Liautaud, Alexis Fogel, and Jean Guillou, headquartered in New York City, and backed by roughly $192 million in venture funding.",
+          "It stores passwords, passkeys, and payment details in a zero-knowledge encrypted vault synced across Windows, macOS, iOS, and Android apps and major browser extensions, serving more than 19 million users and 22,000+ businesses as of 2026."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Beyond core password autofill, Dashlane bundles a built-in VPN, dark web breach monitoring, secure password sharing, encrypted document storage, and AI-powered scam/phishing protection into its Premium subscription.",
+          "In February 2026 it launched Passkey Linked Domains to improve cross-domain passkey autofill, reflecting continued investment in passwordless authentication alongside traditional password management."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Dashlane retired its free plan on September 16, 2025 and now operates as a paid-only subscription product, though it offers a 30-day money-back guarantee for new subscribers.",
+          "Personal plans include Premium (individual) and Friends & Family (up to 10 members), while business plans include Starter (flat rate, up to 10 users), per-seat Business, per-seat Omnix, and a custom-priced Enterprise tier."
+        ]}
+      ],
+      "features": [
+        {"title": "Zero-knowledge encrypted vault", "description": "Stores passwords, passkeys, and payment details with end-to-end encryption Dashlane itself cannot access."},
+        {"title": "Cross-platform apps and extensions", "description": "Native apps for Windows, macOS, iOS, and Android plus browser extensions for major browsers."},
+        {"title": "Built-in VPN", "description": "Included with Premium to protect traffic on public Wi-Fi networks."},
+        {"title": "AI-powered scam protection", "description": "Warns users in real time before autofilling credentials on suspected phishing or scam sites."},
+        {"title": "Dark web monitoring", "description": "Alerts users when their credentials appear in known data breaches."},
+        {"title": "Passkey Linked Domains", "description": "Improves passkey matching and autofill across related company domains, launched February 2026."},
+        {"title": "Secure sharing and Friends & Family", "description": "Lets users securely share credentials with trusted contacts or extend protection to family members."},
+        {"title": "Business SSO/SCIM and credential governance", "description": "Omnix and Enterprise plans integrate with SSO/SCIM and manage workforce password policy centrally."}
+      ],
+      "pros": [
+        "All-in-one bundle of password manager, VPN, dark web monitoring, and AI scam protection.",
+        "Strong cross-platform coverage across Windows, macOS, iOS, Android, and major browsers.",
+        "Actively investing in passwordless/passkey features as authentication standards evolve.",
+        "Robust business tier (Omnix) with SSO/SCIM and credential-breach prevention outside SSO."
+      ],
+      "cons": [
+        "No longer offers a free plan as of September 2025, unlike some direct competitors.",
+        "Full public pricing for several tiers is not transparently listed and requires visiting the pricing pages or contacting sales.",
+        "VPN is only bundled with the higher Premium tier, not lower-cost options.",
+        "Business/Enterprise pricing is largely custom and not self-serve for larger organizations."
+      ],
+      "faqs": [
+        {"question": "Does Dashlane have a free plan?", "answer": "No. Dashlane retired its Free plan on September 16, 2025; it now operates as a paid-only subscription with a 30-day money-back guarantee for new subscribers instead of an ongoing free tier."},
+        {"question": "What does Dashlane's Premium plan include?", "answer": "Unlimited password and passkey storage, unlimited devices, a built-in VPN, AI-powered scam protection, secure sharing, dark web monitoring, 1GB of encrypted document storage, and two-factor authentication."},
+        {"question": "Who founded Dashlane?", "answer": "Dashlane was founded in 2009 by Emmanuel Schalit, Bernard Liautaud, Alexis Fogel, and Jean Guillou, and is headquartered in New York City."},
+        {"question": "Does Dashlane offer business plans?", "answer": "Yes, including a flat-rate Starter plan for up to 10 users, per-seat Business and Omnix tiers with SSO/SCIM integration, and a custom-priced Enterprise tier."},
+        {"question": "What is Dashlane's AI scam protection?", "answer": "It's a feature that analyzes sites and autofill context in real time to warn users before they enter credentials or payment details on a suspected phishing or scam page."},
+        {"question": "What are Dashlane's main competitors?", "answer": "1Password, Bitwarden, NordPass, and Keeper are among its most commonly compared competitors in the password manager category."}
+      ],
+      "use_cases": [
+        {"title": "All-in-one personal digital security", "audience": "Individual consumers", "description": "Individuals use Dashlane's Premium plan to store passwords and passkeys, browse securely with the built-in VPN, and get alerted to data breaches and scam sites."},
+        {"title": "Family password and identity protection", "audience": "Families and households", "description": "The Friends & Family plan lets up to 10 family members share centrally managed password protection under one subscription."},
+        {"title": "Enterprise credential governance", "audience": "IT and security teams at mid-size to large businesses", "description": "Businesses use Dashlane's Omnix or Enterprise tiers to enforce password policy, integrate with SSO/SCIM, and prevent credential breaches across domains outside their SSO perimeter."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Premium (Personal)", "price": "From ~$4.99/month", "billing_cycle": "billed annually", "features": ["Unlimited password/passkey storage", "Unlimited devices", "Built-in VPN", "AI scam protection", "Dark web monitoring", "1GB encrypted document storage"]},
+        {"plan_name": "Friends & Family", "price": "~$8/month for up to 10 members", "billing_cycle": "billed annually", "features": ["Up to 10 family members", "Premium features for the plan manager", "Unlimited password storage and devices per member", "Secure sharing dashboard"]},
+        {"plan_name": "Business Starter", "price": "$30/month flat", "billing_cycle": "monthly", "features": ["Up to 10 users", "Core password management", "Admin console"]},
+        {"plan_name": "Business", "price": "~$8/user/month", "billing_cycle": "monthly or annual", "features": ["Per-user password management", "Team sharing and policies", "Admin reporting"]},
+        {"plan_name": "Omnix", "price": "~$11/user/month", "billing_cycle": "monthly or annual", "features": ["SSO/SCIM integration", "Credential breach prevention outside SSO", "Phishing risk detection"]},
+        {"plan_name": "Enterprise", "price": "Custom", "billing_cycle": "Contact sales", "features": ["Volume-based pricing", "Dedicated account management", "Tailored credential security package"]}
+      ],
+      "tags": ["web-app", "ios", "android", "mac", "windows", "free-trial", "ai"],
+      "publish": true
+    }
+  },
+  {
+    "tool_id": "6d0ecf12-94ea-40bf-8961-2c520ff5df26",
+    "slug": "dashword",
+    "name": "Dashword",
+    "enrichment": {
+      "short_description": "Dashword is an AI-powered SEO content optimization platform offering content briefs, real-time scoring, and post-publish content monitoring.",
+      "pricing_model": "Subscription",
+      "starting_price": "$99/month",
+      "founded_year": 2019,
+      "company_size": null,
+      "headquarters": "Tallinn, Estonia",
+      "languages": ["English"],
+      "seo_title": "Dashword Review 2026: Pricing, Features & Alternatives",
+      "seo_meta_description": "Dashword is an AI SEO content optimization tool with content briefs, real-time scoring, and monitoring. Plans start at $99/month, free trial available.",
+      "llm_readable_summary": "Dashword is an AI-powered SEO content optimization platform designed to help content marketers, SEO teams, and agencies research, write, and maintain search-optimized content more efficiently. The company was founded in 2019 and is headquartered in Tallinn, Estonia, placing it within a broader wave of Baltic-region SaaS startups; public details about its founders and exact team size are limited, and no material funding history was found during this research, suggesting Dashword operates as a smaller, likely bootstrapped or lightly funded, independent SaaS company relative to venture-backed competitors in the content optimization space.\n\nThe platform's stated mission, per its own marketing, is to make researching and writing high-quality content 'easy, fast, and measurable,' and its product is built around three connected workflows. The first is content brief creation: Dashword compiles competitor research, target keyword data, and recommended topics/headers into an interactive brief-building interface, which content strategists can then share with writers so that drafts start from data-backed guidance rather than a blank page. The second is content optimization: as a writer works on a piece (either inside Dashword's own editor or via integrations), the platform calculates a real-time SEO content score that reflects how well the draft aligns with what is currently ranking for the target keyword, factoring in elements like topic coverage, related terms, and structural best practices, so writers can improve a piece before publishing rather than after. The third is content monitoring: once content is live, Dashword continues tracking its search rankings and organic performance over time, flagging underperforming or decaying pages and surfacing weekly keyword reports so teams know which existing articles need to be refreshed or expanded, a workflow increasingly important for SEO teams managing large existing content libraries rather than only producing new posts.\n\nDashword also includes AI writing assistance, marketed as an AI Writer feature that can help generate draft content within the word allowances of a given plan, positioning the product not just as a scoring or research tool but as part of the broader AI-assisted content production category that has grown rapidly alongside large language model adoption in content marketing teams. Reported customer feedback cited in Dashword's own marketing, including from a co-founder at productivity software company QuizBreaker and quotes attributed to marketing leaders at other companies, describes consistent traffic increases on articles optimized through the platform and simplified writing workflows when strategic keywords are pre-organized in a brief, though such testimonials should be read as vendor-selected endorsements rather than independent, third-party-verified case studies.\n\nDashword's pricing is structured around two primary named plans plus a custom enterprise tier. The Startup plan is priced at $99 per month and includes roughly 20 to 30 monthly content reports (sources vary slightly on the exact count), 5 user seats, access to the Content Briefs and Content Optimization tools, and an AI Writer allotment cited at roughly 50,000 monthly AI-generated words in some third-party reviews. A mid-tier Business plan, starting around $349 per month, scales this up to roughly 100 content reports, 10 user seats, bulk report creation, API access, and single sign-on (SSO) support, useful for larger content teams and agencies managing many client accounts. An Enterprise tier, cited in third-party reviews as starting from roughly $699 per month, extends further to 100 or more monthly content reports, around 20 user seats, and additional governance and integration features. Dashword also offers a roughly 20 percent discount for customers who choose annual billing over monthly, and provides a free trial (including a full free content report) with no credit card required, letting prospective customers evaluate the Content Brief, Optimization, and Monitoring workflows before subscribing.\n\nDashword competes most directly with other AI-driven SEO content optimization platforms such as Surfer SEO, Clearscope, MarketMuse, and Frase, all of which similarly combine competitor-driven content briefs, real-time optimization scoring, and (in varying degrees) AI writing assistance. Compared to these competitors, third-party reviews (including from outlets such as TechRadar and Originality.AI) tend to characterize Dashword as offering a strong, near-comprehensive feature set for its price point, while noting specific limitations depending on the reviewer — for instance, some reviews flag gaps or rough edges in particular areas of the product relative to more established competitors like Surfer SEO, which has a larger market presence and integration ecosystem. Dashword is best suited to small-to-mid-size content marketing teams, SEO consultants, and agencies that want an integrated brief-to-monitoring workflow without needing to combine several separate point tools for keyword research, content scoring, and rank tracking.",
+      "long_form_blocks": [
+        {"id": "overview", "heading": "Overview", "level": 2, "paragraphs": [
+          "Dashword is an AI-powered SEO content optimization platform, founded in 2019 and headquartered in Tallinn, Estonia, built around content briefs, real-time optimization scoring, and post-publish performance monitoring.",
+          "It targets content marketers, SEO teams, and agencies that want a single workflow spanning research, writing guidance, and ongoing content maintenance rather than separate point tools."
+        ]},
+        {"id": "key-features", "heading": "Key Features", "level": 2, "paragraphs": [
+          "Dashword's Content Brief Builder compiles competitor research and recommended topics into shareable briefs, while its Content Optimization tool scores drafts against what is currently ranking for a target keyword in real time.",
+          "Content Monitoring tracks rankings and organic performance after publication, flagging underperforming pages via weekly keyword reports, and an AI Writer feature helps generate draft content within plan word limits."
+        ]},
+        {"id": "pricing-overview", "heading": "Pricing", "level": 2, "paragraphs": [
+          "Dashword's Startup plan costs $99/month with around 20-30 content reports and 5 user seats, while the Business plan starts around $349/month with roughly 100 reports, 10 seats, bulk report creation, API access, and SSO.",
+          "An Enterprise tier starts around $699/month for larger teams, annual billing carries roughly a 20% discount, and a free trial with a full content report is available with no credit card required."
+        ]}
+      ],
+      "features": [
+        {"title": "Content Brief Builder", "description": "Compiles competitor research and target-keyword data into an interactive, shareable content brief for writers."},
+        {"title": "Real-time content scoring", "description": "Scores drafts against top-ranking competitor content as writers work, before publishing."},
+        {"title": "Content Monitoring", "description": "Tracks live content's search rankings and organic performance, flagging pages that need refreshing."},
+        {"title": "Weekly keyword reports", "description": "Sends automated reports on ranking movement for tracked keywords and pages."},
+        {"title": "AI Writer", "description": "Generates draft content within a plan's monthly AI-word allowance to speed up first drafts."},
+        {"title": "Competitor analysis", "description": "Analyzes top-ranking pages for a keyword to surface topics, headers, and terms to include."},
+        {"title": "Bulk report creation", "description": "Available on higher plans for agencies and teams managing many content pieces at once."},
+        {"title": "API access and SSO", "description": "Available on the Business and Enterprise plans for integration and centralized authentication."}
+      ],
+      "pros": [
+        "Combines content briefs, optimization scoring, and post-publish monitoring in one platform.",
+        "Straightforward two-tier-plus-enterprise pricing structure that's easy to compare against competitors.",
+        "Free trial with a full content report and no credit card required lowers the barrier to evaluation.",
+        "Content Monitoring helps teams prioritize which existing articles to update, not just new content."
+      ],
+      "cons": [
+        "Smaller company with limited public information on team size, funding, or long-term roadmap.",
+        "Faces well-established, larger competitors like Surfer SEO with bigger integration ecosystems.",
+        "Entry-level Startup plan's report and seat limits may be restrictive for larger content teams.",
+        "Full pricing for the Enterprise tier is not transparently published and requires contacting sales."
+      ],
+      "faqs": [
+        {"question": "How much does Dashword cost?", "answer": "The Startup plan starts at $99/month, the Business plan starts around $349/month, and an Enterprise tier starts around $699/month, with roughly a 20% discount for annual billing."},
+        {"question": "Does Dashword offer a free trial?", "answer": "Yes, Dashword offers a free trial including a full content report with no credit card required."},
+        {"question": "What does Dashword's Content Monitoring do?", "answer": "It tracks published content's search rankings and organic performance over time, flagging underperforming or decaying pages and sending weekly keyword reports."},
+        {"question": "Does Dashword include AI writing?", "answer": "Yes, its AI Writer feature can generate draft content within the monthly AI-word allowance of a given plan."},
+        {"question": "Where is Dashword based?", "answer": "Dashword was founded in 2019 and is headquartered in Tallinn, Estonia."},
+        {"question": "What are Dashword's main competitors?", "answer": "Surfer SEO, Clearscope, MarketMuse, and Frase are among the most commonly compared AI-driven SEO content optimization competitors."}
+      ],
+      "use_cases": [
+        {"title": "Data-backed content brief creation", "audience": "Content strategists and editors", "description": "Teams use Dashword to build competitor-informed content briefs and hand them off to writers so drafts start with clear SEO guidance."},
+        {"title": "Real-time on-page SEO optimization", "audience": "SEO writers and freelance content creators", "description": "Writers use Dashword's live scoring to improve topic coverage and keyword usage in a draft before it is published."},
+        {"title": "Ongoing content refresh prioritization", "audience": "SEO managers and agencies", "description": "Teams managing large content libraries use Content Monitoring to identify which existing articles are losing rankings and need updates."}
+      ],
+      "pricing_plans": [
+        {"plan_name": "Startup", "price": "$99/month", "billing_cycle": "monthly (20% off annually)", "features": ["~20-30 monthly content reports", "5 user seats", "Content Briefs", "Content Optimization", "AI Writer"]},
+        {"plan_name": "Business", "price": "From $349/month", "billing_cycle": "monthly (20% off annually)", "features": ["~100 monthly content reports", "10 user seats", "Bulk report creation", "API access", "Single Sign-On (SSO)"]},
+        {"plan_name": "Enterprise", "price": "From ~$699/month", "billing_cycle": "monthly (20% off annually)", "features": ["100+ monthly content reports", "~20 user seats", "Content Monitoring", "API access"]}
+      ],
+      "tags": ["ai", "api", "web-app", "free-trial"],
+      "publish": true
+    }
+  }
+]
