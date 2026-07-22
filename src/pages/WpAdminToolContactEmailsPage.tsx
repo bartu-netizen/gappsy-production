@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Mail, Download, ExternalLink } from 'lucide-react';
+import * as XLSX from 'xlsx';
+import { Mail, Download, ExternalLink, FileSpreadsheet } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import { adminApiFetch, getErrorMessage } from '../lib/adminApiFetch';
 
@@ -7,9 +8,13 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 interface ToolRef { id: string; slug: string; name: string; website: string | null }
-interface EmailRow { tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef }
+interface EmailRow { tool_id: string; email: string; source_url: string | null; discovered_at: string; tool: ToolRef; profile_url: string }
 interface Progress { eligible_total: number; done: number; failed: number; pending: number }
 interface Response { ok: boolean; progress: Progress; emails: EmailRow[]; total_emails: number; error?: string }
+
+function exportFilename(ext: string): string {
+  return `software-tool-scraped-emails-${new Date().toISOString().slice(0, 10)}.${ext}`;
+}
 
 // Read-only view of what the email_discovery_scan scheduled job finds by
 // crawling each paid (non-open-source) tool's own website (see
@@ -38,7 +43,7 @@ export default function WpAdminToolContactEmailsPage() {
     fetchData();
   }, [fetchData]);
 
-  async function handleExport() {
+  async function handleExportCsv() {
     setExporting(true);
     try {
       const token = localStorage.getItem('gappsy_admin_token');
@@ -54,7 +59,7 @@ export default function WpAdminToolContactEmailsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `tool-contact-emails-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = exportFilename('csv');
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
@@ -64,11 +69,30 @@ export default function WpAdminToolContactEmailsPage() {
     }
   }
 
+  // Built from the same rows already loaded for the table — one row per
+  // email (a tool with 3 emails appears 3 times), same shape as the CSV.
+  function handleExportExcel() {
+    if (!data) return;
+    const rows = data.emails.map((r) => ({
+      tool_name: r.tool.name,
+      tool_slug: r.tool.slug,
+      profile_url: r.profile_url,
+      tool_website: r.tool.website || '',
+      email: r.email,
+      source_url: r.source_url || '',
+      discovered_at: r.discovered_at,
+    }));
+    const sheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, sheet, 'Emails');
+    XLSX.writeFile(workbook, exportFilename('xlsx'));
+  }
+
   const progress = data?.progress;
   const pct = progress && progress.eligible_total > 0 ? Math.round(((progress.done + progress.failed) / progress.eligible_total) * 100) : 0;
 
   return (
-    <WpAdminLayout title="Tool Contact Emails" subtitle="Real emails found on each paid tool's own website, for vendor outreach">
+    <WpAdminLayout title="Software Tool Scraped Emails" subtitle="Real emails found on each paid tool's own website, for vendor outreach">
       <div className="p-6 max-w-5xl mx-auto space-y-5">
         {error && <p className="text-sm text-rose-600 bg-rose-50 border border-rose-100 rounded-lg px-4 py-2.5">{error}</p>}
 
@@ -81,14 +105,24 @@ export default function WpAdminToolContactEmailsPage() {
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                   Scan progress &mdash; {progress!.done + progress!.failed} / {progress!.eligible_total} paid tools checked ({pct}%)
                 </p>
-                <button
-                  type="button"
-                  onClick={handleExport}
-                  disabled={exporting || data.emails.length === 0}
-                  className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  <Download className="w-3.5 h-3.5" /> {exporting ? 'Exporting…' : 'Export CSV'}
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleExportCsv}
+                    disabled={exporting || data.emails.length === 0}
+                    className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <Download className="w-3.5 h-3.5" /> {exporting ? 'Exporting…' : 'Export CSV'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleExportExcel}
+                    disabled={data.emails.length === 0}
+                    className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <FileSpreadsheet className="w-3.5 h-3.5" /> Export Excel
+                  </button>
+                </div>
               </div>
               <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
                 <div className="h-full rounded-full bg-indigo-400" style={{ width: `${pct}%` }} />
@@ -115,6 +149,7 @@ export default function WpAdminToolContactEmailsPage() {
                     <thead>
                       <tr className="text-left text-slate-400 border-b border-slate-100">
                         <th className="px-4 py-2 font-semibold">Tool</th>
+                        <th className="px-4 py-2 font-semibold">Profile</th>
                         <th className="px-4 py-2 font-semibold">Email</th>
                         <th className="px-4 py-2 font-semibold">Found on</th>
                         <th className="px-4 py-2 font-semibold">Discovered</th>
@@ -124,6 +159,11 @@ export default function WpAdminToolContactEmailsPage() {
                       {data.emails.map((row, i) => (
                         <tr key={`${row.tool_id}-${row.email}-${i}`} className="border-b border-slate-50 last:border-0">
                           <td className="px-4 py-2 text-slate-700 font-medium">{row.tool.name}</td>
+                          <td className="px-4 py-2 text-slate-400">
+                            <a href={row.profile_url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 inline-flex items-center gap-1">
+                              Profile <ExternalLink className="w-3 h-3 shrink-0" />
+                            </a>
+                          </td>
                           <td className="px-4 py-2 text-slate-600 font-mono flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5 text-slate-300 shrink-0" /> {row.email}
                           </td>

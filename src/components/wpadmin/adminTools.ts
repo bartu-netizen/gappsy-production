@@ -510,10 +510,10 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
   {
     id: 'tool-contact-emails',
-    label: 'Tool Contact Emails',
+    label: 'Software Tool Scraped Emails',
     description: 'Real emails found on each paid tool\'s own website, for vendor outreach',
     href: '/wp-admin/tool-contact-emails',
-    keywords: ['email', 'contact', 'outreach', 'vendor', 'smartlead', 'crawl', 'discovery'],
+    keywords: ['email', 'contact', 'outreach', 'vendor', 'smartlead', 'crawl', 'discovery', 'scraped', 'scraper'],
     group: 'Monetization',
     scopes: ['software'],
     iconName: 'Mail',

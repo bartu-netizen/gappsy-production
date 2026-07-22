@@ -70,12 +70,13 @@ Deno.serve(async (req: Request) => {
 
     const enriched = emailRows
       .map((r) => ({ ...r, tool: toolById.get(r.tool_id) || null }))
-      .filter((r) => r.tool);
+      .filter((r) => r.tool)
+      .map((r) => ({ ...r, profile_url: `https://gappsy.com/tools/${r.tool!.slug}/` }));
 
     if (format === "csv") {
-      const header = ["tool_name", "tool_slug", "tool_website", "email", "source_url", "discovered_at"].map(escCsv).join(",");
+      const header = ["tool_name", "tool_slug", "profile_url", "tool_website", "email", "source_url", "discovered_at"].map(escCsv).join(",");
       const lines = enriched.map((r) =>
-        [r.tool!.name, r.tool!.slug, r.tool!.website || "", r.email, r.source_url || "", r.discovered_at].map((v) => escCsv(String(v))).join(",")
+        [r.tool!.name, r.tool!.slug, r.profile_url, r.tool!.website || "", r.email, r.source_url || "", r.discovered_at].map((v) => escCsv(String(v))).join(",")
       );
       const today = new Date().toISOString().slice(0, 10);
       return csvResponse([header, ...lines].join("\n"), `tool-contact-emails-${today}.csv`);
