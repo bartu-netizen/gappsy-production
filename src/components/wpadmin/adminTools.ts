@@ -830,6 +830,42 @@ export const ADMIN_TOOLS: AdminTool[] = [
   },
 ];
 
+// Token-based scoring shared by the command palette (⌘K) and the dashboard
+// quick-nav box — a purely local ranking over ADMIN_TOOLS, no LLM call.
+// Exact label match ranks highest, then prefix/substring on label, then
+// keyword hits, then group/description hits — good enough to resolve
+// short, imprecise queries ("listclean", "discovery queue") to the right
+// page without any external API.
+function scoreAdminTool(tool: AdminTool, queryTokens: string[]): number {
+  const label = tool.label.toLowerCase();
+  const description = tool.description.toLowerCase();
+  const keywords = tool.keywords.map((k) => k.toLowerCase());
+  const group = tool.group.toLowerCase();
+  let score = 0;
+  for (const token of queryTokens) {
+    if (!token) continue;
+    if (label === token) score += 100;
+    else if (label.startsWith(token)) score += 40;
+    else if (label.includes(token)) score += 25;
+    if (keywords.includes(token)) score += 30;
+    else if (keywords.some((k) => k.includes(token))) score += 15;
+    if (group.includes(token)) score += 8;
+    if (description.includes(token)) score += 5;
+  }
+  return score;
+}
+
+export function searchAdminTools(query: string, limit = 8): AdminTool[] {
+  const trimmed = query.trim().toLowerCase();
+  if (!trimmed) return [];
+  const tokens = trimmed.split(/\s+/).filter(Boolean);
+  return ADMIN_TOOLS.map((tool) => ({ tool, score: scoreAdminTool(tool, tokens) }))
+    .filter((m) => m.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((m) => m.tool);
+}
+
 export const TOOL_GROUPS = ['Overview', 'Discovery', 'Publishing', 'Software', 'Taxonomy', 'Editorial', 'AI Enrichment', 'Content', 'Monetization', 'Email', 'Ops'] as const;
 
 // For a deep-linked detail/editor page that isn't itself a sidebar item

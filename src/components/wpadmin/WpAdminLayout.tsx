@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef, memo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, LogOut, ChevronRight, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar, PlayCircle, UserCog, MousePointerClick, Layers } from 'lucide-react';
+import { Menu, X, Search, LogOut, ChevronRight, ChevronDown, LayoutDashboard, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, Shield, Activity, BarChart2, Users, Filter, LayoutGrid as Layout, Send, Zap, ClipboardList, SlidersHorizontal, Upload, Bell, Link2, TrendingUp, Building2, Flame, Wrench, FolderTree, Tag, GitCompare, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, Compass, PlusCircle, GitMerge, ShieldCheck, Plug, Radar, PlayCircle, UserCog, MousePointerClick, Layers } from 'lucide-react';
 import AdminCommandPalette from './AdminCommandPalette';
 import { ADMIN_TOOLS, ADMIN_VIEWS, TOOL_GROUPS, isToolVisibleInView, inferScopeForPath, type AdminScope, type AdminTool } from './adminTools';
 import { useAdminSession } from '../../contexts/AdminSessionContext';
@@ -8,6 +8,24 @@ import { useAdminViewState } from '../../contexts/AdminViewContext';
 
 const DESKTOP_SCROLL_KEY = 'wpAdminSidebarScroll:desktop';
 const MOBILE_SCROLL_KEY = 'wpAdminSidebarScroll:mobile';
+const SIDEBAR_GROUPS_OPEN_KEY = 'wpAdminSidebarGroupsOpen';
+
+function loadOpenGroups(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(SIDEBAR_GROUPS_OPEN_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveOpenGroups(next: Record<string, boolean>) {
+  try {
+    localStorage.setItem(SIDEBAR_GROUPS_OPEN_KEY, JSON.stringify(next));
+  } catch {
+    // ignore — persistence is a nicety, not required for the sidebar to work
+  }
+}
 
 // The 3 sections whose visibility the view switcher actually controls.
 // Overview (Dashboard) and Shared render in every view regardless — see
@@ -121,8 +139,17 @@ function ViewSwitcher({ view, onViewChange }: { view: AdminScope | 'all'; onView
 
 const SidebarNav = memo(function SidebarNav({ pathname, onNavigate, onLogout, storageKey, view, onViewChange }: NavProps) {
   const navRef = useRef<HTMLElement>(null);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => loadOpenGroups());
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+
+  const toggleGroup = useCallback((key: string) => {
+    setOpenGroups((prev) => {
+      const next = { ...prev, [key]: !(prev[key] ?? false) };
+      saveOpenGroups(next);
+      return next;
+    });
+  }, []);
 
   useLayoutEffect(() => {
     const saved = sessionStorage.getItem(storageKey);
@@ -199,12 +226,25 @@ const SidebarNav = memo(function SidebarNav({ pathname, onNavigate, onLogout, st
         {sections.map(({ scope, label, subGroups }) => (
           <div key={scope} className="pt-4">
             <p className="px-3 pb-1.5 text-[11px] font-bold text-slate-500 uppercase tracking-widest border-t border-slate-100 pt-3">{label}</p>
-            {subGroups.map(({ group, tools }) => (
-              <div key={group} className="pt-2">
-                <p className="px-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{group}</p>
-                {tools.map(renderTool)}
-              </div>
-            ))}
+            {subGroups.map(({ group, tools }) => {
+              const key = `${scope}::${group}`;
+              const hasActiveTool = tools.some((t) => isActive(t.href));
+              const isOpen = hasActiveTool || (openGroups[key] ?? false);
+              return (
+                <div key={group} className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(key)}
+                    className="w-full flex items-center gap-1.5 px-3 py-1 text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    {isOpen ? <ChevronDown className="w-3 h-3 shrink-0" /> : <ChevronRight className="w-3 h-3 shrink-0" />}
+                    <span className="flex-1 text-left text-[10px] font-bold uppercase tracking-widest">{group}</span>
+                    <span className="text-[10px] font-medium normal-case">{tools.length}</span>
+                  </button>
+                  {isOpen && tools.map(renderTool)}
+                </div>
+              );
+            })}
           </div>
         ))}
       </nav>

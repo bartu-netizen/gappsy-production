@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Search, FileEdit, CheckCircle2, Rocket, Archive, AlertTriangle, Download, Clock,
-  LayoutGrid, Tags, GitCompare, TrendingUp, Edit3, ListTodo, Plus,
+  LayoutGrid, Tags, GitCompare, TrendingUp, Edit3, ListTodo, Plus, ChevronRight, ChevronDown,
   Building2, Star, ShieldCheck, Inbox, Activity,
 } from 'lucide-react';
 import WpAdminLayout from '../components/wpadmin/WpAdminLayout';
 import AdminToolCard from '../components/wpadmin/AdminToolCard';
 import AdminCommandPalette from '../components/wpadmin/AdminCommandPalette';
+import AdminQuickNavChat from '../components/wpadmin/AdminQuickNavChat';
 import { ADMIN_TOOLS, TOOL_GROUPS, isToolVisibleInView } from '../components/wpadmin/adminTools';
 import { useAdminFetch } from '../hooks/useAdminFetch';
 import { useAdminView } from '../contexts/AdminViewContext';
@@ -106,6 +107,25 @@ function formatShortDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
+const DASHBOARD_GROUPS_OPEN_KEY = 'wpAdminDashboardGroupsOpen';
+
+function loadDashboardOpenGroups(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(DASHBOARD_GROUPS_OPEN_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveDashboardOpenGroups(next: Record<string, boolean>) {
+  try {
+    localStorage.setItem(DASHBOARD_GROUPS_OPEN_KEY, JSON.stringify(next));
+  } catch {
+    // ignore — persistence is a nicety, not required for the grid to work
+  }
+}
+
 export default function WpAdminDashboardPage() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { data: statsData, isLoading: statsLoading, isError: statsError } = useAdminFetch<PublishingStatsResponse>('admin-publishing-stats');
@@ -113,6 +133,31 @@ export default function WpAdminDashboardPage() {
   const { data: workspaceData, isLoading: workspaceLoading, isError: workspaceError } = useAdminFetch<WorkspaceStatsResponse>('admin-workspace-stats');
   const workspace = workspaceData?.data;
   const view = useAdminView();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => loadDashboardOpenGroups());
+
+  const visibleGroups = TOOL_GROUPS.filter(group => group !== 'Overview')
+    .map(group => ({ group, tools: ADMIN_TOOLS.filter(t => t.group === group && isToolVisibleInView(t, view)) }))
+    .filter(({ tools }) => tools.length > 0);
+
+  const toggleGroup = (group: string) => {
+    setOpenGroups(prev => {
+      const next = { ...prev, [group]: !(prev[group] ?? false) };
+      saveDashboardOpenGroups(next);
+      return next;
+    });
+  };
+
+  const expandAllGroups = () => {
+    const next = Object.fromEntries(visibleGroups.map(({ group }) => [group, true]));
+    setOpenGroups(next);
+    saveDashboardOpenGroups(next);
+  };
+
+  const collapseAllGroups = () => {
+    const next = Object.fromEntries(visibleGroups.map(({ group }) => [group, false]));
+    setOpenGroups(next);
+    saveDashboardOpenGroups(next);
+  };
 
   return (
     <WpAdminLayout title="Dashboard" subtitle="Quick access to all admin tools">
@@ -500,13 +545,16 @@ export default function WpAdminDashboardPage() {
           )}
         </div>
 
-        {/* Search bar */}
+        {/* Quick Nav — local keyword matching against ADMIN_TOOLS, no LLM/API
+            call, just a friendlier front end for the same data ⌘K searches. */}
+        <AdminQuickNavChat />
+
         <button
           onClick={() => setPaletteOpen(true)}
           className="w-full flex items-center gap-3 px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-400 hover:border-blue-300 hover:shadow-sm transition-all text-sm group"
         >
           <Search className="w-4 h-4 group-hover:text-blue-500 transition-colors" />
-          <span className="flex-1 text-left group-hover:text-slate-500">Search tools by name or keyword...</span>
+          <span className="flex-1 text-left group-hover:text-slate-500">Or search tools by name or keyword...</span>
           <div className="hidden sm:flex items-center gap-1">
             <kbd className="text-xs px-1.5 py-0.5 bg-slate-100 rounded border border-slate-200 text-slate-400">⌘</kbd>
             <kbd className="text-xs px-1.5 py-0.5 bg-slate-100 rounded border border-slate-200 text-slate-400">K</kbd>
@@ -518,23 +566,42 @@ export default function WpAdminDashboardPage() {
             Dashboard page would be redundant. Filtered by the same
             All/Agencies/Software/Shared view as the sidebar (via
             AdminViewContext) so this grid never disagrees with what the
-            sidebar is currently showing. */}
-        {TOOL_GROUPS.filter(group => group !== 'Overview')
-          .map(group => ({ group, tools: ADMIN_TOOLS.filter(t => t.group === group && isToolVisibleInView(t, view)) }))
-          .filter(({ tools }) => tools.length > 0)
-          .map(({ group, tools }) => (
-          <div key={group}>
-            <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{group}</h2>
-              <div className="flex-1 h-px bg-slate-100" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-              {tools.map(tool => (
-                <AdminToolCard key={tool.id} tool={tool} />
-              ))}
-            </div>
+            sidebar is currently showing. Collapsed by default (state
+            remembered per group in localStorage) so a rarely-touched group
+            like AI Enrichment doesn't push everything else down the page. */}
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">All Tools</h2>
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+            <button type="button" onClick={expandAllGroups} className="hover:text-indigo-600 transition-colors">Expand all</button>
+            <span className="text-slate-200">/</span>
+            <button type="button" onClick={collapseAllGroups} className="hover:text-indigo-600 transition-colors">Collapse all</button>
           </div>
-        ))}
+        </div>
+
+        {visibleGroups.map(({ group, tools }) => {
+          const isOpen = openGroups[group] ?? false;
+          return (
+            <div key={group}>
+              <button
+                type="button"
+                onClick={() => toggleGroup(group)}
+                className="w-full flex items-center gap-2 mb-4 group/header"
+              >
+                {isOpen ? <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" /> : <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />}
+                <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover/header:text-slate-600 transition-colors">{group}</h2>
+                <span className="text-[10px] font-medium text-slate-300">{tools.length}</span>
+                <div className="flex-1 h-px bg-slate-100" />
+              </button>
+              {isOpen && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                  {tools.map(tool => (
+                    <AdminToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </WpAdminLayout>
   );

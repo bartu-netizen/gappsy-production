@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, ArrowRight, CreditCard as Edit2, FileJson, Image, Star, LayoutGrid, CreditCard, Inbox, Mail, AlertTriangle, Settings, GitMerge, Upload, UploadCloud, Building2, MailOpen, Send, Activity, CheckCircle, MessageSquare, UserSearch, TrendingUp, Target, EyeOff, BarChart2, Bell, Zap, Shield, Link2, Wrench, FolderTree, Tag, GitCompare, Flame, Rocket, ListChecks, FileEdit, History, Gauge, Workflow, Globe2, Archive, LayoutDashboard, PlayCircle, UserCog, MousePointerClick } from 'lucide-react';
-import { ADMIN_TOOLS, TOOL_GROUPS, AdminTool } from './adminTools';
+import { ADMIN_TOOLS, TOOL_GROUPS, AdminTool, searchAdminTools } from './adminTools';
 
 const ICON_MAP: Record<string, JSX.Element> = {
   PlayCircle: <PlayCircle className="w-4 h-4" />,
@@ -75,16 +75,7 @@ export default function AdminCommandPalette({ open, onClose }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const filtered = query.trim()
-    ? ADMIN_TOOLS.filter(t => {
-        const q = query.toLowerCase();
-        return (
-          t.label.toLowerCase().includes(q) ||
-          t.description.toLowerCase().includes(q) ||
-          t.keywords.some(k => k.includes(q))
-        );
-      })
-    : ADMIN_TOOLS;
+  const filtered = query.trim() ? searchAdminTools(query, ADMIN_TOOLS.length) : ADMIN_TOOLS;
 
   const groupedResults = query.trim()
     ? [{ group: null, tools: filtered }]
