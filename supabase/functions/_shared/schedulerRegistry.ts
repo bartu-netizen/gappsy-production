@@ -542,6 +542,19 @@ const EMAIL_DISCOVERY_TICK_BUDGET_MS = 30_000;
 // far better than the function hanging until forcibly killed uncleanly.
 const EMAIL_DISCOVERY_HARD_DEADLINE_MS = 45_000;
 
+// Real crawler-gateway load test (2026-07-23, against the live server,
+// bypassing the scheduler): 2/4 concurrent crawls stayed fast and 100%
+// reliable, 8 concurrent still succeeded but visibly slowed (~2.4x
+// latency), 12 concurrent started genuinely timing out (2/12 failed) —
+// the real ceiling, not a guess. crawl_queue_drain already runs up to
+// crawl_settings.max_concurrent_crawls (2) independently on this same
+// gateway, so this job's own concurrency is capped well below the
+// observed failure point to leave headroom for that plus real-world
+// sites being slower than the fast, reliable ones used for the test —
+// worst case combined load stays at 2 + 4 = 6, comfortably under where
+// things start failing (12) or even meaningfully degrading (8).
+const EMAIL_DISCOVERY_CRAWL_CONCURRENCY = 4;
+
 async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
   const { supabase, config } = ctx;
   const batchSize = typeof config.batch_size === "number" && config.batch_size > 0
@@ -571,12 +584,7 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
   let retried = 0;
   let stoppedEarly = false;
 
-  async function runBatch() {
-  for (const tool of tools as any[]) {
-    if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
-      stoppedEarly = true;
-      break; // out of budget for this tick — the rest stay pending for the next one
-    }
+  async function processTool(tool: any) {
     const nowIso = new Date().toISOString();
     const markTerminal = (status: "done" | "failed") =>
       supabase.from("tools").update({ email_discovery_status: status, email_discovery_checked_at: nowIso }).eq("id", tool.id);
@@ -585,7 +593,7 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
     if (!urlCheck.ok) {
       await markTerminal("failed"); // permanent — no crawlable URL to retry
       failed++;
-      continue;
+      return;
     }
 
     // No client-side DNS/SSRF pre-check here (deliberately, unlike the
@@ -610,7 +618,6 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
     const SAFE_MAX_DEPTH = 1;
 
     try {
-
       const primary = await crawlForEmails(urlCheck.normalizedUrl!, SAFE_MAX_PAGES, SAFE_MAX_DEPTH);
 
       // Always run the /contact pass too, even when the homepage pass
@@ -655,6 +662,21 @@ async function emailDiscoveryScanHandler(ctx: SchedulerJobContext): Promise<Reco
       }
     }
   }
+
+  // Processed in bounded-concurrency waves (see EMAIL_DISCOVERY_CRAWL_CONCURRENCY
+  // above) rather than one at a time — the tick/hard-deadline budgets below
+  // still apply the same way, just checked between waves instead of
+  // between individual tools.
+  async function runBatch() {
+    const toolList = tools as any[];
+    for (let i = 0; i < toolList.length; i += EMAIL_DISCOVERY_CRAWL_CONCURRENCY) {
+      if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
+        stoppedEarly = true;
+        break; // out of budget for this tick — the rest stay pending for the next one
+      }
+      const wave = toolList.slice(i, i + EMAIL_DISCOVERY_CRAWL_CONCURRENCY);
+      await Promise.all(wave.map((tool) => processTool(tool)));
+    }
   }
 
   await Promise.race([
@@ -716,12 +738,7 @@ async function discoveredToolEmailScanHandler(ctx: SchedulerJobContext): Promise
   let retried = 0;
   let stoppedEarly = false;
 
-  async function runBatch() {
-  for (const candidate of candidates as any[]) {
-    if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
-      stoppedEarly = true;
-      break;
-    }
+  async function processCandidate(candidate: any) {
     const nowIso = new Date().toISOString();
     const markTerminal = (status: "done" | "failed") =>
       supabase.from("discovered_tools").update({ email_discovery_status: status, email_discovery_checked_at: nowIso }).eq("id", candidate.id);
@@ -732,14 +749,14 @@ async function discoveredToolEmailScanHandler(ctx: SchedulerJobContext): Promise
     if (/(^|\.)github\.com$/i.test(new URL(candidate.official_website, "https://x").hostname || "")) {
       await markTerminal("failed");
       failed++;
-      continue;
+      return;
     }
 
     const urlCheck = validateCrawlUrl(candidate.official_website);
     if (!urlCheck.ok) {
       await markTerminal("failed");
       failed++;
-      continue;
+      return;
     }
 
     const SAFE_MAX_PAGES = 3;
@@ -782,6 +799,21 @@ async function discoveredToolEmailScanHandler(ctx: SchedulerJobContext): Promise
       }
     }
   }
+
+  // Same bounded-concurrency-wave pattern as emailDiscoveryScanHandler
+  // (see EMAIL_DISCOVERY_CRAWL_CONCURRENCY) — both scan jobs share the
+  // one-heavy-job-per-tick slot, so only one of them is ever actually
+  // crawling at a time, keeping total gateway concurrency the same either way.
+  async function runBatch() {
+    const candidateList = candidates as any[];
+    for (let i = 0; i < candidateList.length; i += EMAIL_DISCOVERY_CRAWL_CONCURRENCY) {
+      if (Date.now() - tickStartedAt > EMAIL_DISCOVERY_TICK_BUDGET_MS) {
+        stoppedEarly = true;
+        break;
+      }
+      const wave = candidateList.slice(i, i + EMAIL_DISCOVERY_CRAWL_CONCURRENCY);
+      await Promise.all(wave.map((candidate) => processCandidate(candidate)));
+    }
   }
 
   await Promise.race([
