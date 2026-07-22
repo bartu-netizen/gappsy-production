@@ -43,11 +43,11 @@ export default function WpAdminToolContactEmailsPage() {
     fetchData();
   }, [fetchData]);
 
-  async function handleExportCsv() {
+  async function handleExportCsv(format: 'csv' | 'listclean') {
     setExporting(true);
     try {
       const token = localStorage.getItem('gappsy_admin_token');
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-tool-contact-emails?format=csv`, {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-tool-contact-emails?format=${format}`, {
         headers: {
           Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
           ...(token ? { 'x-admin-token': token } : {}),
@@ -59,7 +59,7 @@ export default function WpAdminToolContactEmailsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = exportFilename('csv');
+      a.download = format === 'listclean' ? `tool-emails-listclean-${new Date().toISOString().slice(0, 10)}.csv` : exportFilename('csv');
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
@@ -108,11 +108,20 @@ export default function WpAdminToolContactEmailsPage() {
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
-                    onClick={handleExportCsv}
+                    onClick={() => handleExportCsv('listclean')}
+                    disabled={exporting || data.emails.length === 0}
+                    className="flex items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                    title="email, email_normalized, tool_id, tool_slug, profile_url — one row per email"
+                  >
+                    <Download className="w-3.5 h-3.5" /> {exporting ? 'Exporting…' : 'Export for ListClean'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleExportCsv('csv')}
                     disabled={exporting || data.emails.length === 0}
                     className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    <Download className="w-3.5 h-3.5" /> {exporting ? 'Exporting…' : 'Export CSV'}
+                    <Download className="w-3.5 h-3.5" /> Export CSV
                   </button>
                   <button
                     type="button"

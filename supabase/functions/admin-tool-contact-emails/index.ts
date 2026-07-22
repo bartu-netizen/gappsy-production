@@ -82,6 +82,19 @@ Deno.serve(async (req: Request) => {
       return csvResponse([header, ...lines].join("\n"), `tool-contact-emails-${today}.csv`);
     }
 
+    // Same shape/convention as other-agencies-export-listclean-csv (email +
+    // email_normalized first, then reference columns for manual re-matching
+    // after cleaning) — one row per email, profile_url on every row so a
+    // cleaned result can be traced straight back to the tool's page.
+    if (format === "listclean") {
+      const header = ["email", "email_normalized", "tool_id", "tool_slug", "profile_url"].map(escCsv).join(",");
+      const lines = enriched.map((r) =>
+        [r.email, r.email, r.tool_id, r.tool!.slug, r.profile_url].map((v) => escCsv(String(v))).join(",")
+      );
+      const today = new Date().toISOString().slice(0, 10);
+      return csvResponse([header, ...lines].join("\n"), `tool-emails-listclean-${today}.csv`);
+    }
+
     return jsonResponse({ ok: true, progress, emails: enriched, total_emails: enriched.length });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
