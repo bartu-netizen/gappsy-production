@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, ArrowUpLeft } from 'lucide-react';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
@@ -491,8 +491,8 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             )}
 
-            <p className="text-center text-[12.5px] font-semibold uppercase tracking-wide text-slate-400 mb-2.5">
-              Everything below is extra — on top of what your claimed listing already has
+            <p className="text-center text-[12.5px] text-slate-400 mb-3">
+              Everything below is extra
             </p>
 
             {/* CSS Grid instead of a <table>: every "row" is 3 grid items, so
@@ -506,9 +506,9 @@ export default function FeatureMyProductOnboardingPage() {
                 <div />
                 <div />
                 <div className="flex flex-col items-center">
-                  <p className="flex items-center gap-1 text-[10.5px] font-semibold text-[#4F47E6]">
-                    <ArrowUpLeft className="w-3 h-3 shrink-0" aria-hidden="true" />
-                    ≈4 months free vs. monthly
+                  <p className="flex items-center gap-1 text-[10.5px] font-semibold text-[#4F47E6] whitespace-nowrap">
+                    ≈4 months free
+                    <CornerRightDown className="w-3 h-3 shrink-0" aria-hidden="true" />
                   </p>
                   <span className="relative z-10 -mb-2.5 mt-1 inline-block bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full whitespace-nowrap shadow-md">
                     Best value
