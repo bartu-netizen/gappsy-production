@@ -10,21 +10,27 @@
 /api/admin/email/messages/:id  /.netlify/functions/quick-send-detail  200!
 
 # ========================================
-# CANONICAL SEO REDIRECTS (APEX PRIMARY DOMAIN)
+# CANONICAL SEO REDIRECTS (WWW PRIMARY DOMAIN)
 # ========================================
-# Target: https://gappsy.com/<path>/
-# Netlify's site config has gappsy.com (apex) set as the primary custom
-# domain, which makes Netlify auto-redirect www.gappsy.com -> gappsy.com
-# at the platform level. This file previously forced the opposite
-# direction (apex -> www), and the two redirect rules fought each other,
-# producing an infinite gappsy.com <-> www.gappsy.com redirect loop that
-# took the whole site down. We enforce apex as the primary domain here to
-# match Netlify's actual configuration.
+# Target: https://www.gappsy.com/<path>/
+# LIVE INCIDENT 2026-07-22: something outside Netlify (DNS/registrar-level
+# forwarding, not this repo, not Netlify's own dashboard config) started
+# redirecting apex gappsy.com -> www.gappsy.com. This file previously
+# forced the opposite direction (www -> apex) to match Netlify's THEN
+# config (apex primary, confirmed via API: custom_domain=gappsy.com,
+# domain_aliases=[]) — with that external apex->www redirect now also in
+# play, the two fought each other, an infinite gappsy.com <-> www loop,
+# taking the whole site down (ERR_TOO_MANY_REDIRECTS). Canonical tags/
+# sitemap/robots already pointed at www.gappsy.com in anticipation of a
+# planned cutover (see project memory) — flipping this file to match is
+# completing that cutover, not improvising a new direction. Netlify's
+# site-level primary domain was ALSO updated to www.gappsy.com (via API,
+# domain_aliases=["gappsy.com"]) to match — both sides now agree.
 
-# Step 1: Redirect www and HTTP to the canonical apex HTTPS URL
-http://gappsy.com/*  https://gappsy.com/:splat  301!
-http://www.gappsy.com/*  https://gappsy.com/:splat  301!
-https://www.gappsy.com/*  https://gappsy.com/:splat  301!
+# Step 1: Redirect apex and HTTP to the canonical www HTTPS URL
+http://gappsy.com/*  https://www.gappsy.com/:splat  301!
+http://www.gappsy.com/*  https://www.gappsy.com/:splat  301!
+https://gappsy.com/*  https://www.gappsy.com/:splat  301!
 
 # Step 2: Add trailing slash for page URLs only (exclude files with extensions and API routes)
 # This regex matches paths without dots (files) and without trailing slash
