@@ -27,6 +27,7 @@ import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
+import VideoEmbedSection from '../components/tools/detail/VideoEmbedSection';
 
 interface ComparisonRow {
   id: string;
@@ -353,6 +354,8 @@ export default function CompareDetailPage() {
                 when there's actually a promo to fill it with. */}
             <div className={hasSidebarPromos ? 'flex flex-col lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start' : ''}>
               <div className="space-y-14 min-w-0">
+                <VideoEmbedSection pagePath={`/compare/${comparison.slug}`} />
+
                 {comparisonContent && (
                   <section id="verdict" className="scroll-mt-24">
                     <p className="text-[15px] sm:text-lg text-slate-700 leading-[1.75] max-w-[70ch]">{comparisonContent.verdict}</p>
