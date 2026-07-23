@@ -482,6 +482,59 @@ export async function pauseCampaign(campaignId: string): Promise<boolean> {
   return response.ok === true || response.success === true;
 }
 
+// Matches Smartlead's documented "Get Lead by Email" endpoint: GET /leads/
+// with an email filter — returns the lead's account-wide id plus which
+// campaigns it's currently in (campaign_lead_map), needed to pause it in
+// each one without knowing the lead_id ahead of time.
+export interface SmartleadLeadLookup {
+  id: number | string;
+  email: string;
+  campaignIds: string[];
+}
+
+export async function getLeadByEmail(email: string): Promise<SmartleadLeadLookup | null> {
+  const response = await apiFetch("/leads/", { email });
+  logResponseShape("getLeadByEmail", response);
+  if (!isObject(response)) return null;
+
+  // Smartlead's own docs are inconsistent about whether this returns a bare
+  // lead object or one wrapped in a list — handle both defensively rather
+  // than assume one shape and silently no-op on the other.
+  const containers = collectAllNestedContainers(response);
+  const leadContainer = containers.find((c) => safeGet(c, "id") != null || safeGet(c, "lead_id") != null);
+  if (!leadContainer) return null;
+
+  const id = safeGet(leadContainer, "id") ?? safeGet(leadContainer, "lead_id");
+  if (id == null) return null;
+
+  const campaignMap = safeGet(leadContainer, "campaign_lead_map") ?? safeGet(response, "campaign_lead_map");
+  const campaignIds: string[] = Array.isArray(campaignMap)
+    ? campaignMap
+        .map((c) => (isObject(c) ? safeGet(c, "campaign_id") : null))
+        .filter((v): v is string | number => v != null)
+        .map(String)
+    : [];
+
+  return { id: id as number | string, email, campaignIds };
+}
+
+// Matches Smartlead's documented "Pause a Lead" endpoint: POST
+// /campaigns/{campaign_id}/leads/{lead_id}/pause — stops all future emails
+// to that ONE lead within that one campaign, unlike pauseCampaign() above
+// which pauses the whole campaign for every lead in it.
+export async function pauseLeadInCampaign(campaignId: string, leadId: number | string): Promise<boolean> {
+  try {
+    const response = await apiPost(`/campaigns/${campaignId}/leads/${leadId}/pause`, {});
+    if (!isObject(response)) return false;
+    return response.ok === true || response.success === true;
+  } catch (err) {
+    // Not every lead is actually in every campaign we try — a 404/400 here
+    // is an expected "nothing to pause", not a real failure.
+    console.warn(`[smartleadClient] pauseLeadInCampaign(${campaignId}, ${leadId}) failed (may just mean not enrolled):`, (err as Error).message);
+    return false;
+  }
+}
+
 export async function resumeCampaign(campaignId: string): Promise<boolean> {
   const response = await apiPost(`/campaigns/${campaignId}/status`, { status: "ACTIVE" });
   if (!isObject(response)) return false;

@@ -14,6 +14,7 @@ import type Stripe from "npm:stripe@17.7.0";
 import { validateCrawlUrl } from "./crawlUrlSafety.ts";
 import { drainCrawlQueue } from "./crawlRunner.ts";
 import { sendEmail } from "./emailClient.ts";
+import { syncSmartleadAfterPurchase } from "./smartleadSync.ts";
 
 const TOKEN_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 
@@ -252,6 +253,20 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
     product,
     billingInterval,
   });
+
+  // Stops the cold-outreach "you're not listed yet" campaign the instant
+  // someone converts, and (claim-only buyers) enrolls them in the separate
+  // Growth-upsell campaign instead — see smartleadSync.ts for the full
+  // rationale. Best-effort: a Smartlead hiccup must never affect the
+  // customer's actual purchase/activation.
+  if (contactEmail) {
+    try {
+      const smartleadResult = await syncSmartleadAfterPurchase(contactEmail, product);
+      console.log("[vendorFeatureActivation] post-purchase Smartlead sync:", { contactEmail, product, ...smartleadResult });
+    } catch (err) {
+      console.error("[vendorFeatureActivation] post-purchase Smartlead sync failed:", (err as Error).message);
+    }
+  }
 }
 
 // customer.subscription.updated/deleted — keeps featured_until / tools.featured
