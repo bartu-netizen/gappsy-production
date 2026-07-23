@@ -1,3 +1,5 @@
+import { getVisitorId } from "../utils/funnelTracking";
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
@@ -35,7 +37,7 @@ async function callFunction(name: string, body: Record<string, unknown>): Promis
   const res = await fetch(`${SUPABASE_URL}/functions/v1/${name}`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ visitor_id: getVisitorId(), ...body }),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "Invalid response" }));
   return data;

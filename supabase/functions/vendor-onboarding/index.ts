@@ -234,6 +234,7 @@ Deno.serve(async (req: Request) => {
         const finalUrl = validation.final_url || urlCheck.normalizedUrl || normalized;
         const duplicateMatch = await findDuplicate(supabase, hostname, slugify(hostname), finalUrl);
 
+        const visitorId = typeof payload.visitor_id === "string" ? payload.visitor_id : null;
         const baseSessionRow = {
           submitted_url: rawUrl.trim(),
           normalized_hostname: hostname,
@@ -245,6 +246,7 @@ Deno.serve(async (req: Request) => {
           landing_page: typeof payload.landing_page === "string" ? payload.landing_page : null,
           ip_address: visitor.ip_address,
           user_agent: visitor.user_agent,
+          visitor_id: visitorId,
         };
 
         if (duplicateMatch.againstTable === "tools") {
@@ -267,9 +269,9 @@ Deno.serve(async (req: Request) => {
             .single();
 
           await supabase.from("vendor_funnel_events").insert([
-            { onboarding_session_id: session?.id, event_name: "funnel_started", ...utmMeta(baseSessionRow) },
-            { onboarding_session_id: session?.id, event_name: "website_submitted", ...utmMeta(baseSessionRow) },
-            { onboarding_session_id: session?.id, event_name: "product_match_found", metadata: { tool_id: duplicateMatch.id } },
+            { onboarding_session_id: session?.id, event_name: "funnel_started", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+            { onboarding_session_id: session?.id, event_name: "website_submitted", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+            { onboarding_session_id: session?.id, event_name: "product_match_found", visitor_id: visitorId, metadata: { tool_id: duplicateMatch.id } },
           ]);
 
           if (activeSub) {
@@ -313,9 +315,9 @@ Deno.serve(async (req: Request) => {
             .single();
 
           await supabase.from("vendor_funnel_events").insert([
-            { onboarding_session_id: session?.id, event_name: "funnel_started", ...utmMeta(baseSessionRow) },
-            { onboarding_session_id: session?.id, event_name: "website_submitted", ...utmMeta(baseSessionRow) },
-            { onboarding_session_id: session?.id, event_name: "product_match_found", metadata: { discovered_tool_id: duplicateMatch.id, pending: true } },
+            { onboarding_session_id: session?.id, event_name: "funnel_started", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+            { onboarding_session_id: session?.id, event_name: "website_submitted", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+            { onboarding_session_id: session?.id, event_name: "product_match_found", visitor_id: visitorId, metadata: { discovered_tool_id: duplicateMatch.id, pending: true } },
           ]);
 
           if (activeSub) {
@@ -347,9 +349,9 @@ Deno.serve(async (req: Request) => {
           .single();
 
         await supabase.from("vendor_funnel_events").insert([
-          { onboarding_session_id: session?.id, event_name: "funnel_started", ...utmMeta(baseSessionRow) },
-          { onboarding_session_id: session?.id, event_name: "website_submitted", ...utmMeta(baseSessionRow) },
-          { onboarding_session_id: session?.id, event_name: "product_not_found" },
+          { onboarding_session_id: session?.id, event_name: "funnel_started", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+          { onboarding_session_id: session?.id, event_name: "website_submitted", visitor_id: visitorId, ...utmMeta(baseSessionRow) },
+          { onboarding_session_id: session?.id, event_name: "product_not_found", visitor_id: visitorId },
         ]);
 
         return jsonResponse({
@@ -400,7 +402,7 @@ Deno.serve(async (req: Request) => {
           .from("vendor_onboarding_sessions")
           .update({ matched_discovered_tool_id: discoveredToolId, product_name_input: productName, website_input: website, updated_at: new Date().toISOString() })
           .eq("id", sessionId);
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "product_confirmed", metadata: { discovered_tool_id: discoveredToolId } });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "product_confirmed", visitor_id: session.visitor_id ?? null, metadata: { discovered_tool_id: discoveredToolId } });
 
         return jsonResponse({ ok: true, discovered_tool_id: discoveredToolId });
       }
@@ -415,7 +417,7 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({ ok: false, error: "A valid business email and ownership confirmation are required." }, 400);
         }
 
-        const { data: session } = await supabase.from("vendor_onboarding_sessions").select("normalized_hostname").eq("id", sessionId).maybeSingle();
+        const { data: session } = await supabase.from("vendor_onboarding_sessions").select("normalized_hostname, visitor_id").eq("id", sessionId).maybeSingle();
         if (!session) return jsonResponse({ ok: false, error: "Session not found" }, 404);
 
         const domainMatch = emailDomainMatchesHost(email, session.normalized_hostname);
@@ -423,7 +425,7 @@ Deno.serve(async (req: Request) => {
           .from("vendor_onboarding_sessions")
           .update({ contact_email: email, contact_name: name, ownership_confirmed: true, email_domain_matches_website: domainMatch, status: "contact_collected", updated_at: new Date().toISOString() })
           .eq("id", sessionId);
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "email_submitted", metadata: { domain_match: domainMatch } });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "email_submitted", visitor_id: session.visitor_id ?? null, metadata: { domain_match: domainMatch } });
 
         return jsonResponse({ ok: true, email_domain_matches_website: domainMatch });
       }
@@ -452,7 +454,7 @@ Deno.serve(async (req: Request) => {
         const { data: session } = await supabase.from("vendor_onboarding_sessions").select("*").eq("id", sessionId).maybeSingle();
         if (!session || !session.contact_email) return jsonResponse({ ok: false, error: "Session not ready for checkout" }, 400);
 
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed", metadata: { product, billing_interval: billingInterval } });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed", visitor_id: session.visitor_id ?? null, metadata: { product, billing_interval: billingInterval } });
 
         await reapStalePendingPayments(session.matched_tool_id, session.matched_discovered_tool_id, product);
 
@@ -565,7 +567,7 @@ Deno.serve(async (req: Request) => {
 
         await supabase.from("vendor_feature_subscriptions").update({ stripe_checkout_session_id: stripeSession.id }).eq("id", subRow.id);
         await supabase.from("vendor_onboarding_sessions").update({ stripe_checkout_session_id: stripeSession.id, status: "checkout_pending", updated_at: new Date().toISOString() }).eq("id", sessionId);
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "checkout_started", metadata: { stripe_checkout_session_id: stripeSession.id, product, billing_interval: billingInterval } });
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "checkout_started", visitor_id: session.visitor_id ?? null, metadata: { stripe_checkout_session_id: stripeSession.id, product, billing_interval: billingInterval } });
 
         return jsonResponse({ ok: true, checkout_url: stripeSession.url });
       }
@@ -616,7 +618,10 @@ Deno.serve(async (req: Request) => {
         const eventName = typeof payload.event_name === "string" ? payload.event_name : "";
         const allowed = ["checkout_abandoned", "verification_started"];
         if (!sessionId || !allowed.includes(eventName)) return jsonResponse({ ok: false, error: "Invalid event" }, 400);
-        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: eventName, metadata: (payload.metadata as Record<string, unknown>) || {} });
+        const payloadVisitorId = typeof payload.visitor_id === "string" ? payload.visitor_id : null;
+        const { data: eventSession } = await supabase.from("vendor_onboarding_sessions").select("visitor_id").eq("id", sessionId).maybeSingle();
+        const eventVisitorId = eventSession?.visitor_id ?? payloadVisitorId;
+        await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: eventName, visitor_id: eventVisitorId, metadata: (payload.metadata as Record<string, unknown>) || {} });
         return jsonResponse({ ok: true });
       }
 

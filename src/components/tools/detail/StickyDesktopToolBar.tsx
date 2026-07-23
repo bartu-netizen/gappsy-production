@@ -2,9 +2,15 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowLeft, ChevronRight, X } from 'lucide-react';
 import type { FeaturedTool } from './FeaturedToolPromo';
+import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 import OverflowMarqueeText from './OverflowMarqueeText';
 
 interface StickyDesktopToolBarProps {
+  // Optional because compare pages (CompareDetailPage/GroupCompareDetailPage)
+  // render this bar with no single "current tool" to attribute the click
+  // to — only ToolDetailPage (a genuinely per-tool page) passes this, which
+  // enables outbound-click tracking on the "Get featured here?" link below.
+  toolSlug?: string;
   promos: FeaturedTool[];
 }
 
@@ -21,7 +27,7 @@ interface StickyDesktopToolBarProps {
 // Each promo renders as its own bordered "chip" (not plain inline text next
 // to a divider) with a persistent trailing chevron — both are there so the
 // row unambiguously reads as clickable at a glance, not just on hover.
-export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarProps) {
+export default function StickyDesktopToolBar({ toolSlug, promos }: StickyDesktopToolBarProps) {
   const [dismissed, setDismissed] = useState(false);
   if (dismissed) return null;
 
@@ -60,6 +66,7 @@ export default function StickyDesktopToolBar({ promos }: StickyDesktopToolBarPro
 
         <Link
           to="/feature-my-product"
+          onClick={() => toolSlug && trackToolOutboundClick(toolSlug, 'get_featured', '/feature-my-product')}
           className="inline-flex items-center gap-1 text-xs font-semibold text-[#4F47E6] hover:text-[#4338CA] transition-colors shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded-sm"
         >
           <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />

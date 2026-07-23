@@ -12,6 +12,12 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 import AvailabilityScrollReset from "./components/AvailabilityScrollReset";
 import { AdminSessionProvider } from "./contexts/AdminSessionContext";
 import AdminRoute from "./components/wpadmin/AdminRoute";
+import useSitePageViewTracking from "./hooks/useSitePageViewTracking";
+
+function SitePageViewTracker() {
+  useSitePageViewTracking();
+  return null;
+}
 
 // ─── LAZY: All other pages split into async chunks ───────────────────────────────────────
 
@@ -107,6 +113,7 @@ const WpAdminVendorAccountsPage = lazy(() => import("./pages/WpAdminVendorAccoun
 const WpAdminVendorComparisonRequestsPage = lazy(() => import("./pages/WpAdminVendorComparisonRequestsPage"));
 const WpAdminToolContactEmailsPage = lazy(() => import("./pages/WpAdminToolContactEmailsPage"));
 const WpAdminToolAnalyticsPage = lazy(() => import("./pages/WpAdminToolAnalyticsPage"));
+const WpAdminVisitorsPage = lazy(() => import("./pages/WpAdminVisitorsPage"));
 const AdminAgencyReviewsImportPage = lazy(() => import("./pages/AdminAgencyReviewsImportPage"));
 const AdminAgencyReviewEditorPage = lazy(() => import("./pages/AdminAgencyReviewEditorPage"));
 const WpAdminDiscoveryDashboardPage = lazy(() => import("./pages/WpAdminDiscoveryDashboardPage"));
@@ -199,6 +206,7 @@ export default function App() {
         <ScrollManager />
         <AvailabilityScrollReset />
         <GoogleAnalytics />
+        <SitePageViewTracker />
         <Suspense fallback={<PageLoader />}>
         <Routes>
         <Route path="/" element={<HomePage />} />
@@ -242,6 +250,7 @@ export default function App() {
         <Route path="/wp-admin/vendor-comparison-requests" element={<AdminRoute><WpAdminVendorComparisonRequestsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-contact-emails" element={<AdminRoute><WpAdminToolContactEmailsPage /></AdminRoute>} />
         <Route path="/wp-admin/tool-analytics" element={<AdminRoute><WpAdminToolAnalyticsPage /></AdminRoute>} />
+        <Route path="/wp-admin/visitors" element={<AdminRoute><WpAdminVisitorsPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/import" element={<AdminRoute><AdminAgencyReviewsImportPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/new" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />
         <Route path="/wp-admin/agency-reviews/edit/:id" element={<AdminRoute><AdminAgencyReviewEditorPage /></AdminRoute>} />

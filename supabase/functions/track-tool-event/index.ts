@@ -49,15 +49,21 @@ Deno.serve(async (req: Request) => {
       country_name: typeof payload.country_name === "string" ? payload.country_name : null,
       user_agent: typeof payload.user_agent === "string" ? payload.user_agent : null,
       referrer: typeof payload.referrer === "string" ? payload.referrer : null,
+      visitor_id: typeof payload.visitor_id === "string" ? payload.visitor_id : null,
     };
 
     if (eventType === "page_view") {
-      const { error } = await supabase.from("tool_page_views").insert(shared);
+      const { error } = await supabase.from("tool_page_views").insert({
+        ...shared,
+        utm_source: typeof payload.utm_source === "string" ? payload.utm_source : null,
+        utm_medium: typeof payload.utm_medium === "string" ? payload.utm_medium : null,
+        utm_campaign: typeof payload.utm_campaign === "string" ? payload.utm_campaign : null,
+      });
       if (error) return jsonResponse({ ok: false, error: error.message }, 500);
       return jsonResponse({ ok: true });
     }
 
-    const linkType = ["visit_website", "affiliate", "other"].includes(payload.link_type) ? payload.link_type : "other";
+    const linkType = ["visit_website", "affiliate", "other", "claim_listing", "get_featured"].includes(payload.link_type) ? payload.link_type : "other";
     const { error } = await supabase.from("tool_outbound_clicks").insert({
       ...shared,
       link_type: linkType,

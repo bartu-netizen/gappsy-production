@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Send, Loader2, AlertCircle } from 'lucide-react';
+import { getVisitorId } from '../../utils/funnelTracking';
 
 const SESSION_STORAGE_KEY = 'smart_search_session_id';
 
@@ -95,7 +96,7 @@ export default function SmartSearchBox({
       const res = await fetch('/api/smart-search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionIdRef.current, query: trimmed, mode, ...(categorySlug ? { category_slug: categorySlug } : {}) }),
+        body: JSON.stringify({ session_id: sessionIdRef.current, query: trimmed, mode, visitor_id: getVisitorId(), ...(categorySlug ? { category_slug: categorySlug } : {}) }),
       });
       const data = await res.json().catch(() => null);
 

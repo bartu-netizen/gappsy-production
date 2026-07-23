@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, ArrowUp, Rocket } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
+import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 import OverflowMarqueeText from './OverflowMarqueeText';
 
 export interface FeaturedTool {
@@ -82,10 +83,11 @@ export function planInlinePromoSlots<T>(totalBlocks: number, promos: T[]): { ind
 
 // Every featured-ad placement carries this same "want in on this?" nudge
 // toward the paying-customer funnel — not just the sidebar's top slot.
-function WantYourProductHereLink({ className = '' }: { className?: string }) {
+function WantYourProductHereLink({ className = '', toolSlug }: { className?: string; toolSlug: string }) {
   return (
     <Link
       to="/feature-my-product"
+      onClick={() => trackToolOutboundClick(toolSlug, 'get_featured', '/feature-my-product')}
       className={`flex items-center gap-1 text-[11px] font-semibold text-[#4F47E6] hover:text-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] rounded-sm ${className}`}
     >
       <ArrowUp className="w-3 h-3" aria-hidden="true" />
@@ -139,7 +141,7 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
       {tool.short_description && (
         <OverflowMarqueeText text={tool.short_description} className="text-[11.5px] text-slate-500 mt-1.5 w-full" />
       )}
-      <WantYourProductHereLink className="mt-2 pt-2 border-t border-[#E0E3FC]/80" />
+      <WantYourProductHereLink className="mt-2 pt-2 border-t border-[#E0E3FC]/80" toolSlug={tool.slug} />
     </div>
   );
 }
@@ -148,7 +150,7 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
 // featured — nudging the (possible) owner toward Feature My Product rather
 // than spending that sidebar slot on a competitor ad. Prefills the
 // onboarding wizard's URL step via ?url= so they don't have to retype it.
-export function ClaimListingCard({ toolName, website }: { toolName: string; website: string | null }) {
+export function ClaimListingCard({ toolName, website, toolSlug }: { toolName: string; website: string | null; toolSlug: string }) {
   const onboardingHref = website ? `/list-your-product/onboarding?url=${encodeURIComponent(website)}` : '/list-your-product/onboarding';
   return (
     <div className="rounded-2xl bg-gradient-to-br from-[#EEF0FE] to-purple-50 border border-[#E0E3FC] p-4">
@@ -161,6 +163,7 @@ export function ClaimListingCard({ toolName, website }: { toolName: string; webs
       </p>
       <Link
         to={onboardingHref}
+        onClick={() => trackToolOutboundClick(toolSlug, 'claim_listing', onboardingHref)}
         className="flex items-center justify-center gap-1.5 w-full mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:bg-[#4338CA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F47E6] focus-visible:ring-offset-2"
       >
         Verify it now
@@ -204,7 +207,7 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
       {tool.short_description && (
         <OverflowMarqueeText text={tool.short_description} className="text-[13px] text-slate-600 leading-relaxed mt-2 w-full" />
       )}
-      <WantYourProductHereLink className="mt-3 pt-3 border-t border-[#E0E3FC]/80" />
+      <WantYourProductHereLink className="mt-3 pt-3 border-t border-[#E0E3FC]/80" toolSlug={tool.slug} />
     </div>
   );
 }

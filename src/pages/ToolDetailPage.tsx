@@ -675,7 +675,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               >
                 {tool.featured
                   ? !isAdFree && featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />
-                  : <ClaimListingCard toolName={tool.name} website={websiteUrl} />}
+                  : <ClaimListingCard toolName={tool.name} website={websiteUrl} toolSlug={tool.slug} />}
               </ToolFactsSidebar>
             </div>
 
@@ -734,6 +734,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
 
       {!isAdFree && (
         <StickyDesktopToolBar
+          toolSlug={tool.slug}
           promos={[featuredPromo, featuredPromoSecondary].filter((t): t is FeaturedTool => Boolean(t))}
         />
       )}

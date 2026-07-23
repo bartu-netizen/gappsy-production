@@ -165,6 +165,7 @@ Deno.serve(async (req: Request) => {
 
     const payload = await req.json();
     const sessionId = typeof payload.session_id === "string" ? payload.session_id : null;
+    const visitorId = typeof payload.visitor_id === "string" ? payload.visitor_id : null;
     const rawQuery = typeof payload.query === "string" ? payload.query.trim() : "";
     if (!sessionId || !rawQuery) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
     const query = rawQuery.slice(0, MAX_QUERY_LENGTH);
@@ -268,7 +269,7 @@ Rules:
         console.error("[smart-search-route] OpenAI error (category-tools):", openaiResponse.status);
       }
 
-      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
+      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName, visitor_id: visitorId }).then(() => {});
       return jsonResponse({ ok: true, path, type: resultType, ...buildReply(resultType, resultNames, query) });
     }
 
@@ -355,7 +356,7 @@ Never invent a slug that isn't in one of the lists above.`;
     if (!openaiResponse.ok) {
       const errText = await openaiResponse.text().catch(() => "");
       console.error("[smart-search-route] OpenAI error:", openaiResponse.status, errText);
-      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: "fallback", result_path: fallbackPath, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
+      supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: "fallback", result_path: fallbackPath, ip_address: ip, city, country_code: countryCode, country_name: countryName, visitor_id: visitorId }).then(() => {});
       const fallbackReply = buildReply("fallback", [], query);
       return jsonResponse({ ok: true, path: fallbackPath, type: "fallback", ...fallbackReply });
     }
@@ -449,7 +450,7 @@ Never invent a slug that isn't in one of the lists above.`;
       }
     }
 
-    supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName }).then(() => {});
+    supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName, visitor_id: visitorId }).then(() => {});
 
     const { message, buttonLabel } = buildReply(resultType, resultNames, query);
     return jsonResponse({ ok: true, path, type: resultType, message, buttonLabel });

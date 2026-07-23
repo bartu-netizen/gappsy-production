@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Sparkles, Send, Loader2, AlertCircle } from 'lucide-react';
 import ChatMarkdown from './ChatMarkdown';
+import { getVisitorId } from '../../utils/funnelTracking';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -90,6 +91,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
         body: JSON.stringify({
           session_id: sessionIdRef.current,
+          visitor_id: getVisitorId(),
           ...(toolSlugs && toolSlugs.length > 0
             ? { tool_slugs: toolSlugs }
             : toolSlug

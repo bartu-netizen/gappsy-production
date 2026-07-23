@@ -425,6 +425,7 @@ Deno.serve(async (req: Request) => {
     const toolSlug = typeof payload.tool_slug === "string" ? payload.tool_slug : null;
     const toolSlugs = Array.isArray(payload.tool_slugs) ? (payload.tool_slugs as unknown[]).filter((s): s is string => typeof s === "string") : null;
     const page = typeof payload.page === "string" ? payload.page : null;
+    const visitorId = typeof payload.visitor_id === "string" ? payload.visitor_id : null;
     const messages = Array.isArray(payload.messages) ? (payload.messages as ChatMessage[]) : [];
     if (!sessionId || messages.length === 0) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
 
@@ -470,6 +471,7 @@ Deno.serve(async (req: Request) => {
         role: "user",
         content: lastUserMessage.content.slice(0, 4000),
         ip_address: ip,
+        visitor_id: visitorId,
       }).then(() => {});
     }
 
@@ -533,6 +535,7 @@ Deno.serve(async (req: Request) => {
               role: "assistant",
               content: fullReply.slice(0, 8000),
               ip_address: ip,
+              visitor_id: visitorId,
             }).then(() => {});
           }
         }
