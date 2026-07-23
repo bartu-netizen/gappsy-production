@@ -39,6 +39,7 @@ const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareRouterPage = lazy(() => import("./pages/CompareRouterPage"));
 const GetListedPage = lazy(() => import("./pages/GetListedPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
+const FeatureMyProductProofPage = lazy(() => import("./pages/FeatureMyProductProofPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
 const FeatureGrowthPage = lazy(() => import("./pages/FeatureGrowthPage"));
@@ -395,6 +396,7 @@ export default function App() {
         <Route path="/compare/:comparisonSlug" element={<CompareRouterPage />} />
         <Route path="/get-listed" element={<GetListedPage />} />
         <Route path="/list-your-product" element={<FeatureMyProductPage />} />
+        <Route path="/list-your-product/proof" element={<FeatureMyProductProofPage />} />
         <Route path="/list-your-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
         <Route path="/list-your-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
         <Route path="/feature-my-product" element={<FeatureGrowthPage />} />

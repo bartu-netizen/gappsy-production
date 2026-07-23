@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Globe, ShieldCheck, PenLine, MessageSquare, ExternalLink, Users, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Globe, ShieldCheck, PenLine, MessageSquare, ExternalLink, Users } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 
 const BENEFITS = [
@@ -42,20 +42,19 @@ const JSON_LD = [
 // Deliberately styled as the same shell as OnboardingShell.tsx (navy
 // header, centered single column, sticky bottom CTA) rather than a
 // separate long-form marketing layout — this page effectively IS step
-// zero of the onboarding wizard. Submitting the URL field behaves exactly
-// like the wizard's own url step: it navigates straight into
-// /list-your-product/onboarding with the URL pre-filled and auto-matched
-// (see FeatureMyProductOnboardingPage's autostart handling), one screen
-// earlier than clicking into the wizard first.
+// zero of the onboarding wizard. Submitting the URL field hands off to
+// /list-your-product/proof (the "why list on Gappsy" + real proof step),
+// which carries the URL forward into the actual matching step
+// (FeatureMyProductOnboardingPage's autostart handling) once the visitor
+// continues from there.
 export default function FeatureMyProductPage() {
   const navigate = useNavigate();
   const [heroUrl, setHeroUrl] = useState('');
-  const [showStory, setShowStory] = useState(false);
 
   function handleHeroSubmit() {
     const trimmed = heroUrl.trim();
     if (!trimmed) return;
-    navigate(`/list-your-product/onboarding?url=${encodeURIComponent(trimmed)}&autostart=1`);
+    navigate(`/list-your-product/proof?url=${encodeURIComponent(trimmed)}`);
   }
 
   return (
@@ -68,10 +67,9 @@ export default function FeatureMyProductPage() {
         jsonLd={JSON_LD}
       />
 
-      <header className="shrink-0 flex items-center justify-center px-5 sm:px-8 h-16 sm:h-24 bg-[#0A1735] shadow-lg">
-        <Link to="/" aria-label="Gappsy home" className="shrink-0 flex items-center">
-          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-9 sm:h-14 lg:h-16 w-auto" />
-        </Link>
+      <header className="shrink-0 flex items-center justify-center px-5 sm:px-8 h-14 sm:h-16 bg-[#0A1735] shadow-lg">
+        {/* Not a link to "/" on purpose — we don't want an easy way out of this funnel. */}
+        <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-7 sm:h-8 w-auto" />
       </header>
 
       <main className="flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col">
@@ -101,15 +99,10 @@ export default function FeatureMyProductPage() {
                 />
               </div>
 
-              <button
-                type="button"
-                onClick={() => setShowStory(true)}
-                className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors"
-              >
-                <Users className="w-3.5 h-3.5 text-[#4F47E6]" aria-hidden="true" />
-                Get seen by 10,000+ business owners who use Gappsy
-                <span className="underline underline-offset-2">See proof</span>
-              </button>
+              <p className="mt-3 sm:mt-4 flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-slate-500">
+                <Users className="w-3.5 h-3.5 text-[#4F47E6] shrink-0" aria-hidden="true" />
+                Trusted by 10,000+ paid business owners
+              </p>
             </div>
 
             {/* Right: benefits */}
@@ -141,39 +134,6 @@ export default function FeatureMyProductPage() {
           </button>
         </div>
       </main>
-
-      {showStory && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-[#0A1735]/60 backdrop-blur-sm" onClick={() => setShowStory(false)} aria-hidden="true" />
-          <div className="relative w-full max-w-md bg-white rounded-3xl p-7 shadow-[0_24px_48px_rgba(0,0,0,0.25)]">
-            <button
-              type="button"
-              onClick={() => setShowStory(false)}
-              aria-label="Close"
-              className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
-            >
-              <X className="w-4 h-4" aria-hidden="true" />
-            </button>
-            <div className="w-11 h-11 rounded-2xl bg-[#EEF0FE] flex items-center justify-center mb-4">
-              <Users className="w-5 h-5 text-[#4F47E6]" aria-hidden="true" />
-            </div>
-            <h2 className="text-lg font-bold text-[#0B1221] tracking-tight">10,000+ paid users, since 2019</h2>
-            <p className="mt-2.5 text-[14.5px] text-slate-600 leading-relaxed">
-              Gappsy started in 2019 as a mobile app-builder for businesses. To this day, over
-              10,000 paid users — not free trials — actively use our software tools. We noticed
-              they were interested in trying other software too, so we built this directory to let
-              them discover products like yours.
-            </p>
-            <button
-              type="button"
-              onClick={() => setShowStory(false)}
-              className="mt-6 w-full flex items-center justify-center px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock } from 'lucide-react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
@@ -556,6 +556,17 @@ export default function FeatureMyProductOnboardingPage() {
                 </li>
               ))}
             </ul>
+
+            <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-[#EEF0FE] px-4 py-3">
+              <Users className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+              <p className="text-[13.5px] text-[#3730A3] leading-relaxed">
+                10,000+ business owners already use and trust Gappsy — they could be your next
+                customer.{' '}
+                <Link to="/list-your-product/proof" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
+                  See proof
+                </Link>
+              </p>
+            </div>
           </StepLayout>
         )}
 
