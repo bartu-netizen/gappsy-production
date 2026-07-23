@@ -52,6 +52,7 @@ const JSON_LD = [
 
 const QUICK_STATS = [
   { value: '141+', label: 'tools already listed' },
+  { value: '61', label: 'categories to browse' },
   { value: '$29', label: 'one-time, no subscription' },
   { value: '~2 min', label: 'to get started' },
 ];
