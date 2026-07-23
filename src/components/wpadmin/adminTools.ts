@@ -449,6 +449,16 @@ export const ADMIN_TOOLS: AdminTool[] = [
     iconName: 'MousePointerClick',
   },
   {
+    id: 'visitor-analytics',
+    label: 'Analytics — All Gappsy Visitors & Revenue',
+    description: 'Unified visitor journey across both software and agency funnels: pages, searches, chat, location, traffic source, and revenue, with filters',
+    href: '/wp-admin/visitors',
+    keywords: ['analytics', 'visitor', 'visitors', 'journey', 'revenue', 'traffic source', 'country', 'city', 'ip', 'funnel', 'agency', 'software', 'unified'],
+    group: 'Ops',
+    scopes: ['shared'],
+    iconName: 'BarChart2',
+  },
+  {
     id: 'agency-reviews-import',
     label: 'Import Agency Reviews',
     description: 'Bulk import agency reviews from CSV or JSON with validation and uniqueness scoring',
