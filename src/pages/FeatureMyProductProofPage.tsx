@@ -147,9 +147,9 @@ export default function FeatureMyProductProofPage() {
                       {s.verified && (
                         <div className="pointer-events-none absolute left-0 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-20 whitespace-nowrap rounded-xl bg-white border border-[#eef0f3] shadow-[0_8px_20px_rgba(15,23,42,0.12)] text-[#0B1221] text-[11px] font-semibold px-3 py-2 flex items-center gap-1.5">
                           <span>Verified by</span>
-                          <StripeMark />
+                          <span className="inline-flex items-center gap-1"><StripeMark /> Stripe</span>
                           <span className="text-slate-300" aria-hidden="true">&amp;</span>
-                          <PayPalMark />
+                          <span className="inline-flex items-center gap-1"><PayPalMark /> PayPal</span>
                         </div>
                       )}
                     </div>
