@@ -228,7 +228,27 @@ async function completenessRescanHandler(ctx: SchedulerJobContext): Promise<Reco
 // page — facts/pricing/pros-cons/screenshots come from each tool's own
 // data regardless (see CompareDetailPage.tsx) — so no AI-content-writing
 // step is needed for this to be a genuine, useful asset immediately.
-const LEAD_MAGNET_DEFAULT_BATCH_SIZE = 10;
+//
+// Relevance, not fame, is the quality gate. review_count/quality_score are
+// USELESS as an "established competitor" signal on this DB today — checked
+// live: review_count is 0 for every single published tool (zero exceptions),
+// and completeness_percent/quality_score are a uniform 90 across all 3124
+// (a bulk-import default, not a real quality signal). featured is real but
+// far too sparse (8 tools total) to gate on. What IS real and well-covered:
+// tool_tags/tool_tag_links (87% of published tools have at least one, ~4.4
+// tags/tool average) — the same table the static prerender script already
+// reads for comparison facts. Requiring 2+ shared tags (not just the same
+// broad category) is what actually fixes the confirmed bad pairing found in
+// production ("Compare JSON" vs "Webflow" — both nominally "Developer
+// Tools", nothing else in common — categories here are broad enough that
+// two completely unrelated products land in the same one). Confirmed live:
+// a category-only fallback for zero-tag tools reproduces this exact bug
+// (compare-json has zero tags, still got paired with webflow via category),
+// so a tool with no tags of its own is skipped entirely rather than given a
+// weaker match — no comparison is a better outcome than a bad one for an
+// outreach hook.
+const LEAD_MAGNET_DEFAULT_BATCH_SIZE = 40;
+const MIN_SHARED_TAGS_FOR_RELEVANCE = 2;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function findComparisonCandidate(supabase: SupabaseClient, tool: any): Promise<any | null> {
@@ -246,7 +266,7 @@ async function findComparisonCandidate(supabase: SupabaseClient, tool: any): Pro
     .eq("category_id", (catLink as any).category_id)
     .eq("tools.status", "published")
     .neq("tool_id", tool.id)
-    .limit(30);
+    .limit(50);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let pool = ((links || []) as any[]).map((l) => l.tools).filter(Boolean);
@@ -254,10 +274,41 @@ async function findComparisonCandidate(supabase: SupabaseClient, tool: any): Pro
   // filtering the candidate pool here avoids wasting a pick on a pair that
   // would just get rejected anyway.
   if (tool.is_open_source) pool = pool.filter((t) => !t.is_open_source);
-  // Established/popular first — a comparison against a real, recognizable
-  // competitor is a far more convincing outreach hook than an arbitrary
-  // same-category pairing.
-  pool.sort((a, b) => (Number(b.featured) - Number(a.featured)) || (b.review_count - a.review_count) || (b.rating - a.rating));
+  if (pool.length === 0) return null;
+
+  const { data: ownTagRows } = await supabase.from("tool_tag_links").select("tag_id").eq("tool_id", tool.id);
+  const ownTagIds = new Set(((ownTagRows || []) as any[]).map((r) => r.tag_id));
+  // No tags of our own means no way to verify relevance beyond the (too
+  // broad, confirmed unreliable) category — skip rather than risk another
+  // "Compare JSON vs Webflow".
+  if (ownTagIds.size === 0) return null;
+
+  const { data: candidateTagRows } = await supabase
+    .from("tool_tag_links")
+    .select("tool_id, tag_id")
+    .in(
+      "tool_id",
+      pool.map((c) => c.id),
+    );
+  const overlapByToolId = new Map<string, number>();
+  for (const row of (candidateTagRows || []) as any[]) {
+    if (!ownTagIds.has(row.tag_id)) continue;
+    overlapByToolId.set(row.tool_id, (overlapByToolId.get(row.tool_id) || 0) + 1);
+  }
+  // Relevance is a hard requirement — a coincidental single shared tag (e.g.
+  // both happen to be "cloud-based") isn't enough; 2+ shared tags is the
+  // actual fix for the confirmed bad pairing, not just a ranking preference.
+  pool = pool.filter((c) => (overlapByToolId.get(c.id) || 0) >= MIN_SHARED_TAGS_FOR_RELEVANCE);
+  if (pool.length === 0) return null;
+  // Established/popular as a tie-breaker only (see comment above on why it
+  // can't be a hard requirement given current data), then relevance, then
+  // whatever thin signal review_count/rating still offer.
+  pool.sort((a, b) =>
+    (Number(b.featured) - Number(a.featured)) ||
+    ((overlapByToolId.get(b.id) || 0) - (overlapByToolId.get(a.id) || 0)) ||
+    (b.review_count - a.review_count) ||
+    (b.rating - a.rating)
+  );
 
   for (const candidate of pool) {
     const [a, b] = tool.slug.localeCompare(candidate.slug) <= 0 ? [tool.slug, candidate.slug] : [candidate.slug, tool.slug];
