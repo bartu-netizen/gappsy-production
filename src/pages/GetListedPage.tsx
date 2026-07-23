@@ -20,12 +20,10 @@ export default function GetListedPage() {
 
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-[#05070F] flex flex-col">
-      <header className="shrink-0 px-3 sm:px-4 pt-2.5 sm:pt-3.5 flex items-center justify-center relative z-10">
-        <div className="rounded-2xl bg-[#0A1735] shadow-lg px-5 sm:px-6 h-11 sm:h-12 flex items-center">
-          <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
-            <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 sm:h-7 w-auto" />
-          </Link>
-        </div>
+      <header className="shrink-0 w-full h-14 sm:h-16 bg-[#0A1735] shadow-lg flex items-center justify-center relative z-10">
+        <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
+          <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 sm:h-7 w-auto" />
+        </Link>
       </header>
 
       <main className="flex-1 min-h-0 flex flex-col lg:flex-row relative">
@@ -33,11 +31,11 @@ export default function GetListedPage() {
         <Link
           to="/list-your-product"
           className="group relative flex-1 min-h-0 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 transition-colors"
-          style={{ background: 'radial-gradient(120% 100% at 30% 20%, #24409E 0%, #0A1735 55%, #060B1F 100%)' }}
+          style={{ background: 'radial-gradient(120% 100% at 30% 20%, #12836E 0%, #0A3B32 55%, #04140F 100%)' }}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(99,130,255,0.28), transparent)' }}
+            style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(45,212,175,0.28), transparent)' }}
             aria-hidden="true"
           />
           <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-sm">
