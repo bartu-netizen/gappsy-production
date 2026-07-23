@@ -482,10 +482,14 @@ export async function pauseCampaign(campaignId: string): Promise<boolean> {
   return response.ok === true || response.success === true;
 }
 
-// Matches Smartlead's documented "Get Lead by Email" endpoint: GET /leads/
-// with an email filter — returns the lead's account-wide id plus which
-// campaigns it's currently in (campaign_lead_map), needed to pause it in
-// each one without knowing the lead_id ahead of time.
+// Matches Smartlead's real "Get Lead by Email" endpoint: GET /leads/ with
+// an email filter — returns the lead's account-wide id plus which
+// campaigns it's currently in, needed to pause it in each one without
+// knowing the lead_id ahead of time. Field confirmed live (2026-07-24)
+// against a real synced lead: the response is a flat lead object with a
+// top-level `lead_campaign_data` array (each entry: campaign_id,
+// campaign_name, campaign_lead_map_id, ...) — NOT `campaign_lead_map`,
+// which doesn't exist in the real response despite being a plausible guess.
 export interface SmartleadLeadLookup {
   id: number | string;
   email: string;
@@ -507,9 +511,9 @@ export async function getLeadByEmail(email: string): Promise<SmartleadLeadLookup
   const id = safeGet(leadContainer, "id") ?? safeGet(leadContainer, "lead_id");
   if (id == null) return null;
 
-  const campaignMap = safeGet(leadContainer, "campaign_lead_map") ?? safeGet(response, "campaign_lead_map");
-  const campaignIds: string[] = Array.isArray(campaignMap)
-    ? campaignMap
+  const campaignData = safeGet(leadContainer, "lead_campaign_data") ?? safeGet(response, "lead_campaign_data");
+  const campaignIds: string[] = Array.isArray(campaignData)
+    ? campaignData
         .map((c) => (isObject(c) ? safeGet(c, "campaign_id") : null))
         .filter((v): v is string | number => v != null)
         .map(String)
