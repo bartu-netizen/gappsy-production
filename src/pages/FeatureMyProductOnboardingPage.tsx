@@ -116,6 +116,7 @@ export default function FeatureMyProductOnboardingPage() {
   const [tool, setTool] = useState<ToolSummary | null>(null);
   const [prefillName, setPrefillName] = useState('');
   const [prefillWebsite, setPrefillWebsite] = useState('');
+  const [prefillDescription, setPrefillDescription] = useState('');
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   const [email, setEmail] = useState('');
@@ -252,6 +253,7 @@ export default function FeatureMyProductOnboardingPage() {
     }
     setPrefillName(res.prefill?.name || '');
     setPrefillWebsite(res.prefill?.website || submitUrl);
+    setPrefillDescription(res.prefill?.description || '');
     setStep('new_product');
   }
 
@@ -265,7 +267,7 @@ export default function FeatureMyProductOnboardingPage() {
     if (!sessionId || !prefillName.trim() || !prefillWebsite.trim() || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.confirmNewProduct(sessionId, prefillName.trim(), prefillWebsite.trim());
+    const res = await vendorOnboarding.confirmNewProduct(sessionId, prefillName.trim(), prefillWebsite.trim(), prefillDescription.trim());
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Could not save this product. Please try again.');
@@ -485,13 +487,14 @@ export default function FeatureMyProductOnboardingPage() {
                 />
               </div>
               <div>
-                <label htmlFor="fmp-website" className="block text-[13px] font-medium text-slate-500 mb-1">Canonical website</label>
-                <input
-                  id="fmp-website"
-                  type="text"
-                  value={prefillWebsite}
-                  onChange={(e) => setPrefillWebsite(e.target.value)}
-                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                <label htmlFor="fmp-description" className="block text-[13px] font-medium text-slate-500 mb-1">Short description</label>
+                <textarea
+                  id="fmp-description"
+                  rows={3}
+                  value={prefillDescription}
+                  onChange={(e) => setPrefillDescription(e.target.value)}
+                  placeholder="Describe your product in 1-2 sentences..."
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300 resize-none"
                 />
               </div>
             </div>
@@ -501,7 +504,7 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'contact' && (
           <StepLayout
             eyebrow="Create your account"
-            title="Set up sign-in for your listing"
+            title="Set up account for your listing"
             subtitle="You'll use this to log in and manage your listing once it's live."
             ctaLabel="Continue"
             onCta={handleContactSubmit}

@@ -43,8 +43,8 @@ async function callFunction(name: string, body: Record<string, unknown>): Promis
 
 export const vendorOnboarding = {
   normalizeAndMatch: (rawUrl: string) => callFunction("vendor-onboarding", { action: "normalize_and_match", raw_url: rawUrl, ...getUtmContext() }),
-  confirmNewProduct: (sessionId: string, productName: string, website: string) =>
-    callFunction("vendor-onboarding", { action: "confirm_new_product", session_id: sessionId, product_name: productName, website }),
+  confirmNewProduct: (sessionId: string, productName: string, website: string, shortDescription?: string) =>
+    callFunction("vendor-onboarding", { action: "confirm_new_product", session_id: sessionId, product_name: productName, website, short_description: shortDescription }),
   submitContact: (sessionId: string, email: string, name: string, ownershipConfirmed: boolean) =>
     callFunction("vendor-onboarding", { action: "submit_contact", session_id: sessionId, email, name, ownership_confirmed: ownershipConfirmed }),
   checkEmailAccount: (email: string) => callFunction("vendor-onboarding", { action: "check_email_account", email }),

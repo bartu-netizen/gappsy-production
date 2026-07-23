@@ -363,6 +363,7 @@ Deno.serve(async (req: Request) => {
         const sessionId = typeof payload.session_id === "string" ? payload.session_id : "";
         const productName = typeof payload.product_name === "string" ? payload.product_name.trim() : "";
         const website = typeof payload.website === "string" ? payload.website.trim() : "";
+        const shortDescriptionInput = typeof payload.short_description === "string" ? payload.short_description.trim() : "";
         if (!sessionId || !productName || !website) return jsonResponse({ ok: false, error: "product_name and website are required" }, 400);
 
         const { data: session } = await supabase.from("vendor_onboarding_sessions").select("*").eq("id", sessionId).maybeSingle();
@@ -371,7 +372,9 @@ Deno.serve(async (req: Request) => {
         let discoveredToolId = session.matched_discovered_tool_id as string | null;
 
         if (discoveredToolId) {
-          await supabase.from("discovered_tools").update({ name: productName }).eq("id", discoveredToolId);
+          const update: Record<string, string> = { name: productName };
+          if (shortDescriptionInput) update.short_description = shortDescriptionInput;
+          await supabase.from("discovered_tools").update(update).eq("id", discoveredToolId);
         } else {
           const metadata = await fetchLightweightMetadata(website);
           const { data: provider } = await supabase.from("discovery_providers").select("id").eq("key", "vendor_submission").maybeSingle();
@@ -379,7 +382,7 @@ Deno.serve(async (req: Request) => {
             name: productName,
             officialWebsite: website,
             categoryId: null,
-            shortDescription: metadata.description,
+            shortDescription: shortDescriptionInput || metadata.description,
             logoUrl: metadata.faviconUrl || metadata.ogImageUrl,
             sourceUrl: null,
           };
