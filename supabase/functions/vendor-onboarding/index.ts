@@ -40,7 +40,6 @@ const GROWTH_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
   year: 69900, // $699/yr (~35% off vs. paying monthly for 12 months)
 };
 const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "pending_verification"];
-const RATE_LIMIT_PER_HOUR = 20;
 // A visitor who opens Stripe Checkout and never completes it leaves a
 // "pending_payment" row behind. Without a cutoff, that row blocks this
 // tool/product combination forever — nobody, including the real owner,
@@ -91,17 +90,6 @@ function normalizeSubmittedUrl(raw: string): string | null {
   } catch {
     return null;
   }
-}
-
-async function checkRateLimit(ip: string | null): Promise<boolean> {
-  if (!ip) return true;
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-  const { count } = await supabase
-    .from("vendor_onboarding_sessions")
-    .select("id", { count: "exact", head: true })
-    .eq("ip_address", ip)
-    .gte("created_at", oneHourAgo);
-  return (count ?? 0) < RATE_LIMIT_PER_HOUR;
 }
 
 function emailDomainMatchesHost(email: string, hostname: string | null): boolean {
@@ -206,10 +194,6 @@ Deno.serve(async (req: Request) => {
       // ── Step 1+2: normalize the submitted URL and look it up ──────────
       case "normalize_and_match": {
         const rawUrl = typeof payload.raw_url === "string" ? payload.raw_url : "";
-        if (!(await checkRateLimit(visitor.ip_address))) {
-          return jsonResponse({ ok: false, error_code: "rate_limited", error: "Too many attempts. Please try again later." }, 429);
-        }
-
         const normalized = normalizeSubmittedUrl(rawUrl);
         if (!normalized) return jsonResponse({ ok: false, error_code: "invalid_url", error: "That doesn't look like a valid website." }, 400);
 

@@ -81,6 +81,11 @@ export default function FeatureMyProductPage() {
                 List your product on Gappsy.
               </h1>
 
+              <p className="mt-2.5 sm:mt-3 flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-slate-500">
+                <Users className="w-3.5 h-3.5 text-[#4F47E6] shrink-0" aria-hidden="true" />
+                Trusted by 10,000+ Gappsy users
+              </p>
+
               <label htmlFor="fmp-url" className="sr-only">Your product's website</label>
               <div className="mt-5 sm:mt-8 relative">
                 <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" aria-hidden="true" />
@@ -98,11 +103,6 @@ export default function FeatureMyProductPage() {
                   className="w-full h-14 sm:h-16 rounded-2xl border border-slate-200 pl-14 pr-4 text-base sm:text-lg text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
-
-              <p className="mt-3 sm:mt-4 flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-slate-500">
-                <Users className="w-3.5 h-3.5 text-[#4F47E6] shrink-0" aria-hidden="true" />
-                Trusted by 10,000+ paid business owners
-              </p>
             </div>
 
             {/* Right: benefits */}
