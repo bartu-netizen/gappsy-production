@@ -28,6 +28,14 @@ const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("
 // a tool hold one active row of each product at once (see the v2 migration).
 const CLAIM_PRICE_LOOKUP_KEY = "feature_my_product_claim_v1";
 const CLAIM_PRICE_AMOUNT_CENTS = 2900; // $29 one-time
+// Shown on Stripe Checkout itself — must spell out every benefit already
+// promised earlier in the /list-your-product funnel (claim step, growth
+// upsell copy), or a buyer who lands on Checkout after skimming that promise
+// sees a bare "$29, verify your listing" line and feels like they're paying
+// for less than they were shown.
+const CLAIM_PRODUCT_NAME = "Gappsy Verified Product Listing";
+const CLAIM_PRODUCT_DESCRIPTION =
+  "One-time fee, not a subscription. Includes: a verified badge on your listing, a profile we build for you (edit anytime), self-serve editing, replying to reviews from your dashboard, and a link to your site from your Gappsy listing.";
 const GROWTH_PRICE_LOOKUP_KEYS: Record<"month" | "year", string> = {
   month: "feature_my_product_growth_monthly_v1",
   // Bumped to v2 alongside the $890 -> $699 price drop — Stripe Prices are
@@ -49,10 +57,18 @@ const PENDING_PAYMENT_STALE_MINUTES = 30;
 
 async function getOrCreateClaimPriceId(stripe: Stripe): Promise<string> {
   const existing = await stripe.prices.list({ lookup_keys: [CLAIM_PRICE_LOOKUP_KEY], limit: 1 });
-  if (existing.data[0]) return existing.data[0].id;
+  if (existing.data[0]) {
+    // Stripe Prices are immutable but Products aren't — syncing on every
+    // call (instead of only at creation) means editing the two consts above
+    // and redeploying is enough to update what buyers see on Checkout, with
+    // no separate one-off script ever needed.
+    const productId = existing.data[0].product as string;
+    await stripe.products.update(productId, { name: CLAIM_PRODUCT_NAME, description: CLAIM_PRODUCT_DESCRIPTION });
+    return existing.data[0].id;
+  }
   const product = await stripe.products.create({
-    name: "Gappsy Listing Claim & Verify",
-    description: "One-time verification of your product listing on the Gappsy software directory — verified badge, self-serve editing, and review replies.",
+    name: CLAIM_PRODUCT_NAME,
+    description: CLAIM_PRODUCT_DESCRIPTION,
   });
   const price = await stripe.prices.create({
     product: product.id,

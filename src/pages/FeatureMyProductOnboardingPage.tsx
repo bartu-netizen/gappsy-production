@@ -467,9 +467,9 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'new_product' && (
           <StepLayout
-            eyebrow="We found a new product"
-            title="Confirm your product details"
-            subtitle="This isn't in the Gappsy directory yet. Confirm or edit the details below."
+            eyebrow="New listing"
+            title="Let's build your profile"
+            subtitle="A quick description helps us set up your Gappsy listing."
             ctaLabel="Continue"
             onCta={handleConfirmNewProduct}
             ctaLoading={loading}
@@ -556,7 +556,7 @@ export default function FeatureMyProductOnboardingPage() {
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-            <p className="text-sm text-slate-400 mb-3">Takes about 2 minutes. Here's what you get:</p>
+            <p className="text-sm text-slate-400 mb-3">Takes about 1 minute. Here's what you get:</p>
             <ul className="space-y-2.5">
               {[
                 ['Verified badge', 'on your listing'],
@@ -572,11 +572,11 @@ export default function FeatureMyProductOnboardingPage() {
               ))}
             </ul>
 
-            <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-[#EEF0FE] px-4 py-3">
+            <div className="mt-4 inline-flex items-start gap-2.5 rounded-xl bg-[#EEF0FE] px-4 py-3">
               <Users className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
               <p className="text-[13.5px] text-[#3730A3] leading-relaxed">
-                10,000+ business owners already use and trust Gappsy — they could be your next
-                customer.
+                10,000+ business owners already use and trust Gappsy —<br />
+                they could be your next customer.
               </p>
             </div>
           </StepLayout>
