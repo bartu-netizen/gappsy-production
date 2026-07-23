@@ -5,17 +5,19 @@ import EntitySEOTags from '../components/EntitySEOTags';
 
 const WHY_POINTS = [
   { icon: Rocket, text: 'Started in 2019 as a mobile app-builder for businesses' },
-  { icon: Users, text: '10,000+ paid users — not free trials' },
   { icon: ThumbsUp, text: 'They trust our recommendations and love trying new tools' },
-  { icon: Search, text: 'Plus organic reach via Google, ChatGPT, and social' },
+  { icon: Search, text: 'Found through Google, ChatGPT, YouTube, TikTok, and Instagram' },
 ];
 
 // Real, unedited numbers pulled from a handful of representative email
 // broadcasts to our existing paid user base — campaign names and dates
 // deliberately left out, just the performance columns.
 const EMAIL_PROOF_ROWS = [
+  { contacts: '11,064', sent: '11,035', openRate: '35.42%', clickRate: '2.24%', revenue: '$107.87' },
   { contacts: '10,599', sent: '10,582', openRate: '46.63%', clickRate: '2.42%', revenue: '$861' },
+  { contacts: '10,536', sent: '10,520', openRate: '40.48%', clickRate: '1.60%', revenue: '$758.80' },
   { contacts: '10,119', sent: '10,110', openRate: '37.21%', clickRate: '0.68%', revenue: '$2,296.35' },
+  { contacts: '10,059', sent: '10,049', openRate: '38.10%', clickRate: '0.89%', revenue: '$1,228.56' },
   { contacts: '9,994', sent: '9,986', openRate: '39.11%', clickRate: '0.92%', revenue: '$1,221.00' },
 ];
 
@@ -92,7 +94,7 @@ export default function FeatureMyProductProofPage() {
             {/* Right: the proof, stacked */}
             <div className="space-y-4 sm:space-y-5">
               <section>
-                <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Real revenue, ThriveCart</h2>
+                <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Real revenue, screenshot from ThriveCart</h2>
 
                 {/* lg+: real screenshot, click to enlarge. Below lg: compact stat chips (the screenshot doesn't render legibly at a size that still fits one screen). */}
                 <button
@@ -103,7 +105,7 @@ export default function FeatureMyProductProofPage() {
                   <img
                     src="/images/gappsy-proof/thrivecart-revenue-proof.webp"
                     alt="ThriveCart dashboard showing $1,488,072.90 gross revenue, 16,516 total transactions, and 8,583 total customers"
-                    className="w-full h-auto max-h-[150px] object-cover object-top block"
+                    className="w-full h-auto block"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-[#0A1735]/0 group-hover:bg-[#0A1735]/10 transition-colors flex items-center justify-center">
@@ -125,7 +127,7 @@ export default function FeatureMyProductProofPage() {
               </section>
 
               <section>
-                <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Real email performance</h2>
+                <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Gappsy email performance</h2>
 
                 <div className="hidden lg:block mt-2 rounded-2xl border border-[#eef0f3] overflow-hidden shadow-[0_12px_28px_rgba(15,23,42,0.06)]">
                   <table className="w-full text-[13px]">
