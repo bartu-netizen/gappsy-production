@@ -207,7 +207,7 @@ export default function ToolFactsSidebar({
               className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              Is this right for you?
+              Right tool for you?
             </button>
           )
         )}
