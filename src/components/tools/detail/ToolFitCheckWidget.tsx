@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { X, Star, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Star, ArrowRight, ArrowLeft } from 'lucide-react';
 import AskGappsyChat from '../../askGappsy/AskGappsyChat';
 import { buildOutboundUrl } from '../../../utils/outboundLink';
 import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
@@ -33,25 +34,35 @@ const QUICK_QUESTIONS = [
 ];
 
 // Replaces the direct "Visit Website" CTA on UNCLAIMED tool pages only —
-// claimed listings keep the plain direct link. Opens a premium widget in
-// the same visual language as the Ask Gappsy chat, asks one quick
-// multiple-choice question, and always keeps a direct path to the tool the
-// visitor actually came to see. If a genuinely relevant Featured (paying)
-// alternative exists in the same category — via a real tag-overlap
-// relevance gate server-side, not just "same category" — it's shown
-// alongside, clearly labeled "Featured", never in place of the original.
+// claimed listings keep the plain direct link. Takes over the full viewport
+// (edge-to-edge, no card/backdrop) in the same visual language as the Ask
+// Gappsy chat, asks one quick multiple-choice question, and always keeps a
+// direct path to the tool the visitor actually came to see. If a genuinely
+// relevant Featured (paying) alternative exists in the same category — via
+// a real tag-overlap relevance gate server-side, not just "same category" —
+// it's shown alongside, clearly labeled "Featured", never in place of the
+// original.
 export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onClose }: ToolFitCheckWidgetProps) {
   const [recommended, setRecommended] = useState<FitCheckAlternative | null>(null);
   const [loadingRecommendation, setLoadingRecommendation] = useState(true);
-  // hasAsked drives the "← Back" affordance; resetKey remounts AskGappsyChat
-  // (clearing its internal messages/error/streaming state) so "Back" is a
-  // real reset to the quick-question view, not just a visual toggle.
+  // hasAsked drives what the single top-left back arrow does; resetKey
+  // remounts AskGappsyChat (clearing its internal messages/error/streaming
+  // state) so stepping "back" from a result is a real reset, not just a
+  // visual toggle.
   const [hasAsked, setHasAsked] = useState(false);
   const [resetKey, setResetKey] = useState(0);
 
-  function handleBack() {
-    setHasAsked(false);
-    setResetKey((k) => k + 1);
+  // One back arrow, two jobs depending on where the visitor is — pops one
+  // level at a time like a normal navigation stack: from a result, it
+  // returns to the quick-question view; from the quick-question view
+  // itself, it exits the fit-check entirely back to the tool page.
+  function handleBackArrow() {
+    if (hasAsked) {
+      setHasAsked(false);
+      setResetKey((k) => k + 1);
+    } else {
+      onClose();
+    }
   }
 
   useEffect(() => {
@@ -94,47 +105,38 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
     if (recommended) trackToolOutboundClick(toolSlug, 'fit_check_alternative', `/tools/${recommended.slug}`);
   }
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 fit-check-backdrop-in"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div className="w-full max-w-[560px] max-h-[88vh] bg-white rounded-3xl shadow-[0_32px_80px_rgba(15,23,42,0.32)] flex flex-col overflow-hidden fit-check-panel-in">
-        <div className="relative flex flex-col min-h-[540px]">
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="absolute right-3 top-3 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors shadow-sm"
-          >
-            <X className="w-4 h-4" />
-          </button>
-          <div className="flex-1 flex flex-col min-h-0">
-            <AskGappsyChat
-              key={resetKey}
-              toolSlug={toolSlug}
-              page="tool_fit_check"
-              title={`Is ${toolName} right for you?`}
-              subtitle="Quick fit check — grounded in real listing data"
-              suggestedQuestions={QUICK_QUESTIONS}
-              placeholder={`Ask anything else about fitting ${toolName}...`}
-              threadMaxHeightClass="max-h-[380px]"
-              onConversationStart={() => setHasAsked(true)}
-              leadingSlot={
-                hasAsked ? (
-                  <button
-                    type="button"
-                    onClick={handleBack}
-                    aria-label="Back to quick questions"
-                    className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors shrink-0"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                  </button>
-                ) : undefined
-              }
-              footerSlot={
+  // Portaled to document.body: several ancestors between here and the page
+  // root use backdrop-blur/transform (see GlobalSearch.tsx for the same
+  // reasoning), which per spec makes them a containing block for `position:
+  // fixed` descendants — without the portal this full-page takeover would
+  // be confined to some ancestor's box and sit BEHIND the site's own sticky
+  // header instead of covering the whole viewport above it. Confirmed live:
+  // without this, the header intercepted clicks on the back button.
+  return createPortal(
+    <div className="fixed inset-0 z-50 bg-white flex flex-col fit-check-fullpage-in">
+      <div className="flex items-center gap-3 h-14 px-4 sm:px-6 border-b border-slate-100 shrink-0">
+        <button
+          type="button"
+          onClick={handleBackArrow}
+          aria-label="Back"
+          className="inline-flex items-center justify-center w-9 h-9 -ml-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors shrink-0"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <span className="font-semibold text-[13.5px] text-slate-500 truncate">{toolName}</span>
+      </div>
+      <div className="flex-1 flex flex-col min-h-0 w-full">
+        <AskGappsyChat
+          key={resetKey}
+          toolSlug={toolSlug}
+          page="tool_fit_check"
+          title={`Is ${toolName} right for you?`}
+          subtitle="Quick fit check — grounded in real listing data"
+          suggestedQuestions={QUICK_QUESTIONS}
+          placeholder={`Ask anything else about fitting ${toolName}...`}
+          threadMaxHeightClass="max-h-none"
+          onConversationStart={() => setHasAsked(true)}
+          footerSlot={
                 <div className="px-4 sm:px-5 py-3.5 border-t border-slate-100 space-y-2.5">
                   {!loadingRecommendation && recommended && (
                     <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-3">
@@ -184,9 +186,8 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
                 </div>
               }
             />
-          </div>
-        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
