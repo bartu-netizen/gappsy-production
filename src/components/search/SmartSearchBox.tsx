@@ -9,6 +9,7 @@ const DEFAULT_EXAMPLE_QUERIES = [
   'A free tool to design social posts',
   'CRM with a free trial',
   'Marketing agency in New Jersey',
+  'Canva',
 ];
 
 interface Exchange {
@@ -17,6 +18,13 @@ interface Exchange {
   message?: string;
   buttonLabel?: string;
   path?: string;
+  // Only present on a "fallback" (no confident match) result when the query
+  // reads as a specific product name — a soft, secondary nudge (never a
+  // headline) toward listing that product, kept separate from `message`/
+  // `path` so it always renders smaller and below the main reply.
+  secondaryMessage?: string;
+  secondaryButtonLabel?: string;
+  secondaryPath?: string;
   error?: string;
 }
 
@@ -103,7 +111,16 @@ export default function SmartSearchBox({
       if (res.ok && data?.path) {
         setExchanges((prev) => {
           const copy = [...prev];
-          copy[copy.length - 1] = { query: trimmed, status: 'done', message: data.message, buttonLabel: data.buttonLabel, path: data.path };
+          copy[copy.length - 1] = {
+            query: trimmed,
+            status: 'done',
+            message: data.message,
+            buttonLabel: data.buttonLabel,
+            path: data.path,
+            secondaryMessage: data.secondaryMessage,
+            secondaryButtonLabel: data.secondaryButtonLabel,
+            secondaryPath: data.secondaryPath,
+          };
           return copy;
         });
         return;
@@ -194,6 +211,20 @@ export default function SmartSearchBox({
                           {ex.buttonLabel || 'View'}
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
+                      )}
+                      {ex.secondaryMessage && (
+                        <p className="text-[11.5px] text-slate-400 leading-relaxed pt-2 border-t border-slate-200/70">
+                          {ex.secondaryMessage}{' '}
+                          {ex.secondaryPath && (
+                            <button
+                              type="button"
+                              onClick={() => navigate(ex.secondaryPath!)}
+                              className="font-medium text-[#4F47E6] hover:text-[#4338CA] underline underline-offset-2"
+                            >
+                              {ex.secondaryButtonLabel || 'Learn more'}
+                            </button>
+                          )}
+                        </p>
                       )}
                     </div>
                   )}

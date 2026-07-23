@@ -117,11 +117,37 @@ function joinNames(names: string[]): string {
   return `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
 }
 
+// Words that signal a needs/description-style query ("a free tool to design
+// social posts") rather than someone typing a specific product/brand name
+// ("Notion", "Adobe Express"). Used only to decide whether a fallback (no
+// confident match) is worth adding the "own this product?" nudge to — a
+// vague description that matched nothing shouldn't get a weird "own a
+// product called '...'?" line. Deliberately conservative (word-count cap +
+// blocklist, not an LLM call): a missed nudge is harmless, a wrongly-shown
+// one looks broken, so this only fires when fairly confident.
+const DESCRIPTIVE_QUERY_WORDS = new Set([
+  "free", "with", "for", "in", "trial", "tool", "tools", "software", "app", "apps",
+  "agency", "agencies", "best", "cheap", "alternative", "alternatives", "vs", "versus",
+  "compare", "comparison", "need", "looking", "want", "like", "similar", "and", "or",
+  "a", "an", "the", "to", "of", "that", "this", "team", "teams", "small", "large",
+  "business", "companies", "company", "marketing", "manage", "management", "platform",
+]);
+
+function looksLikeProductName(query: string): boolean {
+  const words = query.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0 || words.length > 3) return false;
+  return !words.some((w) => DESCRIPTIVE_QUERY_WORDS.has(w.toLowerCase()));
+}
+
 // Builds the chat-style reply shown before the visitor clicks through —
 // written from the resolved, real names above, never from anything the
 // model said directly, so it can't contradict what the button actually
 // links to.
-function buildReply(resultType: string, names: string[], query: string): { message: string; buttonLabel: string } {
+function buildReply(
+  resultType: string,
+  names: string[],
+  query: string,
+): { message: string; buttonLabel: string; secondaryMessage?: string; secondaryButtonLabel?: string; secondaryPath?: string } {
   switch (resultType) {
     case "tool":
       return { message: `${names[0]} looks like a great match for what you're looking for.`, buttonLabel: `Visit ${names[0]}` };
@@ -131,8 +157,16 @@ function buildReply(resultType: string, names: string[], query: string): { messa
       return { message: `Here's a side-by-side comparison of ${joinNames(names)}.`, buttonLabel: "See the comparison" };
     case "state":
       return { message: `Here are the top marketing agencies in ${names[0]}.`, buttonLabel: `See agencies in ${names[0]}` };
-    default:
-      return { message: `We couldn't find an exact match, but here are search results for "${query}".`, buttonLabel: "See search results" };
+    default: {
+      const base = { message: `We couldn't find an exact match, but here are search results for "${query}".`, buttonLabel: "See search results" };
+      if (!looksLikeProductName(query)) return base;
+      return {
+        ...base,
+        secondaryMessage: `Own a product called "${query}"? You can list it on Gappsy.`,
+        secondaryButtonLabel: "List your product",
+        secondaryPath: "/list-your-product/onboarding",
+      };
+    }
   }
 }
 
@@ -452,8 +486,7 @@ Never invent a slug that isn't in one of the lists above.`;
 
     supabase.from("smart_search_logs").insert({ session_id: sessionId, query, result_type: resultType, result_path: path, ip_address: ip, city, country_code: countryCode, country_name: countryName, visitor_id: visitorId }).then(() => {});
 
-    const { message, buttonLabel } = buildReply(resultType, resultNames, query);
-    return jsonResponse({ ok: true, path, type: resultType, message, buttonLabel });
+    return jsonResponse({ ok: true, path, type: resultType, ...buildReply(resultType, resultNames, query) });
   } catch (error) {
     console.error("[smart-search-route] error:", error);
     return jsonResponse({ ok: false, error: "Something went wrong. Please try again." }, 500);
