@@ -46,7 +46,7 @@ export default function ToolTagDetailPage() {
 
         supabase
           .from('tool_tag_links')
-          .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status)')
+          .select('tools!inner(slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, website, claim_paid_at, status)')
           .eq('tag_id', data.id)
           .eq('tools.status', 'published')
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

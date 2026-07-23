@@ -20,6 +20,8 @@ export interface ToolRow {
   rating: number;
   review_count: number;
   verified: boolean;
+  featured: boolean;
+  claim_paid_at: string | null;
 }
 
 export interface ToolExtras {

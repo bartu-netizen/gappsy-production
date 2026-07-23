@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
   MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
-  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles, Lock,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard } from '../lib/vendorDashboardApi';
 import EntitySEOTags from '../components/EntitySEOTags';
 import { useNoindex } from '../components/NoindexMeta';
 import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
+import { GROWTH_MONTHLY_FEATURES } from '../lib/growthFeatures';
 
 interface ToolRow {
   id: string; slug: string; name: string; logo: string | null; website: string | null;
@@ -152,7 +153,7 @@ export default function VendorDashboardPage() {
           <div className="flex flex-col lg:flex-row gap-6">
             <nav className="lg:w-56 shrink-0">
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-                {TABS.filter(({ key }) => (key !== 'analytics' && key !== 'comparisons' && key !== 'chat_questions') || growthSubscription?.status === 'active').map(({ key, label, icon: Icon }) => (
+                {TABS.map(({ key, label, icon: Icon }) => (
                   <button
                     key={key}
                     type="button"
@@ -170,10 +171,20 @@ export default function VendorDashboardPage() {
 
             <div className="flex-1 min-w-0">
               {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} />}
-              {tab === 'analytics' && analytics && <AnalyticsTab analytics={analytics} />}
-              {tab === 'chat_questions' && <ChatQuestionsTab questions={chatQuestions} />}
+              {tab === 'analytics' && (
+                growthSubscription?.status === 'active'
+                  ? (analytics && <AnalyticsTab analytics={analytics} />)
+                  : <AnalyticsTeaser toolWebsite={tool.website} />
+              )}
+              {tab === 'chat_questions' && (
+                growthSubscription?.status === 'active'
+                  ? <ChatQuestionsTab questions={chatQuestions} />
+                  : <ChatQuestionsTeaser toolWebsite={tool.website} />
+              )}
               {tab === 'comparisons' && (
-                <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
+                growthSubscription?.status === 'active'
+                  ? <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
+                  : <ComparisonsTeaser tool={tool} toolWebsite={tool.website} />
               )}
               {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
               {tab === 'content' && (
@@ -478,6 +489,152 @@ function ComparisonRequestsTab({
         </Card>
       )}
     </div>
+  );
+}
+
+// Claim-only vendors (no active Growth subscription) still see these tabs in
+// the nav — clicking in shows illustrative sample content behind a blur, with
+// an "Upgrade to Growth" CTA on top, instead of the tab just disappearing.
+// `children` is the illustrative mockup content that gets blurred; the
+// overlay card is the only interactive/legible part of this view.
+function LockedFeatureTeaser({
+  title, description, toolWebsite, children,
+}: {
+  title: string; description: string; toolWebsite: string | null; children: React.ReactNode;
+}) {
+  return (
+    <div className="relative min-h-[280px]">
+      <div className="blur-[3px] opacity-60 pointer-events-none select-none" aria-hidden="true">
+        {children}
+      </div>
+      <div className="absolute inset-0 flex items-start justify-center pt-4 sm:pt-8 px-4">
+        <Card>
+          <div className="max-w-xs text-center mx-auto">
+            <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center mx-auto mb-3">
+              <Lock className="w-5 h-5 text-[#4F47E6]" />
+            </div>
+            <p className="text-sm font-bold text-[#0B1221]">{title}</p>
+            <p className="text-[13px] text-slate-500 mt-1.5">{description}</p>
+            <ul className="mt-3.5 space-y-1.5 text-left">
+              {GROWTH_MONTHLY_FEATURES.slice(0, 3).map((feature) => (
+                <li key={feature} className="flex items-start gap-1.5 text-[12.5px] text-slate-500">
+                  <Sparkles className="w-3 h-3 text-[#4F47E6] shrink-0 mt-0.5" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+              className="mt-4 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
+            >
+              Upgrade to Growth
+            </Link>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+function AnalyticsTeaser({ toolWebsite }: { toolWebsite: string | null }) {
+  const sampleStats: { icon: typeof BarChart3; label: string; value: string }[] = [
+    { icon: BarChart3, label: 'Page views (last 7 days)', value: '142' },
+    { icon: MousePointerClick, label: 'Outbound clicks (last 7 days)', value: '23' },
+    { icon: MousePointerClick, label: 'Click-through rate', value: '4.2%' },
+    { icon: BarChart3, label: 'Page views (all-time)', value: '1,890' },
+  ];
+  return (
+    <LockedFeatureTeaser
+      title="See who's viewing your listing"
+      description="Growth unlocks page views, outbound clicks, and click-through rate for your listing, right in this dashboard."
+      toolWebsite={toolWebsite}
+    >
+      <div className="space-y-5">
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221]">Listing analytics</p>
+          <p className="text-[13px] text-slate-500 mt-1">Illustrative example — not your real numbers.</p>
+        </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {sampleStats.map((s) => (
+            <Card key={s.label}>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-[#EEF0FE] flex items-center justify-center shrink-0"><s.icon className="w-4 h-4 text-[#4F47E6]" /></div>
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{s.label}</p>
+              </div>
+              <p className="text-2xl font-bold text-[#0B1221]">{s.value}</p>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </LockedFeatureTeaser>
+  );
+}
+
+function ChatQuestionsTeaser({ toolWebsite }: { toolWebsite: string | null }) {
+  const sampleQuestions = [
+    'Does this integrate with Slack?',
+    "What's the pricing for a team of 10?",
+    'Is there a free trial available?',
+  ];
+  return (
+    <LockedFeatureTeaser
+      title="See what buyers are asking before they reach out"
+      description="Growth surfaces real, anonymized questions visitors ask the Ask Gappsy chat while viewing your listing."
+      toolWebsite={toolWebsite}
+    >
+      <div className="space-y-5">
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221]">Visitor questions</p>
+          <p className="text-[13px] text-slate-500 mt-1">Illustrative example — not your real visitor questions.</p>
+        </Card>
+        <Card>
+          <div className="divide-y divide-slate-100">
+            {sampleQuestions.map((q, i) => (
+              <div key={i} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#EEF0FE] flex items-center justify-center shrink-0 mt-0.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#4F47E6]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13.5px] text-[#0B1221] leading-snug">{q}</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">2 days ago</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+    </LockedFeatureTeaser>
+  );
+}
+
+function ComparisonsTeaser({ tool, toolWebsite }: { tool: ToolRow; toolWebsite: string | null }) {
+  return (
+    <LockedFeatureTeaser
+      title="Get compared against tools your buyers are already considering"
+      description="Growth lets you request a head-to-head comparison page between your product and a specific competitor."
+      toolWebsite={toolWebsite}
+    >
+      <div className="space-y-5">
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221]">Request a comparison</p>
+          <p className="text-[13px] text-slate-500 mt-1">Illustrative example — not a real request.</p>
+        </Card>
+        <Card>
+          <p className="text-sm font-bold text-[#0B1221] mb-3">Your requests</p>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 px-3.5 py-2.5">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">C</div>
+                <p className="text-sm font-medium text-[#0B1221] truncate">{tool.name} vs Competitor X</p>
+              </div>
+              <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold capitalize bg-amber-50 text-amber-700">
+                <Clock className="w-3 h-3" /> pending
+              </span>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </LockedFeatureTeaser>
   );
 }
 

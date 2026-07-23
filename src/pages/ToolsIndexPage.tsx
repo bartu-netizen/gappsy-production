@@ -67,7 +67,7 @@ export default function ToolsIndexPage() {
     Promise.all([
       supabase
         .from('tools')
-        .select('slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source, created_at')
+        .select('slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, is_open_source, website, claim_paid_at, created_at')
         .eq('status', 'published')
         .order('featured', { ascending: false })
         .order('name'),

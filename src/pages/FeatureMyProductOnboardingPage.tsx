@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users, Search } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { supabase } from '../lib/supabase';
 import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
+import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
 // Carries the email/password the visitor picks at the contact step across
 // the full-page redirect to Stripe Checkout and back — sessionStorage
@@ -40,23 +41,6 @@ const STEP_INDEX: Record<string, number> = {
   claim: 4,
   growth_upsell: 5,
 };
-
-const GROWTH_MONTHLY_FEATURES = [
-  'Featured placement across category, comparison, and search',
-  'Priority ranking ahead of unfeatured listings',
-  'Listing analytics — views and click-throughs, right in your dashboard',
-  'See what visitors ask in the chat on your listing, anonymized',
-  'Priority placement in AI/LLM answer engines (ChatGPT, Perplexity, Claude)',
-  'Remove or hide reviews from your listing, not just reply to them',
-];
-const GROWTH_YEARLY_ONLY_FEATURES = [
-  'A produced video review, posted on our socials',
-  'A featured spot in the Gappsy newsletter',
-  'No competitor ads shown on your own listing',
-  'Faster editorial review of listing updates',
-  'Priority support',
-  'Early access to new placement types',
-];
 
 interface ToolSummary { id: string; name: string; slug: string; logo: string | null; short_description: string | null; category: string | null }
 
@@ -116,7 +100,6 @@ export default function FeatureMyProductOnboardingPage() {
   const [tool, setTool] = useState<ToolSummary | null>(null);
   const [prefillName, setPrefillName] = useState('');
   const [prefillWebsite, setPrefillWebsite] = useState('');
-  const [prefillDescription, setPrefillDescription] = useState('');
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   const [email, setEmail] = useState('');
@@ -253,7 +236,6 @@ export default function FeatureMyProductOnboardingPage() {
     }
     setPrefillName(res.prefill?.name || '');
     setPrefillWebsite(res.prefill?.website || submitUrl);
-    setPrefillDescription(res.prefill?.description || '');
     setStep('new_product');
   }
 
@@ -267,7 +249,7 @@ export default function FeatureMyProductOnboardingPage() {
     if (!sessionId || !prefillName.trim() || !prefillWebsite.trim() || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.confirmNewProduct(sessionId, prefillName.trim(), prefillWebsite.trim(), prefillDescription.trim());
+    const res = await vendorOnboarding.confirmNewProduct(sessionId, prefillName.trim(), prefillWebsite.trim());
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Could not save this product. Please try again.');
@@ -467,9 +449,9 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'new_product' && (
           <StepLayout
-            eyebrow="New listing"
-            title="Let's build your profile"
-            subtitle="A quick description helps us set up your Gappsy listing."
+            eyebrow="We found a new product"
+            title="Confirm your product details"
+            subtitle="This isn't in the Gappsy directory yet. Confirm or edit the details below."
             ctaLabel="Continue"
             onCta={handleConfirmNewProduct}
             ctaLoading={loading}
@@ -487,14 +469,13 @@ export default function FeatureMyProductOnboardingPage() {
                 />
               </div>
               <div>
-                <label htmlFor="fmp-description" className="block text-[13px] font-medium text-slate-500 mb-1">Short description</label>
-                <textarea
-                  id="fmp-description"
-                  rows={3}
-                  value={prefillDescription}
-                  onChange={(e) => setPrefillDescription(e.target.value)}
-                  placeholder="Describe your product in 1-2 sentences..."
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300 resize-none"
+                <label htmlFor="fmp-website" className="block text-[13px] font-medium text-slate-500 mb-1">Canonical website</label>
+                <input
+                  id="fmp-website"
+                  type="text"
+                  value={prefillWebsite}
+                  onChange={(e) => setPrefillWebsite(e.target.value)}
+                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
               </div>
             </div>
@@ -504,7 +485,7 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'contact' && (
           <StepLayout
             eyebrow="Create your account"
-            title="Set up account for your listing"
+            title="Set up sign-in for your listing"
             subtitle="You'll use this to log in and manage your listing once it's live."
             ctaLabel="Continue"
             onCta={handleContactSubmit}
@@ -556,11 +537,10 @@ export default function FeatureMyProductOnboardingPage() {
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-            <p className="text-sm text-slate-400 mb-3">Takes about 1 minute. Here's what you get:</p>
+            <p className="text-sm text-slate-400 mb-3">Takes about 2 minutes. Here's what you get:</p>
             <ul className="space-y-2.5">
               {[
                 ['Verified badge', 'on your listing'],
-                ['We build your profile', 'for you — edit anytime you like'],
                 ['Self-serve editing', 'of your listing'],
                 ['Reply to reviews', 'from your dashboard'],
                 ['A link to your site', 'from your Gappsy listing'],
@@ -572,11 +552,14 @@ export default function FeatureMyProductOnboardingPage() {
               ))}
             </ul>
 
-            <div className="mt-4 inline-flex items-start gap-2.5 rounded-xl bg-[#EEF0FE] px-4 py-3">
+            <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-[#EEF0FE] px-4 py-3">
               <Users className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
               <p className="text-[13.5px] text-[#3730A3] leading-relaxed">
-                10,000+ business owners already use and trust Gappsy —<br />
-                they could be your next customer.
+                10,000+ business owners already use and trust Gappsy — they could be your next
+                customer.{' '}
+                <Link to="/list-your-product/proof" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
+                  See proof
+                </Link>
               </p>
             </div>
           </StepLayout>

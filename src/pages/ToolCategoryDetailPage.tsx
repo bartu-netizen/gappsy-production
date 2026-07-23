@@ -75,7 +75,7 @@ export default function ToolCategoryDetailPage() {
         supabase
           .from('tool_category_links')
           .select(
-            'tools!inner(id, slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, status, created_at)'
+            'tools!inner(id, slug, name, logo, short_description, pricing_model, starting_price, rating, review_count, verified, featured, website, claim_paid_at, status, created_at)'
           )
           .eq('category_id', data.id)
           .eq('tools.status', 'published')

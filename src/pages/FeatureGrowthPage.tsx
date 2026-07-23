@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Check, Minus, BarChart3, Bot, ShieldOff } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, Minus, BarChart3, Bot, ShieldOff, MessageSquare } from 'lucide-react';
 import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
@@ -7,25 +7,17 @@ import ScrollReveal from '../components/featureMyProduct/ScrollReveal';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
 import FmpFaqSection from '../components/featureMyProduct/FmpFaqSection';
 import type { FmpFaqItem } from '../components/featureMyProduct/fmpFaqData';
+import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
 const CANONICAL_BASE = 'https://gappsy.com/feature-my-product';
 
-const GROWTH_MONTHLY_FEATURES = [
-  { icon: Sparkles, text: 'Featured placement across category, comparison, and search' },
-  { icon: BarChart3, text: 'Priority ranking ahead of unfeatured listings' },
-  { icon: BarChart3, text: 'Listing analytics — views and click-throughs, in your dashboard' },
-  { icon: Bot, text: 'Priority placement in AI/LLM answer engines (ChatGPT, Perplexity, Claude)' },
-  { icon: ShieldOff, text: 'Remove or hide reviews from your listing, not just reply to them' },
-];
-
-const GROWTH_YEARLY_ONLY_FEATURES = [
-  'A produced video review, posted on our socials',
-  'A featured spot in the Gappsy newsletter',
-  'No competitor ads shown on your own listing',
-  'Faster editorial review of listing updates',
-  'Priority support',
-  'Early access to new placement types',
-];
+// Icons paired positionally with the shared GROWTH_MONTHLY_FEATURES list —
+// this page is the only one that renders an icon per feature.
+const GROWTH_MONTHLY_FEATURE_ICONS = [Sparkles, BarChart3, BarChart3, MessageSquare, Bot, ShieldOff];
+const GROWTH_MONTHLY_FEATURE_ITEMS = GROWTH_MONTHLY_FEATURES.map((text, i) => ({
+  icon: GROWTH_MONTHLY_FEATURE_ICONS[i] ?? Sparkles,
+  text,
+}));
 
 const GROWTH_FAQS: FmpFaqItem[] = [
   {
@@ -222,7 +214,7 @@ export default function FeatureGrowthPage() {
             </ScrollReveal>
 
             <div className="grid sm:grid-cols-2 gap-5">
-              {GROWTH_MONTHLY_FEATURES.map((f, i) => (
+              {GROWTH_MONTHLY_FEATURE_ITEMS.map((f, i) => (
                 <ScrollReveal key={f.text} delayMs={(i % 3) * 80}>
                   <div className="h-full flex items-start gap-3.5 rounded-2xl border border-[#eef0f3] p-5">
                     <div className="w-9 h-9 shrink-0 rounded-xl bg-amber-50 flex items-center justify-center">

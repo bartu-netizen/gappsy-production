@@ -23,7 +23,7 @@ import { getToolContent } from '../data/toolContent';
 import { getComparisonContent } from '../data/comparisonContent';
 import { useRecentlyViewedComparisons } from '../hooks/useRecentlyViewedComparisons';
 import { buildCompareItemListJsonLd } from '../utils/compareJsonLd';
-import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
@@ -57,7 +57,7 @@ function reverseSlug(slug: string): string | null {
 }
 
 const COMPARISON_SELECT =
-  'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified)';
+  'id, slug, created_at, updated_at, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified,featured,claim_paid_at), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified,featured,claim_paid_at)';
 
 export default function CompareDetailPage() {
   const { comparisonSlug } = useParams<{ comparisonSlug: string }>();
@@ -88,7 +88,17 @@ export default function CompareDetailPage() {
   const inlineFeaturedPromoA = featuredPool?.[2];
   const inlineFeaturedPromoB = featuredPool?.[3];
   const inlineFeaturedPromoC = featuredPool?.[4];
-  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
+
+  // Genuinely unclaimed compared tools (never featured, never paid the
+  // one-time claim fee — see tools.claim_paid_at) each get their own
+  // ClaimListingCard in the sidebar, independent of the other tool's status
+  // and independent of the generic featuredPromo pool above (which already
+  // excludes both compared tools by slug, so there's no overlap risk).
+  // Claimed-but-not-Growth tools (claim_paid_at set, featured false) are
+  // left alone — that vendor already owns the listing.
+  const unclaimedA = Boolean(comparison && !comparison.tool_a.featured && !comparison.tool_a.claim_paid_at);
+  const unclaimedB = Boolean(comparison && !comparison.tool_b.featured && !comparison.tool_b.claim_paid_at);
+  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary || unclaimedA || unclaimedB);
 
   useEffect(() => {
     if (!comparisonSlug) return;
@@ -371,6 +381,8 @@ export default function CompareDetailPage() {
 
               {hasSidebarPromos && (
                 <div className="space-y-4 lg:sticky lg:top-24">
+                  {unclaimedA && <ClaimListingCard toolName={aRow.name} website={aRow.website} toolSlug={aRow.slug} />}
+                  {unclaimedB && <ClaimListingCard toolName={bRow.name} website={bRow.website} toolSlug={bRow.slug} />}
                   {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
                   {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
                 </div>

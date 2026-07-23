@@ -21,7 +21,7 @@ import type { CompareToolFacts } from '../components/compare/types';
 import { supabase } from '../lib/supabase';
 import { getGroupComparisonContent } from '../data/groupComparisonContent';
 import { buildCompareItemListJsonLd } from '../utils/compareJsonLd';
-import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
+import { useFeaturedToolPool, FeaturedToolSidebarCompact, FeaturedToolInlineCard, ClaimListingCard, type FeaturedTool } from '../components/tools/detail/FeaturedToolPromo';
 import StickyMobileToolBar from '../components/tools/detail/StickyMobileToolBar';
 import StickyDesktopToolBar from '../components/tools/detail/StickyDesktopToolBar';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
@@ -43,7 +43,7 @@ interface GroupComparisonRow {
 }
 
 const GROUP_COMPARISON_SELECT =
-  'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, best_for, tools(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified))';
+  'id, slug, title, created_at, updated_at, tool_group_comparison_members(sort_order, best_for, tools(id,slug,name,logo,website,affiliate_link,pricing_model,starting_price,rating,review_count,verified,featured,claim_paid_at))';
 
 function truncateDescription(text: string, max = 160): string {
   const trimmed = text.trim();
@@ -156,7 +156,21 @@ export default function GroupCompareDetailPage() {
   const inlineFeaturedPromoB = featuredPool?.[3];
   const inlineFeaturedPromoC = featuredPool?.[4];
   const inlineFeaturedPromoD = featuredPool?.[5];
-  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary);
+
+  // Genuinely unclaimed member tools (never featured, never paid the
+  // one-time claim fee — see tools.claim_paid_at) each get their own
+  // ClaimListingCard in the sidebar, independent of the other members'
+  // status and independent of the generic featuredPromo pool above (which
+  // already excludes every member by slug, so there's no overlap risk).
+  // Claimed-but-not-Growth members (claim_paid_at set, featured false) are
+  // left alone — that vendor already owns the listing. Unlike
+  // CompareDetailPage's exactly-2-tools/2-slots mapping, a group can have
+  // 3+ members against only 2 generic sidebar slots, so these render
+  // alongside (not swapped 1:1 into) the existing slots.
+  const unclaimedMembers = (groupComparison?.tool_group_comparison_members || []).filter(
+    (m) => !m.tools.featured && !m.tools.claim_paid_at
+  );
+  const hasSidebarPromos = Boolean(featuredPromo || featuredPromoSecondary || unclaimedMembers.length > 0);
 
   if (loading) {
     return (
@@ -333,6 +347,9 @@ export default function GroupCompareDetailPage() {
 
               {hasSidebarPromos && (
                 <div className="space-y-4 lg:sticky lg:top-24">
+                  {unclaimedMembers.map((m) => (
+                    <ClaimListingCard key={m.tools.slug} toolName={m.tools.name} website={m.tools.website} toolSlug={m.tools.slug} />
+                  ))}
                   {featuredPromo && <FeaturedToolSidebarCompact tool={featuredPromo} />}
                   {featuredPromoSecondary && <FeaturedToolSidebarCompact tool={featuredPromoSecondary} />}
                 </div>
