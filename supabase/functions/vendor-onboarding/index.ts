@@ -52,8 +52,13 @@ const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "
 // "pending_payment" row behind. Without a cutoff, that row blocks this
 // tool/product combination forever — nobody, including the real owner,
 // could ever claim or subscribe to it again. Anything older than this
-// window is treated as abandoned.
-const PENDING_PAYMENT_STALE_MINUTES = 30;
+// window is treated as abandoned. Kept short — a real one-time-card-payment
+// checkout normally completes in under two minutes, and the same visitor's
+// own retries are already handled instantly (not by this window at all, see
+// the onboarding_session_id-scoped cancel in create_checkout) — this window
+// only matters for a genuinely different visitor's abandoned attempt, which
+// should self-clear quickly rather than risk blocking the real owner.
+const PENDING_PAYMENT_STALE_MINUTES = 10;
 
 async function getOrCreateClaimPriceId(stripe: Stripe): Promise<string> {
   const existing = await stripe.prices.list({ lookup_keys: [CLAIM_PRICE_LOOKUP_KEY], limit: 1 });
@@ -450,6 +455,28 @@ Deno.serve(async (req: Request) => {
         await supabase.from("vendor_funnel_events").insert({ onboarding_session_id: sessionId, event_name: "plan_viewed", metadata: { product, billing_interval: billingInterval } });
 
         await reapStalePendingPayments(session.matched_tool_id, session.matched_discovered_tool_id, product);
+
+        // A visitor retrying checkout for their OWN session (declined card,
+        // backed out at Stripe, closed the tab and clicked the button again)
+        // must never be blocked by their own previous attempt — only a
+        // genuinely different customer already holding an active claim
+        // should ever produce "already_claimed"/"already_subscribed". Stripe
+        // never notifies us when a checkout is merely abandoned (no
+        // checkout.session.expired handling, no signal on "user hit back"),
+        // so without this, that visitor's own stale pending_payment row sat
+        // blocking retries for up to PENDING_PAYMENT_STALE_MINUTES. Scoped
+        // strictly to this onboarding_session_id, so it can never cancel
+        // someone else's in-flight payment — and even if the underlying
+        // Stripe Checkout Session this cancels is somehow still completed
+        // afterwards, activateVendorFeatureSubscription updates by
+        // stripe_checkout_session_id regardless of current status, so a
+        // real completion is never lost.
+        await supabase
+          .from("vendor_feature_subscriptions")
+          .update({ status: "canceled", canceled_at: new Date().toISOString() })
+          .eq("onboarding_session_id", sessionId)
+          .eq("product", product)
+          .eq("status", "pending_payment");
 
         // Growth is only purchasable once the one-time claim fee has cleared.
         if (product === "growth") {
