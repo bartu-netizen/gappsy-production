@@ -51,6 +51,16 @@ interface AskGappsyChatProps {
    * + "Continue anyway" CTA), which needs to sit inside this same panel
    * without being part of the scrolling message thread itself. */
   footerSlot?: React.ReactNode;
+  /** Fires once, the moment the very first message of the session is sent —
+   * lets a parent (the tool-fit-check widget) know the "suggested
+   * questions" view is about to be replaced by the thread, so it can show
+   * a "← Back" affordance instead of only a close button. */
+  onConversationStart?: () => void;
+  /** Rendered as the first item in the header row, before the Sparkles
+   * icon — used by the tool-fit-check widget for its "← Back" control so
+   * it's a normal flex sibling of the title (never overlaps it), rather
+   * than an absolutely-positioned element fighting for the same corner. */
+  leadingSlot?: React.ReactNode;
 }
 
 function joinNames(names: string[]): string {
@@ -65,7 +75,7 @@ function joinNames(names: string[]): string {
 // streaming response (plain UTF-8 text chunks, not raw OpenAI SSE — the
 // edge function already unwraps that) so this component just reads the
 // stream and appends, no SSE parsing needed here.
-export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, page, title, subtitle, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]', footerSlot }: AskGappsyChatProps) {
+export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, page, title, subtitle, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]', footerSlot, onConversationStart, leadingSlot }: AskGappsyChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -82,6 +92,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
     const trimmed = text.trim();
     if (!trimmed || streaming) return;
 
+    if (messages.length === 0) onConversationStart?.();
     const nextMessages: ChatMessage[] = [...messages, { role: 'user', content: trimmed }];
     setMessages(nextMessages);
     setInput('');
@@ -156,6 +167,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
   return (
     <div ref={containerRef} className="flex flex-col h-full">
       <div className="flex items-center gap-2.5 px-4 sm:px-5 py-3.5 border-b border-slate-100 shrink-0">
+        {leadingSlot}
         <div className="w-8 h-8 rounded-lg bg-[#0A1735] flex items-center justify-center shrink-0">
           <Sparkles className="w-4 h-4 text-white" aria-hidden="true" />
         </div>
@@ -168,7 +180,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
       </div>
 
       {messages.length === 0 ? (
-        <div className="px-4 sm:px-5 py-4 flex-1 overflow-y-auto">
+        <div key="suggested" className="chat-step-in px-4 sm:px-5 py-4 flex-1 overflow-y-auto">
           <p className="text-[13px] text-slate-500 mb-3">Try asking:</p>
           <div className="flex flex-wrap gap-2">
             {suggestedQuestions.map((q) => (
@@ -184,7 +196,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
           </div>
         </div>
       ) : (
-        <div ref={threadRef} className={`flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-3 ${threadMaxHeightClass}`}>
+        <div key="thread" ref={threadRef} className={`chat-step-in flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-3 ${threadMaxHeightClass}`}>
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div

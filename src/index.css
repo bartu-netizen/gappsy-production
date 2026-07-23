@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fit-check widget (ToolFitCheckWidget) entrance + step-transition motion —
+   reuses the same "opacity 0 + slight transform, animate to rest" pattern
+   as fadeInUp below rather than introducing an animation library. */
+@keyframes fitCheckBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fit-check-backdrop-in {
+  animation: fitCheckBackdropIn 200ms ease-out forwards;
+}
+@keyframes fitCheckPanelIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.fit-check-panel-in {
+  opacity: 0;
+  animation: fitCheckPanelIn 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+/* Shared by every AskGappsyChat instance for the suggested-questions ↔
+   thread swap, not just the fit-check widget. */
+.chat-step-in {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fadeInUp 240ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
 @keyframes pill-glow-rose {
   0%, 100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
   50% { box-shadow: 0 0 8px 2px rgba(244, 63, 94, 0.18); opacity: 0.92; }

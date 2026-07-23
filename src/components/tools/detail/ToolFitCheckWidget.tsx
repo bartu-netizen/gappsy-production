@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { X, Star, ArrowRight } from 'lucide-react';
+import { X, Star, ArrowRight, ArrowLeft } from 'lucide-react';
 import AskGappsyChat from '../../askGappsy/AskGappsyChat';
 import { buildOutboundUrl } from '../../../utils/outboundLink';
 import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
@@ -43,6 +43,16 @@ const QUICK_QUESTIONS = [
 export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onClose }: ToolFitCheckWidgetProps) {
   const [recommended, setRecommended] = useState<FitCheckAlternative | null>(null);
   const [loadingRecommendation, setLoadingRecommendation] = useState(true);
+  // hasAsked drives the "← Back" affordance; resetKey remounts AskGappsyChat
+  // (clearing its internal messages/error/streaming state) so "Back" is a
+  // real reset to the quick-question view, not just a visual toggle.
+  const [hasAsked, setHasAsked] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
+
+  function handleBack() {
+    setHasAsked(false);
+    setResetKey((k) => k + 1);
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -86,13 +96,13 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 fit-check-backdrop-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-[440px] max-h-[85vh] bg-white rounded-3xl shadow-[0_24px_64px_rgba(15,23,42,0.28)] flex flex-col overflow-hidden">
-        <div className="relative flex flex-col min-h-[420px]">
+      <div className="w-full max-w-[560px] max-h-[88vh] bg-white rounded-3xl shadow-[0_32px_80px_rgba(15,23,42,0.32)] flex flex-col overflow-hidden fit-check-panel-in">
+        <div className="relative flex flex-col min-h-[540px]">
           <button
             type="button"
             onClick={onClose}
@@ -103,13 +113,27 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
           </button>
           <div className="flex-1 flex flex-col min-h-0">
             <AskGappsyChat
+              key={resetKey}
               toolSlug={toolSlug}
               page="tool_fit_check"
               title={`Is ${toolName} right for you?`}
               subtitle="Quick fit check — grounded in real listing data"
               suggestedQuestions={QUICK_QUESTIONS}
               placeholder={`Ask anything else about fitting ${toolName}...`}
-              threadMaxHeightClass="max-h-[300px]"
+              threadMaxHeightClass="max-h-[380px]"
+              onConversationStart={() => setHasAsked(true)}
+              leadingSlot={
+                hasAsked ? (
+                  <button
+                    type="button"
+                    onClick={handleBack}
+                    aria-label="Back to quick questions"
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors shrink-0"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                ) : undefined
+              }
               footerSlot={
                 <div className="px-4 sm:px-5 py-3.5 border-t border-slate-100 space-y-2.5">
                   {!loadingRecommendation && recommended && (
