@@ -32,7 +32,7 @@ export function trackToolPageView(toolSlug: string): void {
 
 export function trackToolOutboundClick(
   toolSlug: string,
-  linkType: 'visit_website' | 'affiliate' | 'other' | 'claim_listing' | 'get_featured',
+  linkType: 'visit_website' | 'affiliate' | 'other' | 'claim_listing' | 'get_featured' | 'fit_check_continue' | 'fit_check_alternative',
   destinationUrl: string,
 ): void {
   send({ event_type: 'outbound_click', tool_slug: toolSlug, link_type: linkType, destination_url: destinationUrl, visitor_id: getVisitorId() });

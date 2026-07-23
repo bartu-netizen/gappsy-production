@@ -46,6 +46,11 @@ interface AskGappsyChatProps {
    * card or floating bubble panel) stays a predictable size — the thread
    * scrolls internally once it grows past this. */
   threadMaxHeightClass?: string;
+  /** Rendered between the thread and the input form — used by the
+   * tool-fit-check widget for its recommendation card (Featured alternative
+   * + "Continue anyway" CTA), which needs to sit inside this same panel
+   * without being part of the scrolling message thread itself. */
+  footerSlot?: React.ReactNode;
 }
 
 function joinNames(names: string[]): string {
@@ -60,7 +65,7 @@ function joinNames(names: string[]): string {
 // streaming response (plain UTF-8 text chunks, not raw OpenAI SSE — the
 // edge function already unwraps that) so this component just reads the
 // stream and appends, no SSE parsing needed here.
-export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, page, title, subtitle, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]' }: AskGappsyChatProps) {
+export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames, page, title, subtitle, suggestedQuestions, placeholder, threadMaxHeightClass = 'max-h-[360px]', footerSlot }: AskGappsyChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -95,7 +100,7 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
           ...(toolSlugs && toolSlugs.length > 0
             ? { tool_slugs: toolSlugs }
             : toolSlug
-              ? { tool_slug: toolSlug }
+              ? { tool_slug: toolSlug, ...(page ? { page } : {}) }
               : page
                 ? { page }
                 : {}),
@@ -204,6 +209,8 @@ export default function AskGappsyChat({ toolSlug, toolName, toolSlugs, toolNames
           {error}
         </div>
       )}
+
+      {footerSlot}
 
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 sm:px-5 py-3.5 border-t border-slate-100 shrink-0">
         <input

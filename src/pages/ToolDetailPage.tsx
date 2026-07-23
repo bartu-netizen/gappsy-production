@@ -52,6 +52,7 @@ interface ToolDetail {
   review_count: number;
   verified: boolean;
   featured: boolean;
+  claim_paid_at: string | null;
   billing_interval: 'month' | 'year' | null;
   updated_at: string | null;
   founded_year: number | null;
@@ -220,7 +221,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
           id: t.id, slug: t.slug, name: t.name, logo: t.logo, website: t.website, affiliate_link: t.affiliate_link,
           short_description: t.short_description, long_description: t.long_description, pricing_model: t.pricing_model,
           starting_price: t.starting_price, youtube_url: t.youtube_url, rating: t.rating, review_count: t.review_count,
-          verified: t.verified, featured: t.featured, billing_interval: t.billing_interval ?? null, updated_at: t.updated_at,
+          verified: t.verified, featured: t.featured, claim_paid_at: t.claim_paid_at ?? null, billing_interval: t.billing_interval ?? null, updated_at: t.updated_at,
           founded_year: t.founded_year, company_size: t.company_size, headquarters: t.headquarters, languages: t.languages || [],
           status: t.status, seo_title: t.seo_title ?? null, seo_meta_description: t.seo_meta_description ?? null,
         });
@@ -260,7 +261,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
     supabase
       .from('tools')
       .select(
-        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, billing_interval, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
+        'id, slug, name, logo, website, affiliate_link, short_description, long_description, pricing_model, starting_price, youtube_url, rating, review_count, verified, featured, claim_paid_at, billing_interval, updated_at, founded_year, company_size, headquarters, languages, seo_title, seo_meta_description'
       )
       .eq('slug', toolSlug)
       .eq('status', 'published')
@@ -659,6 +660,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
                 startingPrice={tool.starting_price}
                 websiteUrl={websiteUrl}
                 affiliateUrl={affiliateUrl}
+                isClaimed={tool.featured || !!tool.claim_paid_at}
                 categories={categories}
                 tags={tags}
                 integrationCount={integrations.length}

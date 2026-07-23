@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import {
   Star, ExternalLink, FolderTree, Tag as TagIcon, CheckCircle2, Plug, Globe, Calendar,
   Users, MapPin, Languages as LanguagesIcon, ShieldCheck, Clock, Bookmark, Share2,
-  GitCompareArrows, Smartphone, Monitor, Apple, Chrome, MonitorSmartphone, Package,
+  GitCompareArrows, Smartphone, Monitor, Apple, Chrome, MonitorSmartphone, Package, Sparkles,
 } from 'lucide-react';
 import Card from './Card';
 import { useBookmarkedTool } from '../../../hooks/useBookmarkedTools';
 import { formatLastUpdated } from '../../../utils/formatLastUpdated';
 import { buildOutboundUrl } from '../../../utils/outboundLink';
 import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
+import ToolFitCheckWidget from './ToolFitCheckWidget';
 import type { TaxonomyRef } from './types';
 
 interface ToolFactsSidebarProps {
@@ -21,6 +22,10 @@ interface ToolFactsSidebarProps {
   startingPrice: string | null;
   websiteUrl: string | null;
   affiliateUrl: string | null;
+  /** Unclaimed listings (claim_paid_at is null) show the "Is this right for
+   * you?" fit-check widget instead of a direct "Visit Website" link — see
+   * ToolFitCheckWidget for why. Claimed listings are unaffected. */
+  isClaimed: boolean;
   categories: TaxonomyRef[];
   tags: TaxonomyRef[];
   integrationCount: number;
@@ -91,6 +96,7 @@ export default function ToolFactsSidebar({
   startingPrice,
   websiteUrl,
   affiliateUrl,
+  isClaimed,
   categories,
   tags,
   integrationCount,
@@ -110,6 +116,7 @@ export default function ToolFactsSidebar({
   const [shareState, setShareState] = useState<'idle' | 'copied'>('idle');
   const [compareOpen, setCompareOpen] = useState(false);
   const [tagsExpanded, setTagsExpanded] = useState(false);
+  const [fitCheckOpen, setFitCheckOpen] = useState(false);
   const comparePopoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -182,16 +189,31 @@ export default function ToolFactsSidebar({
         )}
 
         {cta && (
-          <a
-            href={outboundCta || cta}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            onClick={() => trackToolOutboundClick(slug, affiliateUrl ? 'affiliate' : 'visit_website', outboundCta || cta)}
-            className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
-          >
-            Visit Website
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+          isClaimed || affiliateUrl ? (
+            <a
+              href={outboundCta || cta}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              onClick={() => trackToolOutboundClick(slug, affiliateUrl ? 'affiliate' : 'visit_website', outboundCta || cta)}
+              className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
+            >
+              Visit Website
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setFitCheckOpen(true)}
+              className="inline-flex items-center justify-center gap-1.5 w-full bg-[#4F47E6] hover:bg-[#4338CA] active:scale-[0.98] text-white px-4 py-2.5 rounded-xl font-semibold transition-all text-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Is this right for you?
+            </button>
+          )
+        )}
+
+        {fitCheckOpen && websiteUrl && (
+          <ToolFitCheckWidget toolSlug={slug} toolName={name} websiteUrl={websiteUrl} onClose={() => setFitCheckOpen(false)} />
         )}
 
         {children}
@@ -287,15 +309,25 @@ export default function ToolFactsSidebar({
             <div className="flex items-center justify-between gap-3">
               <dt className="inline-flex items-center gap-1.5 text-slate-500"><Globe className="w-3.5 h-3.5" />Website</dt>
               <dd className="truncate max-w-[150px] text-right">
-                <a
-                  href={buildOutboundUrl(websiteUrl)}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  onClick={() => trackToolOutboundClick(slug, 'visit_website', buildOutboundUrl(websiteUrl))}
-                  className="text-[#4F47E6] hover:text-[#4338CA] font-medium"
-                >
-                  {hostnameOf(websiteUrl)}
-                </a>
+                {isClaimed ? (
+                  <a
+                    href={buildOutboundUrl(websiteUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    onClick={() => trackToolOutboundClick(slug, 'visit_website', buildOutboundUrl(websiteUrl))}
+                    className="text-[#4F47E6] hover:text-[#4338CA] font-medium"
+                  >
+                    {hostnameOf(websiteUrl)}
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setFitCheckOpen(true)}
+                    className="text-[#4F47E6] hover:text-[#4338CA] font-medium"
+                  >
+                    {hostnameOf(websiteUrl)}
+                  </button>
+                )}
               </dd>
             </div>
           )}

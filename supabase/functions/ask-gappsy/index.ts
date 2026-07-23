@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
+import { findFeaturedAlternative } from "../_shared/toolFitCheck.ts";
 
 // "Ask Gappsy" — a GPT-style chat grounded in real site data. Three modes:
 //   - tool_slug given: answers questions about that one tool, using its
@@ -161,6 +162,44 @@ Disclosure rule: if you mention that ${tool.name} is a Featured/sponsored Gappsy
 If the visitor asks whether a different tool might suit them better, recommend from the Alternatives list above when it's genuinely relevant, and only link to gappsy.com/tool-categories or a real /compare/ page from the list above — never fabricate a comparison page or competitor detail you don't actually know. Keep answers concise and conversational, a few sentences at a time, like a knowledgeable friend rather than a wall of text.`;
 
   return { prompt: prompt + RESPONSE_FORMATTING_INSTRUCTIONS, toolName: tool.name };
+}
+
+// Powers the "Is this right for me?" fit-check widget shown in place of the
+// direct "Visit Website" button on UNCLAIMED tool pages only. Wraps the same
+// real grounding as buildToolSystemPrompt with one addition: a genuinely
+// relevant Featured (paying) alternative in the same category, found via
+// findFeaturedAlternative's tag-overlap relevance gate (never a same-category
+// guess with nothing else in common — see that file's comment for the
+// "Compare JSON vs Webflow" bug this same gate was built to fix). The
+// disclosure rule mirrors the one already used in buildDirectorySystemPrompt
+// below: featured status may be mentioned as a genuine option, never used to
+// manufacture a fake weakness in the tool the visitor actually came to see.
+// deno-lint-ignore no-explicit-any
+async function buildToolFitCheckSystemPrompt(supabase: any, toolRow: { id: string; slug: string; is_open_source: boolean }): Promise<{ prompt: string; toolName: string } | null> {
+  const original = await buildToolSystemPrompt(supabase, toolRow.slug);
+  if (!original) return null;
+
+  const alt = await findFeaturedAlternative(supabase, toolRow);
+  const altSection = alt
+    ? `A genuinely relevant Featured (paid) alternative in the same category also exists: ${alt.name} (gappsy.com/tools/${alt.slug}) — ${alt.short_description || "no description on file"}. Rating: ${alt.rating > 0 ? `${alt.rating}/5 from ${alt.review_count} reviews` : "no reviews yet"}.`
+    : `No Featured alternative is available to suggest in this category right now — only ever discuss ${original.toolName} itself, never invent a competitor.`;
+  const disclosureRule = alt
+    ? `${alt.name} is a Featured/sponsored Gappsy listing — if you mention it, say so plainly, the same way it's labeled on the page. Only bring it up when it genuinely suits what the visitor said better than ${original.toolName}; if ${original.toolName} is actually a fine fit for them, say so honestly instead of steering them elsewhere. Never invent or exaggerate a weakness in ${original.toolName} just to justify mentioning the alternative.`
+    : `Just answer honestly about ${original.toolName} based on what the visitor said.`;
+
+  const prompt = `You are "Ask Gappsy", running a quick, honest "is this the right fit for you?" check on Gappsy's page for ${original.toolName}. A visitor tapped a quick-question button about what matters most to them (price, features/integrations, ease of use, or "not sure yet"). Your job: give a short, genuinely helpful read on whether ${original.toolName} fits what they said, using ONLY the real facts below — never invent anything.
+
+${original.prompt}
+
+${altSection}
+
+Disclosure rule: ${disclosureRule}
+
+${original.toolName}'s listing hasn't been claimed by its vendor yet, so some details (pricing, features) may be less current than a claimed listing — mention this only if it's directly relevant to what the visitor asked, don't dwell on it.
+
+Keep your answer to 2-4 sentences, conversational, like a knowledgeable friend giving a quick honest take — not a sales pitch in either direction.`;
+
+  return { prompt, toolName: original.toolName };
 }
 
 // Trimmed sibling of buildToolSystemPrompt for /compare pages — pulls the
@@ -444,6 +483,23 @@ Deno.serve(async (req: Request) => {
       const context = await buildMultiToolSystemPrompt(supabase, toolSlugs);
       if (!context) return jsonResponse({ ok: false, error: "Tools not found" }, 404);
       systemPrompt = context.prompt;
+    } else if (page === "tool_fit_check" && toolSlug) {
+      const { data: toolRow } = await supabase
+        .from("tools")
+        .select("id, slug, is_open_source, claim_paid_at, featured, status")
+        .eq("slug", toolSlug)
+        .eq("status", "published")
+        .maybeSingle();
+      if (!toolRow) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
+      // Defense in depth — the frontend only ever shows this widget on
+      // unclaimed, non-Featured listings, but never divert a claimed or
+      // Featured tool's own visitors even if this were somehow called
+      // against one (same convention as ToolCard.tsx's showClaimCta).
+      if (toolRow.claim_paid_at || toolRow.featured) return jsonResponse({ ok: false, error: "This tool is already claimed." }, 400);
+      const context = await buildToolFitCheckSystemPrompt(supabase, toolRow);
+      if (!context) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
+      systemPrompt = context.prompt;
+      toolId = toolRow.id;
     } else if (toolSlug) {
       const context = await buildToolSystemPrompt(supabase, toolSlug);
       if (!context) return jsonResponse({ ok: false, error: "Tool not found" }, 404);
