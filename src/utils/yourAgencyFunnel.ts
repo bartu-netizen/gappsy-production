@@ -1,5 +1,6 @@
 import { reliablePost } from './trackingTransport';
 import { getSignals } from './humanSignalCollector';
+import { getVisitorId } from './funnelTracking';
 
 const FSID_KEY = 'gappsy_fsid';
 const FSID_URL_PARAM = 'fsid';
@@ -101,6 +102,7 @@ export function logFunnelEvent(params: FunnelEventParams): void {
 
   const payload: Record<string, unknown> = {
     fsid,
+    visitor_id: getVisitorId(),
     funnel_name: 'your_agency',
     event_name: params.event_name,
     step_number: params.step_number,

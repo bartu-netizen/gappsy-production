@@ -53,6 +53,12 @@ function getStepLabel(funnel_name: string, step_number: number, event_name: stri
 
 interface EventPayload {
   fsid: string;
+  // Distinct from fsid (a separate bot/fraud-detection fingerprint, see
+  // humanSignalCollector.ts) — this is the same gappsy_visitor_id persisted
+  // by getVisitorId() (funnelTracking.ts) that every other funnel type
+  // already writes, so this funnel's activity shows up in the unified
+  // cross-site visitor/revenue analytics instead of being invisible there.
+  visitor_id?: string;
   funnel_name: string;
   event_name: string;
   step_number: number;
@@ -109,6 +115,7 @@ Deno.serve(async (req: Request) => {
 
   const {
     fsid,
+    visitor_id: visitorId,
     funnel_name,
     event_name,
     step_number,
@@ -165,6 +172,7 @@ Deno.serve(async (req: Request) => {
     } else {
       const insertRow: Record<string, unknown> = {
         fsid,
+        visitor_id: visitorId,
         funnel_type: funnel_name,
         funnel_name,
         state_slug: state_slug ?? null,
@@ -260,6 +268,8 @@ Deno.serve(async (req: Request) => {
       updated_at: new Date().toISOString(),
       drop_off_event: event_name,
     };
+
+    if (visitorId) updateFields.visitor_id = visitorId;
 
     if (step_number > currentStep) {
       updateFields.step_number = step_number;
