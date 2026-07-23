@@ -6,7 +6,7 @@ import {
   ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles, Lock,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { vendorDashboard } from '../lib/vendorDashboardApi';
+import { vendorDashboard, type VendorToolSummary } from '../lib/vendorDashboardApi';
 import EntitySEOTags from '../components/EntitySEOTags';
 import { useNoindex } from '../components/NoindexMeta';
 import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
@@ -73,9 +73,37 @@ export default function VendorDashboardPage() {
   const [chatQuestions, setChatQuestions] = useState<ChatQuestionRow[]>([]);
   const [comparisonRequests, setComparisonRequests] = useState<ComparisonRequestRow[]>([]);
 
+  // Multi-tool support — the overwhelmingly common case is exactly one tool
+  // (auto-selected, no picker shown); a vendor who claimed two products
+  // under the same email sees a switcher instead. myTools is fetched
+  // independently of fetchAll so it works even before a tool is selected.
+  const [myTools, setMyTools] = useState<VendorToolSummary[]>([]);
+  const [selectedToolId, setSelectedToolId] = useState<string | null>(null);
+  const [toolsLoaded, setToolsLoaded] = useState(false);
+
   useEffect(() => {
     if (authLoading || !user) return;
-    vendorDashboard.fetchAll().then((res) => {
+    vendorDashboard.listTools().then((res) => {
+      if (!res.ok || !res.tools) {
+        setLoadError(res.error || 'Failed to load your listings');
+        setLoading(false);
+        setToolsLoaded(true);
+        return;
+      }
+      setMyTools(res.tools);
+      if (res.tools.length === 1) setSelectedToolId(res.tools[0].id);
+      setToolsLoaded(true);
+    }).catch(() => {
+      setLoadError('Failed to load your listings');
+      setLoading(false);
+      setToolsLoaded(true);
+    });
+  }, [authLoading, user]);
+
+  useEffect(() => {
+    if (!toolsLoaded || !selectedToolId) return;
+    setLoading(true);
+    vendorDashboard.fetchAll(selectedToolId).then((res) => {
       if (!res.ok) {
         setLoadError(res.error || 'Failed to load your dashboard');
         setLoading(false);
@@ -97,7 +125,7 @@ export default function VendorDashboardPage() {
       setLoadError('Failed to load your dashboard');
       setLoading(false);
     });
-  }, [authLoading, user]);
+  }, [toolsLoaded, selectedToolId]);
 
   if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>;
@@ -125,6 +153,17 @@ export default function VendorDashboardPage() {
             <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-7 w-auto" />
           </Link>
           <div className="flex items-center gap-3">
+            {myTools.length > 1 && (
+              <select
+                value={selectedToolId || ''}
+                onChange={(e) => setSelectedToolId(e.target.value)}
+                className="h-8 px-2.5 rounded-lg bg-white/10 text-white text-[13px] font-medium border border-white/15 focus:outline-none focus:ring-2 focus:ring-white/30"
+              >
+                {myTools.map((t) => (
+                  <option key={t.id} value={t.id} className="text-[#0B1221]">{t.name}</option>
+                ))}
+              </select>
+            )}
             <span className="hidden sm:inline text-[13px] text-white/50">{user.email}</span>
             <button
               type="button"
@@ -138,11 +177,34 @@ export default function VendorDashboardPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        {loading && (
+        {!toolsLoaded && (
           <div className="flex items-center justify-center py-24"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
         )}
 
-        {!loading && loadError && (
+        {toolsLoaded && myTools.length > 1 && !selectedToolId && (
+          <div className="max-w-md mx-auto text-center py-16">
+            <h1 className="text-lg font-bold text-[#0B1221] mb-2">Which listing?</h1>
+            <p className="text-sm text-slate-500 mb-5">This account manages more than one Gappsy listing.</p>
+            <div className="space-y-2">
+              {myTools.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setSelectedToolId(t.id)}
+                  className="w-full text-left px-4 py-3 rounded-xl border border-slate-200 bg-white hover:border-[#4F47E6] hover:bg-[#EEF0FE] transition-colors font-medium text-[#0B1221]"
+                >
+                  {t.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {toolsLoaded && (myTools.length <= 1 || selectedToolId) && loading && (
+          <div className="flex items-center justify-center py-24"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>
+        )}
+
+        {toolsLoaded && (myTools.length <= 1 || selectedToolId) && !loading && loadError && (
           <div className="max-w-md mx-auto text-center py-16">
             <h1 className="text-lg font-bold text-[#0B1221] mb-2">Couldn't load your dashboard</h1>
             <p className="text-sm text-slate-500">{loadError}</p>
@@ -170,7 +232,7 @@ export default function VendorDashboardPage() {
             </nav>
 
             <div className="flex-1 min-w-0">
-              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} />}
+              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} toolId={selectedToolId} />}
               {tab === 'analytics' && (
                 growthSubscription?.status === 'active'
                   ? (analytics && <AnalyticsTab analytics={analytics} />)
@@ -183,18 +245,18 @@ export default function VendorDashboardPage() {
               )}
               {tab === 'comparisons' && (
                 growthSubscription?.status === 'active'
-                  ? <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} />
+                  ? <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} toolId={selectedToolId} />
                   : <ComparisonsTeaser tool={tool} toolWebsite={tool.website} />
               )}
-              {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} />}
+              {tab === 'listing' && <ListingTab tool={tool} onSaved={setTool} toolId={selectedToolId} />}
               {tab === 'content' && (
-                <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} />
+                <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} toolId={selectedToolId} />
               )}
               {tab === 'reviews' && (
-                <ReviewsTab reviews={reviews} onReviews={setReviews} isGrowthActive={growthSubscription?.status === 'active'} toolWebsite={tool.website} />
+                <ReviewsTab reviews={reviews} onReviews={setReviews} isGrowthActive={growthSubscription?.status === 'active'} toolWebsite={tool.website} toolId={selectedToolId} />
               )}
               {tab === 'billing' && (
-                <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} />
+                <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} toolId={selectedToolId} />
               )}
             </div>
           </div>
@@ -216,7 +278,7 @@ const LOGO_MAX_SIZE = 5 * 1024 * 1024;
 // caller's own session, never from anything sent by the client). Client-
 // side checks mirror the server's so a bad file gets instant feedback
 // instead of a round-trip.
-function LogoUploader({ tool, onLogoUpdated }: { tool: ToolRow; onLogoUpdated: (logo: string) => void }) {
+function LogoUploader({ tool, onLogoUpdated, toolId }: { tool: ToolRow; onLogoUpdated: (logo: string) => void; toolId: string | null }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputId = 'vendor-logo-upload-input';
@@ -237,7 +299,7 @@ function LogoUploader({ tool, onLogoUpdated }: { tool: ToolRow; onLogoUpdated: (
 
     setError(null);
     setUploading(true);
-    const res = await vendorDashboard.uploadLogo(file);
+    const res = await vendorDashboard.uploadLogo(file, toolId);
     setUploading(false);
     if (res.ok) {
       onLogoUpdated(res.url);
@@ -269,8 +331,8 @@ function LogoUploader({ tool, onLogoUpdated }: { tool: ToolRow; onLogoUpdated: (
 }
 
 function OverviewTab({
-  tool, growthSubscription, reviews, onLogoUpdated,
-}: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void }) {
+  tool, growthSubscription, reviews, onLogoUpdated, toolId,
+}: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void; toolId: string | null }) {
   const pendingCount = reviews.filter((r) => r.status === 'pending').length;
   const publishedCount = reviews.filter((r) => r.status === 'approved').length;
   const isActive = growthSubscription?.status === 'active';
@@ -279,7 +341,7 @@ function OverviewTab({
     <div className="space-y-5">
       <Card>
         <div className="flex items-start gap-4">
-          <LogoUploader tool={tool} onLogoUpdated={onLogoUpdated} />
+          <LogoUploader tool={tool} onLogoUpdated={onLogoUpdated} toolId={toolId} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-lg font-bold text-[#0B1221] truncate">{tool.name}</h1>
@@ -408,9 +470,9 @@ function ChatQuestionsTab({ questions }: { questions: { content: string; created
 }
 
 function ComparisonRequestsTab({
-  tool, requests, onRequests,
+  tool, requests, onRequests, toolId,
 }: {
-  tool: ToolRow; requests: ComparisonRequestRow[]; onRequests: (v: ComparisonRequestRow[]) => void;
+  tool: ToolRow; requests: ComparisonRequestRow[]; onRequests: (v: ComparisonRequestRow[]) => void; toolId: string | null;
 }) {
   const [selectedTool, setSelectedTool] = useState<ToolOption | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -420,7 +482,7 @@ function ComparisonRequestsTab({
     if (!selectedTool) return;
     setSubmitting(true);
     setError(null);
-    const res = await vendorDashboard.requestComparison(selectedTool.slug);
+    const res = await vendorDashboard.requestComparison(selectedTool.slug, toolId);
     setSubmitting(false);
     if (res.ok) {
       onRequests([res.request, ...requests]);
@@ -667,7 +729,7 @@ function FieldTextarea({ label, value, onChange, rows = 3 }: { label: string; va
   );
 }
 
-function ListingTab({ tool, onSaved }: { tool: ToolRow; onSaved: (t: ToolRow) => void }) {
+function ListingTab({ tool, onSaved, toolId }: { tool: ToolRow; onSaved: (t: ToolRow) => void; toolId: string | null }) {
   const [form, setForm] = useState({
     short_description: tool.short_description || '',
     long_description: tool.long_description || '',
@@ -699,7 +761,7 @@ function ListingTab({ tool, onSaved }: { tool: ToolRow; onSaved: (t: ToolRow) =>
     const res = await vendorDashboard.updateListing({
       ...form,
       founded_year: form.founded_year ? Number(form.founded_year) : null,
-    });
+    }, toolId);
     setSaving(false);
     if (res.ok) {
       onSaved(res.tool);
@@ -759,24 +821,25 @@ function ListingTab({ tool, onSaved }: { tool: ToolRow; onSaved: (t: ToolRow) =>
 }
 
 function ContentTab({
-  features, pros, cons, faqs, onFeatures, onPros, onCons, onFaqs,
+  features, pros, cons, faqs, onFeatures, onPros, onCons, onFaqs, toolId,
 }: {
   features: FeatureRow[]; pros: TextRow[]; cons: TextRow[]; faqs: FaqRow[];
   onFeatures: (v: FeatureRow[]) => void; onPros: (v: TextRow[]) => void; onCons: (v: TextRow[]) => void; onFaqs: (v: FaqRow[]) => void;
+  toolId: string | null;
 }) {
   return (
     <div className="space-y-5">
-      <FeaturesEditor features={features} onSaved={onFeatures} />
+      <FeaturesEditor features={features} onSaved={onFeatures} toolId={toolId} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <ListTextEditor title="Pros" items={pros} onSaved={onPros} action={vendorDashboard.setPros} placeholder="e.g. Fast onboarding" />
-        <ListTextEditor title="Cons" items={cons} onSaved={onCons} action={vendorDashboard.setCons} placeholder="e.g. Limited free tier" />
+        <ListTextEditor title="Pros" items={pros} onSaved={onPros} action={(items) => vendorDashboard.setPros(items, toolId)} placeholder="e.g. Fast onboarding" />
+        <ListTextEditor title="Cons" items={cons} onSaved={onCons} action={(items) => vendorDashboard.setCons(items, toolId)} placeholder="e.g. Limited free tier" />
       </div>
-      <FaqsEditor faqs={faqs} onSaved={onFaqs} />
+      <FaqsEditor faqs={faqs} onSaved={onFaqs} toolId={toolId} />
     </div>
   );
 }
 
-function FeaturesEditor({ features, onSaved }: { features: FeatureRow[]; onSaved: (v: FeatureRow[]) => void }) {
+function FeaturesEditor({ features, onSaved, toolId }: { features: FeatureRow[]; onSaved: (v: FeatureRow[]) => void; toolId: string | null }) {
   const [items, setItems] = useState(features.map((f) => ({ title: f.title, description: f.description || '' })));
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -795,7 +858,7 @@ function FeaturesEditor({ features, onSaved }: { features: FeatureRow[]; onSaved
   async function save() {
     setSaving(true);
     const cleaned = items.filter((it) => it.title.trim());
-    const res = await vendorDashboard.setFeatures(cleaned);
+    const res = await vendorDashboard.setFeatures(cleaned, toolId);
     setSaving(false);
     if (res.ok) {
       onSaved(res.items);
@@ -886,7 +949,7 @@ function ListTextEditor({
   );
 }
 
-function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) => void }) {
+function FaqsEditor({ faqs, onSaved, toolId }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) => void; toolId: string | null }) {
   const [items, setItems] = useState(faqs.map((f) => ({ question: f.question, answer: f.answer })));
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -902,7 +965,7 @@ function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) 
   async function save() {
     setSaving(true);
     const cleaned = items.filter((it) => it.question.trim() && it.answer.trim());
-    const res = await vendorDashboard.setFaqs(cleaned);
+    const res = await vendorDashboard.setFaqs(cleaned, toolId);
     setSaving(false);
     if (res.ok) {
       onSaved(res.items);
@@ -940,9 +1003,9 @@ function FaqsEditor({ faqs, onSaved }: { faqs: FaqRow[]; onSaved: (v: FaqRow[]) 
 }
 
 function ReviewsTab({
-  reviews, onReviews, isGrowthActive, toolWebsite,
+  reviews, onReviews, isGrowthActive, toolWebsite, toolId,
 }: {
-  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isGrowthActive: boolean; toolWebsite: string | null;
+  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isGrowthActive: boolean; toolWebsite: string | null; toolId: string | null;
 }) {
   if (reviews.length === 0) {
     return <Card><p className="text-sm text-slate-500 text-center py-6">No reviews yet.</p></Card>;
@@ -964,26 +1027,26 @@ function ReviewsTab({
         </div>
       )}
       {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} isGrowthActive={isGrowthActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} />
+        <ReviewCard key={review.id} review={review} isGrowthActive={isGrowthActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} toolId={toolId} />
       ))}
     </div>
   );
 }
 
-function ReviewCard({ review, onUpdate, isGrowthActive }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isGrowthActive: boolean }) {
+function ReviewCard({ review, onUpdate, isGrowthActive, toolId }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isGrowthActive: boolean; toolId: string | null }) {
   const [responseText, setResponseText] = useState(review.vendor_response || '');
   const [busy, setBusy] = useState(false);
 
   async function submitResponse() {
     if (!responseText.trim()) return;
     setBusy(true);
-    const res = await vendorDashboard.respondToReview(review.id, responseText.trim());
+    const res = await vendorDashboard.respondToReview(review.id, responseText.trim(), toolId);
     setBusy(false);
     if (res.ok) onUpdate(res.review);
   }
   async function toggleVisibility() {
     setBusy(true);
-    const res = review.status === 'rejected' ? await vendorDashboard.restoreReview(review.id) : await vendorDashboard.removeReview(review.id);
+    const res = review.status === 'rejected' ? await vendorDashboard.restoreReview(review.id, toolId) : await vendorDashboard.removeReview(review.id, toolId);
     setBusy(false);
     if (res.ok) onUpdate(res.review);
   }
@@ -1063,15 +1126,15 @@ function ReviewCard({ review, onUpdate, isGrowthActive }: { review: ReviewRow; o
 }
 
 function BillingTab({
-  claimSubscription, growthSubscription, toolSlug, toolWebsite,
+  claimSubscription, growthSubscription, toolSlug, toolWebsite, toolId,
 }: {
-  claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; toolSlug: string; toolWebsite: string | null;
+  claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; toolSlug: string; toolWebsite: string | null; toolId: string | null;
 }) {
   const [opening, setOpening] = useState(false);
 
   async function openPortal() {
     setOpening(true);
-    const res = await vendorDashboard.openBillingPortal(`${window.location.origin}/vendor/dashboard`);
+    const res = await vendorDashboard.openBillingPortal(`${window.location.origin}/vendor/dashboard`, toolId);
     setOpening(false);
     if (res.ok && res.url) window.location.href = res.url;
   }

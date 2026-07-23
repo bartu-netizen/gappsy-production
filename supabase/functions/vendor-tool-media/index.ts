@@ -27,7 +27,8 @@ Deno.serve(async (req: Request) => {
 
   try {
     const supabase = createServiceClient();
-    const session = await requireVendorSession(req, supabase);
+    const toolId = new URL(req.url).searchParams.get("tool_id");
+    const session = await requireVendorSession(req, supabase, toolId);
 
     const contentType = req.headers.get("content-type") || "";
     if (!contentType.includes("multipart/form-data")) {

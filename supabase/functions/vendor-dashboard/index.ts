@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import Stripe from "npm:stripe@17.7.0";
 import { CORS_HEADERS } from "../_shared/adminSession.ts";
-import { createServiceClient, requireVendorSession, VendorAuthError } from "../_shared/vendorAuth.ts";
+import { createServiceClient, requireVendorSession, listVendorTools, VendorAuthError, VendorMultipleToolsError } from "../_shared/vendorAuth.ts";
 
 // Self-service dashboard for a vendor who owns a listing (tools.owner_user_id
 // = auth.uid(), set only by vendor-claim-account). Deliberately mirrors the
@@ -62,7 +62,18 @@ Deno.serve(async (req: Request) => {
 
   try {
     const supabase = createServiceClient();
-    const session = await requireVendorSession(req, supabase);
+    const url = new URL(req.url);
+    const toolId = url.searchParams.get("tool_id");
+
+    // Tool-switcher support: list every tool this account owns, independent
+    // of the single-tool resolution below (which would throw for an account
+    // owning 2+ tools before the picker could ever be shown).
+    if (req.method === "GET" && url.searchParams.get("list_tools") === "1") {
+      const tools = await listVendorTools(req, supabase);
+      return jsonResponse({ ok: true, tools });
+    }
+
+    const session = await requireVendorSession(req, supabase, toolId);
 
     if (req.method === "GET") {
       const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, growthResult, comparisonRequestsResult] = await Promise.all([
@@ -267,6 +278,9 @@ Deno.serve(async (req: Request) => {
 
     return jsonResponse({ ok: false, error: "Method not allowed" }, 405);
   } catch (error) {
+    if (error instanceof VendorMultipleToolsError) {
+      return jsonResponse({ ok: false, error: error.message, error_code: "multiple_tools", tools: error.tools }, error.status);
+    }
     if (error instanceof VendorAuthError) return jsonResponse({ ok: false, error: error.message }, error.status);
     console.error("[vendor-dashboard] error:", error);
     return jsonResponse({ ok: false, error: "An unexpected error occurred." }, 500);

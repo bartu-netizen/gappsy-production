@@ -8,10 +8,12 @@ async function currentAccessToken(): Promise<string | null> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- response shape varies per action; callers destructure the fields they need
-async function callVendorFunction(name: string, body: Record<string, unknown>, method: 'GET' | 'POST' = 'POST'): Promise<any> {
+async function callVendorFunction(name: string, body: Record<string, unknown>, method: 'GET' | 'POST' = 'POST', toolId?: string | null): Promise<any> {
   const token = await currentAccessToken();
   if (!token) return { ok: false, error: 'Not signed in' };
-  const url = method === 'GET' ? `${SUPABASE_URL}/functions/v1/${name}` : `${SUPABASE_URL}/functions/v1/${name}`;
+  const url = toolId
+    ? `${SUPABASE_URL}/functions/v1/${name}?tool_id=${encodeURIComponent(toolId)}`
+    : `${SUPABASE_URL}/functions/v1/${name}`;
   const res = await fetch(url, {
     method,
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -20,25 +22,49 @@ async function callVendorFunction(name: string, body: Record<string, unknown>, m
   return res.json().catch(() => ({ ok: false, error: 'Invalid response' }));
 }
 
+export interface VendorToolSummary {
+  id: string;
+  slug: string;
+  name: string;
+}
+
+async function listVendorTools(): Promise<{ ok: boolean; tools?: VendorToolSummary[]; error?: string }> {
+  const token = await currentAccessToken();
+  if (!token) return { ok: false, error: 'Not signed in' };
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/vendor-dashboard?list_tools=1`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json().catch(() => ({ ok: false, error: 'Invalid response' }));
+}
+
 export const vendorDashboard = {
-  fetchAll: () => callVendorFunction('vendor-dashboard', {}, 'GET'),
-  updateListing: (fields: Record<string, unknown>) => callVendorFunction('vendor-dashboard', { action: 'update_listing', fields }),
-  setFeatures: (items: { title: string; description?: string }[]) => callVendorFunction('vendor-dashboard', { action: 'set_features', items }),
-  setPros: (items: { text: string }[]) => callVendorFunction('vendor-dashboard', { action: 'set_pros', items }),
-  setCons: (items: { text: string }[]) => callVendorFunction('vendor-dashboard', { action: 'set_cons', items }),
-  setFaqs: (items: { question: string; answer: string }[]) => callVendorFunction('vendor-dashboard', { action: 'set_faqs', items }),
-  respondToReview: (reviewId: string, response: string) => callVendorFunction('vendor-dashboard', { action: 'respond_to_review', review_id: reviewId, response }),
-  removeReview: (reviewId: string) => callVendorFunction('vendor-dashboard', { action: 'remove_review', review_id: reviewId }),
-  restoreReview: (reviewId: string) => callVendorFunction('vendor-dashboard', { action: 'restore_review', review_id: reviewId }),
-  openBillingPortal: (returnUrl: string) => callVendorFunction('vendor-dashboard', { action: 'create_billing_portal_session', return_url: returnUrl }),
-  requestComparison: (requestedToolSlug: string) => callVendorFunction('vendor-dashboard', { action: 'request_comparison', requested_tool_slug: requestedToolSlug }),
+  // Independent of the single-tool resolution the other calls rely on —
+  // safe to call even when the account owns 2+ tools (which would otherwise
+  // make every other call below fail with a "multiple_tools" error until a
+  // specific toolId is supplied).
+  listTools: listVendorTools,
+  fetchAll: (toolId?: string | null) => callVendorFunction('vendor-dashboard', {}, 'GET', toolId),
+  updateListing: (fields: Record<string, unknown>, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'update_listing', fields }, 'POST', toolId),
+  setFeatures: (items: { title: string; description?: string }[], toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'set_features', items }, 'POST', toolId),
+  setPros: (items: { text: string }[], toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'set_pros', items }, 'POST', toolId),
+  setCons: (items: { text: string }[], toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'set_cons', items }, 'POST', toolId),
+  setFaqs: (items: { question: string; answer: string }[], toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'set_faqs', items }, 'POST', toolId),
+  respondToReview: (reviewId: string, response: string, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'respond_to_review', review_id: reviewId, response }, 'POST', toolId),
+  removeReview: (reviewId: string, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'remove_review', review_id: reviewId }, 'POST', toolId),
+  restoreReview: (reviewId: string, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'restore_review', review_id: reviewId }, 'POST', toolId),
+  openBillingPortal: (returnUrl: string, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'create_billing_portal_session', return_url: returnUrl }, 'POST', toolId),
+  requestComparison: (requestedToolSlug: string, toolId?: string | null) => callVendorFunction('vendor-dashboard', { action: 'request_comparison', requested_tool_slug: requestedToolSlug }, 'POST', toolId),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- response shape mirrors callVendorFunction's
-  uploadLogo: async (file: File): Promise<any> => {
+  uploadLogo: async (file: File, toolId?: string | null): Promise<any> => {
     const token = await currentAccessToken();
     if (!token) return { ok: false, error: 'Not signed in' };
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/vendor-tool-media`, {
+    const url = toolId
+      ? `${SUPABASE_URL}/functions/v1/vendor-tool-media?tool_id=${encodeURIComponent(toolId)}`
+      : `${SUPABASE_URL}/functions/v1/vendor-tool-media`;
+    const res = await fetch(url, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
