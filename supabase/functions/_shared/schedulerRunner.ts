@@ -9,6 +9,7 @@
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2.57.4";
 import { computeNextCronRun, computeNextIntervalRun } from "./cronNextRun.ts";
 import { getSchedulerHandler, UnknownJobTypeError } from "./schedulerRegistry.ts";
+import { sendEmail } from "./emailClient.ts";
 
 const HEARTBEAT_INTERVAL_MS = 60_000;
 
@@ -122,6 +123,10 @@ export async function executeScheduledJob(
     last_error: outcome.error || null,
     consecutive_failures: consecutiveFailures,
     next_run_at: nextRunAt ? nextRunAt.toISOString() : null,
+    // Re-arm the stale-job watchdog: the job actually ran (success or
+    // failure), so it is no longer silently stuck — the next overdue
+    // episode, if any, deserves its own fresh alert.
+    stale_alert_sent_at: null,
     updated_at: completedAt.toISOString(),
   }).eq("id", job.id).eq("worker_id", workerId);
 
@@ -157,16 +162,88 @@ const HEAVY_JOB_TYPES = new Set([
 // so the next cron tick, a separate invocation, picks them up instead of
 // stacking their resource use inside this one. Non-heavy jobs always run
 // alongside the single heavy job, same as before.
+const STALE_ALERT_RECIPIENT = "bartu@gappsy.com";
+
+// Watchdog: catches ANY enabled job that has gone significantly overdue for
+// ANY reason (a future, still-unknown bug — not just the heavy-job
+// starvation this accompanies) and self-heals it within this same tick
+// instead of it silently sitting broken until someone happens to query
+// scheduled_jobs by hand, which is exactly how stale_source_retry's
+// 100+-minute starvation was originally found. "Significantly overdue" =
+// worse than 2x its own interval AND at least 5 minutes, so normal tick
+// jitter on fast jobs never trips it. stale_alert_sent_at (cleared whenever
+// the job actually completes a run — see executeScheduledJob) makes this
+// fire once per stale episode, not every minute.
+async function healStaleJobs(supabase: SupabaseClient): Promise<void> {
+  const { data: jobs, error } = await supabase
+    .from("scheduled_jobs")
+    .select("id, job_type, interval_seconds, next_run_at, last_error, consecutive_failures")
+    .eq("enabled", true)
+    .not("next_run_at", "is", null)
+    .is("stale_alert_sent_at", null);
+  if (error || !jobs || jobs.length === 0) return;
+
+  const now = Date.now();
+  const stale = (jobs as any[]).filter((j) => {
+    const overdueMs = now - new Date(j.next_run_at).getTime();
+    const thresholdMs = Math.max((j.interval_seconds || 0) * 2, 300) * 1000;
+    return overdueMs > thresholdMs;
+  });
+  if (stale.length === 0) return;
+
+  // Force back into eligibility immediately (also clears any phantom lease
+  // state) and mark alerted so this doesn't re-fire every minute until the
+  // job actually runs again.
+  await supabase.from("scheduled_jobs")
+    .update({ next_run_at: new Date(now).toISOString(), worker_id: null, lease_expires_at: null, heartbeat_at: null, stale_alert_sent_at: new Date(now).toISOString() })
+    .in("id", stale.map((j) => j.id));
+
+  const lines = stale.map((j) => {
+    const overdueMin = Math.round((now - new Date(j.next_run_at).getTime()) / 60000);
+    return `- ${j.job_type}: ${overdueMin} min overdue (consecutive_failures=${j.consecutive_failures ?? 0}${j.last_error ? `, last_error="${j.last_error}"` : ""}) — forced to re-run this tick`;
+  });
+
+  try {
+    await sendEmail({
+      to: STALE_ALERT_RECIPIENT,
+      subject: `Gappsy scheduler: ${stale.length} job(s) were stuck, auto-recovered`,
+      text: `The scheduler watchdog found the following job(s) far overdue and forced them back into the run queue:\n\n${lines.join("\n")}\n\nThis is automatic — no action needed unless the same job type keeps reappearing, which would point at a real failure in that job rather than a one-off scheduling fluke.`,
+    });
+  } catch (err) {
+    console.error("[schedulerRunner] Failed to send stale-job alert email:", err);
+  }
+}
+
 export async function tickScheduler(supabase: SupabaseClient, supabaseUrl: string, anonKey: string): Promise<TickSummary> {
+  try {
+    await healStaleJobs(supabase);
+  } catch (err) {
+    console.error("[schedulerRunner] healStaleJobs failed:", err);
+  }
+
   const workerId = `tick-${crypto.randomUUID()}`;
   const { data: claimed, error: claimError } = await supabase.rpc("claim_scheduled_jobs", { p_worker_id: workerId });
   if (claimError) throw new Error(`Failed to claim scheduled jobs: ${claimError.message}`);
   if (!claimed || claimed.length === 0) return { claimed: 0, results: [], released: 0 };
 
+  // claim_scheduled_jobs()'s SQL orders its SELECT ... FOR UPDATE subquery by
+  // priority DESC, next_run_at ASC, but that only controls lock-acquisition
+  // order — Postgres does NOT guarantee an UPDATE ... RETURNING * preserves a
+  // subquery's ORDER BY in its output. Without re-sorting here, "the most
+  // overdue heavy job wins the one-per-tick slot" silently never held: heavy
+  // jobs got the budget in whatever row order Postgres happened to return,
+  // every tick, forever — starving any heavy job that consistently lost that
+  // undefined ordering (observed: stale_source_retry, hourly, perpetually
+  // starved by 60s-interval heavy jobs, for 2+ hours straight).
+  const claimedOrdered = (claimed as any[]).slice().sort((a, b) => {
+    if (a.priority !== b.priority) return b.priority - a.priority;
+    return new Date(a.next_run_at).getTime() - new Date(b.next_run_at).getTime();
+  });
+
   let heavyBudgetUsed = false;
   const toRun: any[] = [];
   const toRelease: any[] = [];
-  for (const job of claimed as any[]) {
+  for (const job of claimedOrdered) {
     if (HEAVY_JOB_TYPES.has(job.job_type as string)) {
       if (heavyBudgetUsed) { toRelease.push(job); continue; }
       heavyBudgetUsed = true;
