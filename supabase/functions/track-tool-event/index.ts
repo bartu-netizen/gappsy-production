@@ -22,6 +22,24 @@ function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
 }
 
+// Generous — real browsing (several tool pages + clicks across tabs in a
+// few minutes) can easily reach a few dozen; this only catches a scripted
+// flood, keyed by IP (not visitor_id, which is a client-controlled
+// localStorage value trivial to regenerate per request).
+const RATE_LIMIT_WINDOW_MINUTES = 5;
+const RATE_LIMIT_MAX_EVENTS = 120;
+
+// deno-lint-ignore no-explicit-any
+async function checkRateLimit(supabase: any, ip: string): Promise<boolean> {
+  const since = new Date(Date.now() - RATE_LIMIT_WINDOW_MINUTES * 60 * 1000).toISOString();
+  const [pageViews, clicks] = await Promise.all([
+    supabase.from("tool_page_views").select("id", { count: "exact", head: true }).eq("ip_address", ip).gte("created_at", since),
+    supabase.from("tool_outbound_clicks").select("id", { count: "exact", head: true }).eq("ip_address", ip).gte("created_at", since),
+  ]);
+  const total = (pageViews.count ?? 0) + (clicks.count ?? 0);
+  return total < RATE_LIMIT_MAX_EVENTS;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
   if (req.method !== "POST") return jsonResponse({ ok: false, error: "Method not allowed" }, 405);
@@ -39,12 +57,18 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
     }
 
+    const ipAddress = typeof payload.ip === "string" ? payload.ip : null;
+    if (ipAddress) {
+      const withinLimit = await checkRateLimit(supabase, ipAddress);
+      if (!withinLimit) return jsonResponse({ ok: false, error: "Too many events" }, 429);
+    }
+
     const { data: tool } = await supabase.from("tools").select("id").eq("slug", toolSlug).maybeSingle();
     if (!tool) return jsonResponse({ ok: false, error: "Unknown tool" }, 404);
 
     const shared = {
       tool_id: tool.id,
-      ip_address: typeof payload.ip === "string" ? payload.ip : null,
+      ip_address: ipAddress,
       country_code: typeof payload.country_code === "string" ? payload.country_code : null,
       country_name: typeof payload.country_name === "string" ? payload.country_name : null,
       user_agent: typeof payload.user_agent === "string" ? payload.user_agent : null,

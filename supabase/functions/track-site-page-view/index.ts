@@ -24,6 +24,24 @@ function jsonResponse(body: unknown, status = 200) {
 
 const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "");
 
+// Generous — real browsing (many page navigations in a few minutes) can
+// legitimately approach this; only catches a scripted flood. Keyed by IP
+// (not visitor_id, a client-controlled localStorage value trivial to
+// regenerate per request) and only on "start" (the action that inserts new
+// rows — "duration" only updates an existing id, much lower abuse value).
+const RATE_LIMIT_WINDOW_MINUTES = 5;
+const RATE_LIMIT_MAX_STARTS = 120;
+
+async function checkRateLimit(ip: string): Promise<boolean> {
+  const since = new Date(Date.now() - RATE_LIMIT_WINDOW_MINUTES * 60 * 1000).toISOString();
+  const { count } = await supabase
+    .from("site_page_views")
+    .select("id", { count: "exact", head: true })
+    .eq("ip_address", ip)
+    .gte("created_at", since);
+  return (count ?? 0) < RATE_LIMIT_MAX_STARTS;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: CORS_HEADERS });
   if (req.method !== "POST") return jsonResponse({ ok: false, error: "Method not allowed" }, 405);
@@ -47,6 +65,10 @@ Deno.serve(async (req: Request) => {
       if (!path) return jsonResponse({ ok: false, error: "Invalid payload" }, 400);
 
       const visitor = extractVisitorContext(req);
+      if (visitor.ip_address) {
+        const withinLimit = await checkRateLimit(visitor.ip_address);
+        if (!withinLimit) return jsonResponse({ ok: false, error: "Too many events" }, 429);
+      }
       const { error } = await supabase.from("site_page_views").insert({
         id,
         visitor_id: typeof payload.visitor_id === "string" ? payload.visitor_id : null,
