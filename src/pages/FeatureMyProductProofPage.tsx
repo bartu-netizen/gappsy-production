@@ -1,11 +1,11 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowRight, Users, ThumbsUp, Search } from 'lucide-react';
+import { ArrowRight, Rocket, Users, ThumbsUp } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 
 const WHY_POINTS = [
-  { icon: Users, text: '10,000+ ready-to-buy customers' },
-  { icon: ThumbsUp, text: 'They trust us, completely' },
-  { icon: Search, text: 'Always hunting for new tools' },
+  { icon: Rocket, text: 'A mobile app-builder since 2019' },
+  { icon: Users, text: '10,000+ paid users, and counting' },
+  { icon: ThumbsUp, text: 'They trust our recommendations' },
 ];
 
 // Real numbers from our own Stripe/ThriveCart/PayPal dashboards — shown as
@@ -19,7 +19,11 @@ const REVENUE_STATS = [
   { value: '10,528', label: 'Total customers' },
 ];
 
-const REVENUE_SOURCES = ['Stripe', 'ThriveCart', 'PayPal'];
+const REVENUE_SOURCES = [
+  { name: 'Stripe', color: '#635BFF' },
+  { name: 'PayPal', color: '#003087' },
+  { name: 'ThriveCart', color: '#1AAE9F' },
+];
 
 // Real, unedited numbers pulled from a handful of representative email
 // broadcasts to our existing paid user base — campaign names and dates
@@ -96,6 +100,9 @@ export default function FeatureMyProductProofPage() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-3.5 sm:mt-5 text-[13.5px] sm:text-[15px] text-slate-500 leading-relaxed">
+                These users love trying new tools — <span className="font-semibold text-[#0B1221]">your perfect audience.</span>
+              </p>
             </div>
 
             {/* Right: the proof, stacked */}
@@ -103,9 +110,12 @@ export default function FeatureMyProductProofPage() {
               <section>
                 <div className="flex items-center gap-2">
                   <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Real revenue</h2>
-                  <div className="flex items-center gap-1">
-                    {REVENUE_SOURCES.map((name) => (
-                      <span key={name} className="text-[9.5px] font-semibold text-slate-400 bg-slate-100 rounded px-1.5 py-0.5">{name}</span>
+                  <div className="flex items-center gap-2.5">
+                    {REVENUE_SOURCES.map((s) => (
+                      <span key={s.name} className="inline-flex items-center gap-1">
+                        <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ backgroundColor: s.color }} aria-hidden="true" />
+                        <span className="text-[10.5px] font-semibold text-slate-500">{s.name}</span>
+                      </span>
                     ))}
                   </div>
                 </div>
