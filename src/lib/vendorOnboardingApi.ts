@@ -47,6 +47,7 @@ export const vendorOnboarding = {
     callFunction("vendor-onboarding", { action: "confirm_new_product", session_id: sessionId, product_name: productName, website }),
   submitContact: (sessionId: string, email: string, name: string, ownershipConfirmed: boolean) =>
     callFunction("vendor-onboarding", { action: "submit_contact", session_id: sessionId, email, name, ownership_confirmed: ownershipConfirmed }),
+  checkEmailAccount: (email: string) => callFunction("vendor-onboarding", { action: "check_email_account", email }),
   createCheckout: (sessionId: string, product: "claim" | "growth", billingInterval?: "month" | "year") =>
     callFunction("vendor-onboarding", { action: "create_checkout", session_id: sessionId, product, billing_interval: billingInterval }),
   sessionStatus: (params: { sessionId?: string; stripeSessionId?: string }) =>

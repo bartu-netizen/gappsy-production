@@ -86,7 +86,7 @@ export default function FeatureMyProductVerifyPage() {
                 to={`/vendor/claim?token=${encodeURIComponent(token || '')}`}
                 className="mt-6 w-full flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] transition-opacity hover:opacity-95"
               >
-                Create your account to manage this listing
+                Manage this listing
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

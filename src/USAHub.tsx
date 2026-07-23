@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Top25Header from './components/Top25Header';
 import Footer from './components/Footer';
 import SmartSearchBox from './components/search/SmartSearchBox';
@@ -15,6 +15,7 @@ const AGENCY_STATE_EXAMPLE_QUERIES = [
 
 function USAHub() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isIntroExpanded, setIsIntroExpanded] = useState(false);
   const [stateRegions, setStateRegions] = useState<StateRegion[]>([]);
   // Top25Header's Find/List buttons dispatch these two global events on
@@ -42,6 +43,14 @@ function USAHub() {
       window.removeEventListener('openGetMatchedForm', openFind);
       window.removeEventListener('openSubmitAgencyForm', openList);
     };
+  }, []);
+
+  // Arrived via /get-listed's "Get Started" (Marketing Agency panel) —
+  // same "list" intent as Top25Header's submit-agency event above, just
+  // carried across a real page navigation instead of a same-page event.
+  useEffect(() => {
+    if (searchParams.get('submit') === '1') setStatePickerMode('list');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSelectState(slug: string) {

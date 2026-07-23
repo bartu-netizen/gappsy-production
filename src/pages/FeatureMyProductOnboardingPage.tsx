@@ -1,10 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown } from 'lucide-react';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
+import { supabase } from '../lib/supabase';
 import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
+
+// Carries the email/password the visitor picks at the contact step across
+// the full-page redirect to Stripe Checkout and back — sessionStorage
+// (never the URL, never sent to our own backend) is the only thing that
+// survives that round trip. Cleared the moment it's read, win or lose;
+// /vendor/claim (post-verification) remains the fallback if this account
+// creation attempt fails or the visitor verifies from a different device.
+const PENDING_ACCOUNT_KEY = 'fmp_pending_account';
+
+async function createPendingAccountIfNeeded() {
+  let stored: string | null = null;
+  try { stored = sessionStorage.getItem(PENDING_ACCOUNT_KEY); } catch { /* ignore */ }
+  if (!stored) return;
+  try { sessionStorage.removeItem(PENDING_ACCOUNT_KEY); } catch { /* ignore */ }
+  try {
+    const parsed = JSON.parse(stored) as { email?: string; password?: string };
+    if (!parsed.email || !parsed.password) return;
+    await supabase.auth.signUp({ email: parsed.email, password: parsed.password });
+  } catch {
+    // Best-effort — /vendor/claim after ownership verification is the fallback path.
+  }
+}
 
 type WizardStep =
   | 'url' | 'matching' | 'match_existing' | 'already_featured' | 'new_product'
@@ -92,11 +115,11 @@ export default function FeatureMyProductOnboardingPage() {
   const [tool, setTool] = useState<ToolSummary | null>(null);
   const [prefillName, setPrefillName] = useState('');
   const [prefillWebsite, setPrefillWebsite] = useState('');
-  const [pendingSubmission, setPendingSubmission] = useState(false);
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   const [email, setEmail] = useState('');
   const [contactName, setContactName] = useState('');
+  const [password, setPassword] = useState('');
 
   // Which card's button is mid-checkout — two independent pricing cards
   // (Monthly / Yearly) instead of one shared toggle, so each has its own
@@ -176,6 +199,10 @@ export default function FeatureMyProductOnboardingPage() {
         if (pollRef.current) window.clearInterval(pollRef.current);
         setOwnershipToken(res.ownership_token || null);
         if (onDone === 'growth_upsell') {
+          // The one-time $29 payment just completed — this is "after
+          // payment" for both the skip-Growth and buy-Growth paths, since
+          // both land here first.
+          if (isDone) await createPendingAccountIfNeeded();
           setStep('growth_upsell');
         } else {
           setPurchasedGrowth(res.growth_status === 'active');
@@ -215,7 +242,6 @@ export default function FeatureMyProductOnboardingPage() {
       setStep('match_existing');
       return;
     }
-    setPendingSubmission(Boolean(res.pending_submission));
     setPrefillName(res.prefill?.name || '');
     setPrefillWebsite(res.prefill?.website || submitUrl);
     setStep('new_product');
@@ -240,17 +266,29 @@ export default function FeatureMyProductOnboardingPage() {
     setStep('contact');
   }
 
-  // ── Step 3: contact ─────────────────────────────────────────────────────
+  // ── Step 3: contact + choose account credentials ────────────────────────
   async function handleContactSubmit() {
-    if (!sessionId || !email.trim() || loading) return;
+    if (!sessionId || !email.trim() || password.length < 8 || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.submitContact(sessionId, email.trim(), contactName.trim(), true);
+
+    const trimmedEmail = email.trim();
+    const emailCheck = await vendorOnboarding.checkEmailAccount(trimmedEmail);
+    if (emailCheck.ok && emailCheck.exists) {
+      setLoading(false);
+      setErrorMessage('An account with this email already exists — sign in instead at gappsy.com/login.');
+      return;
+    }
+
+    const res = await vendorOnboarding.submitContact(sessionId, trimmedEmail, contactName.trim(), true);
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Please check your email address and try again.');
       return;
     }
+    // Chosen here, created client-side only after payment succeeds (see
+    // createPendingAccountIfNeeded) — never sent to our own backend.
+    try { sessionStorage.setItem(PENDING_ACCOUNT_KEY, JSON.stringify({ email: trimmedEmail, password })); } catch { /* ignore */ }
     // Already claimed in an earlier visit (paid the one-time fee, never
     // added Growth) — skip straight to the upsell instead of charging again.
     setStep(alreadyClaimed ? 'growth_upsell' : 'claim');
@@ -329,7 +367,6 @@ export default function FeatureMyProductOnboardingPage() {
             onCta={() => handleUrlSubmit()}
             ctaLoading={loading}
             ctaDisabled={!rawUrl.trim()}
-            footnote="No account required to get started."
           >
             <label htmlFor="fmp-url" className="sr-only">Product website</label>
             <input
@@ -360,9 +397,9 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'match_existing' && tool && (
           <StepLayout
-            eyebrow="Found your listing"
+            eyebrow="Your listing exists — but isn't verified"
             title={tool.name}
-            subtitle="Your existing Gappsy listing stays exactly as it is — claiming it adds a verified badge and self-serve editing once ownership is verified."
+            subtitle="It's already live on Gappsy exactly as-is. Verifying it (a one-time $29 fee, not a subscription) is what unlocks the things below."
             ctaLabel="Claim this listing"
             onCta={handleConfirmExisting}
           >
@@ -373,17 +410,43 @@ export default function FeatureMyProductOnboardingPage() {
                 <p className="text-[15px] text-slate-600 leading-relaxed line-clamp-3">{tool.short_description}</p>
               </div>
             </div>
-            <button type="button" onClick={() => setStep('url')} className="mt-3 text-[15px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
+
+            <ul className="mt-3.5 space-y-2">
+              {[
+                'A verified badge — buyers can tell this is the real owner, not a guess',
+                'Self-serve editing — fix outdated info yourself, no waiting on us',
+                'The ability to reply to reviews from your own dashboard',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-[14px] text-slate-600">
+                  <Check className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button type="button" onClick={() => setStep('url')} className="mt-3.5 text-[15px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
               This is not my product
             </button>
+
+            <AskGappsyBubble
+              page="feature_my_product"
+              chatTitle="Ask Gappsy about verifying"
+              chatSubtitle="Real answers — ask us anything before you continue"
+              placeholder="Ask anything about verifying your listing..."
+              suggestedQuestions={[
+                'What do I get for $29?',
+                'Is this a subscription?',
+                'How does ownership verification work?',
+              ]}
+            />
           </StepLayout>
         )}
 
         {step === 'new_product' && (
           <StepLayout
-            eyebrow={pendingSubmission ? 'Pending submission found' : 'We found a new product'}
+            eyebrow="We found a new product"
             title="Confirm your product details"
-            subtitle={pendingSubmission ? 'This product is already in our review queue — confirm the details below to continue.' : 'This isn\'t in the Gappsy directory yet. Confirm or edit the details below.'}
+            subtitle="This isn't in the Gappsy directory yet. Confirm or edit the details below."
             ctaLabel="Continue"
             onCta={handleConfirmNewProduct}
             ctaLoading={loading}
@@ -416,13 +479,13 @@ export default function FeatureMyProductOnboardingPage() {
 
         {step === 'contact' && (
           <StepLayout
-            eyebrow="Contact & ownership"
-            title="How can we reach you?"
-            subtitle="We use your email domain as a signal, not proof — you'll verify ownership after checkout."
+            eyebrow="Create your account"
+            title="Set up sign-in for your listing"
+            subtitle="You'll use this to log in and manage your listing once it's live — we only actually create the account after payment goes through."
             ctaLabel="Continue"
             onCta={handleContactSubmit}
             ctaLoading={loading}
-            ctaDisabled={!email.trim()}
+            ctaDisabled={!email.trim() || password.length < 8}
           >
             <div className="space-y-3.5">
               <div>
@@ -435,6 +498,21 @@ export default function FeatureMyProductOnboardingPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                 />
+              </div>
+              <div>
+                <label htmlFor="fmp-password" className="block text-[13px] font-medium text-slate-500 mb-1">Choose a password</label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+                  <input
+                    id="fmp-password"
+                    type="password"
+                    minLength={8}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="At least 8 characters"
+                    className="w-full h-[3.25rem] rounded-xl border border-slate-200 pl-11 pr-4 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="fmp-contact-name" className="block text-[13px] font-medium text-slate-500 mb-1">Your name (optional)</label>

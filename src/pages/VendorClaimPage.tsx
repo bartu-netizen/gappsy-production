@@ -30,7 +30,7 @@ export default function VendorClaimPage() {
       setLoadState('not_found');
       return;
     }
-    vendorClaim.lookupToken(token).then((res) => {
+    vendorClaim.lookupToken(token).then(async (res) => {
       if (!res.ok) {
         setLoadState((res.error_code as LoadState) || 'not_found');
         return;
@@ -38,6 +38,17 @@ export default function VendorClaimPage() {
       setContactEmail(res.contact_email);
       setToolName(res.tool_name);
       setLoadState('ready');
+
+      // Already signed in — likely from the onboarding wizard's own early
+      // account creation (right after the $29 payment, see
+      // FeatureMyProductOnboardingPage's createPendingAccountIfNeeded).
+      // Skip straight to linking instead of showing the create-account
+      // form again, which would just fail as "already registered".
+      const { data: sessionData } = await supabase.auth.getSession();
+      const activeEmail = sessionData.session?.user?.email?.toLowerCase().trim();
+      if (activeEmail && activeEmail === res.contact_email.toLowerCase().trim()) {
+        await finalizeClaim();
+      }
     }).catch(() => setLoadState('not_found'));
   }, [token]);
 

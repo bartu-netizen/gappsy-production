@@ -420,6 +420,21 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: true, email_domain_matches_website: domainMatch });
       }
 
+      // ── Step 3b: does this email already have a Gappsy account? ───────
+      // Existence-only check so the contact step can nudge an existing
+      // vendor to sign in instead of picking a password for a second
+      // account — the actual account (if any) is still only ever created
+      // client-side via supabase.auth.signUp(), never here.
+      case "check_email_account": {
+        const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          return jsonResponse({ ok: false, error: "A valid email is required." }, 400);
+        }
+        const { data: exists, error: lookupError } = await supabase.rpc("check_email_registered", { p_email: email });
+        if (lookupError) return jsonResponse({ ok: false, error: "Could not check that email." }, 500);
+        return jsonResponse({ ok: true, exists: Boolean(exists) });
+      }
+
       // ── Step 4/5: create the Stripe Checkout session ──────────────────
       case "create_checkout": {
         const sessionId = typeof payload.session_id === "string" ? payload.session_id : "";
