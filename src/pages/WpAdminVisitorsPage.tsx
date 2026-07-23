@@ -18,6 +18,7 @@ interface VisitorRow {
   country_name: string | null;
   city: string | null;
   paid: boolean;
+  revenue_cents?: number;
   // Backend may include a few more fields (e.g. email) — rendered defensively
   // wherever present, never assumed.
   [key: string]: unknown;
@@ -32,7 +33,18 @@ interface VisitorSummary {
   city: string | null;
   paid: boolean;
   paid_products: string[];
+  total_revenue_cents?: number;
   returning_visitor: boolean;
+}
+
+interface FilterOptions {
+  countries: string[];
+  traffic_sources: string[];
+}
+
+function formatCurrency(cents: number | null | undefined): string {
+  if (!cents) return '—';
+  return `$${(cents / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 type TimelineEventType = 'page_view' | 'tool_page_view' | 'search' | 'chat' | 'outbound_click' | 'funnel_event';
@@ -47,6 +59,7 @@ interface TimelineEvent {
 interface ListVisitorsResponse {
   ok: boolean;
   visitors: VisitorRow[];
+  filter_options?: FilterOptions;
   error?: string;
 }
 
@@ -127,6 +140,9 @@ export default function WpAdminVisitorsPage() {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [onlyPaid, setOnlyPaid] = useState(false);
+  const [country, setCountry] = useState('');
+  const [trafficSourceFilter, setTrafficSourceFilter] = useState('');
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({ countries: [], traffic_sources: [] });
   const [offset, setOffset] = useState(0);
 
   // ── detail state ────────────────────────────────────────────────────
@@ -147,17 +163,20 @@ export default function WpAdminVisitorsPage() {
         from: from || undefined,
         to: to || undefined,
         only_paid: onlyPaid || undefined,
+        country: country || undefined,
+        traffic_source: trafficSourceFilter || undefined,
         limit: PAGE_SIZE,
         offset,
       },
     });
     if (result.ok && result.data?.ok) {
       setVisitors(result.data.visitors ?? []);
+      if (result.data.filter_options) setFilterOptions(result.data.filter_options);
     } else {
       setError(result.data?.error || (result.error ? getErrorMessage(result.error) : 'Failed to load visitors'));
     }
     setLoading(false);
-  }, [search, from, to, onlyPaid, offset]);
+  }, [search, from, to, onlyPaid, country, trafficSourceFilter, offset]);
 
   useEffect(() => {
     fetchVisitors();
@@ -199,7 +218,7 @@ export default function WpAdminVisitorsPage() {
   }, [selectedVisitorId]);
 
   return (
-    <WpAdminLayout title="Visitor Journey" subtitle="Per-visitor cross-session activity: page views, searches, chat, outbound clicks and funnel events">
+    <WpAdminLayout title="Analytics — All Gappsy Visitors & Revenue" subtitle="Software directory + agency/state-page funnels, unified: every visitor's journey, location, traffic source, and revenue in one place">
       <div className="p-6 max-w-6xl mx-auto space-y-5">
         {!selectedVisitorId ? (
           <>
@@ -240,6 +259,34 @@ export default function WpAdminVisitorsPage() {
                 />
               </div>
 
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Country</label>
+                <select
+                  value={country}
+                  onChange={(e) => { setCountry(e.target.value); setOffset(0); }}
+                  className="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                >
+                  <option value="">All countries</option>
+                  {filterOptions.countries.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-1">Traffic source</label>
+                <select
+                  value={trafficSourceFilter}
+                  onChange={(e) => { setTrafficSourceFilter(e.target.value); setOffset(0); }}
+                  className="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                >
+                  <option value="">All sources</option>
+                  {filterOptions.traffic_sources.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+
               <label className="flex items-center gap-2 h-10 px-1 text-sm text-slate-600 select-none cursor-pointer">
                 <input
                   type="checkbox"
@@ -278,6 +325,7 @@ export default function WpAdminVisitorsPage() {
                         <th className="px-4 py-3">Traffic source</th>
                         <th className="px-4 py-3">Location</th>
                         <th className="px-4 py-3 text-right">Events</th>
+                        <th className="px-4 py-3 text-right">Revenue</th>
                         <th className="px-4 py-3">Paid</th>
                       </tr>
                     </thead>
@@ -293,6 +341,7 @@ export default function WpAdminVisitorsPage() {
                           <td className="px-4 py-3 text-slate-600">{v.traffic_source || '—'}</td>
                           <td className="px-4 py-3 text-slate-600">{formatLocation(v)}</td>
                           <td className="px-4 py-3 text-right tabular-nums font-medium text-[#0B1221]">{v.total_events ?? 0}</td>
+                          <td className="px-4 py-3 text-right tabular-nums font-medium text-emerald-700">{formatCurrency(v.revenue_cents)}</td>
                           <td className="px-4 py-3"><PaidBadge paid={!!v.paid} /></td>
                         </tr>
                       ))}
@@ -351,7 +400,7 @@ export default function WpAdminVisitorsPage() {
                     )}
                     {summary.paid && (
                       <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
-                        <CreditCard className="w-3 h-3" /> Paid
+                        <CreditCard className="w-3 h-3" /> Paid {formatCurrency(summary.total_revenue_cents)}
                       </span>
                     )}
                   </div>

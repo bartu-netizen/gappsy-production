@@ -101,6 +101,8 @@ Deno.serve(async (req: Request) => {
       const from = typeof payload.from === "string" && payload.from ? payload.from : null;
       const to = typeof payload.to === "string" && payload.to ? payload.to : null;
       const onlyPaid = payload.only_paid === true;
+      const country = typeof payload.country === "string" && payload.country.trim() ? payload.country.trim() : null;
+      const trafficSourceFilter = typeof payload.traffic_source === "string" && payload.traffic_source.trim() ? payload.traffic_source.trim() : null;
       const limit = typeof payload.limit === "number" && payload.limit > 0 ? Math.min(payload.limit, 500) : 50;
       const offset = typeof payload.offset === "number" && payload.offset >= 0 ? payload.offset : 0;
 
@@ -109,6 +111,8 @@ Deno.serve(async (req: Request) => {
         p_from: from,
         p_to: to,
         p_only_paid: onlyPaid,
+        p_country: country,
+        p_traffic_source: trafficSourceFilter,
         p_limit: limit,
         p_offset: offset,
       });
@@ -119,14 +123,28 @@ Deno.serve(async (req: Request) => {
         traffic_source: classifyTrafficSource(row.utm_source ?? null, row.referrer ?? null),
       }));
 
-      return jsonResponse({ ok: true, visitors });
+      // Cheap side query for filter dropdown options — real distinct
+      // countries actually present in the data, not a guessed static list.
+      const countryRows = await safeQuery("distinct_countries", () =>
+        supabase.from("site_page_views").select("country_name").not("country_name", "is", null).limit(500)
+      );
+      const availableCountries = [...new Set((countryRows as any[]).map((r) => r.country_name).filter(Boolean))].sort();
+
+      return jsonResponse({
+        ok: true,
+        visitors,
+        filter_options: {
+          countries: availableCountries,
+          traffic_sources: ["Google", "YouTube", "TikTok", "Instagram", "Facebook", "Twitter / X", "Email", "Direct / Unknown"],
+        },
+      });
     }
 
     if (action === "visitor_timeline") {
       const visitorId = typeof payload.visitor_id === "string" ? payload.visitor_id.trim() : "";
       if (!visitorId) return jsonResponse({ ok: false, error: "visitor_id is required" }, 400);
 
-      const [sitePageViews, toolPageViews, toolOutboundClicks, smartSearchLogs, toolChatMessages, vendorOnboardingSessions, vendorFunnelEvents] = await Promise.all([
+      const [sitePageViews, toolPageViews, toolOutboundClicks, smartSearchLogs, toolChatMessages, vendorOnboardingSessions, vendorFunnelEvents, agencyFunnelEvents, agencyFunnelSessions] = await Promise.all([
         safeQuery("site_page_views", () =>
           supabase
             .from("site_page_views")
@@ -171,6 +189,22 @@ Deno.serve(async (req: Request) => {
             .select("id, onboarding_session_id, event_name, metadata, created_at")
             .eq("visitor_id", visitorId)
         ),
+        // Agency/state-page funnel (top25, spotlight, demo, availability,
+        // matched) — the OTHER major product line on this site, sharing the
+        // same visitor_id. Without this, "all Gappsy visitors/revenue" would
+        // silently only ever mean the software directory.
+        safeQuery("funnel_events", () =>
+          supabase
+            .from("funnel_events")
+            .select("id, funnel_type, state_slug, event_name, event_stage, page_path, referrer, metadata, created_at")
+            .eq("visitor_id", visitorId)
+        ),
+        safeQuery("funnel_sessions", () =>
+          supabase
+            .from("funnel_sessions")
+            .select("id, funnel_type, state_slug, agency_name, lead_email, stage, dropoff_stage, payment_status, amount_total, currency, checkout_session_id, created_at, updated_at")
+            .eq("visitor_id", visitorId)
+        ),
       ]);
 
       const onboardingSessionIds = vendorOnboardingSessions.map((s: any) => s.id).filter(Boolean);
@@ -212,6 +246,19 @@ Deno.serve(async (req: Request) => {
       for (const row of vendorFunnelEvents as any[]) {
         timeline.push({ timestamp: row.created_at, type: "funnel_event", label: `Funnel: ${row.event_name}`, detail: row });
       }
+      for (const row of agencyFunnelEvents as any[]) {
+        const where = row.page_path ? ` on ${row.page_path}` : "";
+        timeline.push({ timestamp: row.created_at, type: "funnel_event", label: `Agency funnel (${row.funnel_type}): ${row.event_name}${where}`, detail: row });
+      }
+      for (const row of agencyFunnelSessions as any[]) {
+        const amount = typeof row.amount_total === "number" ? ` — $${(row.amount_total / 100).toFixed(2)}` : "";
+        timeline.push({
+          timestamp: row.updated_at || row.created_at,
+          type: "funnel_event",
+          label: `Agency ${row.funnel_type} funnel: ${row.payment_status === "paid" ? "paid" : row.stage || "in progress"}${amount}`,
+          detail: row,
+        });
+      }
       for (const row of vendorFeatureSubscriptions as any[]) {
         const estimatedAmountCents = estimateAmountCents(row.product, row.billing_interval);
         timeline.push({
@@ -227,7 +274,7 @@ Deno.serve(async (req: Request) => {
       const firstSeenAt = timeline[0]?.timestamp ?? null;
       const lastSeenAt = timeline[timeline.length - 1]?.timestamp ?? null;
 
-      const utmCarriers = [...sitePageViews, ...toolPageViews, ...vendorOnboardingSessions] as any[];
+      const utmCarriers = [...sitePageViews, ...toolPageViews, ...vendorOnboardingSessions, ...agencyFunnelEvents] as any[];
       const geoCarriers = [...sitePageViews, ...toolPageViews, ...toolOutboundClicks, ...smartSearchLogs] as any[];
 
       const trafficSource = classifyTrafficSource(
@@ -238,8 +285,19 @@ Deno.serve(async (req: Request) => {
       const city = latestNonNull(geoCarriers, "city") as string | null;
 
       const activeSubscriptions = (vendorFeatureSubscriptions as any[]).filter((s) => s.status === "active");
-      const paid = activeSubscriptions.length > 0;
-      const paidProducts = [...new Set(activeSubscriptions.map((s) => s.product as string))];
+      const paidAgencySessions = (agencyFunnelSessions as any[]).filter((s) => s.payment_status === "paid");
+      const paid = activeSubscriptions.length > 0 || paidAgencySessions.length > 0;
+      const paidProducts = [
+        ...new Set([
+          ...activeSubscriptions.map((s) => s.product as string),
+          ...paidAgencySessions.map((s) => `${s.funnel_type} (agency)`),
+        ]),
+      ];
+      // Software side is a display-only estimate (no real amount stored per
+      // subscription row); agency side is the real Stripe amount_total.
+      const softwareRevenueCents = activeSubscriptions.reduce((sum, s) => sum + (estimateAmountCents(s.product, s.billing_interval) ?? 0), 0);
+      const agencyRevenueCents = paidAgencySessions.reduce((sum, s) => sum + (typeof s.amount_total === "number" ? s.amount_total : 0), 0);
+      const totalRevenueCents = softwareRevenueCents + agencyRevenueCents;
 
       const returningVisitor =
         firstSeenAt !== null && lastSeenAt !== null
@@ -255,6 +313,7 @@ Deno.serve(async (req: Request) => {
         city,
         paid,
         paid_products: paidProducts,
+        total_revenue_cents: totalRevenueCents,
         returning_visitor: returningVisitor,
       };
 
