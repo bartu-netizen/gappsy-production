@@ -128,12 +128,16 @@ export default function FeatureMyProductOnboardingPage() {
       return;
     }
 
-    // Arrived via a "Claim this listing" link from a tool page — prefill the
-    // URL step instead of resuming any stale stored session, since the
-    // visitor explicitly wants to start a fresh claim for this specific URL.
+    // Arrived via a "Claim this listing" link from a tool page, or the
+    // marketing page's own inline URL field — prefill the URL step instead
+    // of resuming any stale stored session, since the visitor explicitly
+    // wants to start fresh for this specific URL. "autostart" (only set by
+    // the marketing page's field, which already looks like the first step
+    // of this same wizard) skips the extra click and submits immediately.
     const urlParam = searchParams.get('url');
     if (urlParam) {
       setRawUrl(urlParam);
+      if (searchParams.get('autostart') === '1') handleUrlSubmit(urlParam);
       return;
     }
 
@@ -183,11 +187,15 @@ export default function FeatureMyProductOnboardingPage() {
   }
 
   // ── Step 1: URL ────────────────────────────────────────────────────────
-  async function handleUrlSubmit() {
-    if (!rawUrl.trim() || loading) return;
+  // Accepts an override so the "?url=...&autostart=1" arrival path (typed
+  // on the marketing page's own inline field) can submit immediately
+  // without waiting on the rawUrl state update to land first.
+  async function handleUrlSubmit(overrideUrl?: string) {
+    const submitUrl = overrideUrl ?? rawUrl;
+    if (!submitUrl.trim() || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.normalizeAndMatch(rawUrl);
+    const res = await vendorOnboarding.normalizeAndMatch(submitUrl);
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Something went wrong. Please try a different URL.');
@@ -209,7 +217,7 @@ export default function FeatureMyProductOnboardingPage() {
     }
     setPendingSubmission(Boolean(res.pending_submission));
     setPrefillName(res.prefill?.name || '');
-    setPrefillWebsite(res.prefill?.website || rawUrl);
+    setPrefillWebsite(res.prefill?.website || submitUrl);
     setStep('new_product');
   }
 
@@ -318,7 +326,7 @@ export default function FeatureMyProductOnboardingPage() {
             title="Which product would you like to list?"
             subtitle="Enter your product's website — we'll check if it's already in the Gappsy directory."
             ctaLabel="Continue"
-            onCta={handleUrlSubmit}
+            onCta={() => handleUrlSubmit()}
             ctaLoading={loading}
             ctaDisabled={!rawUrl.trim()}
             footnote="No account required to get started."

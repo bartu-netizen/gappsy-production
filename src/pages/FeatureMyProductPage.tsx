@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, ShieldCheck, Globe } from 'lucide-react';
 import SoftwareHeader from '../components/SoftwareHeader';
 import FooterWrapper from '../components/FooterWrapper';
 import EntitySEOTags from '../components/EntitySEOTags';
@@ -49,7 +50,23 @@ const JSON_LD = [
   },
 ];
 
+const QUICK_STATS = [
+  { value: '141+', label: 'tools already listed' },
+  { value: '$29', label: 'one-time, no subscription' },
+  { value: '~2 min', label: 'to get started' },
+];
+
 export default function FeatureMyProductPage() {
+  const navigate = useNavigate();
+  const [heroUrl, setHeroUrl] = useState('');
+
+  function handleHeroSubmit(e: FormEvent) {
+    e.preventDefault();
+    const trimmed = heroUrl.trim();
+    if (!trimmed) return;
+    navigate(`/list-your-product/onboarding?url=${encodeURIComponent(trimmed)}&autostart=1`);
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <EntitySEOTags
@@ -78,29 +95,53 @@ export default function FeatureMyProductPage() {
                 List your product on Gappsy.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
-                A verified badge, self-serve editing, the ability to reply to reviews, and a link back
-                to your site from gappsy.com — all for a one-time $29 fee. No subscription.
+                A verified badge, self-serve editing, and the ability to reply to reviews — for a
+                one-time $29 fee. Already listed? We'll find it instantly so you can take it over
+                instead of duplicating it.
               </p>
-              <p className="mt-3 text-[15px] text-slate-400 max-w-xl">
-                Already listed? No problem — enter your website below and we'll find your existing
-                listing so you can claim it instead of creating a new one.
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Link
-                  to="/list-your-product/onboarding"
-                  className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
-                >
-                  List your product — $29
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </Link>
-                <a
-                  href="#how-it-works"
-                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl text-[15px] font-semibold text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors"
-                >
-                  See how it works
-                </a>
+
+              <form onSubmit={handleHeroSubmit} className="mt-7 max-w-xl">
+                <div className="flex items-center gap-2 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-1.5 pl-4 focus-within:ring-2 focus-within:ring-[#4F47E6]/20 focus-within:border-slate-300 transition-shadow">
+                  <Globe className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
+                  <label htmlFor="fmp-hero-url" className="sr-only">Your product's website</label>
+                  <input
+                    id="fmp-hero-url"
+                    type="text"
+                    inputMode="url"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    placeholder="yourproduct.com"
+                    value={heroUrl}
+                    onChange={(e) => setHeroUrl(e.target.value)}
+                    className="flex-1 min-w-0 h-11 bg-transparent text-[15px] text-[#0B1221] placeholder:text-slate-400 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="shrink-0 inline-flex items-center justify-center gap-1.5 h-11 px-5 rounded-xl text-[14px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99] whitespace-nowrap"
+                  >
+                    Get started
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+                <p className="mt-2.5 text-[13px] text-slate-400">No account required. Billed once via Stripe if you continue.</p>
+              </form>
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                {QUICK_STATS.map((stat) => (
+                  <div key={stat.label}>
+                    <span className="text-lg font-bold text-[#0B1221]">{stat.value}</span>{' '}
+                    <span className="text-[13px] text-slate-400">{stat.label}</span>
+                  </div>
+                ))}
               </div>
-              <p className="mt-4 text-sm text-slate-400">Billed once via Stripe. Takes about 2 minutes.</p>
+
+              <a
+                href="#how-it-works"
+                className="mt-6 inline-flex items-center gap-1 text-[13.5px] font-medium text-slate-500 hover:text-slate-700 transition-colors"
+              >
+                See how it works
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
+              </a>
             </ScrollReveal>
 
             <ScrollReveal delayMs={120}>
