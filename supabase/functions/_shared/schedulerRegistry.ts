@@ -1143,6 +1143,42 @@ async function discoveredToolEmailSmartleadSyncHandler(ctx: SchedulerJobContext)
   return { synced: result.synced, campaign_id: campaignId };
 }
 
+// Fulfills the privacy policy's own "we retain data as long as necessary...
+// we delete or anonymize data when no longer needed" — without this,
+// site_page_views/tool_page_views/tool_outbound_clicks/smart_search_logs/
+// tool_chat_messages (raw per-event analytics: IP, geo, page path, search
+// query, chat content) would otherwise grow forever with no cleanup at all.
+// 400 days (~13 months) keeps a full year-over-year comparison window while
+// still bounding growth. Deliberately does NOT touch vendor_onboarding_
+// sessions/vendor_funnel_events/funnel_sessions/funnel_events — those are
+// real business/revenue records tied to actual leads and customers, not
+// disposable raw tracking exhaust.
+const ANALYTICS_RETENTION_DAYS = 400;
+const ANALYTICS_RETENTION_TABLES = [
+  "site_page_views",
+  "tool_page_views",
+  "tool_outbound_clicks",
+  "smart_search_logs",
+  "tool_chat_messages",
+] as const;
+
+async function analyticsRetentionCleanupHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase } = ctx;
+  const cutoff = new Date(Date.now() - ANALYTICS_RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();
+  const deletedByTable: Record<string, number> = {};
+
+  for (const table of ANALYTICS_RETENTION_TABLES) {
+    const { error, count } = await supabase
+      .from(table)
+      .delete({ count: "exact" })
+      .lt("created_at", cutoff);
+    if (error) throw new Error(`Failed to prune ${table}: ${error.message}`);
+    deletedByTable[table] = count ?? 0;
+  }
+
+  return { cutoff, deleted: deletedByTable, total_deleted: Object.values(deletedByTable).reduce((a, b) => a + b, 0) };
+}
+
 const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovery_refresh: discoveryRefreshHandler,
   crawl_queue_drain: crawlQueueDrainHandler,
@@ -1160,6 +1196,7 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   discovered_tool_email_listclean_scan: discoveredToolEmailListcleanScanHandler,
   tool_email_smartlead_sync: toolEmailSmartleadSyncHandler,
   discovered_tool_email_smartlead_sync: discoveredToolEmailSmartleadSyncHandler,
+  analytics_retention_cleanup: analyticsRetentionCleanupHandler,
 };
 
 export class UnknownJobTypeError extends Error {
