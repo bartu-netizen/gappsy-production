@@ -19,7 +19,7 @@ export default function GetListedPage() {
   useNoindex();
 
   return (
-    <div className="h-[100dvh] w-full overflow-hidden bg-[#05070F] flex flex-col">
+    <div className="h-[100dvh] w-full overflow-hidden bg-[#0A1735] flex flex-col">
       <header className="shrink-0 w-full h-14 sm:h-16 bg-[#0A1735] shadow-lg flex items-center justify-center relative z-10">
         <Link to="/" aria-label="Gappsy home" className="inline-flex items-center">
           <img src="/logos/Gappsy-logo-white.webp" alt="Gappsy" className="h-6 sm:h-7 w-auto" />
@@ -31,11 +31,11 @@ export default function GetListedPage() {
         <Link
           to="/list-your-product"
           className="group relative flex-1 min-h-0 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 transition-colors"
-          style={{ background: 'radial-gradient(120% 100% at 30% 20%, #12836E 0%, #0A3B32 55%, #04140F 100%)' }}
+          style={{ background: 'radial-gradient(120% 100% at 30% 20%, #4F47E6 0%, #221F6B 45%, #0A1735 100%)' }}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(45,212,175,0.28), transparent)' }}
+            style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(129,120,246,0.35), transparent)' }}
             aria-hidden="true"
           />
           <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-sm">
@@ -57,11 +57,11 @@ export default function GetListedPage() {
         <Link
           to="/marketing-agencies/usa?submit=1"
           className="group relative flex-1 min-h-0 flex items-center justify-center overflow-hidden transition-colors"
-          style={{ background: 'radial-gradient(120% 100% at 70% 20%, #9A5A1E 0%, #4A2A12 55%, #170D06 100%)' }}
+          style={{ background: 'radial-gradient(120% 100% at 70% 20%, #D4922A 0%, #6B4A1E 45%, #0A1735 100%)' }}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: 'radial-gradient(60% 60% at 70% 30%, rgba(255,170,90,0.28), transparent)' }}
+            style={{ background: 'radial-gradient(60% 60% at 70% 30%, rgba(230,180,90,0.3), transparent)' }}
             aria-hidden="true"
           />
           <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-sm">
@@ -80,7 +80,7 @@ export default function GetListedPage() {
         </Link>
 
         {/* Center divider badge — desktop only, straddles the seam between panels */}
-        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#05070F] border border-white/15 items-center justify-center pointer-events-none">
+        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#0A1735] border border-white/15 items-center justify-center pointer-events-none">
           <span className="text-[11px] font-bold text-white/40 uppercase tracking-wide">or</span>
         </div>
       </main>
