@@ -34,6 +34,16 @@ type WizardStep =
   | 'url' | 'matching' | 'match_existing' | 'already_featured' | 'new_product'
   | 'contact' | 'claim' | 'growth_upsell' | 'redirecting' | 'finalizing' | 'success' | 'error';
 
+// Rotates on the "Finalizing…" screen while pollForCompletion waits on
+// Stripe's webhook — real end-to-end time is usually 10-20s and occasionally
+// longer, so a single static "Finalizing…" label reads as stuck long before
+// it actually is. Each message stays up long enough to read comfortably.
+const FINALIZING_MESSAGES = [
+  'Confirming your payment with Stripe…',
+  'Setting up your listing…',
+  "Almost there — just a few more seconds…",
+];
+
 const STEP_INDEX: Record<string, number> = {
   url: 1, matching: 1,
   match_existing: 2, already_featured: 2, new_product: 2,
@@ -114,7 +124,19 @@ export default function FeatureMyProductOnboardingPage() {
 
   const [ownershipToken, setOwnershipToken] = useState<string | null>(null);
   const [cancelledNotice, setCancelledNotice] = useState(false);
+  const [finalizingStage, setFinalizingStage] = useState(0);
   const pollRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (step !== 'finalizing') {
+      setFinalizingStage(0);
+      return;
+    }
+    const timer = window.setInterval(() => {
+      setFinalizingStage((s) => Math.min(s + 1, FINALIZING_MESSAGES.length - 1));
+    }, 6000);
+    return () => window.clearInterval(timer);
+  }, [step]);
 
   // ── Resume / return-from-Stripe handling ──────────────────────────────
   useEffect(() => {
@@ -176,11 +198,19 @@ export default function FeatureMyProductOnboardingPage() {
 
   function pollForCompletion(sid: string | null, stripeSid: string | null, onDone: 'growth_upsell' | 'success') {
     let attempts = 0;
-    pollRef.current = window.setInterval(async () => {
+    // Real bottleneck here is Stripe's own webhook delivery latency (our
+    // handler writes the row this checks BEFORE its slower email/Smartlead
+    // side-effects — see vendorFeatureActivation.ts — so those never delay
+    // this), which we can't speed up. Two things we can fix: don't waste
+    // the first 2s doing nothing before the first check (checkOnce runs
+    // immediately, interval only for subsequent attempts), and give the
+    // "Finalizing…" screen rotating status copy (see FINALIZING_MESSAGES)
+    // so a real 15-20s wait doesn't read as "stuck" and cause drop-off.
+    const checkOnce = async () => {
       attempts += 1;
       const res = await vendorOnboarding.sessionStatus({ sessionId: sid || undefined, stripeSessionId: stripeSid || undefined });
       const isDone = res.ok && (res.session_status === 'checkout_completed' || res.session_status === 'verified');
-      if (isDone || attempts >= 15) {
+      if (isDone || attempts >= 20) {
         if (pollRef.current) window.clearInterval(pollRef.current);
         setOwnershipToken(res.ownership_token || null);
         if (onDone === 'growth_upsell') {
@@ -194,8 +224,13 @@ export default function FeatureMyProductOnboardingPage() {
           setStep('success');
           clearStoredSessionId();
         }
+        return true;
       }
-    }, 2000);
+      return false;
+    };
+    checkOnce().then((done) => {
+      if (!done) pollRef.current = window.setInterval(checkOnce, 2000);
+    });
   }
 
   // ── Step 1: URL ────────────────────────────────────────────────────────
@@ -706,7 +741,7 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'finalizing' && (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             <Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" aria-hidden="true" />
-            <p className="text-sm text-slate-500">Finalizing…</p>
+            <p className="text-sm text-slate-500">{FINALIZING_MESSAGES[finalizingStage]}</p>
           </div>
         )}
 
