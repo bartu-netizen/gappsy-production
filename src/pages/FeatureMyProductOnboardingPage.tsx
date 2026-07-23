@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users } from 'lucide-react';
+import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users, Search } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
@@ -112,13 +112,13 @@ export default function FeatureMyProductOnboardingPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [rawUrl, setRawUrl] = useState('');
+  const [matchingLabel, setMatchingLabel] = useState('');
   const [tool, setTool] = useState<ToolSummary | null>(null);
   const [prefillName, setPrefillName] = useState('');
   const [prefillWebsite, setPrefillWebsite] = useState('');
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   const [email, setEmail] = useState('');
-  const [contactName, setContactName] = useState('');
   const [password, setPassword] = useState('');
 
   // Which card's button is mid-checkout — two independent pricing cards
@@ -222,9 +222,17 @@ export default function FeatureMyProductOnboardingPage() {
     if (!submitUrl.trim() || loading) return;
     setLoading(true);
     setErrorMessage(null);
-    const res = await vendorOnboarding.normalizeAndMatch(submitUrl);
+    setMatchingLabel(submitUrl.trim().replace(/^https?:\/\//i, '').replace(/\/$/, ''));
+    setStep('matching');
+    // Minimum display time so the "checking" screen reads as real work even
+    // when the backend responds near-instantly.
+    const [res] = await Promise.all([
+      vendorOnboarding.normalizeAndMatch(submitUrl),
+      new Promise((resolve) => setTimeout(resolve, 900)),
+    ]);
     setLoading(false);
     if (!res.ok) {
+      setStep('url');
       setErrorMessage(res.error || 'Something went wrong. Please try a different URL.');
       return;
     }
@@ -280,7 +288,7 @@ export default function FeatureMyProductOnboardingPage() {
       return;
     }
 
-    const res = await vendorOnboarding.submitContact(sessionId, trimmedEmail, contactName.trim(), true);
+    const res = await vendorOnboarding.submitContact(sessionId, trimmedEmail, '', true);
     setLoading(false);
     if (!res.ok) {
       setErrorMessage(res.error || 'Please check your email address and try again.');
@@ -385,6 +393,19 @@ export default function FeatureMyProductOnboardingPage() {
           </StepLayout>
         )}
 
+        {step === 'matching' && (
+          <div className="flex-1 flex flex-col items-center justify-center w-full max-w-xl mx-auto px-5 sm:px-10 py-4 sm:py-6 text-center">
+            <div className="relative w-14 h-14 mb-5">
+              <div className="absolute inset-0 rounded-2xl bg-[#EEF0FE] animate-ping opacity-75" aria-hidden="true" />
+              <div className="relative w-14 h-14 rounded-2xl bg-[#EEF0FE] flex items-center justify-center">
+                <Search className="w-6 h-6 text-[#4F47E6]" aria-hidden="true" />
+              </div>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0B1221]">Checking {matchingLabel || 'your website'}...</h1>
+            <p className="mt-2 text-[15px] text-slate-500">Looking for an existing Gappsy listing.</p>
+          </div>
+        )}
+
         {step === 'already_featured' && (
           <StepLayout
             eyebrow="Already featured"
@@ -399,7 +420,7 @@ export default function FeatureMyProductOnboardingPage() {
           <StepLayout
             eyebrow="Your listing exists — but isn't verified"
             title={tool.name}
-            subtitle="It's already live on Gappsy exactly as-is. Verifying it (a one-time $29 fee, not a subscription) is what unlocks the things below."
+            subtitle="You already have a basic listing on Gappsy, but it isn't verified — which means none of the benefits below are active yet. Verifying is a one-time $29 fee, not a subscription."
             ctaLabel="Claim this listing"
             onCta={handleConfirmExisting}
           >
@@ -481,7 +502,7 @@ export default function FeatureMyProductOnboardingPage() {
           <StepLayout
             eyebrow="Create your account"
             title="Set up sign-in for your listing"
-            subtitle="You'll use this to log in and manage your listing once it's live — we only actually create the account after payment goes through."
+            subtitle="You'll use this to log in and manage your listing once it's live."
             ctaLabel="Continue"
             onCta={handleContactSubmit}
             ctaLoading={loading}
@@ -513,16 +534,6 @@ export default function FeatureMyProductOnboardingPage() {
                     className="w-full h-[3.25rem] rounded-xl border border-slate-200 pl-11 pr-4 text-base text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
                   />
                 </div>
-              </div>
-              <div>
-                <label htmlFor="fmp-contact-name" className="block text-[13px] font-medium text-slate-500 mb-1">Your name (optional)</label>
-                <input
-                  id="fmp-contact-name"
-                  type="text"
-                  value={contactName}
-                  onChange={(e) => setContactName(e.target.value)}
-                  className="w-full h-[3.25rem] rounded-xl border border-slate-200 px-4 text-base text-[#0B1221] focus:outline-none focus:ring-2 focus:ring-[#4F47E6]/20 focus:border-slate-300"
-                />
               </div>
             </div>
           </StepLayout>
