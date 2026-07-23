@@ -149,7 +149,7 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
 // than spending that sidebar slot on a competitor ad. Prefills the
 // onboarding wizard's URL step via ?url= so they don't have to retype it.
 export function ClaimListingCard({ toolName, website }: { toolName: string; website: string | null }) {
-  const onboardingHref = website ? `/feature-my-product/onboarding?url=${encodeURIComponent(website)}` : '/feature-my-product/onboarding';
+  const onboardingHref = website ? `/list-your-product/onboarding?url=${encodeURIComponent(website)}` : '/list-your-product/onboarding';
   return (
     <div className="rounded-2xl bg-gradient-to-br from-[#EEF0FE] to-purple-50 border border-[#E0E3FC] p-4">
       <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center mb-2.5 shadow-sm">

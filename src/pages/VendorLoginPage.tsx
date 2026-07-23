@@ -147,11 +147,11 @@ export default function VendorLoginPage() {
                     Accounts are only created for businesses with a paid, verified listing — there's no open sign-up.
                   </p>
                   <Link
-                    to="/feature-my-product"
+                    to="/list-your-product"
                     className="inline-flex items-center justify-center gap-1.5 w-full mt-3 bg-white/10 hover:bg-white/15 border border-white/15 text-white px-4 py-2.5 rounded-xl font-semibold text-[13px] transition-colors"
                   >
                     <Rocket className="w-3.5 h-3.5" aria-hidden="true" />
-                    Feature your product to get one
+                    List your product to get one
                   </Link>
                 </div>
               )}

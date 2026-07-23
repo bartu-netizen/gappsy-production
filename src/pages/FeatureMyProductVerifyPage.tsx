@@ -54,7 +54,7 @@ export default function FeatureMyProductVerifyPage() {
 
   return (
     <>
-      <EntitySEOTags title="Verify Ownership | Gappsy" description="Verify ownership of your featured listing." path={`/feature-my-product/verify/${token || ''}`} noindex />
+      <EntitySEOTags title="Verify Ownership | Gappsy" description="Verify ownership of your featured listing." path={`/list-your-product/verify/${token || ''}`} noindex />
       <OnboardingShell step={0}>
         <div className="flex-1 w-full max-w-md mx-auto px-5 sm:px-6 py-8">
           {loadState === 'loading' && (

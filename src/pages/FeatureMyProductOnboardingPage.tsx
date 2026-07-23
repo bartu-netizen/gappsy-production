@@ -299,7 +299,7 @@ export default function FeatureMyProductOnboardingPage() {
       <EntitySEOTags
         title="List Your Product on Gappsy — Get Started"
         description="List your product on Gappsy for a one-time fee, then optionally upgrade to Growth for featured placement, video reviews, and more."
-        path="/feature-my-product/onboarding"
+        path="/list-your-product/onboarding"
         noindex
       />
       <OnboardingShell step={stepIndex} onBack={showBack ? goBack : undefined}>
@@ -625,7 +625,7 @@ export default function FeatureMyProductOnboardingPage() {
 
 function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: string | null; purchasedGrowth: boolean }) {
   const [copied, setCopied] = useState(false);
-  const verifyUrl = ownershipToken ? `${window.location.origin}/feature-my-product/verify/${ownershipToken}` : null;
+  const verifyUrl = ownershipToken ? `${window.location.origin}/list-your-product/verify/${ownershipToken}` : null;
 
   return (
     <div className="flex-1 w-full max-w-md mx-auto px-5 sm:px-6 py-8 flex flex-col">
@@ -671,7 +671,7 @@ function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: stri
             {copied ? 'Link copied' : 'Copy verification link'}
           </button>
         )}
-        <a href="/feature-my-product" className="flex items-center justify-center w-full px-6 py-3 rounded-xl text-[14px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
+        <a href="/list-your-product" className="flex items-center justify-center w-full px-6 py-3 rounded-xl text-[14px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
           Return to Gappsy
         </a>
       </div>

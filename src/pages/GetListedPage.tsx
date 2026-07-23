@@ -6,7 +6,7 @@ import { US_STATES } from '../lib/usStates';
 
 // A short branching step between the homepage's "Get Listed" CTA and the
 // two, very different listing flows that already exist: a software tool
-// goes straight to /feature-my-product, while a marketing agency listing
+// goes straight to /list-your-product, while a marketing agency listing
 // is inherently state-scoped (the Top 25 submission form lives on each
 // state's own page — see StatePageTemplate.tsx's SubmitAgencyModal). This
 // page's only job is asking "which one" and, for agencies, "which state,"
@@ -47,7 +47,7 @@ export default function GetListedPage() {
       <main className="flex-1 min-h-0 flex flex-col lg:flex-row relative">
         {/* Software Tool — left / top half */}
         <Link
-          to="/feature-my-product"
+          to="/list-your-product"
           className="group relative flex-1 min-h-0 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 transition-colors"
           style={{ background: 'radial-gradient(120% 100% at 30% 20%, #1B2A5E 0%, #0A1735 55%, #060B1F 100%)' }}
         >

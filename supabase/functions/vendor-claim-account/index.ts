@@ -4,7 +4,7 @@ import { createServiceClient } from "../_shared/vendorAuth.ts";
 
 // Links a real Supabase Auth account to the tool the caller paid to feature,
 // gated strictly behind an already-verified vendor_ownership_tokens row —
-// the same token/flow used by /feature-my-product/verify. This is the ONLY
+// the same token/flow used by /list-your-product/verify. This is the ONLY
 // place tools.owner_user_id is ever set: no open self-signup, no way to
 // claim a listing without having already paid (vendor_feature_subscriptions)
 // and proved domain ownership (verified=true).

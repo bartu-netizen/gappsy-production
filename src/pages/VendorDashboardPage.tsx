@@ -302,7 +302,7 @@ function OverviewTab({
             You're on Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>}
             {tool.featured_until && <> — active until <strong className="text-[#0B1221]">{new Date(tool.featured_until).toLocaleDateString()}</strong></>}.
             {growthSubscription?.billing_interval !== 'year' && (
-              <> <Link to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`} className="font-medium text-[#4F47E6] hover:text-[#4338CA]">Switch to Yearly</Link> for a produced video review, a newsletter feature, and an ad-free listing.</>
+              <> <Link to={`/list-your-product/onboarding?url=${encodeURIComponent(tool.website || '')}`} className="font-medium text-[#4F47E6] hover:text-[#4338CA]">Switch to Yearly</Link> for a produced video review, a newsletter feature, and an ad-free listing.</>
             )}
           </p>
         </Card>
@@ -316,7 +316,7 @@ function OverviewTab({
               </p>
             </div>
             <Link
-              to={`/feature-my-product/onboarding?url=${encodeURIComponent(tool.website || '')}`}
+              to={`/list-your-product/onboarding?url=${encodeURIComponent(tool.website || '')}`}
               className="shrink-0 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
             >
               Upgrade to Growth
@@ -799,7 +799,7 @@ function ReviewsTab({
             Removing or hiding a review from your page is a Growth feature.
           </p>
           <Link
-            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
             className="shrink-0 text-[13px] font-semibold text-[#4F47E6] hover:text-[#4338CA]"
           >
             Upgrade to Growth
@@ -968,7 +968,7 @@ function BillingTab({
           </button>
         ) : (
           <Link
-            to={`/feature-my-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
+            to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
             className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
           >
             Upgrade to Growth

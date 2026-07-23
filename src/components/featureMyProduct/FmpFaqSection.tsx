@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
-import { FMP_FAQS } from './fmpFaqData';
+import { FMP_FAQS, type FmpFaqItem } from './fmpFaqData';
 
-export default function FmpFaqSection() {
+interface FmpFaqSectionProps {
+  /** Defaults to the $29 listing page's FAQs; pass a different array to
+   * reuse this same accordion UI for another page's FAQ content (e.g. the
+   * Growth explainer page) without duplicating the component. */
+  faqs?: FmpFaqItem[];
+}
+
+export default function FmpFaqSection({ faqs = FMP_FAQS }: FmpFaqSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -14,7 +21,7 @@ export default function FmpFaqSection() {
         </ScrollReveal>
 
         <div className="space-y-3">
-          {FMP_FAQS.map((faq, i) => {
+          {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <ScrollReveal key={faq.question} delayMs={Math.min(i, 6) * 40}>

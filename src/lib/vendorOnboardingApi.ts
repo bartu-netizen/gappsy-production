@@ -23,7 +23,7 @@ export function getUtmContext(): { utm_source: string | null; utm_medium: string
       utm_medium: p.get("utm_medium"),
       utm_campaign: p.get("utm_campaign"),
       referrer: document.referrer || null,
-      landing_page: "/feature-my-product",
+      landing_page: "/list-your-product",
     };
   } catch {
     return { utm_source: null, utm_medium: null, utm_campaign: null, referrer: null, landing_page: null };

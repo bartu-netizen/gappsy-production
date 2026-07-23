@@ -479,8 +479,8 @@ Deno.serve(async (req: Request) => {
         // Claim success routes to the Growth upsell screen next; Growth
         // success (whichever interval) is the end of the wizard.
         const nextStage = product === "claim" ? "growth_upsell" : "done";
-        const successUrl = `${baseUrl}/feature-my-product/onboarding?step=success&session_id=${sessionId}&stripe_session_id={CHECKOUT_SESSION_ID}&next=${nextStage}`;
-        const cancelUrl = `${baseUrl}/feature-my-product/onboarding?step=${product === "claim" ? "claim" : "growth_upsell"}&session_id=${sessionId}&checkout=cancelled`;
+        const successUrl = `${baseUrl}/list-your-product/onboarding?step=success&session_id=${sessionId}&stripe_session_id={CHECKOUT_SESSION_ID}&next=${nextStage}`;
+        const cancelUrl = `${baseUrl}/list-your-product/onboarding?step=${product === "claim" ? "claim" : "growth_upsell"}&session_id=${sessionId}&checkout=cancelled`;
 
         const metadata: Record<string, string> = {
           funnel_type: "feature_my_product",

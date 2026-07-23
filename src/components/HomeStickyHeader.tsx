@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 // software tool vs. a marketing agency are two entirely different flows
 // (the agency one is state-scoped — SubmitAgencyModal needs a real
 // stateName/stateSlug — while software goes straight to
-// /feature-my-product), so the homepage button just hands off the choice
+// /list-your-product), so the homepage button just hands off the choice
 // instead of assuming one.
 export default function HomeStickyHeader() {
   return (

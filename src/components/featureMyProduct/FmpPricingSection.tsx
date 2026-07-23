@@ -38,7 +38,7 @@ export default function FmpPricingSection() {
             </ul>
 
             <Link
-              to="/feature-my-product/onboarding"
+              to="/list-your-product/onboarding"
               className="mt-8 flex items-center justify-center w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
             >
               List your product — $29

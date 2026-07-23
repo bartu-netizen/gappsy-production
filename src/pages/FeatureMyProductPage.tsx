@@ -13,7 +13,7 @@ import FmpPricingSection from '../components/featureMyProduct/FmpPricingSection'
 import FmpFaqSection from '../components/featureMyProduct/FmpFaqSection';
 import { FMP_FAQS } from '../components/featureMyProduct/fmpFaqData';
 
-const CANONICAL_BASE = 'https://gappsy.com/feature-my-product';
+const CANONICAL_BASE = 'https://gappsy.com/list-your-product';
 
 // Same construction style as buildToolJsonLd (src/utils/toolJsonLd.ts) —
 // FAQPage built from the same FMP_FAQS array the visible accordion renders,
@@ -55,8 +55,8 @@ export default function FeatureMyProductPage() {
       <EntitySEOTags
         title="List Your Product on Gappsy | Gappsy"
         description="List your product on Gappsy's software directory — one-time $29 fee. Get a verified badge, self-serve editing, and the ability to reply to reviews. Already listed? We'll help you claim it."
-        path="/feature-my-product"
-        breadcrumbs={[{ name: 'Feature My Product', path: '/feature-my-product' }]}
+        path="/list-your-product"
+        breadcrumbs={[{ name: 'List Your Product', path: '/list-your-product' }]}
         jsonLd={JSON_LD}
       />
       <SoftwareHeader variant="premium" />
@@ -87,7 +87,7 @@ export default function FeatureMyProductPage() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
-                  to="/feature-my-product/onboarding"
+                  to="/list-your-product/onboarding"
                   className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity active:scale-[0.99]"
                 >
                   List your product — $29
@@ -153,7 +153,7 @@ export default function FeatureMyProductPage() {
                   </p>
                   <div className="mt-8">
                     <Link
-                      to="/feature-my-product/onboarding"
+                      to="/list-your-product/onboarding"
                       className="inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-xl text-[15px] font-semibold text-[#0B1221] bg-white hover:bg-slate-100 transition-colors active:scale-[0.99]"
                     >
                       List your product — $29
@@ -170,7 +170,7 @@ export default function FeatureMyProductPage() {
       {/* Sticky mobile CTA */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#f1f3f5] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <Link
-          to="/feature-my-product/onboarding"
+          to="/list-your-product/onboarding"
           className="flex items-center justify-center w-full px-5 py-3 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] active:scale-[0.99] transition-transform"
         >
           List your product — $29

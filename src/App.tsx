@@ -41,6 +41,7 @@ const GetListedPage = lazy(() => import("./pages/GetListedPage"));
 const FeatureMyProductPage = lazy(() => import("./pages/FeatureMyProductPage"));
 const FeatureMyProductOnboardingPage = lazy(() => import("./pages/FeatureMyProductOnboardingPage"));
 const FeatureMyProductVerifyPage = lazy(() => import("./pages/FeatureMyProductVerifyPage"));
+const FeatureGrowthPage = lazy(() => import("./pages/FeatureGrowthPage"));
 const VendorLoginPage = lazy(() => import("./pages/VendorLoginPage"));
 const VendorClaimPage = lazy(() => import("./pages/VendorClaimPage"));
 const VendorDashboardPage = lazy(() => import("./pages/VendorDashboardPage"));
@@ -393,9 +394,10 @@ export default function App() {
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:comparisonSlug" element={<CompareRouterPage />} />
         <Route path="/get-listed" element={<GetListedPage />} />
-        <Route path="/feature-my-product" element={<FeatureMyProductPage />} />
-        <Route path="/feature-my-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
-        <Route path="/feature-my-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
+        <Route path="/list-your-product" element={<FeatureMyProductPage />} />
+        <Route path="/list-your-product/onboarding" element={<FeatureMyProductOnboardingPage />} />
+        <Route path="/list-your-product/verify/:token" element={<FeatureMyProductVerifyPage />} />
+        <Route path="/feature-my-product" element={<FeatureGrowthPage />} />
 
         {/* Vendor account — real Supabase Auth, gated behind a verified ownership token (see vendor-claim-account) */}
         <Route path="/login" element={<VendorLoginPage />} />

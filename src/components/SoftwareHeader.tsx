@@ -26,8 +26,8 @@ interface SoftwareHeaderProps {
    * templates not yet migrated to the premium redesign (category and
    * compare pages). 'premium' is the Stripe/Linear-style header for the
    * /tools/* detail template: Categories-only nav plus an enabled
-   * "Feature My Product" CTA instead of the disabled "Submit Software"
-   * placeholder.
+   * "List Your Product" CTA (→ /list-your-product) instead of the disabled
+   * "Submit Software" placeholder.
    */
   variant?: 'legacy' | 'premium';
 }
@@ -140,10 +140,10 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                       {accountLabel}
                     </Link>
                     <Link
-                      to="/feature-my-product"
+                      to="/list-your-product"
                       className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[15px] font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
                     >
-                      Feature My Product
+                      List Your Product
                     </Link>
                   </div>
                 </div>
@@ -177,10 +177,10 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                   <Search className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <Link
-                  to="/feature-my-product"
+                  to="/list-your-product"
                   className="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium text-[#0A1735] bg-white whitespace-nowrap"
                 >
-                  Get Featured
+                  List Your Product
                 </Link>
               </div>
             </div>
@@ -207,11 +207,11 @@ export default function SoftwareHeader({ variant = 'legacy' }: SoftwareHeaderPro
                     {accountLabel}
                   </Link>
                   <Link
-                    to="/feature-my-product"
+                    to="/list-your-product"
                     onClick={() => setMenuOpen(false)}
                     className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium text-[#0A1735] bg-white hover:bg-slate-100 transition-colors"
                   >
-                    Feature My Product
+                    List Your Product
                   </Link>
                 </div>
               </div>

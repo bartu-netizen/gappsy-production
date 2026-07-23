@@ -53,7 +53,7 @@ export default function OnboardingShell({ step, onBack, children }: OnboardingSh
             Secure checkout
           </span>
           <Link
-            to="/feature-my-product"
+            to="/list-your-product"
             aria-label="Close"
             className="w-8 h-8 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
           >
