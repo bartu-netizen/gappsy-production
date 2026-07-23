@@ -317,7 +317,30 @@ Rules:
       .split(/\s+(?:vs\.?|versus|or)\s+|,/i)
       .map((s) => s.trim())
       .filter((s) => s.length > 1);
-    const searchQueries = [query, ...(segments.length > 1 ? segments : [])].slice(0, 4);
+
+    // search_software's tool-name tier only matches exact/prefix/substring
+    // against tools.name — "Canva reviews" never appears as a substring of
+    // any tool's name, so it falls through to a description-text search
+    // that Canva's own description won't match either, and the whole query
+    // returns zero tool candidates even though "Canva" alone matches
+    // perfectly. Strip a common trailing modifier a real user is likely to
+    // type after a product name and search that too, same idea as the vs/
+    // versus splitting above.
+    const TRAILING_MODIFIER_WORDS = [
+      "reviews", "review", "pricing", "price", "cost", "alternative", "alternatives",
+      "login", "sign in", "signin", "download", "demo", "features",
+    ];
+    const lowerQuery = query.toLowerCase();
+    const matchedModifier = TRAILING_MODIFIER_WORDS.find((w) => lowerQuery.endsWith(` ${w}`));
+    const strippedModifierQuery = matchedModifier
+      ? query.slice(0, query.length - matchedModifier.length - 1).trim()
+      : null;
+
+    const searchQueries = [
+      query,
+      ...(segments.length > 1 ? segments : []),
+      ...(strippedModifierQuery && strippedModifierQuery.length > 1 ? [strippedModifierQuery] : []),
+    ].slice(0, 4);
 
     const [categoriesResult, ...searchResults] = await Promise.all([
       supabase.from("tool_categories").select("slug, name").eq("status", "published").order("name"),
