@@ -220,6 +220,107 @@ async function completenessRescanHandler(ctx: SchedulerJobContext): Promise<Reco
   return { rescored: (tools || []).length - failed, failed };
 }
 
+// Free lead-magnet for cold outreach: auto-generates a real, live
+// "[Tool] vs [Competitor]" comparison page for unclaimed tools BEFORE ever
+// emailing them, so the outreach hook is "we already made this for you,
+// here's the link" instead of an abstract pitch. A bare tool_comparisons
+// row (no authored comparisonContent) already renders a real, non-broken
+// page — facts/pricing/pros-cons/screenshots come from each tool's own
+// data regardless (see CompareDetailPage.tsx) — so no AI-content-writing
+// step is needed for this to be a genuine, useful asset immediately.
+const LEAD_MAGNET_DEFAULT_BATCH_SIZE = 10;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function findComparisonCandidate(supabase: SupabaseClient, tool: any): Promise<any | null> {
+  const { data: catLink } = await supabase
+    .from("tool_category_links")
+    .select("category_id")
+    .eq("tool_id", tool.id)
+    .eq("primary_category", true)
+    .maybeSingle();
+  if (!catLink) return null;
+
+  const { data: links } = await supabase
+    .from("tool_category_links")
+    .select("tools!inner(id, slug, name, is_open_source, status, featured, rating, review_count)")
+    .eq("category_id", (catLink as any).category_id)
+    .eq("tools.status", "published")
+    .neq("tool_id", tool.id)
+    .limit(30);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let pool = ((links || []) as any[]).map((l) => l.tools).filter(Boolean);
+  // Mirrors createToolComparison's own open-source-vs-open-source block —
+  // filtering the candidate pool here avoids wasting a pick on a pair that
+  // would just get rejected anyway.
+  if (tool.is_open_source) pool = pool.filter((t) => !t.is_open_source);
+  // Established/popular first — a comparison against a real, recognizable
+  // competitor is a far more convincing outreach hook than an arbitrary
+  // same-category pairing.
+  pool.sort((a, b) => (Number(b.featured) - Number(a.featured)) || (b.review_count - a.review_count) || (b.rating - a.rating));
+
+  for (const candidate of pool) {
+    const [a, b] = tool.slug.localeCompare(candidate.slug) <= 0 ? [tool.slug, candidate.slug] : [candidate.slug, tool.slug];
+    const { data: existing } = await supabase.from("tool_comparisons").select("id").eq("slug", `${a}-vs-${b}`).maybeSingle();
+    if (!existing) return candidate;
+  }
+  return null;
+}
+
+async function leadMagnetComparisonGeneratorHandler(ctx: SchedulerJobContext): Promise<Record<string, unknown>> {
+  const { supabase, config } = ctx;
+  const { createToolComparison } = await import("./toolComparisonCreation.ts");
+  const batchSize = typeof config.batch_size === "number" && config.batch_size > 0 ? Math.min(config.batch_size, 50) : LEAD_MAGNET_DEFAULT_BATCH_SIZE;
+
+  // Only worth generating for a tool we can actually email about it, and
+  // only for genuinely unclaimed tools — a claimed or Growth-featured tool
+  // isn't an outreach target, it's an existing customer.
+  const { data: emailRows, error: emailError } = await supabase
+    .from("tool_contact_emails")
+    .select("tool_id, tools!inner(id, slug, name, is_open_source, status, claim_paid_at, featured, rating, review_count)")
+    .eq("listclean_status", "valid")
+    .eq("tools.status", "published")
+    .is("tools.claim_paid_at", null)
+    .eq("tools.featured", false)
+    .limit(batchSize * 4);
+  if (emailError) throw new Error(`Failed to find lead-magnet candidates: ${emailError.message}`);
+
+  const seenToolIds = new Set<string>();
+  const created: Record<string, unknown>[] = [];
+  const skipped: Record<string, unknown>[] = [];
+
+  for (const row of (emailRows || []) as any[]) {
+    if (created.length >= batchSize) break;
+    const tool = row.tools;
+    if (!tool || seenToolIds.has(tool.id)) continue;
+    seenToolIds.add(tool.id);
+
+    const { count: existingCount } = await supabase
+      .from("tool_comparisons")
+      .select("id", { count: "exact", head: true })
+      .or(`tool_a_id.eq.${tool.id},tool_b_id.eq.${tool.id}`);
+    if ((existingCount ?? 0) > 0) {
+      skipped.push({ tool_slug: tool.slug, reason: "already has a comparison" });
+      continue;
+    }
+
+    const competitor = await findComparisonCandidate(supabase, tool);
+    if (!competitor) {
+      skipped.push({ tool_slug: tool.slug, reason: "no eligible competitor found" });
+      continue;
+    }
+
+    const result = await createToolComparison(supabase, tool.id, competitor.id, "published");
+    if (result.ok) {
+      created.push({ tool_slug: tool.slug, competitor_slug: competitor.slug, comparison_slug: result.comparison?.slug });
+    } else {
+      skipped.push({ tool_slug: tool.slug, reason: result.error });
+    }
+  }
+
+  return { created: created.length, considered: seenToolIds.size, created_pairs: created, skipped };
+}
+
 const CHANGE_DETECTION_CREATED_BY = "system:change-detection";
 const DEFAULT_CHANGE_SCAN_BATCH_SIZE = 50;
 const DEFAULT_CHECK_INTERVAL_HOURS = 24;
@@ -1197,6 +1298,7 @@ const REGISTRY: Record<string, SchedulerJobHandler> = {
   tool_email_smartlead_sync: toolEmailSmartleadSyncHandler,
   discovered_tool_email_smartlead_sync: discoveredToolEmailSmartleadSyncHandler,
   analytics_retention_cleanup: analyticsRetentionCleanupHandler,
+  lead_magnet_comparison_generator: leadMagnetComparisonGeneratorHandler,
 };
 
 export class UnknownJobTypeError extends Error {

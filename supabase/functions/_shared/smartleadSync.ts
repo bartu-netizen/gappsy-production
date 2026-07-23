@@ -54,8 +54,35 @@ export async function syncValidEmailsToSmartlead(
   if (entitiesError) return { ok: false, synced: 0, campaign_id: campaignId, error: entitiesError.message };
   const entityById = new Map((entities || []).map((t: any) => [t.id, t]));
 
+  // Free lead-magnet hook (see schedulerRegistry.ts's
+  // leadMagnetComparisonGeneratorHandler): a listed tool may already have a
+  // real, published "Tool vs Competitor" page waiting — surfaced here as a
+  // custom field so the Smartlead sequence can reference {{comparison_url}}
+  // as "we already made this for you" instead of a generic pitch. Only
+  // applies to listed tools (tool_comparisons only ever pairs real tools.rows,
+  // never discovered_tools candidates).
+  const comparisonByToolId = new Map<string, { url: string; competitorName: string }>();
+  if (source === "listed" && entityIds.length > 0) {
+    const { data: comparisons } = await fetchInChunks(entityIds, (chunk) =>
+      supabase
+        .from("tool_comparisons")
+        .select("slug, tool_a_id, tool_b_id, tool_a:tools!tool_comparisons_tool_a_id_fkey(id,name), tool_b:tools!tool_comparisons_tool_b_id_fkey(id,name)")
+        .eq("status", "published")
+        .or(`tool_a_id.in.(${chunk.join(",")}),tool_b_id.in.(${chunk.join(",")})`)
+    );
+    for (const c of (comparisons || []) as any[]) {
+      const isA = entityIds.includes(c.tool_a_id);
+      const thisToolId = isA ? c.tool_a_id : c.tool_b_id;
+      const competitor = isA ? c.tool_b : c.tool_a;
+      if (!comparisonByToolId.has(thisToolId)) {
+        comparisonByToolId.set(thisToolId, { url: `https://gappsy.com/compare/${c.slug}/`, competitorName: competitor?.name || "" });
+      }
+    }
+  }
+
   const leads: SmartleadLead[] = (eligible as any[]).map((r) => {
     const entity = entityById.get(r[idColumn]) as any;
+    const comparison = comparisonByToolId.get(r[idColumn]);
     return {
       email: r.email,
       company_name: entity?.name || undefined,
@@ -66,6 +93,8 @@ export async function syncValidEmailsToSmartlead(
         profile_url: profileUrlFor(entity?.slug),
         short_description: entity?.short_description || null,
         pricing_model: entity?.pricing_model || null,
+        comparison_url: comparison?.url || null,
+        comparison_competitor_name: comparison?.competitorName || null,
         source: emailTable,
       },
     };

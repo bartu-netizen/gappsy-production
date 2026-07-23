@@ -2,6 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 import { fetchInChunks } from "../_shared/dbChunking.ts";
+import { resolveCanonicalPair, createToolComparison, ComparisonValidationError as ValidationError } from "../_shared/toolComparisonCreation.ts";
 
 const JSON_HEADERS = { ...CORS_HEADERS, "Content-Type": "application/json" };
 
@@ -10,34 +11,6 @@ function jsonResponse(body: unknown, status = 200) {
 }
 
 const UNIQUE_VIOLATION = "23505";
-
-class ValidationError extends Error {}
-
-// Fetches both tools and returns them reordered so `toolA` is always the
-// alphabetically-first slug — independent of which one the admin picked as
-// "Tool A" in the form. This is what lets the frontend and the
-// src/data/comparisonContent registry safely assume tool_a always matches
-// the first half of the canonical slug (e.g. tool_a = canva for
-// "canva-vs-figma"), never the admin's arbitrary selection order. The
-// resulting slug is the single indexable URL for the pair — the unique
-// (LEAST, GREATEST) pair index in the tool_comparisons migration is the
-// DB-level backstop against ever storing both orderings as separate rows.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function resolveCanonicalPair(supabase: any, idX: string, idY: string) {
-  const { data, error } = await supabase.from("tools").select("id, slug, name, is_open_source").in("id", [idX, idY]);
-  if (error) throw new Error(`Failed to load tools: ${error.message}`);
-  const toolX = (data || []).find((t: { id: string }) => t.id === idX);
-  const toolY = (data || []).find((t: { id: string }) => t.id === idY);
-  if (!toolX || !toolY) throw new ValidationError("Both tool_a_id and tool_b_id must reference existing tools");
-  // Paid tools drive more real business value than open-source ones — an
-  // open-source-vs-open-source pairing is deliberately blocked rather than
-  // just deprioritized in listings, per an explicit content-strategy call.
-  if (toolX.is_open_source && toolY.is_open_source) {
-    throw new ValidationError("Cannot create a comparison between two open-source tools — pair at least one non-open-source tool");
-  }
-  const [toolA, toolB] = toolX.slug.localeCompare(toolY.slug) <= 0 ? [toolX, toolY] : [toolY, toolX];
-  return { toolA, toolB, slug: `${toolA.slug}-vs-${toolB.slug}` };
-}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function attachTools(supabase: any, comparisons: { tool_a_id: string; tool_b_id: string }[]) {
@@ -106,40 +79,11 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: false, error: "tool_a_id and tool_b_id must be different tools" }, 400);
       }
 
-      let toolA: { id: string; slug: string }, toolB: { id: string; slug: string }, slug: string;
-      try {
-        ({ toolA, toolB, slug } = await resolveCanonicalPair(supabase, payload.tool_a_id, payload.tool_b_id));
-      } catch (validationError) {
-        if (validationError instanceof ValidationError) {
-          return jsonResponse({ ok: false, error: validationError.message }, 400);
-        }
-        throw validationError;
-      }
-
       const status = payload.status === "published" ? "published" : "draft";
+      const result = await createToolComparison(supabase, payload.tool_a_id, payload.tool_b_id, status);
+      if (!result.ok) return jsonResponse({ ok: false, error: result.error }, result.status_code ?? 500);
 
-      // Pre-check for fast, friendly UX. The DB's unique slug + unique
-      // (LEAST, GREATEST) pair index are the actual source of truth — this
-      // check alone cannot be trusted under concurrent writes.
-      const { data: existing } = await supabase.from("tool_comparisons").select("id").eq("slug", slug).maybeSingle();
-      if (existing) {
-        return jsonResponse({ ok: false, error: `A comparison for this pair already exists ("${slug}")` }, 409);
-      }
-
-      const { data: newComparison, error: insertError } = await supabase
-        .from("tool_comparisons")
-        .insert({ tool_a_id: toolA.id, tool_b_id: toolB.id, slug, status })
-        .select()
-        .single();
-
-      if (insertError) {
-        if (insertError.code === UNIQUE_VIOLATION) {
-          return jsonResponse({ ok: false, error: `A comparison for this pair already exists ("${slug}")` }, 409);
-        }
-        return jsonResponse({ ok: false, error: insertError.message }, 500);
-      }
-
-      return jsonResponse({ ok: true, data: newComparison });
+      return jsonResponse({ ok: true, data: result.comparison });
     }
 
     if (req.method === "PUT") {
