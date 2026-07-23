@@ -602,26 +602,22 @@ export default function FeatureMyProductOnboardingPage() {
         )}
 
         {step === 'growth_upsell' && (
-          <div className="flex-1 w-full max-w-4xl mx-auto px-5 sm:px-8 py-5 sm:py-8">
-            <div className="text-center mb-5 sm:mb-7">
-              <p className="text-sm font-semibold text-[#4F47E6] mb-1">Upgrade to Growth</p>
-              <h1 className="text-2xl sm:text-[32px] font-bold tracking-tight text-[#0B1221] leading-tight lg:whitespace-nowrap">
-                Your listing is verified. Ready to get seen?
+          <div className="flex-1 w-full max-w-4xl mx-auto px-5 sm:px-8 py-3 sm:py-4">
+            <div className="text-center mb-2.5 sm:mb-3.5">
+              <p className="text-[13px] font-semibold text-[#4F47E6] mb-0.5">Upgrade to Growth</p>
+              <h1 className="text-xl sm:text-[26px] font-bold tracking-tight text-[#0B1221] leading-tight">
+                Ready to get seen?
               </h1>
-              <p className="mt-2 text-[15px] sm:text-base text-slate-500 leading-snug max-w-xl lg:max-w-none mx-auto lg:whitespace-nowrap">
-                Growth puts your product in front of buyers who are already comparing tools like yours.
+              <p className="hidden sm:block mt-1 text-[13.5px] sm:text-[15px] text-slate-500 leading-snug">
+                Featured placement and priority ranking, starting today.
               </p>
             </div>
 
             {cancelledNotice && (
-              <div className="mb-4 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700 text-center">
+              <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700 text-center">
                 Checkout was cancelled — no charge was made. You can try again below.
               </div>
             )}
-
-            <p className="text-center text-[12.5px] text-slate-400 mb-3">
-              Everything below is extra
-            </p>
 
             {/* CSS Grid instead of a <table>: every "row" is 3 grid items, so
                 Monthly/Yearly naturally share the exact same row height with
@@ -630,7 +626,7 @@ export default function FeatureMyProductOnboardingPage() {
                 siblings (not table cells) without being clipped by its
                 own overflow-hidden corners. */}
             <div className="relative">
-              <div className="grid grid-cols-[1fr_92px_112px] sm:grid-cols-[1fr_112px_136px]">
+              <div className="grid grid-cols-[1fr_62px_76px] sm:grid-cols-[1fr_112px_136px]">
                 <div />
                 <div />
                 <div className="flex flex-col items-center">
@@ -638,65 +634,63 @@ export default function FeatureMyProductOnboardingPage() {
                     ≈4 months free
                     <CornerRightDown className="w-3 h-3 shrink-0" aria-hidden="true" />
                   </p>
-                  <span className="relative z-10 -mb-2.5 mt-1 inline-block bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full whitespace-nowrap shadow-md">
+                  <span className="relative z-10 -mb-2 mt-0.5 inline-block bg-[#4F47E6] text-white text-[8.5px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full whitespace-nowrap shadow-md">
                     Best value
                   </span>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-                <div className="grid grid-cols-[1fr_92px_112px] sm:grid-cols-[1fr_112px_136px]">
+                <div className="grid grid-cols-[1fr_62px_76px] sm:grid-cols-[1fr_112px_136px]">
                   <div className="border-b border-slate-100" />
-                  <div className="px-2 pt-5 pb-4 text-center border-b border-slate-100">
-                    <p className="text-[13px] font-semibold text-slate-500">Monthly</p>
-                    <div className="mt-1 flex items-end justify-center gap-0.5">
-                      <span className="text-2xl sm:text-[28px] font-bold text-[#0B1221]">$89</span>
+                  <div className="px-2 pt-3 pb-2.5 text-center border-b border-slate-100">
+                    <p className="text-[12.5px] font-semibold text-slate-500">Monthly</p>
+                    <div className="mt-0.5 flex items-end justify-center gap-0.5">
+                      <span className="text-xl sm:text-2xl font-bold text-[#0B1221]">$89</span>
                       <span className="text-[11px] text-slate-400 mb-1">/mo</span>
                     </div>
-                    <p className="mt-0.5 text-[10.5px] text-slate-400">Cancel anytime</p>
                   </div>
-                  <div className="px-2 pt-5 pb-4 text-center bg-[#EEF0FE]/70 border-t-2 border-l-2 border-r-2 border-b border-[#4F47E6]">
-                    <p className="text-[13px] font-semibold text-[#4F47E6]">Yearly</p>
-                    <div className="mt-1 flex items-end justify-center gap-0.5">
-                      <span className="text-2xl sm:text-[28px] font-bold text-[#0B1221]">$699</span>
+                  <div className="px-2 pt-3 pb-2.5 text-center bg-[#EEF0FE]/70 border-t-2 border-l-2 border-r-2 border-b border-[#4F47E6]">
+                    <p className="text-[12.5px] font-semibold text-[#4F47E6]">Yearly</p>
+                    <div className="mt-0.5 flex items-end justify-center gap-0.5">
+                      <span className="text-xl sm:text-2xl font-bold text-[#0B1221]">$699</span>
                       <span className="text-[11px] text-slate-400 mb-1">/yr</span>
                     </div>
-                    <p className="mt-0.5 text-[10.5px] text-slate-400">Billed annually</p>
                   </div>
 
                   {[...GROWTH_MONTHLY_FEATURES.map((item) => ({ item, yearlyOnly: false })), ...GROWTH_YEARLY_ONLY_FEATURES.map((item) => ({ item, yearlyOnly: true }))].map((row, i) => (
                     <div key={row.item} className="contents">
-                      <div className={`py-1.5 pl-4 pr-2 flex items-center text-[13px] leading-snug text-slate-600 ${i % 2 === 1 ? 'bg-slate-50/70' : ''}`}>{row.item}</div>
-                      <div className={`py-1.5 flex items-center justify-center ${i % 2 === 1 ? 'bg-slate-50/70' : ''}`}>
+                      <div className={`py-[3px] pl-2.5 pr-1 sm:pl-4 sm:pr-2 flex items-center text-[10.5px] sm:text-[12px] leading-[1.15] sm:leading-tight text-slate-600 ${i % 2 === 1 ? 'bg-slate-50/70' : ''}`}>{row.item}</div>
+                      <div className={`py-[3px] flex items-center justify-center ${i % 2 === 1 ? 'bg-slate-50/70' : ''}`}>
                         {row.yearlyOnly ? (
-                          <Minus className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
+                          <Minus className="w-3 h-3 text-slate-300" aria-hidden="true" />
                         ) : (
-                          <Check className="w-4 h-4 text-[#4F47E6]" aria-hidden="true" />
+                          <Check className="w-3.5 h-3.5 text-[#4F47E6]" aria-hidden="true" />
                         )}
                       </div>
-                      <div className="py-1.5 flex items-center justify-center bg-[#EEF0FE]/70 border-l-2 border-r-2 border-[#4F47E6]">
-                        <Check className="w-4 h-4 text-[#4F47E6]" aria-hidden="true" />
+                      <div className="py-[3px] flex items-center justify-center bg-[#EEF0FE]/70 border-l-2 border-r-2 border-[#4F47E6]">
+                        <Check className="w-3.5 h-3.5 text-[#4F47E6]" aria-hidden="true" />
                       </div>
                     </div>
                   ))}
 
-                  <div className="p-3" />
-                  <div className="p-2">
+                  <div className="p-2" />
+                  <div className="p-1.5">
                     <button
                       type="button"
                       onClick={() => handleGrowthCheckout('month')}
                       disabled={checkingOutInterval !== null}
-                      className="w-full flex items-center justify-center px-2 py-2.5 rounded-lg text-[12.5px] font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                      className="w-full flex items-center justify-center px-2 py-2 rounded-lg text-[12.5px] font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
                       {checkingOutInterval === 'month' ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : 'Continue'}
                     </button>
                   </div>
-                  <div className="p-2 bg-[#EEF0FE]/70 border-l-2 border-r-2 border-b-2 border-[#4F47E6]">
+                  <div className="p-1.5 bg-[#EEF0FE]/70 border-l-2 border-r-2 border-b-2 border-[#4F47E6]">
                     <button
                       type="button"
                       onClick={() => handleGrowthCheckout('year')}
                       disabled={checkingOutInterval !== null}
-                      className="w-full flex items-center justify-center px-2 py-2.5 rounded-lg text-[12.5px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
+                      className="w-full flex items-center justify-center px-2 py-2 rounded-lg text-[12.5px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
                     >
                       {checkingOutInterval === 'year' ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : 'Get Yearly'}
                     </button>
@@ -705,15 +699,16 @@ export default function FeatureMyProductOnboardingPage() {
               </div>
             </div>
 
-            <p className="mt-5 text-center text-[13px] text-slate-400">Billed via Stripe. Cancel anytime.</p>
-
-            <button
-              type="button"
-              onClick={handleSkipGrowth}
-              className="mt-4 w-full text-center text-sm font-semibold text-red-500 hover:text-red-600 underline underline-offset-2 decoration-red-200 hover:decoration-red-300 transition-colors"
-            >
-              No thanks — skip Growth and stay unfeatured for now
-            </button>
+            <div className="mt-2.5 flex items-center justify-center gap-3">
+              <p className="text-[11.5px] text-slate-400">Billed via Stripe. Cancel anytime.</p>
+              <button
+                type="button"
+                onClick={handleSkipGrowth}
+                className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-600 text-[12.5px] font-medium transition-colors"
+              >
+                Skip for now
+              </button>
+            </div>
 
             <AskGappsyBubble
               page="growth_upsell"
