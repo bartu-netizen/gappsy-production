@@ -10,9 +10,7 @@ const WHY_POINTS = [
 ];
 
 // Real brand marks — Stripe and PayPal via their official simple-icons SVG
-// paths (CC0), ThriveCart cropped directly from their own dashboard header
-// in the same source screenshots used elsewhere on this page (simple-icons
-// has no ThriveCart entry).
+// paths (CC0).
 function StripeMark() {
   return (
     <svg viewBox="0 0 24 24" className="w-4 h-4" role="img" aria-label="Stripe">
@@ -32,15 +30,17 @@ const REVENUE_SOURCE_MARKS = [
   { name: 'PayPal', Mark: PayPalMark },
 ];
 
-// Real numbers from our own Stripe/ThriveCart/PayPal dashboards — shown as
-// styled stat cards rather than a raw screenshot crop, since "Total
-// customers" here is a more current count (10,528) than any single
-// dashboard's snapshot.
+// Real numbers from our own Stripe/PayPal dashboards — shown as styled stat
+// cards rather than a raw screenshot crop, since "Total customers" here is a
+// more current count (10,528) than any single dashboard's snapshot.
+// `verified` marks which stats get the "Verified by Stripe & PayPal" hover
+// tooltip — only ones a payment processor can actually attest to, not the
+// static "Since 2019" fact.
 const REVENUE_STATS = [
-  { value: '$1,488,072.90', label: 'Gross revenue' },
-  { value: '2019', label: 'Since' },
-  { value: '16,516', label: 'Total transactions' },
-  { value: '10,528', label: 'Total customers' },
+  { value: '$1,488,072.90', label: 'Gross revenue', verified: true },
+  { value: '2019', label: 'Since', verified: false },
+  { value: '16,516', label: 'Total transactions', verified: true },
+  { value: '10,528', label: 'Total customers', verified: true },
 ];
 
 // Real, unedited numbers pulled from a handful of representative email
@@ -126,23 +126,32 @@ export default function FeatureMyProductProofPage() {
             {/* Right: the proof, stacked */}
             <div className="space-y-4 sm:space-y-5">
               <section>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Real revenue</h2>
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Gappsy Software Revenue</h2>
+                  <span className="text-slate-300" aria-hidden="true">·</span>
+                  <span className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-slate-500">
+                    Verified by
                     {REVENUE_SOURCE_MARKS.map(({ name, Mark }) => (
                       <span key={name} className="inline-flex items-center gap-1">
                         <Mark />
-                        <span className="text-[10.5px] font-semibold text-slate-500">{name}</span>
+                        {name}
                       </span>
                     ))}
-                    <img src="/images/gappsy-proof/thrivecart-logo.webp" alt="ThriveCart" className="h-3 w-auto rounded-sm" />
-                  </div>
+                  </span>
                 </div>
                 <div className="mt-2 rounded-2xl border border-[#eef0f3] bg-white shadow-[0_12px_28px_rgba(15,23,42,0.06)] px-4 py-3 sm:px-5 sm:py-4 grid grid-cols-2 gap-x-4 gap-y-2.5 sm:gap-y-3">
                   {REVENUE_STATS.map((s) => (
-                    <div key={s.label}>
+                    <div key={s.label} className={s.verified ? 'group relative w-fit' : undefined}>
                       <p className="text-lg sm:text-xl font-bold text-[#0B1221] leading-tight">{s.value}</p>
                       <p className="text-[11.5px] sm:text-[12.5px] text-slate-400">{s.label}</p>
+                      {s.verified && (
+                        <div className="pointer-events-none absolute left-0 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-20 whitespace-nowrap rounded-xl bg-white border border-[#eef0f3] shadow-[0_8px_20px_rgba(15,23,42,0.12)] text-[#0B1221] text-[11px] font-semibold px-3 py-2 flex items-center gap-1.5">
+                          <span>Verified by</span>
+                          <StripeMark />
+                          <span className="text-slate-300" aria-hidden="true">&amp;</span>
+                          <PayPalMark />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
