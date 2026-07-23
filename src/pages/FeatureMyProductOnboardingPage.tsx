@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users, Search } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
@@ -557,6 +557,7 @@ export default function FeatureMyProductOnboardingPage() {
             <ul className="space-y-2.5">
               {[
                 ['Verified badge', 'on your listing'],
+                ['We build your profile', 'for you — edit anytime you like'],
                 ['Self-serve editing', 'of your listing'],
                 ['Reply to reviews', 'from your dashboard'],
                 ['A link to your site', 'from your Gappsy listing'],
@@ -572,10 +573,7 @@ export default function FeatureMyProductOnboardingPage() {
               <Users className="w-4 h-4 text-[#4F47E6] shrink-0 mt-0.5" aria-hidden="true" />
               <p className="text-[13.5px] text-[#3730A3] leading-relaxed">
                 10,000+ business owners already use and trust Gappsy — they could be your next
-                customer.{' '}
-                <Link to="/list-your-product/proof" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
-                  See proof
-                </Link>
+                customer.
               </p>
             </div>
           </StepLayout>
