@@ -54,11 +54,6 @@ const EMAIL_PROOF_ROWS = [
   { contacts: '9,994', sent: '9,986', openRate: '39.11%', clickRate: '0.92%', revenue: '$1,221.00' },
 ];
 
-const EMAIL_STATS = [
-  { value: '46.6%', label: 'best open rate' },
-  { value: '$2,296', label: 'from one send' },
-];
-
 // Step in the /list-your-product sequence (after typing a URL, before the
 // real matching step) explaining why listing matters — same app-shell and
 // same strict no-scroll rule as the rest of this funnel. Revenue is shown
@@ -101,7 +96,7 @@ export default function FeatureMyProductProofPage() {
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-12 items-center">
             {/* Left: why list on Gappsy */}
             <div>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F47E6] bg-[#EEF0FE] rounded-full px-3 py-1.5">
+              <span className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4F47E6] bg-[#EEF0FE] rounded-full px-3 py-1.5">
                 <Users className="w-3.5 h-3.5" aria-hidden="true" />
                 10,000+ paid users
               </span>
@@ -157,10 +152,14 @@ export default function FeatureMyProductProofPage() {
                 </div>
               </section>
 
-              <section>
+              {/* Desktop-only: the real table doesn't render legibly small
+                  enough to be worth showing on mobile, and a compact-chip
+                  fallback there just added noise next to the revenue stats
+                  that matter more — so this whole section is lg+ only. */}
+              <section className="hidden lg:block">
                 <h2 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Gappsy email performance</h2>
 
-                <div className="hidden lg:block mt-2 rounded-2xl border border-[#eef0f3] overflow-hidden shadow-[0_12px_28px_rgba(15,23,42,0.06)]">
+                <div className="mt-2 rounded-2xl border border-[#eef0f3] overflow-hidden shadow-[0_12px_28px_rgba(15,23,42,0.06)]">
                   <table className="w-full text-[13px]">
                     <thead>
                       <tr className="bg-slate-50 text-slate-400">
@@ -183,15 +182,6 @@ export default function FeatureMyProductProofPage() {
                       ))}
                     </tbody>
                   </table>
-                </div>
-
-                <div className="lg:hidden mt-2.5 flex flex-wrap items-center gap-x-5 gap-y-2">
-                  {EMAIL_STATS.map((s) => (
-                    <div key={s.label}>
-                      <span className="text-lg font-bold text-[#0B1221]">{s.value}</span>{' '}
-                      <span className="text-[12.5px] text-slate-400">{s.label}</span>
-                    </div>
-                  ))}
                 </div>
               </section>
             </div>
