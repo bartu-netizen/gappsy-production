@@ -13,8 +13,75 @@ import type { SupabaseClient } from "npm:@supabase/supabase-js@2.57.4";
 import type Stripe from "npm:stripe@17.7.0";
 import { validateCrawlUrl } from "./crawlUrlSafety.ts";
 import { drainCrawlQueue } from "./crawlRunner.ts";
+import { sendEmail } from "./emailClient.ts";
 
 const TOKEN_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
+
+// Mirrors sendAdminSaleEmail's role for agency-listing sales (stripe-webhook
+// /index.ts) — that one never fires for feature_my_product checkouts (the
+// webhook returns right after activateVendorFeatureSubscription), so a $29
+// claim or Growth subscription previously produced no admin notification at
+// all. Deliberately a separate, simpler function rather than generalizing
+// sendAdminSaleEmail itself — that one's shape (rank/state/promo/Top25 deep
+// links) is agency-specific and doesn't apply here.
+const VENDOR_SALE_EMAIL_RECIPIENT = "bartu@gappsy.com";
+const VENDOR_CLAIM_AMOUNT_CENTS = 2900;
+const VENDOR_GROWTH_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
+
+async function sendVendorSaleEmail(
+  supabase: SupabaseClient,
+  params: {
+    onboardingSessionId: string | null;
+    matchedToolId: string | null;
+    discoveredToolId: string | null;
+    contactEmail: string;
+    product: "claim" | "growth";
+    billingInterval: "one_time" | "month" | "year";
+  },
+) {
+  try {
+    let toolName = "Unknown product";
+    let toolSlug: string | null = null;
+    if (params.matchedToolId) {
+      const { data } = await supabase.from("tools").select("name, slug").eq("id", params.matchedToolId).maybeSingle();
+      if (data) {
+        toolName = data.name;
+        toolSlug = data.slug;
+      }
+    } else if (params.discoveredToolId) {
+      const { data } = await supabase.from("discovered_tools").select("name").eq("id", params.discoveredToolId).maybeSingle();
+      if (data?.name) toolName = data.name;
+    }
+
+    const amountCents = params.product === "claim" ? VENDOR_CLAIM_AMOUNT_CENTS : VENDOR_GROWTH_AMOUNT_CENTS[params.billingInterval] ?? null;
+    const amountLabel = amountCents != null ? `$${(amountCents / 100).toFixed(2)}` : "unknown amount";
+    const productLabel = params.product === "claim"
+      ? "Claim & Verify (one-time)"
+      : `Growth (${params.billingInterval === "year" ? "yearly" : "monthly"})`;
+    const baseUrl = Deno.env.get("PUBLIC_BASE_URL") || "https://gappsy.com";
+    const adminLink = params.onboardingSessionId
+      ? `${baseUrl}/wp-admin/vendor-monetization?id=${params.onboardingSessionId}`
+      : `${baseUrl}/wp-admin/vendor-monetization`;
+    const toolLink = toolSlug ? `${baseUrl}/tools/${toolSlug}` : null;
+
+    await sendEmail({
+      to: Deno.env.get("SMTP_INTERNAL_EMAIL") || VENDOR_SALE_EMAIL_RECIPIENT,
+      subject: `New software sale: ${productLabel} — ${toolName}`,
+      text: [
+        `Product: ${productLabel}`,
+        `Amount: ${amountLabel}`,
+        `Tool: ${toolName}`,
+        `Customer: ${params.contactEmail}`,
+        "",
+        `Admin: ${adminLink}`,
+        toolLink ? `Live listing: ${toolLink}` : null,
+      ].filter((line): line is string => line !== null).join("\n"),
+    });
+  } catch (err) {
+    // A failed notification email must never break activation itself.
+    console.error("[vendorFeatureActivation] failed to send sale notification email:", err);
+  }
+}
 
 function generateSecureToken(length = 32): string {
   const bytes = new Uint8Array(length);
@@ -173,6 +240,18 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
       metadata: { stripe_checkout_session_id: session.id, product, billing_interval: billingInterval },
     });
   }
+
+  // Fires once per actual purchase (this function only runs on
+  // checkout.session.completed, never on a subscription renewal — those go
+  // through handleVendorSubscriptionChange below, which doesn't call this).
+  await sendVendorSaleEmail(supabase, {
+    onboardingSessionId,
+    matchedToolId,
+    discoveredToolId,
+    contactEmail,
+    product,
+    billingInterval,
+  });
 }
 
 // customer.subscription.updated/deleted — keeps featured_until / tools.featured

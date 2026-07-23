@@ -17,6 +17,17 @@ const SESSION_STATUSES = new Set([
 const DEFAULT_PER_PAGE = 25;
 const MAX_PER_PAGE = 100;
 
+// Display-only estimate, same consts as vendor-onboarding/index.ts and
+// admin-visitor-journey — never used for billing, just so the Sales view can
+// show an approximate amount without a live Stripe lookup per row.
+const CLAIM_AMOUNT_CENTS = 2900;
+const GROWTH_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
+function estimateAmountCents(product: string | null, billingInterval: string | null): number | null {
+  if (product === "claim") return CLAIM_AMOUNT_CENTS;
+  if (product === "growth" && billingInterval) return GROWTH_AMOUNT_CENTS[billingInterval] ?? null;
+  return null;
+}
+
 function generateSecureToken(length = 32): string {
   const alphabet = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
   const bytes = new Uint8Array(length);
@@ -68,6 +79,29 @@ Deno.serve(async (req: Request) => {
       const perPage = Math.min(MAX_PER_PAGE, Math.max(1, Number(url.searchParams.get("per_page")) || DEFAULT_PER_PAGE));
       const rangeFrom = (page - 1) * perPage;
       const rangeTo = rangeFrom + perPage - 1;
+
+      // Sales view: actual completed purchases (vendor_feature_subscriptions
+      // with status='active'), not funnel sessions — "where do sales land"
+      // for the software directory, mirroring what stripe_orders is for
+      // agency listings. Separate branch since the underlying table/shape
+      // (amount, product, tool name) is entirely different from a session row.
+      if (url.searchParams.get("view") === "sales") {
+        let salesQuery = supabase
+          .from("vendor_feature_subscriptions")
+          .select("id, tool_id, discovered_tool_id, product, billing_interval, contact_email, stripe_subscription_id, stripe_checkout_session_id, current_period_end, created_at, tools(name, slug)", { count: "exact" })
+          .eq("status", "active");
+        if (q) salesQuery = salesQuery.or(`contact_email.ilike.%${q}%`);
+        salesQuery = salesQuery.order("created_at", { ascending: false }).range(rangeFrom, rangeTo);
+
+        const { data: sales, error: salesError, count: salesCount } = await salesQuery;
+        if (salesError) return jsonResponse({ ok: false, error: salesError.message }, 500);
+
+        const enrichedSales = (sales || []).map((s: any) => ({
+          ...s,
+          estimated_amount_cents: estimateAmountCents(s.product, s.billing_interval),
+        }));
+        return jsonResponse({ ok: true, data: enrichedSales, total: salesCount || 0, page, page_size: perPage });
+      }
 
       let query = supabase.from("vendor_onboarding_sessions").select("*", { count: "exact" });
       if (statusFilter && SESSION_STATUSES.has(statusFilter)) query = query.eq("status", statusFilter);
