@@ -533,7 +533,7 @@ export default function FeatureMyProductOnboardingPage() {
             ctaLabel="Continue to secure checkout"
             onCta={handleClaimCheckout}
             ctaLoading={loading}
-            footnote="Billed once via Stripe. No subscription — no card kept on file."
+            footnote="Billed once via Stripe. No subscription."
           >
             {cancelledNotice && (
               <div className="mb-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-2.5 text-[13px] text-amber-700">
