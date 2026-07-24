@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Check, Loader2, Copy, ShieldCheck, ArrowRight } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
@@ -17,6 +17,7 @@ interface TokenData {
 
 export default function FeatureMyProductVerifyPage() {
   const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
   const [data, setData] = useState<TokenData | null>(null);
   const [loadState, setLoadState] = useState<'loading' | 'ready' | 'not_found' | 'expired'>('loading');
   const [method, setMethod] = useState<Method>('html_meta_tag');
@@ -37,6 +38,18 @@ export default function FeatureMyProductVerifyPage() {
       if (res.onboarding_session_id) vendorOnboarding.trackEvent(res.onboarding_session_id, 'verification_started', { token });
     }).catch(() => setLoadState('not_found'));
   }, [token]);
+
+  // Auto-continue into /vendor/claim shortly after this screen shows
+  // "Ownership verified" — whether that's from a real passed check or an
+  // already-pre-verified token (see vendorFeatureActivation.ts's
+  // SKIP_OWNERSHIP_VERIFICATION). The "Manage this listing" link below
+  // stays as a manual fallback. This makes the whole post-payment ->
+  // dashboard chain click-free end to end instead of stopping here.
+  useEffect(() => {
+    if (checkResult !== 'success' || !token) return;
+    const timer = window.setTimeout(() => navigate(`/vendor/claim?token=${encodeURIComponent(token)}`, { replace: true }), 1200);
+    return () => window.clearTimeout(timer);
+  }, [checkResult, token, navigate]);
 
   async function handleCheck() {
     if (!token || checking) return;
