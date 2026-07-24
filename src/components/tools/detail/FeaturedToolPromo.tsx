@@ -96,11 +96,11 @@ function WantYourProductHereLink({ className = '', toolSlug }: { className?: str
   );
 }
 
-// A real paying Growth customer gets a distinct gold/amber "Growth" badge
-// instead of the generic indigo "Featured" one — otherwise an editorially
-// marked tool (tools.featured=true with no billing_interval, no money
-// changing hands) reads identically to a customer who's actually paying
-// for placement, which undersells what Growth buys.
+// A real paying Growth customer keeps a distinct gold/amber tint (vs. the
+// generic indigo) so admins can still tell the two apart at a glance, but
+// the label is always "Featured" — visitors have no reason to know "Growth"
+// is Gappsy's internal product-tier name, and seeing it here read as a
+// labeling bug rather than a meaningful distinction.
 export function FeaturedBadge({ large = false, growth = false }: { large?: boolean; growth?: boolean }) {
   return (
     <span
@@ -109,7 +109,7 @@ export function FeaturedBadge({ large = false, growth = false }: { large?: boole
       }`}
     >
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
-      {growth ? 'Growth' : 'Featured'}
+      Featured
     </span>
   );
 }
