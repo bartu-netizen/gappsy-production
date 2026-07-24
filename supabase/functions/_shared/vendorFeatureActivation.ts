@@ -18,6 +18,16 @@ import { syncSmartleadAfterPurchase } from "./smartleadSync.ts";
 
 const TOKEN_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 
+// TEMPORARY, per explicit request: domain-ownership verification (meta
+// tag/DNS/file — see FeatureMyProductVerifyPage.tsx) is switched off for
+// now. New ownership tokens are created pre-verified below, so the verify
+// page shows "Ownership verified" immediately and /vendor/claim links the
+// account right away, without the vendor ever touching their own site.
+// Flip this back to false to re-enable the real check — nothing else needs
+// to change, since the entire verify/claim UI already handles both an
+// already-verified and a not-yet-verified token identically.
+const SKIP_OWNERSHIP_VERIFICATION = true;
+
 // Mirrors sendAdminSaleEmail's role for agency-listing sales (stripe-webhook
 // /index.ts) — that one never fires for feature_my_product checkouts (the
 // webhook returns right after activateVendorFeatureSubscription), so a $29
@@ -227,6 +237,12 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
       tool_id: matchedToolId,
       contact_email: contactEmail,
       verification_target: verificationTarget,
+      verified: SKIP_OWNERSHIP_VERIFICATION,
+      // Honest audit trail — this was never a real meta-tag/DNS/file check,
+      // so it shouldn't look like one to anyone reviewing this data later
+      // (verification_method otherwise only ever holds a real method name
+      // set by vendor-ownership-verify/index.ts on an actual passed check).
+      ...(SKIP_OWNERSHIP_VERIFICATION ? { verified_at: new Date().toISOString(), verification_method: "auto_skip_temporary" } : {}),
     });
   }
 
