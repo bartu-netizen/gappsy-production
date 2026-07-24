@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Loader2, LogOut, ExternalLink, Star, ShieldCheck, CreditCard, Plus, Trash2,
   MessageSquareReply, EyeOff, Eye, Save, LayoutDashboard, FileText, MessageSquare, Wallet, BarChart3, MousePointerClick,
-  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles, Lock,
+  ArrowLeftRight, Clock, CheckCircle2, XCircle, Camera, Sparkles, Lock, X, PartyPopper,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { vendorDashboard, type VendorToolSummary } from '../lib/vendorDashboardApi';
@@ -57,6 +57,7 @@ const TABS: { key: Tab; label: string; icon: typeof LayoutDashboard }[] = [
 export default function VendorDashboardPage() {
   useNoindex();
   const { user, loading: authLoading, signOut } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [tab, setTab] = useState<Tab>('overview');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -80,6 +81,13 @@ export default function VendorDashboardPage() {
   const [myTools, setMyTools] = useState<VendorToolSummary[]>([]);
   const [selectedToolId, setSelectedToolId] = useState<string | null>(null);
   const [toolsLoaded, setToolsLoaded] = useState(false);
+
+  // First-run welcome popup — arrives via ?welcome=1, set by VendorClaimPage
+  // right after auto-linking a freshly-created account (see its own
+  // "auto-continue" comment). Only ever shown once the real dashboard data
+  // is actually on screen, never over a loading/error state, and the query
+  // param is stripped immediately so a refresh doesn't show it again.
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -127,6 +135,15 @@ export default function VendorDashboardPage() {
     });
   }, [toolsLoaded, selectedToolId]);
 
+  useEffect(() => {
+    if (searchParams.get('welcome') !== '1' || !tool || loading || loadError) return;
+    setShowWelcome(true);
+    const next = new URLSearchParams(searchParams);
+    next.delete('welcome');
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tool, loading, loadError]);
+
   if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]"><Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" /></div>;
   }
@@ -146,6 +163,35 @@ export default function VendorDashboardPage() {
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
       <EntitySEOTags title="Vendor Dashboard | Gappsy" description="Manage your featured Gappsy listing." path="/vendor/dashboard" noindex />
+
+      {showWelcome && tool && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4" onClick={() => setShowWelcome(false)}>
+          <div className="w-full max-w-sm bg-white rounded-2xl shadow-[0_24px_60px_rgba(15,23,42,0.28)] p-6 relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => setShowWelcome(false)}
+              aria-label="Close"
+              className="absolute right-3 top-3 w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="w-11 h-11 rounded-2xl bg-[#EEF0FE] flex items-center justify-center mb-3">
+              <PartyPopper className="w-5 h-5 text-[#4F47E6]" aria-hidden="true" />
+            </div>
+            <h2 className="text-lg font-bold text-[#0B1221]">This is your dashboard</h2>
+            <p className="mt-1.5 text-[13.5px] text-slate-500 leading-relaxed">
+              You can edit your {tool.name} listing, reply to reviews, and manage billing right here.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowWelcome(false)}
+              className="mt-4 w-full flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
 
       <header className="sticky top-0 z-30 bg-[#0A1735]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">

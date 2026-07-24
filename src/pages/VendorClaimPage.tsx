@@ -70,6 +70,18 @@ export default function VendorClaimPage() {
     setStep('done');
   }
 
+  // Auto-continue into the dashboard shortly after linking succeeds — the
+  // manual "Go to dashboard" button below stays as a fallback (skip the
+  // wait, or in case a browser blocks the programmatic navigation), but
+  // for the common case (arriving here already-authenticated straight from
+  // the $29 onboarding flow) this makes "verify -> dashboard" feel like one
+  // continuous step instead of a screen requiring its own click.
+  useEffect(() => {
+    if (step !== 'done') return;
+    const timer = window.setTimeout(() => navigate('/vendor/dashboard?welcome=1', { replace: true }), 1200);
+    return () => window.clearTimeout(timer);
+  }, [step, navigate]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -235,7 +247,7 @@ export default function VendorClaimPage() {
                 <p className="text-[13px] text-slate-500 mt-1.5 mb-5">Your account is linked to {toolName}.</p>
                 <button
                   type="button"
-                  onClick={() => navigate('/vendor/dashboard')}
+                  onClick={() => navigate('/vendor/dashboard?welcome=1')}
                   className="w-full inline-flex items-center justify-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all"
                 >
                   Go to dashboard

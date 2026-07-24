@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ArrowRight, Check, Loader2, ShieldCheck, AlertCircle, Copy, Minus, CornerRightDown, Lock, Users, Search } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Check, Loader2, AlertCircle, Minus, CornerRightDown, Lock, Users, Search } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
@@ -99,6 +99,7 @@ function StepLayout({
 }
 
 export default function FeatureMyProductOnboardingPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [step, setStep] = useState<WizardStep>('url');
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -137,6 +138,25 @@ export default function FeatureMyProductOnboardingPage() {
     }, 6000);
     return () => window.clearInterval(timer);
   }, [step]);
+
+  // Skips the old "here's what happens next" checklist entirely — the one
+  // real remaining action is proving ownership of the product's website (a
+  // meta tag/DNS record/file only the vendor can add, never something we
+  // can automate away — see vendor-claim-account/index.ts's comment: "no
+  // way to claim a listing without... proved domain ownership"). So instead
+  // of a static page explaining that, land the visitor directly on the
+  // real next step. Once they finish it there, /vendor/claim auto-links
+  // their already-authenticated session (no separate signup form — see its
+  // own "already signed in" comment) and forwards straight into the
+  // dashboard.
+  useEffect(() => {
+    if (step !== 'success') return;
+    if (ownershipToken) {
+      navigate(`/list-your-product/verify/${ownershipToken}`, { replace: true });
+    } else {
+      navigate('/vendor/dashboard', { replace: true });
+    }
+  }, [step, ownershipToken, navigate]);
 
   // ── Resume / return-from-Stripe handling ──────────────────────────────
   useEffect(() => {
@@ -741,69 +761,13 @@ export default function FeatureMyProductOnboardingPage() {
           </div>
         )}
 
-        {step === 'success' && <SuccessStep ownershipToken={ownershipToken} purchasedGrowth={purchasedGrowth} />}
+        {step === 'success' && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
+            <Loader2 className="w-6 h-6 text-[#4F47E6] animate-spin" aria-hidden="true" />
+            <p className="text-sm text-slate-500">Taking you to the next step…</p>
+          </div>
+        )}
       </OnboardingShell>
     </>
-  );
-}
-
-function SuccessStep({ ownershipToken, purchasedGrowth }: { ownershipToken: string | null; purchasedGrowth: boolean }) {
-  const [copied, setCopied] = useState(false);
-  const verifyUrl = ownershipToken ? `${window.location.origin}/list-your-product/verify/${ownershipToken}` : null;
-
-  return (
-    <div className="flex-1 w-full max-w-md mx-auto px-5 sm:px-6 py-8 flex flex-col">
-      <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
-        <Check className="w-6 h-6 text-emerald-500" aria-hidden="true" />
-      </div>
-      <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#0B1221] leading-tight">
-        {purchasedGrowth ? 'Your Growth listing is being prepared' : 'Your listing is being prepared'}
-      </h1>
-      <p className="mt-2 text-[15px] text-slate-500 leading-relaxed">Here's what happens next:</p>
-
-      <ol className="mt-5 space-y-3">
-        {[
-          'Verify ownership of your product',
-          'Review or complete your product details',
-          'Gappsy prepares or updates your listing',
-          purchasedGrowth ? 'Featured placement activates after eligibility checks' : 'Upgrade to Growth anytime from your dashboard',
-        ].map((item, i) => (
-          <li key={item} className="flex items-start gap-3 text-[14px] text-slate-600">
-            <span className="w-5 h-5 rounded-full bg-indigo-50 text-[#4F47E6] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-            {item}
-          </li>
-        ))}
-      </ol>
-
-      <div className="mt-6 space-y-2.5">
-        {verifyUrl && (
-          <a
-            href={verifyUrl}
-            className="flex items-center justify-center gap-1.5 w-full px-6 py-3.5 rounded-xl text-[15px] font-semibold text-white bg-[#4F47E6] hover:opacity-90 transition-opacity"
-          >
-            Verify ownership
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </a>
-        )}
-        {verifyUrl && (
-          <button
-            type="button"
-            onClick={() => { navigator.clipboard?.writeText(verifyUrl); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-            className="flex items-center justify-center gap-1.5 w-full px-6 py-3 rounded-xl text-[14px] font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors"
-          >
-            <Copy className="w-3.5 h-3.5" aria-hidden="true" />
-            {copied ? 'Link copied' : 'Copy verification link'}
-          </button>
-        )}
-        <a href="/list-your-product" className="flex items-center justify-center w-full px-6 py-3 rounded-xl text-[14px] font-medium text-slate-400 hover:text-slate-600 transition-colors">
-          Return to Gappsy
-        </a>
-      </div>
-
-      <div className="mt-auto pt-6 flex items-center gap-1.5 text-xs text-slate-400">
-        <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-        Save this page or the verification link — it's how you'll manage your listing.
-      </div>
-    </div>
   );
 }
