@@ -5,7 +5,8 @@ import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { supabase } from '../lib/supabase';
-import { vendorOnboarding, getStoredSessionId, setStoredSessionId, clearStoredSessionId } from '../lib/vendorOnboardingApi';
+import { vendorOnboarding, vendorOwnershipVerify, getStoredSessionId, setStoredSessionId, clearStoredSessionId, warmFunnelEdgeFunctions } from '../lib/vendorOnboardingApi';
+import { vendorClaim } from '../lib/vendorDashboardApi';
 import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
 // Carries the email/password the visitor picks at the contact step across
@@ -139,23 +140,70 @@ export default function FeatureMyProductOnboardingPage() {
     return () => window.clearInterval(timer);
   }, [step]);
 
-  // Skips the old "here's what happens next" checklist entirely — the one
-  // real remaining action is proving ownership of the product's website (a
-  // meta tag/DNS record/file only the vendor can add, never something we
-  // can automate away — see vendor-claim-account/index.ts's comment: "no
-  // way to claim a listing without... proved domain ownership"). So instead
-  // of a static page explaining that, land the visitor directly on the
-  // real next step. Once they finish it there, /vendor/claim auto-links
-  // their already-authenticated session (no separate signup form — see its
-  // own "already signed in" comment) and forwards straight into the
-  // dashboard.
+  // Pre-warm the edge functions the post-payment chain needs, using the
+  // time the vendor spends on Stripe's own checkout page (filling in card
+  // details, etc.) as free runway before they ever come back — see
+  // warmFunnelEdgeFunctions's own comment for why this matters here. Also
+  // prefetch the lazy-loaded page chunks (App.tsx) those same steps render
+  // — each is its own JS bundle fetch that would otherwise stack on top of
+  // the data-fetch delay right at the moment that matters most.
+  useEffect(() => {
+    if (step !== 'claim') return;
+    warmFunnelEdgeFunctions();
+    import('./FeatureMyProductVerifyPage').catch(() => {});
+    import('./VendorClaimPage').catch(() => {});
+    import('./VendorDashboardPage').catch(() => {});
+  }, [step]);
+
+  // Skips the old "here's what happens next" checklist AND, whenever
+  // possible, the separate verify/claim page hops too — every extra page
+  // load in this chain is a full navigation + its own edge-function round
+  // trip (each with its own possible cold-start), and this is the payment
+  // funnel, where "loading, loading, loading" directly costs sales. Proving
+  // ownership of the product's website (meta tag/DNS/file) is the one real
+  // remaining action that can't be automated away when it's actually
+  // required — see vendor-claim-account/index.ts's comment on why — but
+  // when the token already reads as verified (a real check already passed,
+  // or SKIP_OWNERSHIP_VERIFICATION is on), there's no reason to render two
+  // separate confirmation pages in between: this does the same
+  // verify-status-check + claim-link calls those pages would make, inline,
+  // in the background, and only falls back to the full page-based flow
+  // (still fully correct, still the only path when a real vendor genuinely
+  // needs to go add something to their site) if it isn't actually verified
+  // yet or something about the fast path fails.
   useEffect(() => {
     if (step !== 'success') return;
-    if (ownershipToken) {
-      navigate(`/list-your-product/verify/${ownershipToken}`, { replace: true });
-    } else {
+    if (!ownershipToken) {
       navigate('/vendor/dashboard', { replace: true });
+      return;
     }
+    let cancelled = false;
+    (async () => {
+      try {
+        const tokenRes = await vendorOwnershipVerify.get(ownershipToken);
+        if (cancelled) return;
+        if (tokenRes.ok && tokenRes.verified) {
+          const { data } = await supabase.auth.getSession();
+          const accessToken = data.session?.access_token;
+          if (accessToken) {
+            const claimRes = await vendorClaim.claim(ownershipToken, accessToken);
+            if (cancelled) return;
+            if (claimRes.ok) {
+              navigate('/vendor/dashboard?welcome=1', { replace: true });
+              return;
+            }
+          }
+        }
+      } catch {
+        // Fast path failed for any reason — fall through to the real,
+        // fully-featured verify page below rather than stranding the
+        // visitor on a blank screen.
+      }
+      if (!cancelled) navigate(`/list-your-product/verify/${ownershipToken}`, { replace: true });
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [step, ownershipToken, navigate]);
 
   // ── Resume / return-from-Stripe handling ──────────────────────────────

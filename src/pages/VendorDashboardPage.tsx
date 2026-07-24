@@ -89,27 +89,68 @@ export default function VendorDashboardPage() {
   // param is stripped immediately so a refresh doesn't show it again.
   const [showWelcome, setShowWelcome] = useState(false);
 
+  // Shared setter used by both effects below.
+  function applyDashboardData(res: {
+    tool: ToolRow; features: FeatureRow[]; pros: TextRow[]; cons: TextRow[]; faqs: FaqRow[]; reviews: ReviewRow[];
+    claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; analytics: AnalyticsData | null;
+    chatQuestions?: ChatQuestionRow[]; comparisonRequests?: ComparisonRequestRow[];
+  }) {
+    setTool(res.tool);
+    setFeatures(res.features);
+    setPros(res.pros);
+    setCons(res.cons);
+    setFaqs(res.faqs);
+    setReviews(res.reviews);
+    setClaimSubscription(res.claimSubscription);
+    setGrowthSubscription(res.growthSubscription);
+    setAnalytics(res.analytics);
+    setChatQuestions(res.chatQuestions || []);
+    setComparisonRequests(res.comparisonRequests || []);
+  }
+
+  // Fast path: fetchAll with no tool_id auto-resolves server-side for the
+  // overwhelmingly common single-tool account (requireVendorSession's own
+  // resolution — see _shared/vendorAuth.ts), landing the full dashboard in
+  // ONE round trip instead of listTools() -> fetchAll() as two sequential
+  // ones. This used to be the single biggest avoidable delay between
+  // payment and a vendor actually seeing their dashboard. Only the rare
+  // multi-tool account needs a second call — and even then, the tools list
+  // comes back on the SAME failed response (vendor-dashboard/index.ts's
+  // VendorMultipleToolsError branch), so there's still no separate
+  // listTools() round trip on the way to showing the picker.
   useEffect(() => {
     if (authLoading || !user) return;
-    vendorDashboard.listTools().then((res) => {
-      if (!res.ok || !res.tools) {
-        setLoadError(res.error || 'Failed to load your listings');
-        setLoading(false);
+    setLoading(true);
+    vendorDashboard.fetchAll().then((res) => {
+      if (res.ok) {
+        setSelectedToolId(res.tool.id);
+        applyDashboardData(res);
         setToolsLoaded(true);
+        setLoading(false);
         return;
       }
-      setMyTools(res.tools);
-      if (res.tools.length === 1) setSelectedToolId(res.tools[0].id);
+      if (res.error_code === 'multiple_tools' && res.tools) {
+        setMyTools(res.tools);
+        setToolsLoaded(true);
+        setLoading(false);
+        return;
+      }
+      setLoadError(res.error || 'Failed to load your dashboard');
       setToolsLoaded(true);
-    }).catch(() => {
-      setLoadError('Failed to load your listings');
       setLoading(false);
+    }).catch(() => {
+      setLoadError('Failed to load your dashboard');
       setToolsLoaded(true);
+      setLoading(false);
     });
   }, [authLoading, user]);
 
+  // Only fires when a multi-tool vendor picks a different listing from the
+  // switcher — the initial single-tool load is already fully handled by
+  // the fast path above, so this guards against re-fetching the same tool
+  // it just loaded.
   useEffect(() => {
-    if (!toolsLoaded || !selectedToolId) return;
+    if (!toolsLoaded || !selectedToolId || tool?.id === selectedToolId) return;
     setLoading(true);
     vendorDashboard.fetchAll(selectedToolId).then((res) => {
       if (!res.ok) {
@@ -117,17 +158,7 @@ export default function VendorDashboardPage() {
         setLoading(false);
         return;
       }
-      setTool(res.tool);
-      setFeatures(res.features);
-      setPros(res.pros);
-      setCons(res.cons);
-      setFaqs(res.faqs);
-      setReviews(res.reviews);
-      setClaimSubscription(res.claimSubscription);
-      setGrowthSubscription(res.growthSubscription);
-      setAnalytics(res.analytics);
-      setChatQuestions(res.chatQuestions || []);
-      setComparisonRequests(res.comparisonRequests || []);
+      applyDashboardData(res);
       setLoading(false);
     }).catch(() => {
       setLoadError('Failed to load your dashboard');

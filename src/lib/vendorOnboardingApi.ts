@@ -15,6 +15,30 @@ export function clearStoredSessionId(): void {
   try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch { /* ignore */ }
 }
 
+// Fire-and-forget pre-warm for the edge functions the post-payment ->
+// dashboard chain needs (vendor-ownership-verify, vendor-claim-account,
+// vendor-dashboard — plus stripe-webhook itself, since it's the same
+// underlying Deno isolate regardless of who invokes it first, and Stripe is
+// about to call it moments later). None of these are called yet at this
+// point in the flow, so left alone they'd each pay a cold-start penalty
+// stacked back to back right when the visitor returns from Stripe, which is
+// exactly the "loading, loading, loading" complaint this exists to prevent.
+// Called once the vendor reaches the $29 checkout step, since the time they
+// then spend on Stripe's hosted checkout page (filling in card details,
+// 2FA, etc.) is otherwise completely free warm-up runway. A plain OPTIONS
+// request is enough to spin up the Deno isolate — every one of these
+// functions already handles it as a CORS preflight, so this never touches
+// real data and can't fail loudly (best-effort, errors are swallowed).
+export function warmFunnelEdgeFunctions(): void {
+  for (const name of ["vendor-ownership-verify", "vendor-claim-account", "vendor-dashboard", "stripe-webhook"]) {
+    try {
+      fetch(`${SUPABASE_URL}/functions/v1/${name}`, { method: "OPTIONS" }).catch(() => {});
+    } catch {
+      // ignore
+    }
+  }
+}
+
 // Mirrors ContactPage.tsx's getUTMParams — first-party attribution only,
 // never sent to a third-party analytics vendor.
 export function getUtmContext(): { utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; referrer: string | null; landing_page: string | null } {

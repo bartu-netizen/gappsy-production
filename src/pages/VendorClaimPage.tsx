@@ -78,7 +78,7 @@ export default function VendorClaimPage() {
   // continuous step instead of a screen requiring its own click.
   useEffect(() => {
     if (step !== 'done') return;
-    const timer = window.setTimeout(() => navigate('/vendor/dashboard?welcome=1', { replace: true }), 1200);
+    const timer = window.setTimeout(() => navigate('/vendor/dashboard?welcome=1', { replace: true }), 500);
     return () => window.clearTimeout(timer);
   }, [step, navigate]);
 

@@ -47,7 +47,7 @@ export default function FeatureMyProductVerifyPage() {
   // dashboard chain click-free end to end instead of stopping here.
   useEffect(() => {
     if (checkResult !== 'success' || !token) return;
-    const timer = window.setTimeout(() => navigate(`/vendor/claim?token=${encodeURIComponent(token)}`, { replace: true }), 1200);
+    const timer = window.setTimeout(() => navigate(`/vendor/claim?token=${encodeURIComponent(token)}`, { replace: true }), 500);
     return () => window.clearTimeout(timer);
   }, [checkResult, token, navigate]);
 
