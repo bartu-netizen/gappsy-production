@@ -5,11 +5,20 @@ import { getVisitorId } from '../../utils/funnelTracking';
 
 const SESSION_STORAGE_KEY = 'smart_search_session_id';
 
+// Real tool names lead — a visitor arriving from a cold-outreach email
+// ("is your tool listed?") needs to instantly recognize "oh, I can just
+// type my own product's name here", not read a sentence-style example
+// first and have to infer that. The descriptive queries after them are for
+// visitors actually browsing/discovering, a secondary use case for this
+// same box.
 const DEFAULT_EXAMPLE_QUERIES = [
+  'Canva',
+  'Adobe',
+  'Notion',
+  'Figma',
   'A free tool to design social posts',
   'CRM with a free trial',
   'Marketing agency in New Jersey',
-  'Canva',
 ];
 
 interface Exchange {
