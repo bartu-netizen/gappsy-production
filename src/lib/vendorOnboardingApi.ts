@@ -15,6 +15,39 @@ export function clearStoredSessionId(): void {
   try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch { /* ignore */ }
 }
 
+// Fire-and-forget pre-warm — a plain OPTIONS request is enough to spin up
+// the Deno isolate (every function in this funnel already handles it as a
+// CORS preflight), so this never touches real data and can't fail loudly.
+// Pre-warming only actually helps when the gap before real use is shorter
+// than the platform's own idle-timeout window, which is why this is called
+// from several different, deliberately-chosen points in the funnel below
+// rather than once at the very start — a warm-up fired too early just
+// expires before it's needed.
+function warmEdgeFunctions(names: string[]): void {
+  for (const name of names) {
+    try {
+      fetch(`${SUPABASE_URL}/functions/v1/${name}`, { method: "OPTIONS" }).catch(() => {});
+    } catch {
+      // ignore
+    }
+  }
+}
+
+// vendor-onboarding is the very first edge function this funnel ever calls
+// (normalizeAndMatch, the instant a URL is submitted) — cold on essentially
+// every fresh visit. Two call sites cover the two real shapes visitors
+// arrive in: FeatureMyProductProofPage (the "Why list on Gappsy" step,
+// whose own Continue button auto-submits the URL the SAME instant the
+// onboarding page mounts — the proof page's own dwell time is the only
+// buffer that exists for that path) and FeatureMyProductOnboardingPage
+// itself (covers every other entry point — ToolCard's "Claim this
+// listing", the dashboard's Growth upsell links, FeatureGrowthPage, etc. —
+// all of which land straight on the URL step and give real click-to-submit
+// buffer time regardless).
+export function warmVendorOnboarding(): void {
+  warmEdgeFunctions(["vendor-onboarding"]);
+}
+
 // Fire-and-forget pre-warm for the edge functions the post-payment ->
 // dashboard chain needs (vendor-ownership-verify, vendor-claim-account,
 // vendor-dashboard — plus stripe-webhook itself, since it's the same
@@ -25,18 +58,9 @@ export function clearStoredSessionId(): void {
 // exactly the "loading, loading, loading" complaint this exists to prevent.
 // Called once the vendor reaches the $29 checkout step, since the time they
 // then spend on Stripe's hosted checkout page (filling in card details,
-// 2FA, etc.) is otherwise completely free warm-up runway. A plain OPTIONS
-// request is enough to spin up the Deno isolate — every one of these
-// functions already handles it as a CORS preflight, so this never touches
-// real data and can't fail loudly (best-effort, errors are swallowed).
+// 2FA, etc.) is otherwise completely free warm-up runway.
 export function warmFunnelEdgeFunctions(): void {
-  for (const name of ["vendor-ownership-verify", "vendor-claim-account", "vendor-dashboard", "stripe-webhook"]) {
-    try {
-      fetch(`${SUPABASE_URL}/functions/v1/${name}`, { method: "OPTIONS" }).catch(() => {});
-    } catch {
-      // ignore
-    }
-  }
+  warmEdgeFunctions(["vendor-ownership-verify", "vendor-claim-account", "vendor-dashboard", "stripe-webhook"]);
 }
 
 // Mirrors ContactPage.tsx's getUTMParams — first-party attribution only,

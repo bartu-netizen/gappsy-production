@@ -5,7 +5,7 @@ import EntitySEOTags from '../components/EntitySEOTags';
 import OnboardingShell from '../components/featureMyProduct/onboarding/OnboardingShell';
 import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { supabase } from '../lib/supabase';
-import { vendorOnboarding, vendorOwnershipVerify, getStoredSessionId, setStoredSessionId, clearStoredSessionId, warmFunnelEdgeFunctions } from '../lib/vendorOnboardingApi';
+import { vendorOnboarding, vendorOwnershipVerify, getStoredSessionId, setStoredSessionId, clearStoredSessionId, warmFunnelEdgeFunctions, warmVendorOnboarding } from '../lib/vendorOnboardingApi';
 import { vendorClaim } from '../lib/vendorDashboardApi';
 import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
@@ -128,6 +128,16 @@ export default function FeatureMyProductOnboardingPage() {
   const [cancelledNotice, setCancelledNotice] = useState(false);
   const [finalizingStage, setFinalizingStage] = useState(0);
   const pollRef = useRef<number | null>(null);
+
+  // vendor-onboarding is the very first edge function this whole funnel
+  // calls (normalizeAndMatch, fired on URL submit) — covers every entry
+  // point that lands straight here (ToolCard's "Claim this listing", the
+  // dashboard's Growth upsell links, etc.) rather than through the proof
+  // page's own warm-up. Fires once on mount, well before the user finishes
+  // typing/confirming a URL in the common case.
+  useEffect(() => {
+    warmVendorOnboarding();
+  }, []);
 
   useEffect(() => {
     if (step !== 'finalizing') {

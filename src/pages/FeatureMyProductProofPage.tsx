@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Rocket, Smartphone, Users, ThumbsUp } from 'lucide-react';
 import EntitySEOTags from '../components/EntitySEOTags';
+import { warmVendorOnboarding } from '../lib/vendorOnboardingApi';
 
 const WHY_POINTS = [
   { icon: Rocket, text: 'Gappsy launched in 2019' },
@@ -68,6 +70,14 @@ export default function FeatureMyProductProofPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const url = searchParams.get('url');
+
+  // The Continue button below auto-submits this URL the instant the
+  // onboarding page mounts (autostart=1) — this page's own read-it dwell
+  // time is the only real buffer that exists before that first API call,
+  // so warm vendor-onboarding here rather than leaving it cold for that path.
+  useEffect(() => {
+    warmVendorOnboarding();
+  }, []);
 
   function handleContinue() {
     if (url) {
