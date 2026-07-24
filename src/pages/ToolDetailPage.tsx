@@ -654,6 +654,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
               <ToolFactsSidebar
                 slug={tool.slug}
                 name={tool.name}
+                logo={safeLogo}
                 rating={tool.rating}
                 reviewCount={tool.review_count}
                 pricingModel={tool.pricing_model}

@@ -1,12 +1,14 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.57.4";
-import { findFeaturedAlternative } from "../_shared/toolFitCheck.ts";
+import { findFeaturedAlternatives } from "../_shared/toolFitCheck.ts";
 
 // Deterministic sibling of ask-gappsy's tool_fit_check chat mode — the
-// widget's recommendation card (name, logo, rating, "Featured" badge) is
+// widget's "similar tools" rail (name, logo, rating, "Featured" badge) is
 // rendered from THIS structured response, never parsed out of the AI's
-// prose reply. Keeps the actual "which alternative, if any" decision fully
+// prose reply. Keeps the actual "which alternatives, if any" decision fully
 // deterministic and testable, independent of anything the model says.
+
+const MAX_ALTERNATIVES = 4;
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -46,10 +48,10 @@ Deno.serve(async (req: Request) => {
     // (!tool.featured && !tool.claim_paid_at) — Featured listings are
     // treated as effectively claimed even before claim_paid_at is actually
     // set (e.g. the site's own flagship showcase listings).
-    if (tool.claim_paid_at || tool.featured) return jsonResponse({ ok: true, recommended: null });
+    if (tool.claim_paid_at || tool.featured) return jsonResponse({ ok: true, alternatives: [] });
 
-    const recommended = await findFeaturedAlternative(supabase, tool);
-    return jsonResponse({ ok: true, recommended });
+    const alternatives = await findFeaturedAlternatives(supabase, tool, MAX_ALTERNATIVES);
+    return jsonResponse({ ok: true, alternatives });
   } catch (error) {
     console.error("[tool-fit-check] error:", error);
     return jsonResponse({ ok: false, error: "Something went wrong." }, 500);

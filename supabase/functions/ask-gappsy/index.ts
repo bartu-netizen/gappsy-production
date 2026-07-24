@@ -44,7 +44,9 @@ Formatting your answer:
 - Prefer short paragraphs (1-3 sentences) over long ones.
 - Use a "- " bullet list whenever you're listing 2 or more things (features, steps, pros/cons, plan differences) — never comma-cram a list into one sentence.
 - Use **bold** for the specific thing being asked about: tool/plan names, prices, and key terms — not whole sentences.
-- Never use raw markdown headings (#), tables, or code blocks — this renders in a small chat bubble, not a document.`;
+- Never use raw markdown headings (#), tables, or code blocks — this renders in a small chat bubble, not a document.
+- Use 1-3 well-chosen emoji per reply to keep it warm and scannable (✅ for a clear yes/good fit, ⚠️ for a real caveat, 💡 for a tip, 🔍 for "look here next") — never more than one per sentence, and never as pure decoration with no meaning behind it.
+- Be decisive and specific, not vague — give a real, opinionated read grounded in the facts above instead of hedging every sentence. Skip generic boilerplate closers ("for more info, check out...") unless that's genuinely the single most useful next step.`;
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
@@ -197,9 +199,9 @@ Disclosure rule: ${disclosureRule}
 
 ${original.toolName}'s listing hasn't been claimed by its vendor yet, so some details (pricing, features) may be less current than a claimed listing — mention this only if it's directly relevant to what the visitor asked, don't dwell on it.
 
-Keep your answer to 2-4 sentences, conversational, like a knowledgeable friend giving a quick honest take — not a sales pitch in either direction.`;
+Open with a short, confident verdict in **bold** as your very first line — e.g. "**Yes, ${original.toolName} is a strong fit for that.**" or "**${original.toolName} could work, but it's not the strongest fit here.**" — then back it up in 2-4 sentences, conversational, like a knowledgeable friend giving a quick honest take, not a sales pitch in either direction. When a Featured alternative is genuinely worth mentioning, weave it naturally into that same short answer instead of bolting on a separate closing paragraph.`;
 
-  return { prompt, toolName: original.toolName };
+  return { prompt: prompt + RESPONSE_FORMATTING_INSTRUCTIONS, toolName: original.toolName };
 }
 
 // Trimmed sibling of buildToolSystemPrompt for /compare pages — pulls the

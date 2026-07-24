@@ -16,6 +16,7 @@ import type { TaxonomyRef } from './types';
 interface ToolFactsSidebarProps {
   slug: string;
   name: string;
+  logo: string | null;
   rating: number;
   reviewCount: number;
   pricingModel: string | null;
@@ -90,6 +91,7 @@ function hostnameOf(url: string): string {
 export default function ToolFactsSidebar({
   slug,
   name,
+  logo,
   rating,
   reviewCount,
   pricingModel,
@@ -213,7 +215,7 @@ export default function ToolFactsSidebar({
         )}
 
         {fitCheckOpen && websiteUrl && (
-          <ToolFitCheckWidget toolSlug={slug} toolName={name} websiteUrl={websiteUrl} onClose={() => setFitCheckOpen(false)} />
+          <ToolFitCheckWidget toolSlug={slug} toolName={name} toolLogo={logo} websiteUrl={websiteUrl} onClose={() => setFitCheckOpen(false)} />
         )}
 
         {children}

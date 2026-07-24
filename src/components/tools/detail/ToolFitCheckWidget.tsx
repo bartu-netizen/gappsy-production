@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Star, ArrowRight, ArrowLeft } from 'lucide-react';
 import AskGappsyChat from '../../askGappsy/AskGappsyChat';
+import { FeaturedBadge } from './FeaturedToolPromo';
 import { buildOutboundUrl } from '../../../utils/outboundLink';
 import { trackToolOutboundClick } from '../../../lib/trackToolEvent';
 
@@ -17,11 +18,13 @@ interface FitCheckAlternative {
   short_description: string | null;
   rating: number;
   review_count: number;
+  billing_interval: string | null;
 }
 
 interface ToolFitCheckWidgetProps {
   toolSlug: string;
   toolName: string;
+  toolLogo: string | null;
   websiteUrl: string;
   onClose: () => void;
 }
@@ -33,18 +36,72 @@ const QUICK_QUESTIONS = [
   "Not sure yet — show me options",
 ];
 
+function AlternativeCard({ tool, onNavigate, compact = false }: { tool: FitCheckAlternative; onNavigate: () => void; compact?: boolean }) {
+  return (
+    <Link
+      to={`/tools/${tool.slug}`}
+      onClick={onNavigate}
+      className={`group block rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-[0_4px_16px_rgba(10,23,53,0.06)] transition-all p-3.5 ${compact ? 'w-[240px] shrink-0' : ''}`}
+    >
+      <div className="flex items-center gap-2.5">
+        {tool.logo ? (
+          <img src={tool.logo} alt="" className="w-10 h-10 rounded-xl object-contain border border-slate-100 bg-white shrink-0" />
+        ) : (
+          <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 font-semibold shrink-0">
+            {tool.name.charAt(0)}
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <FeaturedBadge paid={Boolean(tool.billing_interval)} />
+          <p className="font-semibold text-[#0B1221] text-[13.5px] leading-tight truncate mt-1">{tool.name}</p>
+        </div>
+      </div>
+      {tool.short_description && (
+        <p className="text-[12px] text-slate-500 leading-relaxed mt-2.5 line-clamp-2">{tool.short_description}</p>
+      )}
+      <div className="flex items-center justify-between mt-2.5">
+        {tool.rating > 0 ? (
+          <span className="flex items-center gap-1 text-[11.5px] text-slate-500">
+            <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+            {tool.rating.toFixed(1)}
+            <span className="text-slate-400">({tool.review_count})</span>
+          </span>
+        ) : <span />}
+        <span className="flex items-center gap-1 text-[11.5px] font-semibold text-[#4F47E6] group-hover:text-[#4338CA]">
+          View
+          <ArrowRight className="w-3 h-3" />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function AlternativeCardSkeleton({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={`rounded-2xl border border-slate-100 bg-slate-50/60 p-3.5 animate-pulse ${compact ? 'w-[240px] shrink-0' : ''}`}>
+      <div className="flex items-center gap-2.5">
+        <div className="w-10 h-10 rounded-xl bg-slate-200 shrink-0" />
+        <div className="min-w-0 flex-1 space-y-1.5">
+          <div className="h-3 w-14 rounded bg-slate-200" />
+          <div className="h-3 w-24 rounded bg-slate-200" />
+        </div>
+      </div>
+      <div className="h-2.5 w-full rounded bg-slate-200 mt-3" />
+      <div className="h-2.5 w-2/3 rounded bg-slate-200 mt-1.5" />
+    </div>
+  );
+}
+
 // Replaces the direct "Visit Website" CTA on UNCLAIMED tool pages only —
-// claimed listings keep the plain direct link. Takes over the full viewport
-// (edge-to-edge, no card/backdrop) in the same visual language as the Ask
-// Gappsy chat, asks one quick multiple-choice question, and always keeps a
-// direct path to the tool the visitor actually came to see. If a genuinely
-// relevant Featured (paying) alternative exists in the same category — via
-// a real tag-overlap relevance gate server-side, not just "same category" —
-// it's shown alongside, clearly labeled "Featured", never in place of the
-// original.
-export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onClose }: ToolFitCheckWidgetProps) {
-  const [recommended, setRecommended] = useState<FitCheckAlternative | null>(null);
-  const [loadingRecommendation, setLoadingRecommendation] = useState(true);
+// claimed listings keep the plain direct link. Full-viewport editorial
+// takeover (edge-to-edge, no card/backdrop): a large centered headline +
+// chat on the left, a "similar tools" rail of genuinely relevant Featured
+// listings on the right (desktop) / a horizontal strip (mobile) — never in
+// place of the original tool, always alongside it, with a direct path to
+// the original always one tap away via the header's "Visit anyway" link.
+export default function ToolFitCheckWidget({ toolSlug, toolName, toolLogo, websiteUrl, onClose }: ToolFitCheckWidgetProps) {
+  const [alternatives, setAlternatives] = useState<FitCheckAlternative[]>([]);
+  const [loadingAlternatives, setLoadingAlternatives] = useState(true);
   // hasAsked drives what the single top-left back arrow does; resetKey
   // remounts AskGappsyChat (clearing its internal messages/error/streaming
   // state) so stepping "back" from a result is a real reset, not just a
@@ -75,11 +132,11 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
           body: JSON.stringify({ tool_slug: toolSlug }),
         });
         const data = await res.json().catch(() => null);
-        if (!cancelled) setRecommended(data?.ok ? data.recommended || null : null);
+        if (!cancelled) setAlternatives(data?.ok ? data.alternatives || [] : []);
       } catch {
-        if (!cancelled) setRecommended(null);
+        if (!cancelled) setAlternatives([]);
       } finally {
-        if (!cancelled) setLoadingRecommendation(false);
+        if (!cancelled) setLoadingAlternatives(false);
       }
     })();
     return () => {
@@ -101,9 +158,12 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
     trackToolOutboundClick(toolSlug, 'fit_check_continue', outboundOriginal);
   }
 
-  function handleTryAlternative() {
-    if (recommended) trackToolOutboundClick(toolSlug, 'fit_check_alternative', `/tools/${recommended.slug}`);
+  function handleTryAlternative(slug: string) {
+    trackToolOutboundClick(toolSlug, 'fit_check_alternative', `/tools/${slug}`);
   }
+
+  const hasAlternatives = !loadingAlternatives && alternatives.length > 0;
+  const showAlternativesRail = loadingAlternatives || hasAlternatives;
 
   // Portaled to document.body: several ancestors between here and the page
   // root use backdrop-blur/transform (see GlobalSearch.tsx for the same
@@ -114,7 +174,7 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
   // without this, the header intercepted clicks on the back button.
   return createPortal(
     <div className="fixed inset-0 z-50 bg-white flex flex-col fit-check-fullpage-in">
-      <div className="flex items-center gap-3 h-14 px-4 sm:px-6 border-b border-slate-100 shrink-0">
+      <div className="flex items-center justify-between gap-3 h-14 px-4 sm:px-6 border-b border-slate-100 shrink-0">
         <button
           type="button"
           onClick={handleBackArrow}
@@ -123,69 +183,72 @@ export default function ToolFitCheckWidget({ toolSlug, toolName, websiteUrl, onC
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <span className="font-semibold text-[13.5px] text-slate-500 truncate">{toolName}</span>
+        <a
+          href={outboundOriginal}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          onClick={handleContinueAnyway}
+          className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-slate-500 hover:text-[#0B1221] transition-colors shrink-0"
+        >
+          Visit {toolName} anyway
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
       </div>
-      <div className="flex-1 flex flex-col min-h-0 w-full">
-        <AskGappsyChat
-          key={resetKey}
-          toolSlug={toolSlug}
-          page="tool_fit_check"
-          title={`Is ${toolName} right for you?`}
-          subtitle="Quick fit check — grounded in real listing data"
-          suggestedQuestions={QUICK_QUESTIONS}
-          placeholder={`Ask anything else about fitting ${toolName}...`}
-          threadMaxHeightClass="max-h-none"
-          onConversationStart={() => setHasAsked(true)}
-          footerSlot={
-                <div className="px-4 sm:px-5 py-3.5 border-t border-slate-100 space-y-2.5">
-                  {!loadingRecommendation && recommended && (
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-3">
-                      <div className="flex items-center gap-1.5 mb-1.5">
-                        <span className="inline-flex items-center text-[10px] font-semibold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
-                          Featured
-                        </span>
-                        <span className="text-[11.5px] text-slate-500">Also worth a look in this category</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        {recommended.logo ? (
-                          <img src={recommended.logo} alt="" className="w-8 h-8 rounded-lg object-contain bg-white border border-slate-100 shrink-0" />
-                        ) : (
-                          <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 shrink-0" />
-                        )}
-                        <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-[#0B1221] text-[13.5px] truncate">{recommended.name}</p>
-                          {recommended.rating > 0 && (
-                            <p className="flex items-center gap-0.5 text-[11px] text-slate-500">
-                              <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                              {recommended.rating.toFixed(1)} ({recommended.review_count})
-                            </p>
-                          )}
-                        </div>
-                        <Link
-                          to={`/tools/${recommended.slug}`}
-                          onClick={handleTryAlternative}
-                          className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-[#4F47E6] hover:text-[#4338CA] shrink-0"
-                        >
-                          View
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  )}
 
-                  <a
-                    href={outboundOriginal}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    onClick={handleContinueAnyway}
-                    className="flex items-center justify-center gap-1.5 w-full bg-slate-50 hover:bg-slate-100 text-[#0B1221] px-4 py-2.5 rounded-xl font-semibold transition-colors text-[13px]"
-                  >
-                    Continue to {toolName} anyway
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              }
+      <div className="flex-1 min-h-0 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
+        <div className="flex-1 min-w-0 flex flex-col lg:min-h-0">
+          <div className="px-5 sm:px-8 pt-8 pb-5 sm:pt-10 sm:pb-6 text-center max-w-xl mx-auto w-full shrink-0">
+            {toolLogo && (
+              <img src={toolLogo} alt="" className="w-12 h-12 rounded-2xl object-contain border border-slate-100 bg-white shadow-sm mx-auto mb-4" />
+            )}
+            <h1 className="text-[22px] sm:text-[26px] font-bold text-[#0B1221] tracking-tight leading-tight">
+              Is {toolName} right for you?
+            </h1>
+            <p className="text-[13.5px] text-slate-500 mt-2">Quick fit check — grounded in real listing data</p>
+          </div>
+
+          {showAlternativesRail && (
+            <div className="lg:hidden px-5 sm:px-8 pb-5 shrink-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400 mb-2.5">Similar tools worth a look</p>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 sm:-mx-8 sm:px-8">
+                {loadingAlternatives
+                  ? Array.from({ length: 2 }).map((_, i) => <AlternativeCardSkeleton key={i} compact />)
+                  : alternatives.map((alt) => (
+                      <AlternativeCard key={alt.id} tool={alt} compact onNavigate={() => handleTryAlternative(alt.slug)} />
+                    ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex-1 min-h-0 max-w-xl mx-auto w-full flex flex-col border-t border-slate-100 lg:border-t-0">
+            <AskGappsyChat
+              key={resetKey}
+              toolSlug={toolSlug}
+              page="tool_fit_check"
+              hideHeader
+              suggestedQuestions={QUICK_QUESTIONS}
+              placeholder={`Ask anything else about fitting ${toolName}...`}
+              threadMaxHeightClass="max-h-none"
+              onConversationStart={() => setHasAsked(true)}
             />
+          </div>
+        </div>
+
+        {showAlternativesRail && (
+          <div className="hidden lg:flex lg:flex-col w-[340px] shrink-0 border-l border-slate-100 lg:h-full lg:overflow-y-auto">
+            <div className="px-5 py-6 space-y-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Similar tools worth a look</p>
+                <p className="text-[12px] text-slate-400 mt-0.5">Featured listings matched by category and tags</p>
+              </div>
+              {loadingAlternatives
+                ? Array.from({ length: 3 }).map((_, i) => <AlternativeCardSkeleton key={i} />)
+                : alternatives.map((alt) => (
+                    <AlternativeCard key={alt.id} tool={alt} onNavigate={() => handleTryAlternative(alt.slug)} />
+                  ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>,
     document.body
