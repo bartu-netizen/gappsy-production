@@ -21,10 +21,10 @@ const MAX_PER_PAGE = 100;
 // admin-visitor-journey — never used for billing, just so the Sales view can
 // show an approximate amount without a live Stripe lookup per row.
 const CLAIM_AMOUNT_CENTS = 2900;
-const GROWTH_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
+const FEATURED_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
 function estimateAmountCents(product: string | null, billingInterval: string | null): number | null {
   if (product === "claim") return CLAIM_AMOUNT_CENTS;
-  if (product === "growth" && billingInterval) return GROWTH_AMOUNT_CENTS[billingInterval] ?? null;
+  if (product === "featured" && billingInterval) return FEATURED_AMOUNT_CENTS[billingInterval] ?? null;
   return null;
 }
 

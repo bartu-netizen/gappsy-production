@@ -7,7 +7,7 @@ import AskGappsyBubble from '../components/askGappsy/AskGappsyBubble';
 import { supabase } from '../lib/supabase';
 import { vendorOnboarding, vendorOwnershipVerify, getStoredSessionId, setStoredSessionId, clearStoredSessionId, warmFunnelEdgeFunctions, warmVendorOnboarding } from '../lib/vendorOnboardingApi';
 import { vendorClaim } from '../lib/vendorDashboardApi';
-import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
+import { FEATURED_MONTHLY_FEATURES, FEATURED_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
 // Carries the email/password the visitor picks at the contact step across
 // the full-page redirect to Stripe Checkout and back — sessionStorage
@@ -33,7 +33,7 @@ async function createPendingAccountIfNeeded() {
 
 type WizardStep =
   | 'url' | 'matching' | 'match_existing' | 'already_featured' | 'new_product'
-  | 'contact' | 'claim' | 'growth_upsell' | 'redirecting' | 'finalizing' | 'success' | 'error';
+  | 'contact' | 'claim' | 'featured_upsell' | 'redirecting' | 'finalizing' | 'success' | 'error';
 
 // Rotates on the "Finalizing…" screen while pollForCompletion waits on
 // Stripe's webhook — real end-to-end time is usually 10-20s and occasionally
@@ -50,7 +50,7 @@ const STEP_INDEX: Record<string, number> = {
   match_existing: 2, already_featured: 2, new_product: 2,
   contact: 3,
   claim: 4,
-  growth_upsell: 5,
+  featured_upsell: 5,
 };
 
 interface ToolSummary { id: string; name: string; slug: string; logo: string | null; short_description: string | null; category: string | null }
@@ -122,7 +122,7 @@ export default function FeatureMyProductOnboardingPage() {
   // (Monthly / Yearly) instead of one shared toggle, so each has its own
   // loading state instead of a single global one.
   const [checkingOutInterval, setCheckingOutInterval] = useState<'month' | 'year' | null>(null);
-  const [purchasedGrowth, setPurchasedGrowth] = useState(false);
+  const [purchasedFeatured, setPurchasedFeatured] = useState(false);
 
   const [ownershipToken, setOwnershipToken] = useState<string | null>(null);
   const [cancelledNotice, setCancelledNotice] = useState(false);
@@ -132,7 +132,7 @@ export default function FeatureMyProductOnboardingPage() {
   // vendor-onboarding is the very first edge function this whole funnel
   // calls (normalizeAndMatch, fired on URL submit) — covers every entry
   // point that lands straight here (ToolCard's "Claim this listing", the
-  // dashboard's Growth upsell links, etc.) rather than through the proof
+  // dashboard's Featured upsell links, etc.) rather than through the proof
   // page's own warm-up. Fires once on mount, well before the user finishes
   // typing/confirming a URL in the common case.
   useEffect(() => {
@@ -226,10 +226,10 @@ export default function FeatureMyProductOnboardingPage() {
     if (stepParam === 'success' && (sidParam || stripeSid)) {
       setSessionId(sidParam);
       setStep('finalizing');
-      pollForCompletion(sidParam, stripeSid, next === 'growth_upsell' ? 'growth_upsell' : 'success');
+      pollForCompletion(sidParam, stripeSid, next === 'featured_upsell' ? 'featured_upsell' : 'success');
       return;
     }
-    if ((stepParam === 'claim' || stepParam === 'growth_upsell') && sidParam) {
+    if ((stepParam === 'claim' || stepParam === 'featured_upsell') && sidParam) {
       setSessionId(sidParam);
       setCancelledNotice(searchParams.get('checkout') === 'cancelled');
       setStep(stepParam);
@@ -253,16 +253,16 @@ export default function FeatureMyProductOnboardingPage() {
     if (stored) {
       vendorOnboarding.sessionStatus({ sessionId: stored }).then((res) => {
         if (!res.ok) { clearStoredSessionId(); return; }
-        if (res.claim_status === 'active' && res.growth_status !== 'active') {
-          // Claimed before but never added Growth — send them straight to
+        if (res.claim_status === 'active' && res.featured_status !== 'active') {
+          // Claimed before but never added Featured — send them straight to
           // the upsell instead of the static success screen.
           setSessionId(stored);
           setOwnershipToken(res.ownership_token || null);
-          setStep('growth_upsell');
+          setStep('featured_upsell');
         } else if (res.session_status === 'checkout_completed' || res.session_status === 'verified') {
           setSessionId(stored);
           setOwnershipToken(res.ownership_token || null);
-          setPurchasedGrowth(res.growth_status === 'active');
+          setPurchasedFeatured(res.featured_status === 'active');
           setStep('success');
         } else {
           clearStoredSessionId();
@@ -274,7 +274,7 @@ export default function FeatureMyProductOnboardingPage() {
 
   useEffect(() => () => { if (pollRef.current) window.clearInterval(pollRef.current); }, []);
 
-  function pollForCompletion(sid: string | null, stripeSid: string | null, onDone: 'growth_upsell' | 'success') {
+  function pollForCompletion(sid: string | null, stripeSid: string | null, onDone: 'featured_upsell' | 'success') {
     let attempts = 0;
     // Real bottleneck here is Stripe's own webhook delivery latency (our
     // handler writes the row this checks BEFORE its slower email/Smartlead
@@ -291,14 +291,14 @@ export default function FeatureMyProductOnboardingPage() {
       if (isDone || attempts >= 20) {
         if (pollRef.current) window.clearInterval(pollRef.current);
         setOwnershipToken(res.ownership_token || null);
-        if (onDone === 'growth_upsell') {
+        if (onDone === 'featured_upsell') {
           // The one-time $29 payment just completed — this is "after
-          // payment" for both the skip-Growth and buy-Growth paths, since
+          // payment" for both the skip-Featured and buy-Featured paths, since
           // both land here first.
           if (isDone) await createPendingAccountIfNeeded();
-          setStep('growth_upsell');
+          setStep('featured_upsell');
         } else {
-          setPurchasedGrowth(res.growth_status === 'active');
+          setPurchasedFeatured(res.featured_status === 'active');
           setStep('success');
           clearStoredSessionId();
         }
@@ -397,8 +397,8 @@ export default function FeatureMyProductOnboardingPage() {
     // createPendingAccountIfNeeded) — never sent to our own backend.
     try { sessionStorage.setItem(PENDING_ACCOUNT_KEY, JSON.stringify({ email: trimmedEmail, password })); } catch { /* ignore */ }
     // Already claimed in an earlier visit (paid the one-time fee, never
-    // added Growth) — skip straight to the upsell instead of charging again.
-    setStep(alreadyClaimed ? 'growth_upsell' : 'claim');
+    // added Featured) — skip straight to the upsell instead of charging again.
+    setStep(alreadyClaimed ? 'featured_upsell' : 'claim');
   }
 
   // ── Step 4: claim -> one-time checkout ──────────────────────────────────
@@ -416,23 +416,23 @@ export default function FeatureMyProductOnboardingPage() {
     window.location.href = res.checkout_url;
   }
 
-  // ── Step 5: growth upsell -> recurring checkout (or skip) ───────────────
-  async function handleGrowthCheckout(interval: 'month' | 'year') {
+  // ── Step 5: featured upsell -> recurring checkout (or skip) ─────────────
+  async function handleFeaturedCheckout(interval: 'month' | 'year') {
     if (!sessionId || checkingOutInterval) return;
     setCheckingOutInterval(interval);
     setErrorMessage(null);
-    const res = await vendorOnboarding.createCheckout(sessionId, 'growth', interval);
+    const res = await vendorOnboarding.createCheckout(sessionId, 'featured', interval);
     if (!res.ok) {
       setCheckingOutInterval(null);
-      setErrorMessage(res.error_code === 'already_subscribed' ? 'This product already has an active Growth subscription.' : (res.error || 'Could not start checkout. Please try again.'));
+      setErrorMessage(res.error_code === 'already_subscribed' ? 'This product already has an active Featured subscription.' : (res.error || 'Could not start checkout. Please try again.'));
       return;
     }
     setStep('redirecting');
     window.location.href = res.checkout_url;
   }
 
-  function handleSkipGrowth() {
-    setPurchasedGrowth(false);
+  function handleSkipFeatured() {
+    setPurchasedFeatured(false);
     setStep('success');
     clearStoredSessionId();
   }
@@ -444,14 +444,14 @@ export default function FeatureMyProductOnboardingPage() {
     else if (step === 'claim') setStep('contact');
   }
 
-  const stepIndex = STEP_INDEX[step] ?? (step === 'redirecting' ? (purchasedGrowth ? 5 : 4) : 0);
+  const stepIndex = STEP_INDEX[step] ?? (step === 'redirecting' ? (purchasedFeatured ? 5 : 4) : 0);
   const showBack = ['match_existing', 'already_featured', 'new_product', 'contact', 'claim'].includes(step);
 
   return (
     <>
       <EntitySEOTags
         title="List Your Product on Gappsy — Get Started"
-        description="List your product on Gappsy for a one-time fee, then optionally upgrade to Growth for featured placement, video reviews, and more."
+        description="List your product on Gappsy for a one-time fee, then optionally upgrade to Featured for priority placement, video reviews, and more."
         path="/list-your-product/onboarding"
         noindex
       />
@@ -508,7 +508,7 @@ export default function FeatureMyProductOnboardingPage() {
         {step === 'already_featured' && (
           <StepLayout
             eyebrow="Already featured"
-            title={tool ? `${tool.name} already has a Growth subscription` : 'This product is already on Growth'}
+            title={tool ? `${tool.name} already has a Featured subscription` : 'This product is already on Featured'}
             subtitle="To manage an existing subscription, verify ownership first — we don't show billing details to unverified visitors."
             ctaLabel="Contact support to manage this listing"
             onCta={() => { window.location.href = '/contact'; }}
@@ -679,10 +679,10 @@ export default function FeatureMyProductOnboardingPage() {
           </StepLayout>
         )}
 
-        {step === 'growth_upsell' && (
+        {step === 'featured_upsell' && (
           <div className="flex-1 w-full max-w-4xl mx-auto px-5 sm:px-8 py-3 sm:py-2.5">
             <div className="text-center mb-2 sm:mb-1.5">
-              <p className="text-[13px] sm:text-sm font-semibold text-[#4F47E6] mb-0.5">Upgrade to Growth</p>
+              <p className="text-[13px] sm:text-sm font-semibold text-[#4F47E6] mb-0.5">Upgrade to Featured</p>
               <h1 className="text-xl sm:text-[27px] font-bold tracking-tight text-[#0B1221] leading-tight">
                 Ready to get seen?
               </h1>
@@ -736,7 +736,7 @@ export default function FeatureMyProductOnboardingPage() {
                     </div>
                   </div>
 
-                  {[...GROWTH_MONTHLY_FEATURES.map((item) => ({ item, yearlyOnly: false })), ...GROWTH_YEARLY_ONLY_FEATURES.map((item) => ({ item, yearlyOnly: true }))].map((row, i) => (
+                  {[...FEATURED_MONTHLY_FEATURES.map((item) => ({ item, yearlyOnly: false })), ...FEATURED_YEARLY_ONLY_FEATURES.map((item) => ({ item, yearlyOnly: true }))].map((row, i) => (
                     <div key={row.item} className="contents">
                       <div className={`py-[3px] sm:py-1 pl-2.5 pr-1 sm:pl-4 sm:pr-2 flex items-center text-[10.5px] sm:text-[13.5px] leading-[1.15] sm:leading-tight text-slate-600 ${i % 2 === 1 ? 'bg-slate-100' : ''}`}>{row.item}</div>
                       <div className={`py-[3px] sm:py-1 flex items-center justify-center ${i % 2 === 1 ? 'bg-slate-100' : ''}`}>
@@ -756,7 +756,7 @@ export default function FeatureMyProductOnboardingPage() {
                   <div className="p-1.5">
                     <button
                       type="button"
-                      onClick={() => handleGrowthCheckout('month')}
+                      onClick={() => handleFeaturedCheckout('month')}
                       disabled={checkingOutInterval !== null}
                       className="w-full flex items-center justify-center px-2 py-2 rounded-lg text-[12.5px] sm:text-sm font-semibold text-[#0B1221] bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
@@ -766,7 +766,7 @@ export default function FeatureMyProductOnboardingPage() {
                   <div className="p-1.5 bg-[#EEF0FE]/70 border-l-2 border-r-2 border-b-2 border-[#4F47E6]">
                     <button
                       type="button"
-                      onClick={() => handleGrowthCheckout('year')}
+                      onClick={() => handleFeaturedCheckout('year')}
                       disabled={checkingOutInterval !== null}
                       className="w-full flex items-center justify-center px-2 py-2 rounded-lg text-[12.5px] sm:text-sm font-semibold text-white bg-[#4F47E6] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity active:scale-[0.99]"
                     >
@@ -782,18 +782,18 @@ export default function FeatureMyProductOnboardingPage() {
             <div className="mt-1.5 flex items-center justify-center">
               <button
                 type="button"
-                onClick={handleSkipGrowth}
+                onClick={handleSkipFeatured}
                 className="inline-flex items-center justify-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-full border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 hover:border-rose-300 text-[12.5px] sm:text-sm font-semibold transition-colors"
               >
-                No thanks, skip Growth for now
+                No thanks, skip Featured for now
               </button>
             </div>
 
             <AskGappsyBubble
-              page="growth_upsell"
-              chatTitle="Ask Gappsy about Growth"
+              page="featured_upsell"
+              chatTitle="Ask Gappsy about Featured"
               chatSubtitle="Real answers — ask us anything before you decide"
-              placeholder="Ask anything about Growth..."
+              placeholder="Ask anything about Featured..."
               triggerLabel="Any questions?"
               nudgeText="Any questions? Not sure this is right for you? Ask here and get answers right away."
               suggestedQuestions={[

@@ -22,31 +22,35 @@ const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("
 
 // Server-side price source of truth — the frontend never supplies a price.
 // Two products now instead of one: a one-time "claim" fee (required first),
-// then a recurring "growth" upgrade (monthly or yearly) that unlocks the
+// then a recurring "featured" upgrade (monthly or yearly) that unlocks the
 // actual visibility features. ACTIVE_SUBSCRIPTION_STATUSES is shared by
 // both — the DB's per-(tool, product) unique indexes are what actually let
 // a tool hold one active row of each product at once (see the v2 migration).
 const CLAIM_PRICE_LOOKUP_KEY = "feature_my_product_claim_v1";
 const CLAIM_PRICE_AMOUNT_CENTS = 2900; // $29 one-time
 // Shown on Stripe Checkout itself — must spell out every benefit already
-// promised earlier in the /list-your-product funnel (claim step, growth
+// promised earlier in the /list-your-product funnel (claim step, featured
 // upsell copy), or a buyer who lands on Checkout after skimming that promise
 // sees a bare "$29, verify your listing" line and feels like they're paying
 // for less than they were shown.
 const CLAIM_PRODUCT_NAME = "Gappsy Verified Product Listing";
 const CLAIM_PRODUCT_DESCRIPTION =
   "One-time fee, not a subscription. Includes: a verified badge on your listing, a profile we build for you (edit anytime), self-serve editing, replying to reviews from your dashboard, and a link to your site from your Gappsy listing.";
-const GROWTH_PRICE_LOOKUP_KEYS: Record<"month" | "year", string> = {
+const FEATURED_PRICE_LOOKUP_KEYS: Record<"month" | "year", string> = {
   month: "feature_my_product_growth_monthly_v1",
   // Bumped to v2 alongside the $890 -> $699 price drop — Stripe Prices are
   // immutable, so reusing the v1 lookup key would keep resolving to the old
   // $890 Price object (if one was ever created) instead of a new one.
   year: "feature_my_product_growth_yearly_v2",
 };
-const GROWTH_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
+const FEATURED_PRICE_AMOUNT_CENTS: Record<"month" | "year", number> = {
   month: 8900, // $89/mo
   year: 69900, // $699/yr (~35% off vs. paying monthly for 12 months)
 };
+const FEATURED_PRODUCT_DESCRIPTION = "Priority software directory placement across category, comparison, alternative, and search surfaces.";
+function featuredProductName(interval: "month" | "year"): string {
+  return `Gappsy Featured Listing (${interval === "year" ? "Yearly" : "Monthly"})`;
+}
 const ACTIVE_SUBSCRIPTION_STATUSES = ["pending_payment", "active", "past_due", "pending_verification"];
 // A visitor who opens Stripe Checkout and never completes it leaves a
 // "pending_payment" row behind. Without a cutoff, that row blocks this
@@ -84,17 +88,26 @@ async function getOrCreateClaimPriceId(stripe: Stripe): Promise<string> {
   return price.id;
 }
 
-async function getOrCreateGrowthPriceId(stripe: Stripe, interval: "month" | "year"): Promise<string> {
-  const lookupKey = GROWTH_PRICE_LOOKUP_KEYS[interval];
+async function getOrCreateFeaturedPriceId(stripe: Stripe, interval: "month" | "year"): Promise<string> {
+  const lookupKey = FEATURED_PRICE_LOOKUP_KEYS[interval];
   const existing = await stripe.prices.list({ lookup_keys: [lookupKey], limit: 1 });
-  if (existing.data[0]) return existing.data[0].id;
+  if (existing.data[0]) {
+    // Same sync-on-every-call pattern as getOrCreateClaimPriceId above —
+    // Stripe Prices are immutable but Products aren't, so this is how the
+    // "Growth" -> "Featured" rename actually reaches what a real returning
+    // customer sees on Checkout without touching their existing Price ID or
+    // subscription at all.
+    const productId = existing.data[0].product as string;
+    await stripe.products.update(productId, { name: featuredProductName(interval), description: FEATURED_PRODUCT_DESCRIPTION });
+    return existing.data[0].id;
+  }
   const product = await stripe.products.create({
-    name: `Gappsy Growth Listing (${interval === "year" ? "Yearly" : "Monthly"})`,
-    description: "Priority software directory placement across category, comparison, alternative, and search surfaces.",
+    name: featuredProductName(interval),
+    description: FEATURED_PRODUCT_DESCRIPTION,
   });
   const price = await stripe.prices.create({
     product: product.id,
-    unit_amount: GROWTH_PRICE_AMOUNT_CENTS[interval],
+    unit_amount: FEATURED_PRICE_AMOUNT_CENTS[interval],
     currency: "usd",
     recurring: { interval },
     lookup_key: lookupKey,
@@ -142,7 +155,7 @@ async function fetchToolSummary(toolId: string) {
 // checks below and for the DB's partial unique index (which would otherwise
 // reject a legitimate retry with a duplicate-key error). Run this before
 // every read/write that cares whether a subscription is "active".
-async function reapStalePendingPayments(toolId: string | null, discoveredToolId: string | null, product: "claim" | "growth") {
+async function reapStalePendingPayments(toolId: string | null, discoveredToolId: string | null, product: "claim" | "featured") {
   const staleCutoff = new Date(Date.now() - PENDING_PAYMENT_STALE_MINUTES * 60 * 1000).toISOString();
   if (toolId) {
     await supabase
@@ -164,7 +177,7 @@ async function reapStalePendingPayments(toolId: string | null, discoveredToolId:
   }
 }
 
-async function findActiveSubscription(toolId: string | null, discoveredToolId: string | null, product: "claim" | "growth") {
+async function findActiveSubscription(toolId: string | null, discoveredToolId: string | null, product: "claim" | "featured") {
   if (toolId) {
     const { data } = await supabase
       .from("vendor_feature_subscriptions")
@@ -188,7 +201,7 @@ async function findActiveSubscription(toolId: string | null, discoveredToolId: s
   return null;
 }
 
-// Growth is only purchasable once the one-time claim fee has actually
+// Featured is only purchasable once the one-time claim fee has actually
 // cleared — checked against vendor_feature_subscriptions directly (not the
 // tools.claim_paid_at mirror) so a not-yet-published new product (which has
 // no tools row at all yet) is still gated correctly via discovered_tool_id.
@@ -251,9 +264,9 @@ Deno.serve(async (req: Request) => {
 
         if (duplicateMatch.againstTable === "tools") {
           const tool = await fetchToolSummary(duplicateMatch.id!);
-          await reapStalePendingPayments(duplicateMatch.id, null, "growth");
+          await reapStalePendingPayments(duplicateMatch.id, null, "featured");
           await reapStalePendingPayments(duplicateMatch.id, null, "claim");
-          const activeSub = await findActiveSubscription(duplicateMatch.id, null, "growth");
+          const activeSub = await findActiveSubscription(duplicateMatch.id, null, "featured");
           const alreadyClaimed = await hasActiveClaim(duplicateMatch.id, null);
 
           const { data: session } = await supabase
@@ -295,9 +308,9 @@ Deno.serve(async (req: Request) => {
             .select("id, name, official_website, short_description, logo_url, status")
             .eq("id", duplicateMatch.id)
             .maybeSingle();
-          await reapStalePendingPayments(null, duplicateMatch.id, "growth");
+          await reapStalePendingPayments(null, duplicateMatch.id, "featured");
           await reapStalePendingPayments(null, duplicateMatch.id, "claim");
-          const activeSub = await findActiveSubscription(null, duplicateMatch.id, "growth");
+          const activeSub = await findActiveSubscription(null, duplicateMatch.id, "featured");
           const alreadyClaimed = await hasActiveClaim(null, duplicateMatch.id);
 
           const { data: session } = await supabase
@@ -448,7 +461,7 @@ Deno.serve(async (req: Request) => {
       // ── Step 4/5: create the Stripe Checkout session ──────────────────
       case "create_checkout": {
         const sessionId = typeof payload.session_id === "string" ? payload.session_id : "";
-        const product: "claim" | "growth" = payload.product === "growth" ? "growth" : "claim";
+        const product: "claim" | "featured" = payload.product === "featured" ? "featured" : "claim";
         const billingInterval: "month" | "year" = payload.billing_interval === "year" ? "year" : "month";
 
         const { data: session } = await supabase.from("vendor_onboarding_sessions").select("*").eq("id", sessionId).maybeSingle();
@@ -480,10 +493,10 @@ Deno.serve(async (req: Request) => {
           .eq("product", product)
           .eq("status", "pending_payment");
 
-        // Growth is only purchasable once the one-time claim fee has cleared.
-        if (product === "growth") {
+        // Featured is only purchasable once the one-time claim fee has cleared.
+        if (product === "featured") {
           const claimed = await hasActiveClaim(session.matched_tool_id, session.matched_discovered_tool_id);
-          if (!claimed) return jsonResponse({ ok: false, error_code: "claim_required", error: "Claim & Verify your listing before upgrading to Growth." }, 409);
+          if (!claimed) return jsonResponse({ ok: false, error_code: "claim_required", error: "Claim & Verify your listing before upgrading to Featured." }, 409);
         }
 
         const existingActive = await findActiveSubscription(session.matched_tool_id, session.matched_discovered_tool_id, product);
@@ -491,7 +504,7 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({
             ok: false,
             error_code: product === "claim" ? "already_claimed" : "already_subscribed",
-            error: product === "claim" ? "This product has already been claimed." : "This product already has an active Growth subscription.",
+            error: product === "claim" ? "This product has already been claimed." : "This product already has an active Featured subscription.",
           }, 409);
         }
 
@@ -517,17 +530,17 @@ Deno.serve(async (req: Request) => {
           return jsonResponse({
             ok: false,
             error_code: isDuplicateRace ? (product === "claim" ? "already_claimed" : "already_subscribed") : "insert_failed",
-            error: isDuplicateRace ? (product === "claim" ? "This product has already been claimed." : "This product already has an active Growth subscription.") : subInsertError.message,
+            error: isDuplicateRace ? (product === "claim" ? "This product has already been claimed." : "This product already has an active Featured subscription.") : subInsertError.message,
           }, isDuplicateRace ? 409 : 500);
         }
 
-        const priceId = product === "claim" ? await getOrCreateClaimPriceId(stripe) : await getOrCreateGrowthPriceId(stripe, billingInterval);
+        const priceId = product === "claim" ? await getOrCreateClaimPriceId(stripe) : await getOrCreateFeaturedPriceId(stripe, billingInterval);
         const baseUrl = Deno.env.get("PUBLIC_BASE_URL") || "https://gappsy.com";
-        // Claim success routes to the Growth upsell screen next; Growth
+        // Claim success routes to the Featured upsell screen next; Featured
         // success (whichever interval) is the end of the wizard.
-        const nextStage = product === "claim" ? "growth_upsell" : "done";
+        const nextStage = product === "claim" ? "featured_upsell" : "done";
         const successUrl = `${baseUrl}/list-your-product/onboarding?step=success&session_id=${sessionId}&stripe_session_id={CHECKOUT_SESSION_ID}&next=${nextStage}`;
-        const cancelUrl = `${baseUrl}/list-your-product/onboarding?step=${product === "claim" ? "claim" : "growth_upsell"}&session_id=${sessionId}&checkout=cancelled`;
+        const cancelUrl = `${baseUrl}/list-your-product/onboarding?step=${product === "claim" ? "claim" : "featured_upsell"}&session_id=${sessionId}&checkout=cancelled`;
 
         const metadata: Record<string, string> = {
           funnel_type: "feature_my_product",
@@ -540,7 +553,7 @@ Deno.serve(async (req: Request) => {
         if (session.matched_discovered_tool_id) metadata.discovered_tool_id = session.matched_discovered_tool_id;
 
         // Claim is a genuine one-time charge (mode: "payment", no
-        // subscription_data) — growth stays a recurring subscription like
+        // subscription_data) — featured stays a recurring subscription like
         // the original single-tier flow.
         const stripeSession = await stripe.checkout.sessions.create(
           product === "claim"
@@ -590,11 +603,11 @@ Deno.serve(async (req: Request) => {
 
         const latest = subscriptions?.[0] || null;
         const claimRow = subscriptions?.find((s) => s.product === "claim") || null;
-        const growthRow = subscriptions?.find((s) => s.product === "growth") || null;
+        const featuredRow = subscriptions?.find((s) => s.product === "featured") || null;
 
         // Looked up by onboarding_session_id (not the latest subscription's
         // id) — the ownership token is only ever created once, during claim
-        // activation, and must still resolve after a later Growth checkout
+        // activation, and must still resolve after a later Featured checkout
         // round creates its own separate vendor_feature_subscriptions row.
         let ownershipToken: string | null = null;
         const { data: tokenRow } = await supabase.from("vendor_ownership_tokens").select("token, verified").eq("onboarding_session_id", session.id).order("created_at", { ascending: false }).limit(1).maybeSingle();
@@ -608,8 +621,8 @@ Deno.serve(async (req: Request) => {
           discovered_tool_id: latest?.discovered_tool_id || null,
           ownership_token: ownershipToken,
           claim_status: claimRow?.status || null,
-          growth_status: growthRow?.status || null,
-          growth_billing_interval: growthRow?.billing_interval || null,
+          featured_status: featuredRow?.status || null,
+          featured_billing_interval: featuredRow?.billing_interval || null,
         });
       }
 

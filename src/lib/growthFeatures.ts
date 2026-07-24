@@ -3,7 +3,7 @@
 // (FeatureMyProductOnboardingPage), and the vendor dashboard's locked-tab
 // upsell teasers (VendorDashboardPage) — keeps the feature list from
 // drifting between the several places that all promise the same thing.
-export const GROWTH_MONTHLY_FEATURES: string[] = [
+export const FEATURED_MONTHLY_FEATURES: string[] = [
   'Featured placement across category, comparison, and search',
   'Priority ranking ahead of unfeatured listings',
   'Listing analytics — views and click-throughs, right in your dashboard',
@@ -12,7 +12,7 @@ export const GROWTH_MONTHLY_FEATURES: string[] = [
   'Remove or hide reviews from your listing, not just reply to them',
 ];
 
-export const GROWTH_YEARLY_ONLY_FEATURES: string[] = [
+export const FEATURED_YEARLY_ONLY_FEATURES: string[] = [
   'A produced video review, posted on our socials',
   'A featured spot in the Gappsy newsletter',
   'No competitor ads shown on your own listing',

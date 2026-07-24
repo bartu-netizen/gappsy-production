@@ -7,29 +7,29 @@ import ScrollReveal from '../components/featureMyProduct/ScrollReveal';
 import AskGappsyChat from '../components/askGappsy/AskGappsyChat';
 import FmpFaqSection from '../components/featureMyProduct/FmpFaqSection';
 import type { FmpFaqItem } from '../components/featureMyProduct/fmpFaqData';
-import { GROWTH_MONTHLY_FEATURES, GROWTH_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
+import { FEATURED_MONTHLY_FEATURES, FEATURED_YEARLY_ONLY_FEATURES } from '../lib/growthFeatures';
 
 const CANONICAL_BASE = 'https://gappsy.com/feature-my-product';
 
-// Icons paired positionally with the shared GROWTH_MONTHLY_FEATURES list —
+// Icons paired positionally with the shared FEATURED_MONTHLY_FEATURES list —
 // this page is the only one that renders an icon per feature.
-const GROWTH_MONTHLY_FEATURE_ICONS = [Sparkles, BarChart3, BarChart3, MessageSquare, Bot, ShieldOff];
-const GROWTH_MONTHLY_FEATURE_ITEMS = GROWTH_MONTHLY_FEATURES.map((text, i) => ({
-  icon: GROWTH_MONTHLY_FEATURE_ICONS[i] ?? Sparkles,
+const FEATURED_MONTHLY_FEATURE_ICONS = [Sparkles, BarChart3, BarChart3, MessageSquare, Bot, ShieldOff];
+const FEATURED_MONTHLY_FEATURE_ITEMS = FEATURED_MONTHLY_FEATURES.map((text, i) => ({
+  icon: FEATURED_MONTHLY_FEATURE_ICONS[i] ?? Sparkles,
   text,
 }));
 
-const GROWTH_FAQS: FmpFaqItem[] = [
+const FEATURED_FAQS: FmpFaqItem[] = [
   {
     question: 'Do I need to list my product first?',
-    answer: 'Yes — Growth is an upgrade to an existing Gappsy listing, not a standalone purchase. If your product isn\'t listed and verified yet, that\'s a one-time $29 fee first. Already listed and verified? We\'ll skip straight to Growth.',
+    answer: 'Yes — Featured is an upgrade to an existing Gappsy listing, not a standalone purchase. If your product isn\'t listed and verified yet, that\'s a one-time $29 fee first. Already listed and verified? We\'ll skip straight to Featured.',
   },
   {
-    question: 'How much does Growth cost?',
+    question: 'How much does Featured cost?',
     answer: '$89/month, cancel anytime — or $699/year, which works out to roughly 4 months free compared to paying monthly.',
   },
   {
-    question: 'What do I get with Growth?',
+    question: 'What do I get with Featured?',
     answer: 'Featured placement across category, comparison, and search pages, priority ranking ahead of unfeatured listings, listing analytics, priority placement in AI answer engines like ChatGPT and Perplexity, and the ability to remove reviews (not just reply). The Yearly plan adds a produced video review, a newsletter feature, no competitor ads on your own listing, faster editorial review, priority support, and early access to new placement types.',
   },
   {
@@ -38,7 +38,7 @@ const GROWTH_FAQS: FmpFaqItem[] = [
   },
   {
     question: 'How does billing work?',
-    answer: 'Growth is a real recurring Stripe subscription, manageable from your vendor dashboard billing portal — switch between Monthly and Yearly, or cancel, whenever you like.',
+    answer: 'Featured is a real recurring Stripe subscription, manageable from your vendor dashboard billing portal — switch between Monthly and Yearly, or cancel, whenever you like.',
   },
 ];
 
@@ -46,7 +46,7 @@ const JSON_LD = [
   {
     '@type': 'FAQPage',
     '@id': `${CANONICAL_BASE}/#faq`,
-    mainEntity: GROWTH_FAQS.map((faq) => ({
+    mainEntity: FEATURED_FAQS.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
@@ -55,16 +55,16 @@ const JSON_LD = [
   {
     '@type': 'Service',
     '@id': `${CANONICAL_BASE}/#service`,
-    name: 'Gappsy Growth',
+    name: 'Gappsy Featured',
     serviceType: 'Featured software placement subscription',
-    description: 'Growth is a recurring upgrade for products already listed on Gappsy\'s software directory — featured placement across category, comparison, and search pages, listing analytics, and AI answer engine visibility.',
+    description: 'Featured is a recurring upgrade for products already listed on Gappsy\'s software directory — featured placement across category, comparison, and search pages, listing analytics, and AI answer engine visibility.',
     provider: { '@type': 'Organization', name: 'Gappsy', url: 'https://gappsy.com' },
     areaServed: 'Worldwide',
     audience: { '@type': 'Audience', audienceType: 'SaaS founders and software marketing teams' },
     offers: [
       {
         '@type': 'Offer',
-        name: 'Growth Monthly',
+        name: 'Featured Monthly',
         price: '89',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
@@ -72,7 +72,7 @@ const JSON_LD = [
       },
       {
         '@type': 'Offer',
-        name: 'Growth Yearly',
+        name: 'Featured Yearly',
         price: '699',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
@@ -86,10 +86,10 @@ export default function FeatureGrowthPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <EntitySEOTags
-        title="Get Featured on Gappsy | Growth"
-        description="Growth puts your Gappsy listing in front of buyers already comparing tools like yours — featured placement, analytics, and AI answer engine visibility. Requires a listed & verified product first."
+        title="Get Featured on Gappsy | Featured Placement"
+        description="Featured puts your Gappsy listing in front of buyers already comparing tools like yours — priority placement, analytics, and AI answer engine visibility. Requires a listed & verified product first."
         path="/feature-my-product"
-        breadcrumbs={[{ name: 'Growth', path: '/feature-my-product' }]}
+        breadcrumbs={[{ name: 'Featured', path: '/feature-my-product' }]}
         jsonLd={JSON_LD}
       />
       <SoftwareHeader variant="premium" />
@@ -105,20 +105,20 @@ export default function FeatureGrowthPage() {
             <ScrollReveal>
               <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-amber-700 bg-amber-50 rounded-full px-3 py-1.5">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                Growth · Featured Placement
+                Featured Placement
               </span>
               <h1 className="mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-[#0B1221] leading-[1.1]">
                 Get seen by buyers already comparing tools like yours.
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-500 leading-relaxed max-w-xl">
-                Growth is Gappsy's recurring upgrade for featured placement across category, comparison, and
+                Featured is Gappsy's recurring upgrade for priority placement across category, comparison, and
                 search pages — plus listing analytics and priority visibility in AI answer engines like ChatGPT
                 and Perplexity.
               </p>
               <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50/60 px-4 py-3.5 max-w-xl">
                 <p className="text-[13.5px] text-amber-900 leading-relaxed">
-                  <strong>Growth is an upgrade, not a starting point.</strong> You'll need a listed &amp; verified
-                  product first (one-time $29). Already listed and verified? We'll take you straight to Growth.
+                  <strong>Featured is an upgrade, not a starting point.</strong> You'll need a listed &amp; verified
+                  product first (one-time $29). Already listed and verified? We'll take you straight to Featured.
                 </p>
               </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -147,10 +147,10 @@ export default function FeatureGrowthPage() {
                 />
                 <div className="rounded-2xl border border-[#eef0f3] bg-white shadow-[0_30px_60px_rgba(217,119,6,0.12)] overflow-hidden">
                   <AskGappsyChat
-                    page="feature_growth"
-                    title="Ask Gappsy about Growth"
+                    page="feature_featured"
+                    title="Ask Gappsy about Featured"
                     subtitle="Real answers — ask us anything before you decide"
-                    placeholder="Ask anything about Growth..."
+                    placeholder="Ask anything about Featured..."
                     suggestedQuestions={[
                       'Do I need to list my product first?',
                       'What\'s the difference between Monthly and Yearly?',
@@ -190,7 +190,7 @@ export default function FeatureGrowthPage() {
                   <span className="inline-flex items-center text-[10px] font-semibold uppercase tracking-wide text-amber-700 bg-amber-100 rounded-full px-2.5 py-1">
                     Then
                   </span>
-                  <h3 className="mt-3 text-lg font-semibold text-[#0B1221]">2. Subscribe to Growth</h3>
+                  <h3 className="mt-3 text-lg font-semibold text-[#0B1221]">2. Subscribe to Featured</h3>
                   <p className="mt-2 text-[15px] leading-relaxed text-slate-500">
                     Choose Monthly ($89/mo) or Yearly ($699/yr) for featured placement, analytics, and more.
                     Cancel anytime — your base listing stays either way.
@@ -209,12 +209,12 @@ export default function FeatureGrowthPage() {
         <section id="whats-included" className="py-20 sm:py-28 scroll-mt-24">
           <div className="max-w-4xl mx-auto px-6 sm:px-8">
             <ScrollReveal className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">What Growth gets you</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">What Featured gets you</h2>
               <p className="mt-4 text-lg text-slate-500">Included on both Monthly and Yearly plans.</p>
             </ScrollReveal>
 
             <div className="grid sm:grid-cols-2 gap-5">
-              {GROWTH_MONTHLY_FEATURE_ITEMS.map((f, i) => (
+              {FEATURED_MONTHLY_FEATURE_ITEMS.map((f, i) => (
                 <ScrollReveal key={f.text} delayMs={(i % 3) * 80}>
                   <div className="h-full flex items-start gap-3.5 rounded-2xl border border-[#eef0f3] p-5">
                     <div className="w-9 h-9 shrink-0 rounded-xl bg-amber-50 flex items-center justify-center">
@@ -232,7 +232,7 @@ export default function FeatureGrowthPage() {
         <section id="pricing" className="py-20 sm:py-28 bg-slate-50/40 border-y border-[#f1f3f5] scroll-mt-24">
           <div className="max-w-3xl mx-auto px-6 sm:px-8">
             <ScrollReveal className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">Growth pricing</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B1221]">Featured pricing</h2>
               <p className="mt-4 text-lg text-slate-500">Same features either way — Yearly just costs less over time.</p>
             </ScrollReveal>
 
@@ -265,7 +265,7 @@ export default function FeatureGrowthPage() {
             <div className="mt-6 rounded-2xl border border-[#eef0f3] bg-white p-6">
               <p className="text-[13px] font-semibold uppercase tracking-wide text-slate-400 mb-3">Yearly also includes</p>
               <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
-                {GROWTH_YEARLY_ONLY_FEATURES.map((item) => (
+                {FEATURED_YEARLY_ONLY_FEATURES.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-[14px] text-slate-600">
                     <Check className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
                     <span>{item}</span>
@@ -293,7 +293,7 @@ export default function FeatureGrowthPage() {
           </div>
         </section>
 
-        <FmpFaqSection faqs={GROWTH_FAQS} />
+        <FmpFaqSection faqs={FEATURED_FAQS} />
 
         {/* Final CTA */}
         <section className="py-20 sm:py-28">
@@ -309,7 +309,7 @@ export default function FeatureGrowthPage() {
                     Ready to get in front of more buyers?
                   </h2>
                   <p className="mt-4 text-lg text-slate-300 max-w-xl mx-auto">
-                    Not listed yet? Start there — it's the same button, and we'll route you to Growth automatically
+                    Not listed yet? Start there — it's the same button, and we'll route you to Featured automatically
                     once you're verified.
                   </p>
                   <div className="mt-8">

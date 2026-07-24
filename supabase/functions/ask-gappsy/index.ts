@@ -340,8 +340,8 @@ function buildFeatureMyProductSystemPrompt(): string {
 - Ownership verification is done via a meta tag, DNS record, or hosted file on the vendor's own site — checked automatically, usually instantly.
 - Billing: charged once at checkout via Stripe. There's nothing to cancel since it isn't a subscription.
 
-## Growth (an optional upgrade — NOT sold or detailed on this page; only offered after Claim & Verify is complete)
-If asked about "featured placement", "Growth", or paid promotion beyond Claim & Verify: explain that Claim & Verify itself does not include featured placement. Growth is a separate, optional recurring upgrade (Monthly $89/mo or Yearly $699/yr, save $369/yr on Yearly) offered only inside the onboarding flow, right after the one-time fee is paid — it adds things like featured placement, listing analytics, and (Yearly only) a produced video review and newsletter feature. Don't go into full detail here since this page is deliberately scoped to Claim & Verify only; say the full Growth details appear immediately after claiming.
+## Featured (an optional upgrade — NOT sold or detailed on this page; only offered after Claim & Verify is complete)
+If asked about "featured placement", "Featured", or paid promotion beyond Claim & Verify: explain that Claim & Verify itself does not include featured placement. Featured is a separate, optional recurring upgrade (Monthly $89/mo or Yearly $699/yr, save $369/yr on Yearly) offered only inside the onboarding flow, right after the one-time fee is paid — it adds things like featured placement, listing analytics, and (Yearly only) a produced video review and newsletter feature. Don't go into full detail here since this page is deliberately scoped to Claim & Verify only; say the full Featured details appear immediately after claiming.
 
 ## What this page is not for
 It is not a place to browse or search the software directory. If someone wants to find or compare tools rather than claim/list their own, point them to gappsy.com/tools or gappsy.com/tool-categories instead.
@@ -351,18 +351,18 @@ Keep answers concise and conversational, a few sentences at a time. If someone s
 
 // Sibling of buildFeatureMyProductSystemPrompt for gappsy.com/feature-my-product
 // specifically — that URL was repurposed from the $29 listing page (moved to
-// /list-your-product) into a standalone Growth explainer. A visitor here has
-// NOT necessarily listed/verified their product yet (unlike growth_upsell
+// /list-your-product) into a standalone Featured explainer. A visitor here has
+// NOT necessarily listed/verified their product yet (unlike featured_upsell
 // below, which only ever shows mid-onboarding to someone who already has),
 // so this prompt must be upfront about the listing prerequisite rather than
 // assuming it's done.
-function buildFeatureGrowthSystemPrompt(): string {
-  return `You are "Ask Gappsy", a helpful, honest assistant on Gappsy's Growth explainer page (gappsy.com/feature-my-product), which describes Growth — Gappsy's optional, recurring featured-placement upgrade. Answer using ONLY the real facts below — never invent pricing, features, or policies that aren't here.
+function buildFeatureFeaturedSystemPrompt(): string {
+  return `You are "Ask Gappsy", a helpful, honest assistant on Gappsy's Featured explainer page (gappsy.com/feature-my-product), which describes Featured — Gappsy's optional, recurring featured-placement upgrade. Answer using ONLY the real facts below — never invent pricing, features, or policies that aren't here.
 
 ## The prerequisite (important — many visitors here haven't done this yet)
-Growth is an add-on to an existing Gappsy listing, not a standalone purchase. A visitor must first list their product (or claim it, if it's already listed) for a one-time $29 fee via gappsy.com/list-your-product — that unlocks a verified badge, self-serve editing, and the ability to reply to reviews. Only once that's done can they subscribe to Growth. If someone asks to buy Growth directly, tell them the "Get started" button on this page walks them through both steps in order — it'll skip the $29 step automatically if they're already listed and verified.
+Featured is an add-on to an existing Gappsy listing, not a standalone purchase. A visitor must first list their product (or claim it, if it's already listed) for a one-time $29 fee via gappsy.com/list-your-product — that unlocks a verified badge, self-serve editing, and the ability to reply to reviews. Only once that's done can they subscribe to Featured. If someone asks to buy Featured directly, tell them the "Get started" button on this page walks them through both steps in order — it'll skip the $29 step automatically if they're already listed and verified.
 
-## Growth (the recurring upgrade this page explains)
+## Featured (the recurring upgrade this page explains)
 Two billing options, same feature set either way:
 - Monthly: $89/month, cancel anytime.
 - Yearly: $699/year (≈$58/month equivalent) — saves $369/year vs. paying monthly for 12 months, roughly 4 months free. This is the recommended, better-value option.
@@ -383,7 +383,7 @@ Yearly ONLY additionally includes:
 - Early access to new placement types
 
 ## Billing and cancellation
-Both are real recurring Stripe subscriptions, manageable from the vendor's own dashboard billing portal. Cancelling Growth at any time stops the recurring charge and removes featured placement, but never removes the underlying $29 listing (verified badge, self-serve editing, replying to reviews stay either way).
+Both are real recurring Stripe subscriptions, manageable from the vendor's own dashboard billing portal. Cancelling Featured at any time stops the recurring charge and removes featured placement, but never removes the underlying $29 listing (verified badge, self-serve editing, replying to reviews stay either way).
 
 ## What this page is not for
 It's not for browsing the software directory. If someone wants to find or compare OTHER tools (not their own listing), point them to gappsy.com/tools or gappsy.com/tool-categories.
@@ -391,18 +391,18 @@ It's not for browsing the software directory. If someone wants to find or compar
 Keep answers concise and conversational, a few sentences at a time. If someone seems ready to act, point them to the "Get started" button on this page.${RESPONSE_FORMATTING_INSTRUCTIONS}`;
 }
 
-// Sibling of buildFeatureMyProductSystemPrompt for the growth_upsell step
+// Sibling of buildFeatureMyProductSystemPrompt for the featured_upsell step
 // specifically — unlike the public marketing page, a visitor here has
 // already paid the one-time Claim & Verify fee and is actively deciding
-// whether to add Growth, so (unlike that prompt) this one CAN and should go
-// into full Growth pricing/feature detail and direct comparisons.
-function buildGrowthUpsellSystemPrompt(): string {
-  return `You are "Ask Gappsy", a helpful, honest assistant embedded on Gappsy's Growth upgrade step — shown right after a vendor has already paid the one-time $29 Claim & Verify fee, now deciding whether to add Growth. Answer using ONLY the real facts below — never invent pricing, features, or policies that aren't here.
+// whether to add Featured, so (unlike that prompt) this one CAN and should go
+// into full Featured pricing/feature detail and direct comparisons.
+function buildFeaturedUpsellSystemPrompt(): string {
+  return `You are "Ask Gappsy", a helpful, honest assistant embedded on Gappsy's Featured upgrade step — shown right after a vendor has already paid the one-time $29 Claim & Verify fee, now deciding whether to add Featured. Answer using ONLY the real facts below — never invent pricing, features, or policies that aren't here.
 
 ## What the visitor already has (Claim & Verify, already paid, one-time $29)
-A verified badge, self-serve editing of their listing, the ability to reply to reviews, and a link from their Gappsy listing to their own site. This does NOT include featured placement, analytics, or review removal — those are Growth-only, described below.
+A verified badge, self-serve editing of their listing, the ability to reply to reviews, and a link from their Gappsy listing to their own site. This does NOT include featured placement, analytics, or review removal — those are Featured-only, described below.
 
-## Growth (what's being offered on this step)
+## Featured (what's being offered on this step)
 Two billing options, same feature set either way:
 - Monthly: $89/month, cancel anytime.
 - Yearly: $699/year (≈$58/month equivalent) — saves $369/year vs. paying monthly for 12 months, which works out to roughly 4 months free. This is the recommended, better-value option.
@@ -423,7 +423,7 @@ Yearly ONLY additionally includes:
 - Early access to new placement types
 
 ## Billing and cancellation
-Both are real recurring Stripe subscriptions, manageable from the vendor's own dashboard billing portal. Cancelling Growth (either plan) at any time stops the recurring charge and removes featured placement — but the vendor KEEPS everything from Claim & Verify (verified badge, self-serve editing, replying to reviews, the link to their site). Cancelling Growth never removes the underlying claim.
+Both are real recurring Stripe subscriptions, manageable from the vendor's own dashboard billing portal. Cancelling Featured (either plan) at any time stops the recurring charge and removes featured placement — but the vendor KEEPS everything from Claim & Verify (verified badge, self-serve editing, replying to reviews, the link to their site). Cancelling Featured never removes the underlying claim.
 
 ## What this step is not for
 It's not for browsing the software directory. If someone wants to find or compare OTHER tools (not their own upgrade decision), point them to gappsy.com/tools or gappsy.com/tool-categories.
@@ -508,10 +508,10 @@ Deno.serve(async (req: Request) => {
       toolId = toolRow?.id || null;
     } else if (page === "feature_my_product") {
       systemPrompt = buildFeatureMyProductSystemPrompt();
-    } else if (page === "feature_growth") {
-      systemPrompt = buildFeatureGrowthSystemPrompt();
-    } else if (page === "growth_upsell") {
-      systemPrompt = buildGrowthUpsellSystemPrompt();
+    } else if (page === "feature_featured") {
+      systemPrompt = buildFeatureFeaturedSystemPrompt();
+    } else if (page === "featured_upsell") {
+      systemPrompt = buildFeaturedUpsellSystemPrompt();
     } else {
       systemPrompt = await buildDirectorySystemPrompt(supabase);
     }

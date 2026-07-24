@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.57.4";
 import { requireAdminSession, CORS_HEADERS } from "../_shared/adminSession.ts";
 import { writeAuditLog } from "../_shared/adminAuth.ts";
 
-// Admin queue for vendor_comparison_requests (a Growth-exclusive perk — see
+// Admin queue for vendor_comparison_requests (a Featured-exclusive perk — see
 // vendor-dashboard/index.ts's request_comparison action). Approving/rejecting
 // here only updates the request's own status; it never creates the actual
 // tool_comparisons row — that stays a deliberate manual step via the

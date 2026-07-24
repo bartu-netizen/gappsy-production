@@ -27,10 +27,10 @@ function jsonResponse(body: unknown, status = 200) {
 // can show an approximate amount next to a payment event. The real amount
 // of record always lives in Stripe.
 const CLAIM_PRICE_AMOUNT_CENTS = 2900; // $29 one-time
-const GROWTH_PRICE_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
+const FEATURED_PRICE_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
 function estimateAmountCents(product: string | null, billingInterval: string | null): number | null {
   if (product === "claim") return CLAIM_PRICE_AMOUNT_CENTS;
-  if (product === "growth" && billingInterval) return GROWTH_PRICE_AMOUNT_CENTS[billingInterval] ?? null;
+  if (product === "featured" && billingInterval) return FEATURED_PRICE_AMOUNT_CENTS[billingInterval] ?? null;
   return null;
 }
 

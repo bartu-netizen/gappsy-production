@@ -4,7 +4,7 @@ import AskGappsyChat from './AskGappsyChat';
 
 interface AskGappsyBubbleProps {
   /** Non-tool page context passed through to AskGappsyChat (e.g.
-   * 'feature_my_product', 'growth_upsell') — omit for the directory-wide
+   * 'feature_my_product', 'featured_upsell') — omit for the directory-wide
    * default. */
   page?: string;
   suggestedQuestions?: string[];

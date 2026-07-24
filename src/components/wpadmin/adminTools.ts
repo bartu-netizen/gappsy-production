@@ -431,9 +431,9 @@ export const ADMIN_TOOLS: AdminTool[] = [
   {
     id: 'vendor-comparison-requests',
     label: 'Comparison Requests',
-    description: 'Growth vendors\' requests to be compared against a specific competitor',
+    description: 'Featured vendors\' requests to be compared against a specific competitor',
     href: '/wp-admin/vendor-comparison-requests',
-    keywords: ['vendor', 'comparison', 'growth', 'compare', 'request'],
+    keywords: ['vendor', 'comparison', 'featured', 'compare', 'request'],
     group: 'Content',
     scopes: ['software'],
     iconName: 'GitCompare',

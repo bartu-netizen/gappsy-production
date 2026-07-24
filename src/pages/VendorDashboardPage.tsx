@@ -10,7 +10,7 @@ import { vendorDashboard, type VendorToolSummary } from '../lib/vendorDashboardA
 import EntitySEOTags from '../components/EntitySEOTags';
 import { useNoindex } from '../components/NoindexMeta';
 import ToolSelectCombobox, { type ToolOption } from '../components/compare/ToolSelectCombobox';
-import { GROWTH_MONTHLY_FEATURES } from '../lib/growthFeatures';
+import { FEATURED_MONTHLY_FEATURES } from '../lib/growthFeatures';
 
 interface ToolRow {
   id: string; slug: string; name: string; logo: string | null; website: string | null;
@@ -30,7 +30,7 @@ interface ReviewRow {
   status: string; vendor_response: string | null; vendor_response_at: string | null; created_at: string;
 }
 interface ClaimSubscriptionRow { status: string; created_at: string }
-interface GrowthSubscriptionRow {
+interface FeaturedSubscriptionRow {
   status: string; billing_interval: string | null; current_period_end: string | null;
   featured_until: string | null; stripe_customer_id: string | null; canceled_at: string | null;
 }
@@ -69,7 +69,7 @@ export default function VendorDashboardPage() {
   const [faqs, setFaqs] = useState<FaqRow[]>([]);
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
   const [claimSubscription, setClaimSubscription] = useState<ClaimSubscriptionRow | null>(null);
-  const [growthSubscription, setGrowthSubscription] = useState<GrowthSubscriptionRow | null>(null);
+  const [featuredSubscription, setFeaturedSubscription] = useState<FeaturedSubscriptionRow | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [chatQuestions, setChatQuestions] = useState<ChatQuestionRow[]>([]);
   const [comparisonRequests, setComparisonRequests] = useState<ComparisonRequestRow[]>([]);
@@ -92,7 +92,7 @@ export default function VendorDashboardPage() {
   // Shared setter used by both effects below.
   function applyDashboardData(res: {
     tool: ToolRow; features: FeatureRow[]; pros: TextRow[]; cons: TextRow[]; faqs: FaqRow[]; reviews: ReviewRow[];
-    claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; analytics: AnalyticsData | null;
+    claimSubscription: ClaimSubscriptionRow | null; featuredSubscription: FeaturedSubscriptionRow | null; analytics: AnalyticsData | null;
     chatQuestions?: ChatQuestionRow[]; comparisonRequests?: ComparisonRequestRow[];
   }) {
     setTool(res.tool);
@@ -102,7 +102,7 @@ export default function VendorDashboardPage() {
     setFaqs(res.faqs);
     setReviews(res.reviews);
     setClaimSubscription(res.claimSubscription);
-    setGrowthSubscription(res.growthSubscription);
+    setFeaturedSubscription(res.featuredSubscription);
     setAnalytics(res.analytics);
     setChatQuestions(res.chatQuestions || []);
     setComparisonRequests(res.comparisonRequests || []);
@@ -309,19 +309,19 @@ export default function VendorDashboardPage() {
             </nav>
 
             <div className="flex-1 min-w-0">
-              {tab === 'overview' && <OverviewTab tool={tool} growthSubscription={growthSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} toolId={selectedToolId} />}
+              {tab === 'overview' && <OverviewTab tool={tool} featuredSubscription={featuredSubscription} reviews={reviews} onLogoUpdated={(logo) => setTool((t) => (t ? { ...t, logo } : t))} toolId={selectedToolId} />}
               {tab === 'analytics' && (
-                growthSubscription?.status === 'active'
+                featuredSubscription?.status === 'active'
                   ? (analytics && <AnalyticsTab analytics={analytics} />)
                   : <AnalyticsTeaser toolWebsite={tool.website} />
               )}
               {tab === 'chat_questions' && (
-                growthSubscription?.status === 'active'
+                featuredSubscription?.status === 'active'
                   ? <ChatQuestionsTab questions={chatQuestions} />
                   : <ChatQuestionsTeaser toolWebsite={tool.website} />
               )}
               {tab === 'comparisons' && (
-                growthSubscription?.status === 'active'
+                featuredSubscription?.status === 'active'
                   ? <ComparisonRequestsTab tool={tool} requests={comparisonRequests} onRequests={setComparisonRequests} toolId={selectedToolId} />
                   : <ComparisonsTeaser tool={tool} toolWebsite={tool.website} />
               )}
@@ -330,10 +330,10 @@ export default function VendorDashboardPage() {
                 <ContentTab features={features} pros={pros} cons={cons} faqs={faqs} onFeatures={setFeatures} onPros={setPros} onCons={setCons} onFaqs={setFaqs} toolId={selectedToolId} />
               )}
               {tab === 'reviews' && (
-                <ReviewsTab reviews={reviews} onReviews={setReviews} isGrowthActive={growthSubscription?.status === 'active'} toolWebsite={tool.website} toolId={selectedToolId} />
+                <ReviewsTab reviews={reviews} onReviews={setReviews} isFeaturedActive={featuredSubscription?.status === 'active'} toolWebsite={tool.website} toolId={selectedToolId} />
               )}
               {tab === 'billing' && (
-                <BillingTab claimSubscription={claimSubscription} growthSubscription={growthSubscription} toolSlug={tool.slug} toolWebsite={tool.website} toolId={selectedToolId} />
+                <BillingTab claimSubscription={claimSubscription} featuredSubscription={featuredSubscription} toolSlug={tool.slug} toolWebsite={tool.website} toolId={selectedToolId} />
               )}
             </div>
           </div>
@@ -408,11 +408,11 @@ function LogoUploader({ tool, onLogoUpdated, toolId }: { tool: ToolRow; onLogoUp
 }
 
 function OverviewTab({
-  tool, growthSubscription, reviews, onLogoUpdated, toolId,
-}: { tool: ToolRow; growthSubscription: GrowthSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void; toolId: string | null }) {
+  tool, featuredSubscription, reviews, onLogoUpdated, toolId,
+}: { tool: ToolRow; featuredSubscription: FeaturedSubscriptionRow | null; reviews: ReviewRow[]; onLogoUpdated: (logo: string) => void; toolId: string | null }) {
   const pendingCount = reviews.filter((r) => r.status === 'pending').length;
   const publishedCount = reviews.filter((r) => r.status === 'approved').length;
-  const isActive = growthSubscription?.status === 'active';
+  const isActive = featuredSubscription?.status === 'active';
 
   return (
     <div className="space-y-5">
@@ -449,9 +449,9 @@ function OverviewTab({
       {isActive ? (
         <Card>
           <p className="text-sm text-slate-600">
-            You're on Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>}
+            You're on Featured{featuredSubscription?.billing_interval && <> ({featuredSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>}
             {tool.featured_until && <> — active until <strong className="text-[#0B1221]">{new Date(tool.featured_until).toLocaleDateString()}</strong></>}.
-            {growthSubscription?.billing_interval !== 'year' && (
+            {featuredSubscription?.billing_interval !== 'year' && (
               <> <Link to={`/list-your-product/onboarding?url=${encodeURIComponent(tool.website || '')}`} className="font-medium text-[#4F47E6] hover:text-[#4338CA]">Switch to Yearly</Link> for a produced video review, a newsletter feature, and an ad-free listing.</>
             )}
           </p>
@@ -462,14 +462,14 @@ function OverviewTab({
             <div>
               <p className="text-sm font-bold text-[#0B1221]">You're on the basic listing plan only</p>
               <p className="text-[13px] text-slate-500 mt-1 max-w-md">
-                Upgrade to Growth for featured placement across category, comparison, and search — Yearly adds a produced video review, a newsletter feature, and an ad-free listing.
+                Upgrade to Featured for priority placement across category, comparison, and search — Yearly adds a produced video review, a newsletter feature, and an ad-free listing.
               </p>
             </div>
             <Link
               to={`/list-your-product/onboarding?url=${encodeURIComponent(tool.website || '')}`}
               className="shrink-0 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
             >
-              Upgrade to Growth
+              Upgrade to Featured
             </Link>
           </div>
         </Card>
@@ -495,7 +495,7 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
     <div className="space-y-5">
       <Card>
         <p className="text-sm font-bold text-[#0B1221]">Listing analytics</p>
-        <p className="text-[13px] text-slate-500 mt-1">A Growth perk — how many people see and click through to your listing.</p>
+        <p className="text-[13px] text-slate-500 mt-1">A Featured perk — how many people see and click through to your listing.</p>
       </Card>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <AnalyticsStat icon={BarChart3} label="Page views (last 30 days)" value={analytics.views_30d} />
@@ -507,7 +507,7 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData }) {
   );
 }
 
-// A Growth perk: what visitors actually ask the Ask Gappsy chat while on
+// A Featured perk: what visitors actually ask the Ask Gappsy chat while on
 // this listing's own page — real buyer intent/objections, anonymized by
 // design (the API never returns session_id/ip_address, only the question
 // text and its date — see vendor-dashboard/index.ts).
@@ -517,7 +517,7 @@ function ChatQuestionsTab({ questions }: { questions: { content: string; created
       <Card>
         <p className="text-sm font-bold text-[#0B1221]">Visitor questions</p>
         <p className="text-[13px] text-slate-500 mt-1">
-          A Growth perk — real questions visitors asked the Ask Gappsy chat while looking at your listing. Anonymized: no name, session, or IP is ever shown, just the question itself.
+          A Featured perk — real questions visitors asked the Ask Gappsy chat while looking at your listing. Anonymized: no name, session, or IP is ever shown, just the question itself.
         </p>
       </Card>
 
@@ -581,7 +581,7 @@ function ComparisonRequestsTab({
       <Card>
         <p className="text-sm font-bold text-[#0B1221]">Request a comparison</p>
         <p className="text-[13px] text-slate-500 mt-1 mb-4">
-          A Growth perk — ask us to build a head-to-head comparison between {tool.name} and a specific competitor. We review every request before publishing.
+          A Featured perk — ask us to build a head-to-head comparison between {tool.name} and a specific competitor. We review every request before publishing.
         </p>
         <div className="flex items-end gap-2 flex-wrap">
           <div className="flex-1 min-w-[220px]">
@@ -631,9 +631,9 @@ function ComparisonRequestsTab({
   );
 }
 
-// Claim-only vendors (no active Growth subscription) still see these tabs in
+// Claim-only vendors (no active Featured subscription) still see these tabs in
 // the nav — clicking in shows illustrative sample content behind a blur, with
-// an "Upgrade to Growth" CTA on top, instead of the tab just disappearing.
+// an "Upgrade to Featured" CTA on top, instead of the tab just disappearing.
 // `children` is the illustrative mockup content that gets blurred; the
 // overlay card is the only interactive/legible part of this view.
 function LockedFeatureTeaser({
@@ -655,7 +655,7 @@ function LockedFeatureTeaser({
             <p className="text-sm font-bold text-[#0B1221]">{title}</p>
             <p className="text-[13px] text-slate-500 mt-1.5">{description}</p>
             <ul className="mt-3.5 space-y-1.5 text-left">
-              {GROWTH_MONTHLY_FEATURES.slice(0, 3).map((feature) => (
+              {FEATURED_MONTHLY_FEATURES.slice(0, 3).map((feature) => (
                 <li key={feature} className="flex items-start gap-1.5 text-[12.5px] text-slate-500">
                   <Sparkles className="w-3 h-3 text-[#4F47E6] shrink-0 mt-0.5" />
                   <span>{feature}</span>
@@ -666,7 +666,7 @@ function LockedFeatureTeaser({
               to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
               className="mt-4 inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
             >
-              Upgrade to Growth
+              Upgrade to Featured
             </Link>
           </div>
         </Card>
@@ -685,7 +685,7 @@ function AnalyticsTeaser({ toolWebsite }: { toolWebsite: string | null }) {
   return (
     <LockedFeatureTeaser
       title="See who's viewing your listing"
-      description="Growth unlocks page views, outbound clicks, and click-through rate for your listing, right in this dashboard."
+      description="Featured unlocks page views, outbound clicks, and click-through rate for your listing, right in this dashboard."
       toolWebsite={toolWebsite}
     >
       <div className="space-y-5">
@@ -718,7 +718,7 @@ function ChatQuestionsTeaser({ toolWebsite }: { toolWebsite: string | null }) {
   return (
     <LockedFeatureTeaser
       title="See what buyers are asking before they reach out"
-      description="Growth surfaces real, anonymized questions visitors ask the Ask Gappsy chat while viewing your listing."
+      description="Featured surfaces real, anonymized questions visitors ask the Ask Gappsy chat while viewing your listing."
       toolWebsite={toolWebsite}
     >
       <div className="space-y-5">
@@ -750,7 +750,7 @@ function ComparisonsTeaser({ tool, toolWebsite }: { tool: ToolRow; toolWebsite: 
   return (
     <LockedFeatureTeaser
       title="Get compared against tools your buyers are already considering"
-      description="Growth lets you request a head-to-head comparison page between your product and a specific competitor."
+      description="Featured lets you request a head-to-head comparison page between your product and a specific competitor."
       toolWebsite={toolWebsite}
     >
       <div className="space-y-5">
@@ -1080,37 +1080,37 @@ function FaqsEditor({ faqs, onSaved, toolId }: { faqs: FaqRow[]; onSaved: (v: Fa
 }
 
 function ReviewsTab({
-  reviews, onReviews, isGrowthActive, toolWebsite, toolId,
+  reviews, onReviews, isFeaturedActive, toolWebsite, toolId,
 }: {
-  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isGrowthActive: boolean; toolWebsite: string | null; toolId: string | null;
+  reviews: ReviewRow[]; onReviews: (v: ReviewRow[]) => void; isFeaturedActive: boolean; toolWebsite: string | null; toolId: string | null;
 }) {
   if (reviews.length === 0) {
     return <Card><p className="text-sm text-slate-500 text-center py-6">No reviews yet.</p></Card>;
   }
   return (
     <div className="space-y-4">
-      {!isGrowthActive && (
+      {!isFeaturedActive && (
         <div className="rounded-2xl bg-[#EEF0FE]/60 border border-[#E0E3FC] px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
           <p className="text-[13px] text-slate-600">
             <span className="font-semibold text-[#0B1221]">Reply to reviews is included when you list your product.</span>{' '}
-            Removing or hiding a review from your page is a Growth feature.
+            Removing or hiding a review from your page is a Featured feature.
           </p>
           <Link
             to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
             className="shrink-0 text-[13px] font-semibold text-[#4F47E6] hover:text-[#4338CA]"
           >
-            Upgrade to Growth
+            Upgrade to Featured
           </Link>
         </div>
       )}
       {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} isGrowthActive={isGrowthActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} toolId={toolId} />
+        <ReviewCard key={review.id} review={review} isFeaturedActive={isFeaturedActive} onUpdate={(updated) => onReviews(reviews.map((r) => (r.id === updated.id ? updated : r)))} toolId={toolId} />
       ))}
     </div>
   );
 }
 
-function ReviewCard({ review, onUpdate, isGrowthActive, toolId }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isGrowthActive: boolean; toolId: string | null }) {
+function ReviewCard({ review, onUpdate, isFeaturedActive, toolId }: { review: ReviewRow; onUpdate: (r: ReviewRow) => void; isFeaturedActive: boolean; toolId: string | null }) {
   const [responseText, setResponseText] = useState(review.vendor_response || '');
   const [busy, setBusy] = useState(false);
 
@@ -1146,7 +1146,7 @@ function ReviewCard({ review, onUpdate, isGrowthActive, toolId }: { review: Revi
           {review.title && <p className="text-sm font-medium text-[#0B1221] mt-1.5">{review.title}</p>}
           <p className="text-sm text-slate-600 mt-1 leading-relaxed">{review.body}</p>
         </div>
-        {!isPending && isGrowthActive && (
+        {!isPending && isFeaturedActive && (
           <button
             type="button"
             onClick={toggleVisibility}
@@ -1160,9 +1160,9 @@ function ReviewCard({ review, onUpdate, isGrowthActive, toolId }: { review: Revi
             {isRemoved ? 'Restore' : 'Remove'}
           </button>
         )}
-        {!isPending && !isGrowthActive && (
+        {!isPending && !isFeaturedActive && (
           <span
-            title="Upgrade to Growth to remove or restore reviews"
+            title="Upgrade to Featured to remove or restore reviews"
             className="shrink-0 inline-flex items-center gap-1 text-[12px] font-medium px-2.5 py-1.5 rounded-lg text-slate-300 cursor-not-allowed"
           >
             <EyeOff className="w-3.5 h-3.5" />
@@ -1203,9 +1203,9 @@ function ReviewCard({ review, onUpdate, isGrowthActive, toolId }: { review: Revi
 }
 
 function BillingTab({
-  claimSubscription, growthSubscription, toolSlug, toolWebsite, toolId,
+  claimSubscription, featuredSubscription, toolSlug, toolWebsite, toolId,
 }: {
-  claimSubscription: ClaimSubscriptionRow | null; growthSubscription: GrowthSubscriptionRow | null; toolSlug: string; toolWebsite: string | null; toolId: string | null;
+  claimSubscription: ClaimSubscriptionRow | null; featuredSubscription: FeaturedSubscriptionRow | null; toolSlug: string; toolWebsite: string | null; toolId: string | null;
 }) {
   const [opening, setOpening] = useState(false);
 
@@ -1216,7 +1216,7 @@ function BillingTab({
     if (res.ok && res.url) window.location.href = res.url;
   }
 
-  if (!claimSubscription && !growthSubscription) {
+  if (!claimSubscription && !featuredSubscription) {
     return <Card><p className="text-sm text-slate-500 text-center py-6">No billing history found for this listing.</p></Card>;
   }
 
@@ -1235,29 +1235,29 @@ function BillingTab({
         </div>
       </Card>
 
-      {/* Growth — recurring, so this is the only one with a billing portal */}
+      {/* Featured — recurring, so this is the only one with a billing portal */}
       <Card>
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-[#EEF0FE] flex items-center justify-center"><CreditCard className="w-5 h-5 text-[#4F47E6]" /></div>
           <div>
             <p className="text-sm font-bold text-[#0B1221]">
-              Growth{growthSubscription?.billing_interval && <> ({growthSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>} — {toolSlug}
+              Featured{featuredSubscription?.billing_interval && <> ({featuredSubscription.billing_interval === 'year' ? 'Yearly' : 'Monthly'})</>} — {toolSlug}
             </p>
-            <p className={`text-[13px] font-medium ${growthSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
-              {!growthSubscription ? 'Not subscribed' : growthSubscription.status === 'active' ? 'Active' : growthSubscription.status === 'past_due' ? 'Payment past due' : growthSubscription.status === 'canceled' ? 'Canceled' : growthSubscription.status}
+            <p className={`text-[13px] font-medium ${featuredSubscription?.status === 'active' ? 'text-emerald-600' : 'text-slate-500'}`}>
+              {!featuredSubscription ? 'Not subscribed' : featuredSubscription.status === 'active' ? 'Active' : featuredSubscription.status === 'past_due' ? 'Payment past due' : featuredSubscription.status === 'canceled' ? 'Canceled' : featuredSubscription.status}
             </p>
           </div>
         </div>
-        {growthSubscription?.current_period_end && (
+        {featuredSubscription?.current_period_end && (
           <p className="text-[13px] text-slate-500 mb-4">
-            {growthSubscription.status === 'canceled' ? 'Ended' : 'Renews'} on {new Date(growthSubscription.current_period_end).toLocaleDateString()}
+            {featuredSubscription.status === 'canceled' ? 'Ended' : 'Renews'} on {new Date(featuredSubscription.current_period_end).toLocaleDateString()}
           </p>
         )}
-        {growthSubscription ? (
+        {featuredSubscription ? (
           <button
             type="button"
             onClick={openPortal}
-            disabled={opening || !growthSubscription.stripe_customer_id}
+            disabled={opening || !featuredSubscription.stripe_customer_id}
             className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-60"
           >
             {opening && <Loader2 className="w-4 h-4 animate-spin" />}
@@ -1268,7 +1268,7 @@ function BillingTab({
             to={`/list-your-product/onboarding?url=${encodeURIComponent(toolWebsite || '')}`}
             className="inline-flex items-center gap-1.5 bg-[#4F47E6] hover:bg-[#4338CA] text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors"
           >
-            Upgrade to Growth
+            Upgrade to Featured
           </Link>
         )}
       </Card>

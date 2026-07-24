@@ -162,7 +162,7 @@ export default function GroupCompareDetailPage() {
   // ClaimListingCard in the sidebar, independent of the other members'
   // status and independent of the generic featuredPromo pool above (which
   // already excludes every member by slug, so there's no overlap risk).
-  // Claimed-but-not-Growth members (claim_paid_at set, featured false) are
+  // Claimed-but-not-Featured members (claim_paid_at set, featured false) are
   // left alone — that vendor already owns the listing. Unlike
   // CompareDetailPage's exactly-2-tools/2-slots mapping, a group can have
   // 3+ members against only 2 generic sidebar slots, so these render

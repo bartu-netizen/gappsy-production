@@ -127,19 +127,19 @@ export interface PostPurchaseSyncResult {
   note?: string;
 }
 
-// Called once per real purchase (claim or growth) from
+// Called once per real purchase (claim or featured) from
 // vendorFeatureActivation.ts's sendVendorSaleEmail neighbor. Two jobs:
 // (1) ALWAYS stop the cold-outreach "you're not listed yet" emails the
 // instant someone converts — remaining on that list after paying is exactly
 // the awkward scenario this exists to prevent; (2) a claim-only buyer (not
-// yet on Growth) gets enrolled in a separate upsell campaign instead — its
+// yet on Featured) gets enrolled in a separate upsell campaign instead — its
 // actual email copy/sequence lives entirely in Smartlead's own dashboard,
 // this only ever adds/removes the lead, never touches campaign content.
-// SMARTLEAD_GROWTH_UPSELL_CAMPAIGN_ID is an env var (not code) specifically
+// SMARTLEAD_FEATURED_UPSELL_CAMPAIGN_ID is an env var (not code) specifically
 // so turning the upsell enrollment on is a config change, not a redeploy —
 // the pause-from-cold-outreach half already works today with it unset.
-export async function syncSmartleadAfterPurchase(email: string, product: "claim" | "growth"): Promise<PostPurchaseSyncResult> {
-  const upsellCampaignId = Deno.env.get("SMARTLEAD_GROWTH_UPSELL_CAMPAIGN_ID") || null;
+export async function syncSmartleadAfterPurchase(email: string, product: "claim" | "featured"): Promise<PostPurchaseSyncResult> {
+  const upsellCampaignId = Deno.env.get("SMARTLEAD_FEATURED_UPSELL_CAMPAIGN_ID") || null;
   const pausedFrom: string[] = [];
 
   try {
@@ -151,7 +151,7 @@ export async function syncSmartleadAfterPurchase(email: string, product: "claim"
         ...(upsellCampaignId ? [upsellCampaignId] : []),
       ]);
       for (const campaignId of candidates) {
-        // Growth is the endpoint of the upsell — never pause a claim-only
+        // Featured is the endpoint of the upsell — never pause a claim-only
         // buyer OUT of the very upsell campaign we're about to add them to.
         if (product === "claim" && campaignId === upsellCampaignId) continue;
         const paused = await pauseLeadInCampaign(campaignId, lead.id);
@@ -166,14 +166,14 @@ export async function syncSmartleadAfterPurchase(email: string, product: "claim"
     return { ok: true, paused_from: pausedFrom, enrolled_in_upsell: false };
   }
   if (!upsellCampaignId) {
-    return { ok: true, paused_from: pausedFrom, enrolled_in_upsell: false, note: "SMARTLEAD_GROWTH_UPSELL_CAMPAIGN_ID not configured yet" };
+    return { ok: true, paused_from: pausedFrom, enrolled_in_upsell: false, note: "SMARTLEAD_FEATURED_UPSELL_CAMPAIGN_ID not configured yet" };
   }
 
   try {
     const result = await addLeadsToCampaign(upsellCampaignId, [{ email }]);
     return { ok: result.ok, paused_from: pausedFrom, enrolled_in_upsell: result.ok, note: result.ok ? undefined : "Smartlead rejected enrollment" };
   } catch (err) {
-    console.error(`[smartleadSync] failed to enroll ${email} in growth upsell campaign:`, (err as Error).message);
+    console.error(`[smartleadSync] failed to enroll ${email} in featured upsell campaign:`, (err as Error).message);
     return { ok: false, paused_from: pausedFrom, enrolled_in_upsell: false, note: (err as Error).message };
   }
 }

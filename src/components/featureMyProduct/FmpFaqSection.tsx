@@ -6,7 +6,7 @@ import { FMP_FAQS, type FmpFaqItem } from './fmpFaqData';
 interface FmpFaqSectionProps {
   /** Defaults to the $29 listing page's FAQs; pass a different array to
    * reuse this same accordion UI for another page's FAQ content (e.g. the
-   * Growth explainer page) without duplicating the component. */
+   * Featured explainer page) without duplicating the component. */
   faqs?: FmpFaqItem[];
 }
 

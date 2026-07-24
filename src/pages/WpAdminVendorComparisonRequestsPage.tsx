@@ -14,7 +14,7 @@ interface ComparisonRequestRow {
   requested_tool: ToolRef | null;
 }
 
-// Queue for Growth vendors' "compare me against X" requests (see
+// Queue for Featured vendors' "compare me against X" requests (see
 // vendor-dashboard/index.ts's request_comparison action). Approving/
 // rejecting here only updates the request's own status — the actual
 // tool_comparisons row still needs to be created by hand at
@@ -62,7 +62,7 @@ export default function WpAdminVendorComparisonRequestsPage() {
   const pendingCount = requests.filter((r) => r.status === 'pending').length;
 
   return (
-    <WpAdminLayout title="Comparison Requests" subtitle="Growth vendors' requests to be compared against a specific competitor">
+    <WpAdminLayout title="Comparison Requests" subtitle="Featured vendors' requests to be compared against a specific competitor">
       <div className="p-6 max-w-4xl mx-auto space-y-5">
         <div className="flex items-center justify-between">
           <p className="text-sm text-slate-500">{pendingCount} pending request{pendingCount === 1 ? '' : 's'}</p>

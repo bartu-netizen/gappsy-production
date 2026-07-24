@@ -13,9 +13,9 @@ export interface FeaturedTool {
   pricing_model: string | null;
   starting_price: string | null;
   is_open_source?: boolean;
-  // Only ever set by a real Growth activation (see vendorFeatureActivation.ts
+  // Only ever set by a real Featured activation (see vendorFeatureActivation.ts
   // / the admin manual grant) — null for tools.featured=true via editorial
-  // marking alone, which is how the badge tells a real paying Growth
+  // marking alone, which is how the badge tells a real paying Featured
   // customer apart from an editor's pick.
   billing_interval?: string | null;
 }
@@ -96,16 +96,15 @@ function WantYourProductHereLink({ className = '', toolSlug }: { className?: str
   );
 }
 
-// A real paying Growth customer keeps a distinct gold/amber tint (vs. the
-// generic indigo) so admins can still tell the two apart at a glance, but
-// the label is always "Featured" — visitors have no reason to know "Growth"
-// is Gappsy's internal product-tier name, and seeing it here read as a
-// labeling bug rather than a meaningful distinction.
-export function FeaturedBadge({ large = false, growth = false }: { large?: boolean; growth?: boolean }) {
+// A real paying Featured customer keeps a distinct gold/amber tint (vs. the
+// generic indigo used for an editorially-marked tool) so admins can still
+// tell the two apart at a glance, even though the label itself always reads
+// "Featured" either way.
+export function FeaturedBadge({ large = false, paid = false }: { large?: boolean; paid?: boolean }) {
   return (
     <span
       className={`inline-flex items-center gap-1 font-bold uppercase tracking-[0.06em] text-white rounded-full ${large ? 'text-[10px] px-2.5 py-1' : 'text-[9px] px-2 py-0.5'} ${
-        growth ? 'bg-gradient-to-r from-amber-500 to-amber-600' : 'bg-[#4F47E6]'
+        paid ? 'bg-gradient-to-r from-amber-500 to-amber-600' : 'bg-[#4F47E6]'
       }`}
     >
       <Sparkles className={large ? 'w-3 h-3' : 'w-2.5 h-2.5'} aria-hidden="true" />
@@ -133,7 +132,7 @@ export function FeaturedToolSidebarCompact({ tool }: { tool: FeaturedTool }) {
           <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 font-semibold text-xs shrink-0">{tool.name.charAt(0)}</div>
         )}
         <div className="min-w-0 flex-1">
-          <FeaturedBadge growth={Boolean(tool.billing_interval)} />
+          <FeaturedBadge paid={Boolean(tool.billing_interval)} />
           <p className="font-semibold text-[#0B1221] text-[13px] leading-tight truncate group-hover:text-[#4F47E6] transition-colors">{tool.name}</p>
         </div>
         <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
@@ -187,7 +186,7 @@ export function FeaturedToolInlineCard({ tool }: { tool: FeaturedTool }) {
           )}
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <FeaturedBadge large growth={Boolean(tool.billing_interval)} />
+              <FeaturedBadge large paid={Boolean(tool.billing_interval)} />
             </div>
             <p className="font-bold text-[#0B1221] text-[15px]">{tool.name}</p>
           </div>

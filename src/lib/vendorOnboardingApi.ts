@@ -41,7 +41,7 @@ function warmEdgeFunctions(names: string[]): void {
 // onboarding page mounts — the proof page's own dwell time is the only
 // buffer that exists for that path) and FeatureMyProductOnboardingPage
 // itself (covers every other entry point — ToolCard's "Claim this
-// listing", the dashboard's Growth upsell links, FeatureGrowthPage, etc. —
+// listing", the dashboard's Featured upsell links, FeatureGrowthPage, etc. —
 // all of which land straight on the URL step and give real click-to-submit
 // buffer time regardless).
 export function warmVendorOnboarding(): void {
@@ -98,7 +98,7 @@ export const vendorOnboarding = {
   submitContact: (sessionId: string, email: string, name: string, ownershipConfirmed: boolean) =>
     callFunction("vendor-onboarding", { action: "submit_contact", session_id: sessionId, email, name, ownership_confirmed: ownershipConfirmed }),
   checkEmailAccount: (email: string) => callFunction("vendor-onboarding", { action: "check_email_account", email }),
-  createCheckout: (sessionId: string, product: "claim" | "growth", billingInterval?: "month" | "year") =>
+  createCheckout: (sessionId: string, product: "claim" | "featured", billingInterval?: "month" | "year") =>
     callFunction("vendor-onboarding", { action: "create_checkout", session_id: sessionId, product, billing_interval: billingInterval }),
   sessionStatus: (params: { sessionId?: string; stripeSessionId?: string }) =>
     callFunction("vendor-onboarding", { action: "session_status", session_id: params.sessionId, stripe_session_id: params.stripeSessionId }),

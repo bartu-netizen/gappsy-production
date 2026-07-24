@@ -20,7 +20,7 @@ interface StickyMobileToolBarProps {
 // dead zone between this bar and StickyDesktopToolBar's `lg:` breakpoint —
 // without it, viewports in the 768-1023px range (e.g. iPad portrait) showed
 // neither bar at all. The caller (ToolDetailPage.tsx) skips rendering this
-// component entirely when the current tool is on a Growth Yearly
+// component entirely when the current tool is on a Featured Yearly
 // subscription (`tool.billing_interval === 'year'`) — that's the one paid
 // tier that buys "no competitor ads on your own listing," so this component
 // itself stays unconditional. Renders nothing if there's no promo candidate
@@ -55,7 +55,7 @@ export default function StickyMobileToolBar({ featuredPromo }: StickyMobileToolB
           )}
         </div>
         <div className="absolute top-1.5 right-1.5 scale-90 origin-top-right">
-          <FeaturedBadge growth={Boolean(featuredPromo.billing_interval)} />
+          <FeaturedBadge paid={Boolean(featuredPromo.billing_interval)} />
         </div>
       </Link>
     </div>

@@ -31,13 +31,13 @@ const SKIP_OWNERSHIP_VERIFICATION = true;
 // Mirrors sendAdminSaleEmail's role for agency-listing sales (stripe-webhook
 // /index.ts) — that one never fires for feature_my_product checkouts (the
 // webhook returns right after activateVendorFeatureSubscription), so a $29
-// claim or Growth subscription previously produced no admin notification at
+// claim or Featured subscription previously produced no admin notification at
 // all. Deliberately a separate, simpler function rather than generalizing
 // sendAdminSaleEmail itself — that one's shape (rank/state/promo/Top25 deep
 // links) is agency-specific and doesn't apply here.
 const VENDOR_SALE_EMAIL_RECIPIENT = "bartu@gappsy.com";
 const VENDOR_CLAIM_AMOUNT_CENTS = 2900;
-const VENDOR_GROWTH_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
+const VENDOR_FEATURED_AMOUNT_CENTS: Record<string, number> = { month: 8900, year: 69900 };
 
 async function sendVendorSaleEmail(
   supabase: SupabaseClient,
@@ -46,7 +46,7 @@ async function sendVendorSaleEmail(
     matchedToolId: string | null;
     discoveredToolId: string | null;
     contactEmail: string;
-    product: "claim" | "growth";
+    product: "claim" | "featured";
     billingInterval: "one_time" | "month" | "year";
   },
 ) {
@@ -64,11 +64,11 @@ async function sendVendorSaleEmail(
       if (data?.name) toolName = data.name;
     }
 
-    const amountCents = params.product === "claim" ? VENDOR_CLAIM_AMOUNT_CENTS : VENDOR_GROWTH_AMOUNT_CENTS[params.billingInterval] ?? null;
+    const amountCents = params.product === "claim" ? VENDOR_CLAIM_AMOUNT_CENTS : VENDOR_FEATURED_AMOUNT_CENTS[params.billingInterval] ?? null;
     const amountLabel = amountCents != null ? `$${(amountCents / 100).toFixed(2)}` : "unknown amount";
     const productLabel = params.product === "claim"
       ? "Claim & Verify (one-time)"
-      : `Growth (${params.billingInterval === "year" ? "yearly" : "monthly"})`;
+      : `Featured (${params.billingInterval === "year" ? "yearly" : "monthly"})`;
     const baseUrl = Deno.env.get("PUBLIC_BASE_URL") || "https://gappsy.com";
     const adminLink = params.onboardingSessionId
       ? `${baseUrl}/wp-admin/vendor-monetization?id=${params.onboardingSessionId}`
@@ -108,7 +108,7 @@ export interface VendorCheckoutMetadata {
   matched_tool_id?: string;
   discovered_tool_id?: string;
   contact_email: string;
-  product?: "claim" | "growth";
+  product?: "claim" | "featured";
   billing_interval?: "one_time" | "month" | "year";
 }
 
@@ -149,11 +149,11 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
   const matchedToolId = metadata.matched_tool_id || null;
   const discoveredToolId = metadata.discovered_tool_id || null;
   const contactEmail = metadata.contact_email || session.customer_details?.email || "";
-  // Pre-migration in-flight checkouts (started before the claim/growth
+  // Pre-migration in-flight checkouts (started before the claim/featured
   // split shipped) carry no product/billing_interval metadata at all — a
   // recurring session with no product tag is the old single-tier product,
-  // i.e. today's "growth".
-  const product: "claim" | "growth" = metadata.product === "claim" ? "claim" : "growth";
+  // i.e. today's "featured".
+  const product: "claim" | "featured" = metadata.product === "claim" ? "claim" : "featured";
   const billingInterval: "one_time" | "month" | "year" = metadata.billing_interval || "month";
 
   console.log("[vendorFeatureActivation] checkout.session.completed", {
@@ -222,9 +222,9 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
     }
   }
 
-  // Ownership verification only needs to happen once — Growth is gated
+  // Ownership verification only needs to happen once — Featured is gated
   // behind an already-active claim, so a token already exists by the time
-  // a Growth checkout completes. Only mint one on claim activation.
+  // a Featured checkout completes. Only mint one on claim activation.
   if (isClaim) {
     const ownershipToken = generateSecureToken();
     // Bare token — vendor-ownership-verify/index.ts builds the exact expected
@@ -272,7 +272,7 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
 
   // Stops the cold-outreach "you're not listed yet" campaign the instant
   // someone converts, and (claim-only buyers) enrolls them in the separate
-  // Growth-upsell campaign instead — see smartleadSync.ts for the full
+  // Featured-upsell campaign instead — see smartleadSync.ts for the full
   // rationale. Best-effort: a Smartlead hiccup must never affect the
   // customer's actual purchase/activation.
   if (contactEmail) {
@@ -287,7 +287,7 @@ export async function activateVendorFeatureSubscription(supabase: SupabaseClient
 
 // customer.subscription.updated/deleted — keeps featured_until / tools.featured
 // in sync with the subscription's actual lifecycle (renewal, past_due, cancel).
-// Only Growth is ever a real Stripe Subscription (Claim is mode: "payment",
+// Only Featured is ever a real Stripe Subscription (Claim is mode: "payment",
 // so Stripe never fires this event for it) — no product branching needed.
 export async function handleVendorSubscriptionChange(supabase: SupabaseClient, subscription: Stripe.Subscription) {
   const metadata = (subscription.metadata || {}) as Partial<VendorCheckoutMetadata>;

@@ -94,7 +94,7 @@ export default function CompareDetailPage() {
   // ClaimListingCard in the sidebar, independent of the other tool's status
   // and independent of the generic featuredPromo pool above (which already
   // excludes both compared tools by slug, so there's no overlap risk).
-  // Claimed-but-not-Growth tools (claim_paid_at set, featured false) are
+  // Claimed-but-not-Featured tools (claim_paid_at set, featured false) are
   // left alone — that vendor already owns the listing.
   const unclaimedA = Boolean(comparison && !comparison.tool_a.featured && !comparison.tool_a.claim_paid_at);
   const unclaimedB = Boolean(comparison && !comparison.tool_b.featured && !comparison.tool_b.claim_paid_at);

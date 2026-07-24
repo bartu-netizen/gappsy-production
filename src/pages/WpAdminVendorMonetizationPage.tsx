@@ -31,7 +31,7 @@ interface SaleRow {
   id: string;
   tool_id: string | null;
   discovered_tool_id: string | null;
-  product: 'claim' | 'growth';
+  product: 'claim' | 'featured';
   billing_interval: 'one_time' | 'month' | 'year' | null;
   contact_email: string | null;
   stripe_subscription_id: string | null;
@@ -48,7 +48,7 @@ interface MutateResponse { ok: boolean; error?: string; token?: string }
 
 function productLabel(product: string, billingInterval: string | null): string {
   if (product === 'claim') return 'Claim & Verify';
-  return `Growth (${billingInterval === 'year' ? 'Yearly' : 'Monthly'})`;
+  return `Featured (${billingInterval === 'year' ? 'Yearly' : 'Monthly'})`;
 }
 
 function formatAmount(cents: number | null): string {
@@ -247,7 +247,7 @@ export default function WpAdminVendorMonetizationPage() {
                           ) : <span className="text-slate-400">—</span>}
                         </td>
                         <td className="px-4 py-3">
-                          <span className={`px-2 py-1 rounded-full text-[11px] font-semibold ${sale.product === 'growth' ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700'}`}>
+                          <span className={`px-2 py-1 rounded-full text-[11px] font-semibold ${sale.product === 'featured' ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700'}`}>
                             {productLabel(sale.product, sale.billing_interval)}
                           </span>
                         </td>

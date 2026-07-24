@@ -18,7 +18,7 @@ interface StickyDesktopToolBarProps {
 // card is lg:sticky and stays in view for the whole read, so this bar isn't
 // filling a visibility gap — it's additional exposure. The caller
 // (ToolDetailPage.tsx) skips rendering this component entirely when the
-// current tool is on a Growth Yearly subscription
+// current tool is on a Featured Yearly subscription
 // (`tool.billing_interval === 'year'`) — that's the one paid tier that buys
 // "no competitor ads on your own listing." Dismissible because a second
 // permanent bar on top of an already-persistent sidebar would be one nag

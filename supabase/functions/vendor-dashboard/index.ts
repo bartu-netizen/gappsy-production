@@ -45,12 +45,12 @@ function pickWhitelisted(input: Record<string, unknown>): Record<string, unknown
 }
 
 // deno-lint-ignore no-explicit-any
-async function hasActiveGrowth(supabase: any, toolId: string): Promise<boolean> {
+async function hasActiveFeatured(supabase: any, toolId: string): Promise<boolean> {
   const { data } = await supabase
     .from("vendor_feature_subscriptions")
     .select("status")
     .eq("tool_id", toolId)
-    .eq("product", "growth")
+    .eq("product", "featured")
     .eq("status", "active")
     .limit(1)
     .maybeSingle();
@@ -76,7 +76,7 @@ Deno.serve(async (req: Request) => {
     const session = await requireVendorSession(req, supabase, toolId);
 
     if (req.method === "GET") {
-      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, growthResult, comparisonRequestsResult] = await Promise.all([
+      const [toolResult, featuresResult, prosResult, consResult, faqsResult, reviewsResult, claimResult, featuredResult, comparisonRequestsResult] = await Promise.all([
         supabase.from("tools").select(
           `id, slug, name, logo, website, short_description, long_description, pricing_model, starting_price,
            youtube_url, founded_year, company_size, headquarters, languages, best_for, target_audience,
@@ -88,23 +88,23 @@ Deno.serve(async (req: Request) => {
         supabase.from("tool_cons").select("id, text, sort_order").eq("tool_id", session.toolId).order("sort_order"),
         supabase.from("tool_faqs").select("id, question, answer, sort_order").eq("tool_id", session.toolId).eq("status", "published").order("sort_order"),
         supabase.from("tool_user_reviews").select("id, reviewer_name, rating, title, body, status, vendor_response, vendor_response_at, created_at").eq("tool_id", session.toolId).order("created_at", { ascending: false }),
-        // Claim and Growth are two independent products (see the v2 vendor
-        // claim/growth migration) — queried separately so the dashboard can
+        // Claim and Featured are two independent products (see the v2 vendor
+        // claim/featured migration) — queried separately so the dashboard can
         // show accurate, distinct status for each instead of whichever
         // subscription row happens to be newest.
         supabase.from("vendor_feature_subscriptions").select("status, created_at").eq("tool_id", session.toolId).eq("product", "claim").order("created_at", { ascending: false }).limit(1).maybeSingle(),
-        supabase.from("vendor_feature_subscriptions").select("status, billing_interval, current_period_end, featured_until, stripe_customer_id, canceled_at").eq("tool_id", session.toolId).eq("product", "growth").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        supabase.from("vendor_feature_subscriptions").select("status, billing_interval, current_period_end, featured_until, stripe_customer_id, canceled_at").eq("tool_id", session.toolId).eq("product", "featured").order("created_at", { ascending: false }).limit(1).maybeSingle(),
         supabase.from("vendor_comparison_requests").select("id, status, admin_notes, created_at, requested_tool:tools!vendor_comparison_requests_requested_tool_id_fkey(slug, name, logo)").eq("tool_id", session.toolId).order("created_at", { ascending: false }),
       ]);
 
       if (toolResult.error) return jsonResponse({ ok: false, error: "Failed to load listing" }, 500);
 
-      // Analytics is a Growth perk — only queried (and only ever returned)
-      // for a listing with an actually-paid, currently-active Growth
+      // Analytics is a Featured perk — only queried (and only ever returned)
+      // for a listing with an actually-paid, currently-active Featured
       // subscription, never for Claim-only or a pending/past-due one.
       let analytics = null;
       let chatQuestions: { content: string; created_at: string }[] = [];
-      if (growthResult.data?.status === "active") {
+      if (featuredResult.data?.status === "active") {
         const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
         const [viewsTotal, views30d, clicksTotal, clicks30d, chatQuestionsResult] = await Promise.all([
           supabase.from("tool_page_views").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId),
@@ -112,7 +112,7 @@ Deno.serve(async (req: Request) => {
           supabase.from("tool_outbound_clicks").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId),
           supabase.from("tool_outbound_clicks").select("id", { count: "exact", head: true }).eq("tool_id", session.toolId).gte("created_at", since30d),
           // Anonymized by design — never session_id or ip_address, only the
-          // question text and its date. A Growth perk showing genuine buyer
+          // question text and its date. A Featured perk showing genuine buyer
           // intent/objections asked on this listing's own Ask Gappsy chat.
           supabase.from("tool_chat_messages").select("content, created_at").eq("tool_id", session.toolId).eq("role", "user").order("created_at", { ascending: false }).limit(200),
         ]);
@@ -134,7 +134,7 @@ Deno.serve(async (req: Request) => {
         faqs: faqsResult.data || [],
         reviews: reviewsResult.data || [],
         claimSubscription: claimResult.data || null,
-        growthSubscription: growthResult.data || null,
+        featuredSubscription: featuredResult.data || null,
         analytics,
         chatQuestions,
         comparisonRequests: comparisonRequestsResult.data || [],
@@ -204,10 +204,10 @@ Deno.serve(async (req: Request) => {
         // 'rejected' rather than deleting the row, so a removed review still
         // shows up in the admin moderation queue (oversight against a vendor
         // suppressing legitimate criticism) instead of disappearing forever.
-        // Growth-exclusive: Claim & Verify includes replying to reviews, but
+        // Featured-exclusive: Claim & Verify includes replying to reviews, but
         // not removing/hiding them.
-        if (!(await hasActiveGrowth(supabase, session.toolId))) {
-          return jsonResponse({ ok: false, error: "Removing or restoring reviews is a Growth feature — upgrade to remove reviews from your listing." }, 403);
+        if (!(await hasActiveFeatured(supabase, session.toolId))) {
+          return jsonResponse({ ok: false, error: "Removing or restoring reviews is a Featured feature — upgrade to remove reviews from your listing." }, 403);
         }
 
         if (review.status !== "approved" && review.status !== "rejected") {
@@ -220,12 +220,12 @@ Deno.serve(async (req: Request) => {
       }
 
       if (action === "request_comparison") {
-        // Growth-exclusive: request to be paired against a specific
+        // Featured-exclusive: request to be paired against a specific
         // competitor. Only queues the request — the actual tool_comparisons
         // row is still hand-created by an admin via the existing editor
         // (including its open-source-pair guard), never auto-created here.
-        if (!(await hasActiveGrowth(supabase, session.toolId))) {
-          return jsonResponse({ ok: false, error: "Requesting a comparison is a Growth feature." }, 403);
+        if (!(await hasActiveFeatured(supabase, session.toolId))) {
+          return jsonResponse({ ok: false, error: "Requesting a comparison is a Featured feature." }, 403);
         }
         const requestedToolSlug = typeof payload.requested_tool_slug === "string" ? payload.requested_tool_slug : null;
         if (!requestedToolSlug) return jsonResponse({ ok: false, error: "requested_tool_slug is required" }, 400);
@@ -256,11 +256,11 @@ Deno.serve(async (req: Request) => {
       }
 
       if (action === "create_billing_portal_session") {
-        // Only Growth is a real recurring subscription — Claim is a one-time
+        // Only Featured is a real recurring subscription — Claim is a one-time
         // charge with nothing to manage in a billing portal (no upcoming
         // renewal, no payment method to update for it).
-        const { data: sub } = await supabase.from("vendor_feature_subscriptions").select("stripe_customer_id").eq("tool_id", session.toolId).eq("product", "growth").not("stripe_customer_id", "is", null).order("created_at", { ascending: false }).limit(1).maybeSingle();
-        if (!sub?.stripe_customer_id) return jsonResponse({ ok: false, error: "No Growth subscription found for this listing" }, 404);
+        const { data: sub } = await supabase.from("vendor_feature_subscriptions").select("stripe_customer_id").eq("tool_id", session.toolId).eq("product", "featured").not("stripe_customer_id", "is", null).order("created_at", { ascending: false }).limit(1).maybeSingle();
+        if (!sub?.stripe_customer_id) return jsonResponse({ ok: false, error: "No Featured subscription found for this listing" }, 404);
 
         const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
         if (!stripeKey) return jsonResponse({ ok: false, error: "Billing is not configured" }, 500);

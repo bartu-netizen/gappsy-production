@@ -13,9 +13,9 @@ interface VendorAccountRow {
   email: string | null;
   created_at: string | null;
   last_sign_in_at: string | null;
-  growth_status: string | null;
-  growth_billing_interval: string | null;
-  growth_featured_until: string | null;
+  featured_status: string | null;
+  featured_billing_interval: string | null;
+  featured_until: string | null;
 }
 
 function randomPassword(): string {
@@ -102,17 +102,17 @@ export default function WpAdminVendorAccountsPage() {
     setActingId(null);
   }
 
-  async function handleGrantGrowth(account: VendorAccountRow, interval: 'month' | 'year') {
-    if (!confirm(`Grant ${account.tool_name} Growth (${interval === 'year' ? 'Yearly' : 'Monthly'})? This bypasses Stripe entirely.`)) return;
+  async function handleGrantFeatured(account: VendorAccountRow, interval: 'month' | 'year') {
+    if (!confirm(`Grant ${account.tool_name} Featured (${interval === 'year' ? 'Yearly' : 'Monthly'})? This bypasses Stripe entirely.`)) return;
     setActingId(account.tool_id);
     const result = await adminApiFetch<{ ok: boolean; error?: string; featured_until?: string }>('admin-vendor-accounts', {
       method: 'POST',
-      body: { action: 'grant_growth', tool_id: account.tool_id, billing_interval: interval },
+      body: { action: 'grant_featured', tool_id: account.tool_id, billing_interval: interval },
     });
     if (result.ok && result.data?.ok) {
       fetchAccounts();
     } else {
-      setError(result.data?.error || (result.error ? getErrorMessage(result.error) : 'Failed to grant Growth'));
+      setError(result.data?.error || (result.error ? getErrorMessage(result.error) : 'Failed to grant Featured'));
     }
     setActingId(null);
   }
@@ -266,9 +266,9 @@ export default function WpAdminVendorAccountsPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-[#0B1221] text-sm truncate">{account.tool_name}</p>
-                    {account.growth_status === 'active' ? (
+                    {account.featured_status === 'active' ? (
                       <span className="inline-flex items-center gap-1 text-[10.5px] font-semibold uppercase tracking-wide text-white bg-[#4F47E6] rounded-full px-2 py-0.5">
-                        <Sparkles className="w-2.5 h-2.5" /> Growth ({account.growth_billing_interval === 'year' ? 'Yearly' : 'Monthly'})
+                        <Sparkles className="w-2.5 h-2.5" /> Featured ({account.featured_billing_interval === 'year' ? 'Yearly' : 'Monthly'})
                       </span>
                     ) : (
                       <span className="text-[10.5px] font-semibold uppercase tracking-wide text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Claim only</span>
@@ -278,8 +278,8 @@ export default function WpAdminVendorAccountsPage() {
                   <p className="text-xs text-slate-400 mt-0.5">
                     Created {account.created_at ? new Date(account.created_at).toLocaleString() : '—'}
                     {account.last_sign_in_at ? ` · last signed in ${new Date(account.last_sign_in_at).toLocaleString()}` : ' · never signed in'}
-                    {account.growth_status === 'active' && account.growth_featured_until
-                      ? ` · Growth until ${new Date(account.growth_featured_until).toLocaleDateString()}`
+                    {account.featured_status === 'active' && account.featured_until
+                      ? ` · Featured until ${new Date(account.featured_until).toLocaleDateString()}`
                       : ''}
                   </p>
                 </div>
@@ -296,8 +296,8 @@ export default function WpAdminVendorAccountsPage() {
                   <button
                     type="button"
                     disabled={actingId === account.tool_id}
-                    onClick={() => handleGrantGrowth(account, 'month')}
-                    title="Grant Growth Monthly (bypasses Stripe)"
+                    onClick={() => handleGrantFeatured(account, 'month')}
+                    title="Grant Featured Monthly (bypasses Stripe)"
                     className="h-9 px-3 rounded-full bg-[#EEF0FE] text-[#4F47E6] hover:bg-[#E0E3FC] flex items-center justify-center transition-colors disabled:opacity-50 text-xs font-semibold whitespace-nowrap"
                   >
                     +Monthly
@@ -305,8 +305,8 @@ export default function WpAdminVendorAccountsPage() {
                   <button
                     type="button"
                     disabled={actingId === account.tool_id}
-                    onClick={() => handleGrantGrowth(account, 'year')}
-                    title="Grant Growth Yearly (bypasses Stripe)"
+                    onClick={() => handleGrantFeatured(account, 'year')}
+                    title="Grant Featured Yearly (bypasses Stripe)"
                     className="h-9 px-3 rounded-full bg-[#4F47E6] text-white hover:bg-[#4338CA] flex items-center justify-center transition-colors disabled:opacity-50 text-xs font-semibold whitespace-nowrap"
                   >
                     +Yearly

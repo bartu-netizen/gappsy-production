@@ -324,7 +324,7 @@ async function leadMagnetComparisonGeneratorHandler(ctx: SchedulerJobContext): P
   const batchSize = typeof config.batch_size === "number" && config.batch_size > 0 ? Math.min(config.batch_size, 50) : LEAD_MAGNET_DEFAULT_BATCH_SIZE;
 
   // Only worth generating for a tool we can actually email about it, and
-  // only for genuinely unclaimed tools — a claimed or Growth-featured tool
+  // only for genuinely unclaimed tools — a claimed or Featured tool
   // isn't an outreach target, it's an existing customer.
   const { data: emailRows, error: emailError } = await supabase
     .from("tool_contact_emails")

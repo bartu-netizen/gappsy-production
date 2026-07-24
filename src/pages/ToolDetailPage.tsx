@@ -200,7 +200,7 @@ export default function ToolDetailPage({ previewToolId }: { previewToolId?: stri
   const featuredPromoSecondary = featuredPool?.[1];
   const featuredPromoTertiary = featuredPool?.[2];
   const inlineFeaturedPromos = (featuredPool || []).slice(3);
-  // Growth Yearly's one exclusive perk that isn't a fulfillment task (video
+  // Featured Yearly's one exclusive perk that isn't a fulfillment task (video
   // review, newsletter feature) but an actual render-time gate — no
   // competitor ads anywhere on this tool's own page.
   const isAdFree = tool?.billing_interval === 'year';

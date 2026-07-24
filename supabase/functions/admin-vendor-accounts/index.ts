@@ -36,17 +36,17 @@ Deno.serve(async (req: Request) => {
       if (ownedError) return jsonResponse({ ok: false, error: ownedError.message }, 500);
 
       const toolIds = (owned || []).map((t) => t.id as string);
-      const { data: growthRows } = toolIds.length > 0
+      const { data: featuredRows } = toolIds.length > 0
         ? await fetchInChunks(toolIds, (chunk) =>
-          supabase.from("vendor_feature_subscriptions").select("tool_id, status, billing_interval, featured_until").in("tool_id", chunk).eq("product", "growth")
+          supabase.from("vendor_feature_subscriptions").select("tool_id, status, billing_interval, featured_until").in("tool_id", chunk).eq("product", "featured")
         )
         : { data: [] as { tool_id: string; status: string; billing_interval: string; featured_until: string | null }[] };
-      const growthByToolId = new Map((growthRows || []).map((r) => [r.tool_id, r]));
+      const featuredByToolId = new Map((featuredRows || []).map((r) => [r.tool_id, r]));
 
       const accounts = await Promise.all(
         (owned || []).map(async (tool) => {
           const { data: userData } = await supabase.auth.admin.getUserById(tool.owner_user_id as string);
-          const growth = growthByToolId.get(tool.id as string) || null;
+          const featured = featuredByToolId.get(tool.id as string) || null;
           return {
             tool_id: tool.id,
             tool_slug: tool.slug,
@@ -56,9 +56,9 @@ Deno.serve(async (req: Request) => {
             email: userData?.user?.email || null,
             created_at: userData?.user?.created_at || null,
             last_sign_in_at: userData?.user?.last_sign_in_at || null,
-            growth_status: growth?.status || null,
-            growth_billing_interval: growth?.billing_interval || null,
-            growth_featured_until: growth?.featured_until || null,
+            featured_status: featured?.status || null,
+            featured_billing_interval: featured?.billing_interval || null,
+            featured_until: featured?.featured_until || null,
           };
         })
       );
@@ -128,16 +128,16 @@ Deno.serve(async (req: Request) => {
         return jsonResponse({ ok: true });
       }
 
-      // Manually grants (or extends) Growth for a tool that already has a
+      // Manually grants (or extends) Featured for a tool that already has a
       // linked vendor account — for comp/support cases where a real Stripe
       // checkout shouldn't be required. Mirrors the end state
-      // vendorFeatureActivation.ts leaves behind for a real Growth
+      // vendorFeatureActivation.ts leaves behind for a real Featured
       // checkout (tools.featured/featured_until/billing_interval +
       // vendor_feature_subscriptions row), but as a plain insert/update
       // with no Stripe IDs — reusing that function directly isn't possible
       // since it requires an existing row matched by
       // stripe_checkout_session_id, which a manual grant has none of.
-      if (action === "grant_growth") {
+      if (action === "grant_featured") {
         const toolId = typeof payload.tool_id === "string" ? payload.tool_id : null;
         const billingInterval = payload.billing_interval === "year" ? "year" : "month";
         if (!toolId) return jsonResponse({ ok: false, error: "tool_id is required" }, 400);
@@ -157,7 +157,7 @@ Deno.serve(async (req: Request) => {
           .from("vendor_feature_subscriptions")
           .select("id")
           .eq("tool_id", toolId)
-          .eq("product", "growth")
+          .eq("product", "featured")
           .maybeSingle();
 
         let subError;
@@ -176,7 +176,7 @@ Deno.serve(async (req: Request) => {
           const { data: inserted, error } = await supabase
             .from("vendor_feature_subscriptions")
             .insert({
-              tool_id: toolId, product: "growth", status: "active", billing_interval: billingInterval,
+              tool_id: toolId, product: "featured", status: "active", billing_interval: billingInterval,
               contact_email: contactEmail, current_period_end: periodEnd, featured_until: periodEnd,
             })
             .select("id")
@@ -195,7 +195,7 @@ Deno.serve(async (req: Request) => {
         await writeAuditLog({
           actor_session_type: "session_token",
           actor_email: session.email || undefined,
-          action: "vendor_growth_manual_grant",
+          action: "vendor_featured_manual_grant",
           target_table: "tools",
           target_id: toolId,
           status: "success",
